@@ -277,8 +277,8 @@
 										<span class="online_icon"></span>
 									</div>
 									<div class="user_info">
-										<div>Chat with Khalid</div>
-										<div>1767 Messages</div>
+										<div>Trợ lý ảo</div>
+										<!-- <div>1767 Messages</div> -->
 									</div>
 								</div>
 								<span id="action_menu_btn" class="pointer" (click)="showHideMessage()"><i
@@ -292,19 +292,27 @@
 											<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
 												class="rounded-circle user_img_msg">
 										</div>
-	
+
 										<div class="msg_cotainer">
-											{{message.content}}
-											<span class="msg_time">{{message.timestamp}}</span>
+											{{message.title}}
+											<ng-container *ngFor="let tag of message.subTags">
+												<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag.title,true)">
+													{{tag.title}}
+												</div>
+												<a *ngIf="tag.link" routerLink="tag.link">
+													{{tag.link}}
+												</a>
+											</ng-container>
+											<span class="msg_time">{{message.dateSent}}</span>
 										</div>
-	
 									</div>
+									
 
 									<div *ngIf="message.fromId == 0" class="d-flex justify-content-end mb-4">
 									
 										<div class="msg_cotainer_send">
-											{{message.content}}
-											<span class="msg_time_send">{{message.timestamp}}</span>
+											{{message.title}}
+											<span class="msg_time_send">{{message.dateSent}}</span>
 										</div>
 										<div class="img_cont_msg">
 											<div class="rounded-circle user_img_msg" ></div>
@@ -312,7 +320,16 @@
 									</div>
 									
 								</ng-container>
-							
+						
+								<div  *ngIf="loading == true" style="display: none;" class="chat-bubble">
+									<div class="typing">
+										Bot is typing
+										<div class="ml-2 dot"></div>
+										<div class="dot"></div>
+										<div class="dot"></div>
+									</div>
+								</div>
+
 							</div>
 							<div class="card-footer">
 								<div class="input-group br-textMessage p-1">

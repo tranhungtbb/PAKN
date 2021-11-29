@@ -19,6 +19,7 @@ import { NummerOfWarningSettingComponent } from './components/number-of-warning/
 import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
 import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
 import { ApplicationSettingComponent } from './components/application-setting/application-setting.component'
+import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
 
 const routes: Routes = [
 	{
@@ -46,6 +47,12 @@ const routes: Routes = [
 			{
 				path: 'cau-hinh-sms/:id',
 				component: SmsSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' },
+			},
+			{
+				path: 'cau-hinh-dong-bo/:id',
+				component: SyncSettingComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'A_I_0' },
 			},

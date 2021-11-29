@@ -71,7 +71,9 @@ export class SystemConfigComponent implements OnInit {
 				this.router.navigate(['/quan-tri/he-thong/cau-hinh-hien-thi-trang-chu', id])
 				break
 			case TYPECONFIG.APPLICATION:
-			this.router.navigate(['/quan-tri/he-thong/cau-hinh-ung-dung', id])
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-ung-dung', id])
+			case TYPECONFIG.SYNC_CONFIG:
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-dong-bo', id])
 				break
 			default:
 				break

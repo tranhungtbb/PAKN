@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { FieldObject } from 'src/app/models/fieldObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-
+import { FILETYPE, MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
+import { saveAs as importedSaveAs } from 'file-saver'
 // import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 
 declare var $: any
@@ -22,13 +23,15 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		private _toastr: ToastrService,
 		private _fb: FormBuilder,
 		private _shareData: DataService,
-		private _serviceR: RecommendationService
+		private _serviceR: RecommendationService,
+		private fileService: UploadFileService
 	) {}
 
 	// child
 
 	// @ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
 
+	@ViewChild('file', { static: false }) file: ElementRef
 	listData = new Array<FieldObject>()
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
@@ -42,7 +45,8 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	title: string = ''
 	name: string = ''
 	description: string = ''
-
+	filePost: any = null
+	allowImageExtend = ['image/jpeg', 'image/png']
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -74,6 +78,9 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			name: [this.model.name, Validators.required],
 			description: [this.model.description],
 			isActived: [this.model.isActived, Validators.required],
+			orderNumber: [this.model.orderNumber],
+			isShowHome: [this.model.isShowHome],
+			filePath: [this.model.filePath],
 		})
 	}
 
@@ -82,6 +89,9 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			name: this.model.name,
 			isActived: this.model.isActived,
 			description: this.model.description,
+			orderNumber: this.model.orderNumber,
+			isShowHome: this.model.isShowHome,
+			filePath: this.model.filePath,
 		})
 	}
 
@@ -111,6 +121,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	preCreate() {
 		this.model = new FieldObject()
+		this.filePost = null
 		this.rebuilForm()
 		this.listUnitSelected = []
 		this.submitted = false
@@ -128,9 +139,15 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		if (this.form.invalid) {
 			return
 		}
+
 		this.model.listUnit = this.listUnitSelected.length == 0 ? null : this.listUnitSelected.join(',')
+		let request = {
+			model: this.model,
+			files: this.filePost
+		}
+		
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.fieldInsert(this.model).subscribe((response) => {
+			this._service.fieldInsert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -149,7 +166,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 					alert(error)
 				}
 		} else {
-			this._service.fieldUpdate(this.model).subscribe((response) => {
+			this._service.fieldUpdate(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -171,6 +188,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	}
 
 	preUpdate(data) {
+		this.filePost = null
 		let request = {
 			Id: data.id,
 			Type: 1,
@@ -244,5 +262,49 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	preView(data) {
 		this.model = data
 		$('#modalDetail').modal('show')
+	}
+
+	onChangeImage() {
+		$('#avatar-image').click()
+	}
+	avatarLocalChange = false
+	onImageChange(event: any) {
+		var file = event.target.files[0]
+		if (!file) {
+			return
+		}
+		if (file.size > 3000000) {
+			this._toastr.error('Chỉ chọn tệp có dụng lượng nhỏ hơn 3MB')
+			return
+		}
+		if (!this.allowImageExtend.includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin hình ảnh')
+			return
+		}
+
+		//preview image
+		this.filePost = file
+		this.model.filePath = URL.createObjectURL(file)
+		this.avatarLocalChange = true
+	}
+
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePath,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this._toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
+	}
+
+	onRemoveImg(){
+		this.model.filePath = null;
 	}
 }

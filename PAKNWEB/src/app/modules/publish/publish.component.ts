@@ -12,6 +12,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
 import { BotMessage } from 'src/app/models/chatbotObject'
+import { link } from 'fs'
 
 declare var $: any
 
@@ -46,6 +47,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	subMenu: any[] = []
 	textMessage = null
 	messages: any[] = []
+	loading: boolean
 
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
@@ -98,11 +100,34 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (resCreate.success === 'OK') {
 			this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
+				this.loading = false
 				console.log('receiveMessage 0', this.messages, data)
+
+				let link = ''
+				let subTags
+				let typeFrom
+				if (data.subTags && data.subTags.length > 0) {
+					const par = JSON.parse(data.subTags)
+					typeFrom = par.type
+					if (par.type === 'carousel') {
+						subTags = par.data
+					}
+				}
+
+				const newMessage = {
+					dateSent: data.timestamp,
+					title: data.content,
+					type: typeFrom,
+					subTags: subTags,
+					link: link,
+					fromUserName: data.from,
+					toUserName: data.to,
+				}
+
 				if (this.messages) {
-					this.messages = [...this.messages, data]
+					this.messages = [...this.messages, newMessage]
 				} else {
-					this.messages = [data]
+					this.messages = [newMessage]
 				}
 
 				console.log('receiveMessage 1', this.messages)
@@ -112,12 +137,14 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	sendMessage(text: string, append: boolean = true) {
+		this.loading = true
 		this.connection.invoke('AnonymousChatWithBot', text)
 		if (append) {
 			this.messages = [
 				...this.messages,
 				{
-					content: text,
+					dateSent: '',
+					title: text,
 					fromId: 0,
 				},
 			]
@@ -126,6 +153,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	onDisconnectChatBot() {
 		if (this.connection) {
+			this.connection.off('ReceiveMessageToGroup')
 			this.connection.stop()
 		}
 	}

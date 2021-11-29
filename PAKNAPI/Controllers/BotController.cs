@@ -84,7 +84,7 @@ namespace PAKNAPI.Controllers
                     {
                         // create room
                         var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-                        if (room  !=null && room.Id > 0)
+                        if (room != null && room.Id > 0)
                         {
 
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
@@ -112,7 +112,7 @@ namespace PAKNAPI.Controllers
                         };
                             Message messageModel = new Message()
                             {
-                               
+
                                 Type = MessageTypes.All
                             };
 
