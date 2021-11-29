@@ -24,14 +24,14 @@
 						</div>
 						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date: 'dd/MM/yyyy'}}</span>
 					</div>
-					<!-- <div class="m-3">
+					<div class="m-3">
 						<span class="pr-5" *ngIf="model.unitName">
 							<span class="my-0 h5">Đơn vị tiếp nhận :</span> {{model.unitName}}
 						</span>
 						<span *ngIf="model.fieldName">
 							<span class="my-0 h5">Lĩnh vực :</span> {{model.fieldName}}
 						</span>
-					</div> -->
+					</div>
 					
 					<div class="media pb-4 border-bottom mb-4">
 						<div class="mr-3">
@@ -83,7 +83,7 @@
 
 						</div>
 					</div>
-					<div class="media pb-4 border-bottom mb-4">
+					<div class="media pb-4 border-bottom mb-4" *ngIf="[3,10].includes(model.status)">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc155" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
 								<path
@@ -126,7 +126,7 @@
 									<i class="bi bi-eye"></i>
 								</span>
 							</p>
-							<p class="d-flex justify-content-end">
+							<p class="d-flex justify-content-end" *ngIf="model.status == 10">
 								<button type="button" class="btn btn-outline-success mr-3" (click)="changeSatisfaction(1)" [ngClass]="{ 'like': model.quantityType == 1 }">
 									<span class="mr-2">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
@@ -165,7 +165,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb-4">
+				<div class="box mb-4" *ngIf="model.status == 10">
 					<h3 class="mb-3 text-uppercase">
 						Bình luận <span>({{total_Comments}})</span>
 					</h3>

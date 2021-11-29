@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://192.168.0.45/PAKNAPI",
+      "applicationUrl": "http://localhost/PAKNAPI",
       "sslPort": 0
     },
     "iisExpress": {

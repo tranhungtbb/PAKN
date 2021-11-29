@@ -1,0 +1,79 @@
+<div class="content-nd mt-5 mb-5">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-8 col-lg-8 col-md-8">
+				<div class="box">
+					<div class="tt-v1 mb-3 d-flex justify-content-between center">
+						<h4 class="text-uppercase">tỷ lệ không hài lòng</h4>
+						<button type="button" class="btn text-white border-0 no-grd-blue btn-index border-radius-4">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
+								<path
+									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+							</svg>
+							<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh kiến nghị</span>
+						</button>
+					</div>
+					<div class="d-flex justify-content-between">
+						<div class="col-11 form-group p-0 pr-2">
+								<input placeholder="Nhập tên đơn vị ..." class="form-control form-control border-radius-4" [(ngModel)]="keySearch" maxlength="100"
+									(keydown.enter)="dataStateChange()" />
+						</div>
+						<div class="col-1 form-group px-2">
+							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px" (click)="dataStateChange()">
+								<i class="bi bi-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="box">
+					<div class="table-responsive">
+						<p-table  #dataTable [value]="listData" [lazy]='true' (onLazyLoad)="onPageChange($event)"
+							[paginator]="true" [rows]="pageSize"
+							[showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{total}}" [totalRecords]="total"
+							[responsive]="true" 
+							autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0"
+							>
+							<ng-template pTemplate="header">
+								<tr>
+									<th class="text-center middle" style="width: 60px;">STT</th>
+									<th class="text-center middle">Tên đơn vị</th>
+									<th class="text-center middle" style="width: 200px; text-transform: none;">Tỷ lệ không hài lòng</th>
+								</tr>
+								
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">
+										<p class="mb-0">{{ rowIndex + 1 }}</p>
+									</td>
+									<td>
+										<p class="mb-0">{{ item.unitName }}</p>
+									</td>
+									<td>
+										<p class="mb-0">{{ item.percent }} %</p>
+									</td>
+									
+								</tr>
+							</ng-template>
+							
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td [attr.colspan]="3" class="text-center">
+										Không có dữ liệu hiển thị
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+				<app-gallery></app-gallery>
+			</div>
+		</div>
+	</div>
+</div>

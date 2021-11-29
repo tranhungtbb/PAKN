@@ -16,6 +16,9 @@
     <Compile Update="ExportGrid\HIS_SystemLog.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\ProcessingResultByFeild.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ExportGrid\ProcessingResultByFeildAndReception.cs">
       <SubType>Component</SubType>
     </Compile>

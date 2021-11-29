@@ -236,29 +236,34 @@ namespace PAKNAPI.Models.Statistic
 		}
 	}
 
-	public class StatisticByProvince
+	public class PU_Statistic
 	{
 		private SQLCon _sQLCon;
 
 		public string Title { get; set; }
 		public int? Value { get; set; }
-		public StatisticByProvince(IAppSetting appSetting)
+		public PU_Statistic(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public StatisticByProvince()
+		public PU_Statistic()
 		{
 		}
 
-		public async Task<List<StatisticByProvince>> StatisticByProvinceDAO()
+		public async Task<List<PU_Statistic>> StatisticByProvinceDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
 
-			return (await _sQLCon.ExecuteListDapperAsync<StatisticByProvince>("TK_RecommendationByProvince", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<PU_Statistic>("TK_RecommendationByProvince", DP)).ToList();
+		}
+		public async Task<List<PU_Statistic>> StatisticSatisfactionDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<PU_Statistic>("[TK_RecommendationBySatisfaction]", DP)).ToList();
 		}
 	}
-
 
 	public class StatisticByByUnitParent
 	{

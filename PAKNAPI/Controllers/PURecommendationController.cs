@@ -282,7 +282,7 @@ namespace PAKNAPI.ControllerBase
 		#endregion ChangeSatisfaction
 
 		/// <summary>
-		/// 
+		/// tk phản ánh kiến nghị toàn tỉnh
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -291,7 +291,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				List<StatisticByProvince> statisticByProvinces = await new StatisticByProvince(_appSetting).StatisticByProvinceDAO();
+				List<PU_Statistic> statisticByProvinces = await new PU_Statistic(_appSetting).StatisticByProvinceDAO();
 				var titles = new List<string>();
 				var values = new List<int?>();
 				statisticByProvinces.ForEach(item => {
@@ -314,5 +314,160 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách PAKN bị từ chối tiếp nhận
+		/// </summary>
+		/// <param name="KeySearch"></param>
+		/// <param name="FieldId"></param>
+		/// <param name="UnitId"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("get-list-recommentdation-receive-deny")]
+		public async Task<ActionResult<object>> PURecommendationReceiveDeny(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
+		{
+			try
+			{
+				var pURecommendation_ReceiveDeny = await new PURecommendation(_appSetting).PURecommendationReceiveDeny(KeySearch,FieldId, UnitId,PageSize,PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"RecommendationReceiveDeny", pURecommendation_ReceiveDeny},
+						{"TotalCount", pURecommendation_ReceiveDeny != null && pURecommendation_ReceiveDeny.Count > 0 ? pURecommendation_ReceiveDeny[0].RowNumber : 0},
+						{"PageIndex", pURecommendation_ReceiveDeny != null && pURecommendation_ReceiveDeny.Count > 0 ? PageIndex : 0},
+						{"PageSize", pURecommendation_ReceiveDeny != null && pURecommendation_ReceiveDeny.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("recommendations-hight-light")]
+		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick()
+		{
+			try
+			{
+				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(STATUS_RECOMMENDATION.FINISED);
+				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("unit-dissatisfaction-rate-on-page")]
+		public async Task<ActionResult<object>> PUUnitDissatisfactionRateOnPage(string KeySearch , int? PageSize, int PageIndex)
+		{
+			try
+			{
+				var listUnit = await new UnitDissatisfactionRateOnPage(_appSetting).UnitDissatisfactionRateOnPageDAO(KeySearch, PageSize, PageIndex);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"listUnit", listUnit},
+					{"TotalCount", listUnit != null && listUnit.Count > 0 ? listUnit[0].RowNumber : 0},
+					{"PageIndex", listUnit != null && listUnit.Count > 0 ? PageIndex : 0},
+					{"PageSize", listUnit != null && listUnit.Count > 0 ? PageSize : 0},
+				};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("late-processing-unit-on-page")]
+		public async Task<ActionResult<object>> PULateProcessingUnitOnPage(string KeySearch, int? PageSize, int PageIndex)
+		{
+			try
+			{
+				var listUnit = await new LateProcessingUnitOnPage(_appSetting).LateProcessingUnitOnPageDAO(KeySearch, PageSize, PageIndex);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"listUnit", listUnit},
+					{"TotalCount", listUnit != null && listUnit.Count > 0 ? listUnit[0].RowNumber : 0},
+					{"PageIndex", listUnit != null && listUnit.Count > 0 ? PageIndex : 0},
+					{"PageSize", listUnit != null && listUnit.Count > 0 ? PageSize : 0},
+				};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		
+
+		[HttpGet]
+		[Route("recommendations-processing")]
+		public async Task<ActionResult<object>> PURecommendationProcessing()
+		{
+			try
+			{
+				var pURecommendations = await new PURecommendation(_appSetting).PURecommendationProcessing();
+				return new ResultApi { Success = ResultCode.OK, Result = pURecommendations };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("statistics-satisfaction-recommentdation")]
+		public async Task<ActionResult<object>> PURecommendationStatisticsSatisfaction()
+		{
+			try
+			{
+				var statisticSatisfaction = await new PU_Statistic(_appSetting).StatisticSatisfactionDAO();
+				var values = new List<int?>();
+				statisticSatisfaction.ForEach(item => {
+					values.Add(item.Value); 
+				});
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"RecommendationStatisticBySatisfaction", statisticSatisfaction},
+						{"Values", values }
+					};
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
 	}
 }

@@ -1879,7 +1879,15 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                var type = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
+                int type = 2;
+
+                try {
+                    type = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
+                }
+                catch (Exception ex) {
+                    
+                }
+
                 List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = type == 1 ?
                     await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, null)
                     : await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, true);
