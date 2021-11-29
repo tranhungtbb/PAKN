@@ -463,6 +463,9 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
+		public string FilePath { get; set; }
+		public bool? IsShowHome { get; set; }
+		public int? OrderNumber { get; set; }
 		public string ListUnit { get; set; }
 
 		public async Task<List<CAFieldGetByID>> CAFieldGetByIDDAO(int? Id)
@@ -494,6 +497,9 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _cAFieldInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAFieldInsertIN.IsDeleted);
 			DP.Add("Description", _cAFieldInsertIN.Description);
+			DP.Add("IsShowHome", _cAFieldInsertIN.IsShowHome);
+			DP.Add("FilePath", _cAFieldInsertIN.FilePath);
+			DP.Add("OrderNumber", _cAFieldInsertIN.OrderNumber);
 			DP.Add("ListUnit", _cAFieldInsertIN.ListUnit);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldInsert", DP);
@@ -510,6 +516,9 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
 		public string ListUnit { get; set; }
+		public string FilePath { get; set; }
+		public bool? IsShowHome { get; set; }
+		public int? OrderNumber { get; set; }
 	}
 
 	public class CAFieldKNCTGetDropdown
@@ -593,6 +602,9 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _cAFieldUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAFieldUpdateIN.IsDeleted);
 			DP.Add("Description", _cAFieldUpdateIN.Description);
+			DP.Add("IsShowHome", _cAFieldUpdateIN.IsShowHome);
+			DP.Add("FilePath", _cAFieldUpdateIN.FilePath);
+			DP.Add("OrderNumber", _cAFieldUpdateIN.OrderNumber);
 			DP.Add("ListUnit", _cAFieldUpdateIN.ListUnit);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldUpdate", DP);
@@ -611,6 +623,9 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
 		public string ListUnit { get; set; }
+		public string FilePath { get; set; }
+		public bool? IsShowHome { get; set; }
+		public int? OrderNumber { get; set; }
 	}
 
 	public class CAGroupWordDelete

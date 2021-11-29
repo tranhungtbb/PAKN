@@ -85,7 +85,13 @@
 					</div>
 					<div class="media pb-4 border-bottom mb-4" *ngIf="[3,10].includes(model.status)">
 						<div class="mr-3">
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc155" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;"
+								viewBox="0 0 16 16" *ngIf="[10].includes(model.status)">
+								<path
+									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+							</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: red"
+								viewBox="0 0 16 16" *ngIf="[3].includes(model.status)">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
@@ -94,8 +100,9 @@
 							<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ? model.processUnitName : 'Cơ quan chức năng trả lời'}}:</p>
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
-
-
+							<p *ngIf="!lstConclusion">
+								{{model.contentConclusion != null ? model.contentConclusion.split(':')[1] : ''}}
+							</p>
 							<p class="mb-4" *ngFor="let file of lstConclusionFiles; let i = index">
 								<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">

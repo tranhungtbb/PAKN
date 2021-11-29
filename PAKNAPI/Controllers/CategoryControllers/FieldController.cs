@@ -16,7 +16,8 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
-
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/field")]
@@ -26,12 +27,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
+		private readonly IWebHostEnvironment _hostEnvironment;
 
-        public FieldController(IAppSetting appSetting, IClient bugsnag)
+		public FieldController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
-        }
+			_hostEnvironment = hostEnvironment;
+
+		}
 		/// <summary>
 		/// xóa lĩnh vực
 		/// </summary>
@@ -150,11 +154,41 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("insert")]
-		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
+		public async Task<ActionResult<object>> CAFieldInsertBase()
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+				var jss = new JsonSerializerSettings
+				{
+					DateFormatHandling = DateFormatHandling.IsoDateFormat,
+					DateTimeZoneHandling = DateTimeZoneHandling.Local,
+					DateParseHandling = DateParseHandling.DateTimeOffset,
+				};
+				CAFieldInsertIN _cAFieldInsertIN = JsonConvert.DeserializeObject<CAFieldInsertIN>(Request.Form["data"].ToString(), jss);
+
+				var fileAvatar = Request.Form.Files.Where(x => x.Name == "image").ToList();
+				string folder = "Upload\\Category\\Feild";
+				var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
+				string filePath = string.Empty;
+
+				// avatar
+				if (fileAvatar.Count() > 0)
+				{
+
+					deletefile(_cAFieldInsertIN.FilePath);
+					if (!Directory.Exists(folderPath))
+					{
+						Directory.CreateDirectory(folderPath);
+					}
+					filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						fileAvatar[0].CopyTo(stream);
+					}
+					_cAFieldInsertIN.FilePath = filePath;
+				}
+
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN) };
 			}
@@ -175,12 +209,40 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("update")]
-		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
+		public async Task<ActionResult<object>> CAFieldUpdateBase()
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+				var jss = new JsonSerializerSettings
+				{
+					DateFormatHandling = DateFormatHandling.IsoDateFormat,
+					DateTimeZoneHandling = DateTimeZoneHandling.Local,
+					DateParseHandling = DateParseHandling.DateTimeOffset,
+				};
+				CAFieldUpdateIN _cAFieldUpdateIN = JsonConvert.DeserializeObject<CAFieldUpdateIN>(Request.Form["data"].ToString(), jss);
 
+				var fileAvatar = Request.Form.Files.Where(x => x.Name == "image").ToList();
+				string folder = "Upload\\Category\\Feild";
+				var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
+				string filePath = string.Empty;
+
+				// avatar
+				if (fileAvatar.Count() > 0)
+				{
+
+					deletefile(_cAFieldUpdateIN.FilePath);
+					if (!Directory.Exists(folderPath))
+					{
+						Directory.CreateDirectory(folderPath);
+					}
+					filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						fileAvatar[0].CopyTo(stream);
+					}
+					_cAFieldUpdateIN.FilePath = filePath;
+				}
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN) };
 			}
 			catch (Exception ex)
@@ -219,5 +281,18 @@ namespace PAKNAPI.Controllers.ControllerBase
             }
         }
 
-    }
+		private bool deletefile(string fname)
+		{
+			try
+			{
+				string _imageToBeDeleted = Path.Combine(_hostEnvironment.WebRootPath, fname);
+				if ((System.IO.File.Exists(_imageToBeDeleted)))
+				{
+					System.IO.File.Delete(_imageToBeDeleted);
+				}
+				return true;
+			}
+			catch (Exception ex) { return false; }
+		}
+	}
 }

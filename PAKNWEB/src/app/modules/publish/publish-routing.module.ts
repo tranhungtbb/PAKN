@@ -44,7 +44,15 @@ const routes: Routes = [
 				component: Index2Component,
 			},
 			{
+				path: 'xem-truoc/trang-chu',
+				component: Index2Component,
+			},
+			{
 				path: 'gioi-thieu',
+				component: IntroduceComponent,
+			},
+			{
+				path: 'xem-truoc/gioi-thieu',
 				component: IntroduceComponent,
 			},
 			{

@@ -7,6 +7,8 @@ export class FieldObject {
 		this.description = ''
 		this.isDeleted = false
 		this.isActived = true
+		this.isShowHome = false
+		this.filePath = ''
 	}
 	id: number
 	orderNumber: number
@@ -16,6 +18,8 @@ export class FieldObject {
 	isActived: boolean
 	isDeleted: boolean
 	listUnit: string
+	isShowHome: boolean
+	filePath: string
 }
 export class WordObject {
 	constructor() {

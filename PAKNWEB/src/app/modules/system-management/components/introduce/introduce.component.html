@@ -6,10 +6,11 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">Cấu hình trang giới thiệu</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" (click)="redirect()">
+				<a class="btn btn-sm btn-default rounded mr-3 text-dark background-while" (click)="redirect()">
 					<i class="bi bi-arrow-left"></i>&nbsp;
 					Quay lại
 				</a>
+				<button *hasPermission="['3', 'A_XV_4']" class="btn btn-sm grd-blue text-white rounded border-0 mr-3" (click)="onSave(true)">Xem trước</button>
 				<button *hasPermission="['3', 'A_XV_4']" class="btn btn-sm grd-green text-white rounded border-0 mr-3" (click)="onSave()">Công bố</button>
 			</div>
 		</div>

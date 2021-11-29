@@ -122,7 +122,7 @@ export class RECOMMENDATION_STATUS {
 	public static CREATED = 1 // đang soạn thảo
 	public static RECEIVE_WAIT = 2 //2 Chờ xử lý
 	public static RECEIVE_DENY = 3 //3 Từ chối xử lý
-	
+
 	public static RECEIVE_APPROVED = 4 //4 Đã tiếp nhận
 	public static PROCESS_WAIT = 5 //5 Chờ giải quyết
 	public static PROCESS_DENY = 6 //6 Từ chối giải quyết
@@ -219,6 +219,7 @@ export const TYPE_CONFIG = [
 	{ text: 'Cấu hình tổng đài', value: 3 }, //Config tổng đài
 	{ text: 'Cấu hình chung', value: 4 }, // #
 	{ text: 'Cấu hình trang chủ', value: 5 }, // #
+	{ text: 'Cấu hình đồng bộ', value: 6 }, // #
 ]
 
 export class TYPECONFIG {
@@ -227,6 +228,8 @@ export class TYPECONFIG {
 	public static CONFIG_SWITCHBOARD = 3
 	public static CONFIG_NUMBER_WARNING = 4
 	public static TYPE_INDEX = 5
+	public static APPLICATION = 7
+	public static SYNC_CONFIG = 6
 }
 
 export class REGEX {

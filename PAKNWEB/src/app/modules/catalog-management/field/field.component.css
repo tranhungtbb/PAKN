@@ -35,3 +35,8 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
 :host ::ng-deep .form-control.ng-select .ng-select-container {
 	padding-bottom: 0px;
 }
+
+.feild-img > img {
+	width: 100%;
+	min-height: 120px;
+}

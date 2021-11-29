@@ -5,6 +5,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { IntroduceService } from 'src/app/services/introduce.service'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { IntroduceObjet, IntroduceFunction, IntroduceUnit } from 'src/app/models/IntroductObject'
+import { Router } from '@angular/router'
 
 @Component({
 	selector: 'app-introduce',
@@ -16,14 +17,17 @@ export class IntroduceComponent implements OnInit {
 	model: any = new IntroduceObjet()
 	ltsIntroductUnit: Array<IntroduceUnit>
 	lstIntroduceFunction: Array<IntroduceFunction>
+	isPreview : boolean = false
+
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
-	constructor(private _service: IntroduceService) {
+	constructor(private _service: IntroduceService, private _router : Router) {
 		this.lstIntroduceFunction = []
 	}
 
 	currentDate = new Date()
 
 	ngOnInit() {
+		this.isPreview = this._router.url.includes('xem-truoc') ? true : false
 		this._service.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.model

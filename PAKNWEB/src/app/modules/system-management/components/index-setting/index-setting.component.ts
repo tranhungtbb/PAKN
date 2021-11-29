@@ -100,7 +100,7 @@ export class IndexSettingComponent implements OnInit {
 		window.history.back()
 	}
 
-	onSave() {
+	onSave(isPreView : boolean = false) {
 		this.submitted = true
 		this.model.phone = this.model.phone.trim()
 		this.model.email = this.model.email.trim()
@@ -121,8 +121,12 @@ export class IndexSettingComponent implements OnInit {
 		}
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
+				if(isPreView){
+					window.open('/cong-bo/xem-truoc/trang-chu')
+					return
+				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				// window.history.back()
+				
 			} else {
 				this._toastr.error(res.message)
 			}
