@@ -42,6 +42,7 @@ export class Index2Component implements OnInit, AfterViewInit {
 	recommendationsProcessing: Array<PuRecommendation>
 	unitDissatisfactionRate: any[] = []
 	lateProcessingUnit: any[] = []
+	isPreview: boolean = false
 	dataNotification: any = {}
 	news: any[]
 	firstNews: any
@@ -76,6 +77,8 @@ export class Index2Component implements OnInit, AfterViewInit {
 
 	indexSettingObj = new IndexSettingObjet()
 	async ngOnInit() {
+		this.isPreview = this._router.url.includes('xem-truoc') ? true : false
+
 		await this.getData()
 		this.indexSettingService.GetInfo({}).subscribe(
 			(res) => {

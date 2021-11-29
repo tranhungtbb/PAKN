@@ -1,4 +1,4 @@
-//const BASE_URL = `http://14.177.236.88:6161`;
+// const BASE_URL = `http://14.177.236.88:6161`
 const BASE_URL = `http://localhost/PAKNAPI`
 export class AppSettings {
 	public static HostingAddress = `${BASE_URL}`

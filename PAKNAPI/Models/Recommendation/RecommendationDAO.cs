@@ -98,7 +98,7 @@ namespace PAKNAPI.Models.Recommendation
 			DP.Add("Id", Id);
 			DP.Add("UserprocessId", userProcessId);
 			DP.Add("UnitProcessId", unitProcessId);
-			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).FirstOrDefault();
+			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("[MR_RecommendationGetByIDView]", DP)).FirstOrDefault();
 
 			DP = new DynamicParameters();
 			DP.Add("Id", Id);

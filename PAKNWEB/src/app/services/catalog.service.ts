@@ -43,17 +43,38 @@ export class CatalogService {
 	fieldInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.name),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.model.name),
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldInsert, headers)
+
+		const httpPackage = {
+			headers: headers,
+			reportProgress: true,
+		}
+
+		let formData = new FormData()
+		formData.append('data', JSON.stringify(request.model))
+		if (request.files) formData.append('image', request.files)
+	
+
+		return this.http.post(AppSettings.API_ADDRESS + Api.FieldInsert, formData, httpPackage)
+		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldInsert, headers)
 	}
 
 	fieldUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.name),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.model.name),
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdate, headers)
+		const httpPackage = {
+			headers: headers,
+			reportProgress: true,
+		}
+		let formData = new FormData()
+		formData.append('data', JSON.stringify(request.model))
+		if (request.files) formData.append('image', request.files)
+		
+		return this.http.post(AppSettings.API_ADDRESS + Api.FieldUpdate, formData, httpPackage)
+		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdate, headers)
 	}
 
 	fieldUpdateStatus(request: any): Observable<any> {

@@ -39,10 +39,10 @@ import { SwitchboardSettingComponent } from './components/switchboard-setting/sw
 import { UserSystemComponent } from './components/user-system/user-system.component'
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
 import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
-import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component';
-import { SyncSettingComponent } from './components/sync-setting/sync-setting.component';
+import { ApplicationSettingComponent } from './components/application-setting/application-setting.component'
+import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
+import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
 import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
-
 @NgModule({
 	imports: [
 		CommonModule,
@@ -91,6 +91,7 @@ import { PublishNotificationComponent } from './components/publish-notification/
 		IndexTypeSettingComponent,
 		SyncSettingComponent,
 		PublishNotificationComponent,
+		ApplicationSettingComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

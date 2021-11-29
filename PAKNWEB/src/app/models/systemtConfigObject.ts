@@ -64,6 +64,16 @@ export class GeneralSetting {
 	fileSize: string
 }
 
+
+export class ConfigApplication {
+	constructor() {
+		this.urlIOS = ''
+		this.urlAndroid = ''
+	}
+	urlIOS: string
+	urlAndroid: string
+}
+
 export class ConfigSync {
 	cskhLinkApi: string = ''
 	cskhMethod: number = null

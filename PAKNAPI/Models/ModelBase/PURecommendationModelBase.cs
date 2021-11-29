@@ -36,6 +36,7 @@ namespace PAKNAPI.Models.ModelBase
         public int? QuantityType { get; set; }
 
         public int Status { get; set; }
+        public string ContentConclusion { get; set; }
 
         public int RowNumber { get; set; }
 
@@ -174,6 +175,8 @@ namespace PAKNAPI.Models.ModelBase
         public MRRecommendationConclusionGetByRecommendationId lstConclusion { get; set; }
         //ConclusionFile - file đính kèm giải quyết
         public List<MRRecommendationConclusionFilesGetByConclusionId> lstConclusionFiles { get; set; }
+
+        
 
     }
 
