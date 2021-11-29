@@ -61,6 +61,9 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
+							if(this.model.contentConclusion){
+								this.model.contentConclusion = this.model.contentConclusion.split(':').splice(1,this.model.contentConclusion.split(':').length -1)
+							}
 							if (this.model.quantityType && this.model.quantityType != 0) {
 								this.checkSatisfaction = true
 							}

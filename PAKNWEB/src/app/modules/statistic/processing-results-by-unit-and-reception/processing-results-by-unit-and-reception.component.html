@@ -1,0 +1,178 @@
+<div class="content-body">
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><a class="font-weight-bold uppercase">Thống kê theo phương thức tiếp nhận và đơn vị xử lý</a></li>
+			</ol>
+			<div class="btn-group group-button-table" role="group">
+				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" *hasPermission="['3', 'D_II_2']">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+						<path
+							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+						<path
+							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+					</svg>
+					Xuất báo cáo
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="row p-3" style="background-color: #f6f6f6;">
+					<div class="col col-sm-2 form-group mb-0">
+						<div class="dropdown bootstrap-select form-control form-control-sm">
+							<ng-select  notFoundText="Không có dữ liệu" [clearable]="false" placeholder="Năm" class="form-control" [items]="listYear"
+								 bindLabel="text" bindValue="value" [(ngModel)]="year" [closeOnSelect]="true"
+								 (change)="changeYear()">
+							 </ng-select>
+						 </div>
+					</div>
+					<div class="col col-sm-2 form-group mb-0">
+						<div class="dropdown bootstrap-select form-control form-control-sm">
+							<ng-select  notFoundText="Không có dữ liệu" class="form-control" placeholder="Quý" [clearable]="true" [items]="listQuarter"
+								 bindLabel="text" bindValue="value" [(ngModel)]="quarter" [closeOnSelect]="true"
+								 (change)="changeQuarter()">
+							 </ng-select>
+						 </div>
+					</div>
+					<div class="col col-sm-2 form-group mb-0">
+						<input id="from_date" class="form-control-sm form-control" type="text" bsDatepicker #nv="bsDatepicker"
+							[(ngModel)]="fromDate" [maxDate]="maxDateValue"
+							[bsConfig]="{
+								adaptivePosition: true,
+								dateInputFormat: 'DD/MM/YYYY',
+								containerClass: 'theme-dark-blue'
+							}" datetime="DD/MM/YYYY" placeholder="Từ ngày" (bsValueChange)="fromDateValueChange($event)" />
+						<span class="input-group-addon" (click)="nv.toggle()" [attr.aria-expanded]="nv.isOpen">
+							<i class="fal fa-calendar"></i>
+						</span>
+					</div>
+					<div class="col col-sm-2 form-group mb-0">
+						<input id="to_date" class="form-control-sm form-control" type="text" bsDatepicker #nvto="bsDatepicker"
+							[(ngModel)]="toDate" [maxDate]="maxDateValue"
+							[bsConfig]="{
+								adaptivePosition: true,
+								dateInputFormat: 'DD/MM/YYYY',
+								containerClass: 'theme-dark-blue'
+							}" datetime="DD/MM/YYYY" placeholder="Đến ngày" (bsValueChange)="toDateValueChange($event)" />
+						<span class="input-group-addon" (click)="nvto.toggle()" [attr.aria-expanded]="nvto.isOpen">
+							<i class="fal fa-calendar"></i>
+						</span>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<p-table #table [value]="listData" [paginator]="true" [rows]="20" sortMode="multiple"
+						[showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]" [rows]="pageSize"
+						currentPageReportTemplate="Tổng số {{totalRecords}}" [totalRecords]="totalRecords" 
+						(onLazyLoad)="onPageChange($event)"
+						[responsive]="true" 
+						autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0"
+						[lazy]="true">
+						<ng-template pTemplate="header">
+							<tr>
+								<th rowspan="6" class="text-center middle" style="width: 50px;">STT</th>
+								<th rowspan="6" colspan="1" class="text-center middle text-uppercase">Đơn vị xử lý</th>
+								<th rowspan="2" colspan="5" class="text-center middle text-uppercase">Số PAKN được tiếp nhận</th>
+								<th rowspan="2" colspan="6" class="text-center middle text-uppercase">Kết quả xử lý PAKN</th>
+								<th rowspan="3" colspan="4" class="text-center middle text-uppercase">Đánh giá</th>
+								<th rowspan="6" colspan="1" class="text-center middle text-uppercase" style="width: 100px;">Số lượng PAKN Đăng tải công khai kết quả xử lý</th>
+							</tr>
+							<tr></tr>
+							<tr>
+								<th rowspan="5" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
+								<th rowspan="1" colspan="4" class="text-center middle">Chia theo phương thức tiếp nhận</th>
+								<th rowspan="1" colspan="3" class="text-center middle">Đã xử lý</th>
+								<th rowspan="1" colspan="3" class="text-center middle">Đang xử lý</th>
+							</tr>
+							<tr>
+								<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua điện thoại</th>
+								<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua email, Văn bản</th>
+								<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua web</th>
+								<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua app</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Đúng hạn</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Quá hạn</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Đúng hạn</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Quá hạn</th>
+
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Hài lòng</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Chấp nhận</th>
+								<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Không hài lòng</th>
+							</tr>
+							
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{item.stt}}</td>
+								<td>
+									<p class="text-2line mb-0">{{item.unitName}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.received | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.recommendationMobile | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.recommendationEmail | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.recommendationWeb | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.recommendationApp | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.processedTotal | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.processedOnTime | number}}</p>
+								</td>	
+								<td>
+									<p class="mb-0 text-right">{{item.processedOutOfDate | number}}</p>
+								</td>	
+								<td>
+									<p class="mb-0 text-right">{{item.processTotal | number}}</p>
+								</td>	
+								<td>
+									<p class="mb-0 text-right">{{item.processOnTime | number}}</p>
+								</td>	
+								<td>
+									<p class="mb-0 text-right">{{item.processOutOfDate | number}}</p>
+								</td>	
+								<td>
+									<p class="mb-0 text-right">{{item.evaluate | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.like | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.accept | number}}</p>
+								</td>
+								<td>
+									<p class="mb-0 text-right">{{item.dislike | number}}</p>
+								</td>
+							
+								<td>
+									<p class="mb-0 text-right">{{item.publicQuantity | number}}</p>
+								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="20">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

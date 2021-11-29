@@ -387,6 +387,7 @@ export class Api {
 	public static StatisticRecommendationProcessingResultsByFeildAndReception = 'statistic/recommendation-processing-results-by-feild-and-reception'
 	public static StatisticRecommendationProcessingResultsByFeild = 'statistic/recommendation-processing-results-by-feild'
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
+	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'
 
 	//statstic public
 	public static StatisticsByUnitParentId = 'statistic/recommendation-statistic-by-unit-parent'
