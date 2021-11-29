@@ -12,6 +12,7 @@ import { ProcessingResultsComponent } from './processing-results/processing-resu
 import { ProcessingResultsByFeildComponent } from './processing-results-by-feild/processing-results-by-feild.component'
 import { ProcessingResultsByFeildAndReceptionComponent } from './processing-results-by-feild-and-reception/processing-results-by-feild-and-reception.component'
 import { ProcessingResultsByUnitComponent } from './processing-results-by-unit/processing-results-by-unit.component'
+import { ProcessingResultsByUnitAndReceptionComponent } from './processing-results-by-unit-and-reception/processing-results-by-unit-and-reception.component'
 
 const routes: Routes = [
 	{
@@ -98,6 +99,14 @@ const routes: Routes = [
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},
+	{
+		path: 'ket-qua-xu-ly-pakn-theo-don-vi-va-phuong-thuc-tiep-nhan',
+		component: ProcessingResultsByUnitAndReceptionComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
+
 	
 ]
 

@@ -101,7 +101,7 @@
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
 							<p *ngIf="!lstConclusion">
-								{{model.contentConclusion != null ? model.contentConclusion.split(':')[1] : ''}}
+								{{model.contentConclusion != null ? model.contentConclusion : ''}}
 							</p>
 							<p class="mb-4" *ngFor="let file of lstConclusionFiles; let i = index">
 								<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
