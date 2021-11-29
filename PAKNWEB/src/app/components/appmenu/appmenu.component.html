@@ -48,6 +48,21 @@
 					<!-- <li *hasPermission="['3', 'E_XIII_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-knct">Danh sách KNCT</a></li> -->
 				</ul>
 			</li>
+			<li *hasPermission="['2', 'H_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-file-earmark-ruled"></i>
+					<span class="nav-text">Thủ tục hành chính</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li *hasPermission="['3', 'H_I_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
+					<li *hasPermission="['3', 'H_I_1']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-da-cong-bo">Đã công bố</a></li>
+					<li *hasPermission="['3', 'H_I_2']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-chuyen-tiep-tiep-nhan">Chuyển tiếp/Tiếp nhận
+							thủ tục hành chính</a></li>
+				</ul>
+			</li>
 			<li *hasPermission="['2', 'F_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-newspaper"></i>
@@ -73,10 +88,24 @@
 							routerLink="/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep">Quản lý Doanh nghiệp</a></li>
 				</ul>
 			</li>
-			<li *hasPermission="['3', 'B_IV_10']" routerLinkActive="mm-active active">
+
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-people"></i>
+					<span class="nav-text">Thư mời, sms</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li *hasPermission="['3', 'B_IV_10']"><a routerLinkActive="mm-active" routerLink="/quan-tri/thu-moi">Thư
+							mời</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/email-sms/sms">SMS</a></li>
+				</ul>
+			</li>
+
+
+			<!-- <li *hasPermission="['3', '']" routerLinkActive="mm-active active">
 				<a routerLink="/quan-tri/thu-moi" class="ai-icon" aria-expanded="false">
 					<i class="bi bi-envelope-open"></i>
-					<span class="nav-text">Thư mời</span>
+					<span class="nav-text"></span>
 				</a>
 			</li>
 			<li *ngIf="hasPermissionSMS" routerLinkActive="mm-active active">
@@ -84,7 +113,7 @@
 					<i class="bi bi-chat-right-dots"></i>
 					<span class="nav-text">SMS</span>
 				</a>
-			</li>
+			</li> -->
 			<li *hasPermission="['3', 'A_XX_0']" routerLinkActive="mm-active active"
 				[routerLinkActiveOptions]="{exact: false}">
 				<a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi" class="ai-icon" href="javascript:void()"
@@ -110,23 +139,6 @@
 							routerLink="/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu">Hệ thống PAKN của Chính phủ</a></li>
 				</ul>
 			</li>
-			<li *hasPermission="['2', 'H_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
-				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-					<i class="bi bi-file-earmark-ruled"></i>
-					<span class="nav-text">Thủ tục hành chính</span>
-				</a>
-				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li *hasPermission="['3', 'H_I_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
-					<li *hasPermission="['3', 'H_I_1']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-da-cong-bo">Đã công bố</a></li>
-					<li *hasPermission="['3', 'H_I_2']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-chuyen-tiep-tiep-nhan">Chuyển tiếp/Tiếp nhận
-							thủ tục hành chính</a></li>
-				</ul>
-			</li>
-
-
 
 			<!-- <li *hasPermission="['1','B']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -190,6 +202,11 @@
 							routerLink="/quan-tri/he-thong/lich-su-chat-bot">Lịch sử chatbot</a></li>
 					<li *hasPermission="['3', 'A_XIII_0']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
+					<li *hasPermission="['3', 'A_XV_4']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/he-thong/cau-hinh-trang-gioi-thieu">Cấu hình trang giới thiệu</a></li>
+					<li *hasPermission="['3', 'A_XIX_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
 				</ul>
 			</li>
 			<li *hasPermission="['1','D']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -221,7 +238,7 @@
 							routerLink="/quan-tri/bao-cao/ket-qua-xu-ly-pakn-theo-don-vi">Kết quả xử lý theo đơn vị</a></li>
 				</ul>
 			</li>
-			<li *hasPermission="['1', 'A']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<!-- <li *hasPermission="['1', 'A']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-layout-text-sidebar-reverse"></i>
 					<span class="nav-text">Thiết lập chung</span>
@@ -233,7 +250,7 @@
 							routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
 				</ul>
-			</li>
+			</li> -->
 			<li *hasPermission="['1', 'G']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-life-preserver"></i>
