@@ -152,11 +152,11 @@
 												<i class="bi bi-arrow-left-square"></i>
 											</a>
 											<a *ngIf="(item.status == 2 || item.status == 5 || item.status == 8) && (item.unitReceiveId == unitLoginId)"
-												(click)="preProcess(item, 2)" class="btn-icon grd-xanhngoc2 text-white mr-2" title="Tiếp nhận xử lý"><i
+												(click)="preProcess(item, 2)" class="btn-icon grd-xanhngoc2 text-white mr-2" title="Tiếp nhận"><i
 													class="bi bi-file-earmark-check"></i></a>
 
 											<a *ngIf="(item.status == 2 || item.status == 5 || item.status == 8) && (item.unitReceiveId == unitLoginId)"
-												(click)="preProcess(item, 3)" class="btn-icon grd-red text-white mr-2" title="Từ chối tiếp nhận"><i
+												(click)="preProcess(item, 3)" class="btn-icon grd-red text-white mr-2" title="Từ chối"><i
 													class="bi bi-file-earmark-break"></i></a>
 
 											<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId && !item.isForwardUnitChild  && item.isForwardForUnit)"

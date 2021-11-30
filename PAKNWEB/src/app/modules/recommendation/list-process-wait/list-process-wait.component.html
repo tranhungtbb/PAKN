@@ -145,7 +145,7 @@
 												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess)" title="Từ chối giải quyết">
 												<i class="bi bi-file-earmark-break"></i></a>
 
-												<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId && item.isForwardUnitChild)"
+												<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId  && !item.isForwardUnitChild  && item.isForwardForUnit)"
 												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess,true)" class="btn-icon grd-red text-white mr-2" title="Từ chối giải quyết từ đơn vị"><i
 													class="bi bi-file-earmark-minus"></i></a>
 

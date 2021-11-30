@@ -990,11 +990,11 @@ namespace PAKNAPI.Controller
                     }
                 }
 
-                MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                MRRecommendationUpdateStatusByForwardIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusByForwardIN();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardInsertIN.RecommendationId;
                 _mRRecommendationUpdateStatusIN.IsForwardChild = request.IsForwardUnitChild == null ? false : request.IsForwardUnitChild;
-                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusByForwardDAO(_mRRecommendationUpdateStatusIN);
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = request._mRRecommendationForwardInsertIN.RecommendationId;
                 hisData.Type = 1;

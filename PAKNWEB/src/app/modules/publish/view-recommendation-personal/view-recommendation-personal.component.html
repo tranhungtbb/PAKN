@@ -101,8 +101,7 @@
 							<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold">{{model.unitName}}:</p>
 							<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<ng-container *ngIf="[3,6,9].includes(model.status)">
-								<!-- <p style="text-align: justify;">{{model.reasonDeny}}</p> -->
-								<p style="text-align: justify;">{{denyContent.reasonDeny}}</p>
+								<p style="text-align: justify;">{{model.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status == 10">
 								<p style="text-align: justify;">{{modelConclusion.content}}</p>

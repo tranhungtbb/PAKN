@@ -1986,20 +1986,38 @@ namespace PAKNAPI.ModelBase
             DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
             DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
             DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
-            DP.Add("IsForwardChild", _mRRecommendationUpdateStatusIN.IsForwardChild);
-
             return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
         }
-    }
+		public async Task<int> MRRecommendationUpdateStatusByForwardDAO(MRRecommendationUpdateStatusByForwardIN _mRRecommendationUpdateStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+			DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
+			DP.Add("IsForwardChild", _mRRecommendationUpdateStatusIN.IsForwardChild);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatusByForward", DP));
+		}
+	}
 
 	public class MRRecommendationUpdateStatusIN
 	{
 		public int? Id { get; set; }
 		public byte? Status { get; set; }
 		public bool? IsFakeImage { get; set; }
-		public bool? IsForwardChild { get; set; }
 
 		public MRRecommendationUpdateStatusIN() {
+			this.IsFakeImage = false;
+		}
+	}
+	public class MRRecommendationUpdateStatusByForwardIN
+	{
+		public int? Id { get; set; }
+		public byte? Status { get; set; }
+		public bool? IsFakeImage { get; set; }
+		public bool? IsForwardChild { get; set; }
+
+		public MRRecommendationUpdateStatusByForwardIN()
+		{
 			this.IsFakeImage = false;
 			this.IsForwardChild = false;
 		}

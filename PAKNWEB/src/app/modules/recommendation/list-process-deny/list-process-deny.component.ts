@@ -42,6 +42,7 @@ export class ListProcessDenyComponent implements OnInit {
 	]
 	lstUnit: any = []
 	lstField: any = []
+	listUnitChild : any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
@@ -70,6 +71,7 @@ export class ListProcessDenyComponent implements OnInit {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
 					this.lstField = response.result.lstField
+					this.listUnitChild = response.result.lstUnitChild
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -169,24 +171,31 @@ export class ListProcessDenyComponent implements OnInit {
 		})
 	}
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
-	preForward(id: number) {
+	preForward(id: number, isForwardUnitChild : boolean = false) {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.submitted = false
 		this.rebuilForm()
-		this._service.recommendationGetDataForForward({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnitNotMain = response.result.lstUnitNotMain
-					$('#modal-tc-pakn').modal('show')
+		let obj = this.listData.find((x) => x.id == id)
+		debugger
+		if (isForwardUnitChild == true) {
+			this.lstUnitNotMain = this.listUnitChild
+			$('#modal-tc-pakn').modal('show')
+		}else{
+			this._service.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.lstUnitNotMain = response.result.lstUnitNotMain
+						$('#modal-tc-pakn').modal('show')
+					}
+				} else {
+					this._toastr.error(response.message)
 				}
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
+			}),
+				(error) => {
+					console.log(error)
+				}
+		}
 	}
 
 	onForward() {

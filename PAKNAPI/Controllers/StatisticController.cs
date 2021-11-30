@@ -470,7 +470,7 @@ namespace PAKNAPI.Controllers
 			try
 			{
 				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<StatisticRecommendationProcessStatusByFeildAndReception> result = await new StatisticRecommendationProcessStatusByFeildAndReception(_appSetting).StatisticRecommendationProcessStatusByFeildAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
+				List<StatisticRecommendationProcessStatusByUnitAndReception> result = await new StatisticRecommendationProcessStatusByUnitAndReception(_appSetting).StatisticRecommendationProcessStatusByUnitAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}

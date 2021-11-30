@@ -78,7 +78,8 @@ export class ListGeneralComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
-					;(this.lstField = response.result.lstField), (this.listUnitChild = response.result.lstUnitChild)
+					this.lstField = response.result.lstField
+					this.listUnitChild = response.result.lstUnitChild
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -220,6 +221,7 @@ export class ListGeneralComponent implements OnInit {
 		this.submitted = false
 		this.rebuilForm()
 		let obj = this.listData.find((x) => x.id == id)
+		debugger
 		if (isForwardUnitChild == true && obj.status == RECOMMENDATION_STATUS.PROCESS_DENY) {
 			this.lstUnitNotMain = this.listUnitChild
 			$('#modal-tc-pakn').modal('show')
@@ -284,7 +286,6 @@ export class ListGeneralComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardMain = isForwardMain
-		debugger
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -450,11 +451,10 @@ export class ListGeneralComponent implements OnInit {
 				ReactionaryWord: this.modelProcess.reactionaryWord,
 				IsFakeImage: this.modelProcess.isFakeImage,
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
-				IsForwardUnitChild: obj.isForwardUnitChild && !obj.isForwardForUnit ? true : false,
+				IsForwardUnitChild: obj.isForwardUnitChild ? true : false,
 				IsList: true,
 				IsForwardMain: this.isForwardMain,
 			}
-			debugger
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')

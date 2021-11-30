@@ -395,7 +395,7 @@ namespace PAKNAPI.Models.Statistic
 	{
 		private SQLCon _sQLCon;
 		public int? STT { get; set; }
-		public string UnitName { get; set; }
+		public string FieldName { get; set; }
 		public int? Received { get; set; }
 		public int? RecommendationMobile { get; set; }
 		public int? RecommendationEmail { get; set; }
@@ -526,7 +526,7 @@ namespace PAKNAPI.Models.Statistic
 	{
 		private SQLCon _sQLCon;
 		public int? STT { get; set; }
-		public string FeildName { get; set; }
+		public string UnitName { get; set; }
 		public int? Received { get; set; }
 		public int? RecommendationMobile { get; set; }
 		public int? RecommendationEmail { get; set; }
@@ -554,7 +554,7 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationProcessStatusByUnitAndReception>> StatisticRecommendationProcessStatusByFeildAndReceptionDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationProcessStatusByUnitAndReception>> StatisticRecommendationProcessStatusByUnitAndReceptionDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FromDate", FromDate);

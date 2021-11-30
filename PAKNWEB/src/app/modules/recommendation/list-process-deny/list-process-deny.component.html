@@ -135,7 +135,7 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a *ngIf="(item.unitSendId == unitLoginId)" (click)="preForward(item.id)" class="btn-icon grd-blue text-white mr-2"
+											<a *ngIf="(item.unitSendId == unitLoginId)" (click)="preForward(item.id, item.isForwardUnitChild)" class="btn-icon grd-blue text-white mr-2"
 												title="Chuyển giải quyết">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 													<path

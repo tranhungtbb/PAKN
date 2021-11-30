@@ -113,7 +113,7 @@ export class ProcessingResultsByUnitAndReceptionComponent implements OnInit {
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
-		this._service.getProcessingResultByFeildAndReception(request).subscribe((response) => {
+		this._service.getProcessingResultByUnitAndReception(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listData = response.result;
 				if(response.result && response.result.length > 0){
