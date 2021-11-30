@@ -131,6 +131,10 @@ export class PublishComponent implements OnInit, OnChanges {
 					} else {
 						this.messages = [newMessage]
 					}
+					setTimeout(() => {
+						var objDiv = document.getElementById("bodyMessage");
+						objDiv.scrollTop = objDiv.scrollHeight;
+					}, 300);
 				}
 			})
 			this.sendMessage('Xin chào', false)
@@ -149,6 +153,10 @@ export class PublishComponent implements OnInit, OnChanges {
 					fromId: 0,
 				},
 			]
+			setTimeout(() => {
+				var objDiv = document.getElementById("bodyMessage");
+				objDiv.scrollTop = objDiv.scrollHeight;
+			}, 300);
 		}
 	}
 
