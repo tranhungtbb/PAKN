@@ -236,6 +236,7 @@ namespace PAKNAPI.Controller
                         Directory.CreateDirectory(folderPath);
                     }
                     bool isFakeImage = false;
+                    var fakeImageResults = new List<List<FakeResult>>();
                     List<string> filesNameError = new List<string>();
                     foreach (var item in Request.Form.Files)
                     {
@@ -245,16 +246,23 @@ namespace PAKNAPI.Controller
                         {
                             item.CopyTo(stream);
                             var s = new System.Drawing.Bitmap(stream);
-                            if (fakeImage.IsFake(s))
+                            var outResult = new List<FakeResult>();
+                            if (fakeImage.IsFake(s, ref outResult))
                             {
                                 isFakeImage = true;
                                 filesNameError.Add(item.FileName);
+                                fakeImageResults.Add(outResult);
                             }
                         }
                     }
                     if (isFakeImage)
                     {
-                        return new ResultApi { Success = ResultCode.INCORRECT, Message = "Ảnh " + string.Join(", ", filesNameError) + " đã qua chỉnh sửa" };
+                        return new ResultApi
+                        {
+                            Success = ResultCode.INCORRECT,
+                            Message = "Ảnh " + string.Join(", ", filesNameError) + " đã qua chỉnh sửa",
+                            Result = fakeImageResults
+                        };
                     }
                     else
                     {
