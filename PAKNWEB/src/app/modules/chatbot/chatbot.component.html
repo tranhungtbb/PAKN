@@ -129,14 +129,22 @@
 							<div *ngIf="message.fromUserId != userId" class="d-flex justify-content-start mb-4">
 								<div class="msg_cotainer">
 									{{message.messageContent}}
+									<ng-container  *ngFor="let tag of message.SubTags">
+										<div *ngIf="tag.title" class="msg_cotainer_child">
+											<span class="item p-2">{{tag.title}}</span>
+										</div>
+										<a *ngIf="tag.link" routerLink="tag.link">
+											{{tag.link}}
+										</a>
+									</ng-container>
 									<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
 								</div>
 							</div>
 							<div *ngIf="message.fromUserId == userId" class="d-flex justify-content-end mb-4">
 								<div class="msg_cotainer_send">
 									<!-- {{message.messageContent}} -->
-									{{message.messageContent.Content}}
-									<ng-container *ngFor="let tag of message.messageContent.SubTags.data">
+									{{message.messageContent}}
+									<ng-container  *ngFor="let tag of message.SubTags">
 										<div *ngIf="tag.title" class="msg_cotainer_child">
 											<span class="item p-2">{{tag.title}}</span>
 										</div>

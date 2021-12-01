@@ -27,7 +27,7 @@ export class DashboardChatBotComponent implements OnInit {
 
 	constructor(private botService: ChatBotService, private user: UserInfoStorageService) {}
 	ngOnInit() {
-		console.log('ngOnInit 0')
+		//console.log('ngOnInit 0')
 		this.userId = this.user.getUserId()
 		this.connection = new signalR.HubConnectionBuilder()
 			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${this.userId}`, {
@@ -41,16 +41,16 @@ export class DashboardChatBotComponent implements OnInit {
 		this.connection.keepAliveIntervalInMilliseconds = 180000
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
-				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
+				//console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
 					this.messages = [...this.messages, { messageContent: data.content }]
-					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
+					//console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
-				
-				this.convertMessageToObjectList();
+
+				this.convertMessageToObjectList()
 			})
 			this.connection.on('BroadcastMessage', (data: any) => {
-				console.log('ngOnInit SignalR BroadcastMessage ', data)
+				//console.log('ngOnInit SignalR BroadcastMessage ', data)
 
 				this.fetchRooms()
 			})
@@ -59,23 +59,23 @@ export class DashboardChatBotComponent implements OnInit {
 	}
 
 	fetchRooms = async () => {
-		console.log('fetchRooms 0')
+		//console.log('fetchRooms 0')
 
 		try {
-			console.log('fetchRooms 1')
+			//console.log('fetchRooms 1')
 			this.botService.getRooms({}).subscribe((res) => {
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result) {
-						console.log('fetchRooms ', res)
+						//console.log('fetchRooms ', res)
 						this.rooms = res.result.Data
-						console.log('fetchRooms ', this.rooms)
+						//console.log('fetchRooms ', this.rooms)
 					}
 				} else {
 					//this._toastr.error(res.message)
 				}
 			})
 		} catch (error) {
-			console.log('handleConnect ', error)
+			//console.log('handleConnect ', error)
 		}
 	}
 
@@ -92,7 +92,7 @@ export class DashboardChatBotComponent implements OnInit {
 				PageIndex: this.pageIndex,
 				PageSize: this.pageSize,
 			}
-			console.log('getMessage ', roomName)
+			//console.log('getMessage ', roomName)
 			this.connection.invoke('JoinToRoom', roomName)
 			this.botService.getMessages(request).subscribe((res) => {
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
@@ -105,8 +105,8 @@ export class DashboardChatBotComponent implements OnInit {
 						if (this.messages != null && this.messages.length > 0) {
 							this.totalMessage = this.messages[0].rowNumber
 						}
-						
-						this.convertMessageToObjectList();
+
+						this.convertMessageToObjectList()
 						this.scrollToBottom()
 					}
 				} else {
@@ -126,11 +126,10 @@ export class DashboardChatBotComponent implements OnInit {
 
 	sendMessage() {
 		if (this.newMessage !== '') {
-			console.log('sendMessage ', this.newMessage)
+			//console.log('sendMessage ', this.newMessage)
 			this.connection.invoke('SendToRoom', this.roomNameSelected, this.newMessage)
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId }]
 			this.newMessage = ''
-			this.convertMessageToObjectList();
 		}
 	}
 
@@ -173,28 +172,31 @@ export class DashboardChatBotComponent implements OnInit {
 		// }
 	}
 
-	convertMessageToObjectList(){
-		if(this.messages){
+	convertMessageToObjectList() {
+		if (this.messages) {
 			for (let index = 0; index < this.messages.length; index++) {
-				const element = this.messages[index];
-				if(element.fromUserId == 0){
-						element.messageContent = this.stringToObject(element.messageContent);
-						if(element.messageContent && element.messageContent.SubTags){
-							element.messageContent.SubTags = this.stringToObject(element.messageContent.SubTags);
-							for (let j = 0; j < element.messageContent.SubTags.length; j++) {
-								var subtag = element.messageContent.SubTags[index];
-								subtag = this.stringToObject(subtag);
-							}
-
-						}
+				const element = this.messages[index]
+				const { result, type } = this.stringToObject(element.messageContent)
+				element.messageContent = type === 'string' ? result : result.Content
+				if (type === 'json' && result && result.SubTags) {
+					console.log('element 1', result)
+					if (result.SubTags && result.SubTags.length > 0) {
+						const rs: any = this.stringToObject(result.SubTags[0])
+						element.SubTags = rs.type === 'json' ? rs.result.data : []
+					}
 				}
 			}
 		}
 	}
-	stringToObject(string){
-		if(string){
-			return JSON.parse(string);
 
+	stringToObject(string) {
+		if (string) {
+			try {
+				const result = JSON.parse(string)
+				return { result: result, type: 'json' }
+			} catch (error) {
+				return { result: string, type: 'string' }
+			}
 		}
 	}
 }
