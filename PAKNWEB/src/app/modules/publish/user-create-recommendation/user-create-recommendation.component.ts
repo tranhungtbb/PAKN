@@ -287,7 +287,7 @@ export class CreateRecommendationComponent implements OnInit {
 			unitId: new FormControl(this.model.unitId, [Validators.required]),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
-			address: new FormControl(this.model.address),
+			address: new FormControl(this.model.address, [Validators.required]),
 		})
 	}
 	get f() {

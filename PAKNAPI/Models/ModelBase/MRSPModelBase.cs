@@ -181,10 +181,12 @@ namespace PAKNAPI.ModelBase
 		public string FullName { get; set; }
 		public string Contents { get; set; }
 		public long? RecommendationId { get; set; }
+
+		public string RecommendationTitle { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public bool IsPublish { get; set; }
 
-		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool? IsPublish)
+		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageByRecommendationDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool? IsPublish)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -193,6 +195,20 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsPublish", IsPublish);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("MR_Commnent_GetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageDAO(string FullName, string Content, string RecommendationTitle, bool? IsPublish, DateTime? CreatedDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FullName", FullName);
+			DP.Add("Contents", Content);
+			DP.Add("CreatedDate", CreatedDate);
+			DP.Add("TitleRecommendation", RecommendationTitle);
+			DP.Add("IsPublish", IsPublish);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("MR_Recommendation_CommentGetAllOnPage", DP)).ToList();
 		}
 	}
 
@@ -265,6 +281,33 @@ namespace PAKNAPI.ModelBase
 		public long Id { get; set; }
 		public long? UserId { get; set; }
 		public bool? IsPublish { get; set; }
+	}
+
+	public class MRCommentDelete
+	{
+		private SQLCon _sQLCon;
+
+		public MRCommentDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRCommentDelete()
+		{
+		}
+
+		public async Task<int?> MRCommnentDeleteDAO(MRCommentDeleteIN mRCommentDelete)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", mRCommentDelete.Id);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("MR_Commnent_Delete", DP);
+		}
+	}
+	public class MRCommentDeleteIN
+	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã bình luận không được để trống")]
+		public long Id { get; set; }
 	}
 
 	public class MRRecommendationCheckExistedCode

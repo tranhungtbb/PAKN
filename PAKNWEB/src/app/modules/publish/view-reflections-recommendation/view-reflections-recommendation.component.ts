@@ -110,12 +110,26 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	changeSatisfaction(status: any) {
 		if (this.isLogin) {
 			// chưa like hoặc dislike lần nào
-			if (this.checkSatisfaction == false) {
+			// if (this.checkSatisfaction == false) {
 				// call api
 				this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						this._toastr.success('Đánh giá thành công!')
-						this.checkSatisfaction = true
+						// this.checkSatisfaction = true
+						if(this.model.quantityType){
+							switch (this.model.quantityType) {
+								case 1:
+									this.model.quantityLike = this.model.quantityLike - 1
+									break
+								case 2:
+									this.model.quantityDislike = this.model.quantityDislike - 1
+									break
+								case 3:
+									this.model.quantityAccept = this.model.quantityAccept - 1
+									break
+							}
+						}
+						
 						this.model.quantityType = status
 						switch (status) {
 							case 1:
@@ -132,11 +146,12 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 						this._toastr.error('Đánh giá thất bại!')
 					}
 				})
-			} else {
-				this.checkSatisfaction = true
-				this._toastr.error('Bạn đã đánh giá Phản ánh, kiến nghị này!')
-				return
-			}
+			// } 
+			// else {
+			// 	this.checkSatisfaction = true
+			// 	this._toastr.error('Bạn đã đánh giá Phản ánh, kiến nghị này!')
+			// 	return
+			// }
 		} else {
 			this._toastr.info('Vui lòng đăng nhập để đánh giá Phản ánh, Kiến nghị!')
 			return

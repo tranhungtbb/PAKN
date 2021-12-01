@@ -481,6 +481,30 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		
+
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-for-menu")]
+		public async Task<ActionResult<object>> STT_RecommendationForMenuGetAllOnPageBase()
+		{
+			try
+			{
+				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				StatisticRecommendationForMenu mrrRecommendationForMenu =
+					await new StatisticRecommendationForMenu(_appSetting).StatisticRecommendationForMenuDAO(UnitProcessId, UserProcessId);
+
+				return new ResultApi { Success = ResultCode.OK, Result = mrrRecommendationForMenu };
+			}
+			catch (Exception ex)
+			{
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 	}
 }

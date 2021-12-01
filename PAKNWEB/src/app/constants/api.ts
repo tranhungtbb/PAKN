@@ -58,7 +58,9 @@ export class Api {
 	public static DeleteHashtagForRecommentdation = 'recommendation/delete-hashtag-for-recommentdation'
 	public static MRRecommendationCommentInsert = 'recommendation/insert-comment'
 	public static MRRecommendationCommentUpdateStatus = 'recommendation/update-status-comment'
+	public static MRRecommendationCommentDelete = 'recommendation/delete-comment'
 	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-comment'
+	public static MRRecommendationCommentGetOnPageBase = 'recommendation/	get-all-comment-on-page'
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	// infomationChange
@@ -396,7 +398,7 @@ export class Api {
 	public static StatisticRecommendationProcessingResultsByFeild = 'statistic/recommendation-processing-results-by-feild'
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'
-
+	public static StatisticRecommendationForMenu = 'statistic/recommendation-for-menu'
 	//statstic public
 	public static StatisticsByUnitParentId = 'statistic/recommendation-statistic-by-unit-parent'
 	public static StatisticsForChart = 'statistic/recommendation-statistic-for-chart'

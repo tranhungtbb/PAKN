@@ -103,7 +103,7 @@
 							<ng-container *ngIf="[3,6,9].includes(model.status)">
 								<p style="text-align: justify;">{{model.reasonDeny}}</p>
 							</ng-container>
-							<ng-container *ngIf="model.status == 10">
+							<ng-container *ngIf="model.status > 5">
 								<p style="text-align: justify;">{{modelConclusion.content}}</p>
 								<ng-container *ngFor="let item of filesModel">
 									<div class="col-auto mb-4" *ngIf="item.fileType == 1">

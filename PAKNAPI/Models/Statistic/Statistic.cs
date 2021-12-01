@@ -432,7 +432,7 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 
-			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatusByFeildAndReception>("[TK_RecommendationProcessByUnitAndReception]", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatusByFeildAndReception>("[TK_RecommendationProcessByFeildAndReception]", DP)).ToList();
 		}
 	}
 
@@ -440,7 +440,7 @@ namespace PAKNAPI.Models.Statistic
 	{
 		private SQLCon _sQLCon;
 		public int? STT { get; set; }
-		public string FeildName { get; set; }
+		public string FieldName { get; set; }
 		public int? Received { get; set; }
 		public int? RecommendationPublicService { get; set; }
 		public int? RecommendationSocioeconomic { get; set; }
@@ -564,6 +564,41 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatusByUnitAndReception>("[TK_RecommendationProcessByUnitAndReception]", DP)).ToList();
+		}
+	}
+
+	public class StatisticRecommendationForMenu
+	{
+		private SQLCon _sQLCon;
+
+		public StatisticRecommendationForMenu(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationForMenu()
+		{
+		}
+		public int Total { get; set; }
+		public int Created { get; set; } //1
+		public int ReceiveWait { get; set; } // 2
+		public int ReceiveApproved { get; set; } // 3
+		public int ReceiveDeny { get; set; } // 4
+		public int ProcessWait { get; set; } // 5
+		public int ProcessDeny { get; set; } // 6
+		public int Processing { get; set; } // 7
+		public int ApproveWait { get; set; } // 8
+		public int ApproveDeny { get; set; } // 9
+
+		public int Finised { get; set; }
+
+		public async Task<StatisticRecommendationForMenu> StatisticRecommendationForMenuDAO(int UnitProcessId, long UserProcessId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationForMenu>("[TK_RecommendationByUnitForMenu]", DP)).FirstOrDefault();
 		}
 	}
 }

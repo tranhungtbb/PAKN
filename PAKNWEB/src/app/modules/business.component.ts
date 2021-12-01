@@ -81,6 +81,15 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 	}
 	ngAfterViewInit() {
 		this.currentRouter = this._router.url
+		setTimeout(() => {
+			var widthMenu = $(".header-right").width();
+			var css = '.group-button-table { right: '+(widthMenu + 25) + 'px; }',
+				head = document.head || document.getElementsByTagName('head')[0],
+				style = document.createElement('style');
+	
+			head.appendChild(style);
+			style.appendChild(document.createTextNode(css));
+		},500)
 	}
 	public loadScript(url: string) {
 		$('script[src="' + url + '"]').remove()

@@ -6,6 +6,7 @@ import { UnitService } from 'src/app/services/unit.service'
 declare var $: any
 import { Router } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { StatisticService } from 'src/app/services/statistic.service'
 
 @Component({
 	selector: 'app-appmenu',
@@ -14,10 +15,11 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 })
 export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
-	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService : UnitService) {}
+	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService : UnitService, private _service : StatisticService) {}
 	isMainMenu: boolean = false
 	isAdmin = this.userStorage.getIsAdmin()
 	hasPermissionSMS : boolean = false
+	statistic : any = {}
 	ngOnInit() {
 		this.isMainMenu = this.userStorage.getIsUnitMain()
 		this.unitService.hasPermissionSMS({}).subscribe(res =>{
@@ -25,6 +27,18 @@ export class AppmenuComponent implements OnInit, AfterViewInit {
 				this.hasPermissionSMS = res.result
 			}
 		})
+		this._service.getStatisticRecommendationForMenu({}).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.statistic = response.result
+				console.log(this.statistic)
+			} else {
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
+
 	}
 	ngAfterViewInit() {
 		this.loadScriptMenus('assets/dist/js/custom.min.js')

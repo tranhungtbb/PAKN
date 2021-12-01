@@ -1865,6 +1865,34 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-all-comment-on-page")]
+        public async Task<ActionResult<object>> MRCommentGetAllOnPageBase(string FullName, string Contents , string RecommendationTitle, bool? IsPublish, DateTime? CreatedDate, int? PageSize, int? PageIndex)
+        {
+            try
+            {
+                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(FullName, Contents, RecommendationTitle, IsPublish, CreatedDate, PageSize, PageIndex);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},
+                        {"TotalCount", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? rsMRCommnentGetAllOnPage[0].RowNumber : 0},
+                        {"PageIndex", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageSize : 0},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
         /// <summary>
         /// danh sách bình luận theo pakn
         /// </summary>
@@ -1879,18 +1907,7 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                int type = 2;
-
-                try {
-                    type = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
-                }
-                catch (Exception ex) {
-                    
-                }
-
-                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = type == 1 ?
-                    await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, null)
-                    : await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, true);
+                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageByRecommendationDAO(PageSize, PageIndex, RecommendationId, true);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},
@@ -1911,6 +1928,7 @@ namespace PAKNAPI.Controller
 
         [HttpPost]
         [Route("update-status-comment")]
+        [Authorize("ThePolicy")]
         public async Task<ActionResult<object>> MRCommentUpdateStatusBase(MRCommentUpdateIN _mRCommnentUpdateIN)
         {
             try
@@ -1931,6 +1949,26 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("delete-comment")]
+        public async Task<ActionResult<object>> MRCommentDeleteBase(MRCommentDeleteIN mRCommentDelete)
+        {
+            try
+            {
+                var result = await new MRCommentDelete(_appSetting).MRCommnentDeleteDAO(mRCommentDelete);
+                return new ResultApi { Success = ResultCode.OK, Result = result };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+       
 
 
         /// <summary>
@@ -2241,6 +2279,20 @@ namespace PAKNAPI.Controller
                         notification.ReceiveOrgId = lstRMForward.FirstOrDefault(x => x.Step == 3 && x.Status == 2).UnitSendId;
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
 
+                        // gui trung tam - cu giai quyet xong la gui
+                        
+                        var unitMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                        if (recommendation.UnitId != unitMain.Id) {
+                            // khac don vi tiep nhan thi moi gui thong bao
+                            lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO((int)unitMain.Id);
+                            foreach (var item in lstUser)
+                            {
+                                notification.ReceiveId = item.Id;
+                                notification.ReceiveOrgId = item.UnitId;
+                                // insert notification
+                                await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                            }
+                        }
 
                         // người gửi PAKN
                         notification.ReceiveId = sender.Id;

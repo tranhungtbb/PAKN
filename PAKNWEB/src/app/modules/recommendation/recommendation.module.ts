@@ -29,6 +29,7 @@ import { ListFakeImageComponent } from './list-fake-image/list-fake-image.compon
 import { RemindComponent } from './remind/remind.component'
 
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
+import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
 // import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 @NgModule({
 	imports: [
@@ -63,6 +64,7 @@ import { ListReactionaryWordComponent } from './list-reactionary-word/list-react
 		RemindComponent,
 		ListReactionaryWordComponent,
 		ListFakeImageComponent,
+		ListRecommendationCommentComponent
 	],
 })
 export class RecommendationModule {}

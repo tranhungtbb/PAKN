@@ -54,7 +54,7 @@
 										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
 										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 									</a>
-									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.fileAttach" [namefile]="file.name"
 										title="Xem file">
 										<i class="bi bi-eye"></i>
 									</span>
@@ -94,7 +94,7 @@
 				</div>
 			</div>
 			<div class="col-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-				<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<div class="col-12 col-lg-auto">
 
 					<div class="sb-tk-pakn mb-4">
 						<!-- <div class="d-flex search-ct full-with mb-4">

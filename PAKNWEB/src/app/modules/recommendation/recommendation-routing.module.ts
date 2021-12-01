@@ -16,6 +16,7 @@ import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 import { ListFakeImageComponent } from './list-fake-image/list-fake-image.component'
 import { RoleGuardService } from '../../guards/role-guard.service'
+import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
 
 const routes: Routes = [
 	{
@@ -109,6 +110,12 @@ const routes: Routes = [
 			{
 				path: 'chua-tu-ngu-bi-cam',
 				component: ListReactionaryWordComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_XII_0' },
+			},
+			{
+				path: 'binh-luan-pakn',
+				component: ListRecommendationCommentComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'E_XII_0' },
 			},

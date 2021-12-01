@@ -49,7 +49,7 @@ namespace PAKNAPI.Controllers
 				int height = 60;
 				var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
 				var result = new Captcha(_appSetting).GenerateCaptchaImage(width, height, captchaCode);
-				await new Captcha(_appSetting).DeleteCaptchaByUserAgent(IpAddress, Request.Headers["User-Agent"].ToString());
+				//await new Captcha(_appSetting).DeleteCaptchaByUserAgent(IpAddress, Request.Headers["User-Agent"].ToString());
 				await new Captcha(_appSetting).InsertCaptcha(result.CaptchaCode, IpAddress, Request.Headers["User-Agent"].ToString());
 				Stream s = new MemoryStream(result.CaptchaByteData);
 				var r = new FileStreamResult(s, "image/png");

@@ -156,7 +156,7 @@ export class LoginComponent implements OnInit {
 									if (this.storeageService.getRecommentdationObjectRemember() != null) {
 										location.href = '/cong-bo/them-moi-kien-nghi'
 									} else {
-										location.href = '/cong-bo'
+										location.href = '/cong-bo/phan-anh-kien-nghi-cua-toi'
 									}
 								}
 							} else {

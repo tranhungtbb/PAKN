@@ -29,8 +29,17 @@ export class RecommendationCommentService {
 	public getAllOnPage(req: any): Observable<any> {
 		return this.serviceInvoker.get(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPage)
 	}
+
+	public getAllOnPageBase(req: any): Observable<any> {
+		return this.serviceInvoker.get(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPageBase)
+	}
+
 	public updateStatus(req: any): Observable<any> {
 		return this.serviceInvoker.post(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentUpdateStatus)
+	}
+
+	public delete(req: any): Observable<any> {
+		return this.serviceInvoker.post(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentDelete)
 	}
 
 

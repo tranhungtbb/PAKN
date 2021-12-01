@@ -52,4 +52,7 @@ export class StatisticService {
 	getProcessingResultByUnitAndReception(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingResultsByUnitAndReception)
 	}
+	getStatisticRecommendationForMenu(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationForMenu)
+	}
 }
