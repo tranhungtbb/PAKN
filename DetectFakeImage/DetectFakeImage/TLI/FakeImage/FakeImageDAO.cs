@@ -270,7 +270,7 @@ namespace TLI.FakeImage
         public int UpdateLearnData()
         {
             OpenSql();
-            return conn.ExecuteNonQuery("EXEC FakeImage_DataMining");
+            return conn.ExecuteNonQuery("EXEC FakeImage_DataMining 0");
         }
         public override void Dispose()
         {

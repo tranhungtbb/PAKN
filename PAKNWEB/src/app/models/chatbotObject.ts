@@ -2,15 +2,17 @@ import * as signalR from '@aspnet/signalr'
 export class ChatbotObject {
 	constructor() {
 		this.id = 0
+		this.title = ''
 		this.question = ''
-		this.answer = ''
+		// this.answer = ''
 		this.categoryId = 0
 		this.isDeleted = false
 		this.isActived = true
 	}
 	id: number
+	title: string
 	question: string
-	answer: string
+	// answer: string
 	categoryId: number
 	isActived: boolean
 	isDeleted: boolean
