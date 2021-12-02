@@ -236,6 +236,7 @@ namespace PAKNAPI.Controller
                         Directory.CreateDirectory(folderPath);
                     }
                     bool isFakeImage = false;
+                    var fakeImageResults = new List<List<FakeResult>>();
                     List<string> filesNameError = new List<string>();
                     foreach (var item in Request.Form.Files)
                     {
@@ -245,16 +246,23 @@ namespace PAKNAPI.Controller
                         {
                             item.CopyTo(stream);
                             var s = new System.Drawing.Bitmap(stream);
-                            if (fakeImage.IsFake(s))
+                            var outResult = new List<FakeResult>();
+                            if (fakeImage.IsFake(s, ref outResult))
                             {
                                 isFakeImage = true;
                                 filesNameError.Add(item.FileName);
+                                fakeImageResults.Add(outResult);
                             }
                         }
                     }
                     if (isFakeImage)
                     {
-                        return new ResultApi { Success = ResultCode.INCORRECT, Message = "Ảnh " + string.Join(", ", filesNameError) + " đã qua chỉnh sửa" };
+                        return new ResultApi
+                        {
+                            Success = ResultCode.INCORRECT,
+                            Message = "Ảnh " + string.Join(", ", filesNameError) + " đã qua chỉnh sửa",
+                            Result = fakeImageResults
+                        };
                     }
                     else
                     {
@@ -422,7 +430,7 @@ namespace PAKNAPI.Controller
                             contentType = FileContentType.GetTypeOfFile(filePath);
                             bool isHasFullText = false;
 
-                            if (fakeImage.IsFake(file.FilePath) && file.FileType == 4)
+                            if (file.FileType == 4 && request.Data.ReceptionType != ReceptionType.App && fakeImage.IsFake(file.FilePath))
                             {
                                 isFakeImage = true;
                             }
@@ -726,15 +734,6 @@ namespace PAKNAPI.Controller
                     // người dân, doanh nghiệp gửi
                     if (request.Data.UnitId == null)
                     {
-                        //var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                        //if (syUnitByField.Count == 0)
-                        //{
-                        //    request.Data.UnitId = dataMain.Id;
-                        //}
-                        //else
-                        //{
-                        //    request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
-                        //}
                         request.Data.UnitId = dataMain.Id;
                     }
                     if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
@@ -840,6 +839,11 @@ namespace PAKNAPI.Controller
                     {
                         Directory.CreateDirectory(folderPath);
                     }
+                    var json = System.IO.File.ReadAllText("fake-images.json");
+                    var sampleData = JsonConvert.DeserializeObject<Dictionary<long, FakeResult>>(json);
+                    var fakeImage = new FakeImageDetection(sampleData);
+
+                    bool isFakeImage = false;
                     foreach (var item in request.Files)
                     {
                         MRRecommendationFilesInsertIN file = new MRRecommendationFilesInsertIN();
@@ -857,6 +861,10 @@ namespace PAKNAPI.Controller
                         string content = "";
                         contentType = FileContentType.GetTypeOfFile(filePath);
                         bool isHasFullText = false;
+                        if (file.FileType == 4 && request.Data.ReceptionType != ReceptionType.App && fakeImage.IsFake(file.FilePath))
+                        {
+                            isFakeImage = true;
+                        }
                         Thread t = new Thread(async () => {
                             switch (contentType)
                             {
@@ -887,6 +895,14 @@ namespace PAKNAPI.Controller
                             }
                         });
                         t.Start();
+                    }
+                    if (isFakeImage)
+                    {
+                        MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                        _mRRecommendationUpdateStatusIN.Status = request.Data.Status;
+                        _mRRecommendationUpdateStatusIN.Id = request.Data.Id;
+                        _mRRecommendationUpdateStatusIN.IsFakeImage = true;
+                        await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
                     }
                 }
                 MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();

@@ -225,11 +225,13 @@ namespace PAKNAPI.Models.ModelBase
     public class RecommendationGroupByFieldResponse {
         public int FieldId { get; set; }
         public string FieldName { get; set; }
+        public string FilePath { get; set; }
         public List<PURecommendationByFieldModel> ListRecommendation { get; set; }
 
-        public RecommendationGroupByFieldResponse(int fieldId, string fieldName, List<PURecommendationByFieldModel> pURecommendation) {
+        public RecommendationGroupByFieldResponse(int fieldId, string fieldName, string FilePath, List<PURecommendationByFieldModel> pURecommendation) {
             this.FieldId = fieldId;
             this.FieldName = fieldName;
+            this.FilePath = FilePath;
             this.ListRecommendation = pURecommendation;
         }
     }

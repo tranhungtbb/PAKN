@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table'
 import { ContextMenuModule } from 'primeng/contextmenu'
 import { MatCheckboxModule } from '@angular/material'
 import { TreeTableModule } from 'primeng/treetable'
+import { AgmCoreModule } from '@agm/core'
 
 import { RecommendationRoutingModule } from './recommendation-routing.module'
 import { RecommendationComponent } from './recommendation.component'
@@ -46,6 +47,11 @@ import { ListRecommendationCommentComponent } from './list-recommendation-commen
 		TableModule,
 		NgSelectModule,
 		ContextMenuModule,
+		AgmCoreModule.forRoot({
+			apiKey: 'AIzaSyBriVbWgmHEE8CGaEJM6V47Bem3VoYCi0Q',
+			language: 'vi',
+			libraries: ['places'],
+		}),
 	],
 	declarations: [
 		RecommendationComponent,

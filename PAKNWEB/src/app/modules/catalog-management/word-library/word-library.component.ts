@@ -120,6 +120,9 @@ export class WordLibraryComponent implements OnInit {
 
 	onSave() {
 		this.submitted = true
+		this.model.name = this.model.name == null ? '' : this.model.name.trim()
+		this.model.description = this.model.description == null ? '' : this.model.description.trim()
+		
 		if (this.form.invalid) {
 			return
 		}

@@ -8,11 +8,11 @@ import { StatisticService } from 'src/app/services/statistic.service'
 
 declare var $: any
 @Component({
-	selector: 'app-statistic-processing-results-by-feild-and-reception',
-	templateUrl: './processing-results-by-feild-and-reception.component.html',
-	styleUrls: ['./processing-results-by-feild-and-reception.component.css'],
+	selector: 'app-statistic-processing-results-by-reception-type',
+	templateUrl: './processing-results-by-reception-type.component.html',
+	styleUrls: ['./processing-results-by-reception-type.component.css'],
 })
-export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
+export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	constructor(
 		private _service: StatisticService,
 		private _router: Router,
@@ -30,6 +30,10 @@ export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
 		{ value: 3, text: 'Quý III' },
 		{ value: 4, text: 'Quý IV' },
 	]
+	listType: any = [
+		{ value: 1, text: 'Lĩnh vực' },
+		{ value: 2, text: 'Đơn vị' }
+	]
 	year: number
 	quarter: number
 	fromDate: Date
@@ -38,9 +42,9 @@ export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
 	listData : any [] = []
 	pageIndex: number = 1
 	pageSize: number = 10
+	type : number = 1 
 
 	maxDateValue = new Date()
-	@ViewChild('myCanvas', { static: false }) canvas: any
 
 	ngOnInit() {
 		this.initData()
@@ -110,12 +114,13 @@ export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
 
 	getList() {
 		let request = {
+			Type : this.type,
 			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
 			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
-		this._service.getProcessingResultByFeildAndReception(request).subscribe((response) => {
+		this._service.getProcessingResultByReceptionType(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listData = response.result;
 				if(response.result && response.result.length > 0){
@@ -187,7 +192,9 @@ export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'processing_results_by_feild_and_reception?' + JSON.stringify(passingObj)
+		this._shareData.sendReportUrl = this.type == 1 ? 
+			'processing_results_by_feild_and_reception?' + JSON.stringify(passingObj)
+			: 'processing_results_by_unit_and_reception?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

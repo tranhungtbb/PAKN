@@ -27,7 +27,7 @@
 									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createDate"
 										[(ngModel)]="dataSearch.createDate" (bsValueChange)="onChangeCreateDate($event)" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-									<div class="input-group-addon">
+									<div class="input-group-addon ps-absolute" style="bottom: 15px; right: 17px;">
 										<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 									</div>
 								</span>

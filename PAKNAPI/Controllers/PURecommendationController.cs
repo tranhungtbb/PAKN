@@ -105,7 +105,7 @@ namespace PAKNAPI.ControllerBase
 				lstFieldHome.ForEach((field) =>
 				{
 					var lstRecommendation = new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id).Result;
-					result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
+					result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, field.FilePath, lstRecommendation));
 				});
 				json = new Dictionary<string, object>
 					{

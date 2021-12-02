@@ -143,6 +143,18 @@ export class STEP_RECOMMENDATION {
 	public static FORWARD_MAIN = 4 // 4 chuyển trung tâm
 }
 
+export class TYPE_RECOMMENDATION {
+	public static PublicService  = 0 // dịch vụ công
+	public static Socioeconomic = 1 // kinh tế xã hội
+}
+
+export class RECEPTION_TYPE {
+	public static Web  = 1 //
+	public static App = 2 //
+	public static Phone  = 3 //
+	public static Email = 4 //
+}
+
 export class TYPE_NOTIFICATION {
 	public static NEWS = 1 // thông báo tin tức
 	public static RECOMMENDATION = 2 // thông báo PAKN

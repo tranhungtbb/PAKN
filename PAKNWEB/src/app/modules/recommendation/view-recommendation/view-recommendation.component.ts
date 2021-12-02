@@ -58,6 +58,9 @@ export class ViewRecommendationComponent implements OnInit {
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
 
+	markers : any = {}
+	zoom : any = 15
+
 	enableEdit = false
 
 	constructor(
@@ -116,6 +119,10 @@ export class ViewRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
+				if(this.model.lat && this.model.lng){
+					this.markers.lat = Number(this.model.lat)
+					this.markers.lng = Number(this.model.lng)
+				}
 				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
 					this.modelConclusion = response.result.modelConclusion
 					this.files = response.result.filesConclusion

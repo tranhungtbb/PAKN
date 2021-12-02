@@ -55,7 +55,7 @@
 				</form>
 			</div>
 			<div class="col-12 col-lg-9 p-4 border-brown">
-				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin tài khoản</span></h4>
+				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin cá nhân</span></h4>
 				<form [formGroup]="formInfo" class="form-row px-3" autocomplete="off">
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
@@ -70,7 +70,7 @@
 						</div>
 					</div>
 					<div class="w-100"></div>
-					<div class="col-12 col-lg form-group">
+					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
 						<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
 							class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Phone',$event.target.value)">
@@ -88,7 +88,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg form-group">
+					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1">Email</label>
 						<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px"
 							(change)="onCheckExist('Email',$event.target.value)">

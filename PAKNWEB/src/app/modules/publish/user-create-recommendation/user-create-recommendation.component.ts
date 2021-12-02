@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { MouseEvent } from '@agm/core'
 
 import { COMMONS } from 'src/app/commons/commons'
-import { CONSTANTS, FILETYPE, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, RECEPTION_TYPE, RESPONSE_STATUS, TYPE_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { RecommendationObject } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -27,7 +27,7 @@ declare var $: any
 	templateUrl: './user-create-recommendation.component.html',
 	styleUrls: ['./user-create-recommendation.component.css'],
 })
-export class CreateRecommendationComponent implements OnInit {
+export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	form: FormGroup
 	model: RecommendationObject = new RecommendationObject()
 	lstUnit: any[] = []
@@ -56,7 +56,7 @@ export class CreateRecommendationComponent implements OnInit {
 	isLogin: any
 
 	// map
-	markers: any = null
+	markers: any = {}
 	private geoCoder
 	zoom: number = 15
 
@@ -89,21 +89,16 @@ export class CreateRecommendationComponent implements OnInit {
 				this.getData()
 			} else {
 				this.model.typeObject = 1
+				this.setCurrentLocation()
 			}
 			this.builForm()
 		})
 		this.isLogin = this.storageService.getAccessToken()
 		$('[data-toggle="tooltip"]').tooltip()
+	}
 
-		// this.locationService
-		// 	.getPosition()
-		// 	.then((res) => {
-		// 		this.markers = { ...res }
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err)
-		// 	})
-		this.setCurrentLocation()
+	ngAfterViewInit(){
+		
 	}
 
 	private setCurrentLocation() {
@@ -138,57 +133,6 @@ export class CreateRecommendationComponent implements OnInit {
 				}
 		}
 	}
-	onCreateHashtag(e) {
-		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
-			var isExist = false
-			for (var i = 0; i < this.lstHashtag.length; i++) {
-				if (this.lstHashtag[i].text.toUpperCase() == e.target.value) {
-					isExist = true
-					break
-				}
-			}
-			if (isExist == false) {
-				this.modelHashTagAdd = new HashtagObject()
-				this.modelHashTagAdd.name = e.target.value
-				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe((response) => {
-					if (response.success == RESPONSE_STATUS.success) {
-						this.hashtagId = response.result
-						this.getDropdown()
-					}
-				}),
-					(error) => {
-						console.error(error)
-					}
-			}
-		}
-	}
-
-	onAddHashtag() {
-		var isExist = false
-		for (var i = 0; i < this.lstHashtagSelected.length; i++) {
-			if (this.lstHashtagSelected[i].value == this.hashtagId) {
-				isExist = true
-				break
-			}
-		}
-		if (!isExist) {
-			for (var i = 0; i < this.lstHashtag.length; i++) {
-				if (this.lstHashtag[i].value == this.hashtagId) {
-					this.lstHashtagSelected.push(this.lstHashtag[i])
-					break
-				}
-			}
-		}
-	}
-	onRemoveHashtag(item: any) {
-		for (let index = 0; index < this.lstHashtagSelected.length; index++) {
-			if (this.lstHashtagSelected[index].id == item.id) {
-				this.lstHashtagSelected.splice(index, 1)
-				break
-			}
-		}
-	}
-
 	getData() {
 		let request = {
 			Id: this.model.id,
@@ -198,13 +142,13 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
-				this.getListUnitDefault()
-				if (this.model.sendDate) {
-					this.model.sendDate = new Date(this.model.sendDate)
-					let unitItem = this.lstUnit.find((c) => c.id == this.model.unitId)
-					$('#_unitId .ng-input input').val(unitItem.name)
-					$('#_unitId .ng-select-container').addClass('ng-has-value')
+				if(!this.model.lat || !this.model.lng){
+					this.setCurrentLocation()
+				}else{
+					this.markers.lat = Number(this.model.lat)
+					this.markers.lng = Number(this.model.lng)
 				}
+				this.getListUnitDefault()
 				this.hightLightText()
 			} else {
 				this.toastr.error(response.message)
@@ -304,6 +248,9 @@ export class CreateRecommendationComponent implements OnInit {
 				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
+						if(fileType.value === 4){
+							item.filePathUrl = URL.createObjectURL(item)
+						}
 						this.files.push(item)
 					}
 				})
@@ -325,8 +272,9 @@ export class CreateRecommendationComponent implements OnInit {
 		this.lstXoaFile.push(file)
 		this.files.splice(index, 1)
 	}
-
-	async onSave(status) {
+	isSuitableContent : boolean = true
+	onSave(status) {
+		this.isSuitableContent = true
 		this.submitted = true
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
@@ -337,16 +285,15 @@ export class CreateRecommendationComponent implements OnInit {
 			return
 		}
 		this.model.address = this.model.address == null ? '' : this.model.address.trim()
-		// if (!this.model.address) {
-		// 	await this.getAddress(this.markers.lat, this.markers.lng).then((res) => {
-		// 		this.model.address = String(res)
-		// 	})
-		// }
-
+		if(!this.checkContent()){
+			this.isSuitableContent = false
+			return
+		}
 		if (this.form.invalid) {
 			this.reloadImage()
 			return
 		}
+		
 		// nếu chưa đăng nhập cho lưu tạm
 		if (!this.isLogin || (this.isLogin && this.isLogin.trim() == '')) {
 			this.storageService.setRecommentdationObjectRemember(JSON.stringify(this.model))
@@ -358,6 +305,11 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.sendDate = new Date()
 		this.model.typeObject = this.storageService.getTypeObject() //  == 2 ? 1 : 2
 		this.model.name = this.storageService.getFullName()
+		this.model.lat = this.markers.lat
+		this.model.lng = this.markers.lng
+		this.model.type = TYPE_RECOMMENDATION.Socioeconomic
+		this.model.receptionType = RECEPTION_TYPE.Web
+		this.model.isFakeImage = false
 
 		if (this.model.typeObject == 1) {
 			this.toastr.error('Vui lòng đăng nhập tài khoản người dân, doanh nghiệp để gửi Phản ánh, Kiến nghị')
@@ -454,6 +406,18 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 		$('[data-toggle="tooltip"]').tooltip()
 	}
+
+	
+	checkContent(){
+		for (let index = 0; index < this.lstDictionariesWord.length; index++) {
+			console.log('Model :' + this.model.content+ ',x :' + this.lstDictionariesWord[index].name +' result :'+this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()))
+			if (this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()) != -1){
+				return false
+			}
+		}
+		return true
+	}
+
 	showEditContent() {
 		$('#contentRecommendation').removeClass('show')
 		$('#inputContent').focus()
@@ -468,9 +432,9 @@ export class CreateRecommendationComponent implements OnInit {
 		if (this.markers == null || this.markers.lat == null) {
 			return this.toastr.error('Vui lòng chọn vị trí')
 		} else {
-			this.model.latitude = this.markers.lat
-			this.model.longitude = this.markers.lng
-			await this.getAddress(this.model.latitude, this.model.longitude).then((res) => {
+			this.model.lat = this.markers.lat
+			this.model.lng = this.markers.lng
+			await this.getAddress(this.model.lat, this.model.lng).then((res) => {
 				this.model.address = String(res)
 			})
 			$('#modalMaps').modal('hide')
@@ -499,7 +463,6 @@ export class CreateRecommendationComponent implements OnInit {
 		this.markers = {}
 		this.markers.lat = $event.coords.lat
 		this.markers.lng = $event.coords.lng
-		//console.log('clicked', $event)
 	}
 	markerDragEnd(m: any, $event: MouseEvent) {
 		console.log('dragEnd', m, $event)

@@ -13,7 +13,7 @@ const urlChatbot = 'http://14.177.236.88:8880/api'
 	providedIn: 'root',
 })
 export class ChatbotService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) { }
 
 	UpdateChatbot(data: any): Observable<any> {
 		let headers = {
@@ -34,6 +34,9 @@ export class ChatbotService {
 	}
 	chatbotGetById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetById)
+	}
+	chatbotLibGetById(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotLibGetById)
 	}
 	chatbotUpdateStatus(data: any): Observable<any> {
 		let headers = {
@@ -60,5 +63,8 @@ export class ChatbotService {
 	}
 	chatbotGetListHistory(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetListHistory)
+	}
+	chatbotGetAllActive(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetAllActive)
 	}
 }

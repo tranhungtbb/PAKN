@@ -310,6 +310,11 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-12 col-lg-12" *ngIf="isUnitMain">
+							<mat-checkbox [(ngModel)]="modelUnit.isPermission" [ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+								[color]="primary">Cấp quyền tin nhắn thương hiệu
+							</mat-checkbox>
+						</div>
 						<div class="col-12 col-lg-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
 							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập..." maxlength="500">

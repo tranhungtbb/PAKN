@@ -390,7 +390,7 @@
 
 .img-field {
 	border-radius: 12px 12px 0px 0px;
-	max-height: 120px;
+	height: 120px;
 }
 
 .read-more {
@@ -411,7 +411,6 @@
 	font-size: 14px;
 	line-height: 17px;
 	color: #222222;
-	max-height: 52px;
 	overflow: hidden;
 }
 

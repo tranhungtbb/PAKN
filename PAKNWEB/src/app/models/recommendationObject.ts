@@ -35,8 +35,11 @@ export class RecommendationObject {
 	updatedBy: number
 	updatedDate: Date
 	address: string
-	longitude: string
-	latitude: string
+	lng: string
+	lat: string
+	type : number
+	receptionType : number
+	isFakeImage : boolean
 }
 export class RecommendationSearchObject {
 	constructor() {
@@ -120,6 +123,8 @@ export class RecommendationViewObject {
 	approvedDate: Date
 	phone: string
 	email: string
+	lat : string
+	lng : string
 }
 export class RecommendationConclusionObject {
 	id: number = 0

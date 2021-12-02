@@ -404,13 +404,16 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("recommendation-processing-results-by-feild-and-reception")]
-		public async Task<ActionResult<object>> RecommendationProcessResultsByFeildAndReception(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		[Route("recommendation-processing-results-by-reception-type")]
+		public async Task<ActionResult<object>> RecommendationProcessResultsByReceptionType(int? Type ,DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
 				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<StatisticRecommendationProcessStatusByFeildAndReception> result = await new StatisticRecommendationProcessStatusByFeildAndReception(_appSetting).StatisticRecommendationProcessStatusByFeildAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
+				List<StatisticRecommendationProcessStatusByReceptionType> result = 
+					Type == StatisticType.Field ? 
+					await new StatisticRecommendationProcessStatusByReceptionType(_appSetting).StatisticRecommendationProcessStatusByFeildAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex)
+					: await new StatisticRecommendationProcessStatusByReceptionType(_appSetting).StatisticRecommendationProcessStatusByUnitAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
@@ -424,13 +427,16 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("recommendation-processing-results-by-feild")]
-		public async Task<ActionResult<object>> RecommendationProcessResultsByFeild(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		[Route("recommendation-processing-results-by-type")]
+		public async Task<ActionResult<object>> RecommendationProcessResultsByType(int? Type, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
 				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<StatisticRecommendationProcessStatusByFeild> result = await new StatisticRecommendationProcessStatusByFeild(_appSetting).StatisticRecommendationProcessStatusByFeildDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
+				List<StatisticRecommendationProcessStatusByFeildOrUnit> result = 
+					Type == StatisticType.Field ? 
+					await new StatisticRecommendationProcessStatusByFeildOrUnit(_appSetting).StatisticRecommendationProcessStatusByFeildDAO(FromDate, ToDate, unitId, PageSize, PageIndex)
+					: await new StatisticRecommendationProcessStatusByFeildOrUnit(_appSetting).StatisticRecommendationProcessStatusByUnitDAO(FromDate, ToDate, unitId, PageSize, PageIndex); ;
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
@@ -442,45 +448,45 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("recommendation-processing-results-by-unit")]
-		public async Task<ActionResult<object>> RecommendationProcessResultsByUnit(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
-		{
-			try
-			{
-				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<StatisticRecommendationProcessStatusByUnit> result = await new StatisticRecommendationProcessStatusByUnit(_appSetting).StatisticRecommendationProcessStatusByUnitDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
+		//[HttpGet]
+		//[Authorize("ThePolicy")]
+		//[Route("recommendation-processing-results-by-unit")]
+		//public async Task<ActionResult<object>> RecommendationProcessResultsByUnit(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		//{
+		//	try
+		//	{
+		//		var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+		//		List<StatisticRecommendationProcessStatusByUnit> result = await new StatisticRecommendationProcessStatusByUnit(_appSetting).StatisticRecommendationProcessStatusByUnitDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = result };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+		//		return new ResultApi { Success = ResultCode.OK, Result = result };
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		_bugsnag.Notify(ex);
+		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+		//	}
+		//}
 
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("recommendation-processing-results-by-unit-and-reception")]
-		public async Task<ActionResult<object>> RecommendationProcessResultsByUnitAndReception(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
-		{
-			try
-			{
-				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<StatisticRecommendationProcessStatusByUnitAndReception> result = await new StatisticRecommendationProcessStatusByUnitAndReception(_appSetting).StatisticRecommendationProcessStatusByUnitAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
+		//[HttpGet]
+		//[Authorize("ThePolicy")]
+		//[Route("recommendation-processing-results-by-unit-and-reception")]
+		//public async Task<ActionResult<object>> RecommendationProcessResultsByUnitAndReception(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		//{
+		//	try
+		//	{
+		//		var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+		//		List<StatisticRecommendationProcessStatusByUnitAndReception> result = await new StatisticRecommendationProcessStatusByUnitAndReception(_appSetting).StatisticRecommendationProcessStatusByUnitAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = result };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+		//		return new ResultApi { Success = ResultCode.OK, Result = result };
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		_bugsnag.Notify(ex);
+		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+		//	}
+		//}
 
 
 		[HttpGet]

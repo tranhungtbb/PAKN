@@ -89,7 +89,7 @@ export class Api {
 	public static FieldGetById = 'field/get-by-id'
 	public static FieldInsert = 'field/insert'
 	public static FieldUpdate = 'field/update'
-	public static FieldUpdateStatus = 'field/update'
+	public static FieldUpdateStatus = 'field/update-status'
 	public static FieldDelete = 'field/delete'
 	public static RecommendationRequestGetDataForCreate = 'field/field-knct-get-dropdown'
 	// thằng này ko tồn tại
@@ -344,10 +344,12 @@ export class Api {
 	public static ChatbotGetList = 'chat-bot/get-list-chat-bot-on-page'
 	public static ChatbotDelete = 'chat-bot/delete'
 	public static ChatbotGetById = 'chat-bot/get-by-id'
+	public static ChatbotLibGetById = 'chat-bot/answer-get-by-libid'
 	public static ChatbotUpdate = 'chat-bot/update'
 	public static ChatbotInsertQuestion = 'chat-bot/insert-question'
 	public static ChatbotInsertData = 'chat-bot/insert-data'
 	public static ChatbotGetListHistory = 'chat-bot/list-his'
+	public static ChatbotGetAllActive = 'chat-bot/get-all-active'
 
 	//systemConfig
 	public static SYConfigSystemGetAllOnPage = 'system-config/get-list-system-config-on-page'
@@ -394,8 +396,9 @@ export class Api {
 	public static StatisticRecommendationByGroupWordDetail = 'statistic/recommendation-by-group-word-detail'
 	public static StatisticRecommendationProcessingStatus = 'statistic/recommendation-processing-status'
 	public static StatisticRecommendationProcessingResults = 'statistic/recommendation-processing-results'
-	public static StatisticRecommendationProcessingResultsByFeildAndReception = 'statistic/recommendation-processing-results-by-feild-and-reception'
-	public static StatisticRecommendationProcessingResultsByFeild = 'statistic/recommendation-processing-results-by-feild'
+	public static StatisticRecommendationProcessingResultsByReceptionType = 'statistic/recommendation-processing-results-by-reception-type'
+	public static StatisticRecommendationProcessingResultsByType = 'statistic/recommendation-processing-results-by-type'
+
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'
 	public static StatisticRecommendationForMenu = 'statistic/recommendation-for-menu'
