@@ -13,7 +13,7 @@
 	"vetur.format.options.useTabs": true,
 	"beautify.config": "",
 	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
 	"html.format.indentInnerHtml": true,
 	"editor.tabSize": 2,
@@ -26,7 +26,7 @@
 	//     "editor.defaultFormatter": "HookyQR.beautify"
 	// },
 	"[html]": {
-		"editor.defaultFormatter": "HookyQR.beautify"
+		"editor.defaultFormatter": "vscode.html-language-features"
 	},
 	"prettier.useTabs": true,
 	"prettier.singleQuote": true,

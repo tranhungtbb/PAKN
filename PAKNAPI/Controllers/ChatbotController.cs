@@ -117,6 +117,33 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
+        /// danh sách câu hỏi active
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-all-active")]
+        public async Task<ActionResult<object>> ChatbotGetAllActvieBase()
+        {
+            try
+            {
+                List<ChatbotGetAllActive> ChatbotGetAllActive = await new ChatbotGetAllActive(_appSetting).ChatbotGetAllActiveDAO();
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"ChatbotGetAll", ChatbotGetAllActive},
+                    };
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
         /// chi tiết câu hỏi chatbot
         /// </summary>
         /// <param name="Id"></param>
@@ -133,6 +160,34 @@ namespace PAKNAPI.Controllers.ChatbotController
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"ChatbotGetByID", rsChatbotGetByID},
+                    };
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
+        /// chi tiết câu trả lời chatbot
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("answer-get-by-libid")]
+        public async Task<ActionResult<object>> ChatbotLibGetByIDBase(int? Id)
+        {
+            try
+            {
+                List<ChatbotLibGetByID> rsChatbotLibGetByID = await new ChatbotLibGetByID(_appSetting).ChatbotLibGetByIDDAO(Id);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"ChatbotLibGetByID", rsChatbotLibGetByID},
                     };
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
             }

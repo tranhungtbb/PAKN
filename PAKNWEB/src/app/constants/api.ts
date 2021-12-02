@@ -344,10 +344,12 @@ export class Api {
 	public static ChatbotGetList = 'chat-bot/get-list-chat-bot-on-page'
 	public static ChatbotDelete = 'chat-bot/delete'
 	public static ChatbotGetById = 'chat-bot/get-by-id'
+	public static ChatbotLibGetById = 'chat-bot/answer-get-by-libid'
 	public static ChatbotUpdate = 'chat-bot/update'
 	public static ChatbotInsertQuestion = 'chat-bot/insert-question'
 	public static ChatbotInsertData = 'chat-bot/insert-data'
 	public static ChatbotGetListHistory = 'chat-bot/list-his'
+	public static ChatbotGetAllActive = 'chat-bot/get-all-active'
 
 	//systemConfig
 	public static SYConfigSystemGetAllOnPage = 'system-config/get-list-system-config-on-page'
