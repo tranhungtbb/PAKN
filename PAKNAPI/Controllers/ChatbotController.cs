@@ -172,6 +172,34 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
+        /// chi tiết câu trả lời chatbot
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("answer-get-by-libid")]
+        public async Task<ActionResult<object>> ChatbotLibGetByIDBase(int? Id)
+        {
+            try
+            {
+                List<ChatbotLibGetByID> rsChatbotLibGetByID = await new ChatbotLibGetByID(_appSetting).ChatbotLibGetByIDDAO(Id);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"ChatbotLibGetByID", rsChatbotLibGetByID},
+                    };
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
         /// thêm mới câu hỏi chatbot
         /// </summary>
         /// <param name="_chatbotInsertIN"></param>

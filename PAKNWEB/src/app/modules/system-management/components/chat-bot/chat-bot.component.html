@@ -58,7 +58,7 @@
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
-								<th>
+								<!-- <th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'answer'">
 										<strong>Trả lời <p-sortIcon [field]="'answer'"></p-sortIcon></strong>
@@ -70,7 +70,7 @@
 									<button *ngIf="answer" class="btn bg-transparent btn-clear-input" (click)="answer=''">
 										<i class="fa fa-times"></i>
 									</button>
-								</th>
+								</th> -->
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'isActived'">
@@ -104,7 +104,7 @@
 											title="Xem chi tiết">{{item.question}}</a>
 									</strong>
 								</td>
-								<td>{{item.answer}}</td>
+								<!-- <td>{{item.answer}}</td> -->
 								<td>
 									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
 										<span *hasNotPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill bg-success">Hiệu
@@ -195,7 +195,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="row form-group">
+						<!-- <div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Trả lời <span class="text-danger">(*)</span></label>
 								<textarea placeholder="Nhập trả lời..." class="form-control" textareaTrim formControlName="answer"
@@ -208,7 +208,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<div class="row form-group pr-2">
@@ -218,12 +218,12 @@
 												<div class="col-12 col-lg-6 form-group">
 													<label class="mb-1 department">Câu trả lời</label>
 													<input id="target" placeholder="Nhập câu trả lời..." svTrim class="form-control"
-														[(ngModel)]="testAnswer" maxlength="500" />
+														[(ngModel)]="textAnswer" [ngModelOptions]="{standalone: true}" maxlength="500" />
 												</div>
 												<div class="col-12 col-lg-6 form-group">
 													<label class="mb-1 department">Gợi ý câu hỏi của câu trả lời</label>
 													<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstQuestion"
-														placeholder="Chọn ..." bindLabel="title" bindValue="id" [virtualScroll]="true"
+														placeholder="Chọn ..." bindLabel="question" bindValue="id" [virtualScroll]="true"
 														[(ngModel)]="questionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
 													</ng-select>
 												</div>
@@ -231,30 +231,28 @@
 											<div class="col-lg-1 action padding-item center">
 												<button type="button" style="width: 40px; height: 40px;"
 													class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onAddAnswer()">
-													<i class="bi bi bi-node-plus"></i>
+													<i class="bi bi-node-plus"></i>
 												</button>
 											</div>
 										</div>
 									</div>
 
-
-									<div class="list-user">
+									<div class="col-sm-12 pr-2 pl-2">
 										<div class="title-user-map center" style="text-transform: none;" *ngIf="lstAnswer.length ==0">Chưa
 											có câu trả lời</div>
-										<div class="col-sm-12 item-user" *ngFor="let item of lstAnswer">
-											<div class="info-user border-right padding-item d-flex pl-0" style="flex: 1 0;">
-												<div class="avatar-circle mr-2">
+										<div class="search-user d-flex" *ngFor="let item of lstAnswer">
+											<div class="col-11 d-flex p-0">
+												<div class="col-12 col-lg-6 form-group">
 													{{item.answer}}
 												</div>
-												<div>
-													<div class="title">{{item.questionAnswers}}</div>
-													<div class="department">{{item.questionAnswers}}</div>
+												<div class="col-12 col-lg-6 form-group">
+													{{item.questionAnswers}}
 												</div>
 											</div>
-											<div class="action padding-item center" *ngIf="statusCurent != 2">
+											<div class="col-lg-1 action padding-item center">
 												<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"
-													class="btn btn-block border-0 px-3 center" (click)="onRemoveAnswer(item)">
-													<i class="bi bi-person-dash"></i>
+													class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onRemoveAnswer(item)">
+													<i class="bi bi-node-minus"></i>
 												</button>
 											</div>
 										</div>
@@ -294,14 +292,14 @@
 								<strong>{{model.question}}</strong>
 							</div>
 						</div>
-						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
+						<!-- <div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
 							<div class="col-sm-12">
 								<label class="control-label lb600">Trả lời: </label>
 							</div>
 							<div class="col-sm-12">
 								<p>{{model.answer}}</p>
 							</div>
-						</div>
+						</div> -->
 
 						<div class="row" style="padding: 10px 0px;">
 							<div class="col-sm-8">

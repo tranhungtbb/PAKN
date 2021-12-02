@@ -15,7 +15,7 @@ declare var $: any
 	styleUrls: ['./chat-bot.component.css'],
 })
 export class ChatBotComponent implements OnInit {
-	constructor(private _service: ChatbotService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+	constructor(private _service: ChatbotService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
 
 	listData = new Array<ChatbotObject>()
 	listStatus: any = [
@@ -33,8 +33,8 @@ export class ChatBotComponent implements OnInit {
 	categoryIdDelete: number = 0
 	title: any = ''
 	question: any = ''
-	answer: any = ''
-	testAnswer: any = ''
+	// answer: any = ''
+	textAnswer: any = ''
 	lstAnswer: any = [];
 	lstQuestion: any = [];
 	questionId: number = 0;
@@ -59,9 +59,9 @@ export class ChatBotComponent implements OnInit {
 		this.form = this._fb.group({
 			title: [this.model.title, Validators.required],
 			question: [this.model.question, Validators.required],
-			answer: [this.model.answer, Validators.required],
+			// answer: [this.model.answer, Validators.required],
 			categoryId: [this.model.categoryId],
-			isActived: [this.model.isActived, Validators.required],
+			isActived: [this.model.isActived, Validators.required]
 		})
 	}
 
@@ -70,8 +70,8 @@ export class ChatBotComponent implements OnInit {
 			title: this.model.title,
 			question: this.model.question,
 			isActived: this.model.isActived,
-			answer: this.model.answer,
-			categoryId: this.model.categoryId,
+			// answer: this.model.answer,
+			categoryId: this.model.categoryId
 		})
 	}
 
@@ -102,10 +102,12 @@ export class ChatBotComponent implements OnInit {
 
 	titlePopup: any
 	preCreate() {
+		this.getAllDataActive()
 		this.model = new ChatbotObject()
 		this.rebuilForm()
 		this.submitted = false
 		this.titlePopup = 'Thêm mới câu hỏi'
+		this.lstAnswer = []
 		$('#modal').modal('show')
 		setTimeout(() => {
 			$('#target').focus()
@@ -117,6 +119,7 @@ export class ChatBotComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
+		this.model.lstAnswer = this.lstAnswer;
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.chatbotInsertQuestion(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -126,6 +129,7 @@ export class ChatBotComponent implements OnInit {
 						return
 					} else {
 						$('#modal').modal('hide')
+						this.lstAnswer = []
 						this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
 						this.getList()
 					}
@@ -146,6 +150,7 @@ export class ChatBotComponent implements OnInit {
 						return
 					} else {
 						$('#modal').modal('hide')
+						this.lstAnswer = []
 						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
 						this.getList()
 					}
@@ -160,6 +165,39 @@ export class ChatBotComponent implements OnInit {
 		}
 	}
 
+	getAllDataActive() {
+		let request = {}
+		this._service.chatbotGetAllActive(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.lstQuestion = response.result.ChatbotGetAll
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+				alert(error)
+			}
+	}
+
+	getListAnswer(id) {
+		this.lstAnswer = []
+		let request = {
+			Id: id
+		}
+		this._service.chatbotLibGetById(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.lstAnswer = response.result.ChatbotLibGetByID
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+				alert(error)
+			}
+	}
+
 	preUpdate(data) {
 		let request = {
 			Id: data.id,
@@ -170,6 +208,7 @@ export class ChatBotComponent implements OnInit {
 				this.rebuilForm()
 				this.titlePopup = 'Chỉnh sửa câu hỏi'
 				this.model = response.result.ChatbotGetByID[0]
+				this.getListAnswer(data.id)
 				$('#modal').modal('show')
 				setTimeout(() => {
 					$('#target').focus()
@@ -182,6 +221,7 @@ export class ChatBotComponent implements OnInit {
 				console.error(error)
 				alert(error)
 			}
+		this.getAllDataActive()
 	}
 	preDelete(id: number, categoryId: number) {
 		this.idDelete = id
@@ -239,21 +279,18 @@ export class ChatBotComponent implements OnInit {
 	}
 
 	onAddAnswer = () => {
-		if (this.testAnswer == '') {
+		if (this.textAnswer == '') {
 			this._toastr.error('Vui lòng nhập câu trả lời!')
 			return
 		}
 		if (this.questionId) {
-			let checkQuestion = this.lstQuestion.find((x) => x.id == this.questionId)
-			if (!checkQuestion) {
-				let bussiness = this.lstQuestion.find((x) => x.id == this.questionId)
-				if (bussiness) {
-					let obj = { answer: this.testAnswer, idSuggetLibrary: this.questionId, questionAnswers: bussiness.question }
-					this.lstAnswer.push(obj)
-				}
+			let bussiness = this.lstQuestion.find((x) => x.id == this.questionId)
+			if (bussiness) {
+				let obj = { answer: this.textAnswer, idSuggetLibrary: this.questionId, questionAnswers: bussiness.question }
+				this.lstAnswer.push(obj)
 			}
 		}
-		this.testAnswer = null
+		this.textAnswer = '';
 		this.questionId = null
 	}
 
