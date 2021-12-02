@@ -132,31 +132,50 @@ export class PublishComponent implements OnInit, OnChanges {
 						this.messages = [newMessage]
 					}
 					setTimeout(() => {
-						var objDiv = document.getElementById("bodyMessage");
-						objDiv.scrollTop = objDiv.scrollHeight;
-					}, 300);
+						var objDiv = document.getElementById('bodyMessage')
+						objDiv.scrollTop = objDiv.scrollHeight
+					}, 300)
 				}
 			})
-			this.sendMessage('Xin chào', false)
+			this.sendMessage({ title: 'Xin chào' }, false)
 		}
 	}
 
-	sendMessage(text: string, append: boolean = true) {
+	sendMessage(message: any, append: boolean = true) {
+		console.log('message ', message)
 		this.loading = true
-		this.connection.invoke('AnonymousChatWithBot', text)
-		if (append) {
-			this.messages = [
-				...this.messages,
-				{
-					dateSent: '',
-					title: text,
-					fromId: 0,
-				},
-			]
-			setTimeout(() => {
-				var objDiv = document.getElementById("bodyMessage");
-				objDiv.scrollTop = objDiv.scrollHeight;
-			}, 300);
+		if (message.hiddenAnswer && message.hiddenAnswer !== '') {
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.hiddenAnswer)
+			if (append) {
+				this.messages = [
+					...this.messages,
+					{
+						dateSent: '',
+						title: message.title,
+						fromId: 0,
+					},
+				]
+				setTimeout(() => {
+					var objDiv = document.getElementById('bodyMessage')
+					objDiv.scrollTop = objDiv.scrollHeight
+				}, 300)
+			}
+		} else {
+			this.connection.invoke('AnonymousChatWithBot', message.title, '')
+			if (append) {
+				this.messages = [
+					...this.messages,
+					{
+						dateSent: '',
+						title: message.title,
+						fromId: 0,
+					},
+				]
+				setTimeout(() => {
+					var objDiv = document.getElementById('bodyMessage')
+					objDiv.scrollTop = objDiv.scrollHeight
+				}, 300)
+			}
 		}
 	}
 
@@ -306,12 +325,13 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (this.textMessage) {
 			this.textMessage = this.textMessage.trim()
 		}
-
-		this.sendMessage(this.textMessage)
+		const message = { title: this.textMessage }
+		console.log('sendMessageToApi ', message)
+		this.sendMessage(message, true)
 		this.textMessage = null
 	}
 
-	goToLink(url: string){
-    window.open(url, "_blank");
-}
+	goToLink(url: string) {
+		window.open(url, '_blank')
+	}
 }

@@ -182,5 +182,20 @@ namespace PAKNAPI.Controllers
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        [HttpGet]
+        [Route("get-library")]
+        public async Task<object> ChatbotGetLibrary()
+        {
+            try
+            {
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new BotGetLibrary(_appSetting).BotGetAllLibrary() };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace PAKNAPI.Chat.ResponseModel
     }
     public class Message
     {
-
+        public string HiddenAnswer { get; set; }
         public string Content { get; set; }
         public string Timestamp { get; set; }
         public string From { get; set; }

@@ -96,7 +96,7 @@ namespace SignalR.Hubs
             }
         }
 
-        public async Task AnonymousChatWithBot(string message)
+        public async Task AnonymousChatWithBot(string message,string hiddenAnswer = "")
         {
             var httpContext = Context.GetHttpContext();
             var senderUserName = GetUserName(httpContext);
@@ -106,17 +106,17 @@ namespace SignalR.Hubs
             BOTAnonymousUser senderUser = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
             await SendToRoom(roomName, message);
-            if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable )
+            if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable)
             {
-
                 DateTime foo = DateTime.Now;
                 var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
-                ResultBot res = _bots.Response(senderUserName, message);
+                ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
                 DateTime foooo = DateTime.Now;
                 double totall = (foooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 0 " + totall);
                 Message messageModel = new Message()
                 {
+                    HiddenAnswer = string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer,
                     Content = res.Answer,
                     From = "Bot",
                     SubTags = (res.SubTags),
@@ -130,10 +130,6 @@ namespace SignalR.Hubs
                 DateTime fooo = DateTime.Now;
                 double total = (fooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 1 " + total);
-            }
-            else
-            {
-                
             }
         }
 

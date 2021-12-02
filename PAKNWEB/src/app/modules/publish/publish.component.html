@@ -299,7 +299,7 @@
 										<div class="msg_cotainer">
 											{{message.title}}
 											<ng-container *ngFor="let tag of message.subTags">
-												<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag.title,true)">
+												<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
 													{{tag.title}}
 												</div>
 												<a *ngIf="tag.link" class="pointer" (click)="goToLink(tag.link)">
