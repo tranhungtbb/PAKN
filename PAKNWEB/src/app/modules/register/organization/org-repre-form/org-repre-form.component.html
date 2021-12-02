@@ -15,7 +15,7 @@
 	</div>
 	
 	<div class="w-100"></div>
-	<div class="col-6 form-group">
+	<div class="col-12 form-group">
 		<label class="mb-1">Số điện thoại</label>
 		<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
 			pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-6 form-group">
+	<div class="col-12 form-group">
 		<label class="mb-1">Email </label>
 		<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px"
 			(change)="onCheckExist('Email',$event.target.value)">

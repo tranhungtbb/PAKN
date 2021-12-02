@@ -186,12 +186,12 @@
 				</a>
 
 				<div class="mt-4">
-					<div class="card border pt-4 p-3 bg-notification">
+					<div class="card border pt-4 p-3 bg-notification" style="height: 283px;">
 						<div class="tt-v1 mb-3 d-flex justify-content-between">
 							<h4 class="text-uppercase mb-0 ">thông báo</h4>
 						</div>
 						<div class="title-notification mb-2">{{dataNotification.title}}</div>
-						<p class="content-notification">{{dataNotification.content}}</p>
+						<p class="content-notification text-2line" style="-webkit-line-clamp : 7;" [innerHTML]="dataNotification.content"></p>
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
 							<a class="read-more" title="Xem thêm" routerLink="/cong-bo/thong-tin-cong-bo"> Xem thêm
 							</a>

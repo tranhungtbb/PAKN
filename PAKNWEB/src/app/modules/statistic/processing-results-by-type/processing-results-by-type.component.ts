@@ -8,11 +8,11 @@ import { StatisticService } from 'src/app/services/statistic.service'
 
 declare var $: any
 @Component({
-	selector: 'app-statistic-processing-results-by-unit',
-	templateUrl: './processing-results-by-unit.component.html',
-	styleUrls: ['./processing-results-by-unit.component.css'],
+	selector: 'app-statistic-processing-results-by-type',
+	templateUrl: './processing-results-by-type.component.html',
+	styleUrls: ['./processing-results-by-type.component.css'],
 })
-export class ProcessingResultsByUnitComponent implements OnInit {
+export class ProcessingResultsByTypeComponent implements OnInit {
 	constructor(
 		private _service: StatisticService,
 		private _router: Router,
@@ -22,7 +22,10 @@ export class ProcessingResultsByUnitComponent implements OnInit {
 	) {}
 
 	listYear: any = []
-
+	listType: any = [
+		{ value: 1, text: 'Lĩnh vực' },
+		{ value: 2, text: 'Đơn vị' }
+	]
 	// list active status
 	listQuarter: any = [
 		{ value: 1, text: 'Quý I' },
@@ -34,13 +37,13 @@ export class ProcessingResultsByUnitComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
+	type : number = 1
 	totalRecords : number
 	listData : any [] = []
 	pageIndex: number = 1
 	pageSize: number = 10
 
 	maxDateValue = new Date()
-	@ViewChild('myCanvas', { static: false }) canvas: any
 
 	ngOnInit() {
 		this.initData()
@@ -112,10 +115,11 @@ export class ProcessingResultsByUnitComponent implements OnInit {
 		let request = {
 			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
 			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
+			Type : this.type,
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
-		this._service.getProcessingResultByUnit(request).subscribe((response) => {
+		this._service.getProcessingResultByType(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listData = response.result;
 				if(response.result && response.result.length > 0){
@@ -187,7 +191,9 @@ export class ProcessingResultsByUnitComponent implements OnInit {
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'processing_results_by_unit?' + JSON.stringify(passingObj)
+		this._shareData.sendReportUrl = this.type == 1 ? 
+			'processing_results_by_feild?' + JSON.stringify(passingObj)
+			: 'processing_results_by_unit?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

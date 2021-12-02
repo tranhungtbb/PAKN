@@ -609,6 +609,15 @@ namespace PAKNAPI.ModelBase
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldUpdate", DP);
 		}
+
+		public async Task<int?> CAFieldUpdateStatusDAO(CAFieldUpdateIN _cAFieldUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAFieldUpdateIN.Id);
+			DP.Add("IsActived", _cAFieldUpdateIN.IsActived);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldUpdateStatus", DP);
+		}
 	}
 
 	public class CAFieldUpdateIN
@@ -1502,6 +1511,7 @@ namespace PAKNAPI.ModelBase
 		public int Index { get; set; }
 		public string ListField { get; set; }
 		public string ListFieldName { get; set; }
+		public bool? IsPermission { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{
@@ -1569,7 +1579,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsMain", _cAUnitInsertIN.IsMain);
 			DP.Add("Index", _cAUnitInsertIN.Index);
 			DP.Add("ListField", _cAUnitInsertIN.ListField);
-
+			DP.Add("IsPermission", _cAUnitInsertIN.IsPermission);
 
 			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitInsert", DP)).FirstOrDefault();
 		}
@@ -1605,6 +1615,7 @@ namespace PAKNAPI.ModelBase
 
 		[Range(0, int.MaxValue, ErrorMessage = "Thứ tự hiển thị không đúng định dạng")]
 		public int Index { get; set; }
+		public bool? IsPermission { get; set; }
 		public string ListField { get; set; }
 	}
 
@@ -1637,6 +1648,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsMain", _cAUnitUpdateIN.IsMain);
 			DP.Add("Index", _cAUnitUpdateIN.Index);
 			DP.Add("ListField", _cAUnitUpdateIN.ListField);
+			DP.Add("IsPermission", _cAUnitUpdateIN.IsPermission);
 
 			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitUpdate", DP)).FirstOrDefault();
 		}
@@ -1672,6 +1684,7 @@ namespace PAKNAPI.ModelBase
 
 		[Range(0, int.MaxValue, ErrorMessage = "Thứ tự hiển thị không đúng định dạng")]
 		public int Index { get; set; }
+		public bool? IsPermission { get; set; }
 		public string ListField { get; set; }
 
 

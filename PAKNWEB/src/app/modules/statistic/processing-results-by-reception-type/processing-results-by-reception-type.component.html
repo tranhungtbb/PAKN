@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-				<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Thống kê theo phương thức tiếp nhận và lĩnh vực</a></li>
+				<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Thống kê theo phương thức tiếp nhận</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()" *hasPermission="['3', 'D_II_2']">
@@ -22,6 +22,14 @@
 		<div class="col-lg-12">
 			<div class="card mb-0 shadow-none">
 				<div class="row p-3" style="background-color: #f6f6f6;">
+					<div class="col col-sm-2 form-group mb-0">
+						<div class="dropdown bootstrap-select form-control form-control-sm">
+							<ng-select  notFoundText="Không có dữ liệu" [clearable]="false" placeholder="Chọn" class="form-control" [items]="listType"
+								 bindLabel="text" bindValue="value" [(ngModel)]="type" [closeOnSelect]="true"
+								 (change)="getList()">
+							 </ng-select>
+						 </div>
+					</div>
 					<div class="col col-sm-2 form-group mb-0">
 						<div class="dropdown bootstrap-select form-control form-control-sm">
 							<ng-select  notFoundText="Không có dữ liệu" [clearable]="false" placeholder="Năm" class="form-control" [items]="listYear"
@@ -75,7 +83,7 @@
 						<ng-template pTemplate="header">
 							<tr>
 								<th rowspan="6" class="text-center middle" style="width: 50px;">STT</th>
-								<th rowspan="6" colspan="1" class="text-center middle text-uppercase">Lĩnh vực</th>
+								<th rowspan="6" colspan="1" class="text-center middle text-uppercase">{{ type == 1 ? 'Lĩnh vực' : 'Đơn vị xử lý'}}</th>
 								<th rowspan="2" colspan="5" class="text-center middle text-uppercase">Số PAKN được tiếp nhận</th>
 								<th rowspan="2" colspan="6" class="text-center middle text-uppercase">Kết quả xử lý PAKN</th>
 								<th rowspan="3" colspan="4" class="text-center middle text-uppercase">Đánh giá</th>
@@ -111,7 +119,7 @@
 							<tr>
 								<td class="text-center">{{item.stt}}</td>
 								<td>
-									<p class="text-2line mb-0">{{item.fieldName}}</p>
+									<p class="text-2line mb-0">{{item.name}}</p>
 								</td>
 								<td>
 									<p class="mb-0 text-right">{{item.received | number}}</p>

@@ -33,6 +33,21 @@
 		public const int FORWARD = 4;//3 Chuyển xử lý
 	}
 
+	// Phuong thuc tiep nhan
+	public static class ReceptionType
+	{
+		public const int Web = 1; // web
+		public const int App = 2;// app
+		public const int Phone = 3;// dien thoai
+		public const int Email = 4;// email
+	}
+
+	public static class StatisticType
+	{
+		public const int Field = 1; // lv
+		public const int Unit = 2;// don vi
+	}
+
 	public static class TYPENOTIFICATION
 	{
 		public const int NEWS = 1; // thông báo tin tức

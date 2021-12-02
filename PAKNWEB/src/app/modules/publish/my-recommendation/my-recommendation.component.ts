@@ -138,8 +138,8 @@ export class MyRecommendationComponent implements OnInit {
 		switch (status) {
 			case 1:
 				// chờ xl
-				this.getList(',2,5')
-				this.LtsStatus = ',2,5'
+				this.getList(',2')
+				this.LtsStatus = ',2'
 				break
 			case 2:
 				// đã tiếp nhận
@@ -164,6 +164,10 @@ export class MyRecommendationComponent implements OnInit {
 
 	changeKeySearch(event) {
 		this.title = event.target.value
+	}
+	
+	redirectMyRecommendaton(status: any) {
+		this.filterMyRecommendation(status)
 	}
 
 	sendRecommandation() {

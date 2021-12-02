@@ -201,9 +201,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// cập nhập lĩnh vực
+		/// cap nhap linh vuc
 		/// </summary>
-		/// <param name="_cAFieldUpdateIN"></param>
 		/// <returns></returns>
 
 		[HttpPost]
@@ -253,12 +252,32 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("update-status")]
+		public async Task<ActionResult<object>> CAFieldUpdateStatusBase(CAFieldUpdateIN cAFieldUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateStatusDAO(cAFieldUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		/// <summary>
 		/// dropdown lĩnh vực knct
 		/// </summary>
 		/// <returns></returns>
 
-        [HttpGet]
+		[HttpGet]
         [Authorize("ThePolicy")]
         [Route("field-knct-get-dropdown")]
         public async Task<ActionResult<object>> CAFieldKNCTGetDropdownBase()

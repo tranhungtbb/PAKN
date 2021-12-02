@@ -17,10 +17,8 @@ import { RecommendationsByUnitDetailComponent } from './recommendations-by-unit-
 import { RecommendationsByFieldDetailComponent } from './recommendations-by-field-detail/recommendations-by-field-detail.component'
 import { ProcessingStatusComponent } from './processing-status/processing-status.component'
 import { ProcessingResultsComponent } from './processing-results/processing-results.component'
-import { ProcessingResultsByFeildComponent } from './processing-results-by-feild/processing-results-by-feild.component'
-import { ProcessingResultsByFeildAndReceptionComponent } from './processing-results-by-feild-and-reception/processing-results-by-feild-and-reception.component'
-import { ProcessingResultsByUnitComponent } from './processing-results-by-unit/processing-results-by-unit.component'
-import { ProcessingResultsByUnitAndReceptionComponent } from './processing-results-by-unit-and-reception/processing-results-by-unit-and-reception.component'
+import { ProcessingResultsByTypeComponent } from './processing-results-by-type/processing-results-by-type.component'
+import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
 
 @NgModule({
 	declarations: [
@@ -33,10 +31,8 @@ import { ProcessingResultsByUnitAndReceptionComponent } from './processing-resul
 		RecommendationsByGroupwordDetailComponent,
 		ProcessingStatusComponent,
 		ProcessingResultsComponent,
-		ProcessingResultsByFeildComponent,
-		ProcessingResultsByFeildAndReceptionComponent,
-		ProcessingResultsByUnitComponent,
-		ProcessingResultsByUnitAndReceptionComponent
+		ProcessingResultsByTypeComponent,
+		ProcessingResultsByReceptionTypeComponent,
 	],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })

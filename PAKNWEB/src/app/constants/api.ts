@@ -89,7 +89,7 @@ export class Api {
 	public static FieldGetById = 'field/get-by-id'
 	public static FieldInsert = 'field/insert'
 	public static FieldUpdate = 'field/update'
-	public static FieldUpdateStatus = 'field/update'
+	public static FieldUpdateStatus = 'field/update-status'
 	public static FieldDelete = 'field/delete'
 	public static RecommendationRequestGetDataForCreate = 'field/field-knct-get-dropdown'
 	// thằng này ko tồn tại
@@ -394,8 +394,9 @@ export class Api {
 	public static StatisticRecommendationByGroupWordDetail = 'statistic/recommendation-by-group-word-detail'
 	public static StatisticRecommendationProcessingStatus = 'statistic/recommendation-processing-status'
 	public static StatisticRecommendationProcessingResults = 'statistic/recommendation-processing-results'
-	public static StatisticRecommendationProcessingResultsByFeildAndReception = 'statistic/recommendation-processing-results-by-feild-and-reception'
-	public static StatisticRecommendationProcessingResultsByFeild = 'statistic/recommendation-processing-results-by-feild'
+	public static StatisticRecommendationProcessingResultsByReceptionType = 'statistic/recommendation-processing-results-by-reception-type'
+	public static StatisticRecommendationProcessingResultsByType = 'statistic/recommendation-processing-results-by-type'
+
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'
 	public static StatisticRecommendationForMenu = 'statistic/recommendation-for-menu'

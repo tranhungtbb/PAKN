@@ -86,6 +86,7 @@ namespace PAKNAPI.Models.Recommendation
 			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 			foreach (var item in data.lstFiles)
 			{
+				item.FilePathUrl = item.FilePath;
 				item.FilePath = decrypt.EncryptData(item.FilePath);
 			}
 			return data;

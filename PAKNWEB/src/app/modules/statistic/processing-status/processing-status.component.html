@@ -85,6 +85,11 @@
 								</th>
 								<th style="width: 130px" class="text-center middle">
 									<p class="mb-0">
+										<strong>Cơ quan xử lý</strong>
+									</p>
+								</th>
+								<th style="width: 130px" class="text-center middle">
+									<p class="mb-0">
 										<strong>Cán bộ xử lý</strong>
 									</p>
 								</th>
@@ -110,20 +115,22 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<p class="text-2line mb-0 cursor">
+									<p class="text-3line mb-0 cursor">
 										<a routerLink="/quan-tri/kien-nghi/chi-tiet/{{item.id}}">{{item.content}}</a>
 									</p>
 								</td>
 								<td>
-									<p class="mb-0">{{item.fieldName}}</p>
+									<p class="mb-0 text-3line">{{item.fieldName}}</p>
 								</td>
 								<td>
 									<p class="mb-0">{{item.phone}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-2line">{{item.unitName}}</p>
+									<p class="mb-0 text-3line">{{item.unitName}}</p>
 								</td>
-
+								<td>
+									<p class="mb-0">{{item.unitProcessName}}</p>
+								</td>
 								<td>
 									<p class="mb-0">{{item.userProcessName}}</p>
 								</td>
@@ -151,7 +158,7 @@
 						</ng-template>
 						<ng-template pTemplate="emptymessage">
 							<tr>
-								<td class="text-center" colspan="9">Không có dữ liệu</td>
+								<td class="text-center" colspan="10">Không có dữ liệu</td>
 							</tr>
 						</ng-template>
 					</p-table>

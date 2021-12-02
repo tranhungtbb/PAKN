@@ -328,7 +328,20 @@
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct-ql pl-0 pt-4">
-				<div class="hashtags-box border-bottom px-4 ">
+				<div class="border-bottom px-4" *ngIf="markers">
+					<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false"
+						> 
+						<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"> 
+						</agm-marker>
+					</agm-map>
+					<div>
+						<div class="cl-red d-flex" style="align-items: center;">
+							<i class="fas fa-map-marker-alt mr-3"></i> <p class="mb-0">Địa điểm phản ánh hiện trường</p>
+						</div>
+						<p class="mb-0 font-weight-bold">{{model.address}}</p>
+					</div>
+				</div>
+				<div class="hashtags-box border-bottom px-4 mt-2">
 					<div class="form-row align-items-end">
 						<div class="col form-group pr-0">
 							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>

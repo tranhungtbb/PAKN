@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
-import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, RECEPTION_TYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS, TYPE_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { RecommendationObject } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -300,6 +300,8 @@ export class CreateRecommendationComponent implements OnInit {
 	onSave(onSend: any) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
+		this.model.type = TYPE_RECOMMENDATION.Socioeconomic
+		this.model.receptionType = RECEPTION_TYPE.Web
 		this.builForm()
 		this.submitted = true
 		if (this.form.invalid) {

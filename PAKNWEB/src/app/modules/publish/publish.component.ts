@@ -72,10 +72,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [
 			{ path: ['phan-anh-kien-nghi/da-tra-loi'], text: 'Phản ánh- kiến nghị đã trả lời' },
-			{ path: ['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'], text: 'Cổng thông tin điện tử tỉnh Khánh Hoà' },
+			// { path: ['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'], text: 'Cổng thông tin điện tử tỉnh Khánh Hoà' },
 			{ path: ['phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa'], text: 'Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà' },
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'], text: 'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà' },
-			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
+			// { path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
 	}
 

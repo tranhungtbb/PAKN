@@ -9,10 +9,8 @@ import { RecommendationsByFieldDetailComponent } from './recommendations-by-fiel
 import { RoleGuardService } from 'src/app/guards/role-guard.service'
 import { ProcessingStatusComponent } from './processing-status/processing-status.component'
 import { ProcessingResultsComponent } from './processing-results/processing-results.component'
-import { ProcessingResultsByFeildComponent } from './processing-results-by-feild/processing-results-by-feild.component'
-import { ProcessingResultsByFeildAndReceptionComponent } from './processing-results-by-feild-and-reception/processing-results-by-feild-and-reception.component'
-import { ProcessingResultsByUnitComponent } from './processing-results-by-unit/processing-results-by-unit.component'
-import { ProcessingResultsByUnitAndReceptionComponent } from './processing-results-by-unit-and-reception/processing-results-by-unit-and-reception.component'
+import { ProcessingResultsByTypeComponent } from './processing-results-by-type/processing-results-by-type.component'
+import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
 
 const routes: Routes = [
 	{
@@ -82,32 +80,17 @@ const routes: Routes = [
 		data: { role: 'D_III_0' },
 	},
 	{
-		path: 'ket-qua-xu-ly-pakn-theo-linh-vuc',
-		component: ProcessingResultsByFeildComponent,
+		path: 'ket-qua-xu-ly-theo-loai-pakn',
+		component: ProcessingResultsByTypeComponent,
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},
 	{
-		path: 'ket-qua-xu-ly-pakn-theo-linh-vuc-va-phuong-thuc-tiep-nhan',
-		component: ProcessingResultsByFeildAndReceptionComponent,
-		canActivate: [RoleGuardService],
-		data: { role: 'D_III_0' },
-	},	
-	{
-		path: 'ket-qua-xu-ly-pakn-theo-don-vi',
-		component: ProcessingResultsByUnitComponent,
+		path: 'ket-qua-xu-ly-theo-pttn',
+		component: ProcessingResultsByReceptionTypeComponent,
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},
-	{
-		path: 'ket-qua-xu-ly-pakn-theo-don-vi-va-phuong-thuc-tiep-nhan',
-		component: ProcessingResultsByUnitAndReceptionComponent,
-		canActivate: [RoleGuardService],
-		data: { role: 'D_III_0' },
-	},
-
-
-	
 ]
 
 @NgModule({

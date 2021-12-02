@@ -8,6 +8,7 @@ export class UnitObject {
 		this.id = 0
 		this.index = 0
 		this.listField = null
+		this.isPermisstion = false
 	}
 	id: number
 	name: string
@@ -22,4 +23,5 @@ export class UnitObject {
 	isMain: boolean
 	index: number
 	listField: number
+	isPermisstion : boolean
 }

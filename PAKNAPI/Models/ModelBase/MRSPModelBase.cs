@@ -565,6 +565,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public short? FileType { get; set; }
 		public string FilePath { get; set; }
+		public string FilePathUrl { get; set; }
 
 		public async Task<List<MRRecommendationFilesGetByRecommendationId>> MRRecommendationFilesGetByRecommendationIdDAO(int? Id)
 		{
@@ -1427,6 +1428,13 @@ namespace PAKNAPI.ModelBase
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 
+		public int? Type { get; set; }
+		public int? ReceptionType { get; set; }
+		public string Lat { get; set; }
+		public string Lng { get; set; }
+
+		public bool? IsFakeImage { get; set; }
+
 		public async Task<List<MRRecommendationGetByID>> MRRecommendationGetByIDDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -1477,6 +1485,11 @@ namespace PAKNAPI.ModelBase
 		public int? UnitSendId { get; set; }
 		public int? UnitReceiveId { get; set; }
 		public bool? IsForwardProcess { get; set; }
+		public int? Type { get; set; }
+		public int? ReceptionType { get; set; }
+		public string Lat { get; set; }
+		public string Lng { get; set; }
+		public string Address { get; set; }
 
 		//public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
 		//{
@@ -1549,6 +1562,11 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _mRRecommendationInsertIN.Address);
 			DP.Add("IsForwardChild", _mRRecommendationInsertIN.IsForwardChild);
 
+			DP.Add("Lat", _mRRecommendationInsertIN.Lat);
+			DP.Add("Lng", _mRRecommendationInsertIN.Lng);
+			DP.Add("Type", _mRRecommendationInsertIN.Type);
+			DP.Add("ReceptionType", _mRRecommendationInsertIN.ReceptionType);
+			DP.Add("IsFakeImage", _mRRecommendationInsertIN.IsFakeImage);
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_RecommendationInsert", DP);
 		}
 	}
@@ -1586,6 +1604,13 @@ namespace PAKNAPI.ModelBase
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 		public bool IsForwardChild { get; set; }
+
+		public int? Type { get; set; }
+		public int? ReceptionType { get; set; }
+		public string Lat { get; set; }
+		public string Lng { get; set; }
+
+		public bool? IsFakeImage { get; set; }
 
 		public MRRecommendationInsertIN(){}
 
@@ -1942,6 +1967,12 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UpdatedDate", _mRRecommendationUpdateIN.UpdatedDate);
 			DP.Add("Address", _mRRecommendationUpdateIN.Address);
 
+			DP.Add("Lat", _mRRecommendationUpdateIN.Lat);
+			DP.Add("Lng", _mRRecommendationUpdateIN.Lng);
+			DP.Add("Type", _mRRecommendationUpdateIN.Type);
+			DP.Add("ReceptionType", _mRRecommendationUpdateIN.ReceptionType);
+			DP.Add("IsFakeImage", _mRRecommendationUpdateIN.IsFakeImage);
+
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdate", DP));
 		}
 	}
@@ -1979,6 +2010,12 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+		public int? Type { get; set; }
+		public int? ReceptionType { get; set; }
+		public string Lat { get; set; }
+		public string Lng { get; set; }
+
+		public bool? IsFakeImage { get; set; }
 	}
 
 	public class MRRecommendationUpdateReactionaryWord
