@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace PAKNAPI.Models.ModelBase
 {
@@ -247,6 +248,152 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("PageSize", PageSize);
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetByRoomId>("BOT_Message_GetByRoomId", DP)).ToList();
+		}
+	}
+	public class BotGetLibrary
+	{
+		private SQLCon _sQLCon;
+		private readonly IAppSetting _appSetting;
+
+		public BotGetLibrary(IAppSetting appSetting)
+		{
+			_appSetting = appSetting;
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BotGetLibrary()
+		{
+		}
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Question { get; set; }
+		public int? IdSuggetLibrary { get; set; }
+		public string Answers { get; set; }
+		public string TitleAnswers { get; set; }
+		public string QuestionAnswers { get; set; }
+
+        public class BotLib
+        {
+			public int id { get; set; }
+			public string pattern { get; set; }
+			public template template { get; set; }
+		}
+		public class template
+        {
+			public string title { get; set; }
+			public string pakn { get; set; }
+        }
+
+		private string changeData(List<BotGetLibrary> libraries)
+        {
+			string result = "";
+			List<BotLib> lstLib = new List<BotLib>();
+
+			foreach (BotGetLibrary item in libraries)
+			{
+				if (lstLib.Count == 0)
+				{
+					BotLib lib = new BotLib();
+					lib.id = item.Id;
+					lib.pattern = item.Title;
+					lib.template = new template();
+					lib.template.title = item.Question;
+					lib.template.pakn = SetJson(item.Id, libraries);
+					lstLib.Add(lib);
+				}
+                else
+                {
+					bool checkDuplicate = false;
+                    foreach (BotLib itemLib in lstLib)
+                    {
+                        if (itemLib.id == item.Id)
+                        {
+							checkDuplicate = true;
+							break;
+						}
+                    }
+                    if (!checkDuplicate)
+                    {
+						BotLib lib = new BotLib();
+						lib.id = item.Id;
+						lib.pattern = item.Title;
+						lib.template = new template();
+						lib.template.title = item.Question;
+						lib.template.pakn = SetJson(item.Id, libraries);
+						lstLib.Add(lib);
+					}
+                }
+			}
+			result = SetResult(lstLib);
+
+			return result;
+        }
+
+		private string SetResult(List<BotLib> lstLib)
+        {
+			string result = "";
+            result = @"<?xml version=""1.0"" encoding=""utf-8""?>"
+					+ @"<aiml version=""1.0"">";
+            foreach (BotLib item in lstLib)
+            {
+				result += "<category>"
+						+ "<pattern>" + item.pattern + "</pattern>"
+						+ "<template>"
+						+ item.template.title
+						+ (item.template.pakn == "" ? "<pakn/>" : "<pakn>" + item.template.pakn + "</pakn>")
+						+ "</template>"
+						+ "</category>";
+
+			}
+			result += "</aiml>";
+            return result;
+        }
+
+        private string SetJson(int idLib, List<BotGetLibrary> getLibraries)
+        {
+            string result = "";
+            foreach (var item in getLibraries)
+            {
+                if (item.Id == idLib && item.IdSuggetLibrary != null)
+                {
+                    if (result == "")
+                        result += @"{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
+                    else
+                        result += @",{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
+                }
+            }
+            if (result != "")
+            {
+                result = @"json{""type"":""carousel"",""data"":[" + result + "]}";
+            }
+            return result;
+        }
+
+
+        public async Task<string> BotGetAllLibrary()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			List<BotGetLibrary> libraries = (await _sQLCon.ExecuteListDapperAsync<BotGetLibrary>("SY_Chatbot_Library_GetAll", DP)).ToList();
+			//
+			string result = changeData(libraries);
+
+            //         try
+            //{
+            //	XmlDocument doc = new XmlDocument();
+            //	doc.PreserveWhitespace = true;
+            //	try { doc.Load("D:/booksData.xml"); }
+            //	catch (System.IO.FileNotFoundException)
+            //	{
+            //		doc.LoadXml(result);
+            //	}
+            //	doc.Save("D:/booksData.xml");
+            //}
+            //         catch (Exception ex)
+            //         {
+
+            //         }
+
+            return result;
 		}
 	}
 }
