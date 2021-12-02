@@ -155,10 +155,17 @@ namespace TLI.FakeImage
             return metaInfo;
         }
         public FakeImageInfo GetInfo(string filePath) {
-
-            var rs = GetInfo(new Bitmap(filePath));
-            rs.filePath = filePath;
-            return rs;
+            try
+            {
+                var rs = GetInfo(new Bitmap(filePath));
+                rs.filePath = filePath;
+                return rs;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return null;
         }
         public List<FakeImageMetadata> GetMetadata(Bitmap bitmap)
         {

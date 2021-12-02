@@ -85,6 +85,8 @@ namespace FakeImageDetection
             foreach (var f in filePaths)
             {
                 var li = dao.GetInfo(f);
+                if (li == null) continue;
+
                 this.fileInfos[f] = li;
                 sb = buildInfo(sb, dao, li, false);
 
@@ -116,9 +118,10 @@ namespace FakeImageDetection
             }
 
             foreach (var f in this.fileInfos)
-            {
-                sb = buildInfo(sb, dao, f.Value, true);
-            }
+                if (f.Value != null)
+                {
+                    sb = buildInfo(sb, dao, f.Value, true);
+                }
 
             webBrowser1.DocumentText = "<html style='font-farmily:monospace;font-size:15px;'>"
                 + "<h1>Fake Image Detection</h1>"
@@ -153,7 +156,7 @@ namespace FakeImageDetection
                 timing = new DateTime().Subtract(time).TotalMilliseconds;
                 if (isFake)
                 {
-                    sb.AppendLine($"<span style='color:#800000'><b>Fake image by {string.Join(", ", outResults.ConvertAll(x => $"{x.attrId}= '{x.valueText}'"))}</b>");
+                    sb.AppendLine($"<span style='color:#800000'><b>Fake image by {string.Join(", ", outResults.ConvertAll(x => $"{x.attrId}= '{x.valueText}'"))} fakeCount={outResults.Last().fakeCount}</b>");
                     this.lbFake.Text = (int.Parse(this.lbFake.Text) + 1).ToString();
                 }
                 else
@@ -227,8 +230,9 @@ namespace FakeImageDetection
                     else
                         this.lbReal.Text = (int.Parse(this.lbReal.Text) + 1).ToString();
                 }
-
-                dao.UpdateLearnData();
+                
+                if(MessageBox.Show("EXEC FakeImage_DataMining ?","", MessageBoxButtons.YesNo)== DialogResult.Yes)
+                    dao.UpdateLearnData();
 
                 sb.AppendLine();
 
@@ -272,7 +276,7 @@ namespace FakeImageDetection
 
             var s = new List<string>();
             foreach (var x in d.SampleData)
-                s.Add(x.Key+":"+x.Value.ToJSON());
+                s.Add($"\"{x.Key}\":"+x.Value.ToJSON());
 
             string rs = "{" + string.Join(",", s) + "}";
             webBrowser1.DocumentText = rs;
