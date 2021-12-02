@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace KarmaloopAIMLBotParser
 {
@@ -16,6 +17,7 @@ namespace KarmaloopAIMLBotParser
     {
         ResultBot Response(string botname, string UserInput);
         void RemoveBot(string botname);
+        void ReloadBots(XmlDocument newAIML, string filename);
     }
 
     public class ManageBots : IManageBots
@@ -27,6 +29,11 @@ namespace KarmaloopAIMLBotParser
             AI = new AIMLBot();
             AI.LoadSettings();
             AI.LoadAIMLFromFiles();
+        }
+
+        public void ReloadBots(XmlDocument newAIML, string filename)
+        {
+            AI.loadAIMLFromXML(newAIML, filename);
         }
 
         public ResultBot Response(string botname, string UserInput)

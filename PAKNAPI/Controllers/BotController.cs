@@ -1,4 +1,5 @@
 ﻿using Bugsnag;
+using KarmaloopAIMLBotParser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -14,8 +15,10 @@ using PAKNAPI.Models.SyncData;
 using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace PAKNAPI.Controllers
 {
@@ -27,12 +30,14 @@ namespace PAKNAPI.Controllers
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
         private readonly IHubContext<ChatHub, IChatHub> _hubContext;
+        private readonly IManageBots _bots;
 
-        public BotController(IAppSetting appSetting, IClient bugsnag, IHubContext<ChatHub, IChatHub> hubContext)
+        public BotController(IAppSetting appSetting, IClient bugsnag, IHubContext<ChatHub, IChatHub> hubContext, IManageBots bots)
         {
             this._appSetting = appSetting;
             this._bugsnag = bugsnag;
             _hubContext = hubContext;
+            _bots = bots;
         }
 
 
@@ -190,6 +195,27 @@ namespace PAKNAPI.Controllers
             try
             {
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new BotGetLibrary(_appSetting).BotGetAllLibrary() };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpPost]
+        [Route("reload-library")]
+
+        public async Task<object> ReloadChatbotGetLibrary()
+        {
+            try
+            {
+                string result = await new BotGetLibrary(_appSetting).BotGetAllLibrary();
+                string path = Path.Combine(Environment.CurrentDirectory, "customaiml.xml");
+                XmlDocument doc = new XmlDocument();
+                doc.Load(path);
+                _bots.ReloadBots(doc, "customaiml.xml");
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
             }
             catch (Exception ex)
             {

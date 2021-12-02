@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <aiml version="1.0">
-
+<category>
+		<pattern>*</pattern>
+		<template>
+					Bạn có muốn gặp tư vấn viên không
+					<pakn>json{"type":"chat","data":[{"id":"1"}]}</pakn>
+				</template>
+	</category>
 	<category>
 		<pattern>Tôi là *</pattern>
 		<template>

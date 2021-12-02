@@ -97,7 +97,7 @@ namespace PAKNAPI
 			services.AddTransient<CustomMiddleware>();
 			services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddTransient<IAppSetting, AppSetting>();
-			services.AddTransient<IManageBots, ManageBots>();
+			services.AddSingleton<IManageBots, ManageBots>();
 			services.AddTransient<IFileService, FileService>();
 			services.AddTransient<IMailService, MailService>();
 
