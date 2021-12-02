@@ -385,12 +385,8 @@ namespace PAKNAPI.Models.ModelBase
 				string path = Path.Combine(Environment.CurrentDirectory, "customaiml.xml");
 				XmlDocument doc = new XmlDocument();
                 doc.PreserveWhitespace = true;
-                try { doc.Load(path); }
-                catch (System.IO.FileNotFoundException)
-                {
-                    doc.LoadXml(result);
-                }
-                doc.Save(path);
+				doc.LoadXml(result);
+				doc.Save(path);
             }
             catch (Exception ex)
             {

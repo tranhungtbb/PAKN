@@ -1,5 +1,4 @@
 ﻿using Bugsnag;
-using KarmaloopAIMLBotParser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -211,10 +210,8 @@ namespace PAKNAPI.Controllers
             try
             {
                 string result = await new BotGetLibrary(_appSetting).BotGetAllLibrary();
-                string path = Path.Combine(Environment.CurrentDirectory, "customaiml.xml");
-                XmlDocument doc = new XmlDocument();
-                doc.Load(path);
-                _bots.ReloadBots(doc, "customaiml.xml");
+             
+                await _bots.ReloadBots();
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
             }
             catch (Exception ex)

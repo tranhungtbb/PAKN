@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Chatbot;
+using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,12 +19,13 @@ namespace PAKNAPI.Controllers.ChatbotController
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
-
-        public ChatbotController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting, IClient bugsnag)
+        private readonly IManageBots _bots;
+        public ChatbotController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting, IClient bugsnag, IManageBots bots)
         {
             _webHostEnvironment = webHostEnvironment;
             _appSetting = appSetting;
             _bugsnag = bugsnag;
+            _bots = bots;
         }
         /// <summary>
         /// xóa câu hỏi chatbot
@@ -254,8 +256,10 @@ namespace PAKNAPI.Controllers.ChatbotController
         {
             try
             {
+                var resInsert = await new ChatbotInsertData(_appSetting).InsertDataChatbotDAO(_chatbotDataInsertIN);
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotInsertData(_appSetting).InsertDataChatbotDAO(_chatbotDataInsertIN) };
+                await _bots.ReloadBots();
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resInsert };
             }
             catch (Exception ex)
             {
