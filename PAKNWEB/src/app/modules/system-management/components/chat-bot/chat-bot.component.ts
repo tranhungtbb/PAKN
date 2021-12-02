@@ -31,8 +31,13 @@ export class ChatBotComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	categoryIdDelete: number = 0
+	title: any = ''
 	question: any = ''
 	answer: any = ''
+	testAnswer: any = ''
+	lstAnswer: any = [];
+	lstQuestion: any = [];
+	questionId: number = 0;
 
 	ngOnInit() {
 		this.buildForm()
@@ -52,6 +57,7 @@ export class ChatBotComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
+			title: [this.model.title, Validators.required],
 			question: [this.model.question, Validators.required],
 			answer: [this.model.answer, Validators.required],
 			categoryId: [this.model.categoryId],
@@ -61,6 +67,7 @@ export class ChatBotComponent implements OnInit {
 
 	rebuilForm() {
 		this.form.reset({
+			title: this.model.title,
 			question: this.model.question,
 			isActived: this.model.isActived,
 			answer: this.model.answer,
@@ -93,12 +100,12 @@ export class ChatBotComponent implements OnInit {
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
 
-	title: any
+	titlePopup: any
 	preCreate() {
 		this.model = new ChatbotObject()
 		this.rebuilForm()
 		this.submitted = false
-		this.title = 'Thêm mới câu hỏi'
+		this.titlePopup = 'Thêm mới câu hỏi'
 		$('#modal').modal('show')
 		setTimeout(() => {
 			$('#target').focus()
@@ -161,7 +168,7 @@ export class ChatBotComponent implements OnInit {
 		this._service.chatbotGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
-				this.title = 'Chỉnh sửa câu hỏi'
+				this.titlePopup = 'Chỉnh sửa câu hỏi'
 				this.model = response.result.ChatbotGetByID[0]
 				$('#modal').modal('show')
 				setTimeout(() => {
@@ -229,5 +236,29 @@ export class ChatBotComponent implements OnInit {
 	preView(data) {
 		this.model = data
 		$('#modalDetail').modal('show')
+	}
+
+	onAddAnswer = () => {
+		if (this.testAnswer == '') {
+			this._toastr.error('Vui lòng nhập câu trả lời!')
+			return
+		}
+		if (this.questionId) {
+			let checkQuestion = this.lstQuestion.find((x) => x.id == this.questionId)
+			if (!checkQuestion) {
+				let bussiness = this.lstQuestion.find((x) => x.id == this.questionId)
+				if (bussiness) {
+					let obj = { answer: this.testAnswer, idSuggetLibrary: this.questionId, questionAnswers: bussiness.question }
+					this.lstAnswer.push(obj)
+				}
+			}
+		}
+		this.testAnswer = null
+		this.questionId = null
+	}
+
+	onRemoveAnswer = (item: any) => {
+		this.lstAnswer = this.lstAnswer.filter((x) => x.answer != item.answer && x.idSuggetLibrary != item.idSuggetLibrary)
+		return
 	}
 }

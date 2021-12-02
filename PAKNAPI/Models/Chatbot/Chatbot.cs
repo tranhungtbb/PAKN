@@ -90,8 +90,11 @@ namespace PAKNAPI.Models.Chatbot
 
 		public int? RowNumber { get; set; }
 		public int Id { get; set; }
+		public string Title { get; set; }
 		public string Question { get; set; }
-		public string Answer { get; set; }
+		//public string Answer { get; set; }
+		public string Image { get; set; }
+		public string link { get; set; }
 		public int CategoryId { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
@@ -160,8 +163,11 @@ namespace PAKNAPI.Models.Chatbot
 		}
 
 		public int Id { get; set; }
+		public string Title { get; set; }
 		public string Question { get; set; }
-		public string Answer { get; set; }
+		public string Image { get; set; }
+		public string link { get; set; }
+		//public string Answer { get; set; }
 		public int CategoryId { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
@@ -172,6 +178,38 @@ namespace PAKNAPI.Models.Chatbot
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetByID>("ChatbotGetByID", DP)).ToList();
+		}
+	}
+	#endregion
+
+	#region ChatbotGetAllActive
+	public class ChatbotGetAllActive
+	{
+		private SQLCon _sQLCon;
+
+		public ChatbotGetAllActive(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public ChatbotGetAllActive()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Question { get; set; }
+		public string Image { get; set; }
+		public string link { get; set; }
+		//public string Answer { get; set; }
+		public int CategoryId { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<List<ChatbotGetAllActive>> ChatbotGetAllActiveDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetAllActive>("ChatbotGetAllActive", DP)).ToList();
 		}
 	}
 	#endregion

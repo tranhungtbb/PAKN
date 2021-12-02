@@ -117,6 +117,33 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
+        /// danh sách câu hỏi active
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-all-active")]
+        public async Task<ActionResult<object>> ChatbotGetAllActvieBase()
+        {
+            try
+            {
+                List<ChatbotGetAllActive> ChatbotGetAllActive = await new ChatbotGetAllActive(_appSetting).ChatbotGetAllActiveDAO();
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"ChatbotGetAll", ChatbotGetAllActive},
+                    };
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
         /// chi tiết câu hỏi chatbot
         /// </summary>
         /// <param name="Id"></param>

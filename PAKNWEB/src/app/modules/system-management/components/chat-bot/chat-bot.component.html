@@ -6,9 +6,12 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 
-				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()" *hasPermission="['3', 'A_XI_0']">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()"
+					*hasPermission="['3', 'A_XI_0']">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+						viewBox="0 0 16 16">
+						<path
+							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
 					Thêm mới
 				</button>
@@ -19,9 +22,9 @@
 		<div class="col-lg-12">
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
-
 					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords"
+						[rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -30,14 +33,25 @@
 										<strong>STT</strong>
 									</p>
 								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'title'">
+										<strong>Tiêu đề <p-sortIcon [field]="'title'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" trim [ngSwitch]="'title'"
+										[(ngModel)]="title" (keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')"
+										placeholder="Nhập tiêu đề..." />
+									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
 								<th style="width: 350px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-										[pSortableColumn]="'question'"
-									>
+										[pSortableColumn]="'question'">
 										<strong>Câu hỏi <p-sortIcon [field]="'question'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" maxlength="100"
-										trim [ngSwitch]="'question'" [(ngModel)]="question"
+									<input class="form-control form-control-sm" maxlength="100" trim [ngSwitch]="'question'"
+										[(ngModel)]="question"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'question', 'contains')"
 										placeholder="Nhập câu hỏi..." />
 									<button *ngIf="question" class="btn bg-transparent btn-clear-input" (click)="question=''">
@@ -46,11 +60,12 @@
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'answer'">
+										[pSortableColumn]="'answer'">
 										<strong>Trả lời <p-sortIcon [field]="'answer'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="answer"
-										trim [ngSwitch]="'answer'" (keydown.enter)="table.filter($event?.target.value.trim(), 'answer', 'contains')"
+									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="answer" trim
+										[ngSwitch]="'answer'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'answer', 'contains')"
 										placeholder="Nhập câu trả lời..." />
 									<button *ngIf="answer" class="btn bg-transparent btn-clear-input" (click)="answer=''">
 										<i class="fa fa-times"></i>
@@ -58,17 +73,13 @@
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'isActived'"
-									>
+										[pSortableColumn]="'isActived'">
 										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." 
-											bindLabel="text" bindValue="value"
-											[closeOnSelect]="true"
-											[ngSwitch]="'isActived'"
-											(change)="table.filter($event?.value.toString(), 'isActived')"
-											>
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
+											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [closeOnSelect]="true"
+											[ngSwitch]="'isActived'" (change)="table.filter($event?.value.toString(), 'isActived')">
 										</ng-select>
 									</div>
 								</th>
@@ -83,27 +94,39 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
+									{{item.title}}
+								</td>
+								<td>
 									<strong>
-										<a *hasNotPermission="['3', 'A_XI_4']" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a>
-										<a *hasPermission="['3', 'A_XI_4']" (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a>
+										<a *hasNotPermission="['3', 'A_XI_4']" class="ellipsis text-dark" type="button"
+											title="Xem chi tiết">{{item.question}}</a>
+										<a *hasPermission="['3', 'A_XI_4']" (click)="preView(item)" class="ellipsis text-dark" type="button"
+											title="Xem chi tiết">{{item.question}}</a>
 									</strong>
 								</td>
 								<td>{{item.answer}}</td>
 								<td>
 									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
-										<span *hasPermission="['3', 'A_XI_5']" type="button" (click)="preUpdateStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span *hasNotPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill bg-success">Hiệu
+											lực</span>
+										<span *hasPermission="['3', 'A_XI_5']" type="button" (click)="preUpdateStatus(item)"
+											class="badge rounded-pill bg-success">Hiệu lực</span>
 									</p>
 									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										<span *hasPermission="['3', 'A_XI_5']" type="button" (click)="preUpdateStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span *hasNotPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill badge-light">Hết
+											hiệu lực</span>
+										<span *hasPermission="['3', 'A_XI_5']" type="button" (click)="preUpdateStatus(item)"
+											class="badge rounded-pill badge-light">Hết hiệu lực</span>
 									</p>
 								</td>
 								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_XI_1']" type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_XI_2']" type="button" (click)="preDelete(item.id, item.categoryId)" class="btn-icon grd-red text-white" data-toggle="modal"
-											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+										<a *hasPermission="['3', 'A_XI_1']" type="button" (click)="preUpdate(item)"
+											class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i
+												class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_XI_2']" type="button" (click)="preDelete(item.id, item.categoryId)"
+											class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+												class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -128,14 +151,30 @@
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="modal-title h3">{{title}}</p>
+						<p class="modal-title h3">{{titlePopup}}</p>
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div class="row form-group">
 							<div class="col-sm-8">
+								<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
+								<input id="target" placeholder="Nhập tiêu đề..." svTrim class="form-control" formControlName="title"
+									[(ngModel)]="model.title" maxlength="500" />
+								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.title.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-sm-8">
 								<label class="control-label">Câu hỏi <span class="text-danger">(*)</span></label>
-								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="question" [(ngModel)]="model.question"  maxlength="500"/>
-								<div *ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))" class="has-error m-b-12">
+								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="question"
+									[(ngModel)]="model.question" maxlength="500" />
+								<div
+									*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.question.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -143,10 +182,13 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select notFoundText="Không có dữ liệu"  class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value"
+									placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 									[(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
-								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
+								<div
+									*ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.isActived.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -156,18 +198,74 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Trả lời <span class="text-danger">(*)</span></label>
-								<textarea placeholder="Nhập trả lời..." class="form-control" textareaTrim formControlName="answer" type="text" rows="4" maxlength="500"
-									[(ngModel)]="model.answer"></textarea>
-								<div *ngIf="(submitted && f.answer.invalid) || (f.answer.invalid && (f.answer.dirty || f.answer.touched))" class="has-error m-b-12">
+								<textarea placeholder="Nhập trả lời..." class="form-control" textareaTrim formControlName="answer"
+									type="text" rows="4" maxlength="500" [(ngModel)]="model.answer"></textarea>
+								<div
+									*ngIf="(submitted && f.answer.invalid) || (f.answer.invalid && (f.answer.dirty || f.answer.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.answer.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
 								</div>
 							</div>
 						</div>
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<div class="row form-group pr-2">
+									<div class="col-sm-12 pr-2 pl-2">
+										<div class="search-user d-flex">
+											<div class="col-11 d-flex p-0">
+												<div class="col-12 col-lg-6 form-group">
+													<label class="mb-1 department">Câu trả lời</label>
+													<input id="target" placeholder="Nhập câu trả lời..." svTrim class="form-control"
+														[(ngModel)]="testAnswer" maxlength="500" />
+												</div>
+												<div class="col-12 col-lg-6 form-group">
+													<label class="mb-1 department">Gợi ý câu hỏi của câu trả lời</label>
+													<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstQuestion"
+														placeholder="Chọn ..." bindLabel="title" bindValue="id" [virtualScroll]="true"
+														[(ngModel)]="questionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+													</ng-select>
+												</div>
+											</div>
+											<div class="col-lg-1 action padding-item center">
+												<button type="button" style="width: 40px; height: 40px;"
+													class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onAddAnswer()">
+													<i class="bi bi bi-node-plus"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="list-user">
+										<div class="title-user-map center" style="text-transform: none;" *ngIf="lstAnswer.length ==0">Chưa
+											có câu trả lời</div>
+										<div class="col-sm-12 item-user" *ngFor="let item of lstAnswer">
+											<div class="info-user border-right padding-item d-flex pl-0" style="flex: 1 0;">
+												<div class="avatar-circle mr-2">
+													{{item.answer}}
+												</div>
+												<div>
+													<div class="title">{{item.questionAnswers}}</div>
+													<div class="department">{{item.questionAnswers}}</div>
+												</div>
+											</div>
+											<div class="action padding-item center" *ngIf="statusCurent != 2">
+												<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"
+													class="btn btn-block border-0 px-3 center" (click)="onRemoveAnswer(item)">
+													<i class="bi bi-person-dash"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="modal-footer border-top-0">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
 					</div>
 				</div>
@@ -240,7 +338,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete(idDelete, categoryIdDelete)">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm"
+					(click)="onDelete(idDelete, categoryIdDelete)">Xác nhận</button>
 			</div>
 		</div>
 	</div>
@@ -262,9 +361,9 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onUpdateStatus(dataUpdate)">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm"
+					(click)="onUpdateStatus(dataUpdate)">Xác nhận</button>
 			</div>
 		</div>
 	</div>
 </div>
-
