@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core'
 import { Router } from '@angular/router'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { RESPONSE_STATUS, TYPE_NOTIFICATION, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, TYPE_NOTIFICATION, RECOMMENDATION_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { NotificationService } from 'src/app/services/notification.service'
@@ -13,6 +13,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
 import { BotMessage } from 'src/app/models/chatbotObject'
 import { link } from 'fs'
+import { SystemconfigService } from 'src/app/services/systemconfig.service'
+import { SystemConfigObject } from 'src/app/models/SystemConfigObject'
 
 declare var $: any
 
@@ -29,7 +31,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private sharedataService: DataService,
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
-		private botService: ChatBotService
+		private botService: ChatBotService,
+		private systemConfig : SystemconfigService
 	) {}
 
 	activeUrl: string = ''
@@ -49,6 +52,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	messages: any[] = []
 	loading: boolean
 	myGuid: string
+	config : any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -69,13 +73,24 @@ export class PublishComponent implements OnInit, OnChanges {
 				alert(error)
 			}
 
+			this.systemConfig.syConfigGetByType({Type : TYPECONFIG.APPLICATION}).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.config = JSON.parse(res.result.SYConfigGetByType.content)
+					console.log(this.config)
+				}
+			}),
+				(error) => {
+					console.log(error)
+					alert(error)
+				}
+
 		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [
 			{ path: ['phan-anh-kien-nghi/da-tra-loi'], text: 'Phản ánh- kiến nghị đã trả lời' },
 			// { path: ['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'], text: 'Cổng thông tin điện tử tỉnh Khánh Hoà' },
-			{ path: ['phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa'], text: 'Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà' },
+			// { path: ['phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa'], text: 'Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà' },
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'], text: 'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà' },
-			// { path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
+			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
 	}
 

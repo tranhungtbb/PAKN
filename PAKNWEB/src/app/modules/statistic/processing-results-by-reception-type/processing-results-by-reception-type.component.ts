@@ -192,7 +192,9 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'processing_results_by_feild_and_reception?' + JSON.stringify(passingObj)
+		this._shareData.sendReportUrl = this.type == 1 ? 
+			'processing_results_by_feild_and_reception?' + JSON.stringify(passingObj)
+			: 'processing_results_by_unit_and_reception?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

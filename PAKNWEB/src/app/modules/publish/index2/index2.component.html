@@ -92,10 +92,10 @@
 						<ng-container *ngFor="let item of ReflectionsRecommendations; let i = index">
 							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="i < 8">
 								<div class="card border">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 2" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303.png"
-										alt="">
-
-									<img class="img-fluid img-cover img-field" *ngIf="i== 1" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (1).png"
+									<img class="img-fluid img-cover img-field" style="width: 100%;" [src]="item.filePath"
+										alt="{{item.fieldName}}">
+									<!-- ../../../../assets/dist/images/index2/Rectangle 1303.png -->
+									<!-- <img class="img-fluid img-cover img-field" *ngIf="i== 1" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (1).png"
 										alt="">
 
 									<img class="img-fluid img-cover img-field" *ngIf="i== 0" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (2).png"
@@ -109,7 +109,7 @@
 									<img class="img-fluid img-cover img-field" *ngIf="i== 6" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (6).png"
 										alt="">
 									<img class="img-fluid img-cover img-field" *ngIf="i== 7" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (7).png"
-										alt="">
+										alt=""> -->
 
 									<div class="tt-v1 mb-3 d-flex justify-content-between no-grd-blue title-field pl-3 center">
 										<h4 class="text-uppercase mb-0  text-white">{{item.fieldName}}</h4>
@@ -122,7 +122,7 @@
 														{{mr.recommendation.title}}
 													</a>
 												</p>
-												<div class="tt-v1 mb-3 d-flex justify-content-between">
+												<div class="tt-v1 mb-1 d-flex justify-content-between">
 													<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
 													<a class="read-more" *ngIf="mr.recommendation.totalComment" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
 														<i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}

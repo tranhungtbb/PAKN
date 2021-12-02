@@ -10,12 +10,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 })
 export class SupportComponent implements OnInit, AfterViewInit {
 	constructor(private router: Router, private activatedRoute: ActivatedRoute, private _PuSupportService: PuSupportService, private sanitizer: DomSanitizer) {
-		// this.activatedRoute.queryParams.subscribe((params: Params) => {
-		// 	let type = params['type']
-		// 	if (!type) {
-		// 		this.router.navigate(['/cong-bo/ho-tro/2'])
-		// 	}
-		// })
+		
 	}
 
 	listDoc: any[] = []
