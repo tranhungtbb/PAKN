@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { DataService } from 'src/app/services/sharedata.service'
 import { Router } from '@angular/router'
@@ -18,7 +19,8 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 		private _router: Router,
 		private _localService: UserInfoStorageService,
 		private _toastr: ToastrService,
-		private _shareData: DataService
+		private _shareData: DataService,
+		private BsLocaleService: BsLocaleService,
 	) { }
 
 	listYear: any = []
@@ -43,9 +45,17 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 	pageIndex: number = 1
 	pageSize: number = 10
 
+	minDate: Date
+	maxDate: Date
+
 	maxDateValue = new Date()
 
 	ngOnInit() {
+		let currentTime = new Date()
+		this.year = currentTime.getFullYear()
+		for (var i = this.year; i >= this.year - 5; i--) {
+			this.listYear.push({ value: i, text: 'Năm ' + i })
+		}
 		this.initData()
 	}
 
@@ -54,28 +64,46 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 	}
 
 	initData() {
-		let currentTime = new Date()
-		this.year = currentTime.getFullYear()
-		var curMonth = currentTime.getMonth() + 1
-		for (var i = this.year; i >= this.year - 5; i--) {
-			this.listYear.push({ value: i, text: 'Năm ' + i })
-		}
-		if (1 <= curMonth && curMonth <= 3) {
-			this.quarter = 1
-		} else if (4 <= curMonth && curMonth <= 6) {
-			this.quarter = 2
-		} else if (7 <= curMonth && curMonth <= 9) {
-			this.quarter = 3
-		} else {
-			this.quarter = 4
+		this.BsLocaleService.use('vi')
+		const currentMonth = new Date().getMonth()
+		switch (currentMonth) {
+			case 1:
+			case 2:
+			case 3:
+				this.quarter = 1
+				break
+			case 4:
+			case 5:
+			case 6:
+				this.quarter = 2
+				break
+			case 7:
+			case 8:
+			case 9:
+				this.quarter = 3
+				break
+			case 10:
+			case 11:
+			case 12:
+				this.quarter = 4
+				break
 		}
 		this.changeQuarter()
 	}
-
 	minusDays(date: Date, days: number): Date {
 		date.setDate(date.getDate() - days)
 		return date
 	}
+	getFormattedDate(date) {
+		var year = date.getFullYear()
+		var month = (1 + date.getMonth()).toString()
+		month = month.length > 1 ? month : '0' + month
+		var day = date.getDate().toString()
+		day = day.length > 1 ? day : '0' + day
+		return month + '-' + day + '-' + year
+	}
+
+
 	changeYear() {
 		if (this.year != null) {
 			this.fromDate = new Date(this.year, 0, 1)
@@ -108,6 +136,8 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 				this.toDate = this.minusDays(tmp_date, 1)
 			}
 		}
+		this.minDate = this.fromDate
+		this.maxDate = this.toDate
 		this.getList()
 	}
 
@@ -141,8 +171,6 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 	fromDateValueChange(value: any): void {
 		if (value) {
 			this.fromDate = value
-		} else {
-			this.fromDate = null
 		}
 		this.getList()
 	}
@@ -150,8 +178,6 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 	toDateValueChange(value: Date): void {
 		if (value) {
 			this.toDate = value
-		} else {
-			this.toDate = null
 		}
 		this.getList()
 	}
@@ -182,31 +208,43 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 
 	viewDetail(id: any, recomendationType: number = null) {
 		if (this.type == 1) {
-			return this._router.navigate([
-				'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn',
-				this.type,
-				id, 0, recomendationType,
-				this.getFormattedDate(this.fromDate),
-				this.getFormattedDate(this.toDate)
-			])
+			if (recomendationType) {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-linh-vuc',
+					this.type,
+					id, recomendationType,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			} else {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-linh-vuc',
+					this.type,
+					id,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			}
+		} else {
+			if (recomendationType) {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-don-vi',
+					this.type,
+					id, recomendationType,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			} else {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-don-vi',
+					this.type,
+					id,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			}
 		}
-		return this._router.navigate([
-			'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn',
-			this.type,
-			0, id, recomendationType,
-			this.fromDate.toDateString(),
-			this.toDate.toDateString()
-		])
 	}
-	getFormattedDate(date) {
-		var year = date.getFullYear()
-		var month = (1 + date.getMonth()).toString()
-		month = month.length > 1 ? month : '0' + month
-		var day = date.getDate().toString()
-		day = day.length > 1 ? day : '0' + day
-		return month + '-' + day + '-' + year
-	}
-
 	onExport() {
 		let passingObj: any = {}
 		if (this.fromDate) {

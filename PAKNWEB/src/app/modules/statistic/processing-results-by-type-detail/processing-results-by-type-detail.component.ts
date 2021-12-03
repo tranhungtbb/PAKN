@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { RecommendationObject, RecommendationSearchStatisticObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS, STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { StatisticService } from 'src/app/services/statistic.service'
 import { CatalogService } from 'src/app/services/catalog.service'
-import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 
 declare var $: any
 @Component({
-	selector: 'app-recommendations-by-type-detail',
-	templateUrl: './recommendations-by-type-detail.component.html',
-	styleUrls: ['./recommendations-by-type-detail.component.css'],
+	selector: 'app-processing-results-by-type-detail',
+	templateUrl: './processing-results-by-type-detail.component.html',
+	styleUrls: ['./processing-results-by-type-detail.component.css'],
 })
 export class RecommendationsByTypeDetailComponent implements OnInit {
 	constructor(
@@ -31,26 +31,47 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 	isMain: boolean = this.storeageService.getIsMain()
 	listData: any = []
 	lstUnit: any[] = []
-	unitId: any
+	lstField: any[] = []
+	unitId: number
+	fieldId: number
+	recommendationType: number
 	dataSearch: DataSearch = new DataSearch()
 	fieldName: string
 	fromDate: string
 	toDate: string
 	pageIndex: number = 1
 	pageSize: number = 20
+
+	lstRecommendationType: any = [
+		{ value: 0, text: 'PAKN về dịch vụ công' },
+		{ value: 1, text: 'PAKN về dịch kinh tế xã hội' }
+	]
+
+
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	ngOnInit() {
 		this.activatedRoute.params.subscribe((params) => {
+			debugger
 			this.dataSearch.type = +params['type']
-			this.dataSearch.fieldId = +params['fieldId']
-			this.dataSearch.unitId = params['unitId']
+			if (this.dataSearch.type == 1) // linh vuc
+			{
+				this.fieldId = +params['fieldId']
+			} else { // don vi
+				this.unitId = +params['unitId']
+			}
+
+			let recommendationType = +params['RecommendationType']
+			if (recommendationType) {
+				this.dataSearch.recommendationType = recommendationType
+			}
 			this.fromDate = params['fromDate']
 			this.toDate = params['toDate']
 			this.getList()
 			this._serviceRecommendation.recommendationGetDataForSearch({}).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-
+					this.lstUnit = response.result.lstUnit
+					this.lstField = response.result.lstField
 				} else {
 					this._toastr.error(response.message)
 				}
@@ -73,8 +94,9 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 		this.dataSearch.unitId = (this.dataSearch.unitId == null || this.dataSearch.unitId == 0) ? '' : this.dataSearch.unitId
 		let request = {
 			Type: this.dataSearch.type,
-			FieldId: this.dataSearch.fieldId,
-			UnitId: this.dataSearch.unitId,
+			FieldId: this.fieldId == null ? '' : this.fieldId,
+			UnitId: this.unitId == null ? '' : this.unitId,
+			RecommendationType: this.recommendationType,
 			Code: this.dataSearch.code,
 			Name: this.dataSearch.sendName,
 			Title: this.dataSearch.title,
@@ -143,9 +165,8 @@ class DataSearch {
 		this.code = ''
 		this.sendName = ''
 		this.title = ''
-		this.unitId = null
-		this.fieldId = null
-		this.type = null
+		this.type = null,
+			this.recommendationType = null
 	}
 	code: string
 	sendName: string
@@ -153,4 +174,5 @@ class DataSearch {
 	fieldId: number
 	unitId: any
 	type: number
+	recommendationType: number
 }

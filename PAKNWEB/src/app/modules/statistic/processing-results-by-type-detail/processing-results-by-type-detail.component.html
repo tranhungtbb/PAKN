@@ -44,49 +44,51 @@
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
-									<th style="min-width: 265px;">
+									<th style="width: 210px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tên Cá nhân/ Doanh nghiệp</strong>
-
+											<strong>Tên CN/DN</strong>
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.sendName"
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
-									<th style="width: 350px">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
-
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.title"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
-									<th style="min-width: 240px;">
-										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Đơn vị tiếp nhận</strong>
 
+									<th style="width: 200px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Phân loại</strong>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select notFoundText="Không có dữ liệu" class="" [items]="lstUnit" placeholder="Đơn vị ..."
-												bindLabel="text" bindValue="value" [(ngModel)]="unitId" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+											<ng-select *ngIf="type != 1" notFoundText="Không có dữ liệu" class=""
+												[items]="lstRecommendationType" placeholder="Chọn ..." bindLabel="text" bindValue="value"
+												[(ngModel)]="recommendationType" [closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
-									<th style="width: 160px">
+									<th style="width: 200px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Trạng thái</strong>
-
+											<strong>{{ dataSearch.type == 2 ? 'Lĩnh vực' : 'Đơn vị tiếp nhận' }}</strong>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-												placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+											<ng-select *ngIf="dataSearch.type == 1" notFoundText="Không có dữ liệu" class="" [items]="lstUnit"
+												placeholder="Đơn vị tiếp nhận ..." bindLabel="text" bindValue="value" [(ngModel)]="unitId"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
+											<ng-select *ngIf="dataSearch.type != 1" notFoundText="Không có dữ liệu" class=""
+												[items]="lstField" placeholder="Lĩnh vực ..." bindLabel="text" bindValue="value"
+												[(ngModel)]="fieldId" [closeOnSelect]="true" (change)="dataStateChange()">
+											</ng-select>
 										</div>
 									</th>
-									<th style="width: 100px">
-										<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao
-												tác</strong></p>
+									<th style="width: 140px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+										</p>
 									</th>
 								</tr>
 							</ng-template>
@@ -96,25 +98,20 @@
 										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis"
 												title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
-									<td><a class="ellipsis">{{item.name}}</a></td>
+									<td><a class="ellipsis">{{item.userSendName}}</a></td>
 									<td>
 										<p class="text-2line mb-0">{{item.title}}</p>
 									</td>
 									<td>
-										<p class="text-2line mb-0">{{item.unitName}}</p>
+										<p *ngIf="item.type == 0" class="text-2line mb-0">Phản ánh kiến nghị về dịch vụ công</p>
+										<p *ngIf="item.type == 1" class="text-2line mb-0">Phản ánh kiến nghị về kinh tế xã hội</p>
 									</td>
 									<td>
-										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-blue">Đang soạn thảo</span>
-										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử
-											lý</span>
-										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối tiếp nhận</span>
-										<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
-										<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
-										<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
-										<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-										<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
-										<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
-										<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span>
+										<p class="text-2line mb-0">{{item.name}}</p>
+									</td>
+									<td>
+										<span *ngIf="item.status == 10">Đã xử lý</span>
+										<span *ngIf="item.status != 10">Đang xử lý</span>
 									</td>
 								</tr>
 							</ng-template>
@@ -129,5 +126,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>
