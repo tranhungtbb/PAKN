@@ -14,7 +14,7 @@ declare var $: any
 	styleUrls: ['./org-repre-form.component.css'],
 })
 export class OrgRepreFormComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) { }
 
 	dateNow: Date = new Date()
 	formInfo: FormGroup
@@ -58,7 +58,7 @@ export class OrgRepreFormComponent implements OnInit {
 			//----thông tin người đại diện
 			representativeName: [this.model.representativeName, [Validators.required, Validators.maxLength(100)]], // tên người đại diện
 			email: [this.model.email, [Validators.email]],
-			phone: [this.model.phone],
+			phone: [this.model.phone, [Validators.required]],
 			address: [this.model.address, []],
 		})
 	}

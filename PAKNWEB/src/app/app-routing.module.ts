@@ -1,6 +1,7 @@
 import { NgModule, Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule, Routes } from '@angular/router'
+import { PolicyPageComponent } from './modules/policy-page/policy-page.component'
 
 // template 2
 
@@ -10,6 +11,9 @@ const routes: Routes = [
 	{ path: 'quan-tri', loadChildren: './modules/business.module#BusinessModule' },
 	{ path: 'cong-bo', loadChildren: './modules/publish/publish.module#PublishModule' },
 	{ path: 'dang-ky', loadChildren: './modules/register/register.module#RegisterModule' },
+	{
+		path: 'policy', component: PolicyPageComponent,
+	},
 ]
 
 @NgModule({
@@ -17,4 +21,4 @@ const routes: Routes = [
 	declarations: [],
 	exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

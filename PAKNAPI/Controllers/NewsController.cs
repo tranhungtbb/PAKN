@@ -418,10 +418,10 @@ namespace PAKNAPI.Controller
 						await HISNewsInsert(his);
 					}
 					// thông báo
-					if (_nENewsUpdateIN.IsNotification == true)
-					{
-						await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
-					}
+					//if (_nENewsUpdateIN.IsNotification == true)
+					//{
+					//	await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
+					//}
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
 				}
