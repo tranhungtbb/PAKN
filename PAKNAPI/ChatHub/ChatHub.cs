@@ -108,7 +108,7 @@ namespace SignalR.Hubs
             if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable)
             {
                 DateTime foo = DateTime.Now;
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
+                //var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
                 ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
                 DateTime foooo = DateTime.Now;
                 double totall = (foooo - foo).TotalMilliseconds;

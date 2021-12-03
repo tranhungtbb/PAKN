@@ -57,6 +57,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
 		} else {
 			this.isLogin = true
 		}
+		if (currentlink.includes('policy')) {
+			this._router.navigate(['/policy'])
+			return
+		}
 		if (this.isLogin) {
 			var returnlURL = this.storeageService.getReturnUrl()
 			if (returnlURL != undefined && returnlURL != '' && returnlURL != null && returnlURL != 'undefined') {

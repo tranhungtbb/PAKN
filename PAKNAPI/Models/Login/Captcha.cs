@@ -57,11 +57,12 @@ namespace PAKNAPI.Models.Results
             return sb.ToString();
         }
 
-        public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context)
+        public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context,DateTime createdDate)
         {
             var isValid = false;
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", userInputCaptcha);
+            parameters.Add("@CreatedDate", createdDate);
             var result = _sQLCon.ExecuteListDapper<int>("SY_CaptChaValidator", parameters).FirstOrDefault();
             if (result > 0)
             {
@@ -70,7 +71,7 @@ namespace PAKNAPI.Models.Results
             return isValid;
         }
 
-        public async Task<int?> InsertCaptcha(string captcha, string ipAddress, string userAgent)
+        public async Task<int?> InsertCaptcha(string captcha, string ipAddress, string userAgent, DateTime createdDate)
         {
             try
             {
@@ -78,6 +79,7 @@ namespace PAKNAPI.Models.Results
                 parameters.Add("@Code", captcha);
                 parameters.Add("@IpAddress", ipAddress);
                 parameters.Add("@UserAgent", userAgent);
+                parameters.Add("@createdDate", createdDate);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaInsertData", parameters);
             }
             catch (Exception ex)

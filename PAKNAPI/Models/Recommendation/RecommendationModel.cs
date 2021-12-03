@@ -41,6 +41,7 @@ namespace PAKNAPI.Models.Recommendation
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Mã captcha không được để trống")]
         public string Captcha { get; set; }
+        public double Milliseconds { get; set; }
     }
 
     public class RecommendationInsertRequest

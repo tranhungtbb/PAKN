@@ -282,7 +282,7 @@ namespace PAKNAPI.Controllers
 
 							if (item.SendEmail == true) {
 								var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
-								if (userSend != null && userSend.IsActived == true) { lstUserSend.Add(userSend.FullName,userSend.Email); }
+								if (userSend != null && userSend.IsActived == true && !string.IsNullOrEmpty(userSend.Email)) { lstUserSend.Add(userSend.FullName,userSend.Email); }
 							}
 						}
 						// send email nếu có

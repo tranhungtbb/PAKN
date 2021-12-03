@@ -41,16 +41,25 @@ namespace PAKNAPI.Controllers
 		[Route("get-captcha-image")]
 		[HttpGet]
 		//[Authorize("demo")]
-		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null)
+		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null, double MillisecondsCurrent = 0)
 		{
 			try
 			{
 				int width = 200;
 				int height = 60;
-				var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
+				int number1 = 0;
+				int number2 = 0;
+				Random random = new Random();
+				number1 = random.Next(10);
+				number2 = random.Next(10);
+				var captchaCode = $"{number1.ToString()}+{number2.ToString()}=?";
+				//var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
+
 				var result = new Captcha(_appSetting).GenerateCaptchaImage(width, height, captchaCode);
 				//await new Captcha(_appSetting).DeleteCaptchaByUserAgent(IpAddress, Request.Headers["User-Agent"].ToString());
-				await new Captcha(_appSetting).InsertCaptcha(result.CaptchaCode, IpAddress, Request.Headers["User-Agent"].ToString());
+				TimeSpan time = TimeSpan.FromMilliseconds(MillisecondsCurrent);
+				DateTime createdDAte = new DateTime(1970, 1, 1) + time;
+				await new Captcha(_appSetting).InsertCaptcha((number1 + number2).ToString(), IpAddress, Request.Headers["User-Agent"].ToString(), createdDAte);
 				Stream s = new MemoryStream(result.CaptchaByteData);
 				var r = new FileStreamResult(s, "image/png");
 				return r;
@@ -185,11 +194,13 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[Route("validator-captcha")]
 		[HttpGet]
-		public async Task<ActionResult<object>> ValidatorCaptchaAsync(string CaptchaCode)
+		public async Task<ActionResult<object>> ValidatorCaptchaAsync(string CaptchaCode, double MillisecondsCurrent)
 		{
 			try
 			{
-				if (!new Captcha(_appSetting).ValidateCaptchaCode(CaptchaCode, captChaCode))
+				TimeSpan time = TimeSpan.FromMilliseconds(MillisecondsCurrent);
+				DateTime createdDAte = new DateTime(1970, 1, 1) + time;
+				if (!new Captcha(_appSetting).ValidateCaptchaCode(CaptchaCode, captChaCode, createdDAte))
 				{
 					await new Captcha(_appSetting).DeleteCaptcha("");
 					return new ResultApi { Success = ResultCode.ORROR };
