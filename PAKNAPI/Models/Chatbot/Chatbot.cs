@@ -457,7 +457,6 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotInsertIN
 	{
 		public string Id { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Câu hỏi không được để trống")]
 		public string Question { get; set; }
@@ -524,18 +523,18 @@ namespace PAKNAPI.Models.Chatbot
 
 		public async Task<int> ChatbotUpdateDAO(ChatbotUpdateIN _chatbotUpdateIN)
 		{
-			//if (_chatbotUpdateIN.IsActived == true)
-   //         {
-			//	await UpdateFileQuestion(_chatbotUpdateIN);
-			//}
-			//else
-   //         {
-			//	await DeleteFileQuestion(_chatbotUpdateIN);
-			//}
-
-			await InsertChatbotLibDAO(_chatbotUpdateIN.lstAnswer, (int)_chatbotUpdateIN.Id);
-			return await UpdateDAOQuestion(_chatbotUpdateIN); 
-		}
+            //if (_chatbotUpdateIN.IsActived == true)
+            //         {
+            //	await UpdateFileQuestion(_chatbotUpdateIN);
+            //}
+            //else
+            //         {
+            //	await DeleteFileQuestion(_chatbotUpdateIN);
+            //}
+            await DelChatbotLibDAO((int)_chatbotUpdateIN.Id);
+            await InsertChatbotLibDAO(_chatbotUpdateIN.lstAnswer, (int)_chatbotUpdateIN.Id);
+            return await UpdateDAOQuestion(_chatbotUpdateIN);
+        }
 
 		private async Task<int> UpdateDAOQuestion(ChatbotUpdateIN _chatbotUpdateIN)
 		{
@@ -550,8 +549,13 @@ namespace PAKNAPI.Models.Chatbot
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("ChatbotUpdate", DP));
 		}
-
-		private async Task<int> InsertChatbotLibDAO(List<lstAnswer> lstAnswers, int id)
+        private async Task<int> DelChatbotLibDAO(int id)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("IdBotLib", id);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibAnswersDelBy", DP);
+        }
+        private async Task<int> InsertChatbotLibDAO(List<lstAnswer> lstAnswers, int id)
 		{
 			foreach (var item in lstAnswers)
 			{
@@ -612,7 +616,6 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotUpdateIN
 	{
 		public int? Id { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Câu hỏi không được để trống")]
         public string Question { get; set; }

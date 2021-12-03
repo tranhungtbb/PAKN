@@ -57,7 +57,7 @@ export class ChatBotComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
-			title: [this.model.title, Validators.required],
+			title: [this.model.title],
 			question: [this.model.question, Validators.required],
 			// answer: [this.model.answer, Validators.required],
 			categoryId: [this.model.categoryId],
@@ -289,6 +289,9 @@ export class ChatBotComponent implements OnInit {
 				let obj = { answer: this.textAnswer, idSuggetLibrary: this.questionId, questionAnswers: bussiness.question }
 				this.lstAnswer.push(obj)
 			}
+		} else {
+			let obj = { answer: this.textAnswer, idSuggetLibrary: this.questionId, questionAnswers: null }
+			this.lstAnswer.push(obj)
 		}
 		this.textAnswer = '';
 		this.questionId = null
