@@ -163,7 +163,8 @@ namespace PAKNAPI.Common
 
         public int GetUnitIdFromRequest(HttpContext httpContext)
         {
-            return int.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "UnitId")?.Value);
+            Int32.TryParse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "UnitId")?.Value, out int i);
+            return i;
         }
 
         public bool GetIsMainFromRequest(HttpContext httpContext)
