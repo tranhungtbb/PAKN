@@ -7,7 +7,8 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chi tiết Phản ánh, kiến nghị</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton *ngIf="suggest == false"><i class="bi bi-arrow-left mr-2"></i>
+					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton
+						*ngIf="suggest == false"><i class="bi bi-arrow-left mr-2"></i>
 						quay lại</button>
 					<button type="button" class="btn grd-blue btn-sm rounded border-0 mr-3 text-white" (click)="preForward()"
 						*ngIf="(model.status == 4 && model.unitActive == unitLoginId) || (model.status == 6 && model.unitActive == unitLoginId)">
@@ -20,7 +21,8 @@
 					</button>
 					<button type="button" class="btn grd-red btn-sm rounded border-0 mr-3 text-white" (click)="preProcess(3)"
 						*ngIf="(model.status == 2 || model.status == 5 || model.status == 8) && (model.userActive == userLoginId || model.unitActive == unitLoginId)">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-break mr-2" viewBox="0 0 16 16">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-file-earmark-break mr-2" viewBox="0 0 16 16">
 							<path
 								d="M14 4.5V9h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v7H2V2a2 2 0 0 1 2-2h5.5L14 4.5zM13 12h1v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-2zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H.5z" />
 						</svg>
@@ -29,8 +31,10 @@
 
 					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preProcess(2)"
 						*ngIf="(model.status == 2 || model.status == 5) && (model.userActive == userLoginId || model.unitActive == unitLoginId)">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
-							<path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
+							<path
+								d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
 							<path
 								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
 						</svg>
@@ -39,15 +43,17 @@
 
 					<button type="button" class="btn grd-green btn-sm rounded border-0 text-white" (click)="preProcess(2)"
 						*ngIf="model.status == 8 && model.userActive == userLoginId">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
-							<path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
+							<path
+								d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
 							<path
 								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
 						</svg>
 						Phê duyệt
 					</button>
-					<button *ngIf="enableEdit" type="button" class="btn grd-brown text-dark border-0 ml-3 py-2 px-3 cursor-hand" title="Sửa"
-					[routerLink]="['/quan-tri/kien-nghi/them-moi',model.id]">
+					<button *ngIf="enableEdit" type="button" class="btn grd-brown text-dark border-0 ml-3 py-2 px-3 cursor-hand"
+						title="Sửa" [routerLink]="['/quan-tri/kien-nghi/them-moi',model.id]">
 						<i class="bi bi-pencil-square"></i> Sửa
 					</button>
 				</div>
@@ -74,7 +80,8 @@
 					</div>
 					<div class="media pb-4">
 						<div class="mr-3">
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+								class="bi bi-chat-right-text" viewBox="0 0 16 16">
 								<path
 									d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z">
 								</path>
@@ -87,46 +94,64 @@
 							<p class="h4 font-weight-bold">Nội dung kiến nghị:</p>
 							<p [innerHTML]="model.content"></p>
 							<p *ngIf="filesModel.length > 0">
-									<span class="text-left">
-										<small class="small">Tài liệu đính kèm</small><br>
-										<div *ngFor="let file of filesModel" class="file-att">
-											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
-											</a>
-											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
-											</a>
-											<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
-											</a>
-											<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
-											</a>
-											<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
-											</a>
-											<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
-											</a>
-											<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
-												title="Xem file">
-												<i class="bi bi-eye"></i>
-											</span>
-										</div>
-									</span>
+								<span class="text-left">
+									<small class="small">Tài liệu đính kèm</small><br>
+									<div *ngFor="let file of filesModel" class="file-att">
+										<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-powerpoint.svg"
+												style="width: 30px;padding-right: 5px;" alt="">
+											<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+												style="width: 30px;padding-right: 5px;" alt="">
+											<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}}</span>
+										</a>
+										<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
+											[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
+											<i class="bi bi-eye"></i>
+										</span>
+									</div>
+								</span>
 							</p>
 						</div>
 					</div>
 					<div class="media pb-4" *ngIf="model.status > 6">
 						<div class="mr-3">
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;"
-								viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+								class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
@@ -138,19 +163,21 @@
 									<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 								</div>
 								<div class="col-md-4">
-									<button *ngIf="lstHashtagSelected.length > 0 && suggest == false" type="button" class="btn btn-sm rounded bg-white text-dark border pull-right"
-										(click)="getListSuggest()">
+									<button *ngIf="lstHashtagSelected.length > 0 && suggest == false" type="button"
+										class="btn btn-sm rounded bg-white text-dark border pull-right" (click)="getListSuggest()">
 										<i class="bi bi-lightbulb"></i> Gợi ý kết quả
 									</button>
 								</div>
 							</div>
 							<ng-container *ngIf="model.status == 7 || (model.status == 9 && model.userActive == userLoginId)">
-								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10" placeholder="Nhập nội dung..."></textarea>
+								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10"
+									placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
 									<div class="col-12 attach-ct mt-3">
 										<p class="h5 text-uppercase mb-3">
 											<span>
-												<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+												<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+													class="bi bi-paperclip" viewBox="0 0 16 16">
 													<path
 														d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 													</path>
@@ -161,8 +188,8 @@
 										<div class="attach-file with-border row">
 											<div class="col-auto mb-4">
 												<div class="alert alert-dark h-100 d-flex align-items-center" style="width: 170px">
-													<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none"
-														multiple accept="{{fileAccept}}" />
+													<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+														class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
 													<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
 													<label for="file-5" (click)="file.click()">
 														<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -175,8 +202,10 @@
 											</div>
 											<ng-container *ngFor="let item of files">
 												<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
 														</button>
 														<a href="#" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -185,8 +214,10 @@
 													</div>
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
 														</button>
 														<a href="#" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -195,8 +226,10 @@
 													</div>
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
 														</button>
 														<a href="#" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
@@ -205,8 +238,10 @@
 													</div>
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
 														</button>
 														<a href="#" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
@@ -215,8 +250,10 @@
 													</div>
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
 														</button>
 														<a href="#" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
@@ -234,16 +271,18 @@
 										<label class="mb-1 mt-3">NGƯỜI PHÊ DUYỆT <span class="cl-red">(*)</span></label>
 									</div>
 									<div class="col-12 col-lg-5 form-group">
-										<ng-select class="form-control" [items]="lstUsers" placeholder="Nhập..." bindValue="value" bindLabel="text"
-											[(ngModel)]="modelConclusion.receiverId">
+										<ng-select class="form-control" [items]="lstUsers" placeholder="Nhập..." bindValue="value"
+											bindLabel="text" [(ngModel)]="modelConclusion.receiverId">
 											<ng-template ng-option-tmp let-item="item">
 												<div title="{{item.text}}">{{item.text}}</div>
 											</ng-template>
 										</ng-select>
 									</div>
 									<div class="col-12 col-lg-4 form-group">
-										<button type="button" class="btn grd-xanhngoc border-0 text-white btn-custom-send-process" (click)="onProcessConclusion()">
-											<svg _ngcontent-jqu-c6="" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+										<button type="button" class="btn grd-xanhngoc border-0 text-white btn-custom-send-process"
+											(click)="onProcessConclusion()">
+											<svg _ngcontent-jqu-c6="" fill="none" height="16" viewBox="0 0 16 16" width="16"
+												xmlns="http://www.w3.org/2000/svg">
 												<path _ngcontent-jqu-c6=""
 													d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
 													fill="white"></path>
@@ -262,37 +301,55 @@
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>
 										<div *ngFor="let file of files" class="file-att">
-											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+													alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+													file.name}}</span>
 											</a>
-											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+													alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+													file.name}}</span>
 											</a>
-											<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
+													alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+													file.name}}</span>
 											</a>
-											<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+													alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+													file.name}}</span>
 											</a>
-											<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<img src="../../../../assets/dist/images/file-powerpoint.svg"
+													style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+													file.name}}</span>
 											</a>
-											<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
-												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+													style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+													file.name}}</span>
 											</a>
-											<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
-												title="Xem file">
+											<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
+												[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
 												<i class="bi bi-eye"></i>
 											</span>
 										</div>
 									</span>
-							</p>
+								</p>
 							</ng-container>
 						</div>
 					</div>
@@ -301,8 +358,10 @@
 							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi ({{totalInfomationExchange}})</p>
 						</div>
 						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
-							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..." [(ngModel)]="infoExchangeModel.contents"></textarea>
-							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onInsertInfomationExchange()"> Gửi </button>
+							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..."
+								[(ngModel)]="infoExchangeModel.contents"></textarea>
+							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onInsertInfomationExchange()">
+								Gửi </button>
 						</div>
 						<div *ngFor="let item of listInfomationExchange" class="border-bottom mb-3">
 							<header class="clearfix">
@@ -321,7 +380,8 @@
 							</div>
 						</div>
 						<div *ngIf="listInfomationExchange && (totalInfomationExchange > listInfomationExchange.length)">
-							<p class="text-black"><a href="javascript:void(0);" (click)="onInsertInfomationExchange(infomationExchangeQuery.pageIndex + 1)">Xem thêm trao đổi khác <i
+							<p class="text-black"><a href="javascript:void(0);"
+									(click)="onInsertInfomationExchange(infomationExchangeQuery.pageIndex + 1)">Xem thêm trao đổi khác <i
 										class="bi bi-arrow-right"></i></a></p>
 						</div>
 					</div>
@@ -329,14 +389,15 @@
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct-ql pl-0 pt-4">
 				<div class="border-bottom px-4" *ngIf="markers">
-					<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false"
-						> 
-						<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"> 
+					<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false"
+						[zoomControl]="false">
+						<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true">
 						</agm-marker>
 					</agm-map>
 					<div>
 						<div class="cl-red d-flex" style="align-items: center;">
-							<i class="fas fa-map-marker-alt mr-3"></i> <p class="mb-0">Địa điểm phản ánh hiện trường</p>
+							<i class="fas fa-map-marker-alt mr-3"></i>
+							<p class="mb-0">Địa điểm phản ánh hiện trường</p>
 						</div>
 						<p class="mb-0 font-weight-bold">{{model.address}}</p>
 					</div>
@@ -344,9 +405,9 @@
 				<div class="hashtags-box border-bottom px-4 mt-2">
 					<div class="form-row align-items-end">
 						<div class="col form-group pr-0">
-							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>
-							<ng-select class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" (keydown.enter)="onCreateHashtag($event)"
-								[(ngModel)]="hashtagId" [virtualScroll]="true">
+							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Nhãn dữ liệu</label>
+							<ng-select class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text"
+								(keydown.enter)="onCreateHashtag($event)" [(ngModel)]="hashtagId" [virtualScroll]="true">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
@@ -354,23 +415,28 @@
 						</div>
 						<div class="col-auto form-group">
 							<button type="button" class="btn grd-blue btn-sm border-0 text-white px-2" (click)="onAddHashtag()">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus"
+									viewBox="0 0 16 16">
+									<path
+										d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 								</svg>
 							</button>
 						</div>
 					</div>
 
 					<div class="tags" *ngIf="model.status != 10">
-						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center" *ngFor="let item of lstHashtagSelected">
+						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center"
+							*ngFor="let item of lstHashtagSelected">
 							<strong>{{item.text}}</strong>
-							<button type="button" class="close h-100 pl-2" (click)="onRemoveHashtag(item)"><span><i class="mdi mdi-close"></i></span>
+							<button type="button" class="close h-100 pl-2" (click)="onRemoveHashtag(item)"><span><i
+										class="mdi mdi-close"></i></span>
 							</button>
 						</div>
 					</div>
 
 					<div class="tags" *ngIf="model.status == 10">
-						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center" *ngFor="let item of lstHashtagSelected">
+						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center"
+							*ngFor="let item of lstHashtagSelected">
 							<strong>{{item.text}}</strong>
 
 						</div>
@@ -434,9 +500,11 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId"
-								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
-							<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value"
+								formControlName="unitReceiveId" [(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true">
+							</ng-select>
+							<div
+								*ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="f.unitReceiveId.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -446,8 +514,9 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Hạn giải quyết</label>
 							<div class="input-group">
-								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
-									[(ngModel)]="modelForward.expiredDate" appBsDatepickerInvalid [minDate]="dateNow"
+								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker
+									#n="bsDatepicker" maxlength="10" formControlName="expiredDate" [(ngModel)]="modelForward.expiredDate"
+									appBsDatepickerInvalid [minDate]="dateNow"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon p-2">
 									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -456,8 +525,8 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Nội dung</label>
-							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content" placeholder="Nhập nội dung..."
-								maxlength="500"></textarea>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
+								placeholder="Nhập nội dung..." maxlength="500"></textarea>
 						</div>
 					</div>
 				</form>
@@ -486,7 +555,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onProcessAccept()">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onProcessAccept()">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>
@@ -503,13 +573,16 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
-				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
+				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny"
+					maxlength="500"></textarea>
 				<div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="model.status == 2">
-					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
+					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord"
+						id="basic_checkbox_1">
 					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
 				</div>
-				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 3" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
-					bindLabel="text" bindValue="value" [(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
+				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 3"
+					placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord" bindLabel="text" bindValue="value"
+					[(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
 				</ng-select>
 			</div>
 			<div class="modal-footer justify-content-center border-top-0">
@@ -529,8 +602,9 @@
 				</button>
 			</div>
 			<div class="modal-body pt-3 pb-3">
-				<p-table #table [value]="listData" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-					currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+				<p-table #table [value]="listData" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+					[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+					[totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 					<ng-template pTemplate="header" class="bg-thead">
 						<tr>
@@ -555,7 +629,8 @@
 								</p>
 							</th>
 							<th style="width: 100px">
-								<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao tác</strong></p>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao tác</strong>
+								</p>
 							</th>
 						</tr>
 					</ng-template>
@@ -573,9 +648,10 @@
 							<td>{{item.sendDate | date:'dd/MM/yyyy'}}</td>
 							<td>
 								<div class="d-flex justify-content-end">
-									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" target="_blank" class="btn-icon grd-brown text-brown mr-2"
-										title="Xem chi tiết"><i class="bi bi-eye"></i></a>
-									<a *ngIf="model.status == 7" class="btn-icon grd-blue text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
+									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" target="_blank"
+										class="btn-icon grd-brown text-brown mr-2" title="Xem chi tiết"><i class="bi bi-eye"></i></a>
+									<a *ngIf="model.status == 7" class="btn-icon grd-blue text-white mr-2"
+										(click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
 											class="bi bi-file-earmark-check"></i></a>
 								</div>
 							</td>

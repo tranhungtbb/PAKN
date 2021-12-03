@@ -563,7 +563,7 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationByRecommendationTypeDetail>> StatisticRecommendationByRecommendationTypeAndFieldDetailDAO(int FieldId, int UnitId, int RecommendationType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByRecommendationTypeDetail>> StatisticRecommendationByRecommendationTypeAndFieldDetailDAO(int? FieldId, int? UnitId, int? RecommendationType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FieldId", FieldId);
@@ -579,7 +579,7 @@ namespace PAKNAPI.Models.Statistic
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByRecommendationTypeDetail>("[TK_ListRecommendationByRecommendationTypeAndFieldDetail]", DP)).ToList();
 		}
 
-		public async Task<List<StatisticRecommendationByRecommendationTypeDetail>> StatisticRecommendationByRecommendationTypeAndUnitProcessDetailDAO(int FieldId, int UnitProcess, int RecommendationType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByRecommendationTypeDetail>> StatisticRecommendationByRecommendationTypeAndUnitProcessDetailDAO(int? FieldId, int? UnitProcess, int? RecommendationType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UnitProcess", UnitProcess);
