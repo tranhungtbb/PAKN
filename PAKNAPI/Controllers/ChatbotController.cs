@@ -215,7 +215,9 @@ namespace PAKNAPI.Controllers.ChatbotController
             try
             {
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotInsert(_webHostEnvironment,_appSetting).ChatbotInsertDAO(_chatbotInsertIN) };
+                var resInsert = await new ChatbotInsert(_webHostEnvironment, _appSetting).ChatbotInsertDAO(_chatbotInsertIN);
+                await _bots.ReloadBots();
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resInsert };
             }
             catch (Exception ex)
             {
@@ -239,7 +241,9 @@ namespace PAKNAPI.Controllers.ChatbotController
             try
             {
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotUpdate(_webHostEnvironment, _appSetting).ChatbotUpdateDAO(ChatbotUpdateIN) };
+                var resUpdate = await new ChatbotUpdate(_webHostEnvironment, _appSetting).ChatbotUpdateDAO(ChatbotUpdateIN);
+                await _bots.ReloadBots();
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resUpdate };
             }
             catch (Exception ex)
             {
