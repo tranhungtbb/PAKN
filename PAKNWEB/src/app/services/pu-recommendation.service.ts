@@ -8,7 +8,7 @@ import { Api } from '../constants/api'
 	providedIn: 'root',
 })
 export class PuRecommendationService {
-	constructor(private serviceInvoker: ServiceInvokerService) {}
+	constructor(private serviceInvoker: ServiceInvokerService) { }
 
 	getAllPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationGetAllOnPage)

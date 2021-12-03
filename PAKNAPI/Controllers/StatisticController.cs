@@ -448,25 +448,42 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-		//[HttpGet]
-		//[Authorize("ThePolicy")]
-		//[Route("recommendation-processing-results-by-unit")]
-		//public async Task<ActionResult<object>> RecommendationProcessResultsByUnit(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
-		//{
-		//	try
-		//	{
-		//		var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-		//		List<StatisticRecommendationProcessStatusByUnit> result = await new StatisticRecommendationProcessStatusByUnit(_appSetting).StatisticRecommendationProcessStatusByUnitDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
 
-		//		return new ResultApi { Success = ResultCode.OK, Result = result };
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
-		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-		//	}
-		//}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-by-type-detail-on-page")]
+		public async Task<ActionResult<object>> RecommendationsByFieldAndTypeDetail(int Type, int FieldId, int UnitId, int RecommendationType, string Code,string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				//List<StatisticRecommendationByRecommendationTypeDetail> list = Type == StatisticType.Field ?
+				//	await new StatisticRecommendationByRecommendationTypeDetail(_appSetting).StatisticRecommendationByRecommendationTypeAndFieldDetailDAO(FieldId, UnitId, RecommendationType, Code, Name, Title, null, null, PageSize, PageIndex)
+				//	: await new StatisticRecommendationByRecommendationTypeDetail(_appSetting).StatisticRecommendationByRecommendationTypeAndUnitProcessDetailDAO(FieldId, UnitId, RecommendationType, Code, Name, Title, FromDate, ToDate, PageSize, PageIndex);
+
+				List<StatisticRecommendationByRecommendationTypeDetail> list = new List<StatisticRecommendationByRecommendationTypeDetail>();
+				if (Type == 1)
+				{
+					await new StatisticRecommendationByRecommendationTypeDetail(_appSetting).StatisticRecommendationByRecommendationTypeAndFieldDetailDAO(FieldId, UnitId, RecommendationType, Code, Name, Title, null, null, PageSize, PageIndex);
+				}
+				else {
+					await new StatisticRecommendationByRecommendationTypeDetail(_appSetting).StatisticRecommendationByRecommendationTypeAndUnitProcessDetailDAO(FieldId, UnitId, RecommendationType, Code, Name, Title, null, null, PageSize, PageIndex);
+				}
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListRecommentdation", list},
+						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
+						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
+						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 		//[HttpGet]
 		//[Authorize("ThePolicy")]

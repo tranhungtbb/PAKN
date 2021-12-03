@@ -453,6 +453,7 @@ namespace PAKNAPI.Models.Statistic
 		private SQLCon _sQLCon;
 		public int? STT { get; set; }
 		public string Name { get; set; }
+		public int Id { get; set; }
 		public int? Received { get; set; }
 		public int? RecommendationPublicService { get; set; }
 		public int? RecommendationSocioeconomic { get; set; }
@@ -534,6 +535,64 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("UserProcessId", UserProcessId);
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationForMenu>("[TK_RecommendationByUnitForMenu]", DP)).FirstOrDefault();
+		}
+	}
+
+	public class StatisticRecommendationByRecommendationTypeDetail
+	{
+		private SQLCon _sQLCon;
+
+		public int? RowNumber { get; set; }
+		public int RecommendationId { get; set; }
+		public string Code { get; set; }
+		public string UserSendName { get; set; }
+		public string Title { get; set; }
+		public string Name { get; set; }
+		public int Status { get; set; }
+		public int? Type { get; set; }
+		public int? UnitId { get; set; }
+		public int? FieldId { get; set; }
+
+
+		public StatisticRecommendationByRecommendationTypeDetail(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationByRecommendationTypeDetail()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationByRecommendationTypeDetail>> StatisticRecommendationByRecommendationTypeAndFieldDetailDAO(int FieldId, int UnitId, int RecommendationType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FieldId", FieldId);
+			DP.Add("UnitId", UnitId);
+			DP.Add("RecommendationType", RecommendationType);
+			DP.Add("Code", Code);
+			DP.Add("Name", Name);
+			DP.Add("Title", Title);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByRecommendationTypeDetail>("[TK_ListRecommendationByRecommendationTypeAndFieldDetail]", DP)).ToList();
+		}
+
+		public async Task<List<StatisticRecommendationByRecommendationTypeDetail>> StatisticRecommendationByRecommendationTypeAndUnitProcessDetailDAO(int FieldId, int UnitProcess, int RecommendationType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitProcess", UnitProcess);
+			DP.Add("FieldId", FieldId);
+			DP.Add("RecommendationType", RecommendationType);
+			DP.Add("Code", Code);
+			DP.Add("Name", Name);
+			DP.Add("Title", Title);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByRecommendationTypeDetail>("[TK_ListRecommendationByRecommendationTypeAndUnitProcessDetail]", DP)).ToList();
 		}
 	}
 }

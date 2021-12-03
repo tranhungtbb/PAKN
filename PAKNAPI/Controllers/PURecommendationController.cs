@@ -348,6 +348,41 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+
+		/// <summary>
+		/// danh sách PAKN dang xu ly
+		/// </summary>
+		/// <param name="KeySearch"></param>
+		/// <param name="FieldId"></param>
+		/// <param name="UnitId"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("get-list-recommentdation-processing")]
+		public async Task<ActionResult<object>> PURecommendationProcessing(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
+		{
+			try
+			{
+				var pURecommendations = await new PURecommendation(_appSetting).PURecommendationProcessing(KeySearch, FieldId, UnitId, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"RecommendationProcessing", pURecommendations},
+						{"TotalCount", pURecommendations != null && pURecommendations.Count > 0 ? pURecommendations[0].RowNumber : 0},
+						{"PageIndex", pURecommendations != null && pURecommendations.Count > 0 ? PageIndex : 0},
+						{"PageSize", pURecommendations != null && pURecommendations.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpGet]
 		[Route("recommendations-hight-light")]
 		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick()
@@ -417,26 +452,8 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
 		
 
-		[HttpGet]
-		[Route("recommendations-processing")]
-		public async Task<ActionResult<object>> PURecommendationProcessing()
-		{
-			try
-			{
-				var pURecommendations = await new PURecommendation(_appSetting).PURecommendationProcessing();
-				return new ResultApi { Success = ResultCode.OK, Result = pURecommendations };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
 
 		[HttpGet]
 		[Route("notification-getdashboard")]

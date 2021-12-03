@@ -19,7 +19,7 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 		private _localService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService
-	) {}
+	) { }
 
 	listYear: any = []
 	listType: any = [
@@ -37,9 +37,9 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
-	type : number = 1
-	totalRecords : number
-	listData : any [] = []
+	type: number = 1
+	totalRecords: number
+	listData: any[] = []
 	pageIndex: number = 1
 	pageSize: number = 10
 
@@ -115,14 +115,14 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 		let request = {
 			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
 			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
-			Type : this.type,
+			Type: this.type,
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
 		this._service.getProcessingResultByType(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listData = response.result;
-				if(response.result && response.result.length > 0){
+				if (response.result && response.result.length > 0) {
 					this.totalRecords = response.result[0].rowNumber;
 				}
 			} else {
@@ -180,18 +180,45 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 		this.getList()
 	}
 
+	viewDetail(id: any, recomendationType: number = null) {
+		if (this.type == 1) {
+			return this._router.navigate([
+				'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn',
+				this.type,
+				id, 0, recomendationType,
+				this.getFormattedDate(this.fromDate),
+				this.getFormattedDate(this.toDate)
+			])
+		}
+		return this._router.navigate([
+			'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-loai-pakn',
+			this.type,
+			0, id, recomendationType,
+			this.fromDate.toDateString(),
+			this.toDate.toDateString()
+		])
+	}
+	getFormattedDate(date) {
+		var year = date.getFullYear()
+		var month = (1 + date.getMonth()).toString()
+		month = month.length > 1 ? month : '0' + month
+		var day = date.getDate().toString()
+		day = day.length > 1 ? day : '0' + day
+		return month + '-' + day + '-' + year
+	}
+
 	onExport() {
 		let passingObj: any = {}
-		if(this.fromDate){
-			this.fromDate.setHours(0,0,0,0);
+		if (this.fromDate) {
+			this.fromDate.setHours(0, 0, 0, 0);
 		}
-		if(this.toDate){
-			this.toDate.setHours(0,0,0,0);
+		if (this.toDate) {
+			this.toDate.setHours(0, 0, 0, 0);
 		}
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = this.type == 1 ? 
+		this._shareData.sendReportUrl = this.type == 1 ?
 			'processing_results_by_feild?' + JSON.stringify(passingObj)
 			: 'processing_results_by_unit?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

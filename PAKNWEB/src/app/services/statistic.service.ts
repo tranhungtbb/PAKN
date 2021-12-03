@@ -8,7 +8,7 @@ import { Api } from '../constants/api'
 	providedIn: 'root',
 })
 export class StatisticService {
-	constructor(private serviceInvoker: ServiceInvokerService) {}
+	constructor(private serviceInvoker: ServiceInvokerService) { }
 
 	getStatisticRecommendationByUnit(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByUnit)
@@ -54,5 +54,9 @@ export class StatisticService {
 	}
 	getStatisticRecommendationForMenu(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationForMenu)
+	}
+
+	getStatisticRecommendationByTypeDetail(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByTypeDetail)
 	}
 }

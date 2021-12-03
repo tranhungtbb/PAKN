@@ -1,0 +1,49 @@
+.text-3line a,
+.text-2line {
+	color: #222222;
+}
+
+.card-date {
+	font-size: 16px;
+	line-height: 19px;
+	color: #666666;
+}
+.italic {
+	font-style: italic;
+}
+.f-4 {
+	flex: 4;
+}
+.f-6 {
+	flex: 6;
+}
+
+.list-group-item {
+	border-bottom: 1px solid #d8d8d8;
+	padding: 0.75rem 1.25rem;
+}
+.pagination .page-item .page-link {
+	font-size: 14px;
+	line-height: 16px;
+}
+
+ul.category-article li a.active {
+	color: #2e73d5;
+}
+
+.box .card:hover{
+	box-shadow: none;
+}
+.card-custom{
+	border-radius: 0px;
+}
+.border-bottom{
+	border-bottom: 2px solid #EEEEEE !important;
+}
+.read-more{
+	color: #707C97;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+}

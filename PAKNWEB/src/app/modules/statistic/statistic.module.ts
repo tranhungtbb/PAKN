@@ -19,6 +19,7 @@ import { ProcessingStatusComponent } from './processing-status/processing-status
 import { ProcessingResultsComponent } from './processing-results/processing-results.component'
 import { ProcessingResultsByTypeComponent } from './processing-results-by-type/processing-results-by-type.component'
 import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
+import { RecommendationsByTypeDetailComponent } from './recommendations-by-type-detail/recommendations-by-type-detail.component'
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { ProcessingResultsByReceptionTypeComponent } from './processing-results-
 		ProcessingResultsComponent,
 		ProcessingResultsByTypeComponent,
 		ProcessingResultsByReceptionTypeComponent,
+		RecommendationsByTypeDetailComponent
 	],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })
-export class StatisticModule {}
+export class StatisticModule { }

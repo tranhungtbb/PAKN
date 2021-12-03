@@ -131,7 +131,7 @@
     <Item3 Ref="65" ControlType="BottomMarginBand" Name="bottomMarginBand1" HeightF="43" />
     <Item4 Ref="66" ControlType="ReportHeaderBand" Name="ReportHeader" HeightF="58.9583321">
       <Controls>
-        <Item1 Ref="67" ControlType="XRLabel" Name="label1" Multiline="true" Text="THỐNG KÊ THEO PHƯƠNG THỨC TIẾP NHẬN VÀ LĨNH VỰC" TextAlignment="MiddleCenter" SizeF="1063,49.04166" LocationFloat="0, 0" Font="Times New Roman, 14pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100">
+        <Item1 Ref="67" ControlType="XRLabel" Name="label1" Multiline="true" Text="THỐNG KÊ THEO PHƯƠNG THỨC TIẾP NHẬN" TextAlignment="MiddleCenter" SizeF="1063,49.04166" LocationFloat="0, 0" Font="Times New Roman, 14pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100">
           <StylePriority Ref="68" UseFont="false" UseForeColor="false" UseTextAlignment="false" />
         </Item1>
       </Controls>

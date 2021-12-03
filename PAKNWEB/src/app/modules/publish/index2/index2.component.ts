@@ -33,7 +33,7 @@ export class Index2Component implements OnInit, AfterViewInit {
 		private _syService: SystemconfigService,
 		private _toa: ToastrService,
 		private storageService: UserInfoStorageService
-	) {}
+	) { }
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	ReflectionsRecommendations: Array<PuRecommendation>
@@ -135,9 +135,12 @@ export class Index2Component implements OnInit, AfterViewInit {
 			}
 		})
 
-		this._service.getListProcessing({}).subscribe((res) => {
+		this._service.getListProcessing({
+			PageSize: 6,
+			PageIndex: 1,
+		}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.recommendationsProcessing = res.result
+				this.recommendationsProcessing = res.result.RecommendationProcessing
 			}
 		})
 
@@ -195,7 +198,7 @@ export class Index2Component implements OnInit, AfterViewInit {
 		})
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
 	getShortName(string) {
 		if (!string) {

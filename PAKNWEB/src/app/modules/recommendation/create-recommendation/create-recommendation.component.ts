@@ -21,11 +21,9 @@ export class CreateRecommendationComponent implements OnInit {
 	form: FormGroup
 	model: RecommendationObject = new RecommendationObject()
 	titleObject: string = 'Cá nhân'
-	lstHuongXuLy: any[] = [
-		{ value: 1, text: 'Chuyển đơn' },
-		{ value: 2, text: 'Thụ lý giải quyết' },
-		{ value: 3, text: 'Trả đơn' },
-		{ value: 4, text: 'Từ chối xử lý' },
+	receptionType: any[] = [
+		{ value: 3, text: 'Qua điện thoại' },
+		{ value: 4, text: 'Qua email, văn bản' },
 	]
 	isIndividual: boolean = true
 	title: string = 'Thêm mới'
@@ -55,7 +53,7 @@ export class CreateRecommendationComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationService,
 		private storeageService: UserInfoStorageService
-	) {}
+	) { }
 	ngOnInit() {
 		this.model = new RecommendationObject()
 		this.activatedRoute.params.subscribe((params) => {
@@ -68,7 +66,6 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model.typeObject = 2
 				this.title = 'Thêm mới'
 			}
-			debugger
 			let typeObject = params['typeObject']
 			if (typeObject) {
 				this.isIndividual = Number(typeObject) == 1 ? true : false
@@ -258,6 +255,7 @@ export class CreateRecommendationComponent implements OnInit {
 			unitId: new FormControl(this.model.unitId, [Validators.required]),
 			sendId: new FormControl(this.model.sendId, [Validators.required]),
 			sendDate: new FormControl(this.model.sendDate, [Validators.required]),
+			receptionType: new FormControl(this.model.receptionType, [Validators.required]),
 			hashtag: new FormControl(this.hashtagId),
 		})
 	}
@@ -301,7 +299,6 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		this.model.type = TYPE_RECOMMENDATION.Socioeconomic
-		this.model.receptionType = RECEPTION_TYPE.Web
 		this.builForm()
 		this.submitted = true
 		if (this.form.invalid) {

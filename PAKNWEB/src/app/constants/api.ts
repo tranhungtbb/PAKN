@@ -71,7 +71,7 @@ export class Api {
 	public static PuRecommendationHomePage = 'pu-recommendation/get-list-recommentdation-home-page'
 	public static RecommendationReceiveDeny = 'pu-recommendation/get-list-recommentdation-receive-deny'
 	public static PuRecomentdationHightLight = 'pu-recommendation/recommendations-hight-light'
-	public static PuRecomentdationProcessing = 'pu-recommendation/recommendations-processing'
+	public static PuRecomentdationProcessing = 'pu-recommendation/get-list-recommentdation-processing'
 	public static PuNotificationGetDashboard = 'pu-recommendation/notification-getdashboard'
 	public static MyRecommendationGetAllOnPage = 'pu-recommendation/get-list-my-recommentdation-on-page'
 	public static PuRecommendationGetById = 'pu-recommendation/get-by-id'
@@ -398,6 +398,7 @@ export class Api {
 	public static StatisticRecommendationProcessingResults = 'statistic/recommendation-processing-results'
 	public static StatisticRecommendationProcessingResultsByReceptionType = 'statistic/recommendation-processing-results-by-reception-type'
 	public static StatisticRecommendationProcessingResultsByType = 'statistic/recommendation-processing-results-by-type'
+	public static StatisticRecommendationByTypeDetail = 'statistic/recommendation-by-type-detail-on-page'
 
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'

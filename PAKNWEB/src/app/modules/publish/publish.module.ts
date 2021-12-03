@@ -47,6 +47,7 @@ import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendati
 import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
+import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
 
 @NgModule({
 	declarations: [
@@ -82,7 +83,8 @@ import { LateProcessingUnitComponent } from './late-processing-unit/late-process
 		ReceiveDenyRecommendationsComponent,
 		InfomationPublicComponent,
 		UnitDissatisfactionRateComponent,
-		LateProcessingUnitComponent
+		LateProcessingUnitComponent,
+		ProcessingRecommendationsComponent
 	],
 	imports: [
 		CommonModule,
@@ -106,4 +108,4 @@ import { LateProcessingUnitComponent } from './late-processing-unit/late-process
 		ChartsModule,
 	],
 })
-export class PublishModule {}
+export class PublishModule { }

@@ -29,6 +29,7 @@ import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendati
 import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
+import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
 
 const routes: Routes = [
 	{
@@ -112,6 +113,11 @@ const routes: Routes = [
 				component: ReceiveDenyRecommendationsComponent,
 			},
 			{
+				path: 'phan-anh-kien-nghi-dang-xu-ly',
+				component: ProcessingRecommendationsComponent,
+			},
+
+			{
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
@@ -188,4 +194,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class PublishRoutingModule {}
+export class PublishRoutingModule { }
