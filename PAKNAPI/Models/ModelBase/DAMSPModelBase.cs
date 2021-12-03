@@ -421,15 +421,15 @@ namespace PAKNAPI.ModelBase
 		public async Task<List<DAMAdministrationForwardGetList>> DAMAdministrationForwardGetListDAO(long UserProcess, string Code, string Name, string Organization, int? FieldId,int? UnitForward, int? Status, int PageSize, int PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("@UserProcess", UserProcess);
-			DP.Add("@Code", Code);
-			DP.Add("@Name", Name);
-			DP.Add("@Organization", Organization);
-			DP.Add("@FieldId", FieldId);
-			DP.Add("@UnitForward", UnitForward);
-			DP.Add("@Status", Status);
-			DP.Add("@PageSize", PageSize);
-			DP.Add("@PageIndex", PageIndex);
+			DP.Add("UserProcess", UserProcess);
+			DP.Add("Code", Code);
+			DP.Add("Name", Name);
+			DP.Add("Organization", Organization);
+			DP.Add("FieldId", FieldId);
+			DP.Add("UnitForward", UnitForward);
+			DP.Add("Status", Status);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationForwardGetList>("[DAM_Administration_Forward_GetListOnPage]", DP)).ToList();
 		}

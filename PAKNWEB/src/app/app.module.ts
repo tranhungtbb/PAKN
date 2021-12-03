@@ -34,11 +34,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { LightboxModule } from 'ngx-lightbox'
 import { TreeModule } from 'primeng/tree'
 import { TreeTableModule } from 'primeng/treetable'
+import { PolicyPageComponent } from './modules/policy-page/policy-page.component'
+
 
 /// template 2
 
 @NgModule({
-	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
+	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent, PolicyPageComponent],
 	entryComponents: [ConfirmDialogComponent, ViewFileDialogComponent],
 	imports: [
 		BrowserModule,
@@ -89,4 +91,4 @@ import { TreeTableModule } from 'primeng/treetable'
 	],
 	bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

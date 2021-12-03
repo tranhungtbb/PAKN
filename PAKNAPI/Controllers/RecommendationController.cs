@@ -2194,17 +2194,17 @@ namespace PAKNAPI.Controller
                         {
                             unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         }
-                        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
-                        // gửi cho đơn vị tiếp nhận ban đầu
-                        notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
-                        notification.Content = "PAKN số " + recommendation.Code + " đã bị " + unitReceive.Name + " từ chối giải quyết";
-                        foreach (var item in lstUser)
-                        {
-                            notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId;
-                            // insert notification
-                            await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
-                        }
+                        //unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
+                        //// gửi cho đơn vị tiếp nhận ban đầu
+                        //notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
+                        //notification.Content = "PAKN số " + recommendation.Code + " đã bị " + unitReceive.Name + " từ chối giải quyết";
+                        //foreach (var item in lstUser)
+                        //{
+                        //    notification.ReceiveId = item.Id;
+                        //    notification.ReceiveOrgId = item.UnitId;
+                        //    // insert notification
+                        //    await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                        //}
 
                         // người gửi PAKN
 
