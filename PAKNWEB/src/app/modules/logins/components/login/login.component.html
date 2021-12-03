@@ -6,11 +6,10 @@
 					<div class="row no-gutters">
 						<div class="col-xl-6 border-right border-brown remove-boder-right">
 							<a href="/cong-bo">
-								<img class="img-fluid" style="object-fit: cover;" 
-									src="../../../../../assets/dist/images/BG.svg" alt="">
+								<img class="img-fluid" style="object-fit: cover;" src="../../../../../assets/dist/images/BG.svg" alt="">
 							</a>
 						</div>
-						<div class="col-12 col-md-6 d-flex justify-content-center" >
+						<div class="col-12 col-md-6 d-flex justify-content-center">
 							<div class="auth-form p-0" style="width: 400px">
 								<div class="custom-tab-1">
 									<div class="tab-content pt-3">
@@ -22,11 +21,12 @@
 															nghiệp.</p> -->
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group mb-4">
-																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px" placeholder="Nhập CMND,CCCD,Số ĐKKD.."
-																	maxlength="10" id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName" required
-																	onlyNumber="true"
+																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px"
+																	placeholder="Nhập CMND,CCCD,Số ĐKKD.." maxlength="10" id="productname" type="text"
+																	formControlName="name" [(ngModel)]="userProduct.UserName" required onlyNumber="true"
 																	(change)="userProduct.UserName=userProduct.UserName.trim()">
-																<div *ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
+																<div
+																	*ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.name.errors.required">
 																		<span class="help-block">Trường này không được để trống</span>
@@ -37,40 +37,105 @@
 																</div>
 															</div>
 															<div class="form-group" style="position: relative;">
-																<input class="form-control rounded-8px h-50px px-4 border-brown" [type]="isShowPassword ? 'text' : 'password'"  id="productpass"
-																	(change)="userProduct.Password=userProduct.Password.trim()" style="font-size: 20px" placeholder="Nhập mật khẩu..."
-																	formControlName="pass" [(ngModel)]="userProduct.Password" required>
-																	<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
-																<div *ngIf="floginFormProduct.pass.invalid && (floginFormProduct.pass.dirty || floginFormProduct.pass.touched || submitted)"
+																<input class="form-control rounded-8px h-50px px-4 border-brown"
+																	[type]="isShowPassword ? 'text' : 'password'" id="productpass"
+																	(change)="userProduct.Password=userProduct.Password.trim()" style="font-size: 20px"
+																	placeholder="Nhập mật khẩu..." formControlName="pass"
+																	[(ngModel)]="userProduct.Password" required>
+																<i class="custom-show-pass"
+																	[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
+																	(click)="showPassword()"></i>
+																<div
+																	*ngIf="floginFormProduct.pass.invalid && (floginFormProduct.pass.dirty || floginFormProduct.pass.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.pass.errors.required">
 																		<span class="help-block">Trường này không được để trống</span>
 																	</div>
 																</div>
 															</div>
-															<div class="form-group captcha-form bg-white rounded-xl pt-4 border border-brown position-relative">
-																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-8px h-50px shadow position-absolute">
-																	<img class="img-fluid rounded-xl mr-2 pl-3" id="img-captcha"
-																		[src]="captchaImage" />
-																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl ml-5"><i class="bi bi-arrow-repeat"
-																			style="font-size: 34px"></i></button>
+
+															<!-- <div class="d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
+																<div class="form-group">
+																	<div
+																		class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px shadow">
+																		<img class="img-fluid rounded-xl mr-2 pl-3" id="img-captcha" [src]="captchaImage" />
+																		<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl ml-5"><i
+																				class="bi bi-arrow-repeat" style="font-size: 34px"></i></button>
+																	</div>
 																</div>
-																<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct" maxlength="5" style="font-size: 20px"
-																(change)="captchaCodeProduct=captchaCodeProduct.trim()"
-																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0 " value="">
+																<div class="form-group bg-white rounded-xl border border-brown position-relative">
+																	<div>
+																		<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
+																			maxlength="5" style="font-size: 20px"
+																			(change)="captchaCodeProduct=captchaCodeProduct.trim()"
+																			placeholder="Nhập mã xác thực..." class="form-control bg-transparent border-0 "
+																			value="">
+																	</div>
+																	<div
+																		*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
+																		class="form-row has-error m-b-12">
+																		<div *ngIf="floginFormProduct.captcha.errors.required">
+																			<span class="help-block">Vui lòng nhập mã xác thực</span>
+																		</div>
+																	</div>
+																</div>
+															</div> -->
+															<div class="row">
+																<div class="col-6 form-group position-relative pr-0">
+																	<div
+																		class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px shadow">
+																		<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
+																		<button type="button" (click)="reloadImage()"
+																			class="btn p-1 rounded-10px ml-4 position-absolute"
+																			style="right: 10px; width: 28px;">
+																			<i class="bi bi-arrow-repeat" style="font-size: 25px"></i>
+																		</button>
+																	</div>
+																</div>
+
+																<div class="col-6 form-group">
+																	<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
+																		maxlength="5" style="font-size: 20px"
+																		(change)="captchaCodeProduct=captchaCodeProduct.trim()"
+																		placeholder="Nhập kết quả..." class="form-control bg-transparent" value="">
+																	<div
+																		*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
+																		class="has-error m-b-12">
+																		<div *ngIf="floginFormProduct.captcha.errors.required">
+																			<span class="help-block">Vui lòng nhập kết quả</span>
+																		</div>
+																	</div>
+																</div>
 															</div>
-															<div *ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
+															<!-- <div
+																class="form-group captcha-form bg-white rounded-xl pt-4 border border-brown position-relative">
+																<div
+																	class="bg-white captcha d-flex justify-content-between align-items-center rounded-8px h-50px shadow position-absolute">
+																	<img class="img-fluid rounded-xl mr-2 pl-3" id="img-captcha" [src]="captchaImage" />
+																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl ml-5"><i
+																			class="bi bi-arrow-repeat" style="font-size: 34px"></i></button>
+																</div>
+																<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
+																	maxlength="5" style="font-size: 20px"
+																	(change)="captchaCodeProduct=captchaCodeProduct.trim()"
+																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0 "
+																	value="">
+															</div>
+															<div
+																*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
 																class="has-error m-b-12">
 																<div *ngIf="floginFormProduct.captcha.errors.required">
 																	<span class="help-block">Vui lòng nhập mã xác thực</span>
 																</div>
-															</div>
-															<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
+															</div> -->
+															<div
+																class="form-row d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
 																<div class="form-group">
 																	<div class="custom-control custom-checkbox ml-1">
-																		<input [hidden]="true" type="checkbox" class="custom-control-input" formControlName="isRemember" [(ngModel)]="isSaveLogin"
-																			id="basic_checkbox_1">
-																		<label class="custom-control-label pointer hight-light" for="basic_checkbox_1">Nhớ tài khoản</label>
+																		<input [hidden]="true" type="checkbox" class="custom-control-input"
+																			formControlName="isRemember" [(ngModel)]="isSaveLogin" id="basic_checkbox_1">
+																		<label class="custom-control-label pointer hight-light" for="basic_checkbox_1">Nhớ
+																			tài khoản</label>
 																	</div>
 																</div>
 																<div class="form-group  hight-light">
@@ -85,19 +150,23 @@
 															</div>
 														</form>
 														<div class="new-account my-3" style="font-size: 17px;">
-															<p class="text-right">Chưa có tài khoản? <a class="cl-blue2 pointer hight-light" (click)="register()">Đăng ký</a>
+															<p class="text-right">Chưa có tài khoản? <a class="cl-blue2 pointer hight-light"
+																	(click)="register()">Đăng ký</a>
 															</p>
 														</div>
 														<div class="text-center">
-															<button type="button" class="btn rounded-10px bg-white text-dark border mt-3" style="font-size: 20px" (click)="backToHome()">
+															<button type="button" class="btn rounded-10px bg-white text-dark border mt-3"
+																style="font-size: 20px" (click)="backToHome()">
 																<i class="bi bi-arrow-left"></i> Về lại trang chủ
 															</button>
 															<div class="mt-4">
 																<div class="d-flex justify-content-center center">
-																	<i class="fas fa-phone-square-alt mr-2 cl-blue"></i><p class="info mb-0">1900.1023</p>
+																	<i class="fas fa-phone-square-alt mr-2 cl-blue"></i>
+																	<p class="info mb-0">1900.1023</p>
 																</div>
 																<div class="d-flex justify-content-center center mt-2">
-																	<i class="fas fa-envelope-open mr-2 cl-blue"></i> <p class="info mb-0">pkstthc.vpub@khanhhoa.gov.vn</p>
+																	<i class="fas fa-envelope-open mr-2 cl-blue"></i>
+																	<p class="info mb-0">pkstthc.vpub@khanhhoa.gov.vn</p>
 																</div>
 															</div>
 														</div>

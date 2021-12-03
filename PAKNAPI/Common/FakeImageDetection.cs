@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace PAKNAPI.Common
 {
@@ -66,6 +67,18 @@ namespace PAKNAPI.Common
             Rational = 5,
             SLong = 9,
             SRational = 10
+        }
+        public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults, int maxLevel = 0)
+        {
+            Regex reg = new Regex(@"photoshop", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (var x in param)
+            {
+                var valueText = x.valueText.Trim().ToLower();
+                var rs = reg.Match(valueText);
+                if (rs.Success)
+                    return true;
+            }
+            return false;
         }
 
         public FakeImageInfo GetInfo(Bitmap b)
@@ -216,54 +229,54 @@ namespace PAKNAPI.Common
         {
             return IsFake(GetMetadata(filePath), maxLevel);
         }
-        public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults, int maxLevel = 0)
-        {
-            var map = new Dictionary<long, FakeImageMetadata>();
-            foreach (var x in param)
-            {
-                x.valueText = x.valueText.Trim().ToLower();
-                map.Add(x.attrId, x);
-            }
+        //public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults, int maxLevel = 0)
+        //{
+        //    var map = new Dictionary<long, FakeImageMetadata>();
+        //    foreach (var x in param)
+        //    {
+        //        x.valueText = x.valueText.Trim().ToLower();
+        //        map.Add(x.attrId, x);
+        //    }
 
-            //
-            var stacks = new Stack<FakeResult>();
-            FakeResult rs;
-            long attrId;
-            FakeImageMetadata p;
-            foreach (var x in SampleData)
-            {
-                stacks.Push(x.Value);
-                while (stacks.Any())
-                {
-                    rs = stacks.Pop();
-                    attrId = rs.attrId;
-                    p = map.ContainsKey(attrId) ? map[attrId] : new FakeImageMetadata { attrId = attrId, valueText = "" };
-                    if (p.valueText == rs.valueText)
-                    {
-                        outResults.Add(rs);
-                        if (rs.childs.Count <= 0)
-                        {
-                            outResults.Clear();
-                            while (rs != null)
-                            {
-                                outResults.Insert(0, rs);
-                                rs = SampleData.ContainsKey(rs.parentId) ? SampleData[rs.parentId] : null;
-                            }
+        //    //
+        //    var stacks = new Stack<FakeResult>();
+        //    FakeResult rs;
+        //    long attrId;
+        //    FakeImageMetadata p;
+        //    foreach (var x in SampleData)
+        //    {
+        //        stacks.Push(x.Value);
+        //        while (stacks.Any())
+        //        {
+        //            rs = stacks.Pop();
+        //            attrId = rs.attrId;
+        //            p = map.ContainsKey(attrId) ? map[attrId] : new FakeImageMetadata { attrId = attrId, valueText = "" };
+        //            if (p.valueText == rs.valueText)
+        //            {
+        //                outResults.Add(rs);
+        //                if (rs.childs.Count <= 0)
+        //                {
+        //                    outResults.Clear();
+        //                    while (rs != null)
+        //                    {
+        //                        outResults.Insert(0, rs);
+        //                        rs = SampleData.ContainsKey(rs.parentId) ? SampleData[rs.parentId] : null;
+        //                    }
 
-                            return true;
-                        }
+        //                    return true;
+        //                }
 
-                        if (maxLevel > 0 && outResults.Count >= maxLevel)
-                            continue;
-                        else
-                            rs.childs.ForEach(c => stacks.Push(c));
-                    }
-                }
+        //                if (maxLevel > 0 && outResults.Count >= maxLevel)
+        //                    continue;
+        //                else
+        //                    rs.childs.ForEach(c => stacks.Push(c));
+        //            }
+        //        }
 
-            }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         public bool IsFake(List<FakeImageMetadata> param, int maxLevel = 0)
         {
