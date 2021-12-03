@@ -48,7 +48,7 @@ export class LoginAdminComponent implements OnInit {
 		size: this.size,
 		tabindex: 3,
 	}
-
+	milliseconds = new Date().getTime();
 	constructor(
 		private _fb: FormBuilder,
 		private _avRoute: ActivatedRoute,
@@ -138,6 +138,7 @@ export class LoginAdminComponent implements OnInit {
 		} else {
 			var constdata = {
 				CaptchaCode: this.captchaCode,
+				MillisecondsCurrent: this.milliseconds
 			}
 			this.captchaService.send(constdata).subscribe((result) => {
 				if (result.success === RESPONSE_STATUS.success) {
@@ -250,6 +251,7 @@ export class LoginAdminComponent implements OnInit {
 		} else {
 			var constdata = {
 				CaptchaCode: this.captchaCodeProduct,
+				MillisecondsCurrent: this.milliseconds
 			}
 			this.captchaService.send(constdata).subscribe((result) => {
 				if (result.success === RESPONSE_STATUS.success) {
@@ -376,13 +378,15 @@ export class LoginAdminComponent implements OnInit {
 	captchaCode: string = null
 	captchaImage: any = ''
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
+		this.milliseconds = new Date().getTime();
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000 + '&&MillisecondsCurrent=' + this.milliseconds
 	}
 
 	captchaCodeProduct: string = null
 	captchaImageProduct: any = ''
 	reloadImageProduct() {
+		this.milliseconds = new Date().getTime();
 		this.captchaImageProduct =
-			AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
+			AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000 + '&&MillisecondsCurrent=' + this.milliseconds
 	}
 }

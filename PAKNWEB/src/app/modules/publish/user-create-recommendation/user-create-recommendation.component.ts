@@ -59,7 +59,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	markers: any = {}
 	private geoCoder
 	zoom: number = 15
-
+	milliseconds = new Date().getTime();
 	constructor(
 		private unitService: UnitService,
 		private toastr: ToastrService,
@@ -73,7 +73,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		private notificationService: NotificationService,
 		private eRef: ElementRef,
 		private locationService: LocationService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.model = new RecommendationObject()
@@ -97,8 +97,8 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 
-	ngAfterViewInit(){
-		
+	ngAfterViewInit() {
+
 	}
 
 	private setCurrentLocation() {
@@ -142,9 +142,9 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
-				if(!this.model.lat || !this.model.lng){
+				if (!this.model.lat || !this.model.lng) {
 					this.setCurrentLocation()
-				}else{
+				} else {
 					this.markers.lat = Number(this.model.lat)
 					this.markers.lng = Number(this.model.lng)
 				}
@@ -248,7 +248,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
-						if(fileType.value === 4){
+						if (fileType.value === 4) {
 							item.filePathUrl = URL.createObjectURL(item)
 						}
 						this.files.push(item)
@@ -272,7 +272,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.lstXoaFile.push(file)
 		this.files.splice(index, 1)
 	}
-	isSuitableContent : boolean = true
+	isSuitableContent: boolean = true
 	onSave(status) {
 		this.isSuitableContent = true
 		this.submitted = true
@@ -285,7 +285,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			return
 		}
 		this.model.address = this.model.address == null ? '' : this.model.address.trim()
-		if(!this.checkContent()){
+		if (!this.checkContent()) {
 			this.isSuitableContent = false
 			return
 		}
@@ -293,7 +293,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			this.reloadImage()
 			return
 		}
-		
+
 		// nếu chưa đăng nhập cho lưu tạm
 		if (!this.isLogin || (this.isLogin && this.isLogin.trim() == '')) {
 			this.storageService.setRecommentdationObjectRemember(JSON.stringify(this.model))
@@ -324,6 +324,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		}
 		var constdata = {
 			CaptchaCode: this.captchaCode,
+			MillisecondsCurrent: this.milliseconds
 		}
 
 		this.captchaService.send(constdata).subscribe((result) => {
@@ -331,7 +332,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				if (this.model.id == 0) {
 					this.recommendationService.recommendationInsert(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
+							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => { })
 							this.toastr.success(COMMONS.ADD_SUCCESS)
 							localStorage.removeItem('recommentdationObjRemember')
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
@@ -365,7 +366,8 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
+		this.milliseconds = new Date().getTime();
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000 + '&&MillisecondsCurrent=' + this.milliseconds
 	}
 
 	reloadForm() {
@@ -394,10 +396,10 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				content = content.replace(
 					nameWord,
 					'<span class="txthighlight wrapper" data-toggle="tooltip" data-placement="top" title="' +
-						this.lstDictionariesWord[index].description +
-						'">' +
-						this.lstDictionariesWord[index].name +
-						'</span>'
+					this.lstDictionariesWord[index].description +
+					'">' +
+					this.lstDictionariesWord[index].name +
+					'</span>'
 				)
 			}
 			$('#contentRecommendation').addClass('show')
@@ -407,11 +409,11 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 
-	
-	checkContent(){
+
+	checkContent() {
 		for (let index = 0; index < this.lstDictionariesWord.length; index++) {
-			console.log('Model :' + this.model.content+ ',x :' + this.lstDictionariesWord[index].name +' result :'+this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()))
-			if (this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()) != -1){
+			console.log('Model :' + this.model.content + ',x :' + this.lstDictionariesWord[index].name + ' result :' + this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()))
+			if (this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()) != -1) {
 				return false
 			}
 		}

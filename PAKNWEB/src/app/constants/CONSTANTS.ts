@@ -144,14 +144,14 @@ export class STEP_RECOMMENDATION {
 }
 
 export class TYPE_RECOMMENDATION {
-	public static PublicService  = 0 // dịch vụ công
+	public static PublicService = 0 // dịch vụ công
 	public static Socioeconomic = 1 // kinh tế xã hội
 }
 
 export class RECEPTION_TYPE {
-	public static Web  = 1 //
+	public static Web = 1 //
 	public static App = 2 //
-	public static Phone  = 3 //
+	public static Phone = 3 //
 	public static Email = 4 //
 }
 
