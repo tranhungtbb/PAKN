@@ -78,7 +78,7 @@
 						</div>
 						<span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
 					</div>
-					<div class="media pb-4">
+					<div class="media pb-4 mb-4 box-message-publish">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
 								class="bi bi-chat-right-text" viewBox="0 0 16 16">
@@ -148,7 +148,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="media pb-4" *ngIf="model.status > 6">
+					<div class="media pb-4 mb-4 box-message-publish" *ngIf="model.status > 6">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
 								class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">

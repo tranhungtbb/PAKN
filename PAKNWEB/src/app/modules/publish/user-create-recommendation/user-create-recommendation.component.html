@@ -4,7 +4,7 @@
 <div class="content-nd">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/phan-anh-kien-nghi']">Phản ánh, Kiến nghị</a></li>
@@ -12,7 +12,8 @@
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
 				<!-- <div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div> -->
-				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
+				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến
+					nghị!</p>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
 						<div class="mb-1 d-flex">
@@ -22,9 +23,10 @@
 								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
 							</button>
 						</div>
-						<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500" formControlName="title" (blur)="searchRecommendation()"
-							placeholder="Nhập..." />
-						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
+						<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500"
+							formControlName="title" (blur)="searchRecommendation()" placeholder="Nhập..." />
+						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+							class="has-error">
 							<div *ngIf="f.title.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -46,35 +48,40 @@
 						<div class="mb-1 d-flex">
 							<div class="label pl-0">Nội dung</div>
 							<span class="cl-red">(*)</span>
-							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (click)="hightLightText()">
+							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'"
+								(click)="hightLightText()">
 								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
 							</button>
 						</div>
 						<div class="group-content-recommendation">
-							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
-								placeholder="Nhập nội dung..." (blur)="hightLightText()"></textarea>
+							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content"
+								style="height: 158px; border-radius: 0.75rem;" rows="6" placeholder="Nhập nội dung..."
+								(blur)="hightLightText()"></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
-						<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error">
+						<div
+							*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
+							class="has-error">
 							<div *ngIf="f.content.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 						<div *ngIf="model.content && !isSuitableContent">
-							<span class="help-block">Nội dung phản ánh, kiến nghị chứa các từ ngữ bị cấm không thuộc thẩm quyền xử lý. Vui lòng nhập lại thông tin!</span>
+							<span class="help-block">Nội dung phản ánh, kiến nghị chứa các từ ngữ bị cấm không thuộc thẩm quyền xử lý.
+								Vui lòng nhập lại thông tin!</span>
 						</div>
 					</div>
 					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">Lĩnh vực <span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" 
-							placeholder="Chọn..." formControlName="field" notFoundText="Không tìm thấy dữ liệu"
-							(change)="getListUnit()"
+						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" placeholder="Chọn..."
+							formControlName="field" notFoundText="Không tìm thấy dữ liệu" (change)="getListUnit()"
 							[(ngModel)]="model.field">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.text}}">{{item.text}}</div>
 							</ng-template>
 						</ng-select>
-						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))" class="has-error">
+						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))"
+							class="has-error">
 							<div *ngIf="f.field.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -82,9 +89,9 @@
 					</div>
 					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstUnit"
-							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
-							placeholder="Chọn..." formControlName="unitId" [(ngModel)]="model.unitId">
+						<ng-select class="form-control" [items]="lstUnit" bindLabel="text" bindValue="value"
+							notFoundText="Không tìm thấy dữ liệu" placeholder="Chọn..." formControlName="unitId"
+							[(ngModel)]="model.unitId">
 							<ng-template ng-option-tmp let-item="item">
 								<ul>
 									<li>
@@ -108,14 +115,16 @@
 					<div class="col-12 col-sm-12 form-group">
 						<div class="label pl-0 mb-1">ĐỊA ĐIỂM PHẢN ÁNH HIỆN TRƯỜNG <span class="cl-red">(*)</span></div>
 						<div class="ps-relative">
-							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300" formControlName="address"
-								placeholder="Nhập..." />
+							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300"
+								formControlName="address" placeholder="Nhập..." />
 
-							<div class="input-group-customform pointer ps-absolute" style="right: 15px; top: 8px;" 
-								title="Chọn vị trí" (click)="showMaps()">
+							<div class="input-group-customform pointer ps-absolute" style="right: 15px; top: 8px;" title="Chọn vị trí"
+								(click)="showMaps()">
 								<i class="fas fa-map-marker-alt"></i>
 							</div>
-							<div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error">
+							<div
+								*ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
+								class="has-error">
 								<div *ngIf="f.address.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
@@ -126,7 +135,8 @@
 				<div class="box attach-ct">
 					<p class="h5 text-uppercase mb-3">
 						<span>
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip"
+								viewBox="0 0 16 16">
 								<path
 									d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 								</path>
@@ -137,8 +147,8 @@
 					<div class="attach-file row">
 						<div class="col-auto mb-4">
 							<div class="alert alert-dark h-100 d-flex align-items-center" style="width: 170px">
-								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
-									accept="{{fileAccept}}" />
+								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+									class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
 								<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
 								<label for="file-5" (click)="file.click()">
 									<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -151,8 +161,10 @@
 						</div>
 						<ng-container *ngFor="let item of files">
 							<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+									style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+												class="mdi mdi-close"></i></span>
 									</button>
 									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -161,8 +173,10 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+									style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+												class="mdi mdi-close"></i></span>
 									</button>
 									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -171,8 +185,10 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+									style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+												class="mdi mdi-close"></i></span>
 									</button>
 									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img [src]="item.filePathUrl | sanitizerUrl" style="width: 85px; object-fit: cover;" alt="">
@@ -181,8 +197,10 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+									style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+												class="mdi mdi-close"></i></span>
 									</button>
 									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
@@ -191,8 +209,10 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+									style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+												class="mdi mdi-close"></i></span>
 									</button>
 									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
@@ -201,8 +221,10 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 7">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+									style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+												class="mdi mdi-close"></i></span>
 									</button>
 									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
@@ -217,15 +239,21 @@
 				<form class="form-row mb-3 align-items-end" [formGroup]="form">
 					<div class="col-12 col-lg-4">
 						<label class="mb-1">Mã số xác thực</label>
-						<div class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha" [src]="captchaImage" />
-							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 24px"></i></button>
+						<div
+							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
+							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha"
+								[src]="captchaImage" />
+							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+									style="font-size: 24px"></i></button>
 						</div>
 					</div>
 					<div class="col-12 col-lg-4">
 						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
-						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" style="height: 56px;" formControlName="captcha" maxlength="5">
-						<div *ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))" class="has-error">
+						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode"
+							style="height: 56px;" formControlName="captcha" maxlength="5">
+						<div
+							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"
+							class="has-error">
 							<div *ngIf="f.captcha.errors.required">
 								<span class="help-block">Vui lòng nhập mã captcha</span>
 							</div>
@@ -237,7 +265,8 @@
 							<i class="bi bi-arrow-repeat d-flex" style="font-size: 24px"></i>
 							<span class="ml-2">Nhập lại</span>
 						</button> -->
-						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3 px-5" (click)="onSave(1)">Lưu</button>
+						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3 px-5"
+							(click)="onSave(1)">Lưu</button>
 
 						<button type="button" class="btn text-white border-0 grd-blue px-5" (click)="onSave(2)">
 							<span class="ml-2">Gửi</span>
@@ -263,17 +292,18 @@
 			<div class="modal-body pb-0 pt-0">
 				<div class="row form-group">
 					<div class="col-md-12">
-						<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false"
-							(mapClick)="mapClicked($event)"> 
-							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"> 
+						<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false"
+							[zoomControl]="false" (mapClick)="mapClicked($event)">
+							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true">
 							</agm-marker>
 						</agm-map>
 					</div>
-				</div> 
+				</div>
 			</div>
 			<div class="modal-footer border-top-0">
 				<button class="btn btn-outline-secondary border px-5 mr-3" data-dismiss="modal" type="button">Hủy</button>
-				<button class="btn text-white grd-blue border-0 px-5 " type="button" (click)="onSaveMaps()">Xác nhận</button></div>
+				<button class="btn text-white grd-blue border-0 px-5 " type="button" (click)="onSaveMaps()">Xác nhận</button>
+			</div>
 
 		</div>
 	</div>

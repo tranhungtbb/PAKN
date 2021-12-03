@@ -1,10 +1,11 @@
 <div class="content-nd">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-					<li class="breadcrumb-item active"><a href="/cong-bo/phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa" class="font-weight-bold">Phản ánh, Kiến nghị hệ thống kiến nghị cử tri</a></li>
+					<li class="breadcrumb-item active"><a href="/cong-bo/phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa"
+							class="font-weight-bold">Phản ánh, Kiến nghị hệ thống kiến nghị cử tri</a></li>
 				</ol>
 				<div class="box" *ngIf="!modelData" style="text-align: center;">
 					<strong>Không tìm thấy dữ liệu</strong>
@@ -29,12 +30,14 @@
 							<p class="my-0 h5">Lĩnh vực :</p> {{modelData.fieldName}}
 						</span>
 						<!-- <span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span> -->
-						<span *ngIf="modelData.endDate">{{modelData.endDate | date:'HH:mm'}} ngày {{modelData.endDate | date: 'dd/MM/yyyy'}}</span>
+						<span *ngIf="modelData.endDate">{{modelData.endDate | date:'HH:mm'}} ngày {{modelData.endDate | date:
+							'dd/MM/yyyy'}}</span>
 					</div>
-				
+
 					<div class="media pb-4 border-bottom mb-4">
 						<div class="mr-3">
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc305" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc305"
+								class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.430a1 1 0 0 0-.707.293L.854 30.306A.5.5 0 0 1 0 30.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
@@ -50,42 +53,60 @@
 							<p *ngIf="files.length > 0">
 								<span class="text-left">
 									<div *ngFor="let file of files" class="file-att">
-										<a *ngIf="file.type == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-											<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." : file.fileName}}</span>
+										<a *ngIf="file.type == 1" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
 										</a>
-										<a *ngIf="file.type == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-											<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." : file.fileName}}</span>
+										<a *ngIf="file.type == 2" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
 										</a>
-										<a *ngIf="file.type == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-											<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." : file.fileName}}</span>
+										<a *ngIf="file.type == 3" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
 										</a>
-										<a *ngIf="file.type == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-											<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." : file.fileName}}</span>
+										<a *ngIf="file.type == 4" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
 										</a>
-										<a *ngIf="file.type == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-											<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." : file.fileName}}</span>
+										<a *ngIf="file.type == 6" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-powerpoint.svg"
+												style="width: 30px;padding-right: 5px;" alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
 										</a>
-										<a *ngIf="file.type == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-											<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
-											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." : file.fileName}}</span>
+										<a *ngIf="file.type == 7" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+												style="width: 30px;padding-right: 5px;" alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
 										</a>
-										<span *ngIf="file.type != 6 && file.type != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.fileName"
-											title="Xem file">
+										<span *ngIf="file.type != 6 && file.type != 5" class="pointer" appViewFile
+											[linkfile]="file.filePath" [namefile]="file.fileName" title="Xem file">
 											<i class="bi bi-eye"></i>
 										</span>
 									</div>
 								</span>
 							</p>
-							
+
 						</div>
 					</div>
 				</div>
-			
+
 			</div>
 			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-statistics-right></app-statistics-right>

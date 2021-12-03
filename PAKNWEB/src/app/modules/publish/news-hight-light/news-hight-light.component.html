@@ -4,17 +4,18 @@
 			<h4 class="text-uppercase">Tin tức nổi bật</h4>
 		</div>
 		<div class="row mt-4">
-			<div class="col col-lg-3" *ngFor="let item of listData; let i = index">
-					<div *ngIf="i < 4" class="card mb-lg-0 ps-relative" [style.background]="'url(/' + item.imagePath + ')'" style="min-height: 260px; background-size: cover;">
-						<div class="content-article ps-absolute bg-cards-content-owl full-width" >
-							<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">{{item.createdDate | date : 'dd/MM/yyyy'}}</p>
-							<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
-								<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
-									{{ item.title}}
-								</p>
-							</div>
+			<div class="col-lg-3 col-md-6" *ngFor="let item of listData; let i = index">
+				<div *ngIf="i < 4" class="card mb-lg-0 ps-relative" [style.background]="'url(/' + item.imagePath + ')'"
+					style="min-height: 260px; background-size: cover;">
+					<div class="content-article ps-absolute bg-cards-content-owl full-width">
+						<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">{{item.createdDate | date : 'dd/MM/yyyy'}}</p>
+						<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+							<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+								{{ item.title}}
+							</p>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>
