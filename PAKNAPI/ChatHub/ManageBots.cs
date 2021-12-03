@@ -1,32 +1,47 @@
 ﻿using KarmaloopAIMLBot;
+using PAKNAPI.Common;
+using PAKNAPI.Models.ModelBase;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
-namespace KarmaloopAIMLBotParser
+namespace SignalR.Hubs
 {
     public class ResultBot
     {
         public string Answer { get; set; }
         public List<string> SubTags { get; set; }
     }
-    public interface IManageBots
-    {
-        ResultBot Response(string botname, string UserInput);
-        void RemoveBot(string botname);
-    }
+    
 
     public class ManageBots : IManageBots
     {
         AIMLBot AI;
         private readonly static Dictionary<string, BotUser> _ConnectionsMap = new Dictionary<string, BotUser>();
-        public ManageBots()
+        private readonly IAppSetting _appSetting;
+        public ManageBots(IAppSetting appSetting)
         {
+            _appSetting = appSetting;
             AI = new AIMLBot();
             AI.LoadSettings();
             AI.LoadAIMLFromFiles();
+            Task.Run(async()=> {
+                await this.ReloadBots();
+            });
+        }
+
+        public async Task<string> ReloadBots()
+        {
+            string result = await new BotGetLibrary(_appSetting).BotGetAllLibrary();
+            string path = Path.Combine(Environment.CurrentDirectory, "customaiml.xml");
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            AI.loadAIMLFromXML(doc, "customaiml.xml");
+            return result;
         }
 
         public ResultBot Response(string botname, string UserInput)

@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <aiml version="1.0">
-
+<category>
+		<pattern>*</pattern>
+		<template>
+					Bạn có muốn gặp tư vấn viên không
+					<pakn>json{"type":"chat","data":[{"id":"1"}]}</pakn>
+				</template>
+	</category>
 	<category>
 		<pattern>Tôi là *</pattern>
 		<template>
@@ -255,41 +261,4 @@
 		</template>
 	</category>
 
-	<topic name = "pakn">
-		<category>
-			<pattern> Tôi là * </pattern>
-			<template>
-				OK <set name="xten">
-					<star/>
-				</set>. Mời <get name="xten"/> nhập Email
-				<pakn>
-					[{"prefix":"Email tôi là "}]
-				</pakn>
-			</template>
-		</category>
-		<category>
-			<pattern> Email tôi là * </pattern>
-			<template>
-				Ok <set name="xemail">
-					<star/>
-				</set> Mời Chọn lĩnh vực
-				<pakn>
-					["type":"dropdow",
-					data:[{"title":"Lĩnh vực 1",
-					"image":""},
-					{"title":"Lĩnh vực 2",
-					"image":""},
-					{"title":"Lĩnh vực 3",
-					"image":""},
-					{"title":"Lĩnh vực 4",
-					"image":""}]]
-				</pakn>
-			</template>
-		</category>
-		<category>
-			<pattern> I LIKE WATCHING COMEDY! </pattern>
-			<template>I like comedy movies too.</template>
-		</category>
-
-	</topic>
 </aiml>
