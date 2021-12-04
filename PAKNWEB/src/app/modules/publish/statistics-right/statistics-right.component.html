@@ -1,5 +1,3 @@
-
-
 <!-- <div class="" *ngIf="!isLogin">
 	<a href="javascript:void(0)">
 		<img class="img-fluid card img-cover"
@@ -10,8 +8,9 @@
 			src="../../../../assets/dist/images/banner-index-2.png" alt="">
 	</a>
 </div> -->
-	
-<div class="sb-tk-pakn mb-4 card-my-recommentdation" *ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
+
+<div class="sb-tk-pakn mb-4 card-my-recommentdation"
+	*ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
 		<h4 class="counter cursor">{{totalRecommentdation}}</h4>
@@ -57,15 +56,11 @@
 		<h4 class="text-uppercase">Phản ánh kiến nghị toàn tỉnh</h4>
 	</div>
 	<div class="position-relative">
-		<canvas baseChart  height="55vh" width="75vw"
-			[data]="pieChartData"
-			[colors]="pieChartColors"
-			[labels]="pieChartLabels"
-			[options]="chartOptions"
-			[chartType]="chartType">
+		<canvas baseChart height="55vh" width="75vw" [data]="pieChartData" [colors]="pieChartColors"
+			[labels]="pieChartLabels" [options]="chartOptions" [chartType]="chartType">
 		</canvas>
 		<div class="position-absolute" style="top: 150px; left: 165px;">
-			<div class="h1 number-chart number-chart-index pb-0 text-white">89%</div>
+			<div class="h1 number-chart number-chart-index pb-0 text-white">{{onTime}}%</div>
 			<p class="text-white">hồ sơ đúng hạn</p>
 		</div>
 	</div>
@@ -90,12 +85,8 @@
 		<h4 class="text-uppercase">thống kê mức độ hài lòng</h4>
 	</div>
 	<div class="position-relative">
-		<canvas baseChart height="55vh" width="75vw"
-			[data]="satisfactionChartData"
-			[colors]="satisfactionChartColors"
-			[labels]="satisfactionChartLabels"
-			[options]="chartOptions"
-			[chartType]="chartType">
+		<canvas baseChart height="55vh" width="75vw" [data]="satisfactionChartData" [colors]="satisfactionChartColors"
+			[labels]="satisfactionChartLabels" [options]="chartOptions" [chartType]="chartType">
 		</canvas>
 	</div>
 	<div class="tt-v1 px-4 justify-content-between justify-content-between d-flex">
@@ -120,5 +111,3 @@
 		<b class="center">{{satisfactionChartData ? satisfactionChartData[2] : ''}}</b>
 	</div>
 </div>
-
-

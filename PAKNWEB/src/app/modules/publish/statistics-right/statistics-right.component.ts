@@ -16,9 +16,9 @@ declare var $: any
 	styleUrls: ['./statistics-right.component.css'],
 })
 export class StatisticsRightComponent implements OnInit {
-	constructor(private _router: Router, private _toastr: ToastrService, private storageService: UserInfoStorageService, private _service: PuRecommendationService) {}
+	constructor(private _router: Router, private _toastr: ToastrService, private storageService: UserInfoStorageService, private _service: PuRecommendationService) { }
 
-	@Input() isShowSatisfationChart : boolean
+	@Input() isShowSatisfationChart: boolean
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	typeObject: number = this.storageService.getTypeObject()
 	recommendationStatistics: any
@@ -27,12 +27,12 @@ export class StatisticsRightComponent implements OnInit {
 	// chart
 
 	chartOptions: ChartOptions = {
-    responsive: true,
+		responsive: true,
 		legend: {
-			display : false,
+			display: false,
 			position: 'bottom',
 		},
-  };
+	};
 	chartType: ChartType = 'pie'
 
 	// tk toàn tỉnh
@@ -46,15 +46,16 @@ export class StatisticsRightComponent implements OnInit {
 
 	// tk satisfaction
 
-	
-  satisfactionChartLabels: Label[] = ['Hài lòng','Không hài lòng', 'Chấp nhận'];
-  satisfactionChartData: SingleDataSet = [500, 150, 250];
-  satisfactionChartPlugins = [];
+
+	satisfactionChartLabels: Label[] = ['Hài lòng', 'Không hài lòng', 'Chấp nhận'];
+	satisfactionChartData: SingleDataSet = [500, 150, 250];
+	satisfactionChartPlugins = [];
 	satisfactionChartColors: Color[] = [
 		{
 			backgroundColor: ['#2E73D5', '#DA2222', '#FFB200'],
 		},
 	]
+	onTime: number = 0
 
 	ngOnInit() {
 		this._service.recommendationStatisticsProvince({}).subscribe(
@@ -62,6 +63,7 @@ export class StatisticsRightComponent implements OnInit {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.pieChartLabels = res.result.Titles
 					this.pieChartData = res.result.Values
+
 				} else {
 					this._toastr.error(res.message)
 				}
@@ -75,6 +77,7 @@ export class StatisticsRightComponent implements OnInit {
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.satisfactionChartData = res.result.Values
+					this.onTime = Math.floor(res.result.Expire.onTime / res.result.Expire.total * 100)
 				} else {
 					this._toastr.error(res.message)
 				}
@@ -101,5 +104,5 @@ export class StatisticsRightComponent implements OnInit {
 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi/' + status])
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 }
