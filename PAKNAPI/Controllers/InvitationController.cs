@@ -336,8 +336,9 @@ namespace PAKNAPI.Controllers
                         SendSmsController sendSmsController = new SendSmsController(_appSetting, _bugsnag, _configuration);
                         SendMessageRequest sendMessageRequest = new SendMessageRequest();
                         sendMessageRequest.message = $"{invInvitation.Model.Title} {Environment.NewLine}Thời gian: {invInvitation.Model.StartDate.ToString("HH:mm dd/MM/yyyy")} - {invInvitation.Model.EndDate.ToString("HH:mm dd/MM/yyyy")} {Environment.NewLine}Địa điểm: {invInvitation.Model.Place}";
-                        foreach (var item in lstUserSend)
+                        foreach (var item in lstUserSendSMS)
                         {
+                            sendMessageRequest.phoneTo = item.Value;
                             if (item.Value.StartsWith('0'))
                             {
                                 sendMessageRequest.phoneTo = item.Value.Remove(0, 1);
@@ -645,6 +646,7 @@ namespace PAKNAPI.Controllers
                             sendMessageRequest.message = $"{invInvitation.Model.Title} {Environment.NewLine}Thời gian: {invInvitation.Model.StartDate.ToString("HH:mm dd/MM/yyyy")} - {invInvitation.Model.EndDate.ToString("HH:mm dd/MM/yyyy")} {Environment.NewLine}Địa điểm: {invInvitation.Model.Place}";
                             foreach (var item in lstUserSendSMS)
                             {
+                                sendMessageRequest.phoneTo = item.Value;
                                 if (item.Value.StartsWith('0'))
                                 {
                                     sendMessageRequest.phoneTo = item.Value.Remove(0,1);

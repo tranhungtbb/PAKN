@@ -132,6 +132,7 @@ namespace PAKNAPI.Controllers
 							if (response.model.Status == 2)
 							{
 								var userSend = await new BIBusiness(_appSetting).BIBusinessGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
 								if (userSend.Phone.StartsWith('0'))
 								{
 									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
@@ -148,6 +149,7 @@ namespace PAKNAPI.Controllers
 							if (response.model.Status == 2)
 							{
 								var userSend = await new BIIndividual(_appSetting).BIIndividualGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
 								if (userSend.Phone.StartsWith('0'))
 								{
 									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
@@ -286,6 +288,7 @@ namespace PAKNAPI.Controllers
 							if (response.model.Status == 2)
 							{
 								var userSend = await new BIBusiness(_appSetting).BIBusinessGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
 								if (userSend.Phone.StartsWith('0'))
 								{
 									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
@@ -303,6 +306,7 @@ namespace PAKNAPI.Controllers
 							if (response.model.Status == 2)
 							{
 								var userSend = await new BIIndividual(_appSetting).BIIndividualGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
 								if (userSend.Phone.StartsWith('0'))
 								{
 									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
