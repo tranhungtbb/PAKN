@@ -93,6 +93,9 @@ export class PublishComponent implements OnInit, OnChanges {
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
 	}
+	redirectCreateRecommendation() {
+		this._router.navigate(['/cong-bo/them-moi-kien-nghi'])
+	}
 
 	async onConnectChatBot() {
 		this.myGuid = uuidv4()

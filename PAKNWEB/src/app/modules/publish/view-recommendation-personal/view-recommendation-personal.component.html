@@ -121,7 +121,7 @@
 						<div class="media-body">
 							<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold">{{model.unitName}}:</p>
 							<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
-							<ng-container *ngIf="[3,6,9].includes(model.status)">
+							<ng-container *ngIf="[3,6].includes(model.status)">
 								<p style="text-align: justify;">{{model.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status > 5">
@@ -193,14 +193,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb-4" *ngIf="model.status == 10">
+				<div class="box mb-4" *ngIf="model.status > 4 && !(model.status == 5 && model.isForwardProcess)">
 					<h3 class="mb-3 text-uppercase">
 						Trao đổi <span>({{totalInfomationExchange}})</span>
 					</h3>
 					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
-						<p *ngIf="!isLogin">Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue"
-								routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
-						</p>
 						<div class="form-group mb-0">
 							<textarea class="form-control px-4 py-3" [(ngModel)]="infoExchangeModel.contents" rows="3"
 								placeholder="Nhập bình luận..." id="comment" maxlength="500"></textarea>
@@ -226,7 +223,7 @@
 					</ng-container>
 
 					<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
-						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 20 bình luận khác
+						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 20 trao đổi khác
 							<span class="ml-2">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
 									class="bi bi-arrow-right" viewBox="0 0 16 16">
