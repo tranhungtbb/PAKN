@@ -167,8 +167,10 @@ export class SystemLogComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		this.dataSearch.description = this.dataSearch.description == null ? '' : this.dataSearch.description.trim()
-
-		passingObj.CreateDate = this.dataSearch.createDate ? this.dataSearch.createDate.setHours(0, 0, 0, 0) : null;
+		if (this.dataSearch.createDate) {
+			this.dataSearch.createDate.setHours(0, 0, 0, 0);
+		}
+		passingObj.CreatedDate = this.dataSearch.createDate ? this.dataSearch.createDate : null;
 		passingObj.Content = this.dataSearch.description;
 		passingObj.Status = this.dataSearch.status;
 		passingObj.UserId = this.dataSearch.userId;
