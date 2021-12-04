@@ -32,8 +32,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
-		private systemConfig : SystemconfigService
-	) {}
+		private systemConfig: SystemconfigService
+	) { }
 
 	activeUrl: string = ''
 	isHasToken: boolean = this.storageService.getIsHaveToken()
@@ -52,7 +52,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	messages: any[] = []
 	loading: boolean
 	myGuid: string
-	config : any = {}
+	config: any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -73,16 +73,16 @@ export class PublishComponent implements OnInit, OnChanges {
 				alert(error)
 			}
 
-			this.systemConfig.syConfigGetByType({Type : TYPECONFIG.APPLICATION}).subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.config = JSON.parse(res.result.SYConfigGetByType.content)
-					console.log(this.config)
-				}
-			}),
-				(error) => {
-					console.log(error)
-					alert(error)
-				}
+		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.config = JSON.parse(res.result.SYConfigGetByType.content)
+				console.log(this.config)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 
 		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [
@@ -118,16 +118,18 @@ export class PublishComponent implements OnInit, OnChanges {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				if (this.myGuid !== data.from) {
 					this.loading = false
-					console.log('receiveMessage 0', this.messages, data)
 
 					let link = ''
 					let subTags
 					let typeFrom
 					if (data.subTags && data.subTags.length > 0) {
-						const par = JSON.parse(data.subTags)
-						typeFrom = par.type
-						if (par.type === 'carousel') {
-							subTags = par.data
+						try {
+							const par = JSON.parse(data.subTags)
+							typeFrom = par.type
+							if (par.type === 'carousel' || par.type === 'form') {
+								subTags = par.data
+							}
+						} catch (error) {
 						}
 					}
 
@@ -140,7 +142,6 @@ export class PublishComponent implements OnInit, OnChanges {
 						fromUserName: data.from,
 						toUserName: data.to,
 					}
-
 					if (this.messages) {
 						this.messages = [...this.messages, newMessage]
 					} else {
