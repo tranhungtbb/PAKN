@@ -484,11 +484,13 @@ namespace PAKNAPI.ControllerBase
 				statisticSatisfaction.ForEach(item => {
 					values.Add(item.Value); 
 				});
+				var StatisticExpire = await new PU_Statistic(_appSetting).StatisticExpireDAO();
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"RecommendationStatisticBySatisfaction", statisticSatisfaction},
-						{"Values", values }
+						{"Values", values },
+						{"Expire", StatisticExpire}
 					};
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };

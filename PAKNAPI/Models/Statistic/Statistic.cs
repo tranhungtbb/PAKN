@@ -263,6 +263,18 @@ namespace PAKNAPI.Models.Statistic
 
 			return (await _sQLCon.ExecuteListDapperAsync<PU_Statistic>("[TK_RecommendationBySatisfaction]", DP)).ToList();
 		}
+
+		public async Task<StatisticExpire> StatisticExpireDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticExpire>("[TK_RecommendationExpire]", DP)).FirstOrDefault();
+		}
+	}
+
+	public class StatisticExpire {
+		public int? OnTime { get; set; }
+		public int? Total { get; set; }
 	}
 
 	public class StatisticByByUnitParent
