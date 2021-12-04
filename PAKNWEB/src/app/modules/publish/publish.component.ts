@@ -32,8 +32,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
-		private systemConfig : SystemconfigService
-	) {}
+		private systemConfig: SystemconfigService
+	) { }
 
 	activeUrl: string = ''
 	isHasToken: boolean = this.storageService.getIsHaveToken()
@@ -52,7 +52,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	messages: any[] = []
 	loading: boolean
 	myGuid: string
-	config : any = {}
+	config: any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -73,16 +73,16 @@ export class PublishComponent implements OnInit, OnChanges {
 				alert(error)
 			}
 
-			this.systemConfig.syConfigGetByType({Type : TYPECONFIG.APPLICATION}).subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.config = JSON.parse(res.result.SYConfigGetByType.content)
-					console.log(this.config)
-				}
-			}),
-				(error) => {
-					console.log(error)
-					alert(error)
-				}
+		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.config = JSON.parse(res.result.SYConfigGetByType.content)
+				console.log(this.config)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 
 		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [
@@ -157,6 +157,12 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	sendMessage(message: any, append: boolean = true) {
+		if (message.link) {
+			if (message.link.length > 2) {
+				this.activeUrl = message.link[2]
+			}
+			this._router.navigate(['../' + message.link])
+		}
 		console.log('message ', message)
 		this.loading = true
 		if (message.hiddenAnswer && message.hiddenAnswer !== '') {
