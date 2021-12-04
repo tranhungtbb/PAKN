@@ -25,7 +25,7 @@ export class DashboardChatBotComponent implements OnInit {
 	userId: number
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
-	constructor(private botService: ChatBotService, private user: UserInfoStorageService) {}
+	constructor(private botService: ChatBotService, private user: UserInfoStorageService) { }
 	ngOnInit() {
 		//console.log('ngOnInit 0')
 		this.userId = this.user.getUserId()
@@ -121,13 +121,13 @@ export class DashboardChatBotComponent implements OnInit {
 		try {
 			//console.log('height scroll:' + this.boxChat.nativeElement.scrollHeight)
 			this.boxChat.nativeElement.scrollTop = this.boxChat.nativeElement.scrollHeight
-		} catch (err) {}
+		} catch (err) { }
 	}
 
 	sendMessage() {
 		if (this.newMessage !== '') {
 			//console.log('sendMessage ', this.newMessage)
-			this.connection.invoke('SendToRoom', this.roomNameSelected, this.newMessage)
+			this.connection.invoke('AdminSendToRoom', this.roomNameSelected, this.newMessage)
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId }]
 			this.newMessage = ''
 		}

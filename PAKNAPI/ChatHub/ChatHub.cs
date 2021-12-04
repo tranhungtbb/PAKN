@@ -72,14 +72,24 @@ namespace SignalR.Hubs
             }
         }
 
-        public async Task SendToRoom(string roomName, string message)
+        public async Task AdminSendToRoom(string roomName, string message)
         {
-            if (!string.IsNullOrEmpty(message)) {
+            var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+            if (room.Type == (int) BotStatus.Enable)
+            {
+                await new BOTRoom(_appSetting).BOTRoomEnableBot(roomName, (int)BotStatus.Disable);
+            }
+            await HandleMessageToRoom(room.Name,room.Id, message);
+        }
+
+        private async Task HandleMessageToRoom(string roomName,int roomId ,string message) {
+            if (!string.IsNullOrEmpty(message))
+            {
                 var httpContext = Context.GetHttpContext();
 
                 var senderUserName = GetUserName(httpContext);
                 var senderUserId = await GetUserIdByUserName(httpContext);
-                var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                
                 DateTime dateSent = DateTime.Now;
                 Message messageModel = new Message()
                 {
@@ -90,8 +100,8 @@ namespace SignalR.Hubs
                     Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(),
                     Type = MessageTypes.Conversation
                 };
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUserId, room.Id, dateSent);
-                await Clients.Group(room.Name).ReceiveMessageToGroup(messageModel);
+                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUserId, roomId, dateSent);
+                await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
             }
         }
 
@@ -104,7 +114,7 @@ namespace SignalR.Hubs
             string roomName = "Room_" + senderUserName;
             BOTAnonymousUser senderUser = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-            await SendToRoom(roomName, message);
+            await HandleMessageToRoom(room.Name,room.Id, message);
             if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable)
             {
                 DateTime foo = DateTime.Now;
