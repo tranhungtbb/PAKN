@@ -221,12 +221,12 @@ namespace PAKNAPI.Controller
                 
                 if (!new Captcha(_appSetting).ValidateCaptchaCode(model.Captcha, captChaCode, createdDAte))
                 {
-                    await new Captcha(_appSetting).DeleteCaptcha("");
+                    await new Captcha(_appSetting).DeleteCaptcha("", createdDAte);
                     return new ResultApi { Success = ResultCode.ORROR, Message = "Vui lòng nhập lại mã captcha" };
                 }
                 else
                 {
-                    await new Captcha(_appSetting).DeleteCaptcha(model.Captcha);
+                    await new Captcha(_appSetting).DeleteCaptcha(model.Captcha, createdDAte);
 
                     var json = System.IO.File.ReadAllText("fake-images.json");
                     var sampleData = JsonConvert.DeserializeObject<Dictionary<long, FakeResult>>(json);

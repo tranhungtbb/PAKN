@@ -1250,6 +1250,17 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLogGetAllOnPageAdmin", DP)).ToList();
 		}
+
+		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogExport(int? UserId, DateTime? CreateDate, byte? Status, string Description)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			DP.Add("CreateDate", CreateDate);
+			DP.Add("Status", Status);
+			DP.Add("Description", Description);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLog_Export", DP)).ToList();
+		}
 	}
 
 	public class SYTimeDelete

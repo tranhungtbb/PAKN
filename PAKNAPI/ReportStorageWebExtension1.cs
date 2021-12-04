@@ -470,6 +470,22 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "system-log":
+                    var queryParamsSystemLog = JsonConvert.DeserializeObject<ExportSystemLog>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.SystemLog.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["Content"].Value = queryParamsSystemLog.Content;
+                    result.Parameters["CreatedDate"].Value = queryParamsSystemLog.CreatedDate;
+                    result.Parameters["Status"].Value = queryParamsSystemLog.Status;
+                    result.Parameters["UserId"].Value = queryParamsSystemLog.UserId;
+                    result.Parameters["TitleReport"].Value = "Nhật ký hệ thống";
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+                        return ms.ToArray();
+                    }
+                    break;
             }
             sYSystemLogInsertIN.Status = 0;
             new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
