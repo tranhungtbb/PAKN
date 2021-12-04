@@ -13,11 +13,11 @@ import { CatalogService } from 'src/app/services/catalog.service'
 
 declare var $: any
 @Component({
-	selector: 'app-processing-results-by-type-detail',
-	templateUrl: './processing-results-by-type-detail.component.html',
-	styleUrls: ['./processing-results-by-type-detail.component.css'],
+	selector: 'app-processing-results-detail',
+	templateUrl: './processing-results-detail.component.html',
+	styleUrls: ['./processing-results-detail.component.css'],
 })
-export class RecommendationsByTypeDetailComponent implements OnInit {
+export class RecommendationsProcessingResultDetailComponent implements OnInit {
 	constructor(
 		private _serviceRecommendation: RecommendationService,
 		private _service: StatisticService,
@@ -34,7 +34,9 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 	lstField: any[] = []
 	unitId: number
 	fieldId: number
-	recommendationType: number
+
+	status: number
+	isOnTime: number
 	dataSearch: DataSearch = new DataSearch()
 	fieldName: string
 	fromDate: string
@@ -42,6 +44,7 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 	pageIndex: number = 1
 	pageSize: number = 20
 	data: any = {}
+
 	lstRecommendationType: any = [
 		{ value: 0, text: 'PAKN về dịch vụ công' },
 		{ value: 1, text: 'PAKN về dịch kinh tế xã hội' }
@@ -60,11 +63,17 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 			} else { // don vi
 				this.unitId = +params['unitId']
 			}
-
-			let recommendationType = +params['RecommendationType']
-			if (recommendationType) {
-				this.dataSearch.recommendationType = recommendationType
+			// /:type/:fieldId/:status/:IsOnTime
+			let status = +params['status']
+			if (status) {
+				this.status = status
 			}
+
+			let isOnTime = +params['isOnTime']
+			if (isOnTime) {
+				this.isOnTime = isOnTime
+			}
+
 			this.fromDate = params['fromDate']
 			this.toDate = params['toDate']
 			this.getList()
@@ -96,7 +105,8 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 			Type: this.dataSearch.type,
 			FieldId: this.fieldId == null ? '' : this.fieldId,
 			UnitId: this.unitId == null ? '' : this.unitId,
-			RecommendationType: this.recommendationType,
+			Status: this.status == null ? '' : this.status,
+			IsOnTime: this.isOnTime == null ? '' : this.isOnTime,
 			Code: this.dataSearch.code,
 			Name: this.dataSearch.sendName,
 			Title: this.dataSearch.title,
@@ -106,7 +116,7 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 
-		this._service.getStatisticRecommendationByTypeDetail(request).subscribe((response) => {
+		this._service.getStatisticRecommendationByResultDetail(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []

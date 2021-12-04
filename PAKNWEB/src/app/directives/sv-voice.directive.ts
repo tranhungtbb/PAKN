@@ -21,6 +21,7 @@ export class SvVoiceDirective {
 
 	@HostListener('click', ['$event'])
 	onClick(event) {
+		let data = $('#' + this.target).val()
 		this.ison += 1
 		if (this.ison == 1) {
 			$(this.element).children().attr('class', 'bi bi-mic-fill')
@@ -35,21 +36,26 @@ export class SvVoiceDirective {
 					}
 					try {
 						$('#' + this.target)[0].dispatchEvent(this.createEvent('focus'))
-					} catch {}
-					$('#' + this.target).val(value)
+					} catch { }
+					if (data) {
+						$('#' + this.target).val(data + ' ' + value)
+					} else {
+						$('#' + this.target).val(value)
+					}
+
 					try {
 						$('#' + this.target)[0].dispatchEvent(this.createEvent('change'))
 						$('#' + this.target)[0].dispatchEvent(this.createEvent('input'))
-					} catch {}
+					} catch { }
 
-					//$("#" + this.target)[0].dispatchEvent(this.createEvent('blur'));
+					// $("#" + this.target)[0].dispatchEvent(this.createEvent('blur'));
 				},
 				//Lỗi
 				(err) => {
 					console.log(err)
 				},
 				//Hoàn thành
-				() => {}
+				() => { }
 			)
 		} else {
 			$(this.element).children().attr('class', 'bi bi-mic-mute-fill')

@@ -459,14 +459,30 @@ namespace PAKNAPI.Controllers
                 List<StatisticRecommendationByRecommendationTypeDetail> list = Type == StatisticType.Field ?
                     await new StatisticRecommendationByRecommendationTypeDetail(_appSetting).StatisticRecommendationByRecommendationTypeAndFieldDetailDAO(FieldId, UnitId, RecommendationType, Code, Name, Title, null, null, PageSize, PageIndex)
                     : await new StatisticRecommendationByRecommendationTypeDetail(_appSetting).StatisticRecommendationByRecommendationTypeAndUnitProcessDetailDAO(FieldId, UnitId, RecommendationType, Code, Name, Title, FromDate, ToDate, PageSize, PageIndex);
-                IDictionary<string, object> json = new Dictionary<string, object>
+				if (Type == StatisticType.Field)
+				{
+					IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"ListRecommentdation", list},
+						{"Data", (await new CAFieldGetByID(_appSetting).CAFieldGetByIDDAO(FieldId)).FirstOrDefault()},
 						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
 						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
 						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
 					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+				else
+				{
+					IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListRecommentdation", list},
+						{"Data", (await new CAUnitGetByID(_appSetting).CAUnitGetByIDDAO(UnitId)).FirstOrDefault()},
+						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
+						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
+						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
+					};
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
 			}
 			catch (Exception ex)
 			{
@@ -487,14 +503,30 @@ namespace PAKNAPI.Controllers
 				List<StatisticRecommendationByReceptionTypeDetail> list = Type == StatisticType.Field ?
 					await new StatisticRecommendationByReceptionTypeDetail(_appSetting).StatisticRecommendationByReceptionTypeAndFieldDetailDAO(FieldId, UnitId, ReceptionType, Code, Name, Title, null, null, PageSize, PageIndex)
 					: await new StatisticRecommendationByReceptionTypeDetail(_appSetting).StatisticRecommendationByReceptionTypeAndUnitProcessDetailDAO(FieldId, UnitId, ReceptionType, Code, Name, Title, FromDate, ToDate, PageSize, PageIndex);
-				IDictionary<string, object> json = new Dictionary<string, object>
+				if (Type == StatisticType.Field)
+				{
+					IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"ListRecommentdation", list},
+						{"Data", (await new CAFieldGetByID(_appSetting).CAFieldGetByIDDAO(FieldId)).FirstOrDefault()},
 						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
 						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
 						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
 					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+				else
+				{
+					IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListRecommentdation", list},
+						{"Data", (await new CAUnitGetByID(_appSetting).CAUnitGetByIDDAO(UnitId)).FirstOrDefault()},
+						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
+						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
+						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
+					};
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
 			}
 			catch (Exception ex)
 			{
@@ -504,25 +536,47 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-		//[HttpGet]
-		//[Authorize("ThePolicy")]
-		//[Route("recommendation-processing-results-by-unit-and-reception")]
-		//public async Task<ActionResult<object>> RecommendationProcessResultsByUnitAndReception(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
-		//{
-		//	try
-		//	{
-		//		var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-		//		List<StatisticRecommendationProcessStatusByUnitAndReception> result = await new StatisticRecommendationProcessStatusByUnitAndReception(_appSetting).StatisticRecommendationProcessStatusByUnitAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
-
-		//		return new ResultApi { Success = ResultCode.OK, Result = result };
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
-		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-		//	}
-		//}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-by-result-detail-on-page")]
+		public async Task<ActionResult<object>> RecommendationsByResultDetail(int Type, int? FieldId, int? UnitId, int? Status,bool? IsOnTime, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<StatisticRecommendationByResultDetail> list = Type == StatisticType.Field ?
+					await new StatisticRecommendationByResultDetail(_appSetting).StatisticRecommendationByResultAndFieldDetailDAO(FieldId, UnitId, Status, IsOnTime, Code, Name, Title, null, null, PageSize, PageIndex)
+					: await new StatisticRecommendationByResultDetail(_appSetting).StatisticRecommendationByResultAndUnitProcessDetailDAO(FieldId, UnitId, Status, IsOnTime, Code, Name, Title, FromDate, ToDate, PageSize, PageIndex);
+				if (Type == StatisticType.Field)
+				{
+					IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListRecommentdation", list},
+						{"Data", (await new CAFieldGetByID(_appSetting).CAFieldGetByIDDAO(FieldId)).FirstOrDefault()},
+						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
+						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
+						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
+					};
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+				else {
+					IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListRecommentdation", list},
+						{"Data", (await new CAUnitGetByID(_appSetting).CAUnitGetByIDDAO(UnitId)).FirstOrDefault()},
+						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
+						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
+						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
+					};
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 
 		[HttpGet]

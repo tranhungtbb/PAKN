@@ -32,8 +32,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
-		private systemConfig : SystemconfigService
-	) {}
+		private systemConfig: SystemconfigService
+	) { }
 
 	activeUrl: string = ''
 	isHasToken: boolean = this.storageService.getIsHaveToken()
@@ -52,13 +52,13 @@ export class PublishComponent implements OnInit, OnChanges {
 	messages: any[] = []
 	loading: boolean
 	myGuid: string
-	config : any = {}
+	config: any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
 			this.activeUrl = splitRouter[2]
 		}
-		// this.loadScript('assets/dist/js/owl.carousel.min.js')
+		this.loadScript('assets/dist/vendor/bootstrap/js/bootstrap.min.js')
 		// this.loadScript('assets/dist/js/sd-js.js')
 		if (this.isLogin) {
 			this.getListNotification(this.numberNotifications)
@@ -73,16 +73,16 @@ export class PublishComponent implements OnInit, OnChanges {
 				alert(error)
 			}
 
-			this.systemConfig.syConfigGetByType({Type : TYPECONFIG.APPLICATION}).subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.config = JSON.parse(res.result.SYConfigGetByType.content)
-					console.log(this.config)
-				}
-			}),
-				(error) => {
-					console.log(error)
-					alert(error)
-				}
+		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.config = JSON.parse(res.result.SYConfigGetByType.content)
+				console.log(this.config)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 
 		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [

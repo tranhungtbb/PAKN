@@ -37,6 +37,7 @@ namespace PAKNAPI.Controllers
 		/// mã capcha (ảnh)
 		/// </summary>
 		/// <param name="IpAddress"></param>
+		/// <param name="MillisecondsCurrent"></param>
 		/// <returns></returns>
 		[Route("get-captcha-image")]
 		[HttpGet]
@@ -191,6 +192,7 @@ namespace PAKNAPI.Controllers
 		/// check isvalid capcha
 		/// </summary>
 		/// <param name="CaptchaCode"></param>
+		/// <param name="MillisecondsCurrent"></param>
 		/// <returns></returns>
 		[Route("validator-captcha")]
 		[HttpGet]

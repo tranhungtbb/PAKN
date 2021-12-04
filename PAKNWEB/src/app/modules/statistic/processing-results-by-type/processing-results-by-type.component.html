@@ -132,22 +132,28 @@
 											number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.processedTotal | number}}</p>
+										<p class="mb-0 text-right" (click)="viewResultDetail(item.id,10,null)">{{item.processedTotal |
+											number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.processedOnTime | number}}</p>
+										<p class="mb-0 text-right" (click)="viewResultDetail(item.id,10,1)">{{item.processedOnTime |
+											number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.processedOutOfDate | number}}</p>
+										<p class="mb-0 text-right" (click)="viewResultDetail(item.id,10,0)">{{item.processedOutOfDate |
+											number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.processTotal | number}}</p>
+										<p class="mb-0 text-right" (click)="viewResultDetail(item.id,4,null)">{{item.processTotal | number}}
+										</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.processOnTime | number}}</p>
+										<p class="mb-0 text-right" (click)="viewResultDetail(item.id,4,1)">{{item.processOnTime | number}}
+										</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.processOutOfDate | number}}</p>
+										<p class="mb-0 text-right" (click)="viewResultDetail(item.id,4,0)">{{item.processOutOfDate |
+											number}}</p>
 									</td>
 									<td>
 										<p class="mb-0 text-right">{{item.evaluate | number}}</p>

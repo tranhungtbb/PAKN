@@ -48,15 +48,14 @@
 						<div class="mb-1 d-flex">
 							<div class="label pl-0">Nội dung</div>
 							<span class="cl-red">(*)</span>
-							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'"
-								(click)="hightLightText()">
+							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (blur)="hightLightText()">
 								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
 							</button>
 						</div>
 						<div class="group-content-recommendation">
 							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content"
 								style="height: 158px; border-radius: 0.75rem;" rows="6" placeholder="Nhập nội dung..."
-								(blur)="hightLightText()"></textarea>
+								(click)="hightLightText()" (blur)="hightLightText()"></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
 						<div
