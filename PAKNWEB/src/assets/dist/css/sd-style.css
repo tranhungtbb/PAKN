@@ -2388,4 +2388,21 @@ table thead .form-control ng-select {
 	.d-block-xs {
 		display: block !important;
 	}
+
+	.sub-nav {
+		max-width: 100%;
+	}
+
+	.content-nd .card .card-header {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.img-cover {
+		object-fit: cover;
+	}
+
+	.sidebar-ct {
+		width: 100% !important;
+	}
 }
