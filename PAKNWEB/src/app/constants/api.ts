@@ -168,6 +168,7 @@ export class Api {
 	public static SystemLogin = 'system-log/get-list-system-log-on-page'
 	public static SystemLoginAdmin = 'system-log/get-list-system-log-admin-on-page'
 	public static SystemLogDelete = 'system-log/delete'
+	public static ExportExcel = 'system-log/export-excel'
 
 	//SY_Role
 	public static RoleGetAll = 'role/get-list-role-base'
