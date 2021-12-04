@@ -71,7 +71,6 @@
     <Compile Include="AIMLTagHandlers\uppercase.cs" />
     <Compile Include="AIMLTagHandlers\version.cs" />
     <Compile Include="BotUser.cs" />
-    <Compile Include="ManageBots.cs" />
     <Compile Include="Normalize\ApplySubstitutions.cs" />
     <Compile Include="Normalize\MakeCaseInsensitive.cs" />
     <Compile Include="Normalize\SplitIntoSentences.cs" />

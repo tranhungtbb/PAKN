@@ -5,9 +5,10 @@
 /* @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss');
 @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss'); */
 
-*{
+* {
 	font-family: 'Inter', sans-serif;
 }
+
 .cdk-overlay-pane {
 	max-width: 98vw !important;
 }
@@ -162,7 +163,8 @@ a:hover {
 	/* background: linear-gradient(180deg, #41D1FF 0%, #216277 100%); */
 	background-color: #038CB8;
 }
-.grd-xanhngoc2{
+
+.grd-xanhngoc2 {
 	background: linear-gradient(180deg, #41D1FF 0%, #216277 100%);
 }
 
@@ -2108,6 +2110,7 @@ table thead .form-control ng-select {
 	border-radius: 50%;
 	z-index: 1000;
 }
+
 .call-content {
 	width: 48px;
 	height: 48px;
@@ -2126,6 +2129,7 @@ table thead .form-control ng-select {
 	border-radius: 50%;
 	z-index: 1000;
 }
+
 .message-content {
 	width: 48px;
 	height: 48px;
@@ -2194,7 +2198,7 @@ table thead .form-control ng-select {
 	background-color: #2E73D5;
 }
 
-.btn-outline-blue{
+.btn-outline-blue {
 	color: #2E73D5;
 	border-color: #2E73D5;
 }
@@ -2203,15 +2207,16 @@ table thead .form-control ng-select {
 	border-radius: 4px;
 }
 
-.btn-index{
-	padding: 0.638rem 1.5rem;
+.btn-index {
+	padding: 0.638rem 1.2rem;
 
 }
 
 .bg-gray {
 	background-color: #F6F6F6;
 }
-.bd-12{
+
+.bd-12 {
 	border-radius: 12px;
 }
 
@@ -2221,9 +2226,11 @@ table thead .form-control ng-select {
 	font-size: 16px;
 	line-height: 19px;
 }
-.color-dark{
+
+.color-dark {
 	color: #222 !important;
 }
+
 .bg-cards-content-owl {
 	bottom: 0px;
 	border-bottom-right-radius: 12px;
@@ -2237,19 +2244,24 @@ table thead .form-control ng-select {
 	background-color: #eff8ff;
 	border-radius: 12px;
 }
+
 .lh-20 {
 	line-height: 20px;
 }
+
 .bd-20 {
 	border-radius: 20px;
 }
+
 .bg-gray {
 	background-color: #f6f6f6;
 }
+
 .read-more {
 	color: #1673d8;
 	font-size: 22px;
 }
+
 .number-chart-index {
 	font-family: Inter;
 	font-style: normal;
@@ -2257,10 +2269,12 @@ table thead .form-control ng-select {
 	font-size: 48px;
 	line-height: 58px;
 }
+
 .card-my-chart {
 	border-radius: 12px;
 	border: 1px solid #eeeeee;
 }
+
 .circle {
 	width: 40px;
 	height: 40px;
@@ -2269,6 +2283,7 @@ table thead .form-control ng-select {
 	line-height: 20px;
 	border-radius: 50%;
 }
+
 .title-status-rm {
 	font-size: 16px;
 	line-height: 20px;
@@ -2278,30 +2293,116 @@ table thead .form-control ng-select {
 .border-left-yellow {
 	border-left: 3px solid #db8e3f;
 }
+
 .border-left-blue2 {
 	border-left: 3px solid #25a7d0;
 }
+
 .border-left-blue {
 	border-left: 3px solid #22a246;
 }
+
 .border-left-red {
 	border-left: 3px solid #da2222;
 }
+
 .bg-yellow {
 	background-color: #db8e3f;
 }
+
 .bg-blue2 {
 	background-color: #25a7d0;
 }
+
 .bg-blue {
 	background-color: #22a246 !important;
 }
+
 .bg-red {
 	background-color: #da2222;
 }
+
 .h-184 {
 	height: 184.4px;
 }
-.middle{
+
+.middle {
 	vertical-align: middle !important;
+}
+
+
+@media (max-width: 992px) {
+	.navbar-light .navbar-toggler {
+		border-radius: 0;
+	}
+
+	.navbar-nav {
+		padding-top: 10px;
+	}
+
+	.navbar.navbar-expand {
+		min-height: 98px;
+
+	}
+
+	.navbar.navbar-light {
+		padding: 0 !important;
+		box-shadow: 0px 6px 8px rgb(0 0 0 / 12%);
+	}
+
+	.navbar-collapse .menu-left {
+		padding-bottom: 10px;
+	}
+
+	.header-info .btn-login {
+		position: absolute;
+		right: 0;
+		width: 130px;
+		margin-top: 44px;
+		border-radius: 0 !important;
+		border-color: transparent !important;
+	}
+
+	#main-wrapper .p-xs-0 {
+		padding: 0 !important;
+	}
+
+	.pagination-xs .ps-absolute {
+		display: block;
+		float: left;
+		position: relative;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	.pagination-xs .pagination {
+		display: flex;
+		width: 100%;
+		float: right;
+	}
+
+	.box-message-publish .media-body {
+		max-width: calc(100% - 75px);
+	}
+
+	.d-block-xs {
+		display: block !important;
+	}
+
+	.sub-nav {
+		max-width: 100%;
+	}
+
+	.content-nd .card .card-header {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.img-cover {
+		object-fit: cover;
+	}
+
+	.sidebar-ct {
+		width: 100% !important;
+	}
 }

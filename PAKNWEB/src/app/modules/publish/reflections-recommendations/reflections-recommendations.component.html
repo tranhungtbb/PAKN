@@ -1,38 +1,42 @@
 <div class="content-nd mt-5 mb-5">
 	<div class="container">
 		<div class="row justify-content-between">
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="box">
 					<div class="tt-v1 mb-3 d-flex justify-content-between center">
 						<h4 class="text-uppercase">Phản ánh, kiến nghị</h4>
 						<button type="button" class="btn text-white border-0 no-grd-blue btn-index border-radius-4">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
-								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+								class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+								<path
+									d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
 								<path
 									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
 							</svg>
-							<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh kiến nghị</span>
+							<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh
+								kiến nghị</span>
 						</button>
 					</div>
-					<div class="d-flex justify-content-between">
-						<div class="col-4 form-group p-0 pr-2">
-								<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4" [(ngModel)]="KeySearch" maxlength="100"
-									(keydown.enter)="dataStateChange()" />
+					<div class="row m-0 d-flex justify-content-between">
+						<div class="col-lg-4 form-group p-0 pr-2 p-xs-0">
+							<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4"
+								[(ngModel)]="KeySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
 						</div>
-						<div class="col-4 form-group px-2">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý..." class="form-control border-brown border-radius-4" [items]="lstUnit"
-								bindLabel="text" bindValue="value" [(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()"
-								[virtualScroll]="true">
+						<div class="col-lg-4 form-group px-2 p-xs-0">
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý..."
+								class="form-control border-brown border-radius-4" [items]="lstUnit" bindLabel="text" bindValue="value"
+								[(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 							</ng-select>
 						</div>
-						<div class="col-3 form-group px-2">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..." class="form-control border-brown border-radius-4" [items]="lstField"
-									bindLabel="text" bindValue="value" [(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()"
-									[virtualScroll]="true">
-								</ng-select>
+						<div class="col-lg-3 col-xs-8 form-group px-2 p-xs-0">
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..."
+								class="form-control border-brown border-radius-4" [items]="lstField" bindLabel="text" bindValue="value"
+								[(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+							</ng-select>
 						</div>
-						<div class="col-1 form-group px-2">
-							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px" (click)="dataStateChange()">
+						<div class="col-lg-1 col-xs-4 form-group px-2 p-xs-0">
+							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px"
+								(click)="dataStateChange()">
 								<i class="bi bi-search"></i>
 							</button>
 						</div>
@@ -51,42 +55,44 @@
 							<div class="card-body pt-1 pb-3">
 								<div class="d-flex align-items-center justify-content-between">
 									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
-									<a class="read-more" *ngIf="item.totalComment"
-											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
-										> <i class="bi bi-chat-right-fill cl-blue"></i> {{item.totalComment}}
-										</a>
+									<a class="read-more" *ngIf="item.totalComment" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"> <i
+											class="bi bi-chat-right-fill cl-blue"></i> {{item.totalComment}}
+									</a>
 								</div>
-								
+
 								<p class="card-text">
-									<a class="text-2line italic lh-20" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" [innerHTML]="item.content | Change">
-										
+									<a class="text-2line italic lh-20" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}"
+										[innerHTML]="item.content | Change">
+
 									</a>
 								</p>
 							</div>
-					</div>
+						</div>
 					</ng-container>
 					<p class="text-center pt-2" *ngIf="!ReflectionsRecommendations || ReflectionsRecommendations.length == 0">
 						Không tìm thấy phản ánh kiến nghị nào
 					</p>
-					<nav aria-label="navigation" class="mt-4 ps-relative">
+					<nav aria-label="navigation" class="pagination-xs mt-4 ps-relative">
 						<span class="justify-content-start align-items-center ps-absolute">
 							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh kiến nghị</span>
 						</span>
 						<ul class="pagination pagination-lg justify-content-end align-items-center">
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == 1 }">
-								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"  tabindex="-1"
-									aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"
+									tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
+										class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 							</li>
 							<li class="d-flex justify-content-center align-items-center">
 								<a *ngIf="PageIndex > 4" class="cursor">...</a>
-								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index ===PageIndex }">
-									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex" class="page-link"
-										>{{item.index}}</a>
+								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index"
+									[ngClass]="{ 'active': item.index ===PageIndex }">
+									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex"
+										class="page-link">{{item.index}}</a>
 								</p>
 								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">...</a>
 							</li>
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == Total }">
-								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1" >
+								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1">
 									&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 								</a>
 							</li>
@@ -94,7 +100,7 @@
 					</nav>
 				</div>
 			</div>
-			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 				<app-gallery></app-gallery>
 			</div>

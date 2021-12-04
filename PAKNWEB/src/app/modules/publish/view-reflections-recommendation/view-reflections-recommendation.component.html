@@ -1,7 +1,7 @@
 <div class="content-nd mb-5">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
 					<li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Phản ánh, Kiến nghị</a></li>
@@ -32,10 +32,11 @@
 							<span class="my-0 h5">Lĩnh vực :</span> {{model.fieldName}}
 						</span>
 					</div>
-					
-					<div class="media pb-4 border-bottom mb-4">
+
+					<div class="media pb-4 border-bottom mb-4 mb-4 box-message-publish">
 						<div class="mr-3">
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+								class="bi bi-chat-right-text" viewBox="0 0 16 16">
 								<path
 									d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
 								<path
@@ -50,32 +51,50 @@
 							<span class="text-left">
 								<small class="small" *ngIf="lstFiles && lstFiles.length > 0">Tài liệu đính kèm</small><br>
 								<div *ngFor="let file of lstFiles" class="file-att">
-									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg"
+											style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+											style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
 									</a>
-									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
-										title="Xem file">
+									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
+										[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
 										<i class="bi bi-eye"></i>
 									</span>
 								</div>
@@ -83,60 +102,82 @@
 
 						</div>
 					</div>
-					<div class="media pb-4 border-bottom mb-4" *ngIf="[3,10].includes(model.status)">
+					<div class="media pb-4 border-bottom mb-4 mb-4 box-message-publish" *ngIf="[3,10].includes(model.status)">
 						<div class="mr-3">
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;"
-								viewBox="0 0 16 16" *ngIf="[10].includes(model.status)">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+								class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16"
+								*ngIf="[10].includes(model.status)">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
-							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: red"
-								viewBox="0 0 16 16" *ngIf="[3].includes(model.status)">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+								class="bi bi-chat-left-text-fill" style="color: red" viewBox="0 0 16 16"
+								*ngIf="[3].includes(model.status)">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ? model.processUnitName : 'Cơ quan chức năng trả lời'}}:</p>
+							<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ? model.processUnitName : 'Cơ
+								quan chức năng trả lời'}}:</p>
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
 							<p *ngIf="!lstConclusion">
 								{{model.contentConclusion != null ? model.contentConclusion : ''}}
 							</p>
 							<p class="mb-4" *ngFor="let file of lstConclusionFiles; let i = index">
-								<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+									style="color: #333;">
+									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+									style="color: #333;">
+									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+								<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+									style="color: #333;">
 									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+									style="color: #333;">
+									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+									style="color: #333;">
+									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+									style="color: #333;">
+									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}}</span>
 								</a>
-								<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
-									title="Xem file">
+								<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
+									[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
 									<i class="bi bi-eye"></i>
 								</span>
 							</p>
 							<p class="d-flex justify-content-end" *ngIf="model.status == 10">
-								<button type="button" class="btn btn-outline-success mr-3" (click)="changeSatisfaction(1)" [ngClass]="{ 'like': model.quantityType == 1 }">
+								<button type="button" class="btn btn-outline-success mr-3" (click)="changeSatisfaction(1)"
+									[ngClass]="{ 'like': model.quantityType == 1 }">
 									<span class="mr-2">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+											class="bi bi-emoji-smile" viewBox="0 0 16 16">
 											<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
 											<path
 												d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
@@ -146,20 +187,25 @@
 									Hài lòng ({{model.quantityLike}})
 								</button>
 
-								<button type="button" class="btn btn-outline-blue mr-3" (click)="changeSatisfaction(3)" [ngClass]="{ 'accept': model.quantityType == 3 }">
+								<button type="button" class="btn btn-outline-blue mr-3" (click)="changeSatisfaction(3)"
+									[ngClass]="{ 'accept': model.quantityType == 3 }">
 									<span class="mr-2">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-emoji-neutral" viewBox="0 0 16 16">
-											<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-											<path d="M4 10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5zm3-4C7 5.672 6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8s1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5S9.448 8 10 8s1-.672 1-1.5z"/>
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+											class="bi bi-emoji-neutral" viewBox="0 0 16 16">
+											<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+											<path
+												d="M4 10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5zm3-4C7 5.672 6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8s1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5S9.448 8 10 8s1-.672 1-1.5z" />
 										</svg>
 									</span>
 
 									Chấp nhận ({{model.quantityAccept}})
 								</button>
 
-								<button type="button" class="btn btn-outline-secondary" (click)="changeSatisfaction(2)" [ngClass]="{ 'dislike': model.quantityType == 2 }">
+								<button type="button" class="btn btn-outline-secondary" (click)="changeSatisfaction(2)"
+									[ngClass]="{ 'dislike': model.quantityType == 2 }">
 									<span class="mr-2">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+											class="bi bi-emoji-frown" viewBox="0 0 16 16">
 											<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
 											<path
 												d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
@@ -177,12 +223,14 @@
 						Bình luận <span>({{total_Comments}})</span>
 					</h3>
 					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
-						<p *ngIf="!isLogin">Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue" routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
+						<p *ngIf="!isLogin">Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue"
+								routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
 						</p>
 						<div class="form-group mb-0">
-							<textarea class="form-control px-4 py-3" [(ngModel)]="commentModel.contents" rows="3" placeholder="Nhập bình luận..." id="comment"
-								maxlength="500"></textarea>
-							<button type="button" class="btn text-white no-grd-blue border-0 px-5 mt-3" (click)="onSendComment()">Gửi</button>
+							<textarea class="form-control px-4 py-3" [(ngModel)]="commentModel.contents" rows="3"
+								placeholder="Nhập bình luận..." id="comment" maxlength="500"></textarea>
+							<button type="button" class="btn text-white no-grd-blue border-0 px-5 mt-3"
+								(click)="onSendComment()">Gửi</button>
 						</div>
 					</div>
 					<ng-container *ngFor="let item of listCommentsPaged; let i = index">
@@ -212,7 +260,8 @@
 					<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
 						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 10 bình luận khác
 							<span class="ml-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+									class="bi bi-arrow-right" viewBox="0 0 16 16">
 									<path fill-rule="evenodd"
 										d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
 								</svg>
@@ -221,7 +270,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 				<app-gallery></app-gallery>
 			</div>

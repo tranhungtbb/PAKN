@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row justify-content-between">
 			<p class="col-12 h4 red-title mb-2" *ngIf="isPreview">(Xem trước)</p>
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="box">
 					<div class="row">
 						<div class="col col-sm-6 col-md-6 col-lg-6">
@@ -193,7 +193,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<a href="javascript:void(0)">
 					<img class="img-fluid card" style="height: 200px; width: 100%;"
 						src="../../../../assets/dist/images/index2/Frame 3482.png" alt="">
@@ -371,7 +371,7 @@
 		<!-- Start TTHC -->
 
 		<div class="row justify-content-between mt-4">
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="box">
 					<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">thủ tục hành chính</h4>
@@ -379,7 +379,7 @@
 								class="bi bi-arrow-right"></i></a>
 					</div>
 					<div>
-						<p-table [value]="Administrations">
+						<p-table [value]="Administrations" tableStyleClass="table-responsive">
 							<ng-template pTemplate="header">
 								<tr>
 									<th style="width: 200px;">Mã quản lý quốc gia</th>
@@ -407,7 +407,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-gallery></app-gallery>
 				<a href="javascript:void(0)">
 					<img class="img-fluid card mt-4" style="width: 100%; height: 150px;"

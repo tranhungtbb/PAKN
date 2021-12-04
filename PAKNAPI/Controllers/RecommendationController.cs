@@ -216,7 +216,10 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                if (!new Captcha(_appSetting).ValidateCaptchaCode(model.Captcha, captChaCode))
+                TimeSpan time = TimeSpan.FromMilliseconds(model.Milliseconds);
+                DateTime createdDAte = new DateTime(1970, 1, 1) + time;
+                
+                if (!new Captcha(_appSetting).ValidateCaptchaCode(model.Captcha, captChaCode, createdDAte))
                 {
                     await new Captcha(_appSetting).DeleteCaptcha("");
                     return new ResultApi { Success = ResultCode.ORROR, Message = "Vui lòng nhập lại mã captcha" };
