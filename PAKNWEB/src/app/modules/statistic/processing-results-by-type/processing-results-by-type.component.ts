@@ -245,6 +245,49 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 			}
 		}
 	}
+
+	viewResultDetail(id: any, status: number, isOnTime: number = null) {
+		if (this.type == 1) {
+			if (isOnTime) {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc',
+					this.type,
+					id, status, isOnTime,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+				// /:type/:fieldId/:status/:IsOnTime/:fromDate/:toDate
+			} else {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc',
+					this.type,
+					id, status,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			}
+		}
+		else {
+			if (isOnTime) {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi',
+					this.type,
+					id, status, isOnTime,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			} else {
+				return this._router.navigate([
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi',
+					this.type,
+					id, status,
+					this.getFormattedDate(this.fromDate),
+					this.getFormattedDate(this.toDate)
+				])
+			}
+		}
+	}
+
 	onExport() {
 		let passingObj: any = {}
 		if (this.fromDate) {

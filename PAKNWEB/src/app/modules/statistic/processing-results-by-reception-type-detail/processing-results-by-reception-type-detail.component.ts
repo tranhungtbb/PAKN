@@ -41,6 +41,7 @@ export class RecommendationsByReceptionTypeDetailComponent implements OnInit {
 	toDate: string
 	pageIndex: number = 1
 	pageSize: number = 20
+	data: any = {}
 
 	lstReceptionType: any = [
 		{ value: 1, text: 'Qua Web' },
@@ -112,6 +113,7 @@ export class RecommendationsByReceptionTypeDetailComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
+					this.data = response.result.Data
 					this.listData = response.result.ListRecommentdation
 					this.totalRecords = response.result.TotalCount
 				}

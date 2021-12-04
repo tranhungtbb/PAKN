@@ -444,8 +444,10 @@ namespace PAKNAPI.Controller
                                     case ".pdf":
                                         // không đọc được từ file scan
                                         //content = FileUtils.ExtractDataFromPDFFile(filePath);
-                                        //content = PdfTextExtractorCustom.ReadPdfFile(filePath);
-                                        content = PdfTextExtractorCustom.PerformOCR(filePath, _hostingEnvironment);
+                                        content = PdfTextExtractorCustom.ReadPdfFile(filePath);
+                                        if (string.IsNullOrEmpty(content)) {
+                                            content = PdfTextExtractorCustom.PerformOCR(filePath, _hostingEnvironment);
+                                        }
                                         isHasFullText = true;
                                         break;
 

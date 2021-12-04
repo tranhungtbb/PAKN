@@ -13,6 +13,7 @@ import { ProcessingResultsByTypeComponent } from './processing-results-by-type/p
 import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
 import { RecommendationsByTypeDetailComponent } from './processing-results-by-type-detail/processing-results-by-type-detail.component'
 import { RecommendationsByReceptionTypeDetailComponent } from './processing-results-by-reception-type-detail/processing-results-by-reception-type-detail.component'
+import { RecommendationsProcessingResultDetailComponent } from './processing-results-detail/processing-results-detail.component'
 
 const routes: Routes = [
 	{
@@ -136,6 +137,33 @@ const routes: Routes = [
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},
+
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-linh-vuc/:type/:fieldId/:status/:isOnTime/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-linh-vuc/:type/:fieldId/:status/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-don-vi/:type/:unitId/:status/:isOnTime/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-don-vi/:type/:unitId/:status/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
 
 	{
 		path: 'ket-qua-xu-ly-theo-pttn',

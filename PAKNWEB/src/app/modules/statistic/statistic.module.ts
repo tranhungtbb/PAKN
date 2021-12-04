@@ -21,6 +21,7 @@ import { ProcessingResultsByTypeComponent } from './processing-results-by-type/p
 import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
 import { RecommendationsByTypeDetailComponent } from './processing-results-by-type-detail/processing-results-by-type-detail.component'
 import { RecommendationsByReceptionTypeDetailComponent } from './processing-results-by-reception-type-detail/processing-results-by-reception-type-detail.component'
+import { RecommendationsProcessingResultDetailComponent } from './processing-results-detail/processing-results-detail.component'
 
 @NgModule({
 	declarations: [
@@ -36,7 +37,8 @@ import { RecommendationsByReceptionTypeDetailComponent } from './processing-resu
 		ProcessingResultsByTypeComponent,
 		ProcessingResultsByReceptionTypeComponent,
 		RecommendationsByTypeDetailComponent,
-		RecommendationsByReceptionTypeDetailComponent
+		RecommendationsByReceptionTypeDetailComponent,
+		RecommendationsProcessingResultDetailComponent
 	],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })

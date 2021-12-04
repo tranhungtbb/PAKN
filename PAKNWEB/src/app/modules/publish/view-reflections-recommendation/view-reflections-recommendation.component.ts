@@ -31,7 +31,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	pageSizeComment: any = 4
 	IsAllComment: boolean = false
 	isLogin: boolean = this.storeageService.getIsHaveToken()
-	typeObject : number = this.storeageService.getTypeObject()
+	typeObject: number = this.storeageService.getTypeObject()
 	APIADDRESS: any
 	constructor(
 		private service: PuRecommendationService,
@@ -61,8 +61,8 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
-							if(this.model.contentConclusion){
-								this.model.contentConclusion = this.model.contentConclusion.split(':').splice(1,this.model.contentConclusion.split(':').length -1)
+							if (this.model.contentConclusion) {
+								this.model.contentConclusion = this.model.contentConclusion.split(':').splice(1, this.model.contentConclusion.split(':').length - 1)
 							}
 							if (this.model.quantityType && this.model.quantityType != 0) {
 								this.checkSatisfaction = true
@@ -111,41 +111,41 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		if (this.isLogin) {
 			// chưa like hoặc dislike lần nào
 			// if (this.checkSatisfaction == false) {
-				// call api
-				this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
-					if (res.success == RESPONSE_STATUS.success) {
-						this._toastr.success('Đánh giá thành công!')
-						// this.checkSatisfaction = true
-						if(this.model.quantityType){
-							switch (this.model.quantityType) {
-								case 1:
-									this.model.quantityLike = this.model.quantityLike - 1
-									break
-								case 2:
-									this.model.quantityDislike = this.model.quantityDislike - 1
-									break
-								case 3:
-									this.model.quantityAccept = this.model.quantityAccept - 1
-									break
-							}
-						}
-						
-						this.model.quantityType = status
-						switch (status) {
+			// call api
+			this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this._toastr.success('Đánh giá thành công!')
+					// this.checkSatisfaction = true
+					if (this.model.quantityType) {
+						switch (this.model.quantityType) {
 							case 1:
-								this.model.quantityLike = this.model.quantityLike + 1
+								this.model.quantityLike = this.model.quantityLike - 1
 								break
 							case 2:
-								this.model.quantityDislike = this.model.quantityDislike + 1
+								this.model.quantityDislike = this.model.quantityDislike - 1
 								break
 							case 3:
-								this.model.quantityAccept = this.model.quantityAccept + 1
+								this.model.quantityAccept = this.model.quantityAccept - 1
 								break
 						}
-					} else {
-						this._toastr.error('Đánh giá thất bại!')
 					}
-				})
+
+					this.model.quantityType = status
+					switch (status) {
+						case 1:
+							this.model.quantityLike = this.model.quantityLike + 1
+							break
+						case 2:
+							this.model.quantityDislike = this.model.quantityDislike + 1
+							break
+						case 3:
+							this.model.quantityAccept = this.model.quantityAccept + 1
+							break
+					}
+				} else {
+					this._toastr.error('Đánh giá thất bại!')
+				}
+			})
 			// } 
 			// else {
 			// 	this.checkSatisfaction = true
@@ -188,7 +188,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				this._toastr.error(res.message)
 				return
 			}
-			this._toastr.success('Gửi bình luận thành công')
+			this._toastr.success('Bình luận của bạn sẽ được chuyển đến quản trị viên để phê duyệt')
 			this.commentModel = new RecommnendationCommentObject()
 			this.getCommentPaged()
 		})
@@ -216,26 +216,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		this.pageSizeComment += 10
 		this.getCommentPaged()
 	}
-	changeStatusComment = (comment) => {
-		let obj = {
-			Id: comment.id,
-			IsPublish: !comment.isPublish,
-		}
-		this.commentService.updateStatus(obj).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					comment.isPublish = !comment.isPublish
-					this._toastr.success(comment.isPublish == true ? 'Công bố bình luận thành công' : 'Thu hồi bình luận thành công')
-					
-				} else {
-					this._toastr.error(res.message)
-				}
-			},
-			(err) => {
-				console.log(err)
-			}
-		)
-	}
+
 	DownloadFile(file: any) {
 		var request = {
 			Path: file.filePath,
