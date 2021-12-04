@@ -158,12 +158,6 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	sendMessage(message: any, append: boolean = true) {
-		if (message.link) {
-			if (message.link.length > 2) {
-				this.activeUrl = message.link[2]
-			}
-			this._router.navigate(['../' + message.link])
-		}
 		console.log('message ', message)
 		this.loading = true
 		if (message.hiddenAnswer && message.hiddenAnswer !== '') {
