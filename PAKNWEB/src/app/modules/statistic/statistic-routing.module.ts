@@ -12,6 +12,7 @@ import { ProcessingResultsComponent } from './processing-results/processing-resu
 import { ProcessingResultsByTypeComponent } from './processing-results-by-type/processing-results-by-type.component'
 import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
 import { RecommendationsByTypeDetailComponent } from './processing-results-by-type-detail/processing-results-by-type-detail.component'
+import { RecommendationsByReceptionTypeDetailComponent } from './processing-results-by-reception-type-detail/processing-results-by-reception-type-detail.component'
 
 const routes: Routes = [
 	{
@@ -110,6 +111,32 @@ const routes: Routes = [
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},
+
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/:type/:fieldId/:ReceptionType/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/:type/:fieldId/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/:type/:unitId/:ReceptionType/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/:type/:unitId/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
 	{
 		path: 'ket-qua-xu-ly-theo-pttn',
 		component: ProcessingResultsByReceptionTypeComponent,

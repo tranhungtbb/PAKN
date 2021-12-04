@@ -118,16 +118,18 @@ export class PublishComponent implements OnInit, OnChanges {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				if (this.myGuid !== data.from) {
 					this.loading = false
-					console.log('receiveMessage 0', this.messages, data)
 
 					let link = ''
 					let subTags
 					let typeFrom
 					if (data.subTags && data.subTags.length > 0) {
-						const par = JSON.parse(data.subTags)
-						typeFrom = par.type
-						if (par.type === 'carousel') {
-							subTags = par.data
+						try {
+							const par = JSON.parse(data.subTags)
+							typeFrom = par.type
+							if (par.type === 'carousel' || par.type === 'form') {
+								subTags = par.data
+							}
+						} catch (error) {
 						}
 					}
 
@@ -140,7 +142,6 @@ export class PublishComponent implements OnInit, OnChanges {
 						fromUserName: data.from,
 						toUserName: data.to,
 					}
-
 					if (this.messages) {
 						this.messages = [...this.messages, newMessage]
 					} else {
