@@ -3,7 +3,7 @@
 <category>
 		<pattern>*</pattern>
 		<template>
-					Bạn có muốn gặp tư vấn viên không
+					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không
 					<pakn>json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Sai","image":"","hiddenAnswer":"m45fe4a-d402-451c-b9ed-9c1a04247482"}]}</pakn>
 				</template>
 	</category>
