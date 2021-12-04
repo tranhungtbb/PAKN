@@ -476,6 +476,34 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-by-reception-type-detail-on-page")]
+		public async Task<ActionResult<object>> RecommendationsByReceptionTypeDetail(int Type, int? FieldId, int? UnitId, int? ReceptionType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<StatisticRecommendationByReceptionTypeDetail> list = Type == StatisticType.Field ?
+					await new StatisticRecommendationByReceptionTypeDetail(_appSetting).StatisticRecommendationByReceptionTypeAndFieldDetailDAO(FieldId, UnitId, ReceptionType, Code, Name, Title, null, null, PageSize, PageIndex)
+					: await new StatisticRecommendationByReceptionTypeDetail(_appSetting).StatisticRecommendationByReceptionTypeAndUnitProcessDetailDAO(FieldId, UnitId, ReceptionType, Code, Name, Title, FromDate, ToDate, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListRecommentdation", list},
+						{"TotalCount", list != null && list.Count > 0 ? list[0].RowNumber : 0},
+						{"PageIndex", list != null && list.Count > 0 ? PageIndex : 0},
+						{"PageSize", list != null && list.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		//[HttpGet]
 		//[Authorize("ThePolicy")]
 		//[Route("recommendation-processing-results-by-unit-and-reception")]

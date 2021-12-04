@@ -399,6 +399,8 @@ export class Api {
 	public static StatisticRecommendationProcessingResultsByReceptionType = 'statistic/recommendation-processing-results-by-reception-type'
 	public static StatisticRecommendationProcessingResultsByType = 'statistic/recommendation-processing-results-by-type'
 	public static StatisticRecommendationByTypeDetail = 'statistic/recommendation-by-type-detail-on-page'
+	public static StatisticRecommendationByRecptionTypeDetail = 'statistic/recommendation-by-reception-type-detail-on-page'
+
 
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'
