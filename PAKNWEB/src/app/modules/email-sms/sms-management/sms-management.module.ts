@@ -7,6 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
 import { TableModule } from 'primeng/table'
 import { TreeviewModule } from 'ngx-treeview'
 import { MultiSelectModule } from 'primeng/multiselect'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 import { SMSManagementRoutingModule } from './sms-management-routing.module'
 import { SMSManagementComponent } from './sms-management.component'
@@ -25,6 +26,7 @@ import { SMSCreateOrUpdateComponent } from './sms-management-create-or-update/sm
 		BsDatepickerModule.forRoot(),
 		NgSelectModule,
 		MultiSelectModule,
+		MatCheckboxModule
 	],
 })
-export class SMSModule {}
+export class SMSModule { }

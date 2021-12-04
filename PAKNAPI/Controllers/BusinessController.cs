@@ -607,6 +607,32 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
+		/// get-drop-list-individual-business
+		/// </summary>
+		/// <param name="SmsId"></param>
+		/// <param name="Type"></param>
+		/// <returns></returns>
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-drop-list-individual-business")]
+		public async Task<ActionResult<object>> BIIndividualBusinessGetDrop(int? SmsId, int? Type)
+		{
+			try
+			{
+				List<IndividualBusinessGetDrop> result = await new IndividualBusinessGetDrop(_appSetting).BIIndividualBusinessGetDrop(SmsId, Type);
+				
+				return new ResultApi { Success = ResultCode.OK, Result = result };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		/// <summary>
 		/// check doanh nghiệp đã tồn tại
 		/// </summary>
 		/// <param name="Field"></param>

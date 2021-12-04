@@ -75,63 +75,47 @@
 						<div class="col-sm-12 pl-2 pr-2">
 							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
 							<div class="search-user" *ngIf="statusCurent != 2">
-								<div class="department">Đơn vị</div>
-								<div class="d-flex">
-									<div class="input-serach" style="width: 42%;">
-										<div class="form-group" style="margin-bottom: 0px;flex: 1 1;">
-											<ngx-dropdown-treeview [config]="config" [items]="administrativeUnits"
-												buttonClass="btn btn-outline-primary" (selectedChange)="onSelectedChange($event)">
-											</ngx-dropdown-treeview>
-										</div>
-									</div>
-									<div class="info-individual ml-2" style="flex: 1 1; position: relative;">
-										<div class="individual" style="display: flex; position: absolute;top: -40px;">
-											<div class="form-check" style="margin: 5px;">
-												<input class="form-check-input" type="checkbox" (click)="onChange(1)"
-													formControlName="individual" id="sendSMS">
-												<label class="form-check-label" for="sendSMS">
-													Cá nhân
-												</label>
-											</div>
-											<div class="form-check" style="margin: 5px;">
-												<input class="form-check-input" type="checkbox" (click)="onChange(2)" formControlName="business"
-													id="sendMail">
-												<label class="form-check-label" for="sendMail">
-													Doanh nghiệp
-												</label>
-											</div>
-										</div>
-
-										<p-multiSelect [options]="listIndividualAndBusinessGetByAdmintrativeId" formControlName="userId"
-											[(ngModel)]="userId" optionLabel="nameAndPhone" [virtualScroll]="true" optionValue="id">
-											<ng-template let-userSelected pTemplate="selectedItems">
-												<ng-container *ngIf="userSelected && userSelected.length < 2">
-													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
-														<span>{{val.nameAndPhone}}</span>
-													</div>
-												</ng-container>
-
-												<span *ngIf="!userSelected || userSelected.length === 0"
-													class="ui-multiselected-empty-token  ui-corner-all">Chọn cá nhân, doanh
-													nghiệp...</span>
-												<span *ngIf="userSelected && userSelected.length > 1"
-													class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
-													cá nhân, doanh nghiệp đã chọn</span>
-											</ng-template>
-										</p-multiSelect>
-
-									</div>
-									<div class="action center ml-1">
-										<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white center"
-											style="height: auto;" (click)="onCreateUser()">
-											<i class="bi bi-plus"></i>
-										</button>
-									</div>
+								<div>
+									<mat-checkbox [(ngModel)]="individual" class="mr-2" (click)="onLoadListIndividualAndBusiness()"
+										[ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+										[color]="primary">Cá nhân
+									</mat-checkbox>
+									<mat-checkbox [(ngModel)]="business" (click)="onLoadListIndividualAndBusiness()"
+										[ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+										[color]="primary">Doanh nghiệp
+									</mat-checkbox>
 								</div>
+								<div class="d-flex">
+
+									<p-multiSelect [options]="listData" class="form-control" formControlName="userId" [(ngModel)]="userId"
+										optionLabel="name" [virtualScroll]="true" optionValue="id">
+										<ng-template let-userSelected pTemplate="selectedItems">
+											<ng-container *ngIf="userSelected && userSelected.length < 2">
+												<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+													<span>{{val.name}}</span>
+												</div>
+											</ng-container>
+
+											<span *ngIf="!userSelected || userSelected.length === 0"
+												class="ui-multiselected-empty-token  ui-corner-all">Chọn cá nhân, doanh
+												nghiệp...</span>
+											<span *ngIf="userSelected && userSelected.length > 1"
+												class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+												cá nhân, doanh nghiệp đã chọn</span>
+										</ng-template>
+
+
+
+									</p-multiSelect>
+									<button type="button" class="btn btn-sm grd-xanhngoc text-white rounded border-0 ml-3 px-4"
+										(click)="onCreateUser()">
+										Thêm
+									</button>
+								</div>
+
+
 							</div>
-
 						</div>
-
 
 						<div class="list-user">
 							<div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">
@@ -143,8 +127,8 @@
 									<div class="department">{{item.name}}</div>
 								</div>
 								<div class="info-unit border-right padding-item" style="width: 60%">
-									<div class="title">Đơn vị</div>
-									<div class="department">{{item.administrativeUnitName}}</div>
+									<div class="title">Địa chỉ</div>
+									<div class="department">{{item.address}}</div>
 								</div>
 								<div class="action padding-item center" *ngIf="statusCurent != 2">
 									<button type="button" (click)="onRemoveUser(item)"

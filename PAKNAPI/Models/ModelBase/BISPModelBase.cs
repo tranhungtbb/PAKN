@@ -630,6 +630,36 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class IndividualBusinessGetDrop
+	{
+		private SQLCon _sQLCon;
+
+		public IndividualBusinessGetDrop(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public IndividualBusinessGetDrop()
+		{
+		}
+
+		public long Id { get; set; }
+		public int Category { get; set; }
+		public string Name { get; set; }
+		public string Address { get; set; }
+		public string Phone { get; set; }
+
+
+		public async Task<List<IndividualBusinessGetDrop>> BIIndividualBusinessGetDrop(int? SmsId, int? Type)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("SmsId", SmsId);
+			DP.Add("Type", Type);
+
+			return (await _sQLCon.ExecuteListDapperAsync<IndividualBusinessGetDrop>("[BI_IndividualBusinessGetDrop]", DP)).ToList();
+		}
+	}
+
 	public class BIInvididualUpdateInfo
 	{
 		private SQLCon _sQLCon;

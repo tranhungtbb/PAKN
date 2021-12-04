@@ -6,6 +6,8 @@ export class Api {
 	public static FORGETPASSWORD = 'contact/forget-password'
 	public static logOut = 'contact/log-out'
 
+	public static ExportExcel = ''
+
 	// kha nang ko dùng
 	public static REGISTER = 'contact/register'
 	public static CHANGEPASSWORD = 'contact/ChangePassword'
@@ -385,6 +387,7 @@ export class Api {
 	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'business/get-list-individual-business-by-provice-id'
 	public static OrganizationCheckExists = 'business/check-exists'
 	public static BusinessImportFile = 'business/import-data-business?folder=BusinessIndividual'
+	public static GetListIndividualBusinessDrop = 'business/get-drop-list-individual-business'
 
 	//Statistic admin
 
