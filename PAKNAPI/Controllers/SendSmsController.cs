@@ -47,13 +47,13 @@ namespace PAKNAPI.Controllers
 					body: request.message
 					);
 				var result =  Content(resmessage.Sid);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

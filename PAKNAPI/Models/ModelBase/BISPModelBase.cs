@@ -616,6 +616,7 @@ namespace PAKNAPI.ModelBase
 		public long Id { get; set; }
 		public int Category { get; set; }
 		public string Name { get; set; }
+		public string NameAndPhone { get; set; }
 		public string AdministrativeUnitName { get; set; }
 		public short? AdministrativeUnitId { get; set; }
 
