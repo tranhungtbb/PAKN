@@ -46,6 +46,9 @@
     <Compile Update="ExportGrid\Statistic_Recommendation_ByUnitDetail.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\SystemLog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ExportGrid\SY_UserByUnit.cs">
       <SubType>Component</SubType>
     </Compile>

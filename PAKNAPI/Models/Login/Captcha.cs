@@ -89,10 +89,11 @@ namespace PAKNAPI.Models.Results
 
         }
 
-        public async Task<int?> DeleteCaptcha(string captcha)
+        public async Task<int?> DeleteCaptcha(string captcha, DateTime createdDate)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", captcha);
+            parameters.Add("@CreatedDate", createdDate);
             return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDelete", parameters);
         }
 

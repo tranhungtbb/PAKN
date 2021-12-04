@@ -204,12 +204,12 @@ namespace PAKNAPI.Controllers
 				DateTime createdDAte = new DateTime(1970, 1, 1) + time;
 				if (!new Captcha(_appSetting).ValidateCaptchaCode(CaptchaCode, captChaCode, createdDAte))
 				{
-					await new Captcha(_appSetting).DeleteCaptcha("");
+					await new Captcha(_appSetting).DeleteCaptcha("", createdDAte);
 					return new ResultApi { Success = ResultCode.ORROR };
 				}
 				else
 				{
-					await new Captcha(_appSetting).DeleteCaptcha(CaptchaCode);
+					await new Captcha(_appSetting).DeleteCaptcha(CaptchaCode, createdDAte);
 					return new ResultApi { Success = ResultCode.OK };
 				}
 			}

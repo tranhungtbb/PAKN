@@ -3,9 +3,12 @@ import { FormGroup } from '@angular/forms'
 import { UserObject } from '../../../../models/UserObject'
 import { UserService } from '../../../../services/user.service'
 import { ToastrService } from 'ngx-toastr'
+import { saveAs as importedSaveAs } from "file-saver";
 
 import { RESPONSE_STATUS, MESSAGE_COMMON } from 'src/app/constants/CONSTANTS'
 import { NullTemplateVisitor } from '@angular/compiler'
+import { DataService } from 'src/app/services/sharedata.service'
+import { Router } from '@angular/router'
 declare var $: any
 @Component({
 	selector: 'app-system-log',
@@ -64,7 +67,9 @@ export class SystemLogComponent implements OnInit {
 	Notifications: any[]
 	numberNotifications: any = 5
 	ViewedCount: number = 0
-	constructor(private userService: UserService, private _toastr: ToastrService) {}
+	constructor(private userService: UserService, private _toastr: ToastrService,
+		private _shareData: DataService,
+		private router: Router) { }
 
 	ngOnInit() {
 		this.userService.getUserDropdown().subscribe((response) => {
@@ -157,6 +162,21 @@ export class SystemLogComponent implements OnInit {
 			this.messageError = messageError
 			$('#modal-error-his').modal('show')
 		}
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		this.dataSearch.description = this.dataSearch.description == null ? '' : this.dataSearch.description.trim()
+		if (this.dataSearch.createDate) {
+			this.dataSearch.createDate.setHours(0, 0, 0, 0);
+		}
+		passingObj.CreatedDate = this.dataSearch.createDate ? this.dataSearch.createDate : null;
+		passingObj.Content = this.dataSearch.description;
+		passingObj.Status = this.dataSearch.status;
+		passingObj.UserId = this.dataSearch.userId;
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'system-log?' + JSON.stringify(passingObj)
+		this.router.navigate(['quan-tri/xuat-file'])
 	}
 }
 

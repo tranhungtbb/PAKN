@@ -87,10 +87,12 @@
     <None Remove="ExportGrid\Statistic_Recommendation_ByFieldDetail.repx" />
     <None Remove="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
     <None Remove="ExportGrid\Statistic_Recommendation_ByUnitDetail.repx" />
+    <None Remove="ExportGrid\SystemLog.repx" />
     <None Remove="ExportGrid\SY_UserByUnit.repx" />
     <None Remove="ExportGrid\UserReadedInvitation_ByInvitationId.repx" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExportGrid\SystemLog.repx" />
     <EmbeddedResource Include="ExportGrid\ProcessingResultByUnitAndReception.repx" />
     <EmbeddedResource Include="ExportGrid\ProcessingResultByUnit.repx" />
     <EmbeddedResource Include="ExportGrid\ProcessingResultByFeild.repx" />
@@ -131,6 +133,13 @@
     </Compile>
     <Compile Update="ExportGrid\BI_Individual_List.Designer.cs">
       <DependentUpon>BI_Individual_List.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\HIS_SystemLog - Copy.cs">
+      <SubType>Component</SubType>
+      <DependentUpon>HIS_SystemLog.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\HIS_SystemLog - Copy.Designer.cs">
+      <DependentUpon>HIS_SystemLog.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\HIS_SystemLog.cs">
       <DependentUpon>HIS_SystemLog.repx</DependentUpon>
@@ -205,6 +214,12 @@
     </Compile>
     <Compile Update="ExportGrid\Statistic_Recommendation_ByUnitDetail.Designer.cs">
       <DependentUpon>Statistic_Recommendation_ByUnitDetail.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\SystemLog.cs">
+      <DependentUpon>SystemLog.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\SystemLog.Designer.cs">
+      <DependentUpon>SystemLog.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\SY_UserByUnit.cs">
       <DependentUpon>SY_UserByUnit.repx</DependentUpon>
