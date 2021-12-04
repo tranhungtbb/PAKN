@@ -396,6 +396,7 @@ namespace PAKNAPI.Models.Statistic
 	{
 		private SQLCon _sQLCon;
 		public int? STT { get; set; }
+		public int? Id { get; set; }
 		public string Name { get; set; }
 		public int? Received { get; set; }
 		public int? RecommendationMobile { get; set; }
@@ -593,6 +594,66 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByRecommendationTypeDetail>("[TK_ListRecommendationByRecommendationTypeAndUnitProcessDetail]", DP)).ToList();
+		}
+	}
+
+
+	public class StatisticRecommendationByReceptionTypeDetail
+	{
+		private SQLCon _sQLCon;
+
+		public int? RowNumber { get; set; }
+		public int RecommendationId { get; set; }
+		public string Code { get; set; }
+		public string UserSendName { get; set; }
+		public string Title { get; set; }
+		public string Name { get; set; }
+		public int Status { get; set; }
+		public int? Type { get; set; }
+		public int? ReceptionType { get; set; }
+		public int? UnitId { get; set; }
+		public int? FieldId { get; set; }
+
+
+		public StatisticRecommendationByReceptionTypeDetail(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationByReceptionTypeDetail()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationByReceptionTypeDetail>> StatisticRecommendationByReceptionTypeAndFieldDetailDAO(int? FieldId, int? UnitId, int? ReceptionType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FieldId", FieldId);
+			DP.Add("UnitId", UnitId);
+			DP.Add("ReceptionType", ReceptionType);
+			DP.Add("Code", Code);
+			DP.Add("Name", Name);
+			DP.Add("Title", Title);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByReceptionTypeDetail>("[TK_ListRecommendationByReceptionTypeAndFieldDetail]", DP)).ToList();
+		}
+
+		public async Task<List<StatisticRecommendationByReceptionTypeDetail>> StatisticRecommendationByReceptionTypeAndUnitProcessDetailDAO(int? FieldId, int? UnitProcess, int? ReceptionType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitProcess", UnitProcess);
+			DP.Add("FieldId", FieldId);
+			DP.Add("ReceptionType", ReceptionType);
+			DP.Add("Code", Code);
+			DP.Add("Name", Name);
+			DP.Add("Title", Title);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByReceptionTypeDetail>("[TK_ListRecommendationByReceptionTypeAndUnitProcessDetail]", DP)).ToList();
 		}
 	}
 }
