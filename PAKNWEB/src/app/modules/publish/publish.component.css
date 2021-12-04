@@ -778,11 +778,12 @@ a.text-1line.text-black.sub-menu-active {
 .dropdown-message.show {
 	position: absolute;
 	top: -565px !important;
-	left: -367px !important;
+	left: auto;
 	-webkit-transform: translate3d(-67px, 58px, 0px);
 	transform: translate3d(-67px, 58px, 0px);
-	right: 0;
+	right: -70px;
 	width: 500px;
+	max-width: calc(100vw - 50px);
 }
 
 .dropdown-message ::-webkit-scrollbar {

@@ -59,6 +59,8 @@
     <PackageReference Include="Spire.PDF" Version="5.12.15" />
     <PackageReference Include="Syncfusion.PDF.OCR.Net.Core" Version="19.3.0.48" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="Twilio" Version="5.68.2" />
+    <PackageReference Include="Twilio.AspNet.Core" Version="5.68.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataBaseAuto\" />

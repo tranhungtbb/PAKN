@@ -46,7 +46,7 @@ a.hight-light:hover {
 	border-radius: 20px;
 }
 .img-fluid{
-	height: 30px;
-	width: 105px;
+	height: 100%;
+	width: 85%;
 	object-fit: fill;
 }

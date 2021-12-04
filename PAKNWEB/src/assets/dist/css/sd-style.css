@@ -2405,4 +2405,16 @@ table thead .form-control ng-select {
 	.sidebar-ct {
 		width: 100% !important;
 	}
+
+	.search-bar {
+		width: 100%;
+		display: block;
+		position: relative;
+	}
+
+	.search-bar .search_icon {
+		right: 0px;
+		top: 0;
+		padding: 7px 15px !important;
+	}
 }
