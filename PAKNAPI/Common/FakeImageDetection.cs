@@ -70,7 +70,7 @@ namespace PAKNAPI.Common
         }
         public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults, int maxLevel = 0)
         {
-            Regex reg = new Regex(@"photoshop", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            Regex reg = new Regex(@"photoshop|adobe|figma", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (var x in param)
             {
                 var valueText = x.valueText.Trim().ToLower();
