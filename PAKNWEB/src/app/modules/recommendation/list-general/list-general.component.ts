@@ -26,7 +26,7 @@ export class ListGeneralComponent implements OnInit {
 		private _router: Router,
 		private _shareData: DataService,
 		private notificationService: NotificationService
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
 	isMain: boolean = this.storeageService.getIsMain()
@@ -66,7 +66,7 @@ export class ListGeneralComponent implements OnInit {
 	ngOnInit() {
 		this.buildForm()
 		this.getDataForCreate()
-		this.getList()
+		// this.getList()
 	}
 
 	ngAfterViewInit() {
@@ -396,7 +396,7 @@ export class ListGeneralComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -427,7 +427,7 @@ export class ListGeneralComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 				this.getList()
 			} else {
