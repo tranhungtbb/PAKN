@@ -2105,10 +2105,10 @@ table thead .form-control ng-select {
 	width: 68px;
 	height: 68px;
 	right: 30px;
-	bottom: 30px;
+	bottom: 100px;
 	background: #cde2fd;
 	border-radius: 50%;
-	z-index: 1000;
+	z-index: 100;
 }
 
 .call-content {
@@ -2124,8 +2124,8 @@ table thead .form-control ng-select {
 	width: 68px;
 	height: 68px;
 	right: 30px;
-	bottom: 105px;
-	background: #cde2fd;
+	bottom: 30px;
+	/* background: #cde2fd; */
 	border-radius: 50%;
 	z-index: 1000;
 }
@@ -2416,5 +2416,15 @@ table thead .form-control ng-select {
 		right: 0px;
 		top: 0;
 		padding: 7px 15px !important;
+	}
+
+	.content-nd{
+		margin-top: 16px !important;
+	}
+	.border-bottom-blue {
+		border-bottom: 3px solid #2E73D5;
+	}
+	.margin-top-16{
+		margin-top: 16px !important;
 	}
 }

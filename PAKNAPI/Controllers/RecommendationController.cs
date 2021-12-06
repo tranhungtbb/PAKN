@@ -2080,7 +2080,6 @@ namespace PAKNAPI.Controller
                 notification.IsViewed = true;
                 notification.IsReaded = true;
 
-
                 switch (recommendation.Status)
                 {
                     case STATUS_RECOMMENDATION.RECEIVE_WAIT: //2 Chờ xử lý
@@ -2188,9 +2187,6 @@ namespace PAKNAPI.Controller
 
                         break;
                     case STATUS_RECOMMENDATION.PROCESS_DENY: //6 Từ chối giải quyết
-
-                        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-
                         if (lstRMForward.FirstOrDefault(x => x.Step == 2) == null)
                         {
                             unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 1).UnitReceiveId;
@@ -2220,8 +2216,6 @@ namespace PAKNAPI.Controller
 
                         break;
                     case STATUS_RECOMMENDATION.PROCESSING: //7 Đang giải quyết
-
-                        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 
@@ -2240,7 +2234,6 @@ namespace PAKNAPI.Controller
                         break;
                     case STATUS_RECOMMENDATION.APPROVE_WAIT: //8 Chờ phê duyệt
                         // bạn có 1 PAKN chờ phê duyệt
-                        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
                         receiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).ReceiveId;
                         approver = await new SYUser(_appSetting).SYUserGetByID(receiveId);
 
@@ -2253,7 +2246,6 @@ namespace PAKNAPI.Controller
                         break;
                     case STATUS_RECOMMENDATION.APPROVE_DENY: //9 Từ chối phê duyệt
 
-                        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3 && x.Status == 3).UnitSendId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 

@@ -1192,6 +1192,17 @@ body, html {
 	margin-right: 0;
 }
 
+.chat-now{
+	position: fixed;
+	width: 330px;
+	/* height: 60px; */
+	right: 0px;
+	bottom: 0px;
+	background: #2E73D5;
+	border-radius: 10px 10px 0px 0px;
+	z-index: 1000;
+}
+
 @keyframes mercuryTypingAnimation {
 	0% {
 		transform: translateY(0px);

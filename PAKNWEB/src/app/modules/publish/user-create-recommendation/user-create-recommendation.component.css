@@ -36,3 +36,12 @@ form .label {
 agm-map {
 	height: 70vh;
 }
+.btn-voice:active {
+	outline: none;
+	border: none;
+}
+	
+.btn-voice:focus {
+	outline:none;
+  box-shadow: none;
+}

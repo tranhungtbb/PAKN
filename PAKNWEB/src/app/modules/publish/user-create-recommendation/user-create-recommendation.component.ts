@@ -392,7 +392,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		if (this.model.content != null && this.model.content != '' && this.model.content.trim() != '') {
 			let content = this.model.content //.replace(/\\n/g, String.fromCharCode(13, 10))
 			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
-				var nameWord = new RegExp(this.lstDictionariesWord[index].name + '$', 'ig')
+				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'ig')
 				console.log(nameWord)
 				content = content.replace(
 					nameWord,

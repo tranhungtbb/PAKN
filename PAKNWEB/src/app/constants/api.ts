@@ -6,8 +6,6 @@ export class Api {
 	public static FORGETPASSWORD = 'contact/forget-password'
 	public static logOut = 'contact/log-out'
 
-	public static ExportExcel = ''
-
 	// kha nang ko dùng
 	public static REGISTER = 'contact/register'
 	public static CHANGEPASSWORD = 'contact/ChangePassword'

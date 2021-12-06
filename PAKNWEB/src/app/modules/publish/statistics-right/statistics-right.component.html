@@ -9,7 +9,7 @@
 	</a>
 </div> -->
 
-<div class="sb-tk-pakn mb-4 card-my-recommentdation"
+<div class="sb-tk-pakn card-my-recommentdation margin-top-16"
 	*ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
@@ -51,7 +51,8 @@
 	</div>
 </div>
 
-<div class="sb-tk-pakn text-center card-my-chart pb-4" [ngClass]="{'mt-4' : typeObject == 2 || typeObject == 3}">
+<div class="sb-tk-pakn text-center card-my-chart margin-top-16"
+	[ngClass]="{'mt-4' : typeObject == 2 || typeObject == 3}">
 	<div class="tt-v1 pt-4 pb-3 mb-3 justify-content-between text-center">
 		<h4 class="text-uppercase">Phản ánh kiến nghị toàn tỉnh</h4>
 	</div>
@@ -80,7 +81,7 @@
 	</div>
 </div>
 
-<div class="sb-tk-pakn text-center card-my-chart pb-4 mt-4" *ngIf="isShowSatisfationChart">
+<div class="sb-tk-pakn text-center card-my-chart pb-4 margin-top-16" *ngIf="isShowSatisfationChart">
 	<div class="tt-v1 pt-4 pb-3 mb-3 justify-content-between text-center">
 		<h4 class="text-uppercase">thống kê mức độ hài lòng</h4>
 	</div>

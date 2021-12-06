@@ -112,9 +112,22 @@
 						</li>
 					</ul>
 					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
+						<li class="nav-item d-none d-lg-block">
+							<button type="button" class="btn text-white border-0 no-grd-blue btn-index" style="border-radius: 10px;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+									class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+									<path
+										d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
+									<path
+										d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+								</svg>
+								<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh
+									kiến nghị</span>
+							</button>
+						</li>
 						<li class="nav-item dropdown header-profile">
 							<div class="header-info">
-								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
+								<a class="btn btn-login btn-index" title="Đăng nhập" routerLink="/dang-nhap" type="button">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 										class="bi bi-person-fill" viewBox="0 0 16 16">
 										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -244,7 +257,7 @@
 					</div>
 
 					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
-						<h4 class="title-footer pb-1">Tải app</h4>
+						<h4 class="title-footer pb-1">Phiên bản ứng dụng di động</h4>
 						<div>
 							<a href="{{config.urlIOS}}" target="_blank">
 								<img style="width: 127px; border-radius: 6px;" class="img-cover pointer mr-3"
@@ -272,8 +285,30 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div class="call-now center  pointer">
+		<div class="call-content center">
+			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
+		</div>
+	</div>
+
+	<div class="chat-now pointer" (click)="showHideMessage()">
+		<div class="d-flex center">
+			<div class="mr-3">
+				<img src="../../../assets/dist/images/chat 1.svg">
+			</div>
+			<div class="py-2">
+				<h5 class="text-white" style="font-family: 'Inter';">Hỗ trợ trực tuyến</h5>
+				<p class="text-white mb-0">Bạn có câu hỏi? Bạn cần tư vấn?</p>
+			</div>
+			<i style="color: #fff;" class="bi bi-chevron-up ml-3"></i>
+			<!-- <i class="bi bi-chevron-down"></i> -->
+		</div>
+	</div>
+
 	<div class="message-now center pointer">
-		<div class="message-content center" (click)="showHideMessage()">
+		<!-- <div class="message-content center" (click)="showHideMessage()">
 			<div>
 				<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#fff" class="bi bi-messenger"
 					viewBox="0 0 16 16">
@@ -281,7 +316,7 @@
 						d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
 				</svg>
 			</div>
-		</div>
+		</div> -->
 		<div class="dropdown-menu dropdown-message" style="display: none;" id="message">
 			<div class="h-100">
 				<div class="row justify-content-center h-100">
@@ -362,12 +397,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="call-now center  pointer">
-		<div class="call-content center">
-			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
 		</div>
 	</div>
 </div>

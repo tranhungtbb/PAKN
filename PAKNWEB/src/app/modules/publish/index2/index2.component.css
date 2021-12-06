@@ -106,7 +106,7 @@
 
 
 .border-bottom-blue {
-	border-bottom: 2px solid #2E73D5;
+	border-bottom: 3px solid #2E73D5;
 }
 
 .owl-item .card {
@@ -430,4 +430,19 @@ ul li {
 	font-size: 16px;
 	line-height: 19px;
 	color: #DA2222;
+}
+.pr-7{
+	padding-right: 8px !important;
+}
+.pl-7{
+	padding-left: 8px !important;
+}
+.card{
+	margin-bottom: 16px !important;
+}
+.content-nd{
+	margin-top: 16px !important;
+}
+.margin-top-16{
+	margin-top: 16px !important;
 }

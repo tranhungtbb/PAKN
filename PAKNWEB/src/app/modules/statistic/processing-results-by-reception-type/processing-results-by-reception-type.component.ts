@@ -188,84 +188,83 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 
 
 	viewDetail(id: any, receptionType: number = null) {
+		var url
 		if (this.type == 1) {
 			if (receptionType) {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc',
-					this.type,
-					id, receptionType,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/' +
+					this.type + '/' +
+					id, receptionType + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			} else {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc',
-					this.type,
-					id,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/' +
+					this.type + '/' +
+					id + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			}
 		} else {
 			if (receptionType) {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi',
-					this.type,
-					id, receptionType,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/' +
+					this.type + '/' +
+					id + '/' + receptionType + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			} else {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi',
-					this.type,
-					id,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/' +
+					this.type + '/' +
+					id + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			}
 		}
+		setTimeout(() => {
+			window.open(url, '_blank')
+		}, 100)
 	}
 	viewResultDetail(id: any, status: number, isOnTime: number = null) {
+		var url
 		if (this.type == 1) {
 			if (isOnTime) {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc',
-					this.type,
-					id, status, isOnTime,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc/' +
+					this.type + '/' +
+					id + '/' + status + '/' + isOnTime + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
-				// /:type/:fieldId/:status/:IsOnTime/:fromDate/:toDate
 			} else {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc',
-					this.type,
-					id, status,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc/' +
+					this.type + '/' +
+					id + '/' + status + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			}
 		}
 		else {
 			if (isOnTime) {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi',
-					this.type,
-					id, status, isOnTime,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi/' +
+					this.type + '/' +
+					id + '/' + status + '/' + isOnTime + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			} else {
-				return this._router.navigate([
-					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi',
-					this.type,
-					id, status,
-					this.getFormattedDate(this.fromDate),
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi/' +
+					this.type + '/' +
+					id + '/' + status + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
 					this.getFormattedDate(this.toDate)
-				])
 			}
 		}
+		setTimeout(() => {
+			window.open(url, '_blank')
+		}, 100)
 	}
 
 	onExport() {
