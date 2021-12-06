@@ -38,6 +38,8 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
+	fromDateSearch: Date
+	toDateSearch: Date
 	totalRecords: number
 	listData: any[] = []
 	pageIndex: number = 1
@@ -45,13 +47,14 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	type: number = 1
 
 	maxDateValue = new Date()
-
+	firstLoad = false
 	ngOnInit() {
 		this.initData()
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		this.firstLoad = true
 	}
 
 	initData() {
@@ -88,35 +91,37 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	changeQuarter() {
 		if (this.year != null) {
 			if (this.quarter == 1) {
-				this.fromDate = new Date(this.year, 0, 1)
+				this.fromDateSearch = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year, 3, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 2) {
-				this.fromDate = new Date(this.year, 3, 1)
+				this.fromDateSearch = new Date(this.year, 3, 1)
 				let tmp_date = new Date(this.year, 6, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 3) {
-				this.fromDate = new Date(this.year, 6, 1)
+				this.fromDateSearch = new Date(this.year, 6, 1)
 				let tmp_date = new Date(this.year, 9, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 4) {
-				this.fromDate = new Date(this.year, 9, 1)
+				this.fromDateSearch = new Date(this.year, 9, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else {
-				this.fromDate = new Date(this.year, 0, 1)
+				this.fromDateSearch = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			}
 		}
 		this.getList()
 	}
 
 	getList() {
+		if (!this.firstLoad)
+			return
 		let request = {
 			Type: this.type,
-			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
-			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
+			FromDate: this.fromDateSearch == null ? '' : this.fromDateSearch.toDateString(),
+			ToDate: this.toDateSearch == null ? '' : this.toDateSearch.toDateString(),
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
@@ -141,14 +146,14 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 
 	fromDateValueChange(value: any): void {
 		if (value) {
-			this.fromDate = value
+			this.fromDateSearch = value
 		}
 		this.getList()
 	}
 
 	toDateValueChange(value: Date): void {
 		if (value) {
-			this.toDate = value
+			this.toDateSearch = value
 		}
 		this.getList()
 	}
