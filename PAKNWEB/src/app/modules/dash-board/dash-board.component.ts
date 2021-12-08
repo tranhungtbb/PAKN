@@ -8,8 +8,6 @@ import { DataService } from '../../services/sharedata.service'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { RemindService } from 'src/app/services/remind.service'
-import { STATUS_CODES } from 'http'
-import { type } from 'os'
 
 declare var $: any
 
@@ -25,9 +23,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		private userStorage: UserInfoStorageService,
 		private _shareData: DataService,
 		private router: Router,
-		private remindService : RemindService,
+		private remindService: RemindService,
 		private recommenService: RecommendationService
-	) {}
+	) { }
 
 	dataGraph: any = {
 		stt_2: { count: 0 },
@@ -36,33 +34,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		stt_10: { count: 0 },
 	}
 
-	dataGraphTTHC : any = {
+	dataGraphTTHC: any = {
 		stt_2: { count: 0 },
 		stt_3: { count: 0 }
 	}
 
 
-	dataAll: any ={}
+	dataAll: any = {}
 
 	totalCount = 0
-	listRemind : any = []
+	listRemind: any = []
+	isUnitMain = this.userStorage.getIsUnitMain()
+	isApprove = this.userStorage.getIsApprove()
 
 	ngOnInit() {
 		this.getDataGraph()
-		this.remindService.remindGetList({}).subscribe(res=>{
-			if(res.success === RESPONSE_STATUS.success){
+		this.remindService.remindGetList({}).subscribe(res => {
+			if (res.success === RESPONSE_STATUS.success) {
 				this.listRemind = res.result
 			}
-			else{
+			else {
 				this.listRemind = []
 			}
 		})
-		
+
 	}
-	ngAfterViewInit(){
+	ngAfterViewInit() {
 	}
 
-	totalCountTTHC : any = 0
+	totalCountTTHC: any = 0
 
 	getDataGraph() {
 		let req = {
@@ -72,23 +72,23 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		this.recommenService.get7DayDataGraph(req).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				for (const item of res.result.data7day) {
-					if(item.type ==1){
+					if (item.type == 1) {
 						this.totalCount += item.total
 					}
-					if(item.type == 2){
+					if (item.type == 2) {
 						this.totalCountTTHC += item.total
 					}
 				}
 
 				for (const item of res.result.data7day) {
-					if(item.type == 1){
+					if (item.type == 1) {
 						item.per_100 = ((item.total / this.totalCount) * 100)
 						this.dataGraph['stt_' + item.status] = item;
 					}
-					if(item.type == 2){
+					if (item.type == 2) {
 						item.per_100_TTHC = ((item.total / this.totalCountTTHC) * 100)
 						this.dataGraphTTHC['stt_' + item.status] = item;
-					}	
+					}
 				}
 
 				let totalCountA = res.result.data.reduce((acc, item, index) => {
@@ -101,9 +101,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					acc['stt_' + item.status] = item;
 					return acc
 				}, {})
-				setTimeout(()=>{
+
+				console.log(this.dataAll)
+				setTimeout(() => {
 					$('.data-attr').peity('donut')
-				},1)
+				}, 100)
 			}
 		})
 

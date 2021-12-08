@@ -12,7 +12,7 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 	providedIn: 'root',
 })
 export class RecommendationCommentService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	public insert(body: any): Observable<any> {
 		var form = new FormData()
@@ -32,6 +32,14 @@ export class RecommendationCommentService {
 
 	public getAllOnPageBase(req: any): Observable<any> {
 		return this.serviceInvoker.get(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPageBase)
+	}
+
+	public getAllByParentId(req: any): Observable<any> {
+		return this.serviceInvoker.get(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetAllByParentId)
+	}
+
+	public getPageByParentId(req: any): Observable<any> {
+		return this.serviceInvoker.get(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetPageByParent)
 	}
 
 	public updateStatus(req: any): Observable<any> {

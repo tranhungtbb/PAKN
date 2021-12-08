@@ -61,6 +61,8 @@ export class Api {
 	public static MRRecommendationCommentDelete = 'recommendation/delete-comment'
 	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-comment'
 	public static MRRecommendationCommentGetOnPageBase = 'recommendation/	get-all-comment-on-page'
+	public static MRRecommendationCommentGetAllByParentId = 'recommendation/get-all-comment-by-parent'
+	public static MRRecommendationCommentGetPageByParent = 'recommendation/get-comment-by-parent-on-page'
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	// infomationChange

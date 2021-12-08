@@ -11,7 +11,7 @@ export class UserInfoStorageService {
 	unitName: string
 	role: number
 
-	constructor() {}
+	constructor() { }
 	clear = () => {
 		debugger
 		var remember = this.getRecommentdationObjectRemember()
@@ -90,6 +90,10 @@ export class UserInfoStorageService {
 		localStorage.setItem('isUnitMain', value)
 	}
 
+	setIsAprove(value): void {
+		localStorage.setItem('isApprove', value)
+	}
+
 	setTypeObject(value): void {
 		localStorage.setItem('typeObject', value)
 	}
@@ -126,6 +130,9 @@ export class UserInfoStorageService {
 	}
 	getIsUnitMain(): boolean {
 		return localStorage.getItem('isUnitMain') === 'true'
+	}
+	getIsApprove(): boolean {
+		return localStorage.getItem('isApprove') === 'true'
 	}
 
 	getReturnUrl(): string {

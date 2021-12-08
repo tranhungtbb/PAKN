@@ -355,7 +355,8 @@
 					</div>
 					<div>
 						<div>
-							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi ({{totalInfomationExchange}})</p>
+							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi với người dân
+								({{totalInfomationExchange}})</p>
 						</div>
 						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
 							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..."
@@ -385,6 +386,9 @@
 										class="bi bi-arrow-right"></i></a></p>
 						</div>
 					</div>
+					<ng-container *ngIf="model && model.status == 10">
+						<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="false"></app-comment-recommendation>
+					</ng-container>
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct-ql pl-0 pt-4">
@@ -424,23 +428,16 @@
 						</div>
 					</div>
 
-					<div class="tags" *ngIf="model.status != 10">
+					<div class="tags">
 						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center"
 							*ngFor="let item of lstHashtagSelected">
 							<strong>{{item.text}}</strong>
-							<button type="button" class="close h-100 pl-2" (click)="onRemoveHashtag(item)"><span><i
-										class="mdi mdi-close"></i></span>
+							<button *ngIf="model.status != 10" type="button" class="close h-100 pl-2"
+								(click)="onRemoveHashtag(item)"><span><i class="mdi mdi-close"></i></span>
 							</button>
 						</div>
 					</div>
 
-					<div class="tags" *ngIf="model.status == 10">
-						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center"
-							*ngFor="let item of lstHashtagSelected">
-							<strong>{{item.text}}</strong>
-
-						</div>
-					</div>
 				</div>
 
 				<div class="mb-4">

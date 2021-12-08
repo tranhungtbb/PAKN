@@ -15,146 +15,153 @@
 					<div class="media pt-4 px-2 px-lg-5" style="padding-bottom: 120px">
 						<img class="icon-banner mr-3" src="../../../assets/dist/images/icon-banner.svg" alt="...">
 						<div class="media-body">
-							<h3 class="mt-0 cl-brown text-uppercase text-banner text-center" style="line-height: 2rem">Hệ thống thông tin tiếp nhận, xử lý phản ánh, kiến nghị dành cho người dân, doanh nghiệp tỉnh Khánh Hòa</h3>
+							<h3 class="mt-0 cl-brown text-uppercase text-banner text-center" style="line-height: 2rem">Hệ thống thông
+								tin tiếp nhận, xử lý phản ánh, kiến nghị dành cho người dân, doanh nghiệp tỉnh Khánh Hòa</h3>
 							<!-- <p class="cl-brown d-none d-lg-block">Hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị của người dân, doanh nghiệp về kinh tế - xã hội tỉnh Khánh Hòa</p> -->
 						</div>
 					</div>
 				</div>
-				<div class="row mx-0" style="margin-top: -110px">
-					<div class="col-6 col-lg-3 text-center">
-						<div class="card py-3 py-xl-4">
-							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Đã giải quyết</p>
-							<div class="position-relative">
-								<a [routerLink]="['/quan-tri/kien-nghi/da-giai-quyet']">
-									<span class="data-attr"
-									data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>{{dataAll['stt_10']?.per_10}}/10</span>
-									<span class="h1 position-absolute number-chart">{{dataAll['stt_10']?.total || 0}}</span>
-								</a>
+				<div class="row mx-0" *ngIf="isUnitMain" style="margin-top: -110px">
+					<ng-container *ngIf="!isApprove">
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Chờ tiếp nhận</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-xu-ly']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_2']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_2']?.total || 0}}</span>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-6 col-lg-3 text-center">
-						<div class="card py-3 py-xl-4">
-							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Chờ giải quyết</p>
-							<div class="position-relative">
-								<a [routerLink]="['/quan-tri/kien-nghi/cho-giai-quyet']">
-									<span class="data-attr"
-										data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_5']?.per_10}}/10</span>
-									<span class="h1 position-absolute number-chart">{{dataAll['stt_5']?.total || 0}}</span>
-								</a>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Đã chuyển đơn vị</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_5']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_5']?.total || 0}}</span>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-6 col-lg-3 text-center">
-						<div class="card py-3 py-xl-4">
-							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Từ chối giải quyết</p>
-							<div class="position-relative">
-								<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
-									<span class="data-attr"
-										data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_10}}/10</span>
-									<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
-								</a>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Phân phối lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-6 col-lg-3 text-center">
-						<div class="card py-3 py-xl-4">
-							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Chờ xử lý</p>
-							<div class="position-relative">
-								<a [routerLink]="['/quan-tri/kien-nghi/cho-xu-ly']">
-									<span class="data-attr"
-										data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_2']?.per_10}}/10</span>
-									<span class="h1 position-absolute number-chart">{{dataAll['stt_2']?.total || 0}}</span>
-								</a>
+					</ng-container>
+					<ng-container *ngIf="isApprove">
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Cần phê duyệt</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>{{dataAll['stt_8']?.per_8}}/10</span>
+
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_8']?.total || 0}}</span>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> đơn vị xử lý lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_6}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+
+				</div>
+
+				<div class="row mx-0" *ngIf="!isUnitMain" style="margin-top: -110px">
+					<ng-container *ngIf="!isApprove">
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Chờ tiếp nhận</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_5']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_5']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Phân phối lại </p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Đơn vị xử lý lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_9']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_9']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="isApprove">
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> cần phê duyệt</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_8']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_8']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Đơn vị xử lý lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_9']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_9']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+
 				</div>
 
 				<div class="card mx-lg-4">
-					<!-- danh sach phan anh kien nghi -->
 					<app-recommnendation-get-list></app-recommnendation-get-list>
 				</div>
-				<!-- <div class="card mb-3 mb-lg-2 mx-lg-4">
-					<div class="card-header" style="background: #DBEBFF">
-						<h5 class="card-title">Thủ tục hành chính đang soạn thảo</h5>
-						<span class="badge badge-rounded bg-white text-dark" style="font-size: 1.2rem">10</span>
-					</div>
-					<div class="card-body pb-2">
-						<div class="card border-bottom shadow-none rounded-0 mb-3 p-0">
-							<div class="card-body p-0">
-								<p class="card-text">
-									<a class="h4" href="#">
-										Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư <span
-											class="font-weight-light d-block">(Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)</span>
-									</a>
-								</p>
-							</div>
-							<div class="card-footer border-0 p-0 d-block d-md-flex align-items-center">
-								<div class="card-footer-link mb-0 py-2" style="width: 20%">
-									<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-								</div>
-								<div class="card-footer-link mb-0 pt-2 pb-3">
-									<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-								</div>
-							</div>
-						</div>
-						<div class="card border-bottom shadow-none rounded-0 mb-3 p-0">
-							<div class="card-body p-0">
-								<p class="card-text">
-									<a class="h4" href="#">
-										Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư <span
-											class="font-weight-light d-block">(Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)</span>
-									</a>
-								</p>
-							</div>
-							<div class="card-footer border-0 p-0 d-block d-md-flex align-items-center">
-								<div class="card-footer-link mb-0 py-2" style="width: 20%">
-									<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-								</div>
-								<div class="card-footer-link mb-0 pt-2 pb-3">
-									<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-								</div>
-							</div>
-						</div>
-						<div class="card border-bottom shadow-none rounded-0 mb-3 p-0">
-							<div class="card-body p-0">
-								<p class="card-text">
-									<a class="h4" href="#">
-										Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư <span
-											class="font-weight-light d-block">(Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)</span>
-									</a>
-								</p>
-							</div>
-							<div class="card-footer border-0 p-0 d-block d-md-flex align-items-center">
-								<div class="card-footer-link mb-0 py-2" style="width: 20%">
-									<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-								</div>
-								<div class="card-footer-link mb-0 pt-2 pb-3">
-									<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-								</div>
-							</div>
-						</div>
-						<div class="card shadow-none rounded-0 mb-0 p-0">
-							<div class="card-body p-0">
-								<p class="card-text">
-									<a class="h4" href="#">
-										Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư <span
-											class="font-weight-light d-block">(Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)</span>
-									</a>
-								</p>
-							</div>
-							<div class="card-footer border-0 p-0 d-block d-md-flex align-items-center">
-								<div class="card-footer-link mb-0 py-2" style="width: 20%">
-									<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-								</div>
-								<div class="card-footer-link mb-0 pt-2 pb-3">
-									<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
 			</div>
 			<div class="col-12 col-lg-auto z-index-1 right-dashboard px-3 px-lg-0">
 				<div class="card mb-3 px-3 py-2 d-none d-lg-block" style="margin-top: -35px">
@@ -171,7 +178,8 @@
 								<span class="pull-right font-weight-bold cl-blue2 counter">{{dataGraph['stt_4']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_4']?.per_100+'%'">
+								<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_4']?.per_100+'%'">
 								</div>
 							</div>
 						</a>
@@ -180,7 +188,8 @@
 								<span class="pull-right font-weight-bold cl-blue counter">{{dataGraph['stt_7']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-blue progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_7']?.per_100+'%'">
+								<div class="progress-bar grd-blue progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_7']?.per_100+'%'">
 								</div>
 							</div>
 						</a>
@@ -190,7 +199,8 @@
 								<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_10']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_10']?.per_100+'%'">
+								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_10']?.per_100+'%'">
 								</div>
 							</div>
 						</a>
@@ -200,7 +210,7 @@
 								<span class="pull-right font-weight-bold cl-red counter">{{dataGraph['stt_3']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar" 
+								<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar"
 									[style.width]="dataGraph['stt_3']?.per_100+'%'">
 								</div>
 							</div>
@@ -211,34 +221,35 @@
 								<span class="pull-right font-weight-bold cl-green counter">{{dataGraphTTHC['stt_3']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar" 
+								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar"
 									[style.width]="dataGraphTTHC['stt_3']?.per_100_TTHC+'%'">
 								</div>
 							</div>
 						</a>
-						
+
 						<a [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop']">
 							<p class="mb-1 mt-4">TTHC đã thu hồi
 								<span class="pull-right font-weight-bold cl-brown counter">{{dataGraphTTHC['stt_2']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-brown2 progress-animated" style="height:6px;" role="progressbar" 
+								<div class="progress-bar grd-brown2 progress-animated" style="height:6px;" role="progressbar"
 									[style.width]="dataGraphTTHC['stt_2']?.per_100_TTHC+'%'">
 								</div>
 							</div>
 						</a>
-						
+
 
 					</div>
 				</div>
 				<div class="alert alert-nv alert-dark alert-dismissible shadow rounded fade show"
-					*ngFor="let item of listRemind"
-				>
+					*ngFor="let item of listRemind">
 					<p class="mb-0 cl-brown">Nhắc việc</p>
 					<span class="small d-block mb-2">{{item.dateSend | date : 'HH:mm | dd/MM/yyy'}}</span>
-					<p class="text-2line mb-0 text-dark"><a href="javascript:void(0)">{{item.content}}</a></p>
-					<button type="button" class="close px-3" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-					</button>
+					<p class="text-2line mb-0 text-dark"><a
+							routerLink="/quan-tri/kien-nghi/chi-tiet/{{item.recommendationId}}">{{item.content}}</a></p>
+					<!-- <button type="button" class="close px-3" data-dismiss="alert" aria-label="Close"><span><i
+								class="mdi mdi-close"></i></span>
+					</button> -->
 				</div>
 			</div>
 		</div>

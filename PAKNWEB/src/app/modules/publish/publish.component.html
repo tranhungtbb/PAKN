@@ -111,31 +111,11 @@
 							</div>
 						</li>
 					</ul>
-					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
-						<li class="nav-item d-none d-lg-block">
-							<button type="button" class="btn text-white border-0 no-grd-blue btn-index" style="border-radius: 10px;">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-									class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
-									<path
-										d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
-									<path
-										d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-								</svg>
-								<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh
-									kiến nghị</span>
-							</button>
-						</li>
-						<li class="nav-item dropdown header-profile">
-							<div class="header-info">
-								<a class="btn btn-login btn-index" title="Đăng nhập" routerLink="/dang-nhap" type="button">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-										class="bi bi-person-fill" viewBox="0 0 16 16">
-										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-									</svg>
-									<span class="ml-2" style="text-transform: none;">Đăng nhập</span>
-								</a>
-							</div>
-						</li>
+					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center title-action">
+
+						<span><a routerLink="/dang-ky/ca-nhan" class="text-dark">Đăng kí</a></span>
+						<span class="mx-1">/</span>
+						<span><a routerLink="/dang-nhap" class="text-dark">Đăng nhập</a></span>
 					</ul>
 				</div>
 			</nav>
@@ -158,13 +138,9 @@
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./gioi-thieu']">Giới thiệu</a>
 							</li>
-							<!-- <li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./danh-sach-phan-anh-kien-nghi']" >Phản ánh - kiến nghị</a>
-							</li> -->
 							<li class="nav-item ps-relative">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./danh-sach-phan-anh-kien-nghi']">Phản ánh - kiến nghị <i
-										class="fas fa-caret-down ml-2"></i></a>
+									[routerLink]="['/cong-bo/them-moi-kien-nghi']">Gửi phản ánh<i class="fas fa-caret-down ml-2"></i></a>
 								<ul class="bg-white rounded sub-nav border" style="z-index: 100000;">
 									<ng-container *ngFor="let item of subMenu;let i = index">
 										<li class="p-3 rounded sub-item" title="{{item.text}}">
@@ -175,21 +151,21 @@
 									</ng-container>
 								</ul>
 							</li>
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
-							</li>
-							<li class="nav-item">
+							</li> -->
+							<!-- <li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./tin-tuc-su-kien']">Tin tức</a>
-							</li>
+							</li> -->
 							<li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./tong-hop-so-lieu']">Tổng hợp số liệu</a>
+									[routerLink]="['./tong-hop-so-lieu']">Thống kê</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">Hỗ
-									trợ</a>
+								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">Hướng
+									dẫn</a>
 							</li>
 						</ul>
 
@@ -260,12 +236,12 @@
 						<h4 class="title-footer pb-1">Phiên bản ứng dụng di động</h4>
 						<div>
 							<a href="{{config.urlIOS}}" target="_blank">
-								<img style="width: 127px; border-radius: 6px;" class="img-cover pointer mr-3"
-									src="../../../assets/dist/images/ios.png">
+								<img style="width: 127px; border-radius: 6px; height: 44px;" class="img-cover pointer mr-3"
+									src="../../../assets/dist/images/app-store.svg">
 							</a>
 							<a href="{{config.urlAndroid}}" target="_blank">
-								<img style="width: 127px; border-radius: 6px;" class="img-cover pointer"
-									src="../../../assets/dist/images/google-play.png">
+								<img style="width: 127px; border-radius: 6px; height: 44px;" class="img-cover pointer"
+									src="../../../assets/dist/images/google-play.svg">
 							</a>
 
 						</div>

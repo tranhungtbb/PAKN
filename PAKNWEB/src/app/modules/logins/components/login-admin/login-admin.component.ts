@@ -151,14 +151,17 @@ export class LoginAdminComponent implements OnInit {
 									login: this.user.UserName,
 									password: 'quickblox',
 								}
-								this._userServiceChat
-									.createUserForApp(user, null, true)
-									.then((r) => {
-										console.log(r)
-									})
-									.catch((e) => {
-										console.log(e)
-									})
+
+								//  await this._userServiceChat
+								// 	.createUserForApp(user, null, true)
+								// 	.then((r) => {
+								// 		debugger
+								// 		console.log("R:" + r)
+								// 	})
+								// 	.catch((e) => {
+								// 		debugger
+								// 		console.log('E :' + e)
+								// 	})
 
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
@@ -177,6 +180,7 @@ export class LoginAdminComponent implements OnInit {
 								this.storeageService.setIsAdmin(data.isAdmin)
 								this.storeageService.setTypeObject(data.typeObject)
 								this.storeageService.setIsUnitMain(data.isUnitMain)
+								this.storeageService.setIsAprove(data.isApprove)
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
@@ -191,15 +195,9 @@ export class LoginAdminComponent implements OnInit {
 									location.href = '/quan-tri'
 								} else {
 									location.href = '/quan-tri'
-									// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
-									// localStorage.clear();
 								}
-								// if(this.storeageService.getRecommentdationObjectRemember() != null){
-								// 	location.href='/cong-bo/them-moi-kien-nghi'
-								// }
-								// else{
-								// 	location.href = '/quan-tri'
-								// }
+
+
 							} else {
 								this.toastr.error(data.message)
 								this.reloadImage()

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { NewsService } from 'src/app/services/news.service'
@@ -14,7 +13,6 @@ import { NewsService } from 'src/app/services/news.service'
 	styleUrls: ['./news.component.css'],
 })
 export class NewsComponent implements OnInit {
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	listData: any[] = []
 	listNewsType: any[] = []
 	newHighLight: any = {}

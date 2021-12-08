@@ -36,6 +36,7 @@ import { DeleteDialogComponent } from './chatbox/dashboard/delete-dialog/delete-
 import { DropdownModule } from 'primeng/dropdown'
 import { WeatherComponent } from './dash-board/weather/weather.component'
 import { DashboardChatBotComponent } from './chatbot/chatbot.component'
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -78,8 +79,8 @@ import { DashboardChatBotComponent } from './chatbot/chatbot.component'
 		EditDialogComponent,
 		DeleteDialogComponent,
 		WeatherComponent,
-		DashboardChatBotComponent,
+		DashboardChatBotComponent
 	],
 	exports: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })
-export class BusinessModule {}
+export class BusinessModule { }

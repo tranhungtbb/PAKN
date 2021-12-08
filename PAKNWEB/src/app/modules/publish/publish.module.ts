@@ -27,7 +27,6 @@ import { CheckboxModule } from 'primeng/checkbox'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { ChatbotComponent } from './chatbot/chatbot.component'
 import { ViewNotificationComponent } from './view-notification/view-notification.component'
 import { ListRecommendationKnct } from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
@@ -42,18 +41,17 @@ import { StatisticsRightComponent } from './statistics-right/statistics-right.co
 import { GalleryComponent } from './gallery/gallery.component'
 import { StatisticsComponent } from './statistics/statistics.component'
 import { NewsHightLightComponent } from './news-hight-light/news-hight-light.component'
-import { Index2Component } from './index2/index2.component'
 import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendations/receive-deny-recommendations.component'
 import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
+import { CommentModule } from './comment-recommendation/comment.module'
 
 @NgModule({
 	declarations: [
 		PublishComponent,
 		IndexComponent,
-		Index2Component,
 		AdministrativeProceduresComponent,
 		NewsComponent,
 		ViewNewsComponent,
@@ -65,7 +63,6 @@ import { ProcessingRecommendationsComponent } from './processing-recommendations
 		MyRecommendationComponent,
 		ViewRecommendationPersonalComponent,
 		ViewAdministrativeProceduresComponent,
-		ViewRightComponent,
 		ChatbotComponent,
 		ViewNotificationComponent,
 		ListRecommendationKnct,
@@ -84,7 +81,7 @@ import { ProcessingRecommendationsComponent } from './processing-recommendations
 		InfomationPublicComponent,
 		UnitDissatisfactionRateComponent,
 		LateProcessingUnitComponent,
-		ProcessingRecommendationsComponent
+		ProcessingRecommendationsComponent,
 	],
 	imports: [
 		CommonModule,
@@ -93,6 +90,7 @@ import { ProcessingRecommendationsComponent } from './processing-recommendations
 		ReactiveFormsModule,
 		FormsModule,
 		SharedModule,
+		CommentModule,
 		TableModule,
 		CheckboxModule,
 		PaginatorModule,

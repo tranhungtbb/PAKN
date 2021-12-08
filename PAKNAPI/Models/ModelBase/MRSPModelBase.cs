@@ -177,6 +177,7 @@ namespace PAKNAPI.ModelBase
 
 		public int? RowNumber { get; set; }
 		public long ID { get; set; }
+		public long Index { get; set; }
 		public long? UserId { get; set; }
 		public string FullName { get; set; }
 		public string Contents { get; set; }
@@ -185,6 +186,13 @@ namespace PAKNAPI.ModelBase
 		public string RecommendationTitle { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public bool IsPublish { get; set; }
+		public bool? ExistChild { get; set; }
+		public int? Level { get; set; }
+
+		public int? PageIndexChild { get; set; }
+		public bool IsShowChild { get; set; }
+
+		public int? RowNumberChild { get; set; }
 
 		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageByRecommendationDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool? IsPublish)
 		{
@@ -210,6 +218,24 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("MR_Recommendation_CommentGetAllOnPage", DP)).ToList();
 		}
+
+		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllByParentDAO(int? ParentId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ParentId", ParentId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("[MR_Recommendation_CommentGetAllByParent]", DP)).ToList();
+		}
+
+		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllByParentOnPageDAO(int? ParentId, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ParentId", ParentId);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("PageSize", 5);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("[MR_Recommendation_CommentGetOnPageByParent]", DP)).ToList();
+		}
 	}
 
 	public class MRCommentInsert
@@ -233,6 +259,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RecommendationId", _mRCommnentInsertIN.RecommendationId);
 			DP.Add("FullName", _mRCommnentInsertIN.FullName);
 			DP.Add("IsPublish", _mRCommnentInsertIN.IsPublish);
+			DP.Add("ParentId", _mRCommnentInsertIN.ParentId);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Commnent_Insert", DP);
 		}
@@ -250,6 +277,8 @@ namespace PAKNAPI.ModelBase
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool IsPublish { get; set; }
+
+		public int? ParentId { get; set; }
 	}
 
 	public class MRCommentUpdateStatus

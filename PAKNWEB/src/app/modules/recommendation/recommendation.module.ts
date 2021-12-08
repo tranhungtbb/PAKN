@@ -31,6 +31,7 @@ import { RemindComponent } from './remind/remind.component'
 
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
+import { CommentModule } from '../publish/comment-recommendation/comment.module'
 // import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 @NgModule({
 	imports: [
@@ -40,6 +41,7 @@ import { ListRecommendationCommentComponent } from './list-recommendation-commen
 		MatCheckboxModule,
 		FormsModule,
 		SharedModule,
+		CommentModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
 		TreeModule,
@@ -73,4 +75,4 @@ import { ListRecommendationCommentComponent } from './list-recommendation-commen
 		ListRecommendationCommentComponent
 	],
 })
-export class RecommendationModule {}
+export class RecommendationModule { }

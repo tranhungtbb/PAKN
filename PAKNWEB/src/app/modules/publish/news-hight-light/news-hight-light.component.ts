@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { NewsService } from 'src/app/services/news.service'
 
@@ -13,10 +12,9 @@ import { NewsService } from 'src/app/services/news.service'
 	styleUrls: ['./news-hight-light.component.css'],
 })
 export class NewsHightLightComponent implements OnInit {
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	listData: any[] = []
 
-	constructor(private _toastr: ToastrService, private newsService: NewsService, private _router: Router) {}
+	constructor(private _toastr: ToastrService, private newsService: NewsService, private _router: Router) { }
 
 	ngOnInit() {
 		this.newsService.getListHomePage({}).subscribe((res) => {

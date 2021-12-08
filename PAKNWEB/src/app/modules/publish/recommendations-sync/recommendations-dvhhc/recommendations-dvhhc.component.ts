@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
-import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
+import { RecommandationSyncService } from 'src/app/services/recommandation-sync.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 @Component({
@@ -21,9 +20,9 @@ export class RecommendationsDvhhcComponent implements OnInit {
 
 	// arr
 
-	listData : any = []
+	listData: any = []
 
-	constructor(private service: RecommandationSyncService, private routers: Router, private userService : UserInfoStorageService) {}
+	constructor(private service: RecommandationSyncService, private routers: Router, private userService: UserInfoStorageService) { }
 
 	ngOnInit() {
 		this.getList()
@@ -39,7 +38,7 @@ export class RecommendationsDvhhcComponent implements OnInit {
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
-	
+
 		var obj = {
 			questioner: '',
 			question: this.KeySearch, //FINISED
@@ -50,10 +49,10 @@ export class RecommendationsDvhhcComponent implements OnInit {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.Data.length > 0) {
 					this.listData = res.result.Data
-					.map((item) => {
-						item.shortName = this.getShortName(item.questioner)
-						return item
-					})
+						.map((item) => {
+							item.shortName = this.getShortName(item.questioner)
+							return item
+						})
 					this.Total = res.result.Data[0].rowNumber
 					this.padi()
 				} else {

@@ -7,6 +7,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { Router } from '@angular/router'
 import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 import { COMMONS } from 'src/app/commons/commons'
+import { TreeNode } from 'primeng/api'
 
 declare var $: any
 
@@ -21,21 +22,21 @@ export class ListRecommendationCommentComponent implements OnInit {
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private _router: Router
-	) {}
+	) { }
 
-	listData : any [] = []
-	dataSearch : any = {
-		fullName : '',
+	listData: TreeNode[]
+	dataSearch: any = {
+		fullName: '',
 		contents: '',
-		titleRecommendation : '',
+		titleRecommendation: '',
 	}
 	listStatus: any = [
-		{ value: true, text: 'Đã công bố' },
-		{ value: false, text: 'Đã thu hồi' }
+		{ value: true, text: 'Công bố' },
+		{ value: false, text: 'Không công bố' }
 	]
 	pageIndex: number = 1
 	pageSize: number = 20
-	createdDate : Date = null
+	createdDate: Date = null
 	isPublish = null
 
 	@ViewChild('table', { static: false }) table: any
@@ -58,7 +59,7 @@ export class ListRecommendationCommentComponent implements OnInit {
 		}
 		this.getList()
 	}
-	
+
 
 	getList() {
 		this.dataSearch.fullName = this.dataSearch.fullName == null ? '' : this.dataSearch.fullName.trim()
@@ -66,11 +67,11 @@ export class ListRecommendationCommentComponent implements OnInit {
 		this.dataSearch.titleRecommendation = this.dataSearch.titleRecommendation == null ? '' : this.dataSearch.titleRecommendation.trim()
 		this.isPublish = this.isPublish //== null ?  : this.isPublish
 		let request = {
-			FullName : this.dataSearch.fullName,
+			FullName: this.dataSearch.fullName,
 			Contents: this.dataSearch.contents,
-			RecommendationTitle : this.dataSearch.titleRecommendation,
-			IsPublish : this.isPublish == null ? '' : this.isPublish,
-			CreatedDate : this.createdDate == null ? '' : this.createdDate.toDateString(),
+			RecommendationTitle: this.dataSearch.titleRecommendation,
+			IsPublish: this.isPublish == null ? '' : this.isPublish,
+			CreatedDate: this.createdDate == null ? '' : this.createdDate.toDateString(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -78,6 +79,13 @@ export class ListRecommendationCommentComponent implements OnInit {
 		this._service.getAllOnPageBase(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
+					for (var item of response.result.MRCommnentGetAllOnPage) {
+						let itemDefault = item
+						item.children = []
+						item.label = item.unitName
+						item.leaf = false
+						item.data = { ...itemDefault, expanded: false, leaf: true, children: [] }
+					}
 					this.listData = response.result.MRCommnentGetAllOnPage
 					this.totalRecords = response.result.TotalCount
 				}
@@ -102,44 +110,62 @@ export class ListRecommendationCommentComponent implements OnInit {
 		this.table.first = 0
 		this.getList()
 	}
-	titleConfirm : string
-	preChangeStatus = (item : any) =>{
+	titleConfirm: string
+	preChangeStatus = (item: any) => {
 		this.id = item.id
 		this.titleConfirm = item.isPublish == true ? 'Anh/Chị có chắc chắn muốn thu hồi bình luận này?' : 'Anh/Chị có chắc chắn muốn công bố bình luận này?'
 		$('#modalConfirmChangeStatus').modal('show')
 	}
 
-	onChangeStatus = ()=>{
-		let obj : any = this.listData.find(x=>x.id === this.id)
-		this._service.updateStatus({Id : this.id, IsPublish : !obj.isPublish}).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
+	onChangeStatus = () => {
+		let obj: any = this.listData.find(x => x.data.id === this.id)
+		this._service.updateStatus({ Id: this.id, IsPublish: !obj.isPublish }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				$('#modalConfirmChangeStatus').modal('hide')
 				this.getList()
-			}else{
+			} else {
 				this._toastr.error(res.message)
 			}
-		},(err) =>{
+		}, (err) => {
 			console.log(err)
 		})
 	}
 
 
-	preDelete = (id : number) =>{
+	preDelete = (id: number) => {
 		this.id = id
 		$('#modalConfirmDelete').modal('show')
 	}
-	onDelete = () =>{
-		this._service.delete({Id : this.id}).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
+
+
+	onDelete = () => {
+		this._service.delete({ Id: this.id }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
 				this.getList()
-			}else{
+			} else {
 				this._toastr.error(res.message)
 			}
-		},(err) =>{
+		}, (err) => {
 			console.log(err)
+		})
+	}
+
+	onNodeExpand(event) {
+		this._service.getAllByParentId({ ParentId: event.node.id }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				for (var item of res.result) {
+					let itemDefault = item
+					item.children = []
+					item.label = item.unitName
+					item.leaf = false
+					item.data = { ...itemDefault, index: event.node.data.index + '.' + item.index, expanded: false, leaf: true, children: [] }
+				}
+				event.node.children = res.result
+				this.listData = [...this.listData]
+			}
 		})
 	}
 }

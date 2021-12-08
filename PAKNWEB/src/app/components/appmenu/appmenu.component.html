@@ -50,12 +50,11 @@
 					<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết <span *ngIf="statistic"
 								class="text-danger">({{statistic.finised}})</span></a></li>
-					<li *hasPermission="['3', 'E_XII_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/kien-nghi/chua-tu-ngu-bi-cam">PAKN chứa từ ngữ bị cấm</a></li>
 					<li *hasPermission="['3', 'E_XI_0']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/kien-nghi/chua-anh-gia">PAKN chứa ảnh giả</a></li>
 					<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/kien-nghi/binh-luan-pakn">Bình luận PAKN</a></li>
+							routerLink="/quan-tri/kien-nghi/binh-luan-pakn">Bình luận PAKN<span *ngIf="statistic"
+								class="text-danger">({{statistic.totalComment}})</span></a></li>
 				</ul>
 			</li>
 			<li *hasPermission="['2', 'H_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">

@@ -102,7 +102,8 @@
 
 						</div>
 					</div>
-					<div class="media pb-4 border-bottom mb-4 mb-4 box-message-publish" *ngIf="[3,10].includes(model.status)">
+					<div class="media pb-4 border-bottom mb-4 mb-4 box-message-publish"
+						*ngIf="model && [3,10].includes(model.status)">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
 								class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16"
@@ -118,8 +119,8 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ? model.processUnitName : 'Cơ
-								quan chức năng trả lời'}}:</p>
+							<p class="h4 font-italic font-weight-bold">Đơn vị :{{model.processUnitName != null ? model.processUnitName
+								: 'Cơ quan chức năng trả lời'}} trả lời:</p>
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
 							<p *ngIf="!lstConclusion">
@@ -172,7 +173,7 @@
 									<i class="bi bi-eye"></i>
 								</span>
 							</p>
-							<p class="d-flex justify-content-end" *ngIf="model.status == 10">
+							<p class="d-flex justify-content-end" *ngIf="model && model.status == 10">
 								<button type="button" class="btn btn-outline-success mr-3" (click)="changeSatisfaction(1)"
 									[ngClass]="{ 'like': model.quantityType == 1 }">
 									<span class="mr-2">
@@ -218,57 +219,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb-4" *ngIf="model.status == 10">
-					<h3 class="mb-3 text-uppercase">
-						Bình luận <span>({{total_Comments}})</span>
-					</h3>
-					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
-						<p *ngIf="!isLogin">Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue"
-								routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
-						</p>
-						<div class="form-group mb-0">
-							<textarea class="form-control px-4 py-3" [(ngModel)]="commentModel.contents" rows="3"
-								placeholder="Nhập bình luận..." id="comment" maxlength="500"></textarea>
-							<button type="button" class="btn text-white no-grd-blue border-0 px-5 mt-3"
-								(click)="onSendComment()">Gửi</button>
-						</div>
-					</div>
-					<ng-container *ngFor="let item of listCommentsPaged; let i = index">
-						<div class="media mt-3 border-top pt-3">
-							<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
-								{{getShortName(item.fullName)}}
-							</div>
-							<div class="media-body">
-								<p class="mb-0 h5">{{item.fullName}}</p>
-								<div class="d-flex">
-									<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-									<!-- <span class="ml-3 cursor my-0 h5 center cl-blue" style="font-size: 12px;" *ngIf="typeObject == 1"
-										[title]="!item.isPublish ? 'Công bố bình luận' : 'Thu hồi bình luận'"
-										
-										[ngClass]="{'red': item.isPublish == true}"
-										(click)="changeStatusComment(item)">
-											{{ item.isPublish == true ? 'Thu hồi' : 'Công bố'}}
-									</span> -->
-								</div>
-								<p class="mb-0">
-									{{item.contents}}
-								</p>
-							</div>
-						</div>
-					</ng-container>
-
-					<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
-						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 10 bình luận khác
-							<span class="ml-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-									class="bi bi-arrow-right" viewBox="0 0 16 16">
-									<path fill-rule="evenodd"
-										d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-								</svg>
-							</span>
-						</a>
-					</p>
-				</div>
+				<ng-container *ngIf="model && model.status == 10">
+					<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="true"></app-comment-recommendation>
+				</ng-container>
 			</div>
 			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>

@@ -14,7 +14,7 @@ import { Api } from '../constants/api'
 export class CustomHttpInterceptor implements HttpInterceptor {
 	env = environment
 
-	constructor(public storeageService: UserInfoStorageService, private _router: Router, private toastr: ToastrService) {}
+	constructor(public storeageService: UserInfoStorageService, private _router: Router, private toastr: ToastrService) { }
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		let isShowLoading = request.headers.get('isShowLoading')
@@ -26,7 +26,9 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 			request.url != AppSettings.API_ADDRESS + Api.UserGetAllByIdQb &&
 			request.url != AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdownByField &&
 			request.url != AppSettings.API_ADDRESS + Api.StatisticsByUnitParentId &&
-			request.url != AppSettings.API_ADDRESS + Api.GetMessages
+			request.url != AppSettings.API_ADDRESS + Api.GetMessages &&
+			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetPageByParent &&
+			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPage
 		) {
 			this.env.isContentLoading = true
 		}

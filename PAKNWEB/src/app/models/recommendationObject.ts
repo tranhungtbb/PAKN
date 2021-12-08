@@ -167,6 +167,7 @@ export class RecommnendationCommentObject {
 	recommendationId: number
 	fullName: string
 	isPublish: boolean
+	parentId: number
 }
 
 export class RecommnendationInfomationExchange {

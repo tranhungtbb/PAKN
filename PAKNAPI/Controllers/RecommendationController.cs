@@ -1756,6 +1756,10 @@ namespace PAKNAPI.Controller
         {
             try
             {
+                var type = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
+                if (type == 1) {
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản cán bộ không được bình luận" };
+                }
                 _mRCommnentInsertIN.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 _mRCommnentInsertIN.FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 
@@ -1913,9 +1917,28 @@ namespace PAKNAPI.Controller
             }
         }
 
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-all-comment-by-parent")]
+        public async Task<ActionResult<object>> MRCommentGetByParent(int? ParentId)
+        {
+            try
+            {
+                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllByParentDAO(ParentId);
+                
+                return new ResultApi { Success = ResultCode.OK, Result = rsMRCommnentGetAllOnPage };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
 
         /// <summary>
-        /// danh sách bình luận theo pakn
+        /// danh sách bình luận theo pakn trang coong bo
         /// </summary>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
@@ -1946,7 +1969,32 @@ namespace PAKNAPI.Controller
             }
         }
 
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-comment-by-parent-on-page")]
+        public async Task<ActionResult<object>> MRCommentGetByParentOnPage(int? ParentId, int? PageIndex)
+        {
+            try
+            {
+                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllByParentOnPageDAO(ParentId, PageIndex);
 
+                return new ResultApi { Success = ResultCode.OK, Result = rsMRCommnentGetAllOnPage };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+
+        /// <summary>
+        /// Thay doi trang thai binh luan
+        /// </summary>
+        /// <param name="_mRCommnentUpdateIN"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("update-status-comment")]
         [Authorize("ThePolicy")]
