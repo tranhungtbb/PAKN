@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PAKNAPI.Models.Chatbot
+{
+    public class UserChatModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+        public string AvatarUrl { get; set; }
+    }
+}
