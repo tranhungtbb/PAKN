@@ -41,7 +41,7 @@ export class DashboardChatBotComponent implements OnInit {
 		this.connection.keepAliveIntervalInMilliseconds = 180000
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
-				//console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
+				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
 					this.messages = [...this.messages, { messageContent: data.content }]
 					//console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
