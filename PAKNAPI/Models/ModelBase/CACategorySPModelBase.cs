@@ -432,6 +432,9 @@ namespace PAKNAPI.ModelBase
 
 		public string FilePath { get; set; }
 
+		public int? OrderNumber { get; set; }
+		public bool? IsShowHome { get; set; }
+
 		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();

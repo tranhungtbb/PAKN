@@ -16,12 +16,14 @@ import { StatisticService } from 'src/app/services/statistic.service'
 export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
 	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService: UnitService, private _service: StatisticService) { }
-	isMainMenu: boolean = false
+
 	isAdmin = this.userStorage.getIsAdmin()
 	hasPermissionSMS: boolean = false
 	statistic: any = {}
+	isMainMenu: boolean = this.userStorage.getIsUnitMain()
+	isApprove = this.userStorage.getIsApprove()
+
 	ngOnInit() {
-		this.isMainMenu = this.userStorage.getIsUnitMain()
 		this.unitService.hasPermissionSMS({}).subscribe(res => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.hasPermissionSMS = res.result

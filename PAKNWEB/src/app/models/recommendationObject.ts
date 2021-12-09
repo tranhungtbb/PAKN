@@ -181,6 +181,7 @@ export class RecommnendationInfomationExchange {
 	fullName: string
 	createdDate: Date
 	isPublish: boolean
+	parentId: number
 }
 
 export class RecommendationSearchStatisticObject {

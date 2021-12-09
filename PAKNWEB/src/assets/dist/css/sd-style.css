@@ -2,8 +2,6 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('../../../../node_modules/devextreme/dist/css/dx.common.css');
 @import url('../../../../node_modules/devextreme/dist/css/dx.light.css');
-/* @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss');
-@import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss'); */
 
 * {
 	font-family: 'Inter', sans-serif;
@@ -2296,6 +2294,13 @@ table thead .form-control ng-select {
 
 .border-left-blue2 {
 	border-left: 3px solid #25a7d0;
+}
+.bg-blue-3{
+	background-color: #2e73d5 !important;
+}
+
+.border-left-blue3{
+	border-left: 3px solid #2e73d5 ;
 }
 
 .border-left-blue {

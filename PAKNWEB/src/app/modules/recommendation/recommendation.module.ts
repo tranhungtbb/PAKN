@@ -32,7 +32,8 @@ import { RemindComponent } from './remind/remind.component'
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
 import { CommentModule } from '../publish/comment-recommendation/comment.module'
-// import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
+import { InfomationExchangeModule } from './infomation-exchange/infomation-exchange.module'
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -42,6 +43,7 @@ import { CommentModule } from '../publish/comment-recommendation/comment.module'
 		FormsModule,
 		SharedModule,
 		CommentModule,
+		InfomationExchangeModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
 		TreeModule,
