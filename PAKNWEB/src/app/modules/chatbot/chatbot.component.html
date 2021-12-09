@@ -132,6 +132,7 @@
 										src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
 										class="rounded-circle user_img_msg">
 									<img *ngIf="message.fromAvatar != ''" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
+									{{message.fromFullName}}
 								</div>
 								<div class="msg_cotainer">
 
@@ -167,6 +168,7 @@
 										src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
 										class="rounded-circle user_img_msg">
 									<img *ngIf="message.fromAvatar != ''" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
+									{{message.fromFullName}}
 								</div>
 							</div>
 						</ng-container>

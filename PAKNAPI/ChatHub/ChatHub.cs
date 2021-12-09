@@ -160,7 +160,7 @@ namespace SignalR.Hubs
                 return new UserChatModel()
                 {
                     Id = ress.Id,
-                    Name = senderUserName,
+                    Name = "Người dân",
                     AvatarUrl = ""
                 };
             }

@@ -58,9 +58,10 @@ export class DashboardChatBotComponent implements OnInit {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
-					this.messages = [...this.messages, { messageContent: data.content }]
+					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName }]
 					//console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
+
 
 				this.convertMessageToObjectList()
 			})
@@ -196,13 +197,14 @@ export class DashboardChatBotComponent implements OnInit {
 				const { result, type } = this.stringToObject(element.messageContent)
 				element.messageContent = type === 'string' ? result : result.Content
 				element.fromAvatar = element.fromAvatar ? element.fromAvatar : '';
-				element.fromFullName = element.FromFullName ? element.FromFullName : '';
+				element.fromFullName = element.fromFullName ? element.fromFullName : '';
 				if (type === 'json' && result && result.SubTags) {
 					if (result.SubTags && result.SubTags.length > 0) {
 						const rs: any = this.stringToObject(result.SubTags[0])
 						element.SubTags = rs.type === 'json' ? rs.result.data : []
 					}
 				}
+				console.log('element', element);
 			}
 		}
 	}
