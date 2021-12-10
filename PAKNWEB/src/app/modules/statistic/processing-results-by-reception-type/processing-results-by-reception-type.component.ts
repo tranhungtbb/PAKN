@@ -47,7 +47,7 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	type: number = 1
 
 	maxDateValue = new Date()
-	firstLoad = false
+	firstLoad = true
 	ngOnInit() {
 		this.initData()
 	}

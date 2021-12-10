@@ -51,7 +51,7 @@ export class ProcessingResultsByTypeComponent implements OnInit {
 	maxDate: Date
 
 	maxDateValue = new Date()
-	firstLoad = false
+	firstLoad = true
 	ngOnInit() {
 		let currentTime = new Date()
 		this.year = currentTime.getFullYear()

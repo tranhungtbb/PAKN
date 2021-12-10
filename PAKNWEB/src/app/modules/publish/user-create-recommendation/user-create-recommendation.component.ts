@@ -35,6 +35,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	lstIndividual: any[] = []
 	lstObject: any[] = []
 	lstHashtag: any[] = []
+	lstGroupUnit: any[] = []
 	lstHashtagSelected: any[] = []
 	hashtagId: number = null
 	fileAccept = CONSTANTS.FILEACCEPT
@@ -50,7 +51,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	lstDictionariesWord: any = []
 
 	unitSelected: any = { name: null, id: null }
-	lstUnitTree: any[] = []
+	lstUnitChild: any[] = []
 	isLogin: any
 
 	// map
@@ -167,7 +168,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 					this.lstIndividual = response.result.lstIndividual
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
-					// this.lstUnit = response.result.lstUnit
+					this.lstGroupUnit = response.result.lstGroupUnit
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -190,7 +191,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		)
 	}
 
-	getListUnit() {
+	getListUnitChild() {
 		this.lstUnit = []
 		this.model.unitId = null
 		let obj = {
@@ -226,14 +227,55 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
 			field: new FormControl(this.model.field, [Validators.required]),
-			unitId: new FormControl(this.model.unitId, [Validators.required]),
+			unitId: new FormControl(this.model.unitId),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
 			address: new FormControl(this.model.address, [Validators.required]),
+			groupUnitId: new FormControl(this.model.address, [Validators.required]),
 		})
 	}
 	get f() {
 		return this.form.controls
+	}
+	isShowUnitChild: boolean = false
+	isChooseUnit: boolean = false
+	onChangeGroup(event) {
+		this.isChooseUnit = event.isMain == null ? false : true
+		this.model.unitReceive = null
+		this.model.unitChildId = null
+		if (!event.isMain) {
+			this.getUnitByGroup(event.id)
+		}
+		if (event.isAdministrative) {
+			this.isShowUnitChild = true
+		} else {
+			this.isShowUnitChild = false
+		}
+		this.lstUnit = []
+	}
+	getUnitByGroup(groupId: number) {
+		this.unitService.getByGroup({ GroupId: groupId }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstUnit = res.result
+			} else {
+				this.toastr.error(res.message)
+			}
+		})
+	}
+
+	getUnitByParent(event) {
+		if (event) {
+			this.unitService.getByParent({ ParentId: event.id }).subscribe(res => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.lstUnitChild = res.result
+				} else {
+					this.toastr.error(res.message)
+				}
+			})
+		} else {
+			this.lstUnitChild = []
+		}
+
 	}
 
 	onUpload(event) {
@@ -274,6 +316,19 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	onSave(status) {
 		this.isSuitableContent = true
 		this.submitted = true
+		if (this.isChooseUnit) {
+			this.model.unitId = this.model.groupUnitId
+		} else {
+			if (this.isShowUnitChild && this.model.unitChildId) {
+				this.model.unitId = this.model.unitChildId
+			} else {
+				if (!this.model.unitReceive) {
+					return
+				}
+				this.model.unitId = this.model.unitReceive
+			}
+		}
+		debugger
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {

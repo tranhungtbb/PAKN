@@ -2127,6 +2127,7 @@ namespace PAKNAPI.Controller
                 notification.TypeSend = recommendation.Status;
                 notification.IsViewed = true;
                 notification.IsReaded = true;
+                notification.ReceiveOrgId = 0;
 
                 switch (recommendation.Status)
                 {
@@ -2136,8 +2137,9 @@ namespace PAKNAPI.Controller
                         {
 
                             notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId;
+                            notification.ReceiveOrgId = item.UnitId??0;
                             notification.Title = "PAKN CHỜ XỬ LÝ";
+                            notification.SendOrgId = 0;
                             notification.Content =
                                 recommendation.SendId != item.Id ?
                                 sender.FullName + " vừa gửi một PAKN" : "Bạn vừa tạo một PAKN";
@@ -2215,7 +2217,7 @@ namespace PAKNAPI.Controller
                             foreach (var item in listUserReceiveResolve)
                             {
                                 notification.ReceiveId = item.Id;
-                                notification.ReceiveOrgId = item.UnitId;
+                                notification.ReceiveOrgId = item.UnitId??0;
                                 // insert notification
                                 await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                             }
@@ -2228,7 +2230,7 @@ namespace PAKNAPI.Controller
                         foreach (var item in listUserReceiveResolve)
                         {
                             notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId;
+                            notification.ReceiveOrgId = item.UnitId??0;
                             // insert notification
                             await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                         }
@@ -2271,7 +2273,7 @@ namespace PAKNAPI.Controller
                             foreach (var item in lstUser)
                             {
                                 notification.ReceiveId = item.Id;
-                                notification.ReceiveOrgId = item.UnitId;
+                                notification.ReceiveOrgId = item.UnitId??0;
                                 notification.Title = "PAKN ĐANG GIẢI QUYẾT";
                                 notification.Content = "PAKN số " + recommendation.Code + " đã được đơn vị " + unitReceive.Name + " giải quyết";
                                 // insert notification
@@ -2302,7 +2304,7 @@ namespace PAKNAPI.Controller
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId;
+                            notification.ReceiveOrgId = item.UnitId??0;
                             // insert notification
                             await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                         }
@@ -2327,7 +2329,7 @@ namespace PAKNAPI.Controller
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId;
+                            notification.ReceiveOrgId = item.UnitId??0;
                             // insert notification
                             await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                         }
@@ -2349,7 +2351,7 @@ namespace PAKNAPI.Controller
                             foreach (var item in lstUser)
                             {
                                 notification.ReceiveId = item.Id;
-                                notification.ReceiveOrgId = item.UnitId;
+                                notification.ReceiveOrgId = item.UnitId??0;
                                 // insert notification
                                 await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                             }
@@ -2357,7 +2359,7 @@ namespace PAKNAPI.Controller
 
                         // người gửi PAKN
                         notification.ReceiveId = sender.Id;
-                        notification.ReceiveOrgId = null;
+                        notification.ReceiveOrgId = 0;
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                         break;
                 }

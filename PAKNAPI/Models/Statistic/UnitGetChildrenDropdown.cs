@@ -33,5 +33,14 @@ namespace PAKNAPI.Models.Statistic
 
 			return (await _sQLCon.ExecuteListDapperAsync<UnitGetChildrenDropdown>("[SY_UnitGetChildrenDropdown]", DP)).ToList();
 		}
+
+		public async Task<List<UnitGetChildrenDropdown>> UnitDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<UnitGetChildrenDropdown>("[SY_UnitDropdown]", DP)).ToList();
+		}
 	}
+
+	
 }

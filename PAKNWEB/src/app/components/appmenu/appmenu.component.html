@@ -24,7 +24,7 @@
 
 						<ng-container *ngIf="isMainMenu">
 							<li *hasPermission="['3', 'E_I_3']">
-								<a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý
+								<a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ tiếp nhận
 									<span *ngIf="statistic" class="text-danger">({{statistic.receiveWait}})</span></a>
 							</li>
 							<li *hasPermission="['3', 'E_I_3']">

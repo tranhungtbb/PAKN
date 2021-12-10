@@ -40,6 +40,9 @@ export class RecommendationObject {
 	type: number
 	receptionType: number
 	isFakeImage: boolean
+	groupUnitId: number
+	unitReceive: number
+	unitChildId: number
 }
 export class RecommendationSearchObject {
 	constructor() {

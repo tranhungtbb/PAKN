@@ -21,6 +21,8 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstGroupWord { get; set; }
         public List<DropdownObject> lstUnitChild { get; set; }
         public GeneralSetting generalSetting { get; set; }
+
+        public List<SYUnitDropdown> lstGroupUnit { get; set; }
     }
 
     public class RecommendationGetDataForForwardResponse

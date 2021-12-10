@@ -36,9 +36,9 @@
 								<!-- <h4 class="text-uppercase border-bottom-blue mb-3">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4> -->
 								<div class="row">
 									<ng-container *ngFor="let item of recommendationsReceiveDeny">
-										<div class="col-6">
-											<p class="align-items-center mb-1" style="min-height: 38px;">
-												<a class="h4 title-sm color-dark text-2line"
+										<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+											<p class="align-items-center mb-1">
+												<a class="h4 title-sm color-dark text-1line"
 													routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 													{{item.title}}
 												</a>
@@ -111,12 +111,11 @@
 					</div>
 					<div class="row" *ngIf="!isGrid">
 						<ng-container *ngFor="let item of ReflectionsRecommendations; let i = index">
-							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" [ngClass]="i % 2 == 0 ? 'pr-7' : 'pl-7'"
-								*ngIf="i < 8">
+							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" [ngClass]="i % 2 == 0 ? 'pr-7' : 'pl-7'">
 								<div class="card border">
 									<img class="img-fluid img-cover img-field" style="width: 100%;" [src]="item.filePath"
 										alt="{{item.fieldName}}">
-									<div class="tt-v1 mb-3 d-flex justify-content-between no-grd-blue title-field pl-3 center">
+									<div class="tt-v1 mb-1 d-flex justify-content-between no-grd-blue title-field pl-3 center">
 										<h4 class="text-uppercase mb-0  text-white">{{item.fieldName}}</h4>
 									</div>
 									<div class="ml-3 mr-3 mb-3">
@@ -199,10 +198,10 @@
 				</a> -->
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 
-				<div class="mt-4">
+				<div class="margin-top-16">
 					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3 d-flex justify-content-between">
-							<h4 class="text-uppercase mb-0 ">tỷ lệ không hài lòng</h4>
+						<div class="tt-v1 mb-3 justify-content-between text-center">
+							<h4 class="text-uppercase mb-0">tỷ lệ không hài lòng</h4>
 						</div>
 						<div class="pl-3 pr-3 mb-2">
 							<ul>
@@ -222,10 +221,10 @@
 					</div>
 				</div>
 
-				<div class="mt-4" *ngIf="lateProcessingUnit">
+				<div class="margin-top-16" *ngIf="lateProcessingUnit">
 					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3 d-flex justify-content-between">
-							<h4 class="text-uppercase mb-0 ">đơn vị xử lý trễ hạn</h4>
+						<div class="tt-v1 mb-3 justify-content-between text-center">
+							<h4 class="text-uppercase mb-0">đơn vị xử lý trễ hạn</h4>
 						</div>
 						<div class="pl-3 pr-3 mb-2">
 							<ul>
@@ -247,9 +246,9 @@
 
 
 				<div class="margin-top-16" *ngIf="recommendationsHighLight">
-					<div class="card border pt-4 p-3">
-						<div class="tt-v1 mb-3 d-flex justify-content-between">
-							<h4 class="text-uppercase border-bottom-blue mb-0 ">phản ánh kiến nghị tiêu biểu</h4>
+					<div class="card border pt-4 p-3 bg-notification">
+						<div class="tt-v1 mb-3 justify-content-between text-center">
+							<h4 class="text-uppercase mb-0 ">phản ánh kiến nghị tiêu biểu</h4>
 						</div>
 						<ng-container *ngFor="let mr of recommendationsHighLight;let i = index">
 							<div class="mt-3" [ngClass]="{ 'border-bottom': i+1 != recommendationsHighLight.length}">
@@ -272,9 +271,9 @@
 
 
 				<div class="margin-top-16" *ngIf="recommendationsProcessing">
-					<div class="card border pt-4 p-3">
-						<div class="tt-v1 mb-3 d-flex justify-content-between title-field center">
-							<h4 class="text-uppercase border-bottom-blue mb-0 ">phản ánh kiến nghị đang xử lý</h4>
+					<div class="card border pt-4 p-3 bg-notification">
+						<div class="tt-v1 mb-3 justify-content-between title-field text-center">
+							<h4 class="text-uppercase mb-0">phản ánh kiến nghị đang xử lý</h4>
 						</div>
 						<ng-container *ngFor="let mr of recommendationsProcessing;let i = index">
 							<div class="mt-3" [ngClass]="{ 'border-bottom': i+ 1 != recommendationsProcessing.length}">

@@ -1511,6 +1511,7 @@ namespace PAKNAPI.ModelBase
 		public string ApprovedName { get; set; }
 		public DateTime? ApprovedDate { get; set; }
 		public string ReasonDeny { get; set; }
+		public DateTime? DenyDate { get; set; }
 		public int? UnitSendId { get; set; }
 		public int? UnitReceiveId { get; set; }
 		public bool? IsForwardProcess { get; set; }

@@ -136,6 +136,14 @@ a:hover {
 	background: #25A7D0;
 }
 
+.bg-blue3 {
+	background: #155bbf;
+}
+.border-left-blue3{
+	border-left: 3px solid #155bbf;
+}
+
+
 .cl-red {
 	color: #DA2222;
 }

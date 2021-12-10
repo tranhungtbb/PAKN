@@ -740,8 +740,8 @@ a.text-1line.text-black.sub-menu-active {
 }
 
 .navbar-light .navbar-nav .nav-link {
-	padding: 15px 10px;
-	font-family: Inter;
+	padding: 15px 20px;
+	font-family: 'Inter', sans-serif;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 16px;
@@ -752,6 +752,22 @@ a.text-1line.text-black.sub-menu-active {
 	color: #fff;
 }
 
+.text-decoration-revert{
+	text-decoration: revert;
+}
+
+.menu-filter{
+	width: 40px;
+	height: 38px;
+	border-radius: 4px;
+	background-color: rgba(255,255,255,.2);
+	border: none;
+}
+
+ul.ft-list-rm li {
+	list-style: inside;
+}
+
 .navbar-light .navbar-nav .nav-link:hover {
 	background-color: #155bbf;
 }
@@ -760,7 +776,13 @@ a.text-1line.text-black.sub-menu-active {
 	height: 40px;
 	padding-right: 15px !important;
 }
-
+ul.ft-list-rm li::marker {
+	color: #2e73d5;
+	font-size: 20px;
+}
+ul.ft-list-rm li a {
+	color: #222;
+}
 ::placeholder {
 	color: #c8c8c8;
 	opacity: 1;

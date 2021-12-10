@@ -1,14 +1,5 @@
-<!-- <div class="" *ngIf="!isLogin">
-	<a href="javascript:void(0)">
-		<img class="img-fluid card img-cover"
-			src="../../../../assets/dist/images/banner-index-1.png" alt="">
-	</a>
-	<a href="javascript:void(0)">
-		<img class="img-fluid card mt-3 img-cover"
-			src="../../../../assets/dist/images/banner-index-2.png" alt="">
-	</a>
-</div> -->
-
+<!-- <div class="row"> -->
+<!-- <div class="col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 p-0"> -->
 <div class="sb-tk-pakn card-my-recommentdation"
 	*ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
@@ -32,7 +23,15 @@
 				{{recommendationStatistics.receiveApproved}}
 			</div>
 		</div>
-		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
+		<div class="border-left-blue3 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
+			<div class="pf-4">
+				<p class="title-status-rm ml-3 mb-0">Đang giải quyết</p>
+			</div>
+			<div class="circle bg-blue3 center text-white cursor">
+				{{recommendationStatistics.processing}}
+			</div>
+		</div>
+		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
 			</div>
@@ -40,7 +39,7 @@
 				{{recommendationStatistics.finised}}
 			</div>
 		</div>
-		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
+		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(5)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
 			</div>
@@ -50,14 +49,15 @@
 		</div>
 	</div>
 </div>
-
+<!-- </div> -->
+<!-- <div class="col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 p-0"> -->
 <div class="sb-tk-pakn text-center card-my-chart px-3"
 	[ngClass]="{'margin-top-16' : (typeObject == 2 || typeObject == 3)}">
 	<div class="tt-v1 pt-4 mb-3 justify-content-between text-center">
-		<h4 class="text-uppercase">Phản ánh kiến nghị toàn tỉnh</h4>
+		<h4 class="text-uppercase">Thống kê kết quả xử lý</h4>
 	</div>
-	<div class="tt-v1 mb-3 d-flex justify-content-between text-center">
-		<div>
+	<div class="tt-v1 mb-3 d-flex justify-content-between text-center statistic-chart">
+		<div class="center">
 			<canvas baseChart height="150px" width="150px" [data]="pieChartData" [colors]="pieChartColors"
 				[labels]="pieChartLabels" [options]="chartOptions" [chartType]="chartType">
 			</canvas>
@@ -83,13 +83,14 @@
 	</div>
 
 </div>
-
+<!-- </div> -->
+<!-- <div class="col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 p-0"> -->
 <div class="sb-tk-pakn text-center card-my-chart px-3 margin-top-16" *ngIf="isShowSatisfationChart">
 	<div class="tt-v1 pt-4 mb-3 justify-content-between text-center">
 		<h4 class="text-uppercase">thống kê mức độ hài lòng</h4>
 	</div>
-	<div class="tt-v1 mb-3 d-flex justify-content-between text-center">
-		<div>
+	<div class="tt-v1 mb-3 d-flex justify-content-between text-center statistic-chart">
+		<div class="center">
 			<canvas baseChart height="150px" width="150px" [data]="satisfactionChartData" [colors]="satisfactionChartColors"
 				[labels]="satisfactionChartLabels" [options]="chartOptions" [chartType]="chartType">
 			</canvas>
@@ -122,3 +123,5 @@
 	</div>
 
 </div>
+<!-- </div> -->
+<!-- </div> -->

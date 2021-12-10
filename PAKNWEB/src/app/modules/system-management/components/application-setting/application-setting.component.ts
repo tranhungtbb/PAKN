@@ -21,7 +21,7 @@ export class ApplicationSettingComponent implements OnInit, AfterContentInit {
 	configApplication: ConfigApplication = new ConfigApplication()
 
 	form: FormGroup
-	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute: ActivatedRoute, private _router: Router) {}
+	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute: ActivatedRoute, private _router: Router) { }
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe((params) => {
@@ -62,8 +62,8 @@ export class ApplicationSettingComponent implements OnInit, AfterContentInit {
 		this.form = this._fb.group({
 			title: [this.model.title, Validators.required],
 			description: [this.model.description, Validators.required],
-			urlIOS: [this.configApplication.urlIOS,[ Validators.required,Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
-			urlAndroid: [this.configApplication.urlAndroid, [Validators.required,Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]]
+			urlIOS: [this.configApplication.urlIOS, [Validators.required]],
+			urlAndroid: [this.configApplication.urlAndroid, [Validators.required]]
 		})
 	}
 	rebuilForm() {

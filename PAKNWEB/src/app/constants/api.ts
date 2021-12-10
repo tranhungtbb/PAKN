@@ -123,6 +123,10 @@ export class Api {
 	public static UnitPermissionSMSInsert = 'unit/unit-permission-insert'
 	public static UnitNotPermissionSMSGetDrop = 'unit/get-unit-dropdown-not-permission'
 	public static UnitHasPermissionSMS = 'unit/unit-has-permission'
+	public static UnitGetByGroup = 'unit/unit-get-by-group'
+	public static UnitGetByParentId = 'unit/get-children-dropdown-by-parent'
+
+
 
 	//Position
 	public static PositionInsert = 'position/insert'
