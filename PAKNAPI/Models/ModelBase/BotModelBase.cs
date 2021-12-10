@@ -241,6 +241,12 @@ namespace PAKNAPI.Models.ModelBase
 		}
 		public int Id { get; set; }
 		public string MessageContent { get; set; }
+
+		public string fromFullName { get; set; }
+
+		public string fromAvatar { get; set; }
+
+
 		public int RoomId { get; set; }
 		public int FromUserId { get; set; }
 		public DateTime DateSend { get; set; }

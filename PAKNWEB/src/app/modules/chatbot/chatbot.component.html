@@ -127,9 +127,17 @@
 						(scroll)="onScrollBoxChat($event)">
 						<ng-container *ngFor="let message of messages">
 							<div *ngIf="message.fromUserId != userId" class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+									<img *ngIf="message.fromAvatar == ''|| message.fromAvatar == null "
+										src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+										class="rounded-circle user_img_msg">
+									<img *ngIf="message.fromAvatar != ''" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
+									{{message.fromFullName}}
+								</div>
 								<div class="msg_cotainer">
+
 									{{message.messageContent}}
-									<ng-container  *ngFor="let tag of message.SubTags">
+									<ng-container *ngFor="let tag of message.SubTags">
 										<div *ngIf="tag.title" class="msg_cotainer_child">
 											<span class="item p-2">{{tag.title}}</span>
 										</div>
@@ -141,10 +149,11 @@
 								</div>
 							</div>
 							<div *ngIf="message.fromUserId == userId" class="d-flex justify-content-end mb-4">
+
 								<div class="msg_cotainer_send">
 									<!-- {{message.messageContent}} -->
 									{{message.messageContent}}
-									<ng-container  *ngFor="let tag of message.SubTags">
+									<ng-container *ngFor="let tag of message.SubTags">
 										<div *ngIf="tag.title" class="msg_cotainer_child">
 											<span class="item p-2">{{tag.title}}</span>
 										</div>
@@ -153,6 +162,13 @@
 										</a>
 									</ng-container>
 									<span class="msg_time_send">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+								</div>
+								<div class="img_cont_msg">
+									<img *ngIf="message.fromAvatar == ''|| message.fromAvatar == null "
+										src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+										class="rounded-circle user_img_msg">
+									<img *ngIf="message.fromAvatar != ''" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
+									{{message.fromFullName}}
 								</div>
 							</div>
 						</ng-container>
