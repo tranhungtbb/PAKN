@@ -131,7 +131,7 @@ namespace SignalR.Hubs
                     HiddenAnswer = string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer,
                     Content = res.Answer,
                     From = "Bot",
-                   
+                    FromFullName = "Bot",
                     SubTags = (res.SubTags),
                     FromId = "Bot",
                     To = roomName,
