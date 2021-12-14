@@ -1,0 +1,222 @@
+<div class="modal fade notscroll" id="{{modalId}}">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" [ngClass]="{'width-96vw': isAdmin == true, 'width-auto': isAdmin == false}"> 
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
+				<p class="modal-title h3">{{modalTitle}}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0 mt-0 pt-0">
+				<div class="row">
+					<div [ngClass]="{'col-md-6': isAdmin == true, 'col-md-12': isAdmin == false}">
+						<form id="createUserForm" [formGroup]="createUserForm" (keydown.enter)="onSaveUser()" (ngSubmit)="onSaveUser()">
+							<div class="align-items-center mb-4 avatar-bg">
+								<div class="avatar-frame">
+									<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }" style="height: 100%; width: 100%; object-fit: cover;" />
+									<span class="no-avatar-view" *ngIf="userAvatar == null">
+										<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd"
+												d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+												fill="#743F15" />
+										</svg>
+									</span>
+								</div>
+								<div class="text-center">
+									<input type="file" [hidden]="true" class="seclect-avatar" accept="{{fileAccept}}" (change)="changeSelectAvatar($event)">
+									<a class="color-brow" style="cursor: pointer;" (click)="onChangeAvatar()">
+										<i class="pi bi-image"></i>&nbsp;
+										Tải lên ảnh đại diện
+									</a>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-12 col-lg-8 form-group">
+									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+									<input id="target" svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
+										[readonly]="modelUser.id != null && modelUser.id > 0" (change)="onCheckExist('Email',$event.target.value)">
+									<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.email.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="fUser.email.errors.email">
+											<span class="help-block">Định dạng email không đúng</span>
+										</div>
+									</div>
+									<div *ngIf="checkExists['Email'] && fUser.email.valid" class="has-error m-b-12">
+										<div *ngIf="checkExists['Email']">
+											<span class="help-block">Email đã tồn tại</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
+									<input svTrim formControlName="fullName" [(ngModel)]="modelUser.fullName" type="text" class="form-control" placeholder="Nhập..."
+										maxlength="100">
+									<div *ngIf="(userFormSubmitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.fullName.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
+									<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control"
+										placeholder="Nhập..." (change)="onCheckExist('Phone',$event.target.value)">
+									<div *ngIf="(userFormSubmitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.phone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="fUser.phone.errors.pattern">
+											<span class="help-block">Định dạng số điện thoại không đúng</span>
+										</div>
+									</div>
+									<div *ngIf="checkExists['Phone'] && fUser.phone.valid" class="has-error m-b-12">
+										<div *ngIf="checkExists['Phone']">
+											<span class="help-block">Số điện thoại đã tồn tại</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-8 form-group">
+									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
+									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
+									<ng-select notFoundText="Không có dữ liệu" 
+										[ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" 
+										class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" 
+										[(ngModel)]="modelUser.unitId" (change)="changeUnit($event)"
+										formControlName="unitId" [closeOnSelect]="true">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.unitId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
+									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.positionName}}" type="text" class="form-control">
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="positionId"
+										[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.positionId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
+									<!--  -->
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
+										formControlName="gender" [closeOnSelect]="true" [searchable]="false">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.gender.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+									<input *ngIf="!isAdmin && modelUser.id > 0 && modelUser.isActived" disabled type="text" class="form-control" value="Hiệu lực">
+									<input *ngIf="!isAdmin && modelUser.id > 0 && !modelUser.isActived" disabled type="text" class="form-control" value="Hết hiệu lực">
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+										formControlName="isActived" [(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.isActived.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 form-group">
+									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
+									<input *ngIf="!isAdmin && modelUser.id > 0" disabled type="text" class="form-control" value="{{roleName}}">
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
+										formControlName="roleId" hideSelected="true" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.roleId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 form-group">
+									<label class="mb-1">Địa chỉ</label>
+									<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập..."
+										maxlength="300"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-6" *ngIf="isAdmin == true">
+						<p class="h4 text-uppercase mt-3">Phân quyền vai trò</p>
+						<div *hasPermission="['3', 'A_X_4']" class="row no-margin" style="height: 80vh; overflow: auto;">
+							<div class="col-md-12 panel-body mt-3 mb-3" *ngFor="let permisionCategory of listPermissionCategories;let i = index">
+								<mat-checkbox [(ngModel)]="permisionCategory.selected" class="permision-category" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+									(change)="onCategoryChange($event, permisionCategory)" [color]="primary" [disabled]="permisionCategory.disabled">{{ permisionCategory.name }}
+								</mat-checkbox>
+								<hr class="mb-2 mt-1" />
+								<div class="row no-margin" [attr.id]="'groupUS'+ i">
+									<div *ngFor="let function of permisionCategory.function" class="col-md-6 permission-select-layout">
+										<mat-checkbox [(ngModel)]="function.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+											(change)="onFunctionChange($event, function, permisionCategory)" [color]="primary" [disabled]="function.disabled">{{ function.name }}
+										</mat-checkbox>
+										<div class="panel-body no-padding-bottom ml-3" [attr.id]="'functionUS'+ function.id">
+											<div class="permission-select-area" *ngFor="let permission of function.permission">
+												<mat-checkbox [(ngModel)]="permission.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+													(change)="onPermissionChange($event, permission, function, permisionCategory)" [color]="primary"
+													[disabled]="permission.disabled">
+													{{ permission.name }}
+												</mat-checkbox>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div *hasNotPermission="['3', 'A_X_4']" class="row no-margin" style="height: 80vh; overflow: auto;">
+							<div class="col-md-12 panel-body mt-3 mb-3" *ngFor="let permisionCategory of listPermissionCategories;let i = index">
+								<mat-checkbox [(ngModel)]="permisionCategory.selected" class="permision-category" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+									[color]="primary" [disabled]="true">{{ permisionCategory.name }}
+								</mat-checkbox>
+								<hr class="mb-2 mt-1" />
+								<div class="row no-margin" [attr.id]="'groupUS'+ i">
+									<div *ngFor="let function of permisionCategory.function" class="col-md-6 permission-select-layout">
+										<mat-checkbox [(ngModel)]="function.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+											[color]="primary" [disabled]="true">{{ function.name }}
+										</mat-checkbox>
+										<div class="panel-body no-padding-bottom ml-3" [attr.id]="'functionUS'+ function.id">
+											<div class="permission-select-area" *ngFor="let permission of function.permission">
+												<mat-checkbox [(ngModel)]="permission.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+													[color]="primary"
+													[disabled]="true">
+													{{ permission.name }}
+												</mat-checkbox>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" (click)="onSaveUser()" class="btn btn-danger border-0 px-5 grd-blue">
+					{{modal_btn_save}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

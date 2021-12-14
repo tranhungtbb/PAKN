@@ -1,0 +1,222 @@
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><a>Hệ thống</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">Cấu hình hệ thống</a></li>
+			</ol>
+			<div class="btn-group group-button-table" role="group">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="table-responsive">
+
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20"
+						[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<ng-template pTemplate="header" class="bg-thead">
+							<tr>
+								<th style="width: 50px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>STT</strong>
+									</p>
+								</th>
+								<th style="width: 250px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'title'">
+										<strong>Tên cấu hình <p-sortIcon [field]="'title'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="title" trim [ngSwitch]="'title'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')" placeholder="Nhập tên..." />
+									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th style="width: 350px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'description'">
+										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="description" trim [ngSwitch]="'description'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')" placeholder="Nhập mô tả..." />
+									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th style="width: 170px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'type'">
+										<strong>Loại cấu hình <p-sortIcon [field]="'type'"></p-sortIcon></strong>
+									</p>
+									<div class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select notFoundText="Không có dữ liệu" [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
+											[ngSwitch]="'type'" (change)="table.filter($event?.value.toString(), 'type')" [closeOnSelect]="true">
+										</ng-select>
+									</div>
+								</th>
+								<th style="text-align: center; width: 100px !important;"><strong>THAO TÁC</strong></th>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
+								<td>
+									<strong class="highlight">
+										<a *hasNotPermission="['3', 'A_I_2']" class="ellipsis" title="Xem chi tiết">{{item.title}}</a>
+										<a *hasPermission="['3', 'A_I_2']" (click)="preDetail(item.id, item.type)" class="ellipsis" title="Xem chi tiết">{{item.title}}</a>
+									</strong>
+								</td>
+								<td>
+									<p class="text-2line mb-0">{{item.description}}</p>
+								</td>
+								<td>
+									<span *ngIf="item.type == 1" class="badge rounded-pill badge-success">Cấu hình email</span>
+									<span *ngIf="item.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
+									<span *ngIf="item.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
+									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
+									<span *ngIf="item.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị trang chủ</span>
+
+									<span *ngIf="item.type == 7" class="badge rounded-pill badge-outline-blue ng-star-inserted">Cấu hình hiển thị ứng dụng</span>
+									<span *ngIf="item.type == 6" class="badge rounded-pill badge-warning">Cấu hình đồng bộ</span>
+								</td>
+								<td>
+									<div class="hover-active d-flex justify-content-end">
+										<a *hasPermission="['3', 'A_I_1']" (click)="redirectUpdate(item.id, item.type)" class="btn-icon grd-brown text-brown mr-2"
+											title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
+									</div>
+								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="4">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 50%" role="document">
+		<div class="modal-content rounded">
+			<!-- <form class="form-horizontal"> -->
+			<div class="panel panel-default no-margin">
+				<div class="modal-header">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Thông tin chi tiết</p>
+				</div>
+				<div class="modal-body no-padding-bottom">
+					<div class="row">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Tên cấu hình</strong>
+							<p>{{model.title}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Loại cấu hình</strong> <br>
+							<span *ngIf="model.type == 1" class="badge rounded-pill badge-success">Cấu hình email</span>
+							<span *ngIf="model.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
+							<span *ngIf="model.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
+							<span *ngIf="model.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
+							<span *ngIf="model.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị trang chủ</span>
+
+							<span *ngIf="model.type == 7" class="badge rounded-pill badge-outline-blue ng-star-inserted">Cấu hình hiển thị ứng dụng</span>
+						</div>
+						<div class="col-sm-12">
+							<strong class="control-label lb600">Mô tả</strong>
+							<p>{{model.description}}</p>
+						</div>
+					</div>
+					<div class="row" *ngIf="model.type == 1">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Email</strong>
+							<p>{{config.email}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Mật khẩu</strong>
+							<p>{{config.password}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Địa chỉ server</strong>
+							<p>{{config.server}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Cổng</strong>
+							<p>{{config.port}}</p>
+						</div>
+					</div>
+
+					<div class="row" *ngIf="model.type == 2">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Link Webservice</strong>
+							<p>{{config.linkwebservice}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">User</strong>
+							<p>{{config.user}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Password</strong>
+							<p>{{config.password}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Code</strong>
+							<p>{{config.code}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">ServiceID</strong>
+							<p>{{config.serviceID}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">CommandCode </strong>
+							<p>{{config.commandCode}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">ContentType</strong>
+							<p *ngIf="config.contentType == true">Tin nhắn nội dung có dấu</p>
+							<p *ngIf="config.contentType == false">Tin nhắn nội dung không dấu</p>
+						</div>
+					</div>
+
+					<div class="row" *ngIf="model.type == 3">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Link</strong>
+							<p>{{config.link}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Config</strong>
+							<p>{{config.config}}</p>
+						</div>
+					</div>
+					<div class="row" *ngIf="model.type == 4">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Số lần cảnh báo</strong>
+							<p>{{config.numberOfWarning}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Số lượng file</strong>
+							<p>{{config.fileQuantity}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Dung lượng file</strong>
+							<p>{{config.fileSize}} KB</p>
+						</div>
+					</div>
+					<div class="row" *ngIf="model.type == 5">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Loại trang chủ</strong>
+							<p *ngIf="model.content == '1'">Trang chủ mặc định</p>
+							<p *ngIf="model.content == '0'">Trang chủ dạng lưới</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- </form> -->
+		</div>
+	</div>
+</div>

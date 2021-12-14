@@ -1,0 +1,33 @@
+.paging-panel-left {
+	margin-right: 265px;
+}
+.paging-panel-left input {
+	width: 40px;
+}
+
+.form-control.ng-select .ng-select-container {
+	padding-top: 5px !important;
+}
+
+.body-scroll {
+	max-height: 65vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+.image-relate {
+	width: 80px;
+	min-height: 3em;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+.title-relate {
+	/* height: 3em; */
+	/* white-space: nowrap; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.form-control-sm .ng-select,
+.table thead input.form-control {
+	padding: 4px 0px 4px 30px;
+}

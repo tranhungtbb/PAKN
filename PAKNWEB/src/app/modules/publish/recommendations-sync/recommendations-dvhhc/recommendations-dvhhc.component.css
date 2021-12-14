@@ -1,0 +1,35 @@
+/* .text-2line {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	height: 42px;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+} */
+
+.text-3line a,
+.text-2line {
+	font-size: 15px;
+	line-height: 24px;
+	color: #222222;
+	flex-grow: 0;
+	margin: 8px 0px;
+}
+.box .card:hover{
+	box-shadow: none;
+}
+.card-custom{
+	border-radius: 0px;
+}
+.list-group-item {
+	border-bottom: 1px solid #d8d8d8;
+	padding: 0.75rem 1.25rem;
+}
+.pagination .page-item .page-link {
+	font-size: 14px;
+	line-height: 16px;
+}
+
+ul.category-article li a.active {
+	color: #2e73d5;
+}

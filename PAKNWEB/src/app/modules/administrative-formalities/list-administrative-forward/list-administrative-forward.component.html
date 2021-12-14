@@ -1,0 +1,209 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Thủ tục hành chính</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chuyển tiếp, tiếp nhận thủ tục hành chính</a></li>
+				</ol>
+				<div class="btn-group group-button-table" role="group">
+				
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th style="width: 100px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Mã TTHC</strong>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tên thủ tục</strong>
+											
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input" (click)="dataSearch.name=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									
+									<th style="width: 220px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Cơ quan thực hiện</strong>
+											
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.organization" class="btn bg-transparent btn-clear-input" (click)="dataSearch.organization=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th style="width: 200px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>lĩnh vực</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+											</ng-select>
+										</div>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đơn vị</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitForward" style="min-width: 250px;"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+											</ng-select>
+										</div>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="listStatus" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status" style="min-width: 110px;"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+											</ng-select>
+										</div>
+									</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<strong>{{item.code}}</strong>
+									</td>
+									<td>
+										<strong>
+											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.administrationId]" class="text-2line mb-0" title="Xem chi tiết">{{item.administrationName}}</a>
+											<a *hasNotPermission="['3', 'H_I_4']" class="text-2line mb-0" title="Xem chi tiết">{{item.administrationName}}</a>
+										</strong>
+									</td>
+									<td>
+										<p class="text-2line mb-0">{{item.organization}}</p>
+									</td>
+									<td>{{item.fieldName}}</td>
+									<td>
+										<p class="text-2line mb-0">{{item.unitForward}}</p>
+									</td>
+									<td>
+										<span *ngIf="item.status == 1" class="badge rounded-pill bg-xam text-dark">Đã nhận</span>
+										<span *ngIf="item.status == 0" class="badge rounded-pill bg-success">Đã gửi</span>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="6">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- <div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div> -->
+
+<!-- <div class="modal fade pr-0" id="modal-history-pakn">
+	<div class="modal-dialog modal-dialog-right vh-100" role="document">
+		<div class="modal-content rounded-0 h-100">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử quy trình xử lý</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body py-3">
+				<div id="DZ_W_TimeLine" class="widget-timeline h-100 dz-scroll">
+					<ul class="timeline">
+						<li *ngFor="let item of lstHistories">
+							<div *ngIf="item.status == 1" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 2" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 3" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 4" class="timeline-badge primary"></div>
+							<div *ngIf="item.status == 5" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 6" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 7" class="timeline-badge primary"></div>
+							<div *ngIf="item.status == 8" class="timeline-badge success"></div>
+							<div *ngIf="item.status == 9" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 10" class="timeline-badge success"></div>
+							<div *ngIf="item.status == 11" class="timeline-badge info"></div>
+							<div class="timeline-panel">
+								<p class="mb-2 h5">Người dùng: <strong>{{item.createdByName}}</strong></p>
+								<p class="mb-2 d-flex justify-content-between align-items-center">
+									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi
+										tạo</span>
+									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Gửi xử lý</span>
+									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối xử lý</span>
+									<span *ngIf="item.status == 4" class="badge rounded-pill mb-0 bg-blue2">Đã tiếp nhận</span>
+									<span *ngIf="item.status == 5" class="badge rounded-pill mb-0 badge-outline-green2">Đã gửi giải
+										quyết</span>
+									<span *ngIf="item.status == 6" class="badge rounded-pill mb-0 bg-red">Từ chối giải quyết</span>
+									<span *ngIf="item.status == 7" class="badge rounded-pill mb-0 badge-outline-blue">Đang giải
+										quyết</span>
+									<span *ngIf="item.status == 8" class="badge rounded-pill mb-0 badge-outline-success">Đã gửi phê
+										duyệt</span>
+									<span *ngIf="item.status == 9" class="badge rounded-pill mb-0 bg-red">Từ chối phê duyệt</span>
+									<span *ngIf="item.status == 10" class="badge rounded-pill mb-0 badge-success">Đã giải quyết</span>
+									<span *ngIf="item.status == 11" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã cập
+										nhật</span>
+									<span class="text-dark mb-0">{{item.createdDate | date:'HH:mm | dd/MM/yyyy'}}</span>
+								</p>
+								<p class="mb-0 h5"><strong>{{item.content}}</strong></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->

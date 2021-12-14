@@ -1,0 +1,461 @@
+<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body bg-white">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><span>Trang chủ </span>/<strong> Thủ tục hành chính</strong></li>
+			</ol>
+			<div class="btn-group group-button-table" role="group">
+				<span>
+					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
+				</span>
+				<span *hasPermission="['3', 'H_I_2']">
+					<button class="btn grd-blue btn-sm rounded border-0 text-white mr-3" (click)="preForward()">Gửi cơ quan đơn vị</button>
+				</span>
+				<span *hasPermission="['3', 'H_I_4']">
+					<button *ngIf="model.status != 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(3)">Công bố</button>
+				</span>
+				<span *hasPermission="['3', 'H_I_4']">
+					<button *ngIf="model.status == 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Thu hồi</button>
+				</span>
+				
+				
+				<!-- <a class="btn btn-sm rounded text-dark border-0 grd-brown" [routerLink]="['../../cap-nhat',model.id]">Sửa</a> -->
+
+			</div>
+		</div>
+	</div>
+	<!-- row -->
+	<div class="container p-0 col-lg-12 mt-0">
+		<div class="row">
+			<div class="col-md-9 col-lg-9">
+				<div class="table-reponsive p-4">
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<td style="width: 20%;" class="font-weight-bold">Tên thủ tục</td>
+								<td>{{model.name}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Cấp tiếp nhận </td>
+								<td>{{model.rankReceive}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Đơn vị tiếp nhận </td>
+								<td>{{model.unitReceiveName}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Lĩnh vực</td>
+								<td>{{model.fieldName}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Mức độ trực tuyến</td>
+								<td><input disabled value="{{model.typeSend}}" type="checkbox" [checked]="model.typeSend"></td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Số bộ hồ sơ</td>
+								<td>{{model.fileNum}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Thời gian giải quyết</td>
+								<td>{{model.amountTime}} ngày kể từ khi nhận đủ hồ sơ hợp lệ</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Cơ quan thực hiện </td>
+								<td>{{model.organization}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Cơ quan có thẩm quyền quyêt định</td>
+								<td>{{model.organizationDecision}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Cơ quan được ủy quyền </td>
+								<td>{{model.organizationAuthor}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Cách thức thực hiện</td>
+								<td>{{model.proceed}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Đối tượng thực hiện </td>
+								<td>{{model.object}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Cơ quan phối hợp</td>
+								<td>{{model.organizationCombine}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Địa chỉ tiếp nhận hồ sơ</td>
+								<td>{{model.address}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Kết quả thực hiện</td>
+								<td>{{model.result}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Căn cứ pháp lý</td>
+								<td>{{model.legalGrounds | htmlToPlaintext}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Yêu cầu, điều kiện</td>
+								<td>{{model.request | htmlToPlaintext}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Đánh giá tác động TTHC</td>
+								<td>{{model.request | htmlToPlaintext}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Ghi chú </td>
+								<td>{{model.request | htmlToPlaintext}}</td>
+							</tr>
+							<tr>
+								<td class="font-weight-bold">Tài liệu đính kèm</td>
+								<td class="text-left">
+									<ng-container *ngFor="let item of files">
+										<a *ngIf="item.fileType == 1" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
+											<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
+										</a>
+										<a *ngIf="item.fileType == 2" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
+											<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
+										</a>
+										<a *ngIf="item.fileType == 4" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
+											<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
+										</a>
+										<a *ngIf="item.fileType == 3" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
+											<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="{{item.name}}" title="{{item.name}}">
+										</a>
+										<a *ngIf="item.fileType == 6" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
+											<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
+										</a>
+									</ng-container>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- thành phần hồ sơ -->
+				<div class="row p-4">
+					<div class="col align-items-center form-group mb-0 pb-3">
+						<div class="row mb-2">
+							<div class="col-md-6">
+								<strong class="h4 mr-5">Thành phần hồ sơ</strong>
+							</div>
+						</div>
+						<div class="row">
+							<p-table #table [value]="lstCompositionProfile" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header" class="bg-thead">
+									<tr>
+										<th style="width: 50px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>STT</strong>
+											</p>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Tên giấy tờ</strong>
+											</p>
+										</th>
+										<th style="width: 120px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>bản chính</strong>
+											</p>
+										</th>
+										<th style="width: 100px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>bản sao</strong>
+											</p>
+										</th>
+										<th style="width: 200px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Mẫu đơn tờ khai</strong>
+											</p>
+										</th>
+										<th style="width: 100px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Bắt buộc</strong>
+											</p>
+										</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td>
+											<strong>{{rowIndex+1}}</strong>
+										</td>
+										<td>
+											{{item.nameExhibit}}
+										</td>
+										<td>
+											{{item.originalForm}}
+										</td>
+										<td>
+											{{item.copyForm}}
+										</td>
+										<td>
+											<div class="attach-file row">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-word.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-excel.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-image.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-pdf.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-powerpoint.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<span title="{{lstBind[0].text}}" *ngIf="lstBind[0].value == item.isBind">{{lstBind[0].text}}</span>
+											<span title="{{lstBind[1].text}}" *ngIf="lstBind[1].value == item.isBind">{{lstBind[1].text}}</span>
+										</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td class="text-center" colspan="6">Không có dữ liệu</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+				<!-- trình tự thực hiện -->
+				<div class="row p-4">
+					<div class="col align-items-center form-group mb-0 pb-3">
+						<div class="row  mb-2">
+							<div class="col-md-6">
+								<strong class="h4 mr-5">Trình tự thực hiện</strong>
+							</div>
+						</div>
+						<div class="row">
+							<p-table #table [value]="lstImplementationProcess" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header" class="bg-thead">
+									<tr>
+										<th style="width: 80px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>STT</strong>
+											</p>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Công việc</strong>
+											</p>
+										</th>
+										<th style="width: 250px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Cơ quan thực hiện</strong>
+											</p>
+										</th>
+										<th style="width: 150px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Thời gian</strong>
+											</p>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Kết quả</strong>
+											</p>
+										</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td>
+											<strong>{{rowIndex+1}}</strong>
+										</td>
+										<td>
+											{{item.name}}
+										</td>
+										<td>
+											{{item.unit}}
+										</td>
+										<td>
+											{{item.time}}
+										</td>
+										<td>
+											{{item.result}}
+										</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td class="text-center" colspan="5">Không có dữ liệu</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+				<!-- Phí, lệ phí -->
+				<div class="row p-4">
+					<div class="col align-items-center form-group mb-0 pb-3">
+						<div class="row  mb-2">
+							<div class="col-md-6">
+								<strong class="h4 mr-5">Phí, lệ phí</strong>
+							</div>
+						</div>
+						<div class="row">
+							<p-table #table [value]="lstCharges" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header" class="bg-thead">
+									<tr>
+										<th style="width: 80px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>STT</strong>
+											</p>
+										</th>
+										<th style="width: 250px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Mức phí</strong>
+											</p>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Mô tả</strong>
+											</p>
+										</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td>
+											<strong>{{rowIndex+1}}</strong>
+										</td>
+										<td>
+											{{item.charges}}
+										</td>
+										<td>
+											{{item.description}}
+										</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td class="text-center" colspan="3">Không có dữ liệu</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-3 border-left pl-0">
+				<div class="">
+					<p class="p-3 m-0 border-bottom">
+						<span class="font-weight-bold">Mã thủ tục: </span><span class="pull-right">{{model.code}}</span>
+					</p>
+					<p class="p-3 m-0 border-bottom" style="display: inline-flex;">
+						<span class="font-weight-bold">Mã quản lý quốc gia: </span><span class="pull-right"><p class="text-1line mb-0">{{model.countryCode}}</p></span>
+					</p>
+					<p class="p-3 m-0 border-bottom">
+						<span class="font-weight-bold">Ngày tạo: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy'}}</span>
+					</p>
+					<!-- <p class="p-3 m-0 border-bottom">
+						<span>Người tạo: </span><span class="pull-right">{{model.createdBy}}</span>
+					</p> -->
+					<p class="p-3 m-0 border-bottom">
+						<span class="font-weight-bold">Ngày công bố: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy' }}</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--**********************************
+									Content body end
+							***********************************-->
+<div class="modal fade" id="modalDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modal-forward">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Gửi cơ quan đơn vị</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-0">
+				<form class="form-horizontal" #formDir="ngForm">
+					<div class="form-row">
+						<div class="col-12 col-lg-12 form-group">
+							<label class="mb-2">Đơn vị được chuyển tiếp<span class="cl-red">(*)</span></label>
+							<ng-select notFoundText="Không có dữ liệu" class="form-control border-input" multiple="true" hideSelected="true" 
+								[ngModelOptions]="{standalone: true}" [items]="lstUnitForward" bindLabel="text" bindValue="value" 
+								placeholder="Chọn đơn vị"
+								[(ngModel)]="modelForward.lstUnitId" [closeOnSelect]="true" ></ng-select>
+							
+						</div>
+					
+						<div class="col-12 form-group">
+							<label class="mb-2">Nội dung</label>
+							<textarea class="form-control" rows="6" [ngModelOptions]="{standalone: true}" [(ngModel)]="modelForward.content" placeholder="Nhập nội dung..."
+								maxlength="500"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5 mr-3" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn text-white grd-blue border-0 px-5" (click)="onForward()">Gửi</button>
+			</div>
+		</div>
+	</div>
+</div>

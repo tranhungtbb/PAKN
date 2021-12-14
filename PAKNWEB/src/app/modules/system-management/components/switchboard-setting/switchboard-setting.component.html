@@ -1,0 +1,81 @@
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+			<li class="breadcrumb-item"><a>Hệ thống</a></li>
+			<li class="breadcrumb-item active"><a class="font-weight-bold"> Cấu hình tổng đài</a></li>
+		</ol>
+		<div class="btn-group group-button-table" role="group">
+				<a class="btn btn-sm rounded bg-white text-dark border mr-3" (click)="redirectHis()">
+				<i class="bi bi-arrow-left"></i>&nbsp;
+				Quay lại
+			</a>
+			<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onCancel()">
+				Hủy
+			</button>
+			<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="onSave()">
+				Lưu
+			</button>
+		</div>
+	</div>
+</div>
+<div class="row" style="margin-top: 60px;">
+	<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 border center rounded">
+						<div class="modal-body no-padding-bottom">
+							<div class="row form-group">
+								<div class="col-sm-12">
+									<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
+									<input autofocus placeholder="Nhập..." svTrim class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" />
+									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+										<div *ngIf="f.title.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-12">
+									<label class="control-label">Mô tả <span class="text-danger">(*)</span></label>
+									<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="description" rows="4" [(ngModel)]="model.description" maxlength="200"></textarea>
+									<div *ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))" class="has-error m-b-12">
+										<div *ngIf="f.description.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label class="control-label">Đường dẫn <span class="text-danger">(*)</span></label>
+									<input placeholder="Nhập..." svTrim class="form-control" formControlName="link" [(ngModel)]="configSwitchboard.link" maxlength="100" />
+									<div *ngIf="(submitted && f.link.invalid) || (f.link.invalid && (f.link.dirty || f.link.touched))" class="has-error m-b-12">
+										<div *ngIf="f.link.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+										<div *ngIf="f.link.errors.pattern">
+											<span class="help-block">Định dạng đường dẫn không đúng</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<label class="control-label">Config <span class="text-danger">(*)</span></label>
+									<input type="text" placeholder="Nhập..." svTrim class="form-control" formControlName="config"
+										[(ngModel)]="configSwitchboard.config" maxlength="100" />
+									<div *ngIf="(submitted && f.config.invalid) || (f.config.invalid && (f.config.dirty || f.config.touched))" class="has-error m-b-12">
+										<div *ngIf="f.config.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

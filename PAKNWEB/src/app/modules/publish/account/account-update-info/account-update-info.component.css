@@ -1,0 +1,15 @@
+.input-group .input-group-addon{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.border-right{
+  border-top-right-radius: 0.75rem !important;
+  border-bottom-right-radius: 0.75rem !important;
+  border: 1px solid #C0C0C0 !important;
+}

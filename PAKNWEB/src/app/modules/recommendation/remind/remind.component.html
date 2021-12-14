@@ -1,0 +1,169 @@
+<div style="position: relative;" *ngIf="checkShow == true">
+	<button (click)="showComponent()" class="btn btn-remind"><i class="bi bi-chat-text px-2"></i> Nhắc việc</button>
+	<div class="list-remind">
+		<div class="item-remind" *ngFor="let item of listRemind">
+			<div class="sender-name">{{item.senderName}}</div>
+			<div class="create-date">{{item.dateSend | date : 'HH:mm'}} - {{item.dateSend | date : 'dd/MM/yyyy'}}</div>
+			<p class="content-remind" innerHTML="{{item.content | Change}}">
+			</p>
+			<span class="text-left text-truncate">
+				<small *ngIf="item.files.length > 0" class="mr-2" style="font-size: 17px;font-weight: 500;">Tài liệu đính kèm</small><br>
+				<div *ngFor="let file of item.files" class="file-att">
+					<a *ngIf="file.fileType == 1" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
+						<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 2" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
+						<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 3" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
+						<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 4" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
+						<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 6" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
+						<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 7" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
+						<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+					</a>
+					<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.fileAttach" [namefile]="file.name" title="Xem file">
+						<i class="bi bi-eye"></i>
+					</span>
+				</div>
+
+			</span>
+		</div>
+		<div *ngIf="listRemind.length <= 0">Chưa có nhắc việc</div>
+	</div>
+
+</div>
+
+
+
+<div class="modal fade" id="modal2" *ngIf="checkShow == true">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal" [formGroup]="remindForm" #formDir="ngForm">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Nhắc việc</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none; padding: 0px 30px;">
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<textarea class="form-control" style="border: 2px solid #E5E5E5; border-radius: 10px;" type="text" rows="7" formControlName="content"
+									[(ngModel)]="model.content" placeholder="Nhập nội dung..."></textarea>
+								<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
+									<div *ngIf="f.content.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 attach-ct mt-3">
+								<p class="h5 text-uppercase mb-3">
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+											<path
+												d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
+											</path>
+										</svg>
+									</span>
+									Tài liệu đính kèm
+								</p>
+								<div class="attach-file row">
+									<div class="col-2 mb-2">
+										<div class="alert-dark d-flex align-items-center h-80">
+											<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
+												accept="{{fileAccept}}" />
+											<label for="file-5" (click)="file.click()">
+												<figure style="background-color: transparent;text-align: center;">
+													<i class="bi bi-file-earmark-arrow-up" style="font-size: 35px;"></i>
+												</figure>
+												<span class="d-block text-center">Tải lên</span>
+											</label>
+										</div>
+									</div>
+									<ng-container *ngFor="let item of files">
+
+										<div class="col-2 mb-2" *ngIf="item.fileType == 1">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
+												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
+															class="mdi mdi-close"></i></span>
+												</button>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-word.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
+												</a>
+											</div>
+										</div>
+
+										<div class="col-2 mb-2" *ngIf="item.fileType == 3">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
+												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
+															class="mdi mdi-close"></i></span>
+												</button>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-pdf.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
+												</a>
+											</div>
+										</div>
+
+										<div class="col-2 mb-2" *ngIf="item.fileType == 4">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
+												<button type="button" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i
+															class="mdi mdi-close"></i></span>
+												</button>
+												<a href="javascript:void(0)" class="d-block text-center box-fileinput">
+													<img src="../../../../assets/dist/images/file-image.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
+												</a>
+											</div>
+										</div>
+
+										<div class="col-2 mb-2" *ngIf="item.fileType == 2">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
+												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
+															class="mdi mdi-close"></i></span>
+												</button>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-excel.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
+												</a>
+											</div>
+										</div>
+										<div class="col-2 mb-2" *ngIf="item.fileType == 6">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
+												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
+															class="mdi mdi-close"></i></span>
+												</button>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-powerpoint.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
+												</a>
+											</div>
+										</div>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer border-top-0" style="padding-top: 0px;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-4 grd-blue" (click)="onInsert()"><i class="bi bi-chat-text px-2"></i>Gửi nhắc việc</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

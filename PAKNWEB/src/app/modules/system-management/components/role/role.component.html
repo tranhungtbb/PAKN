@@ -1,0 +1,267 @@
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><a>Vai trò</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách vai trò</a></li>
+			</ol>
+			<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
+			<div class="btn-group group-button-table" role="group">
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="redirectCreate()" *hasPermission="['3', 'A_X_1']">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+					</svg>
+					Thêm mới
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="table-responsive">
+
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<ng-template pTemplate="header" class="bg-thead">
+							<tr>
+								<th style="width: 50px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>STT</strong>
+									</p>
+								</th>
+								<th style="max-width: 180px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'name'"
+									>
+										<strong>Tên vai trò <p-sortIcon [field]="'name'"></p-sortIcon></strong>
+										
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="title"
+										trim [ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
+									 	maxlength="100" placeholder="Nhập tên..." />
+									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'description'"
+									>
+										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
+										
+									</p>
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="description"
+										trim [ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
+										placeholder="Nhập mô tả...">
+									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+
+								<th style="width: 160px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'userCount'"
+									>
+										<strong>Số người <p-sortIcon [field]="'userCount'"></p-sortIcon></strong>
+									</p>
+									<input type="text" class="form-control form-control-sm"
+										numbersOnly [ngSwitch]="'userCount'" [(ngModel)]="userCount"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'userCount', 'contains')"
+										placeholder="Nhập số lượng...">
+										<button *ngIf="userCount" class="btn bg-transparent btn-clear-input" (click)="userCount=''">
+											<i class="fa fa-times"></i>
+										</button>
+								</th>
+								<th style="width: 180px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'isActived'"
+									>
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
+										
+									</p>
+									<div class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+											[closeOnSelect]="true" [ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											>
+										</ng-select>
+									</div>
+								</th>
+								<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
+								<td>
+									<strong class="highlight">
+										<a *hasNotPermission="['3', 'A_X_2']" class="ellipsis" title="Cập nhập">{{item.name}}</a>
+										<a *hasPermission="['3', 'A_X_2']" (click)="redirectUpdate(item.id)" class="ellipsis" title="Cập nhập">{{item.name}}</a>
+									</strong>
+								</td>
+								<td>{{item.description}}</td>
+								<td>
+									{{item.userCount}}
+								</td>
+								<td>
+									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
+										<span *hasNotPermission="['3', 'A_X_8']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span *hasPermission="['3', 'A_X_8']" type="button" (click)="confirm(item,'changeStatus')" class="badge rounded-pill bg-success">Hiệu lực</span>
+									</p>
+									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
+										<span *hasNotPermission="['3', 'A_X_8']" type="button" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span *hasPermission="['3', 'A_X_8']" type="button" (click)="confirm(item,'changeStatus')" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									</p>
+								</td>
+								<td style="text-align: center;">
+									<div class="d-flex justify-content-end">
+										<a *hasPermission="['3', 'A_X_6']" (click)="showListUser(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor" title="Xem danh sách người thuộc vai trò"><i class="bi bi-person-plus"></i></a>
+										<a *hasPermission="['3', 'A_X_2']" (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_X_3']" (click)="confirm(item,'delete')" class="btn-icon grd-red text-white cursor" title="Xóa" data-toggle="modal" data-target="#modal-tc-pakn"><i
+												class="bi bi-trash"></i></a>
+									</div>
+								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="6">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					{{mess}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onAction()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalUsersByRoleId">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Danh sách người dùng thuộc vai trò</p>
+				<button class="close btn-close-modal" data-dismiss="modal">
+					×
+				</button>
+			</div>
+			<div style="display: flex; margin: 10px 20px;">
+				<div style="width: 15%;" class="text-center-x">Chọn người dùng</div>
+				<div style="width: 75%;">
+					<ng-select notFoundText="Không có dữ liệu"  class="form-control" 
+						[items]="SYUserGetIsNotRole"
+						style="height: auto;" multiple="true" bindValue="value" bindLabel="text" 
+						[(ngModel)]="listItem"
+						(change)="onChangeLstItemUser()"
+					>
+					</ng-select>
+				</div>
+				<div style="width: 10%;" class="text-center-x">
+					<button *hasPermission="['3', 'A_X_9']" type="button" (click)="onCreateUserRole()" class="btn grd-blue btn-sm rounded border-0 text-white text-center-x"
+						style="width: 60%;">Thêm</button>
+				</div>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #table2 [value]="listUser" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{userTotalRecords}}" [rows]="userPageSize" [totalRecords]="userTotalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Tên người dùng</strong>
+									
+								</p>
+							</th>
+
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Tên đăng nhập</strong>
+									
+								</p>
+							</th>
+
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Số điện thoại</strong>
+									
+								</p>
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+									
+								</p>
+							</th>
+							<td style="text-align: center; width: 100px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Thao tác</strong>
+								</p>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td>
+								<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.fullName}}</a></strong>
+							</td>
+
+							<td>
+								<p>{{item.userName}}</p>
+							</td>
+							<td>
+								<p>{{item.phone}}</p>
+							</td>
+							<td>
+								<span type="button" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu
+									lực</span>
+								<span type="button" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu
+									lực</span>
+							</td>
+							<td class="text-center">
+								<a *hasPermission="['3', 'A_X_7']" class="btn-icon grd-red text-white" (click)="onDeleteUserRole(item.id)" data-toggle="modal" data-target="#modal-tc-pakn"><i
+									class="bi bi-trash"></i></a>
+							</td>
+
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+			<!-- <div style="display: flex; float: right;">
+				<button class="btn grd-xanhngoc btn-sm rounded border-0 text-white" data-dismiss="modal" type="button">
+					Đóng </button>
+			</div> -->
+		</div>
+
+	</div>
+</div>

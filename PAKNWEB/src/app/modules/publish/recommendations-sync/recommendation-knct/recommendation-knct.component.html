@@ -1,0 +1,99 @@
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between pt-5">
+			<div class="col-lg-8 col-md-8 pb-3">
+				<div class="box">
+					<div class="tt-v1 mb-3 d-flex justify-content-between center">
+						<h4 class="text-uppercase">Danh sách kiến nghị cử tri Khánh Hòa</h4>
+					</div>
+					<div class="row m-0 d-flex justify-content-between">
+						<div class="col-lg-8 col-xs-12 form-group p-0">
+							<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4"
+								[(ngModel)]="keySearch" maxlength="100" (keydown.enter)="getList()" />
+						</div>
+						<div class="col-lg-4 col-xs-12 form-group p-xs-0">
+							<button type="button" class="btn text-white border-0 no-grd-blue btn-index border-radius-4 h-38px">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+									class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+									<path
+										d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
+									<path
+										d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+								</svg>
+								<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh
+									kiến nghị</span>
+							</button>
+						</div>
+					</div>
+					<!-- <div class="d-flex justify-content-between mb-4">
+						<div class="d-flex search-ct">
+							<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4" [(ngModel)]="keySearch" maxlength="100"
+									(keydown.enter)="getList()" />
+							
+						</div>
+						<button type="button" class="btn text-white border-0 grd-blue">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
+								<path
+									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+							</svg>
+							<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh kiến nghị</span>
+						</button>
+					</div> -->
+					<p-table tableStyleClass="table-responsive" #table [value]="listData" [lazy]="true"
+						(onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords"
+						[responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+
+							<div class="box">
+								<div class="card border">
+									<div class="card-body py-4">
+										<p class="card-text">
+											<a class="h4"
+												[routerLink]="['/cong-bo/phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa/',item.electorId]"
+												title="Xem chi tiết">
+												<p class="text-2line mb-0" style="-webkit-line-clamp: 3;" [title]="item.content">
+													{{item.content}}</p>
+											</a>
+										</p>
+									</div>
+									<div class="card-footer py-0 d-flex align-items-center">
+										<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
+											<p class="card-text text-dark d-inline">Đơn vị thực hiện: <strong
+													class="ml-2">{{item.unitPreside}}</strong></p>
+										</div>
+										<div class="card-footer-link mb-0 pl-4 py-2">
+											<p class="card-text text-dark d-inline">Nơi có kiến nghị: <strong
+													class="ml-2">{{item.recommendationPlace}}</strong></p>
+										</div>
+									</div>
+									<div class="card-footer py-0 d-flex align-items-center">
+										<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
+											<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">{{item.fieldName}}</strong>
+											</p>
+										</div>
+										<div class="card-footer-link mb-0 pl-4 py-2">
+											<p class="card-text text-dark d-inline">Nhiệm kỳ: <strong class="ml-2">{{item.term}}</strong></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="6">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</div>
+			</div>
+			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right></app-statistics-right>
+				<app-gallery></app-gallery>
+			</div>
+		</div>
+	</div>
+</div>

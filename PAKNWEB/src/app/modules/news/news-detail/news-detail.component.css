@@ -1,0 +1,43 @@
+:host ::ng-deep .ck-editor__editable_inline {
+	min-height: 500px;
+}
+
+:host ::ng-deep .ck.ck-editor__main > .ck-editor__editable {
+	background: #e9ecef;
+}
+
+.text-area-height {
+	min-height: 200px;
+}
+.news-avatar > img {
+	width: 100%;
+	min-height: 120px;
+}
+.btn-inline {
+	display: inline;
+}
+
+.dis-block {
+	display: block;
+}
+.dis-inline {
+	display: inline;
+}
+.relate-del-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	/* font-style: italic; */
+	font-weight: 100;
+}
+.item-news-relate {
+	display: flex;
+	border-radius: 10px;
+	position: relative;
+}
+.br-8px{
+	border-radius: 8px;
+}
+.br-15px{
+	border-radius: 15px;
+}

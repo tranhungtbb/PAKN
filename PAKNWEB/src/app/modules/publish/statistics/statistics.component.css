@@ -1,0 +1,47 @@
+.statistic-title{
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 29px;
+}
+.middle{
+	vertical-align: middle;
+}
+
+:host ::ng-deep .treetable-sd thead, :host ::ng-deep .ui-treetable .ui-treetable-thead > tr > th{
+	background-color: #2E73D5 !important;
+	color: #fff;
+	font-family: Inter;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	padding: 0.571em 0.557em;
+	border: 1.5px solid rgba(214, 214, 214, 0.8);
+}
+:host ::ng-deep .ui-treetable .ui-treetable-tbody > tr > td{
+	color: #222;
+	font-family: Inter;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
+	padding: 0.571em 0.857em;
+	background-color: inherit;
+	border: 1px solid #f0f1f5!important;
+}
+:host ::ng-deep .ui-treetable .ui-treetable-tbody>tr{
+	background-color: #fff;
+}
+:host ::ng-deep .ui-treetable .ui-treetable-tbody>tr:nth-child(even){
+	background-color: #FDFCFC  !important;
+}
+
+.blue {
+	color: #038CB8 !important;
+}
+.green{
+	color: #58A55C !important;
+}
+.red{
+	color: #DA2222 !important;
+}

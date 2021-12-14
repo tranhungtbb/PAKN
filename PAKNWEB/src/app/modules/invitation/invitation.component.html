@@ -1,0 +1,361 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Thư mời</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách tổng hợp</a></li>
+				</ol>
+				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
+				<div class="btn-group group-button-table" role="group">
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="redirectCreate()" *hasPermission="['3', 'B_IV_0']">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+						Thêm mới
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tiêu đề</strong>
+											
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập tên..." />
+											<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th style="width: 240px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Thời gian</strong>
+											
+										</p>
+										<div class="input-group">
+											<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDaterangepicker
+											[(ngModel)]="date" #n="bsDaterangepicker" appBsDatepickerInvalid [maxDate]="dateNow"
+											[bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false ,containerClass: 'theme-dark-blue'}" />
+											<div class="input-group-addon p-2" style="height: 34px;">
+												<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+											</div>
+										</div>
+									</th>
+
+									<th style="width: 220px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Địa điểm</strong>
+											
+										</p>
+										<input type="text" class="form-control form-control-sm" [(ngModel)]="place" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập địa điểm...">
+											<button *ngIf="place" class="btn bg-transparent btn-clear-input" (click)="place=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th style="width: 180px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+											<ng-select notFoundText="Không có dữ liệu"  [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 90px;" class="text-center"><strong>ĐÃ XEM</strong></th>
+									<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<strong *hasNotPermission="['3', 'B_IV_8']" class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
+										<strong *hasPermission="['3', 'B_IV_8']" class="highlight"><a (click)="redirectDetail(item.id)" class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
+									</td>
+									<td>{{item.startDate | date: 'HH:mm dd/MM/yyyy'}} <br> {{item.endDate | date: 'HH:mm dd/MM/yyyy'}} </td>
+									<td>
+										{{item.place}}
+									</td>
+									<td>
+										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
+										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
+										<span type="button" *ngIf="item.status == 3" class="badge rounded-pill badge-outline-green2">Chưa xem</span>
+										<span type="button" *ngIf="item.status == 4" class="badge rounded-pill badge-success">Đã xem</span>
+									</td>
+									<td style="text-align: right;">
+										<strong *hasNotPermission="['3', 'B_IV_7']" style="cursor: pointer;">{{item.amountWatched}}</strong>
+										<strong *hasPermission="['3', 'B_IV_7']" style="cursor: pointer;" (click)="preUserWatched(item.id)">{{item.amountWatched}}</strong>
+									</td>
+									<td style="text-align: center;">
+										<div class="d-flex justify-content-end">
+											<span *hasPermission="['3', 'B_IV_1']">
+												<a *ngIf="item.status == 1" (click)="redirectUpdate(item.id)" title="Cập nhập" class="btn-icon grd-brown text-brown mr-2 cursor"><i
+													class="bi bi-pencil-square"></i></a>
+											</span>
+											<span *hasPermission="['3', 'B_IV_2']">
+												<a *ngIf="item.status == 1" (click)="confirm(item.id)" class="btn-icon grd-red text-white mr-2 cursor" data-toggle="modal"
+												data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+											</span>
+											<span *hasPermission="['3', 'B_IV_9']">
+												<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i
+													class="bi bi-clock-history"></i></a>
+											</span>
+										
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="7">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn muốn xóa thư mời này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalLstUser">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
+		<div class="modal-content rounded">
+			<!-- <form class="form-horizontal" autocomplete="off"> -->
+			<div class="panel panel-default no-margin">
+				<div class="modal-header" style="border: none;">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Danh sách người đã xem thư mời</p>
+				</div>
+				<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+					<div class="form-horizontal">
+						<div class="row" style="padding: 5px 0px;">
+							<div class="col-12 col-lg-8 form-group">
+								<label class="mb-1 text-uppercase"><strong>Người dùng</strong></label>
+								<input class="form-control form-control-sm" [(ngModel)]="queryLstUser.UserName" maxlength="100" (keydown.enter)="preUserWatched(queryLstUser.InvitationId)"
+											placeholder="Nhập tên..." />
+								<div class="input-group-addon">
+									<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4 form-group">
+								<label class="mb-1 text-uppercase"><strong>Ngày xem</strong></label>
+								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="watchedDate" (keydown.enter)="preUserWatched(queryLstUser.InvitationId)"
+									bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon">
+									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card mb-0 shadow-none">
+								<div class="table-responsive">
+									<div *ngIf="lstUser.length == 0" style="text-align: center;">
+										<strong>Không tìm thấy dữ liệu</strong>
+									</div>
+									<div class="row item-user-readed" *ngFor="let item of lstUser">
+										<div style="display: flex;" class="col-lg-8">
+											<div class="avatar">
+												<img [src]="item.avatar" style="width: 100%; height: 100%; object-fit: cover;">
+											</div>
+											
+											<div class="content-user">
+												<div style="font-weight: 500;">{{item.fullName}}</div>
+												<p style="padding: 0px;">{{item.email}}</p>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<p>{{item.watchedDate  | date : 'HH:mm - dd/MM/yyyy'}}</p>
+										</div>
+										
+									</div>
+									<div class="mt-1" style="display: flex;">
+											<nav aria-label="navigation" style="width: 65%;">
+												<ul class="pagination pagination-lg justify-content-center align-items-center">
+													<li class="page-item" [ngClass]="{ 'disabled': queryLstUser.PageIndex === 1 }">
+														<a (click)="changePagination(queryLstUser.PageIndex - 1)" class="page-link text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
+															aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i></a>
+													</li>
+													<li class="d-flex justify-content-center align-items-center">
+														<a *ngIf="queryLstUser.PageIndex > 4">...</a>
+														<p class="mb-0 page-item" style="font-size: 1.2rem;" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === queryLstUser.PageIndex }">
+															<a (click)="changePagination(item.index)" *ngIf="i - 3 < queryLstUser.PageIndex && i + 5 > queryLstUser.PageIndex" class="page-link"
+																href="javascript:void(0)">{{item.index}}</a>
+														</p>
+														<a *ngIf="queryLstUser.PageIndex < pagination.length -4">...</a>
+													</li>
+													<li class="page-item" [ngClass]="{ 'disabled': queryLstUser.PageIndex === totalRecordsUser }">
+														<a (click)="changePagination(queryLstUser.PageIndex + 1)" class="page-link text-uppercase rounded-pill" href="javascript:void(0)">
+															<i class="bi bi-chevron-right ml-2"></i></a>
+													</li>
+												</ul>
+											</nav>
+											<div class="mt-1 ml-2" style="display: flex; float: right;">
+												<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" style="height: 35px;" data-dismiss="modal">
+													Đóng
+												</button>
+												<button type="button" class="btn grd-brown3 btn-sm rounded ml-1 border-0 text-dark" style="height: 35px;padding: 0px 10px;" (click)='onExport()'>
+													Xuất excel
+												</button>
+											</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- </form> -->
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalHisInvitation">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử Thư mời</p>
+				<button type="button" class="close" data-dismiss="modal" ><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #tableHis [value]="listHis" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th style="width: 5%">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>STT</strong>
+								</p>
+							</th>
+
+							<th style="width: 40%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Nội dung</strong>
+									
+								</p>
+								<input class="form-control form-control-sm" [(ngModel)]="hisContent" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập nội dung..." />
+							</th>
+
+							<th style="width: 20%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Người tạo</strong>
+									
+								</p>
+								<input class="form-control form-control-sm" [(ngModel)]="hisUserCreate" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập tên..." />
+							</th>
+
+							<th style="width: 15%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Ngày tạo</strong>
+									
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm ps-relative">
+									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
+										appBsDatepickerInvalid (bsValueChange)="sendDateChange($event)"
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon ps-absolute" style="top: 5px; right: 10px;">
+										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+									
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listHisStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="hisStatus"
+										[closeOnSelect]="true" (change)="dataStateChange2()">
+									</ng-select>
+								</div>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td class="text-center">{{rowIndex + 1}}</td>
+							<td>
+								<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.content}}</a></strong>
+							</td>
+
+							<td>
+								<p class="mb-0">{{item.createName}}</p>
+							</td>
+							<td>
+								<p class="mb-0">{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
+							</td>
+							<td>
+								<span type="button" *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
+								<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</div>
+</div>
+
+

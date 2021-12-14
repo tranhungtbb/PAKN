@@ -1,0 +1,119 @@
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Cuộc gọi</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách cuộc gọi</a></li>
+				</ol>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+						<p-table #table [value]="listData" [rows]="query.pageSize" [totalRecords]="totalCount" [rowsPerPageOptions]="[20,30,50]" currentPageReportTemplate="Tổng số {{totalCount}}"
+							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 60px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Số điện thoại</strong>
+										</p>
+										<input [(ngModel)]="query.phone" (keydown.enter)="getDataPageList()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<button *ngIf="query.phone" class="btn bg-transparent btn-clear-input" (click)="query.phone=''">
+											<i class="fa fa-times"></i>
+										</button>
+									</th>
+									<th style="width:220px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead no-wrap">
+											<strong>Loại</strong>
+											<!--  -->
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm" style="width: 170px;">
+											<ng-select notFoundText="Không có dữ liệu" class="" placeholder="Loại cuộc gọi" [items]="callTypes" bindLabel="text" bindValue="value" [closeOnSelect]="true"
+												[(ngModel)]="query.type" (change)="getDataPageList()" [searchable]="false">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width:220px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Thời gian gọi</strong>
+										</p>
+									</th>
+									<th style="width:220px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Thời lượng cuộc gọi</strong>
+										</p>
+									</th>
+									<th class="text-center text-uppercase" style=width:130px;><strong>Thao tác</strong></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td>
+										{{rowIndex + 1}}
+									</td>
+									<td>
+										{{item.phone}}
+									</td>
+									<td>
+										<span *ngIf="item.type == 0"
+											class="badge rounded-pill badge-outline-light bg-blue-light text-white">{{callTypes[0].text}}</span>
+										<span *ngIf="item.type == 1" class="badge rounded-pill bg-green-light text-white">{{callTypes[1].text}}</span>
+										<span *ngIf="item.type == 2" class="badge rounded-pill bg-green">{{callTypes[2].text}}</span>
+									</td>
+									<td>
+										{{item.startDate | date:'HH:mm dd/MM/yyyy'}}
+									</td>
+									<td>
+										{{item.callDuration}}
+									</td>
+									<td class="text-center">
+										<span *hasPermission="['3', 'A_XX_1']">
+											<a (click)="confirm(item,true)" style="cursor: pointer;" title="Xóa" class="btn-icon grd-red text-white cursor mr-2 pull-right" data-toggle="modal" data-target="#modal-tc-pakn"><i
+												class="bi bi-trash"></i>
+											</a>
+										</span>
+										
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalConfirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn xóa cuộc gọi này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="confirm(null,false)">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>

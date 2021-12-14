@@ -1,0 +1,23 @@
+
+.hover-active a :hover {
+	cursor: pointer;
+}
+strong.highlight:hover {
+	color: red;
+}
+strong.highlight {
+	cursor: pointer;
+}
+
+.input-group-addon {
+	position: absolute;
+	opacity: 0.5;
+	right: 25px;
+	top: 8px;
+}
+.label-thead{
+	text-transform: none;
+}
+.form-group input{
+	height: 38px;
+}

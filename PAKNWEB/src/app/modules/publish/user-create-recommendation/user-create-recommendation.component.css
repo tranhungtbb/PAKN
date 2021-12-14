@@ -1,0 +1,47 @@
+form.form-row {
+	align-items: flex-start !important;
+}
+
+.col-12.col-lg-auto.d-flex.justify-content-end.align-items-center {
+	margin-top: 25px;
+}
+
+.bg-white.captcha.border.d-flex.justify-content-between.align-items-center.rounded-xl.shadow.position-absolute {
+	top: auto;
+}
+.bg-hover:hover {
+	color: rgb(61, 61, 255);
+}
+p.active {
+	color: rgb(61, 61, 255);
+}
+
+.breadcrumb-item a {
+	color: #222222;
+}
+form .label {
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 20px;
+	color: #222222;
+	text-transform: uppercase;
+}
+.form-control,
+.ng-select {
+	color: black;
+}
+.tooltip {
+	background-color: brown !important;
+}
+agm-map {
+	height: 70vh;
+}
+.btn-voice:active {
+	outline: none;
+	border: none;
+}
+	
+.btn-voice:focus {
+	outline:none;
+  box-shadow: none;
+}

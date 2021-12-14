@@ -1,0 +1,117 @@
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between pt-5">
+			<div class="col-lg-8 col-md-8">
+				<ol class="breadcrumb px-0 bg-transparent">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item active"><a href="/cong-bo/phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa"
+							class="font-weight-bold">Phản ánh, Kiến nghị hệ thống kiến nghị cử tri</a></li>
+				</ol>
+				<div class="box" *ngIf="!modelData" style="text-align: center;">
+					<strong>Không tìm thấy dữ liệu</strong>
+				</div>
+				<div class="box" *ngIf="modelData">
+					<p class="card-text h3 mb-3"><span style="font-weight: 300;">Nội dung kiến nghị : </span>
+					</p>
+					<p innerHTML="{{modelData.content | Change}}"></p>
+					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
+						<div class="media align-items-center">
+							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
+								KN
+							</div>
+							<!-- <div class="media-body">
+								<p class="my-0 h5">{{modelData.recommendationPlace}}</p>
+							</div> -->
+						</div>
+						<span>
+							<p class="my-0 h5">Đơn vị tiếp nhận :</p> {{modelData.unitPreside}}
+						</span>
+						<span>
+							<p class="my-0 h5">Lĩnh vực :</p> {{modelData.fieldName}}
+						</span>
+						<!-- <span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span> -->
+						<span *ngIf="modelData.endDate">{{modelData.endDate | date:'HH:mm'}} ngày {{modelData.endDate | date:
+							'dd/MM/yyyy'}}</span>
+					</div>
+
+					<div class="media pb-4 border-bottom mb-4">
+						<div class="mr-3">
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc305"
+								class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+								<path
+									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.430a1 1 0 0 0-.707.293L.854 30.306A.5.5 0 0 1 0 30.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+							</svg>
+						</div>
+						<div class="media-body" *ngIf="modelData.response">
+							<p class="h4 font-italic font-weight-bold">{{modelData.unitPreside}}:</p>
+							<p innerHTML="{{modelData.response | RemoveTag}}">
+							</p>
+
+							<strong class="mb-2">File đính kèm</strong>
+							<p *ngIf="files.length ==0">Không có file đính kèm nào</p>
+
+							<p *ngIf="files.length > 0">
+								<span class="text-left">
+									<div *ngFor="let file of files" class="file-att">
+										<a *ngIf="file.type == 1" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
+										</a>
+										<a *ngIf="file.type == 2" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
+										</a>
+										<a *ngIf="file.type == 3" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
+										</a>
+										<a *ngIf="file.type == 4" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+												alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
+										</a>
+										<a *ngIf="file.type == 6" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/file-powerpoint.svg"
+												style="width: 30px;padding-right: 5px;" alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
+										</a>
+										<a *ngIf="file.type == 7" download [href]="APIADDRESS + file.filePath" target="_blank"
+											style="color: #333;">
+											<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+												style="width: 30px;padding-right: 5px;" alt="">
+											<span class="small text-truncate">{{file.fileName.length > 15? file.fileName.slice(0,14) + "..." :
+												file.fileName}}</span>
+										</a>
+										<span *ngIf="file.type != 6 && file.type != 5" class="pointer" appViewFile
+											[linkfile]="file.filePath" [namefile]="file.fileName" title="Xem file">
+											<i class="bi bi-eye"></i>
+										</span>
+									</div>
+								</span>
+							</p>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right></app-statistics-right>
+				<app-gallery></app-gallery>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TRUNG TÂM TIẾP NHẬN PHẢN ÁNH, KIẾN NGHỊ TỈNH KHÁNH HOÀ</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-icons.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+	<!-- owl.carousel -->
+	<link href="./css/owl.carousel.min.css" rel="stylesheet">
+	<link href="./css/owl.theme.default.min.css" rel="stylesheet">
+	<link href="./css/owl.theme.green.min.css" rel="stylesheet">
+
+	<link href="./css/sd-style.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+		
+		<!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header-nd px-0">
+            <div class="header-content container">
+                <nav class="navbar navbar-expand py-4 px-0">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            <a href="index.html"><img class="img-fluid" src="images/logo-nd.png" alt=""></a>
+                        </div>
+
+                        <ul class="navbar-nav header-right align-items-center">
+                            <li class="nav-item d-none d-lg-block">
+                                <div class="header-info">
+                                    <span class="text-white">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link text-white ai-icon bg-transparent" href="#" role="button" data-toggle="dropdown">
+                                    <i class="bi bi-bell"></i>
+                                    <div class="pulse-css"></div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
+                                        <ul class="timeline">
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">Vừa xong</small>
+                                                        <p class="mb-0 text-uppercase">PAKN chờ xử lý</p>
+                                                        <p class="mb-1 h4">Nguyễn Thị Liêm gửi một phản ánh, kiến nghị về lĩnh vực Y tế</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">30 phút trước</small>
+                                                        <p class="mb-0 text-uppercase cl-blue2">PAKN đã được tiếp nhận</p>
+                                                        <p class="mb-1 h4">Công an thành phố Nha Trang đã tiếp nhận kiến nghị số 10007.23</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">12 giờ trước</small>
+                                                        <p class="mb-0 text-uppercase cl-blue">PAKN đã giải quyết</p>
+                                                        <p class="mb-1 h4">Công an thành phố Nha Trang đã giải quyết xong kiến nghị số 10007.23</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">1 ngày trước</small>
+                                                        <p class="mb-0 text-uppercase cl-red">PAKN bị từ chối</p>
+                                                        <p class="mb-1 h4">Công an thành phố Nha Trang đã từ chối kiến nghị số 10007.23</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <a class="all-notification" href="#">Xem tất cả thông báo <i class="ti-arrow-right"></i></a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+                                    <div class="avatar-circle">
+                                        <i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" class="dropdown-item ai-icon">
+                                        <i class="bi bi-person-square"></i>
+                                        <span class="ml-2">Thông tin cá nhân </span>
+                                    </a>
+                                    <a href="#" class="dropdown-item ai-icon">
+                                        <i class="bi bi-file-earmark-medical"></i>
+                                        <span class="ml-2">PAKN của tôi </span>
+                                    </a>
+                                    <a href="#" class="dropdown-item ai-icon">
+                                        <i class="bi bi-key"></i>
+                                        <span class="ml-2">Đổi mật khẩu </span>
+                                    </a>
+                                    <a href="./ĐăngNhập.html" class="dropdown-item ai-icon">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span class="ml-2">Đăng xuất </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-nav p-3 p-md-0">
+				    <button class="navbar-toggler border-0 bg-white py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				      <span class="navbar-toggler-icon"></span>
+				    </button>
+				    <div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
+				      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				        <li class="nav-item">
+				          <a class="nav-link" aria-current="page" href="#">
+				          	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+							  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+							</svg>
+				          </a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">giới thiệu</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link active" href="#">Thủ tục hành chính</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">Tin tức sự kiện</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">phản ảnh - kiến nghị</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">hỗ trợ</a>
+				        </li>
+				      </ul>
+				        <div class="header-left">
+                            <div class="search_bar dropdown show">
+                                <div class="dropdown-menu p-0 m-0 show">
+                                    <form>
+                                        <input class="form-control" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                                    </form>
+                                </div>
+								<span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z" fill="#A4A4A4"/></svg>
+                                </span>
+                            </div>
+                        </div>
+				    </div>
+				</nav>
+            </div>   
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+		
+		<!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-nd">
+            <div class="container">
+            	<div class="row justify-content-between pt-5">
+            		<div class="col main-ct pr-3 pr-lg-5">
+                        <ol class="breadcrumb px-0 bg-transparent">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item active"><a href="#">Danh sách thủ tục hành chính</a></li>
+                        </ol>
+            			<div class="table-responsive">
+                            <table class="table table-tthc table-bordered table-striped rounded overflow-hidden mb-4">
+                              <tbody>
+                                <tr>
+                                  <th scope="row">Tên thủ tục</th>
+                                  <td class="h4">Cấp Giấy chứng nhận đủ điều kiện an toàn thực phẩm đối với cơ sở sản xuất, kinh doanh thực phẩm do Sở Công Thương thực hiện</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Cấp tiếp nhận</th>
+                                  <td>Cơ quan chuyên môn</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Đơn vị tiếp nhận</th>
+                                  <td>Cơ quan chuyên môn</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Lĩnh vực</th>
+                                  <td>An toàn thực phẩm</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Mức độ trực tuyến</th>
+                                  <td>Nộp trực tiếp</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Số bộ hồ sơ</th>
+                                  <td>10</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Tổng thời gian giải quyết</th>
+                                  <td>20 ngày làm việc</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Cơ quan thực hiện</th>
+                                  <td>Sở Công Thương</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Cơ quan có thẩm quyền quyết định</th>
+                                  <td>N/A</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Cơ quan được uỷ quyền</th>
+                                  <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Cách thức thực hiện</th>
+                                  <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Đối tượng thực hiện</th>
+                                  <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Cơ quan phối hợp</th>
+                                  <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Địa chỉ tiếp nhận hồ sơ</th>
+                                  <td>Sở Công Thương Khánh Hòa - Khu liên cơ II - Số 04 Phan Chu Trinh - Nha Trang - Khánh Hòa</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Kết quả thực hiện</th>
+                                  <td>Giấy chứng nhận cơ sở đủ điều kiện an toàn thực phẩm. - Văn bản thông báo (nếu có)</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Căn cứ pháp lý</th>
+                                  <td>
+                                        <p>1. Luật An toàn thực phẩm số 55/2010/QH12 ngày 17/6/2010;</p>
+
+                                        <p>2. Nghị định số 15/2018/NĐ-CP ngày 02/02/2018 của Chính phủ quy định chi tiết thi hành một số điều của Luật an toàn thực phẩm;</p>
+
+                                        <p class="mb-0">3. Nghị định số 17/2020/NĐ-CP ngày 05/02/2020 của Chính phủ sửa đổi, bổ sung một số điều của các Nghị định liên quan đến điều kiện đầu tư kinh doanh thuộc lĩnh vực quản lý nhà nước của Bộ Công Thương;</p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Yêu cầu hoặc điều kiện để thực hiện TTHC</th>
+                                  <td>
+                                        <p>
+                                            1. Điều kiện chung: <br>
+                                            Cơ sở sản xuất, kinh doanh thực phẩm thuộc trách nhiệm quản lý của Bộ Công Thương bao gồm: cơ sở sản xuất, kinh doanh các loại rượu, bia, nước giải khát, sữa chế biến, dầu thực vật, bột, tinh bột, bánh, mứt, kẹo.
+                                        </p>
+
+                                        <p class="mb-0">
+                                            2. Điều kiện riêng: <br>
+                                            Cơ sở sản xuất các sản phẩm thực phẩm có công suất thiết kế
+                                        </p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Đánh giá tác động TTHC</th>
+                                  <td>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis gravida non volutpat interdum eget commodo nisi. Pharetra enim nibh mauris lorem sollicitudin ut feugiat vitae. Adipiscing venenatis quis sapien, in elementum nibh varius lectus. Purus sed tincidunt at pulvinar egestas eu. Vestibulum, semper in odio arcu ut maecenas nisl consectetur.
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Ghi chú</th>
+                                  <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis gravida non volutpat interdum eget commodo nisi. Pharetra enim nibh mauris lorem sollicitudin ut feugiat vitae.</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Thành phần hồ sơ</th>
+                                  <td>
+                                    <div class="tphs mb-3">
+                                        <p>
+                                          1. Giấy khai sinh (Bắt buộc)<br>
+                                            - SL bản chính: 1<br>
+                                            - SL bản sao: 10
+                                        </p>
+                                        <div class="media ">
+                                            <img src="images/file-word.svg" class="mr-3 align-self-center" alt="...">
+                                            <div class="media-body">
+                                                <small>Mẫu đơn, tờ khai</small>
+                                                <p class="mb-0">Giấy khai sinh.doc</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tphs">
+                                        <p>
+                                          2. Giấy khai sinh (Bắt buộc)<br>
+                                            - SL bản chính: 1<br>
+                                            - SL bản sao: 10
+                                        </p>
+                                        <div class="media ">
+                                            <img src="images/file-word.svg" class="mr-3 align-self-center" alt="...">
+                                            <div class="media-body">
+                                                <small>Mẫu đơn, tờ khai</small>
+                                                <p class="mb-0">Giấy khai sinh.doc</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Trình tự thực hiện</th>
+                                  <td>
+                                        <p>
+                                          1. Công việc: Tiếp nhận hồ sơ<br>
+                                            - Cơ quan thực hiện: Cục Y tế dự phòng - Bộ Y tế<br>
+                                            - Thời gian: 3 ngày làm việc
+                                            - kết quả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit vestibulum.
+                                        </p>
+                                        <p class="mb-0">
+                                          2. Công việc: Tiếp nhận hồ sơ<br>
+                                            - Cơ quan thực hiện: Cục Y tế dự phòng - Bộ Y tế<br>
+                                            - Thời gian: 3 ngày làm việc
+                                            - kết quả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit vestibulum.
+                                        </p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Phí, Lệ phí</th>
+                                  <td>
+                                        <p>
+                                            1. Mức phí: 50.000 đồng/hồ sơ<br>
+                                            Mô tả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit.
+                                        </p>
+                                        <p class="mb-0">
+                                            2. Mức phí: 100.000 đồng/hồ sơ<br>
+                                            Mô tả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit.
+                                        </p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">Tài liệu đính kèm</th>
+                                  <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn py-0 px-3"><img src="images/file-pdf.svg" alt=""></button>
+                                            <button type="button" class="btn py-0 px-3"><img src="images/file-word.svg" alt=""></button>
+                                            <button type="button" class="btn py-0 px-3"><img src="images/file-excel.svg" alt=""></button>
+                                            <button type="button" class="btn py-0 px-3"><img src="images/file-powerpoint.svg" alt=""></button>
+                                            <button type="button" class="btn py-0 px-3"><img src="images/file-image.svg" alt=""></button>
+                                        </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+            		</div>
+            		<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+            			<div class="sb-tk-pakn mb-4">
+            				<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
+			                	<h4 class="text-uppercase">Thống kê PAKN của tôi</h4>
+			                	<h4 class="counter">60</h4>
+			                </div>
+			                <div class="card-body p-0">
+                                <p class="mb-1">Chờ xử lý
+                                    <span class="pull-right font-weight-bold cl-yellow counter">20</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-yellow1 progress-animated" style="width: 85%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+
+                                <p class="mb-1 mt-4">Đã tiếp nhận
+                                    <span class="pull-right font-weight-bold cl-blue2 counter">12</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-xanhngoc progress-animated" style="width: 35%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+
+                                <p class="mb-1 mt-4">Đã trả lời
+                                    <span class="pull-right font-weight-bold cl-blue counter">13</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-blue progress-animated" style="width: 40%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+
+                                <p class="mb-1 mt-4">Bị từ chối
+                                    <span class="pull-right font-weight-bold cl-red counter">05</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-red progress-animated" style="width: 15%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+                                
+                            </div>
+            			</div>
+
+            			<div class="sb-pakn-dqt mb-4">
+            				<div class="tt-v1 pt-3 pb-3">
+			                	<h4 class="text-uppercase">PA-KN được quan tâm nhiều</h4>
+			                </div>
+			                <div class="bootstrap-media">
+                                <div class="media">
+                                    <a href="#"><img class="mr-3 img-fluid rounded-0" width="60" src="./images/icon-vb.png" alt=""></a>
+                                    <div class="media-body">
+                                        <small>7:30 | 14/01/2021</small>
+                                        <p class="mb-0 h5 text-3line"><a href="#">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</a></p>
+                                    </div>
+                                </div>
+                                <div class="media mt-3 pt-3 border-top">
+                                    <a href="#"><img class="mr-3 img-fluid rounded-0" width="60" src="./images/icon-vb.png" alt=""></a>
+                                    <div class="media-body">
+                                        <small>7:30 | 14/01/2021</small>
+                                        <p class="mb-0 h5 text-3line"><a href="#">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</a></p>
+                                    </div>
+                                </div>
+                                <div class="media mt-3 pt-3 border-top">
+                                    <a href="#"><img class="mr-3 img-fluid rounded-0" width="60" src="./images/icon-vb.png" alt=""></a>
+                                    <div class="media-body">
+                                        <small>7:30 | 14/01/2021</small>
+                                        <p class="mb-0 h5 text-3line"><a href="#">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</a></p>
+                                    </div>
+                                </div>
+                            </div>
+            			</div>
+            			<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb1.png" alt=""></a>
+            			<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb2.png" alt=""></a>
+            			<div class="sb-lkWeb mb-4">
+            				<div class="tt-v1 pt-3">
+			                	<h4 class="text-uppercase">liên kế website</h4>
+			                </div>
+			                <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                            </ul>
+            			</div>
+            			<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb3.png" alt=""></a>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer px-0">
+        	<div class="ct-footer pt-5 pb-4" style="background: #FFF7EB">
+        		<div class="container">
+        			<div class="row justify-content-between">
+        				<div class="col-12 col-lg-5 pr-lg-5">
+        					<a href="#"><img class="img-fluid" src="images/logo-ft.png" alt=""></a>
+        					<p class="mb-0 mt-3 h6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum dolor, sit amet consectetur adipisicing elit doloribus fugiat accusantium illo.</p>
+        				</div>
+        				<div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
+        					<ul class="list-group list-group-flush">
+                                <li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>0258.3563.531</li>
+                                <li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>stttt@khanhhoa.gov.vn</li>
+                                <li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>Nhà A1 Khu Liên cơ số 01 đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa</li>
+                            </ul>
+        				</div>
+        			</div>
+        			
+        		</div>
+        	</div>
+            <div class="copyright py-2" style="background: #FFF2DE">
+            	<div class="container">
+            		<p class="text-left">
+            		<small>Giấy phép số: 39/GP-TTĐT do Cục Quản lý Phát thanh, Truyền hình và Thông tin điện tử - Bộ Thông tin và Truyền thông cấp ngày 28/4/2016</small>
+            		</p>
+            	</div>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+
+	<!-- Bootstrap -->
+    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./vendor/bootstrap/is/bootstrap.min.js"></script>
+
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	
+	<!-- Counter Up -->
+    <script src="./vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="./vendor/jquery.counterup/jquery.counterup.min.js"></script>	
+		
+	<!-- Apex Chart -->
+	<script src="./vendor/apexchart/apexchart.js"></script>	
+	
+	<!-- Chart piety plugin files -->
+	<script src="./vendor/peity/jquery.peity.min.js"></script>
+	
+	<!-- Dashboard 1 -->
+	<script src="./js/dashboard/dashboard-1.js"></script>
+
+	<!-- owl.carousel -->
+	<script src="./js/owl.carousel.min.js"></script>
+	<script src="./js/sd-js.js"></script>
+	
+	
+</body>
+</html>

@@ -1,0 +1,121 @@
+<div class="authincation h-100 bg-login">
+	<div class="container-fluid h-100"
+		style="background-image: url(../../../../../assets/dist/images/Rectangle\ 1296.png); background-size: cover;">
+		<div class="row justify-content-center h-100 align-items-center">
+			<div class="col" style="padding: 0px;">
+				<div class="authincation-content bg-transparent shadow-none">
+					<div class="row justify-content-center">
+						<div class="col-12 col-sm-4 col-md-4">
+							<div class="auth-form p-5 form-login">
+								<h4 class="text-uppercase text-center">hệ thống thông tin tiếp nhận PHẢN ÁNH, KIẾN NGHị</h4>
+								<h4 class="text-uppercase text-center">dành cho người dân, doanh nghiệp</h4>
+								<h5 class="text-uppercase cl-blue text-center pb-3" style="font-size: 25px;">TỈNH KHÁNH HOÀ</h5>
+								<form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
+									<div class="row">
+										<div class="form-group col-12">
+											<input class="form-control rounded-8px h-50px px-4 border-brown bg-white"
+												(change)="user.UserName=user.UserName.trim()" placeholder="Nhập email..." type="text"
+												id="username" formControlName="name" [(ngModel)]="user.UserName" required>
+											<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
+												<div *ngIf="name.errors.email">
+													<span class="help-block">Email không hợp lệ</span>
+												</div>
+												<div *ngIf="name.errors.required">
+													<span class="help-block">Trường này không được để trống</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-12 form-group position-relative">
+											<input class="form-control rounded-8px h-50px px-4 border-brown bg-white"
+												[type]="isShowPassword ? 'text' : 'password'" id="userpass"
+												(change)="user.Password=user.Password.trim()" placeholder="Nhập mật khẩu..."
+												formControlName="pass" [(ngModel)]="user.Password" required>
+											<i class="custom-show-pass"
+												[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
+												(click)="showPassword()"></i>
+											<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
+												<div *ngIf="pass.errors.required">
+													<span class="help-block">Trường này không được để trống</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-6 form-group position-relative">
+											<label class="mb-1 text-uppercase">Mã số xác thực</label>
+											<div class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px shadow">
+												<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
+												<button type="button" (click)="reloadImage()"
+													class="btn p-1 rounded-10px ml-4 position-absolute" style="right: 17px; width: 40px;">
+													<i class="bi bi-arrow-repeat" style="font-size: 25px"></i>
+												</button>
+											</div>
+										</div>
+
+										<div class="col-6 form-group">
+											<label class="mb-1 text-uppercase">Nhập kết quả</label>
+											<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5"
+												style="font-size: 20px" (change)="captchaCode=captchaCode.trim()" placeholder="Nhập ..."
+												class="form-control rounded-8px h-50px px-4 border-brown bg-white" value="">
+											<div
+												*ngIf="(submitted && captcha.invalid)||(captcha.invalid && (captcha.dirty || captcha.touched))"
+												class="has-error m-b-12">
+												<div *ngIf="captcha.errors.required">
+													<span class="help-block">Vui lòng nhập kết quả</span>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
+											<div class="form-group">
+												<div class="custom-control custom-checkbox ml-1">
+													<input hidden type="checkbox" class="custom-control-input" id="basic_checkbox_2"
+														formControlName="isRemember" [(ngModel)]="isSaveLogin">
+													<label class="custom-control-label hight-light pointer" for="basic_checkbox_2">Nhớ tài
+														khoản</label>
+												</div>
+											</div>
+											<div class="form-group hight-light pointer">
+												<a (click)="forgetPassWordUser()">Quên mật khẩu?</a>
+											</div>
+										</div>
+										<div class="text-center">
+											<button type="submit"
+												class="btn text-white text-uppercase font-weight-normal btn-block border-0 rounded-10px no-grd-blue h-50px p-0"
+												style="font-size: 20px">Đăng nhập
+											</button>
+											<button type="button" class="btn rounded-10px bg-white text-dark border mt-3 h-50px p-0"
+												style="font-size: 20px" (click)="backToHome()">
+												<i class="bi bi-arrow-left"></i> Về lại trang chủ
+											</button>
+											<div class="mt-4">
+												<div>
+													<span class="d-flex center">
+														<i class="fas fa-phone-square-alt mr-2 cl-blue"></i>
+														<p class="info mb-0">1900.1023</p>
+													</span>
+													<span class="d-flex center">
+														<i class="fas fa-envelope-open mr-2 cl-blue"></i>
+														<p class="info mb-0">pakn@khanhhoa.gov.vn</p>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--**********************************
+  Scripts
+***********************************-->
+<!-- Required vendors -->
+<script src="assets/dist/vendor/global/global.min.js"></script>
+<script src="assets/dist/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="assets/dist/js/custom.min.js"></script>
+<script src="assets/dist/js/deznav-init.js"></script>

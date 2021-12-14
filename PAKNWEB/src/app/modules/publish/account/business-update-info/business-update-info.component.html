@@ -1,0 +1,370 @@
+<div class="content-nd mb-4">
+	<div class="container pt-5">
+		<div class="row justify-content-between">
+			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct">
+				<app-account-side-left></app-account-side-left>
+			</div>
+			<div class="col main-ct pl-3 pl-lg-4">
+				<form [formGroup]="formUpdateAccountInfo">
+					<div class="box">
+						<div class="tt-v1 pt-3 mb-3">
+							<h4 class="text-uppercase">Thông tin người đại diện</h4>
+						</div>
+						<div class="row">
+							<div class="col">
+								<p class="mb-1">Họ và Tên <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.representativeName}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" [(ngModel)]="model.representativeName"
+										formControlName="representativeName">
+									<div
+										*ngIf="(submitted && f.representativeName.invalid)||(f.representativeName.invalid && (f.representativeName.dirty || f.representativeName.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.representativeName.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<!-- <div class="col">
+								<p class="mb-1">Ngày tháng năm sinh</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model._representativeBirthDay | date : 'dd/MM/yyyy'}}</p>
+								<div class="form-group" *ngIf="editable">
+									<div class="input-group">
+										<input type="text" class="form-control" [(ngModel)]="model._representativeBirthDay" placeholder="Chọn" formControlName="representativeBirthDay" bsDatepicker
+										#n="bsDatepicker" maxlength="10" id="_dateOfBirth" appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}">
+										<div class="input-group-addon p-2 center">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
+									</div>
+								
+								</div>
+							</div> -->
+							<div class="col">
+								<p class="mb-1">Số điện thoại</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.phone}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" [(ngModel)]="model.phone" formControlName="phone"
+										placeholder="Nhập">
+									<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.phone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="f.phone.errors.pattern">
+											<span class="help-block">Số điện thoại không đúng</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="w-100 mb-3"></div>
+							<div class="col">
+								<p class="mb-1">Email</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.email}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" [(ngModel)]="model.email" formControlName="email"
+										placeholder="Nhập">
+									<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.email.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="f.email.errors.email">
+											<span class="help-block">Định dạng email không đúng</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- <div class="col">
+								<p class="mb-1">Quốc tịch <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.nation}}</p>
+								<div class="form-group" *ngIf="editable">
+									<ng-select notFoundText="Không có dữ liệu"  [(ngModel)]="model.nation" *ngIf="!nation_enable_type" formControlName="nation" class="form-control" placeholder="Chọn..."
+										[clearable]="false" [closeOnSelect]="true" (change)="onChangeNation(true)">
+										<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
+										<ng-option value="#">Khác</ng-option>
+									</ng-select>
+									<input [svTrim] *ngIf="nation_enable_type" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
+										class="form-control border-brown" (click)="resetNationField($event)">
+									<span *ngIf="nation_enable_type" class="select-caret-icon" style="top: 30pt;" (click)="backToDfVal()">
+										<i class="bi bi-caret-down-fill"></i>
+									</span>
+									<div *ngIf="(submitted && f.nation.invalid)||(f.nation.invalid && (f.nation.dirty || f.nation.touched))" class="has-error m-b-12">
+										<div *ngIf="f.nation.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col">
+								<p class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listProvince|getLocalUnitName:model.provinceId}}</p>
+								<div class="form-group" *ngIf="editable">
+									<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.provinceId" formControlName="Province">
+										<option value="0">Chọn...</option>
+									</select>
+									<ng-select notFoundText="Không có dữ liệu"  *ngIf="!nation_enable_type" [(ngModel)]="model.provinceId" formControlName="provinceId" class="form-control" placeholder="Chọn..."
+										[clearable]="false" [closeOnSelect]="true" (change)="onChangeProvince(true)">
+										<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
+									</ng-select>
+									<div *ngIf="!nation_enable_type && (submitted && !model.provinceId)"
+										class="has-error m-b-12">
+										<div>
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col">
+								<p class="mb-1">Huyện / Quận / Thị xã ... <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listDistrict | getLocalUnitName:model.districtId}}</p>
+								<div class="form-group" *ngIf="editable">
+									<ng-select notFoundText="Không có dữ liệu"  *ngIf="!nation_enable_type" [(ngModel)]="model.districtId" formControlName="districtId" class="form-control" placeholder="Chọn..."
+										[clearable]="false" [closeOnSelect]="true" (change)="onChangeDistrict(true)">
+										<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
+									</ng-select>
+									<select *ngIf="nation_enable_type" class="form-control border-brown" disabled [(ngModel)]="model.districtId" formControlName="districtId">
+										<option value="0">Chọn...</option>
+									</select>
+									<div *ngIf="!nation_enable_type && ((submitted && !model.districtId))"
+										class="has-error m-b-12">
+										<div>
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="w-100 mb-3"></div>
+							<div class="col">
+								<p class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listVillage | getLocalUnitName:model.wardsId}} </p>
+								<div class="form-group" *ngIf="editable">
+									<ng-select notFoundText="Không có dữ liệu"  *ngIf="!nation_enable_type" [(ngModel)]="model.wardsId" formControlName="wardsId" class="form-control" placeholder="Chọn..."
+										[clearable]="false" [closeOnSelect]="true">
+										<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
+									</ng-select>
+									<select *ngIf="nation_enable_type" class="form-control border-brown" disabled [(ngModel)]="model.wardsId" formControlName="wardsId">
+										<option value="0">Chọn...</option>
+									</select>
+									<div *ngIf="!nation_enable_type && (submitted && !model.wardsId)"
+										class="has-error m-b-12">
+									<div>
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+								</div>
+								</div>
+
+							</div> -->
+							<div class="col col-lg-8">
+								<p class="mb-1">Địa chỉ cụ thể </p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.address}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" [(ngModel)]="model.address" formControlName="address"
+										placeholder="Nhập">
+									<div
+										*ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.address.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="w-100 mb-3"></div>
+							<div class="col-12">
+								<p class="mb-1" *ngIf="!editable">Giới tính: <span class="h4" *ngIf="!model.representativeGender">Nữ</span><span class="h4"
+										*ngIf="model.representativeGender">Nam</span>
+								</p>
+								<div class="form-group" *ngIf="editable">
+									<label class="mr-3">Giới tính:</label>
+									<label *ngFor="let gen of listGender" class="radio-inline mr-3">
+										<input [(ngModel)]="model.representativeGender" formControlName="representativeGender" [value]="gen.value" type="radio"> <span
+											class="text-uppercase"> {{gen.text}}</span>
+									</label>
+								</div>
+							</div> -->
+						<div class="tt-v1 pt-3 mb-3">
+							<h4 class="text-uppercase">Thông tin doanh nghiệp</h4>
+						</div>
+						<div class="row">
+							<div class="col col-lg-12">
+								<p class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.business}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" [(ngModel)]="model.business" formControlName="business"
+										placeholder="Nhập">
+									<div
+										*ngIf="(submitted && f.business.invalid)||(f.business.invalid && (f.business.dirty || f.business.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.business.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col col-lg-6">
+								<p class="mb-1">Số chứng nhận đăng ký kinh doanh <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.businessRegistration}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.businessRegistration"
+										formControlName="businessRegistration">
+								</div>
+							</div>
+							<div class="col col-lg-6">
+								<p class="mb-1">Điện thoại <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgPhone}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgPhone"
+										formControlName="orgPhone" maxlength="10" numbersOnly pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
+									<div
+										*ngIf="(submitted && f.orgPhone.invalid)||(f.orgPhone.invalid && (f.orgPhone.dirty || f.orgPhone.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.orgPhone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="f.orgPhone.errors.pattern">
+											<span class="help-block">Định dạng số điện thoại không đúng</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="w-100 mb-3"></div>
+							<div class="col">
+								<p class="mb-1">Số quyết định thành lập</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.decisionOfEstablishing}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.decisionOfEstablishing" formControlName="decisionOfEstablishing">
+								</div>
+							</div> -->
+							<!-- <div class="col">
+								<p class="mb-1">Ngày cấp / Thành lập</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model._dateOfIssue | date : 'dd/MM/yyyy'}}</p>
+								<div class="form-group" *ngIf="editable">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Chọn" [(ngModel)]="model._dateOfIssue" formControlName="dateOfIssue" bsDatepicker #n="bsDatepicker"
+										maxlength="10" id="_dateOfIssue" appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true }">
+										<div class="input-group-addon p-2 center">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
+									</div>
+								
+								</div>
+							</div> -->
+							<!-- <div class="col">
+								<p class="mb-1">Mã số thuế <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.tax}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.tax" formControlName="tax" maxlength="13" numbersOnly>
+									<div *ngIf="(submitted && f.tax.invalid)||(f.tax.invalid && (f.tax.dirty || f.tax.touched))" class="has-error m-b-12">
+										<div *ngIf="f.tax.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+							</div> -->
+						</div>
+						<div class="tt-v1 pt-3 mb-3">
+							<h4 class="text-uppercase">Địa chỉ trụ sở / văn phòng đại điện</h4>
+						</div>
+						<div class="row">
+							<!-- <div class="col">
+								<p class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listProvince | getLocalUnitName:model.orgProvinceId}}</p>
+								<div class="form-group" *ngIf="editable">
+									<ng-select notFoundText="Không có dữ liệu"  [(ngModel)]="model.orgProvinceId" formControlName="orgProvinceId" class="form-control" placeholder="Chọn..." [clearable]="false"
+										[closeOnSelect]="true" (change)="onChangeOrgProvince(true)">
+										<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
+									</ng-select>
+									<div *ngIf="(submitted && f.orgProvinceId.invalid)||(f.orgProvinceId.invalid && (f.orgProvinceId.dirty || f.orgProvinceId.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgProvinceId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col">
+								<p class="mb-1">Huyện / Quận / Thị xã ...<span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listOrgDistrict | getLocalUnitName:model.orgDistrictId}}</p>
+								<div class="form-group" *ngIf="editable">
+									<ng-select notFoundText="Không có dữ liệu"  [(ngModel)]="model.orgDistrictId" formControlName="orgDistrictId" class="form-control" placeholder="Chọn..." [clearable]="false"
+										[closeOnSelect]="true" (change)="onChangeOrgDistrict(true)">
+										<ng-option *ngFor="let prov of listOrgDistrict" [value]="prov.id">{{prov.name}}</ng-option>
+									</ng-select>
+									<div *ngIf="(submitted && f.orgDistrictId.invalid)||(f.orgDistrictId.invalid && (f.orgDistrictId.dirty || f.orgDistrictId.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgDistrictId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col">
+								<p class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listOrgVillage | getLocalUnitName:model.orgWardsId}}</p>
+								<div class="form-group" *ngIf="editable">
+									<ng-select notFoundText="Không có dữ liệu"  [(ngModel)]="model.orgWardsId" formControlName="orgWardsId" class="form-control" placeholder="Chọn" [clearable]="false"
+										[closeOnSelect]="true">
+										<ng-option *ngFor="let prov of listOrgVillage" [value]="prov.id">{{prov.name}}</ng-option>
+									</ng-select>
+									<div *ngIf="(submitted && f.orgWardsId.invalid)||(f.orgWardsId.invalid && (f.orgWardsId.dirty || f.orgWardsId.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgWardsId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+							</div> -->
+							<div class="col col-lg-8">
+								<p class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgAddress}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" placeholder="Nhập" class="form-control" [(ngModel)]="model.orgAddress"
+										formControlName="orgAddress">
+								</div>
+								<div
+									*ngIf="(submitted && f.orgAddress.invalid)||(f.orgAddress.invalid && (f.orgAddress.dirty || f.orgAddress.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.orgAddress.errors.required">
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col col-lg-4">
+								<p class="mb-1">Email</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgEmail}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgEmail"
+										formControlName="orgEmail">
+									<div
+										*ngIf="(submitted && f.orgEmail.invalid)||(f.orgEmail.invalid && (f.orgEmail.dirty || f.orgEmail.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.orgEmail.errors.email">
+											<span class="help-block">Định dạng email không đúng</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col text-right clearfix">
+								<button type="button" class="btn grd-blue text-white border-0 rounded-xl mt-3 pull-right"
+									*ngIf="editable" (click)="onSave()">Cập nhật</button>
+								<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right mr-3"
+									*ngIf="editable" (click)="onReset()">Hủy</button>
+								<a class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right" *ngIf="!editable"
+									(click)="editable=true">Sửa thông tin</a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

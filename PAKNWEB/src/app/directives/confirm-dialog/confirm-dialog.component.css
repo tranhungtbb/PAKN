@@ -1,0 +1,10 @@
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  top: 51px;
+} 
+.cdk-overlay-pane {
+  width: 500px !important;
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+}

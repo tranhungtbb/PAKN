@@ -1,0 +1,211 @@
+﻿using Dapper;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using PAKNAPI.Common;
+using PAKNAPI.Model.ModelAuth;
+using PAKNAPI.Models.Results;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PAKNAPI.Models.User
+{
+	public class SYUserGetAllOnPageList
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetAllOnPageList(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetAllOnPageList()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+
+		public string UnitName { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+
+		public string PositionName { get; set; }
+
+		public async Task<List<SYUserGetAllOnPageList>> SYUserGetAllOnPageDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageList>("[SY_UserGetAllOnPageList]", DP)).ToList();
+		}
+		public async Task<UsersGetDataForCreateResponse> UsersGetDataForCreate()
+		{
+			UsersGetDataForCreateResponse data = new UsersGetDataForCreateResponse();
+			DynamicParameters DP = new DynamicParameters();
+			data.lstUnit = (await _sQLCon.ExecuteListDapperAsync<DropdownTree>("SY_UnitGetDropdownLevel", DP)).ToList();
+			data.lstPossition = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_PositionGetDropdown", DP)).ToList();
+			data.lstRoles = (await _sQLCon.ExecuteListDapperAsync<DropdownPermissionObject>("SY_RoleGetDropdown", DP)).ToList();
+            foreach (var role in data.lstRoles)
+			{
+				DP = new DynamicParameters();
+				DP.Add("GroupUserId", role.Value);
+				role.permissionIds = (await _sQLCon.ExecuteListDapperAsync<int>("SY_PermissionGroupUser_GetByGroupId", DP)).ToList();
+			}
+			DP = new DynamicParameters();
+			data.lstPermissionCategories = (await _sQLCon.ExecuteListDapperAsync<PermissionCategoryObject>("SY_PermissionCategory_Get", DP)).ToList();
+			foreach (var cat in data.lstPermissionCategories)
+			{
+				DP = new DynamicParameters();
+				DP.Add("Id", cat.Id);
+				cat.Function = (await _sQLCon.ExecuteListDapperAsync<FunctionObject>("SY_PermissionFunction_GetByCategory", DP)).ToList();
+				foreach (var per in cat.Function)
+				{
+					DP = new DynamicParameters();
+					DP.Add("Id", per.Id);
+					per.Permission = (await _sQLCon.ExecuteListDapperAsync<PermissionObject>("SY_Permission_GetByFunction", DP)).ToList();
+				}
+			}
+			return data;
+		}
+	}
+
+
+	public class SYUserGetAllOnPageListForChat
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetAllOnPageListForChat(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetAllOnPageListForChat()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long IdQB { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Phone { get; set; }
+		public string Avatar { get; set; }
+
+		public string UnitName { get; set; }
+		public async Task<List<SYUserGetAllOnPageListForChat>> SYUserGetAllOnPageListForChatDAO(int? PageIndex, string UserName, string TextSearch)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserName", UserName);
+			DP.Add("TextSearch", TextSearch);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageListForChat>("[SY_UserSystemGetForChat]", DP)).ToList();
+		}
+
+		public async Task<List<SYUserGetAllOnPageListForChat>> SYUserGetAllOnPageListByListIdQb(string lstIdQb, string textSearch)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("LstIdQb", lstIdQb);
+			DP.Add("TextSearch", textSearch);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageListForChat>("[SY_UserSystemGetByLstIdQb]", DP)).ToList();
+		}
+
+		public async Task<int> SYUserUpdateIdQBDAO(int? id , int? idQB)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", id);
+			DP.Add("IdQB", idQB);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdateQB", DP));
+		}
+
+	}
+
+
+	public class SYUserSystemGetAllOnPageList
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserSystemGetAllOnPageList(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserSystemGetAllOnPageList()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+
+		public async Task<List<SYUserSystemGetAllOnPageList>> SYUserSystemGetAllOnPageDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserSystemGetAllOnPageList>("[SY_UserSystemGetAllOnPageList]", DP)).ToList();
+		}
+	}
+
+	public class DropListTreeView {
+		public string text { get; set; }
+		public long value { get; set; }
+		public List<DropListTreeView> children { get; set; }
+
+		public DropListTreeView() { }
+		public DropListTreeView(string text, long value) {
+			this.text = text;
+			this.value = value;
+			this.children = null;
+		}
+
+		public DropListTreeView(string text, long value, IList<DropListTreeView> chil) {
+			this.text = text;
+			this.value = value;
+			this.children = (List<DropListTreeView>)chil;
+		}
+	}
+	public class UsersGetDataForCreateResponse
+	{
+		public List<DropdownTree> lstUnit { get; set; }
+		public List<DropdownObject> lstPossition { get; set; }
+		public List<DropdownPermissionObject> lstRoles { get; set; }
+		public List<PermissionCategoryObject> lstPermissionCategories { get; set; }
+	}
+	public class DropdownPermissionObject
+	{
+		public int Value { get; set; }
+		public string Text { get; set; }
+		public List<int> permissionIds { get; set; }
+	}
+
+
+}

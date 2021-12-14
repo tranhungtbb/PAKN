@@ -1,0 +1,242 @@
+//QUẢN LÝ HỆ THỐNG
+//Cấu hình hệ thống
+public const string Xemdanhsachcauhinhhethong = "A_I_0"; // Xem danh sách cấu hình hệ thống 
+public const string Suathongtincauhinhhethong = "A_I_1"; // Sửa thông tin cấu hình hệ thống
+public const string Xemthongtincauhinhhethong = "A_I_2"; // Xem thông tin cấu hình hệ thống
+public const string Xuatfiledanhsachcauhinhhethong = "A_I_3"; // Xuất file danh sách cấu hình hệ thống
+//Cấu hình tham số gửi mail
+public const string Xemdanhsachcauhinhguiemail = "A_II_0"; // Xem danh sách cấu hình gửi email
+public const string Themmoicauhinhguiemail = "A_II_1"; // Thêm mới cấu hình gửi email
+public const string Suacauhinhguiemail = "A_II_2"; // Sửa cấu hình gửi email
+public const string Xoacauhinhguiemail = "A_II_3"; // Xóa cấu hình gửi email
+public const string Xemmauemail = "A_II_4"; // Xem mẫu email
+public const string Xemchitietcauhinhguiemail = "A_II_5"; // Xem chi tiết cấu hình gửi email
+//Quản lý mẫu email
+public const string Xemdanhsachmauemail = "A_III_0"; // Xem danh sách mẫu email
+public const string Themmoimauemail = "A_III_1"; // Thêm mới mẫu email
+public const string Suamauemail = "A_III_2"; // Sửa mẫu email
+public const string Xoamauemail = "A_III_3"; // Xóa mẫu email
+public const string Xemchitietmauemail = "A_III_4"; // Xem chi tiết mẫu email
+//Cấu hình tham số gửi SMS
+public const string XemdanhsachcauhinhguiSMS = "A_IV_0"; // Xem danh sách cấu hình gửi SMS
+public const string ThemmoicauhinhguiSMS = "A_IV_1"; // Thêm mới cấu hình gửi SMS
+public const string SuacauhinhguiSMS = "A_IV_2"; // Sửa cấu hình gửi SMS
+public const string XoacauhinhguiSMS = "A_IV_3"; // Xóa cấu hình gửi SMS
+public const string XemmauSMS = "A_IV_4"; // Xem mẫu SMS
+public const string XemchitietcauhinhguiSMS = "A_IV_5"; // Xem chi tiết cấu hình gửi SMS
+//Quản lý mẫu SMS
+public const string XemdanhsachmauSMS = "A_V_0"; // Xem danh sách mẫu SMS
+public const string ThemmoimauSMS = "A_V_1"; // Thêm mới mẫu SMS
+public const string SuamauSMS = "A_V_2"; // Sửa mẫu SMS
+public const string XoamauSMS = "A_V_3"; // Xóa mẫu SMS
+public const string XemchitietmauSMS = "A_V_4"; // Xem chi tiết mẫu SMS
+//Cấu hình thông tin kết nối tổng đài
+public const string Themcauhinhtongdai = "A_VI_0"; // Thêm cấu hình tổng đài
+public const string Suacauhinhtongdai = "A_VI_1"; // Sửa cấu hình  tổng đài
+public const string Xoacauhinhtongdai = "A_VI_2"; // Xóa cấu hình  tổng đài
+//Quản lý Cơ quan đơn vị
+public const string Xemdanhsachdonvi = "A_VII_0"; // Xem danh sách đơn vị
+public const string Xemchitietthongtindonvi = "A_VII_1"; // Xem chi tiết thông tin đơn vị
+public const string Suathongtindonvi = "A_VII_2"; // Sửa thông tin đơn vị
+public const string Xoathongtindonvi = "A_VII_3"; // Xóa thông tin đơn vị
+public const string Thietlaptrangthaihoatdongchodonvi = "A_VII_4"; // Thiết lập trạng thái hoạt động cho đơn vị
+//Quản lý người dùng theo đơn vị
+public const string Xemdanhsachnguoidungtrongdonvi = "A_VIII_0"; // Xem danh sách người dùng trong đơn vị
+public const string Themmoinguoidungtrongdonvi = "A_VIII_1"; // Thêm mới người dùng trong đơn vị
+public const string Xemchitietthongtinnguoidungtrongdonvi = "A_VIII_2"; // Xem chi tiết thông tin người dùng trong đơn vị
+public const string Suathongtinnguoidungtrongdonvi = "A_VIII_3"; // Sửa thông tin người dùng trong đơn vị
+public const string Xoanguoidungkhoidonvi = "A_VIII_4"; // Xóa người dùng khỏi đơn vị
+public const string Thietlaptrangthaihoatdongchonguoidung = "A_VIII_5"; // Thiết lập trạng thái hoạt động cho người dùng
+public const string Xuatfilenguoidungthuocdonvi = "A_VIII_6"; // Xuất file người dùng thuộc đơn vị
+public const string Captinnhanthuonghieuchocoquandonvi = "A_VIII_7"; // Cấp tin nhắn thương hiệu cho cơ quan đơn vị
+//Quản lý thông tin của người dùng
+public const string Xemthongtintaikhoan = "A_IX_0"; // Xem thông tin tài khoản
+public const string Dieuchinhthongtincanhan = "A_IX_1"; // Điều chỉnh thông tin cá nhân 
+public const string Doimatkhau = "A_IX_2"; // Đổi mật khẩu
+public const string Xoataikhoannguoidung = "A_IX_3"; // Xóa tài khoản người dùng
+public const string Thietlaptrangthaihoatdongcuanguoidung = "A_IX_4"; // Thiết lập trạng thái hoạt động của người dùng
+//Quản trị vai trò
+public const string Xemdanhsachvaitrocuahethong = "A_X_0"; // Xem danh sách vai trò của hệ thống
+public const string Themmoivaitrochohethong = "A_X_1"; // Thêm mới vai trò cho hệ thống
+public const string Suathongtinvaitro = "A_X_2"; // Sửa thông tin vai trò
+public const string Xoathongtinvaitro = "A_X_3"; // Xóa thông tin vai trò
+public const string Ganquyenbosungchovaitrodadinhnghia = "A_X_4"; // Gán quyền bổ sung cho vai trò đã định nghĩa
+public const string Loaiboquyenchovaitrodadinhnghia = "A_X_5"; // Loại bỏ quyền cho vai trò đã định nghĩa
+public const string Xemdanhsachnguoidungthuocvaitro = "A_X_6"; // Xem danh sách người dùng thuộc vai trò
+public const string Loaibonguoidungkhoidanhsach = "A_X_7"; // Loại bỏ người dùng khỏi danh sách
+public const string Thietlaptrangthaihieuluc/hethieulucchovaitro = "A_X_8"; // Thiết lập trang thái hiệu lực/ hết hiệu lực cho vai trò
+//Quản lý chatbot
+public const string Themmoicauhoi/traloi = "A_XI_0"; // Thêm mới câu hỏi/ trả lời
+public const string Suacauhoi/traloi = "A_XI_1"; // Sửa câu hỏi/ trả lời
+public const string Xoacauhoi/traloi = "A_XI_2"; // Xóa câu hỏi/ trả lời
+public const string Xemdanhsachcauhoi/traloi = "A_XI_3"; // Xem danh sách câu hỏi/ trả lời
+public const string Xemchitietcauhoi/traloi = "A_XI_4"; // Xem chi tiết câu hỏi/ trả lời
+public const string Thietlaptrangthaihieuluc/hethieulucchocauhoi/traloi = "A_XI_5"; // Thiết lập trang thái hiệu lực/ hết hiệu lực cho câu hỏi/ trả lời
+//Quản lý cấp quyền gửi tin nhắn SMS
+public const string CapquyenguitinnhanSMSdencacdonvi = "A_XII_0"; // Cấp quyền gửi tin nhắn SMS đến các đơn vị
+public const string SuaquyenguitinnhanSMSdencacdonvi = "A_XII_1"; // Sửa quyền gửi tin nhắn SMS đến các đơn vị
+public const string XoaquyenguitinnhanSMSdencacdonvi = "A_XII_2"; // Xóa quyền gửi tin nhắn SMS đến các đơn vị
+//Quản lý lịch sử hệ thống
+public const string Xemdanhsachlichsuhethong = "A_XIII_0"; // Xem danh sách lịch sử hệ thống
+public const string Xoalichsuhethong = "A_XIII_1"; // Xóa lịch sử hệ thống
+public const string Loclichsutheomotsotieuchi:nguoidung,noidung,trangthai = "A_XIII_2"; // Lọc lịch sử theo một số tiêu chí: người dùng, nội dung, trạng thái
+//Quản lý lịch sử chatbot
+public const string Xemdanhsachcuocnoichuyen = "A_XIV_0"; // Xem danh sách cuộc nói chuyện
+public const string Xoacuocnoichuyen = "A_XIV_1"; // Xóa cuộc nói chuyện
+//Quản lý trang tĩnh, thông tin giới thiệu cho từng cơ quan đơn vị
+public const string Thietlapnoidung = "A_XV_0"; // Thiết lập nội dung
+public const string Xemtruocnoidung = "A_XV_1"; // Xem trước nội dung
+public const string Xuatbanthongtin = "A_XV_2"; // Xuất bản thông tin
+public const string Xoanoidungdathietlap = "A_XV_3"; // Xóa nội dung đã thiết lập
+public const string Capnhatnoidungtrangtinh = "A_XV_4"; // Cập nhật nội dung trang tĩnh
+public const string CapnhatIconhienthi = "A_XV_5"; // Cập nhật Icon hiển thị
+public const string Capnhatbannerhienthi = "A_XV_6"; // Cập nhật banner hiển thị 
+public const string Capnhathienthiungdung = "A_XV_7"; // Cập nhật hiển thị ứng dụng
+//Quản lý nhóm, chỉ đạo điều hành công việc
+public const string Taonhomcongviec = "A_XVI_0"; // Tạo nhóm công việc
+public const string Suathongtinnhom = "A_XVI_1"; // Sửa thông tin nhóm
+public const string Themthanhvienvaonhom = "A_XVI_2"; // Thêm thành viên vào nhóm
+public const string Roinhom = "A_XVI_3"; // Rời nhóm
+public const string Loaibothanhvienrakhoinhom = "A_XVI_4"; // Loại bỏ thành viên ra khỏi nhóm
+public const string Traodoithongtindieuhanh(themmoi,xoathongtintraodoi) = "A_XVI_5"; // Trao đổi thông tin điều hành (thêm mới, xóa thông tin trao đổi)
+public const string Dinhkemfile/hinhanh = "A_XVI_6"; // Đính kèm file/hình ảnh
+public const string Thongbaodencacthietbididongcuacacthanhvienkhicothongtintraodoitrongnhom = "A_XVI_7"; // Thông báo đến các thiết bị di động của các thành viên khi có thông tin trao đổi trong nhóm
+public const string Danhbachatnhom = "A_XVI_8"; // Danh bạ chat nhóm
+//Quản lý người dân/doanh nghiệp
+public const string Themmoithongtinnguoidan/doanhnghiep = "A_XVII_0"; // Thêm mới thông tin người dân/doanh nghiệp
+public const string Suathongtinnguoidan/doanhnghiep = "A_XVII_1"; // Sửa thông tin người dân/doanh nghiệp
+public const string Xoathongtinnguoidan/doanhnghiep = "A_XVII_2"; // Xóa thông tin người dân/doanh nghiệp
+public const string Timkiemnguoidan/doanhnghiep = "A_XVII_3"; // Tìm kiếm người dân/doanh nghiệp
+public const string Importthongtinnguoidan/doanhnghieptufileexcel = "A_XVII_4"; // Import thông tin người dân/doanh nghiệp từ file excel
+public const string Sapxepthutuhienthitrongdanhsach = "A_XVII_5"; // Sắp xếp thứ tự hiển thị trong danh sách
+public const string LienketdulieuvoiCSDLkhachhangcuaCongDichvuhanhchinhcongtructuyen = "A_XVII_6"; // Liên kết dữ liệu với CSDL khách hàng của Cổng Dịch vụ hành chính công trực tuyến
+public const string Xuatfileexcelnguoidan/doanhnghiep = "A_XVII_7"; // Xuất file excel người dân/doanh nghiệp
+//TIỆN ÍCH
+//Quản lý Email
+public const string Emaildencanhan,tochuc = "B_I_0"; // Email đến cá nhân, tổ chức
+public const string Emaildenhangloatdennhieucanhan,tochuc = "B_I_1"; // Email đến hàng loạt đến nhiều cá nhân, tổ chức
+public const string XemdanhsachEmail = "B_I_2"; // Xem danh sách Email
+public const string XemchitietEmaildagui = "B_I_3"; // Xem chi tiết Email đã gửi
+public const string XoaEmaildagui = "B_I_4"; // Xóa Email đã gửi
+public const string LichsuEmaildaduocguidi = "B_I_5"; // Lịch sử Email đã được gửi đi
+//Quản lý tin nhắn SMS
+public const string Nhantindencanhan,tochuc = "B_II_0"; // Nhắn tin đến cá nhân, tổ chức
+public const string Nhantinquangbadenhangloatdennhieucanhan,tochuc = "B_II_1"; // Nhắn tin quảng bá đến hàng loạt đến nhiều cá nhân, tổ chức
+public const string Nhantinthuonghieu = "B_II_2"; // Nhắn tin thương hiệu 
+public const string Xemdanhsachtinnhan = "B_II_3"; // Xem danh sách tin nhắn
+public const string Xemchitiettinnhandagui = "B_II_4"; // Xem chi tiết tin nhắn đã gửi
+public const string Xoatinnhandagui = "B_II_5"; // Xóa tin nhắn đã gửi
+public const string Lichsutinnhandaduocguidi = "B_II_6"; // Lịch sử tin nhắn đã được gửi đi
+//Trao đổi thông tin cá nhân (Chat)
+public const string Quanlydanhbacanhan = "B_III_0"; // Quản lý danh bạ cá nhân
+public const string Traodoithongtin = "B_III_1"; // Trao đổi thông tin 
+public const string Dinhkemfile = "B_III_2"; // Đính kèm file
+public const string Taifiledinhkem = "B_III_3"; // Tải file đính kèm
+public const string Dinhkemhinhanh = "B_III_4"; // Đính kèm hình ảnh
+public const string Callnhom = "B_III_5"; // Call nhóm
+public const string Thongbaonotifydenthietbididongkhicothongtinduocguiden = "B_III_6"; // Thông báo notify đến thiết bị di động khi có thông tin được gửi đến
+public const string Xoanoidungtraodoi = "B_III_7"; // Xóa nội dung trao đổi
+//Quản lý thư mời
+public const string Themmoithumoi = "B_IV_0"; // Thêm mới thư mời
+public const string Suathongtinthumoi = "B_IV_1"; // Sửa thông tin thư mời
+public const string Xoathumoi = "B_IV_2"; // Xóa thư mời
+public const string Guitinnhanthongbaodencacthanhphanthamduhop(donguoitaothumoichon) = "B_IV_3"; // Gửi tin nhắn thông báo đến các thành phần tham dự họp (do người tạo thư mời chọn)
+public const string Guithumoiquaemail,smsdencacthanhphanthamduhop(donguoitaothumoichon) = "B_IV_4"; // Gửi thư mời qua email, sms đến các thành phần tham dự họp (do người tạo thư mời chọn)
+public const string LienketdulieuvoiCSDLkhachhangcuaCongDichvuhanhchinhcongtructuyen = "B_IV_5"; // Liên kết dữ liệu với CSDL khách hàng của Cổng Dịch vụ hành chính công trực tuyến
+public const string Guithongbaodenthietbididongcuacacthanhphanthamduhop = "B_IV_6"; // Gửi thông báo đến thiết bị di động của các thành phần tham dự họp
+public const string ThongkesoluotxemthumoivacacNguoidungdaxemthumoi = "B_IV_7"; // Thống kê số lượt xem thư mời và các Người dùng đã xem thư mời
+//DANH MỤC
+//Quản lý danh mục chức vụ
+public const string Xemdanhsachdanhmucchucvu = "C_I_0"; // Xem danh sách danh mục chức vụ
+public const string Themthongtindanhmucchucvu = "C_I_1"; // Thêm thông tin danh mục chức vụ
+public const string Suathongtindanhmucchucvu = "C_I_2"; // Sửa thông tin danh mục chức vụ
+public const string Xemthongtinchitietdanhmucchucvu = "C_I_3"; // Xem thông tin chi tiết danh mục chức vụ
+public const string Xoathongtindanhmucchucvu = "C_I_4"; // Xóa thông tin danh mục chức vụ
+public const string Xuatfiledanhmucchucvu = "C_I_5"; // Xuất file danh mục chức vụ
+public const string Khoadanhmucchucvu = "C_I_6"; // Khóa danh mục chức vụ
+public const string Mokhoadanhmucchucvu = "C_I_7"; // Mở khóa danh mục chức vụ
+//Quản lý danh mục nhóm sở ngành
+public const string Themdanhmucnhomsonganh = "C_II_0"; // Thêm danh mục nhóm sở ngành
+public const string Suadanhmucnhomsonganh = "C_II_1"; // Sửa danh mục nhóm sở ngành
+public const string Xoadanhmucnhomsonganh = "C_II_2"; // Xóa danh mục nhóm sở ngành
+public const string Xemdanhsachdanhmucnhomsonganh = "C_II_3"; // Xem danh sách danh mục nhóm sở ngành
+public const string Xemthongtindanhmucnhomsonganh = "C_II_4"; // Xem thông tin danh mục nhóm sở ngành
+public const string Khoadanhmucnhomsonganh = "C_II_5"; // Khoá danh mục nhóm sở ngành
+public const string Mokhoadanhmucnhomsonganh = "C_II_6"; // Mở khoá danh mục nhóm sở ngành
+//Quản lý danh mục sở ngành
+public const string Themdanhmucsonganh = "C_III_0"; // Thêm danh mục sở ngành
+public const string Suadanhmucsonganh = "C_III_1"; // Sửa danh mục sở ngành
+public const string Xoadanhmucsonganh = "C_III_2"; // Xóa danh mục sở ngành
+public const string Xemdanhsachdanhmucsonganh = "C_III_3"; // Xem danh sách danh mục sở ngành
+public const string Xemthongtindanhmucsonganh = "C_III_4"; // Xem thông tin danh mục sở ngành
+public const string Khoadanhmucsonganh = "C_III_5"; // Khoá danh mục sở ngành
+public const string Mokhoadanhmucsonganh = "C_III_6"; // Mở khoá danh mục sở ngành
+//Quản lý danh mục lĩnh vực
+public const string Themdanhmuclinhvuc = "C_IV_0"; // Thêm danh mục lĩnh vực
+public const string Suadanhmuclinhvuc = "C_IV_1"; // Sửa danh mục lĩnh vực
+public const string Xoadanhmuclinhvuc = "C_IV_2"; // Xóa danh mục lĩnh vực
+public const string Xemdanhsachdanhmuclinhvuc = "C_IV_3"; // Xem danh sách danh mục lĩnh vực
+public const string Xemthongtindanhmuclinhvuc = "C_IV_4"; // Xem thông tin danh mục lĩnh vực
+public const string Khoadanhmuclinhvuc = "C_IV_5"; // Khoá danh mục lĩnh vực
+public const string Mokhoadanhmuclinhvuc = "C_IV_6"; // Mở khoá danh mục lĩnh vực
+//Quản lý loại tin tức
+public const string Themmoidanhmucloaitintuc = "C_V_0"; // Thêm mới danh mục loại tin tức
+public const string Suadanhmucloaitintuc = "C_V_1"; // Sửa danh mục loại tin tức
+public const string Xoadanhmucloaitintuc = "C_V_2"; // Xóa danh mục loại tin tức
+public const string Xemdanhsachdanhmucloaitintuc = "C_V_3"; // Xem danh sách danh mục loại tin tức
+public const string Xemthongtindanhmucloaitintuc = "C_V_4"; // Xem thông tin danh mục loại tin tức
+public const string Khoadanhmucloaitintuc = "C_V_5"; // Khoá danh mục loại tin tức
+public const string Mokhoadanhmucloaitintuc = "C_V_6"; // Mở khoá danh mục loại tin tức
+//Quản lý phân loại từ ngữ trong thư viện từ ngữ
+public const string Themmoiphanloaitu = "C_VI_0"; // Thêm mới phân loại từ
+public const string Suaphanloaitu = "C_VI_1"; // Sửa phân loại từ
+public const string Xoaphanloaitu = "C_VI_2"; // Xóa phân loại từ
+public const string Xemdanhsachphanloaitu = "C_VI_3"; // Xem danh sách phân loại từ
+public const string Xemthongtinphanloaitu = "C_VI_4"; // Xem thông tin phân loại từ
+public const string Thietlaptrangthaihoatdongcuamotloaitungu = "C_VI_5"; // Thiết lập trạng thái hoạt động của một loại từ ngữ
+public const string Sapxepthutuhienthitrongdanhsach = "C_VI_6"; // Sắp xếp thứ tự hiển thị trong danh sách
+//THỐNG KÊ, BÁO CÁO
+//Thống kê, báo cáo phản ánh, kiến nghị
+public const string Xuatexcelthongketheodieukienloc = "D_I_0"; // Xuất excel thống kê theo điều kiện lọc
+public const string Xuatexcelchitietthongketheodieukienloc = "D_I_1"; // Xuất excel chi tiết thống kê theo điều kiện lọc
+public const string Xuatpdfthongketheodieukienloc = "D_I_2"; // Xuất pdf thống kê theo điều kiện lọc
+public const string Xuatpdfchitietthongketheodieukienloc = "D_I_3"; // Xuất pdf chi tiết thống kê theo điều kiện lọc
+public const string Xuatfilewordthongketheodieukienloc = "D_I_4"; // Xuất file word thống kê theo điều kiện lọc
+public const string Xuatfilewordchitietthongketheodieukienloc = "D_I_5"; // Xuất file word chi tiết thống kê theo điều kiện lọc
+public const string Inbaocao = "D_I_6"; // In báo cáo
+public const string Danhsachchitietthongketheodieukienloc = "D_I_7"; // Danh sách chi tiết thống kê theo điều kiện lọc
+//QUẢN LÝ PAKN
+//PAKN tiếp nhận trực tiếp
+public const string ThemmoiPAKN = "E_I_0"; // Thêm mới PAKN
+public const string SuaPAKN = "E_I_1"; // Sửa PAKN
+public const string XoaPAKN = "E_I_2"; // Xóa PAKN
+public const string XemdanhsachPAKN = "E_I_3"; // Xem danh sách PAKN
+public const string XemchitietPAKN = "E_I_4"; // Xem chi tiết PAKN
+public const string LichsuPAKN = "E_I_5"; // Lịch sử PAKN
+//PAKN chờ xử lý
+public const string XemdanhsachPAKNdenchotoixuly = "E_II_0"; // Xem danh sách PAKN đến chờ tối xử lý
+//PAKN tiếp nhận xử lý
+public const string XemdanhsachPAKNtoidatiepnhan = "E_III_0"; // Xem danh sách PAKN tôi đã tiếp nhận
+//PAKN từ chối xử lý
+public const string XemdanhsachPAKNtoidatuchoi = "E_IV_0"; // Xem danh sách PAKN tôi đã từ chối
+//PAKN chờ giải quyết
+public const string XemdanhsachPAKNtoidaguigiaiquyetvadangchotoigiaiquyet = "E_V_0"; // Xem danh sách PAKN tôi đã gửi giải quyết và đang chờ tôi giải quyết
+//PAKN từ chối giải quyết
+public const string XemdanhsachPAKNtoidatuchoigiaiquyethoactoibituchoigiaiquyet = "E_VI_0"; // Xem danh sách PAKN tôi đã từ chối giải quyết hoặc tôi bị từ chối giải quyết
+//PAKN đang giải quyết
+public const string XemdanhsachPAKNtoidanggiaiquyethoactoiguidangduocgiaiquyet = "E_VII_0"; // Xem danh sách PAKN tôi đang giải quyết hoặc tôi gửi đang được giải quyết
+//PAKN chờ phê duyệt
+public const string XemdanhsachPAKNdangchotoipheduyet = "E_VIII_0"; // Xem danh sách PAKN đang chờ tôi phê duyệt
+//PAKN từ chối phê duyệt
+public const string XemdanhsachPAKNbitoituchoipheduyet = "E_IX_0"; // Xem danh sách PAKN bị tôi từ chối phê duyệt
+//PAKN  đã phê duyệt
+public const string XemdanhsachPAKNtoidapheduyet = "E_X_0"; // Xem danh sách PAKN tôi  đã phê duyệt
+//QUẢN LÝ TIN TỨC, SỰ KIỆN
+//Quản lý tin tức
+public const string Themmoitintuc = "F_I_0"; // Thêm mới tin tức
+public const string Suatintuc = "F_I_1"; // Sửa tin tức
+public const string Xoatintuc = "F_I_2"; // Xóa tin tức
+public const string Xemdanhsachtintuctheoloaitintuc = "F_I_3"; // Xem danh sách tin tức theo loại tin tức
+public const string Xemthongtintintuc = "F_I_4"; // Xem thông tin tin tức
+public const string Guithongtintuyentruyen:coquan,nguoidan = "F_I_5"; // Gửi thông tin tuyên truyền: cơ quan, người dân
+public const string Lichsuguitintuyentruyenchocoquanvanguoidan = "F_I_6"; // Lịch sử gửi tin tuyên truyền cho cơ quan và người dân

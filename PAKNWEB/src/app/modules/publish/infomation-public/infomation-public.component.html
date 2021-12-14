@@ -1,0 +1,20 @@
+<div class="content-nd mt-5 mb-5">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-lg-8 col-md-8">
+				<div class="box">
+					<div class="tt-v1 mb-3 d-flex justify-content-between center">
+						<h4 class="text-uppercase">{{dataNotification.title}}</h4>
+					</div>
+					<p>{{dataNotification.createdDate | date : 'HH:mm dd/MM/yyyy'}}</p>
+				</div>
+				<div class="box">
+					<p style="white-space: break-spaces;">{{dataNotification.content}}</p>
+				</div>
+			</div>
+			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+			</div>
+		</div>
+	</div>
+</div>

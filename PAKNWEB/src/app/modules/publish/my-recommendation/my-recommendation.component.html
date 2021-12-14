@@ -1,0 +1,235 @@
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between pt-5">
+			<div class="col-3 d-none d-lg-block sidebar-ct">
+				<div class="media pt-3 mb-3">
+					<div class="avatar-circle bg-light mr-2">
+						<i class="bi bi-person-fill text-dark" style="font-size: 24px"></i>
+					</div>
+					<div class="media-body">
+						<p class="my-0 font-weight-bolder h4">{{userName}}</p>
+						<p class="mb-0 small">Tài khoản: {{phone}}</p>
+					</div>
+				</div>
+				<ul class="nav nav-qltknd flex-column">
+					<li class="nav-item border-bottom">
+						<a class="nav-link px-0 h5" [routerLink]="['/cong-bo/tai-khoan/thong-tin']" aria-current="page">Thông tin
+							tài khoản</a>
+					</li>
+					<li class="nav-item border-bottom">
+						<a class="nav-link px-0 h5" [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']">Đổi mật khẩu</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link px-0 h5" (click)="mySignOut()">Đăng xuất</a>
+					</li>
+				</ul>
+
+				<div class="sb-tk-pakn mb-4 card-my-recommentdation"
+					*ngIf="typeUserLoginPublish != 1 && recommendationStatistics">
+					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
+						<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
+						<h4 class="counter cursor">{{totalRecommentdation}}</h4>
+					</div>
+					<div>
+						<div class="border-left-yellow mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(1)">
+							<div class="pf-4">
+								<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
+							</div>
+							<div class="circle bg-yellow center text-white cursor">
+								{{recommendationStatistics.receiveWait}}
+							</div>
+						</div>
+						<div class="border-left-blue2 mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(2)">
+							<div class="pf-4">
+								<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
+							</div>
+							<div class="circle bg-blue2 center text-white cursor">
+								{{recommendationStatistics.receiveApproved}}
+							</div>
+						</div>
+						<div class="border-left-blue3 mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(3)">
+							<div class="pf-4">
+								<p class="title-status-rm ml-3 mb-0">Đang giải quyết</p>
+							</div>
+							<div class="circle bg-blue3 center text-white cursor">
+								{{recommendationStatistics.processing}}
+							</div>
+						</div>
+						<div class="border-left-blue mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(4)">
+							<div class="pf-4">
+								<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
+							</div>
+							<div class="circle bg-blue center text-white cursor">
+								{{recommendationStatistics.finised}}
+							</div>
+						</div>
+						<div class="border-left-red mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(5)">
+							<div class="pf-4">
+								<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
+							</div>
+							<div class="circle bg-red center text-white cursor">
+								{{recommendationStatistics.approve}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-9 main-ct pl-3 pl-lg-4">
+				<div class="row mb-3">
+					<div class="col-md-12 col-lg-12">
+						<div class="tt-v1 mb-3 center">
+							<h4 class="text-uppercase" style="width: 30%;">Phản ánh kiến nghị của tôi</h4>
+							<div class="d-flex search-ct" style="width: 70%; padding-bottom: 20px;">
+								<input (keyup)="changeKeySearch($event)" [(ngModel)]="title" (keydown.enter)="getList()"
+									class="form-control" style="border-radius: 10px; height: 56px;" type="text"
+									placeholder="Nhập từ khóa..." aria-label="Tìm kiếm...">
+								<button type="button" class="btn px-3 grd-blue" style="margin-left: -20px;padding: 0px;"
+									(click)="getList()">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+											fill="#fff"></path>
+									</svg>
+								</button>
+							</div>
+						</div>
+
+					</div>
+					<!-- <div class="col-md-4 col-lg-4">
+						<div class="text-right">
+							<button type="button" class="btn text-white border-0 grd-blue" (click)="sendRecommandation()">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+									<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z">
+									</path>
+									<path
+										d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z">
+									</path>
+								</svg>
+								<span class="ml-2" style="text-transform: none;">Gửi phản ánh kiến nghị</span>
+							</button>
+						</div>
+
+					</div> -->
+				</div>
+				<div class="card border" *ngFor="let item of listData">
+					<div class="card-body pt-3 pb-2">
+						<p class="card-text mb-1">
+							<a [routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]" title="{{item.title}}"
+								class="h3 text-2line">{{item.title}}</a>
+						</p>
+						<p class="card-text">
+							<a class="text-2line" [routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]">{{item.content}}</a>
+						</p>
+					</div>
+					<div class="card-footer pt-0 border-top-0 d-flex justify-content-between align-items-center">
+						<span>{{item.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
+						<div class="col-md-6">
+							<div class="d-flex justify-content-end">
+								<a [routerLink]="['/cong-bo/cap-nhat-kien-nghi/',item.id]" *ngIf="item.status == 1"
+									class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+								<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 .pointer" title="Gửi"
+									(click)="preSend(item.id)">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+										<path
+											d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
+											fill="white"></path>
+									</svg>
+								</a>
+								<a *ngIf="item.status == 1" class="btn-icon grd-red text-white mr-2 .pointer"
+									(click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
+								<span *ngIf="item.status == 2 || (item.status == 5 && item.isForwardProcess)"
+									class="badge rounded-pill badge-outline-dark">Chờ xử lý</span>
+								<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue-light">Đã tiếp nhận</span>
+								<span
+									*ngIf="item.status == 7  || item.status == 8 || item.status == 9 || (item.status == 5 && !item.isForwardProcess)"
+									class="badge rounded-pill bg-blue3 ng-star-inserted">Đang giải quyết</span>
+								<span *ngIf="item.status == 3 || item.status == 6" class="badge rounded-pill bg-red">Bị từ
+									chối</span>
+								<span *ngIf="item.status == 10" class="badge rounded-pill" style="background-color:forestgreen ;">Đã trả
+									lời</span>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<nav aria-label="navigation" *ngIf="listData.length > 0">
+					<ul class="pagination pagination-lg justify-content-between align-items-center">
+						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == 1 }">
+							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill p-3"
+								href="javascript:void(0)" tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
+									class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+						</li>
+						<li class="d-flex justify-content-center align-items-center">
+							<a *ngIf="pageIndex > 4">...</a>
+							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index"
+								[ngClass]="{ 'active': item.index === pageIndex }">
+								<a (click)="changePagination(item.index)" *ngIf="i - 3 < pageIndex && i + 5 > pageIndex"
+									class="page-link" href="javascript:void(0)">{{item.index}}</a>
+							</p>
+							<a *ngIf="pageIndex < pagination.length -4">...</a>
+						</li>
+						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == totalRecords }">
+							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill p-3"
+								href="javascript:void(0)">
+								&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div *ngIf="listData.length == 0" style="text-align: center;">
+					<span>Không có phản ánh kiến nghị nào</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn muốn xóa Phản ánh, Kiến nghị này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm"
+					(click)="onDelete(recommandationId)">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirmSend">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn muốn gửi Phản ánh, Kiến nghị này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onSend(5)">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>

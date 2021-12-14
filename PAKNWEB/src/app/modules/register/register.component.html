@@ -1,0 +1,28 @@
+<div class="authincation height-100">
+	<div class="container-fluid px-0 height-100">
+		<div class="row height-100">
+			<div class="col">
+				<div class="card mb-0 bg-transparent shadow-none bg-blue">
+					<div class="card-body p-0">
+						<!-- Nav tabs -->
+						<div class="custom-tab-1">
+							<ul class="nav nav-tabs nav-tabs-register px-5">
+								<li class="nav-item mr-5">
+									<a routerLinkActive="active" class="nav-link text-uppercase px-0 py-4 bg-transparent mb-1 text-white" [routerLink]="['./ca-nhan']">đăng ký dành cho cá nhân</a>
+								</li>
+								<li class="nav-item">
+									<a routerLinkActive="active" class="nav-link px-0 py-4 bg-transparent text-uppercase mb-1 text-white" [routerLink]="['./doanh-nghiep']">đăng ký dành cho
+										tổ chức, doanh nghiệp</a>
+								</li>
+							</ul>
+							<div class="tab-content p-3 p-lg-5 pb-0" style="height: 100%;background-color: #E5E5E5;">
+								<router-outlet>
+								</router-outlet>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,69 @@
+<div class="content-nd mt-5 mb-5">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-lg-8 col-md-8">
+				<div class="box">
+					<div class="tt-v1 mb-3 d-flex justify-content-between center">
+						<h4 class="text-uppercase">đơn vị xử lý trễ hạn</h4>
+
+					</div>
+					<div class="d-flex justify-content-between">
+						<div class="col-11 form-group p-0 pr-2">
+							<input placeholder="Nhập tên đơn vị ..." class="form-control form-control border-radius-4"
+								[(ngModel)]="keySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
+						</div>
+						<div class="col-1 form-group px-2">
+							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px"
+								(click)="dataStateChange()">
+								<i class="bi bi-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="box">
+					<div class="table-responsive">
+						<p-table #dataTable [value]="listData" [lazy]='true' (onLazyLoad)="onPageChange($event)" [paginator]="true"
+							[rows]="pageSize" [showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{total}}"
+							[totalRecords]="total" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header">
+								<tr>
+									<th class="text-center middle" style="width: 60px;">STT</th>
+									<th class="text-center middle">Tên đơn vị</th>
+									<th class="text-center middle" style="width: 200px; text-transform: none;">Số lượng</th>
+								</tr>
+
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">
+										<p class="mb-0">{{ rowIndex + 1 }}</p>
+									</td>
+									<td>
+										<p class="mb-0">{{ item.unitName }}</p>
+									</td>
+									<td>
+										<p class="mb-0">{{ item.quantity }}</p>
+									</td>
+
+								</tr>
+							</ng-template>
+
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td [attr.colspan]="3" class="text-center">
+										Không có dữ liệu hiển thị
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+				<app-gallery></app-gallery>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,126 @@
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><a>Vai trò</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">{{action}}</a></li>
+			</ol>
+			<div class="btn-group group-button-table" role="group">
+				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri/he-thong','vai-tro']">
+					<i class="bi bi-arrow-left"></i>&nbsp;
+					Quay lại
+				</a>
+				<button class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4" (click)="onSave()">Lưu</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 pt-3 pr-3 pl-4" style="border-right: 1px solid #e5e5e5;">
+			<form class="form-horizontal" [formGroup]="form">
+				<div class="row form-group">
+					<div class="col-sm-12 padding-col">
+						<label class="control-label title-role">Tên vai trò<span class="text-danger">(*)</span></label>
+						<input autofocus class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" placeholder="Nhập..." />
+						<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
+							<div *ngIf="f.name.errors.required">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12 padding-col">
+						<label class="control-label title-role">Số thứ tự hiển thị</label>
+						<input class="form-control" [(ngModel)]="model.orderNumber" numbersOnly formControlName="orderNumber" placeholder="Nhập..." />
+						<div class="has-error m-b-12">
+							<div *ngIf="f.orderNumber.errors">
+								<span class="help-block">Vui lòng nhập định dạng Number</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 padding-col">
+						<label class="control-label title-role">Mô tả</label>
+						<textarea class="form-control" [(ngModel)]="model.description" formControlName="description" rows="5" placeholder="Nhập..."></textarea>
+					</div>
+					<div class="col-sm-12 padding-col">
+						<label class="control-label title-role">Trạng thái <span class="text-danger">(*)</span></label>
+						<ng-select notFoundText="Không có dữ liệu"  class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+							[(ngModel)]="model.isActived" style="font-weight: 600;">
+						</ng-select>
+						<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
+							<div *ngIf="f.isActived.errors.required">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-10 form-group padding-col">
+						<label class="mb-1 title-role">Thêm người dùng</label>
+						<ng-select notFoundText="Không có dữ liệu"  placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="id" bindLabel="userName" formControlName="userId"
+							[virtualScroll]="true" [(ngModel)]="userId">
+						</ng-select>
+					</div>
+					<div class="col-sm-2 form-group padding-col" style="display: flex;align-items: center;padding : 23px 0px 0px 0px;">
+						<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white center" style="width: 40px; height: 40px;" (click)="onCreateUser()">
+							<i class="bi bi-person-plus"></i>
+						</button>
+					</div>
+					<div class="col-12">
+						<div class="alert alert-dark d-inline-flex fade show py-2 pl-3 pr-2 align-items-center mr-1" style="background: #e2e2e2;"
+							*ngFor="let item of listItemUserSelected">
+							<strong>{{item.text}}</strong>
+							<button type="button" class="close h-100 pl-2" (click)="onRemoveUser(item)"><span><i class="mdi mdi-close"></i></span>
+							</button>
+						</div>
+					</div>
+					<div class="w-100"></div>
+
+
+				</div>
+			</form>
+		</div>
+		<div class="col-md-8">
+			<p class="h4 text-uppercase mt-3">Phân quyền vai trò</p>
+			<div *hasPermission="['3', 'A_X_4']" class="row no-margin">
+				<div class="col-md-12 panel-body mt-3 mb-3" *ngFor="let permisionCategory of listPermissionCategories;let i = index">
+					<mat-checkbox [(ngModel)]="permisionCategory.selected" class="permision-category" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+						(change)="onCategoryChange($event, permisionCategory)" [color]="primary" [disabled]="permisionCategory.disabled">{{ permisionCategory.name }}</mat-checkbox>
+					<hr class="mb-2 mt-1" />
+					<div class="row no-margin" [attr.id]="'groupUS'+ i">
+						<div *ngFor="let function of permisionCategory.function" class="col-md-6 permission-select-layout mt-2 mb-2">
+							<mat-checkbox [(ngModel)]="function.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+								(change)="onFunctionChange($event, function, permisionCategory)" [color]="primary" [disabled]="function.disabled">{{ function.name }}</mat-checkbox>
+							<div class="panel-body no-padding-bottom ml-3" [attr.id]="'functionUS'+ function.id">
+								<div class="permission-select-area" *ngFor="let permission of function.permission">
+									<mat-checkbox [(ngModel)]="permission.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+										(change)="onPermissionChange($event, permission, function, permisionCategory)" [color]="primary" [disabled]="permission.disabled">
+										{{ permission.name }}
+									</mat-checkbox>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *hasNotPermission="['3', 'A_X_4']" class="row no-margin">
+				<div class="col-md-12 panel-body mt-3 mb-3" *ngFor="let permisionCategory of listPermissionCategories;let i = index">
+					<mat-checkbox [(ngModel)]="permisionCategory.selected" class="permision-category" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+						[color]="primary" [disabled]="true">{{ permisionCategory.name }}</mat-checkbox>
+					<hr class="mb-2 mt-1" />
+					<div class="row no-margin" [attr.id]="'groupUS'+ i">
+						<div *ngFor="let function of permisionCategory.function" class="col-md-6 permission-select-layout mt-2 mb-2">
+							<mat-checkbox [(ngModel)]="function.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" class="permision-category"
+								[color]="primary" [disabled]="true">{{ function.name }}</mat-checkbox>
+							<div class="panel-body no-padding-bottom ml-3" [attr.id]="'functionUS'+ function.id">
+								<div class="permission-select-area" *ngFor="let permission of function.permission">
+									<mat-checkbox [(ngModel)]="permission.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
+										[color]="primary" [disabled]="true">
+										{{ permission.name }}
+									</mat-checkbox>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,131 @@
+.form-control {
+	height: 40px;
+	border-radius: 7px;
+}
+
+:host ::ng-deep .form-control.ng-select .ng-select-container {
+	padding-top: 8px;
+}
+
+.bg-administrative-left {
+	background: #f4f6fa;
+	padding: 30px 15px 15px;
+	width: 280px !important;
+}
+
+.group-search {
+	position: relative;
+}
+
+.group-search .form-control {
+	height: 40px;
+	border-radius: 7px;
+}
+
+.group-search .input-group-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-top: 9px;
+	margin-right: 12px;
+}
+
+.list-data {
+	margin: 0;
+	padding: 0;
+}
+
+.list-data li {
+	list-style: none;
+	padding: 10px 0;
+	box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.list-data li:last-child {
+	box-shadow: none;
+}
+
+.list-data li a {
+	color: #222222;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.badge-custom {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	text-align: center;
+	color: #ffffff;
+}
+
+.badge-custom.orange {
+	background: #ee8a4f;
+}
+
+.badge-custom.pink {
+	background: #92486B;
+}
+
+.badge-custom.danger {
+	background: #811E1E;
+}
+
+.badge-custom.danger-bold {
+	background: #581515;
+}
+
+.text-black {
+	color: #222222;
+}
+
+.text-brown {
+	color: #595959;
+}
+
+.show2line {
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.text-blue {
+	color: #2E73D5;
+}
+
+.vertical-top {
+	vertical-align: top;
+}
+
+.form-search {
+	position: relative;
+}
+
+.form-search .form-control {
+	padding-right: 52px;
+}
+
+.form-search a {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 8px;
+	margin-right: 10px;
+	font-size: 18px;
+	color: #707C97
+}
+
+.btn-submit-administration{
+	padding: 0.438rem 1.2rem;
+	font-family: Noto Sans;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 16px;
+	text-transform: inherit;
+	color: #222222;
+}
+.margin-top-16{
+	margin-top: 16px !important;
+}

@@ -1,0 +1,25 @@
+.btn-icon:hover {
+	cursor: pointer;
+}
+
+:host ::ng-deep .treetable-sd thead, :host ::ng-deep .ui-treetable .ui-treetable-thead > tr > th{
+	background-color: #f0f1f5 !important;
+	font-family: Inter;
+	padding: 0.571em 0.557em;
+	border: 1.5px solid rgba(214, 214, 214, 0.8);
+	position: relative;
+}
+:host ::ng-deep .ui-treetable .ui-treetable-tbody > tr > td{
+	color: #222;
+	font-family: Inter;
+	padding: 0.571em 0.857em;
+	background-color: inherit;
+	border: 1px solid #f0f1f5!important;
+}
+:host ::ng-deep .ui-treetable .ui-treetable-tbody>tr{
+	background-color: #fff;
+}
+:host ::ng-deep .ui-treetable .ui-treetable-tbody>tr:nth-child(even){
+	background-color: #FDFCFC  !important;
+}
+

@@ -1,0 +1,36 @@
+<div class="content__title j-content__title j-create_dialog">
+  <button (click)="goBack()" class="back_to_dialog j-back_to_dialog">
+    <i class="material-icons">arrow_back</i>
+  </button>
+  <h1 class="group_chat__title">Tạo mới group chat</h1>
+</div>
+<div class="notifications j-notifications hidden"></div>
+<div class="content__inner j-content__inner">
+  <div class="group_chat__filter __web-inspector-hide-shortcut__">
+    <input [(ngModel)]="textSearch" (keydown.enter)="getUserList()" type="text" autocomplete="off"
+           autocorrect="off" placeholder="Tìm kiếm...">
+  </div>
+  <p class="group__chat__description">Chọn người dùng tham gia:</p>
+  <div class="group_chat__user_list j-group_chat__user_list">
+    <div (click)="toggleSelectItem(user.idQB)" *ngFor="let user of users"
+         [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.idQB) >= 0 }" class="user__item"
+         id="{{ user.idQB }}">
+      <span class="user__avatar avatar-circle mr-2 avatar-custom">{{getShortName(user.fullName)}} </span>
+      
+      <div class="user__details">
+        <p class="user__name">{{ user.fullName }}</p>
+        <p class="user__last_seen">{{ user.unitName }}</p>
+      </div>
+    </div>
+  </div>
+  <form action="" (ngSubmit)="onSubmit()" class="dialog_form m-dialog_form_create j-create_dialog_form"
+        name="create_dialog">
+    <input [(ngModel)]="messageField" [disabled]="selectedUsers.length < 2" autocapitalize="off" autocomplete="off" autocorrect="off"
+           class="dialog_name"
+           name="dialog_name" placeholder="Add conversation name" type="text">
+    <button [disabled]="selectedUsers.length < 2" class="btn m-create_dialog_btn j-create_dialog_btn"
+            name="create_dialog_submit"
+            type="submit">create
+    </button>
+  </form>
+</div>

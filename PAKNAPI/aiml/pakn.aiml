@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<aiml version="1.0">
+<category>
+		<pattern>*</pattern>
+		<template>
+					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không
+					<pakn>json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Sai","image":"","hiddenAnswer":"m45fe4a-d402-451c-b9ed-9c1a04247482"}]}</pakn>
+				</template>
+	</category>
+	<category>
+		<pattern>x245fe4a-d402-451c-b9ed-9c1a04247482</pattern>
+				<template>
+					Tư vấn đang kết nối với bạn
+					<pakn>json{"type":"chat","data":[{"id":"1"}]}</pakn>
+				</template>
+			</category>
+	<category>
+		<pattern>Tôi là *</pattern>
+		<template>
+			Nice to meet you, <set name="xname">
+				<star/>
+			</set>
+		</template>
+	</category>
+	<category>
+		<pattern>Tên tôi *</pattern>
+		<template>
+			Your name is <get name="xname"/>.
+			<pakn/>
+		</template>
+	</category>
+	
+	<category>
+		<pattern>Xin chào</pattern>
+
+		<template>
+			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
+			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
+			<pakn>
+				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Phản ánh kiến nghị","image":"","link":""}]}
+			</pakn>
+		</template>
+	</category>
+
+<category>
+		<pattern>m45fe4a-d402-451c-b9ed-9c1a04247482</pattern>
+
+		<template>
+			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
+			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
+			<pakn>
+				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""}]}
+			</pakn>
+		</template>
+	</category>
+
+	<category>
+		<pattern>Client Đã gửi xong phản ánh kiến nghị</pattern>
+		<template>
+			Cảm ơn <set name = "topic">chúng tôi đã tiếp nhận phản ánh kiến nghị</set>
+		</template>
+	</category>
+
+	<category>
+		<pattern>phản ánh *</pattern>
+		<template>
+			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
+			<pakn>json{"type":"form","data":[{"title":"","image":"","link":"https://pakn.ziz.vn:6160/cong-bo/them-moi-kien-nghi"}]}</pakn>
+		</template>
+	</category>
+	<category>
+		<pattern>Phản ánh *</pattern>
+		<template>
+			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
+			<pakn>json{"type":"form","data":[{"title":"","image":"","link":"https://pakn.ziz.vn:6160/cong-bo/them-moi-kien-nghi"}]}</pakn>
+		</template>
+	</category>
+<category>
+		<pattern> Tra cứu thủ tục * </pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
+		</template>
+
+	</category>
+
+	<category>
+		<pattern> * Tra cứu thủ tục  </pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
+		</template>
+	</category>
+
+	<category>
+		<pattern> Tra cứu thủ tục  </pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
+		</template>
+	</category>
+
+	<category>
+		<pattern> * thủ tục *</pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
+		</template>
+	</category>
+
+
+
+	<category>
+		<pattern>  Tra cứu hồ sơ * </pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
+			</pakn>
+		</template>
+	</category>
+	<category>
+		<pattern>  Tra cứu hồ sơ   </pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
+			</pakn>
+		</template>
+	</category>
+
+	<category>
+		<pattern>* hồ sơ *</pattern>
+		<template>Tra cứu hồ sơ giải quyết Thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
+			</pakn>
+		</template>
+	</category>
+
+</aiml>

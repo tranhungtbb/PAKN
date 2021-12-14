@@ -1,0 +1,186 @@
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between pt-4">
+			<div class="col-lg-8 col-md-8">
+				<ol class="breadcrumb px-0 bg-transparent">
+					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a href="#" class="font-weight-bold">Tin tức sự kiện</a></li>
+				</ol>
+				<div *ngIf="viewDemo || model != null">
+					<h1 style="line-height: 1.5; font-weight: 500;font-size: 28px;line-height: 34px;">
+						<span *ngIf="viewDemo" style="color: red;">(Xem trước) </span>
+						{{model.title}}
+					</h1>
+					<div class="mt-3 mb-2">
+						<time style="font-size: 10pt;">
+							<i class="pi pi-calendar"></i>&nbsp;
+							{{model.createdDate | date:'HH:mm'}} <span>ngày</span> {{model.createdDate | date:'dd/MM/yyyy'}}
+						</time>
+					</div>
+					<!-- <div>
+						<p style="font-weight: bold; text-align: justify;">
+							{{model.summary}}
+						</p>
+					</div> -->
+					<div class="contents" [innerHTML]="model.contents | oembed" style="text-align: justify;">
+					</div>
+
+					<div>
+						<div class="mb-4" *ngIf="files">
+							<!-- <b *ngIf="!files || files.length == 0">Chưa có file media nào</b> -->
+							<ng-container>
+								<div *ngFor="let file of files" class="file-att">
+									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg"
+											style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+										style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+											style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}}</span>
+									</a>
+									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
+										[linkfile]="file.fileAttach" [namefile]="file.name" title="Xem file">
+										<i class="bi bi-eye"></i>
+									</span>
+								</div>
+							</ng-container>
+							<!-- bi bi-x -->
+						</div>
+					</div>
+				</div>
+
+				<p *ngIf="(viewDemo && !model) || !model">Bài viết chưa được công bố</p>
+				<div *ngIf="viewDemo || model">
+					<div class="mb-4">
+						<h5 class="pb-2 border-top text-uppercase pt-4" style="font-size: 14pt;">Bài viết liên quan khác</h5>
+					</div>
+					<div *ngIf="newsRelates && newsRelates.length == 0">Chưa có bài viết liên quan nào</div>
+					<div class="box">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item px-0" *ngFor="let item of newsRelates;index as i"
+								[ngClass]="{'border-bottom':i < newsRelates.length-1}">
+								<div class="media">
+									<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="image-box ratio-5-3 rounded mr-3"
+										style="width: 12rem">
+										<img class="image img-cover" [src]="item.imagePath">
+									</a>
+									<div class="media-body">
+										<div class="createDate">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :
+											'dd/MM/yyyy'}}</div>
+										<p class="h3 my-2">
+											<a class="text-2line title-item-article"
+												routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}">{{item.title}}</a>
+										</p>
+										<p class="mb-0 article-summary">
+											<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="text-3line">{{item.summary}}</a>
+										</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<div class="col-12 col-lg-auto">
+
+					<div class="sb-tk-pakn mb-4">
+						<!-- <div class="d-flex search-ct full-with mb-4">
+							<div class="search-bar center ps-relative search-article full-with">
+								<div class="p-0 m-0 show full-with">
+									<form>
+										<input class="form-control" type="text" (keyup)="changeKeySearch($event)" placeholder="Nhập nội dung tìm kiếm..." aria-label="Search">
+									</form>
+								</div>
+								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
+									<i class="bi bi-search"></i>
+								</span>
+							</div>
+						</div> -->
+						<div class="h4 text-uppercase">
+							Tin tức nổi bật
+						</div>
+						<ul class="list-group list-group-flush">
+							<ng-container *ngFor="let item of newsHightlight;let i = index">
+								<li class="list-group-item px-0" *ngIf="i < 5">
+									<div class="media">
+										<a href="javascript:void(0)" (click)="redirectDetail(item.id)"
+											class="image-box ratio-4-3 rounded mr-3" style="width: 6rem">
+											<img class="image" style="object-fit: cover; width: 100%; height: 100%;" [src]="item.imagePath">
+										</a>
+										<div class="media-body">
+											<small><span class="createDate"
+													style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{item.createdDate | date :
+													'HH:mm'}} ngày
+													{{item.createdDate | date : 'dd/MM/yy'}}</span></small>
+											<p class="h5 mb-0">
+												<a class="text-2line" style="font-size: 15px; color: #3c3c3c;" href="javascript:void(0)"
+													(click)="redirectDetail(item.id)">{{item.title}}</a>
+											</p>
+										</div>
+									</div>
+								</li>
+							</ng-container>
+						</ul>
+					</div>
+
+					<a href="#"><img class="img-fluid card shadow img-hover mt-5" style="width: 100%; height: 250px;"
+							src="../../../../assets/dist/images/article/Rectangle 360.png" alt="">
+					</a>
+
+					<div class="sb-lkWeb mb-2">
+						<div class="tt-v1 pt-3">
+							<h4 class="text-uppercase">liên kết website</h4>
+						</div>
+						<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
+							<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==0"
+									src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==1"
+									src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==2"
+									src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==3"
+									src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+							</a>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

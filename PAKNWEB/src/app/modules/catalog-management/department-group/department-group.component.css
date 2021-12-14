@@ -1,0 +1,12 @@
+strong.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+
+:host ::ng-deep .ui-state-highlight, :host ::ng-deep .ui-sortable-column:hover {
+	background-color: transparent !important;
+	color: #333333 !important;
+}
+:host ::ng-deep .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon{
+	color: #111 !important;
+}

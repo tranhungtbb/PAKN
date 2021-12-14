@@ -1,0 +1,35 @@
+:host ::ng-deep .ck-editor__editable_inline {
+	min-height: 500px;
+}
+.text-area-height {
+	min-height: 200px;
+}
+.news-avatar > img {
+	width: 100%;
+	min-height: 120px;
+}
+.btn-inline {
+	display: inline;
+}
+
+.dis-block {
+	display: block;
+}
+.dis-inline {
+	display: inline;
+}
+.relate-del-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	/* font-style: italic; */
+	font-weight: 100;
+}
+.tb-attach-file {
+	width: 100%;
+}
+.tb-attach-file .inline-block {
+	display: inline-block;
+}
+.tb-attach-file .box-fileinput img {
+}

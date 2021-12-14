@@ -1,0 +1,129 @@
+<div class="content-body">
+	<!-- row -->
+
+	<div class="container-fluid pl-lg-0 pr-0 py-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách thông báo</div>
+				<div class="btn-group group-button-table" role="group">
+
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="notifications" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 5%;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th style="width: 25%;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tên thông báo</strong>
+											
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="model.title" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập tên..." />
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Nội dung thông báo</strong>
+											
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="model.content" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập nội dung..." />
+									</th>
+									<th style="width: 170px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Loại thông báo</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listType" placeholder="Loại thông báo" bindLabel="text" bindValue="value" [(ngModel)]="model.type"
+												[closeOnSelect]="true" (change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 220px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Thời gian thông báo</strong>
+											
+										</p>
+										<div class="input-group">
+											<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker"
+											maxlength="10" appBsDatepickerInvalid [maxDate]="dateNow"
+											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+											<div class="input-group-addon p-2" style="height: 34px;">
+												<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+											</div>
+										</div>
+										
+									</th>
+									<th style="width: 100px;" class="text-right"><strong>THAO TÁC</strong></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<p [ngClass]="{ 'highlight': item.isViewed == true }">{{item.title}}
+										</p>
+									</td>
+									<td>{{item.content}}</td>
+									<td>
+										<span type="button" *ngIf="item.type == 1">Bài viết</span>
+										<span type="button" *ngIf="item.type == 2">Phản ánh kiến nghị</span>
+										<span type="button" *ngIf="item.type == 3">Nhắc việc</span>
+									</td>
+
+									<td>{{item.sendDate | date : 'dd/MM/yyyy HH:mm'}}</td>
+									<td>
+										<div class="hover-active d-flex justify-content-end">
+											<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													class="bi bi-trash"></i></a>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="5">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn xóa thông báo này
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,339 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chờ giải quyết</a></li>
+				</ol>
+				<div class="btn-group group-button-table" role="group">
+					<button type="button" class="btn background-while btn-sm rounded border-0 mr-3 text-dark"
+						(click)="onExport()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+							<path
+								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+							<path
+								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+						</svg>
+						Xuất excel
+					</button>
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white"
+						[routerLink]="['/quan-tri/kien-nghi/them-moi/0']" *hasPermission="['3', 'E_I_0']">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+							viewBox="0 0 16 16">
+							<path
+								d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+						Thêm mới
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+							[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+							[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th style="width: 150px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Mã số</strong>
+
+										</p>
+										<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch.code"
+											maxlength="100" (keydown.enter)="dataStateChange()" />
+										<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input"
+											(click)="dataSearch.code=''">
+											<i class="fa fa-times"></i>
+										</button>
+									</th>
+									<th style="min-width: 150px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tên CN/DN</strong>
+
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name"
+											maxlength="100" (keydown.enter)="dataStateChange()" />
+										<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input"
+											(click)="dataSearch.name=''">
+											<i class="fa fa-times"></i>
+										</button>
+									</th>
+									<th style="min-width: 250px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tiêu đề</strong>
+
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content"
+											maxlength="100" (keydown.enter)="dataStateChange()" />
+										<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input"
+											(click)="dataSearch.content=''">
+											<i class="fa fa-times"></i>
+										</button>
+									</th>
+									<th style="width: 200px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đơn vị tiếp nhận</strong>
+
+										</p>
+										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value"
+												notFoundText="Không có dữ liệu" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>lĩnh vực</strong>
+
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value"
+												notFoundText="Không có dữ liệu" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 160px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+
+										</p>
+									</th>
+									<th style="width: 100px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao
+												tác</strong></p>
+									</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis"
+												title="Xem chi tiết">{{item.code}}</a></strong>
+									</td>
+									<td><a class="ellipsis">{{item.name}}</a></td>
+									<td>
+										<p class="text-2line mb-0">{{item.title}}</p>
+										<p *ngIf="item.isFakeImages" class="text-2line mb-0 red">(Lưu ý: cần xác minh ảnh)</p>
+									</td>
+									<td>{{item.unitName}}</td>
+									<td>{{item.fieldName}}</td>
+									<td>
+										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử
+											lý</span>
+										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối tiếp nhận</span>
+										<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
+										<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
+										<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
+										<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
+										<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
+										<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
+										<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span>
+									</td>
+									<td>
+										<div class="d-flex justify-content-end">
+											<a class="btn-icon grd-brown2 text-white mr-2"
+												*ngIf="item.unitReceiveId == unitLoginId && item.isForwardProcess"
+												(click)="preProcess(item.id,item.processId,4,item.isForwardProcess)"
+												title="Gửi lại trung tâm tiếp nhận">
+												<i class="bi bi-arrow-left-square"></i>
+											</a>
+											<a class="btn-icon grd-xanhngoc2 text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"
+												(click)="preProcess(item.id,item.processId,2,item.isForwardProcess)"
+												title="Tiếp nhận giải quyết">
+												<i class="bi bi-file-earmark-check"></i></a>
+											<a class="btn-icon grd-red text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"
+												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess)" title="Từ chối giải quyết">
+												<i class="bi bi-file-earmark-break"></i></a>
+
+											<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId  && item.isForwardUnitChild)"
+												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess,true)"
+												class="btn-icon grd-red text-white mr-2" title="Từ chối giải quyết từ đơn vị"><i
+													class="bi bi-file-earmark-minus"></i></a>
+
+											<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories(item.id)"
+												title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="8">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalAccept">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					{{titleAccept}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onProcessAccept()">Xác
+					nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalForward">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="panel panel-default no-margin">
+				<div class="modal-header">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Xác nhận</p>
+				</div>
+				<div class="modal-body no-padding-bottom form-horizontal">
+					<p class="h4 text-center mb-3">Anh/Chị có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này?</p>
+
+					<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
+						<div class="form-row">
+							<div class="col-12 col-lg-12 form-group">
+								<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
+								<ng-select class="form-control border-input" [items]="unitForward" bindLabel="text" bindValue="value"
+									notFoundText="Không có dữ liệu" formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
+									[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
+								<div
+									*ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.unitReceiveId.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 form-group">
+								<label class="mb-1">Nội dung</label>
+								<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
+									placeholder="Nhập nội dung..." maxlength="500"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+						data-dismiss="modal">Hủy</button>
+					<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessForward()">Xác
+						nhận</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalReject">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
+				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do..."
+					[(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
+				<ng-container *ngIf="isForwardProcess">
+					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
+						<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord"
+							id="basic_checkbox_1">
+						<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
+					</div>
+					<ng-select *ngIf="modelProcess.reactionaryWord" placeholder="Chọn nhóm từ ngữ" class="form-control"
+						notFoundText="Không có dữ liệu" [items]="lstGroupWord" bindLabel="text" bindValue="value"
+						[(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
+					</ng-select>
+				</ng-container>
+			</div>
+			<div class="modal-footer justify-content-center border-top-0">
+				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger grd-red" (click)="onProcessDeny()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade pr-0" id="modal-history-pakn">
+	<div class="modal-dialog modal-dialog-right vh-100" role="document">
+		<div class="modal-content rounded-0">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử quy trình xử lý</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body py-3">
+				<div id="DZ_W_TimeLine" class="widget-timeline h-100 dz-scroll">
+					<ul class="timeline">
+						<li *ngFor="let item of lstHistories">
+							<div *ngIf="item.status == 1" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 2" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 3" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 4" class="timeline-badge primary"></div>
+							<div *ngIf="item.status == 5" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 6" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 7" class="timeline-badge primary"></div>
+							<div *ngIf="item.status == 8" class="timeline-badge success"></div>
+							<div *ngIf="item.status == 9" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 10" class="timeline-badge success"></div>
+							<div *ngIf="item.status == 11" class="timeline-badge info"></div>
+							<div class="timeline-panel">
+								<p class="mb-2 h5">Người dùng: <strong>{{item.createdByName}}</strong></p>
+								<p class="mb-2 d-flex justify-content-between align-items-center">
+									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi
+										tạo</span>
+									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Gửi xử lý</span>
+									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối tiếp nhận</span>
+									<span *ngIf="item.status == 4" class="badge rounded-pill mb-0 bg-blue2">Đã tiếp nhận</span>
+									<span *ngIf="item.status == 5" class="badge rounded-pill mb-0 badge-outline-green2">Đã gửi giải
+										quyết</span>
+									<span *ngIf="item.status == 6" class="badge rounded-pill mb-0 bg-red">Từ chối giải quyết</span>
+									<span *ngIf="item.status == 7" class="badge rounded-pill mb-0 badge-outline-blue">Đang giải
+										quyết</span>
+									<span *ngIf="item.status == 8" class="badge rounded-pill mb-0 badge-outline-success">Đã gửi phê
+										duyệt</span>
+									<span *ngIf="item.status == 9" class="badge rounded-pill mb-0 bg-red">Từ chối phê duyệt</span>
+									<span *ngIf="item.status == 10" class="badge rounded-pill mb-0 badge-success">Đã giải quyết</span>
+									<span *ngIf="item.status == 11" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã cập
+										nhật</span>
+									<span class="text-dark mb-0">{{item.createdDate | date:'HH:mm | dd/MM/yyyy'}}</span>
+								</p>
+								<p class="mb-0 h5"><strong innerHTML="{{item.content | Change}}"></strong></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

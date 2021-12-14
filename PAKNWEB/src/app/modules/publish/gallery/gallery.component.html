@@ -1,0 +1,30 @@
+<div class="sb-lkWeb mb-2">
+	<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
+		<h4 class="text-uppercase border-bottom-blue">liên kết website</h4>
+	</div>
+	<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
+		<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
+			<img class="img-fluid card rounded img-cover mb-0 mt-3" *ngIf="i==0"
+				src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+			<img class="img-fluid card rounded img-cover mb-0 mt-3" *ngIf="i==1"
+				src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+			<img class="img-fluid card rounded img-cover mb-0 mt-3" *ngIf="i==2"
+				src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+			<img class="img-fluid card rounded img-cover mb-0 mt-3" *ngIf="i==3"
+				src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+		</a>
+	</ng-container>
+</div>
+
+<!-- <div class="sb-lkWeb mb-3">
+	<div class="tt-v1 pt-3">
+		<h4 class="text-uppercase">thư viện ảnh</h4>
+	</div>
+	<div class="p-3 shadow border border-radius-gallery">
+		<div class="row p-2">
+			<div class="col-4 p-1" *ngFor="let image of _albums; let i=index">
+				<img [src]="image.thumb" class="img-cover" (click)="open(i)" />
+			</div>
+		</div>
+	</div>
+</div> -->

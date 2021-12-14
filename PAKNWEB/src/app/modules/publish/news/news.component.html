@@ -1,0 +1,170 @@
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between pt-4">
+			<div class="col-lg-8" style="box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.25);">
+				<div class="row">
+					<div class="col-lg-8 col-xs-12">
+						<a *ngIf="newHighLight" routerLink="/cong-bo/tin-tuc-su-kien/{{newHighLight.id}}">
+							<img class="img-fluid card shadow mb-1 img-cover" *ngIf="newHighLight" style="height: 369px;"
+								src="{{newHighLight.imagePath}}" alt="{{newHighLight.title}}">
+						</a>
+						<div class="h2 text-2line mt-3 cursor" (click)="redirectDetail(newHighLight.id)">
+							{{newHighLight.title}}
+						</div>
+					</div>
+					<div class="col-lg-4 col-xs-12">
+						<div class="box">
+							<div class="tt-v1 mb-0 d-flex justify-content-between pb-3">
+								<h4 class="text-uppercase">TIN TỨC SỰ KIỆN</h4>
+							</div>
+
+							<div class="list-article">
+								<ul>
+									<ng-container *ngFor="let item of listNewHighLight; let i = index">
+										<li *ngIf="i > 2 && i < 9" [ngClass]="{'border-top-none' : i == 3}">
+											<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}">
+												{{item.title}}
+											</a>
+										</li>
+									</ng-container>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ng-container *ngFor="let item of listNewHighLight; let i = index">
+						<div class="col-lg-4 col-sm-6 col-xs-12 mt-5" *ngIf="i < 3">
+							<div class="card mb-lg-0">
+								<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="image-box ratio-16-9 bd-12">
+									<span class="image">
+										<img class="img-cover" src="{{item.imagePath}}" title="{{item.title}}">
+									</span>
+								</a>
+							</div>
+							<p class="title-article text-3line mt-3 cursor" (click)="redirectDetail(item.id)">
+								{{item.title}}
+							</p>
+						</div>
+					</ng-container>
+				</div>
+			</div>
+			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right></app-statistics-right>
+			</div>
+		</div>
+
+		<div class="row justify-content-between pt-5 pb-5">
+			<div class="col-lg-8 box-gray">
+				<div class="box mt-4 mb-1">
+					<ul class="category-article">
+						<li class="d-inline-block" *ngFor="let item of listNewsType">
+							<a class="text-uppercase h5 px-3 cursor" (click)="dataStateChange(item.value)"
+								[ngClass]="{'active' : query.newsType == item.value}">{{item.text}}</a>
+						</li>
+					</ul>
+				</div>
+				<!-- list tin tức -->
+
+				<div class="box">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item px-0" *ngFor="let item of listData">
+							<div class="media">
+								<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="image-box ratio-5-3 rounded mr-3"
+									style="width: 12rem">
+									<img class="image" style="object-fit: cover; width: 100%; height: 100%;" title="{{item.title}}"
+										[src]="item.imagePath">
+								</a>
+								<div class="media-body">
+									<div class="createDate">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :
+										'dd/MM/yyyy'}}</div>
+									<p class="h3 my-2">
+										<a class="text-2line title-item-article"
+											routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}">{{item.title}}</a>
+									</p>
+									<p class="mb-0 article-summary">
+										<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="text-3line">{{item.summary}}</a>
+									</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!-- justify-content-between -->
+				<nav aria-label="navigation" *ngIf="listData.length > 0">
+					<ul class="pagination pagination-lg justify-content-end align-items-center">
+						<li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == 1 }">
+							<a (click)="changePagination(query.pageIndex - 1)" class="page-link border rounded-pill p-1 pr-3 cursor"
+								tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
+									class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+						</li>
+						<li class="d-flex justify-content-center align-items-center">
+							<a *ngIf="query.pageIndex > 4">...</a>
+							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index"
+								[ngClass]="{ 'active': item.index === query.pageIndex }">
+								<a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex"
+									class="page-link cursor">{{item.index}}</a>
+							</p>
+							<a *ngIf="query.pageIndex < pagination.length -4">...</a>
+						</li>
+						<li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == totalRecords }">
+							<a (click)="changePagination(query.pageIndex + 1)" class="page-link border rounded-pill p-1 cursor">
+								&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+			</div>
+			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0 box-gray">
+				<div class="sb-lkWeb mb-2">
+					<div class="tt-v1 pt-5">
+						<h4 class="text-uppercase">liên kết website</h4>
+					</div>
+					<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
+						<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
+							<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==0"
+								src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+							<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==1"
+								src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+							<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==2"
+								src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+							<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==3"
+								src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+						</a>
+					</ng-container>
+				</div>
+
+				<a href="#"><img class="img-fluid card shadow img-hover mt-5" style="width: 100%; height: 250px;"
+						src="../../../../assets/dist/images/article/Rectangle 360.png" alt=""></a>
+			</div>
+		</div>
+
+		<div class="row justify-content-between pb-5">
+			<a href="#"><img class="img-fluid card shadow mb-1" style="width: 100%; object-fit: fill;"
+					src="../../../assets/dist/images/Rectangle 360.png" alt=""></a>
+			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+				<a href="#">
+					<img class="img-fluid card shadow bd-20 img-cover" src="../../../../assets/dist/images/child-banner-1.png"
+						alt="">
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+				<a href="#">
+					<img class="img-fluid card shadow bd-20 img-cover" src="../../../../assets/dist/images/child-banner-2.png"
+						alt="">
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+				<a href="#">
+					<img class="img-fluid card shadow bd-20 img-cover" src="../../../../assets/dist/images/child-banner-3.png"
+						alt="">
+				</a>
+			</div>
+			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+				<a href="#">
+					<img class="img-fluid card shadow bd-20 img-cover" src="../../../../assets/dist/images/child-banner-4.png"
+						alt="">
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

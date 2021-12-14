@@ -1,0 +1,168 @@
+<div class="tab-pane fade show active" id="dk-canhan" role="tabpanel">
+	<div class="mx-0">
+		<div class="row mx-0 border border-brown rounded-xl">
+			<div class="col-12 col-lg-3 border-right p-4 border-brown">
+				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
+				<form [formGroup]="formLogin" class="px-3" autocomplete="off">
+					<div class="form-group">
+						<label class="mb-1">Số CMND/CCCD<span class="cl-red">(*)</span></label>
+						<input maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px"
+							pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+
+						<div *ngIf="(fLoginSubmitted && fLogin.iDCard.invalid)||(fLogin.iDCard.invalid && (fLogin.iDCard.dirty || fLogin.iDCard.touched))" class="has-error m-b-12">
+							<div *ngIf="fLogin.iDCard.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+							<div *ngIf="fLogin.iDCard.errors.pattern">
+								<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
+							</div>
+						</div>
+						<div *ngIf="checkExists['IDCard'] && model.iDCard" class="has-error m-b-12">
+							<div *ngIf="checkExists['IDCard']">
+								<span class="help-block">Số CMND/CCCD đã tồn tại</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
+						<input svDisabledSpaceKey [(ngModel)]="model.password" pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" formControlName="password" type="password"
+							placeholder="Nhập..." autocomplete="off" class="form-control border-brown h-34px rounded-6px" value="">
+						<div *ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="fLogin.password.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+							<div *ngIf="fLogin.password.errors.pattern">
+								<span class="help-block">Mật khẩu phải lớn hơn 6 ký tự và bao gồm cả chữ và số!</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
+						<input svDisabledSpaceKey [(ngModel)]="model.rePassword" formControlName="rePassword" type="password" placeholder="Nhập..." autocomplete="off"
+							class="form-control border-brown h-34px rounded-6px" value="">
+						<div *ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="fLogin.rePassword.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+							<div *ngIf="fLogin.rePassword.errors.mustMatch">
+								<span class="help-block">Mật khẩu không khớp!</span>
+							</div>
+						</div>
+					</div>
+					<p class="font-italic mb-0">Sử dụng 6 ký tự trở lên, bao gồm cả ký tự chữ và số</p>
+				</form>
+			</div>
+			<div class="col-12 col-lg-9 p-4 border-brown">
+				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin cá nhân</span></h4>
+				<form [formGroup]="formInfo" class="form-row px-3" autocomplete="off">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
+						<input [svTrim] maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="h-34px rounded-6px form-control border-brown">
+						<div *ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))" class="has-error m-b-12">
+							<div *ngIf="fInfo.fullName.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+							<div *ngIf="fInfo.fullName.errors.maxlength">
+								<span class="help-block">Chỉ nhập tối đa 100 ký tự</span>
+							</div>
+						</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
+						<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
+							class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Phone',$event.target.value)">
+						<div *ngIf="(fLoginSubmitted && fInfo.phone.invalid)||(fInfo.phone.invalid && (fInfo.phone.dirty || fInfo.phone.touched))" class="has-error m-b-12">
+							<div *ngIf="fInfo.phone.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+							<div *ngIf="fInfo.phone.errors.pattern">
+								<span class="help-block">Số điện thoại không đúng</span>
+							</div>
+						</div>
+						<div *ngIf="checkExists['Phone'] && fInfo.phone.valid" class="has-error m-b-12">
+							<div *ngIf="checkExists['Phone']">
+								<span class="help-block">Số điện thoại đã tồn tại</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1">Email</label>
+						<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px"
+							(change)="onCheckExist('Email',$event.target.value)">
+						<!--  -->
+						<div *ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))" class="has-error m-b-12">
+							<div *ngIf="fInfo.email.errors.email">
+								<span class="help-block">Email không hợp lệ</span>
+							</div>
+						</div>
+						<div *ngIf="checkExists['Email'] && fInfo.email.valid" class="has-error m-b-12">
+							<div *ngIf="checkExists['Email']">
+								<span class="help-block">Email đã tồn tại</span>
+							</div>
+						</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
+						<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px">
+						<!--  -->
+						<div *ngIf="(fLoginSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))" class="has-error m-b-12">
+							<div *ngIf="fInfo.address.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="w-100"></div>
+					
+				</form>
+			</div>
+		</div>
+		<p class="cl-red font-italic mt-3">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một lần để sử dụng nhiều lần trên hệ thống</p>
+		<div class="card-body d-flex justify-content-end px-0">
+			<a (click)="backToHome()" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px">
+				<i class="bi bi-arrow-left"></i>
+				Quay lại
+			</a>
+			<button type="button" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px text-dark" (click)="onReset()">Hủy</button>
+			<button type="button" class="btn text-white border-light no-grd-blue px-5 rounded-10px h-48px" (click)="onPreShowOtp()">Đăng ký</button>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal-otp">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block">
+				<h3 class="modal-title text-center text-uppercase">xác thực mã otp</h3>
+				<p class="text-center">Mã xác thực đã được gửi về SĐT:</p>
+				<p class="text-center mb-0 font-weight-bold" style="font-size: 22px">{{phoneHide}}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="background: #F8FBFF">
+				<div class="otp-code">
+					<p class="text-center title-otp">Nhập mã OTP</p>
+					<div class="input-group-otp d-flex justify-content-center">
+						<input type="text" id="input_1" (keyup)="onChange($event,1)" [(ngModel)]="otp_1" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_2" (keyup)="onChange($event,2)" [(ngModel)]="otp_2" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_3" (keyup)="onChange($event,3)" [(ngModel)]="otp_3" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_4" (keyup)="onChange($event,4)" [(ngModel)]="otp_4" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_5" (keyup)="onChange($event,5)" [(ngModel)]="otp_5" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_6" (keyup)="onChange($event,6)" [(ngModel)]="otp_6" numbersOnly maxlength="1" class="form-control border-brown text-center">
+					</div>
+				</div>
+			</div>
+			<div class="text-center mt-2">
+				<p class="mr-2">Bạn chưa nhận được mã? <a (click)="clearOTP()" class="red">Gửi lại OTP</a></p>
+			</div>
+			<div class="modal-footer justify-content-center border-0">
+				<button type="button" class="btn no-grd-blue text-white rounded-xl border-0 text-uppercase my-3" (click)="onSave()">Xác thực</button>
+			</div>
+		</div>
+	</div>
+</div>
+

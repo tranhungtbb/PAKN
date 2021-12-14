@@ -1,0 +1,424 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a class="">Email</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
+				</ol>
+				<div class="btn-group group-button-table" role="group">
+				
+					<button type="button" *hasPermission="['3', 'B_I_6']" class="btn grd-blue btn-sm rounded border-0 text-white" routerLink="/quan-tri/email-sms/email/create">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+					Soạn thư
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="query.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tiêu đề</strong>
+											
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="query.title" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập..." />
+										<button *ngIf="query.title" class="btn bg-transparent btn-clear-input" (click)="query.title=''">
+											<i class="fa fa-times"></i>
+										</button>
+									</th>
+
+									<th style="width: 200px; max-width: 250px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đơn vị nhận</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." [(ngModel)]="query.unitName" [closeOnSelect]="true" style="width: 200px !important;"
+												(change)="dataStateChange()">
+												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
+													{{nt.name}}
+												</ng-option>
+											</ng-select>
+										</div>
+									</th>
+
+									<th style="width: 200px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đối tượng nhận</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+											<ng-select class="" [items]="listCategory" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="query.objectId"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 180px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											
+										</p>
+										<div *ngIf="!isSentLst" class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái" bindLabel="text" bindValue="value" [(ngModel)]="query.status"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 168px !important;" class="text-center"><strong>THAO TÁC</strong></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<span *hasNotPermission="['3', 'B_I_3']">
+											<strong class="highlight" style="cursor: pointer;" title="Xem chi tiết"><a class="ellipsis">{{item.title}}</a></strong>
+										</span>
+										<span *hasPermission="['3', 'B_I_3']">
+											<strong class="highlight" style="cursor: pointer;" title="Xem chi tiết"><a class="ellipsis" (click)="getDetail(item.id)">{{item.title}}</a></strong>
+										</span>
+									</td>
+									<td>
+										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.unitName}}</p>
+									</td>
+									<td>{{item.objectName}}</td>
+									<td>
+										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
+										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill bg-blue-light">Đã gửi</span>
+									</td>
+									<td style="text-align: center;">
+										<div class="d-flex justify-content-end">
+											<ng-container *ngIf="!isSentLst">
+												<span *hasPermission="['3', 'B_I_0']">
+													<a *ngIf="item.status == 1" title="Gửi" class="btn-icon grd-blue text-white mr-2 cursor" style="cursor: pointer;" (click)="onSend(item)">
+														<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+															<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
+															-0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 
+															14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 
+															14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 
+															-0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 
+															14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 
+															3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z" fill="white">
+		
+															</path>
+														</svg>
+													</a>
+												</span>
+												<span *hasPermission="['3', 'B_I_7']">
+													<a *ngIf="item.status == 1" [routerLink]="['/quan-tri/email-sms/email/edit',item.id]" 
+														class="btn-icon grd-brown text-brown mr-2 cursor" title="Cập nhập">
+														<i class="bi bi-pencil-square"></i>
+													</a>
+												</span>
+											</ng-container>
+											<span *hasPermission="['3', 'B_I_4']">
+												<a *ngIf="item.status == 1" (click)="confirm(item.id)" title="Xóa" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn">
+													<i class="bi bi-trash"></i>
+												</a>
+											</span>
+											<span *hasPermission="['3', 'B_I_5']">
+												<a class="btn-icon" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											</span>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="6">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalConfirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn xóa dự thảo email này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có xác nhận gửi email này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onUpdateStatusTypeSend()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalHisSMS">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử Email</p>
+				<button type="button" class="close" data-dismiss="modal" (click)="clearModelHis()"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #table2 [value]="hisPagedList" [lazy]="true" (onLazyLoad)="onPageChangeHis($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisQuery.pageSize" [totalRecords]="hisTotalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th style="width: 5%">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>STT</strong>
+								</p>
+							</th>
+
+							<th style="width: 40%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Nội dung</strong>
+									
+								</p>
+								<input class="form-control form-control-sm" trim [(ngModel)]="hisQuery.content" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập nội dung..." />
+							</th>
+
+							<th style="width: 20%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Người tạo</strong>
+									
+								</p>
+								<input class="form-control form-control-sm" trim [(ngModel)]="hisQuery.createdBy" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập tên..." />
+							</th>
+
+							<th style="width: 15%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Ngày tạo</strong>
+									
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<input id="fieldHisCratedDate" class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisQuery.createdDate"
+										appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" (change)="dataStateChange2()" (keydown.enter)="dataStateChange2()"/>
+									<div class="input-group-addon">
+										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+									
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<ng-select class="" [items]="listHisStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="hisStatus"
+										[closeOnSelect]="true" [(ngModel)]="hisQuery.status" (change)="dataStateChange2()">
+									</ng-select>
+								</div>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td class="text-center">{{rowIndex + 1}}</td>
+							<td>
+								<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.content}}</a></strong>
+							</td>
+
+							<td>
+								<p>{{item.fullName}}</p>
+							</td>
+							<td>
+								<p>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
+							</td>
+							<td>
+								<span type="button" *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
+								<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span type="button" *ngIf="item.status == 2" class="badge rounded-pill bg-blue-light">Đã gửi</span>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">{{modelView.Data.title}}</p>
+					</div>
+					<div class="modal-body no-padding-bottom pt-0">
+						<div class="" >
+							<div class="w-100 border-bottom mt-3 mb-3"></div>
+							<div class="">
+								<p style="margin: 16px 0px; font-size: 18px;">{{modelView.Data.content}}</p>
+							</div>
+							
+							<div *ngIf="modelView.ListBusinessIndividual && modelView.ListBusinessIndividual.length > 0">
+								<div class="w-100 border-bottom mt-3 mb-3"></div>
+								<div class=" title-user-map">
+									<p class="text-uppercase" style="font-size: 18px; font-weight: 500;">Cá nhân doanh nghiệp nhận Email</p>
+								</div>
+									<div class="row">
+										<div class="col-sm-3" style="padding: 5px !important;" *ngFor="let item of modelView.ListBusinessIndividual">
+											<div class="item-user">
+												<div class="info-user padding-item" style="padding-left: 0px;">
+													<div class="title">{{item.unitName}}</div>
+													<div class="department mb-0 text-1line" title="{{item.objectName}}">{{item.objectName}}</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="w-100"></div>
+								
+							</div>
+							
+							<div *ngIf="modelView.ListAttachment && modelView.ListAttachment.length > 0">
+								<div class="w-100 border-bottom mt-3 mb-3"></div>
+								<div class="mb-2 title-user-map">
+									<p class="text-uppercase" style="font-size: 18px; font-weight: 500;">Tài liệu đính kèm</p>
+								</div>
+								<div class="attach-file" style="display: flex;">
+									<div class="row">
+										<ng-container *ngFor="let item of modelView.ListAttachment">
+											<div class="col-auto mb-4" *ngIf="item.fileType == 0">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a class="d-block text-center box-fileinput">
+														<img (click)="previewFile(item)" src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 7">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+		
+										</ng-container>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

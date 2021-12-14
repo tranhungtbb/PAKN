@@ -1,0 +1,10 @@
+.white-space-break-line {
+  white-space: pre-wrap;
+}
+.breadcrumb-item a {
+	color: #222;
+}
+
+:host ::ng-deep em{
+  font-weight: bold;
+}

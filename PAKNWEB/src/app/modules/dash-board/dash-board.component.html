@@ -1,0 +1,262 @@
+<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body" style="border-radius: 20px 20px 0 0">
+	<!-- row -->
+	<div class="container-fluid ct-dashboard py-3 pl-3 pr-3">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<div class="h4 title-dash-board">HỆ THỐNG THÔNG TIN TIẾP NHẬN, XỬ LÝ PHẢN ÁNH, KIẾN NGHỊ TỈNH KHÁNH HOÀ</div>
+				</div>
+			</div>
+			<div class="col main-dashboard">
+				<div class="card mb-0 top-banner">
+					<div class="media pt-4 px-2 px-lg-5" style="padding-bottom: 120px">
+						<img class="icon-banner mr-3" src="../../../assets/dist/images/icon-banner.svg" alt="...">
+						<div class="media-body">
+							<h3 class="mt-0 cl-brown text-uppercase text-banner text-center" style="line-height: 2rem">Hệ thống thông
+								tin tiếp nhận, xử lý phản ánh, kiến nghị dành cho người dân, doanh nghiệp tỉnh Khánh Hòa</h3>
+							<!-- <p class="cl-brown d-none d-lg-block">Hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị của người dân, doanh nghiệp về kinh tế - xã hội tỉnh Khánh Hòa</p> -->
+						</div>
+					</div>
+				</div>
+				<div class="row mx-0" *ngIf="isUnitMain" style="margin-top: -110px">
+					<ng-container *ngIf="!isApprove">
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN chờ tiếp nhận</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-xu-ly']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_2']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_2']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN đã chuyển đơn vị</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_5']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_5']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN phân phối lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="isApprove">
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN cần phê duyệt</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>{{dataAll['stt_8']?.per_8}}/10</span>
+
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_8']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN đơn vị xử lý lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_6}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+
+				</div>
+
+				<div class="row mx-0" *ngIf="!isUnitMain" style="margin-top: -110px">
+					<ng-container *ngIf="!isApprove">
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN chờ tiếp nhận</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_5']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_5']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN phân phối lại </p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-giai-quyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-lg-4 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN đơn vị xử lý lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_9']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_9']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="isApprove">
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN cần phê duyệt</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/cho-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_8']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_8']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-lg-6 text-center">
+							<div class="card py-3 py-xl-4">
+								<p class="card-title h4 mb-4">PAKN đơn vị xử lý lại</p>
+								<div class="position-relative">
+									<a [routerLink]="['/quan-tri/kien-nghi/tu-choi-phe-duyet']">
+										<span class="data-attr"
+											data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_9']?.per_10}}/10</span>
+										<span class="h1 position-absolute number-chart">{{dataAll['stt_9']?.total || 0}}</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</ng-container>
+
+				</div>
+
+				<div class="card mx-lg-4">
+					<app-recommnendation-get-list></app-recommnendation-get-list>
+				</div>
+			</div>
+			<div class="col-12 col-lg-auto z-index-1 right-dashboard px-3 px-lg-0">
+				<div class="card mb-3 px-3 py-2 d-none d-lg-block" style="margin-top: -35px">
+					<app-weather></app-weather>
+				</div>
+				<div class="card p-4 sb-tk-pakn mb-4">
+					<div class="tt-v1 pb-3">
+						<h4 class="text-uppercase">Thống kê công việc</h4>
+						<p class="mb-0">Thống kê những công việc mà đơn vị bạn đã xử lý trong 7 ngày qua</p>
+					</div>
+					<div class="card-body p-0">
+						<a [routerLink]="['/quan-tri/kien-nghi/tiep-nhan-xu-ly']">
+							<p class="mb-1">Tiếp nhận Phản ánh, kiến nghị
+								<span class="pull-right font-weight-bold cl-blue2 counter">{{dataGraph['stt_4']?.total || 0}}</span>
+							</p>
+							<div class="progress ">
+								<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_4']?.per_100+'%'">
+								</div>
+							</div>
+						</a>
+						<a [routerLink]="['/quan-tri/kien-nghi/dang-giai-quyet']">
+							<p class="mb-1 mt-4">Phản ánh, kiến nghị đang giải quyết
+								<span class="pull-right font-weight-bold cl-blue counter">{{dataGraph['stt_7']?.total || 0}}</span>
+							</p>
+							<div class="progress ">
+								<div class="progress-bar grd-blue progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_7']?.per_100+'%'">
+								</div>
+							</div>
+						</a>
+
+						<a [routerLink]="['/quan-tri/kien-nghi/da-giai-quyet']">
+							<p class="mb-1 mt-4">Phản ánh, kiến nghị đã giải quyết
+								<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_10']?.total || 0}}</span>
+							</p>
+							<div class="progress ">
+								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_10']?.per_100+'%'">
+								</div>
+							</div>
+						</a>
+
+						<a [routerLink]="['/quan-tri/kien-nghi/danh-sach-tong-hop']">
+							<p class="mb-1 mt-4">Từ chối Phản ánh, kiến nghị
+								<span class="pull-right font-weight-bold cl-red counter">{{dataGraph['stt_3']?.total || 0}}</span>
+							</p>
+							<div class="progress ">
+								<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraph['stt_3']?.per_100+'%'">
+								</div>
+							</div>
+						</a>
+
+						<a [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop']">
+							<p class="mb-1 mt-4">TTHC đã công bố
+								<span class="pull-right font-weight-bold cl-green counter">{{dataGraphTTHC['stt_3']?.total || 0}}</span>
+							</p>
+							<div class="progress ">
+								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraphTTHC['stt_3']?.per_100_TTHC+'%'">
+								</div>
+							</div>
+						</a>
+
+						<a [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop']">
+							<p class="mb-1 mt-4">TTHC đã thu hồi
+								<span class="pull-right font-weight-bold cl-brown counter">{{dataGraphTTHC['stt_2']?.total || 0}}</span>
+							</p>
+							<div class="progress ">
+								<div class="progress-bar grd-brown2 progress-animated" style="height:6px;" role="progressbar"
+									[style.width]="dataGraphTTHC['stt_2']?.per_100_TTHC+'%'">
+								</div>
+							</div>
+						</a>
+
+
+					</div>
+				</div>
+				<div class="alert alert-nv alert-dark alert-dismissible shadow rounded fade show"
+					*ngFor="let item of listRemind">
+					<p class="mb-0 cl-brown">Nhắc việc</p>
+					<span class="small d-block mb-2">{{item.dateSend | date : 'HH:mm | dd/MM/yyy'}}</span>
+					<p class="text-2line mb-0 text-dark"><a
+							routerLink="/quan-tri/kien-nghi/chi-tiet/{{item.recommendationId}}">{{item.content}}</a></p>
+					<!-- <button type="button" class="close px-3" data-dismiss="alert" aria-label="Close"><span><i
+								class="mdi mdi-close"></i></span>
+					</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--**********************************
+            Content body end
+        ***********************************-->
+<!-- Dashboard -->
+<script src="assets/dist/js/dashboard/dashboard-1.js"></script>

@@ -1,0 +1,32 @@
+<div *hasPermission="['3', 'E_I_3']">
+	<div *ngIf="listData && listData.length > 0" class="card-header" style="background: #DDEDFF">
+		<h5 class="card-title title-list-rm">{{title}}</h5>
+		<span class="badge badge-rounded bg-white text-dark" style="font-size: 1.2rem; cursor: pointer;" (click)="redirectList()">{{totalRecords}}</span>
+	</div>
+	<div *ngIf="listData && listData.length > 0" class="card-body pb-2">
+		<div *ngFor="let item of listData" class="card border-bottom mb-3 p-0 shadow-none rounded-0">
+			<div class="card-header p-0 d-flex align-items-center">
+				<div class="media align-items-center">
+					<div class="avatar-circle mr-2" style="background: #EBF2FF; " [innerHTML]="getShortName(item.name)">
+					</div>
+					<div class="media-body">
+						<p class="my-0 h5">{{item.name}}</p>
+					</div>
+				</div>
+	
+				<span style="display: flex;">
+					<p style="padding: 0px;"> {{item.createdDate | date:"dd"}}</p>
+					<p style="padding: 0px; margin: 0px 3px;">Tháng</p>
+					<p style="padding: 0px;">{{item.createdDate | date : "MM yyyy HH:mm a"}}</p>
+				</span>
+			</div>
+			<div class="card-body px-0 py-3">
+				<p class="card-text mb-1">
+					<a class="h4" [routerLink]="['../kien-nghi/chi-tiet',item.id]">
+						{{item.title}}
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

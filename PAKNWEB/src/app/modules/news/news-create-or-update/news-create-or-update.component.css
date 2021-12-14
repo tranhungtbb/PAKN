@@ -1,0 +1,67 @@
+:host ::ng-deep .ck-editor__editable_inline {
+	min-height: 500px;
+}
+.text-area-height {
+	min-height: 200px;
+}
+.news-avatar > img {
+	width: 100%;
+	min-height: 120px;
+}
+.btn-inline {
+	display: inline;
+}
+
+.dis-block {
+	display: block;
+}
+.dis-inline {
+	display: inline;
+}
+.relate-del-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	/* font-style: italic; */
+	font-weight: 100;
+}
+
+.item-news-relate {
+	display: flex;
+	border-radius: 10px;
+	position: relative;
+}
+
+.info-upload-avartar{
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100px;
+	width: fit-content;
+	color: #222;
+}
+.br-15px{
+	border-radius: 15px;
+}
+.br-8px{
+	border-radius: 8px;
+}
+.flex-1{
+	flex: 1 1 0;
+	font-family: Inter;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+	flex-direction: row;
+	align-items: center;
+}
+.title-upload{
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 20px;
+}

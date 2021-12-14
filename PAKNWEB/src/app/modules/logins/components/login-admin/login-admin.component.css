@@ -1,0 +1,52 @@
+.help-block {
+	color: red;
+	font-size: 14px;
+	font-style: italic;
+}
+.btn {
+	display: block;
+	width: 100%;
+}
+
+.hight-light:hover {
+	color: #ee5454;
+}
+
+a.hight-light:hover {
+	color: #ee5454;
+}
+.img-fluid {
+	width: 100%;
+	height: 100%;
+	max-height: 100vh;
+	object-fit: cover;
+}
+.custom-tab-1 {
+	padding-top: calc((100vh - 610px) / 2);
+}
+.custom-show-pass{
+	position: absolute;
+	top: 12px;
+	right: 26px;
+	font-size: 20px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus{
+	outline:none;
+	box-shadow:none;
+}
+.btn-back-home{
+	color: #212529;
+	background-color: #c8c8c8;
+	font-size: 20px;
+}
+
+.form-login{
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 20px;
+}
+.img-fluid{
+	height: 100%;
+	width: 85%;
+	object-fit: fill;
+}

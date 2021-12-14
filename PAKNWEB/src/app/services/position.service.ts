@@ -1,0 +1,53 @@
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { ServiceInvokerService } from '../commons/service-invoker.service'
+import { Observable } from 'rxjs'
+import { AppSettings } from '../constants/app-setting'
+import { Api } from '../constants/api'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
+
+// import { retry } from 'rxjs/operators';
+// import { request } from 'http';
+import { UserInfoStorageService } from '../commons/user-info-storage.service'
+
+@Injectable({
+	providedIn: 'root',
+})
+export class PositionService {
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+
+	CreatePosition(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + request.name),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionInsert, headers)
+	}
+	UpdatePosition(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + data.name),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.PositionUpdate, headers)
+	}
+	positionGetList(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetList)
+	}
+	positionDelete(request: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionDelete, headers)
+	}
+	positionGetById(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetById)
+	}
+	positionUpdateStatus(data: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.PositionUpdate, headers)
+	}
+}

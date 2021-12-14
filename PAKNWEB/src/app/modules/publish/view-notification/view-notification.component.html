@@ -1,0 +1,60 @@
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between pt-5">
+			<div class="col main-ct pr-3 pr-lg-5 col-lg-9">
+				<div class="clearfix">
+					<span>Trang chủ / <strong>Thông báo</strong></span>
+				</div>
+				<div class="" *ngIf="notification">
+					<h1 style="margin-top: 10px; font-weight: 400;font-size: 25px;line-height: 34px;">
+						{{notification.title}}
+					</h1>
+					<div class="mt-3 mb-2">
+						<time style="font-size: 10pt;">
+							<i class="pi pi-calendar"></i>&nbsp;
+							{{notification.sendDate | date:'HH:mm'}} <span>ngày</span> {{notification.sendDate | date:'dd/MM/yyyy'}}
+						</time>
+						<time style="font-size: 10pt; margin-left: 10px;">
+							<i class="bi bi-envelope"></i>
+							{{notification.senderName}}
+						</time>
+						
+					</div>
+					<div>
+					</div>
+					<div class="contents" [innerHTML]="notification.content" style="text-align: justify;"></div>
+				</div>
+			</div>
+			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<div class="sb-tk-pakn mb-4">
+					<div class="h3" style="text-transform: uppercase;font-weight: 500;
+					font-size: 20px;
+					line-height: 30px;">
+						Thông báo khác
+					</div>
+					<hr width="70%" style="margin: 0px; color: black;">
+					<ul class="list-group list-group-flush">
+						<ng-container *ngFor="let item of lstNotification;let i = index">
+							<li class="list-group-item px-0" *ngIf="i != id">
+								<div class="media center">
+									<a href="javascript:void(0)" (click)="redirectDetail(item.id)" class="image-box ratio-4-3 rounded mr-3 center"
+									style="background: #F7F7F7;border-radius: 15px !important;width: 3rem;height: 3rem;">
+										<i [ngClass]="{ 'bi bi-newspaper': item.type ==1, 'bi bi-file-earmark-break' : item.type ==2 ,' bi bi-envelope' : item.type ==3}"
+										style="font-size: 20px;"
+										></i>
+									</a>
+									<div class="media-body">
+										<small><span class="createDate" style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{getTime(item.sendDate)}}</span></small>
+										<p class="mb-0 text-uppercase" style="cursor: pointer;" (click)="redirectDetail(item.id)" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
+										<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
+										</p>
+									</div>
+								</div>
+							</li>
+						</ng-container>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

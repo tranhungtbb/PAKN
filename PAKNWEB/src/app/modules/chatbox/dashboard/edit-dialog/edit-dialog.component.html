@@ -1,0 +1,45 @@
+<div class="content__title j-content__title j-create_dialog">
+  <button (click)="goBack()" class="back_to_dialog j-back_to_dialog">
+    <i class="material-icons">arrow_back</i>
+  </button>
+
+  <form action="" name="update_chat_name" class="update_chat_name_form">
+    <input type="text" name="update_chat__title" class="update_chat__title_input j-update_chat__title_input" value="{{ dialog.name }}" disabled="">
+    <button type="button" (click)="showTitle($event)" class="update_chat__title_button j-update_chat__title_button" title="Đổi tên nhóm">
+      <i class="material-icons m-user_icon">create</i>
+    </button>
+  </form>
+
+</div>
+<div class="notifications j-notifications hidden"></div>
+<div class="content__inner j-content__inner">
+  <div class="group_chat__filter __web-inspector-hide-shortcut__">
+    <input [(ngModel)]="textSearch" (keydown.enter)="getUserList()" type="text" autocomplete="off"
+           autocorrect="off" placeholder="Tìm kiếm ...">
+  </div>
+  <p class="group__chat__description">Thêm người dùng:</p>
+  <div class="group_chat__user_list j-group_chat__user_list" *ngIf="users && users.length > 0">
+    <div (click)="toggleSelectItem(user.idQB)" *ngFor="let user of users"
+         [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.idQB) >= 0 }" class="user__item"
+         id="{{ user.idQB }}">
+      <span class="user__avatar avatar-circle mr-2 avatar-custom">{{getShortName(user.fullName)}} </span>
+       <div class="user__details">
+         <p class="user__name">{{ user.fullName }}</p>
+         <p class="user__last_seen">{{ user.unitName }}</p>
+       </div>
+    </div>
+    <ng-template *ngIf="users.length ==0">
+      <p>Không tìm thấy người dùng</p>
+    </ng-template>
+    
+  </div>
+  <form action="" (ngSubmit)="onSubmit()" class="dialog_form m-dialog_form_create j-create_dialog_form"
+        name="create_dialog">
+    <button type="button" (click)="goBack()" class="btn m-update_dialog_btn_cancel j-update_dialog_btn_cancel"
+            name="update_dialog_cancel">Cancel
+    </button>
+    <button class="btn m-create_dialog_btn j-create_dialog_btn" name="create_dialog_submit"
+            type="submit">Thêm người dùng
+    </button>
+  </form>
+</div>

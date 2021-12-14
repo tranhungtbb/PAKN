@@ -1,0 +1,13 @@
+.height-100 {
+	height: 100%;
+}
+.nav-tabs-register{
+	background-color: #2E73D5;
+}
+.nav-tabs-register .nav-item .nav-link.active{
+	border-color: #fff;
+}
+.bg-blue{
+	background-color: #E5E5E5 !important;
+	height: 100vh !important;
+}

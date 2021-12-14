@@ -1,0 +1,13 @@
+.cdk-overlay-pane {
+  max-width: 100vw !important;
+}
+
+.cdk-overlay-pane
+{
+  min-height:98vh;
+  width: 98%!important;
+}
+
+body{
+  text-align:center;
+}

@@ -1,0 +1,195 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Thủ tục hành chính</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách tổng hợp</a></li>
+				</ol>
+				<div class="btn-group group-button-table" role="group">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords"  [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th style="width: 120px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Mã số</strong>
+											
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input" (click)="dataSearch.code=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tên thủ tục</strong>
+											
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input" (click)="dataSearch.name=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th style="width: 150px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đối tượng</strong>
+											
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.object" class="btn bg-transparent btn-clear-input" (click)="dataSearch.object=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th style="width: 250px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Cơ quan thực hiện</strong>
+											
+										</p>
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.organization" class="btn bg-transparent btn-clear-input" (click)="dataSearch.organization=''">
+												<i class="fa fa-times"></i>
+											</button>
+									</th>
+									<th style="width: 200px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>lĩnh vực</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 110px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+												[closeOnSelect]="true" (change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<strong>
+											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.administrationId]" class="text-2line mb-0" title="Xem chi tiết">{{item.code}}</a>
+											<a *hasNotPermission="['3', 'H_I_4']" class="text-2line mb-0" title="Xem chi tiết">{{item.code}}</a>
+										</strong>
+									</td>
+									<td>
+										<p class="text-2line mb-0">{{item.name}}</p>
+									</td>
+									<td>
+										<p class="text-2line mb-0">{{item.object}}</p>
+									</td>
+									<td>
+										<p class="text-2line mb-0">{{item.organization}}</p>
+									</td>
+									<td>{{item.fieldName}}</td>
+									<td>
+										<p  class="pb-0" *hasPermission="['3', 'H_I_4']">
+											<span *ngIf="item.status == 3" class="badge rounded-pill bg-success cursor" (click)="preChangeStatus(item.administrationId,2)">Đã công bố</span>
+											<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark cursor" (click)="preChangeStatus(item.administrationId,3)">Đã thu hồi</span>
+										</p>
+										<p  class="pb-0" *hasNotPermission="['3', 'H_I_4']">
+											<span *ngIf="item.status == 3" class="badge rounded-pill bg-success cursor">Đã công bố</span>
+											<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark cursor">Đã thu hồi</span>
+										</p>
+										
+									</td>
+									<!-- <td>
+										<div class="d-flex justify-content-end">
+											<a [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/cap-nhat/', item.id]" *ngIf="item.status == 1"
+												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<a *ngIf="item.status == 1 " class="btn-icon grd-red text-white" (click)="preDelete(item.id)" title="Xóa"><i
+													class="bi bi-trash"></i></a>
+										</div>
+									</td> -->
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="6">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border w-127" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 w-127 grd-blue" (click)="onDelete(idDelete)">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị thay đổi trạng thái của TTHC này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onChangeStatus()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>

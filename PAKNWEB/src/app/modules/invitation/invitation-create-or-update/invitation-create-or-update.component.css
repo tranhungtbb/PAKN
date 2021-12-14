@@ -1,0 +1,126 @@
+.alert-dark {
+	padding: 0px;
+}
+
+.alert button {
+	position: absolute;
+	top: -15px;
+	left: 65%;
+}
+.center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.item-user {
+	display: flex;
+	color: #444463;
+	border: 1px solid #e5eaee;
+	box-sizing: border-box;
+	border-radius: 10px;
+	flex: none;
+	order: 2;
+	flex-grow: 0;
+	margin: 15px 0px;
+	padding: 12px;
+}
+.border-1 {
+	border: 2px solid #e5e5e5;
+	border-radius: 10px;
+	padding: 8px 8px 0px 8px;
+	/* padding-right: 8px; */
+}
+
+.info-user {
+	width: 40%;
+}
+
+.title {
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 15px;
+	flex-grow: 0;
+	/* margin: 4px 0px; */
+}
+.department {
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 17px;
+	color: #1b1b3e;
+	order: 1;
+	flex-grow: 0;
+	margin: 4px 0px;
+}
+.type-send {
+	width: 120px;
+}
+.action {
+	width: 10%;
+}
+
+.border-right {
+	border-right: 1px solid #e5e5e5;
+}
+
+.padding-item {
+	padding: 8px;
+}
+
+.padding-col {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.search-user {
+	padding: 15px;
+	background: #fdfcfc;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.title-user-map {
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 21px;
+	margin: 30px 0px 15px 0px;
+	text-transform: uppercase;
+	color: #1b1b3e;
+}
+
+.text-2line {
+	width: 5.2rem;
+}
+/* 
+.btn-chooise {
+	border: 2px solid #1b1b3e !important;
+} */
+:host ::ng-deep .dropdown-menu {
+	width: 180% !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+	border: 1px solid #c0c0c0;
+	border-radius: 10px;
+	height: 38px;
+}
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix,
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+	padding: 0px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+	border: none !important;
+}
+
+:host ::ng-deep .cdk-text-field-autofill-monitored {
+	position: absolute;
+	top: -20px;
+	font-weight: 400;
+	font-size: 1rem;
+	color: #6e6e6e;
+}

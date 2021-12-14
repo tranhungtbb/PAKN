@@ -1,0 +1,563 @@
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><a>Hệ thống</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách nhân viên quản trị</a></li>
+			</ol>
+			<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
+			<div class="btn-group group-button-table" role="group">
+				
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()" *hasPermission="['3', 'A_IX_6']">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+					</svg>
+					Thêm mới
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="table-responsive">
+
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<ng-template pTemplate="header" class="bg-thead">
+							<tr>
+								<th style="width: 50px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>STT</strong>
+									</p>
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'userName'">
+										<strong>Tên tài khoản <p-sortIcon [field]="'userName'"></p-sortIcon></strong>
+										
+									</p>
+									<input class="form-control form-control-sm"
+										trim [ngSwitch]="'userName'" [(ngModel)]="userName"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
+									 	placeholder="Nhập ..." />
+									<button *ngIf="userName" class="btn bg-transparent btn-clear-input" (click)="userName=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th style="min-width: 180px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'fullName'">
+										<strong>Họ và tên <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
+									</p>
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName"
+										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
+										placeholder="Nhập ...">
+									<button *ngIf="fullName" class="btn bg-transparent btn-clear-input" (click)="fullName=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								
+								<th style="width: 150px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'phone'">
+										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
+									</p>
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone"
+										numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									 	placeholder="Nhập...">
+									<button *ngIf="phone" class="btn bg-transparent btn-clear-input" (click)="phone=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th style="width: 160px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'isActived'">
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
+										
+									</p>
+									<div class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" 
+											placeholder="Trạng thái" bindLabel="text" bindValue="value"
+											style="width: 160px !important;"
+											[ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											[closeOnSelect]="true">
+										</ng-select>
+									</div>
+								</th>
+								<th style="text-align: center; width: 168px !important;">
+									<strong>THAO TÁC</strong>
+								</th>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
+								<td>
+									<strong class="highlight cursor">
+										<a (click)="preView(item.id)" class="ellipsis" title="Xem chi tiết">{{item.userName}}</a>
+									</strong>
+								</td>
+								<td>{{item.fullName}}</td>
+								<td>{{item.phone}}</td>
+								<td>
+									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
+										<span type="button" (click)="changeStatus(item.id)" class="badge rounded-pill bg-success">Hiệu lực</span>
+									</p>
+									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
+										<span type="button" (click)="changeStatus(item.id)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									</p>
+								</td>
+								<td>
+									<div class="hover-active d-flex justify-content-end">
+										<a (click)="preUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
+										<a (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor" title="Đổi mật khẩu"><i class="bi bi-key"></i></a>
+										<a class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
+												class="bi bi-clock-history"></i></a>
+										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+												class="bi bi-trash"></i></a>
+									</div>
+								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="8">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document"> 
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
+				<p class="modal-title h3">Thêm mới nhân viên quản trị</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0 mt-0 pt-0">
+				<div class="row">
+					<div class="col-md-12">
+						<form [formGroup]="createUserForm" (ngSubmit)="onSave()">
+							<div class="align-items-center mb-4 avatar-bg">
+								<div class="avatar-frame">
+									<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }" style="height: 100%; width: 100%; object-fit: cover;" />
+									<span class="no-avatar-view" *ngIf="userAvatar == null">
+										<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd"
+												d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+												fill="#743F15" />
+										</svg>
+									</span>
+								</div>
+								<div class="text-center">
+									<input type="file" [hidden]="true" class="seclect-avatar" accept="{{fileAccept}}" (change)="changeSelectAvatar($event)">
+									<a class="color-brow" style="cursor: pointer;" (click)="onChangeAvatar()">
+										<i class="pi bi-image"></i>&nbsp;
+										Tải lên ảnh đại diện
+									</a>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-12 col-lg-8 form-group">
+									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+									<input svTrim formControlName="email" [(ngModel)]="model.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
+										[readonly]="model.id != null && model.id > 0" (change)="onCheckExist('Email',$event.target.value)">
+									<div *ngIf="(submitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.email.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="fUser.email.errors.email">
+											<span class="help-block">Định dạng email không đúng</span>
+										</div>
+									</div>
+									<div *ngIf="checkExists['Email'] && fUser.email.valid" class="has-error m-b-12">
+										<div *ngIf="checkExists['Email']">
+											<span class="help-block">Email đã tồn tại</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
+									<input svTrim formControlName="fullName" [(ngModel)]="model.fullName" type="text" class="form-control" placeholder="Nhập..."
+										maxlength="100">
+									<div *ngIf="(submitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.fullName.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
+									<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="model.phone" type="text" class="form-control"
+										placeholder="Nhập..." (change)="onCheckExist('Phone',$event.target.value)">
+									<div *ngIf="(submitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.phone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="fUser.phone.errors.pattern">
+											<span class="help-block">Định dạng số điện thoại không đúng</span>
+										</div>
+									</div>
+									<div *ngIf="checkExists['Phone'] && fUser.phone.valid" class="has-error m-b-12">
+										<div *ngIf="checkExists['Phone']">
+											<span class="help-block">Số điện thoại đã tồn tại</span>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
+									<!--  -->
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="model.gender"
+										formControlName="gender" [closeOnSelect]="true" [searchable]="false">
+									</ng-select>
+									<div *ngIf="(submitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.gender.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+									<!-- <input *ngIf="!isAdmin && model.id > 0 && model.isActived" disabled type="text" class="form-control" value="Hiệu lực">
+									<input *ngIf="!isAdmin && model.id > 0 && !model.isActived" disabled type="text" class="form-control" value="Hết hiệu lực"> -->
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+										formControlName="isActived" [(ngModel)]="model.isActived" [closeOnSelect]="true" [searchable]="false">
+									</ng-select>
+									<div *ngIf="(submitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.isActived.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 form-group">
+									<label class="mb-1">Địa chỉ</label>
+									<textarea class="form-control" formControlName="address" [(ngModel)]="model.address" rows="4" placeholder="Nhập..."
+										maxlength="300"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" (click)="onSave()" class="btn btn-danger border-0 px-5 grd-blue">
+					Lưu
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal view -->
+
+<div class="modal fade" id="modalView">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
+				<p class="modal-title h3">Thông tin nhân viên quản trị</p>
+				<button type="button" class="close"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0 mt-0 pt-0">
+
+				<!-- <form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()"> -->
+				<div class="align-items-center mb-4 avatar-bg">
+					<div class="avatar-frame">
+						<img *ngIf="userAvatar != null" [src]="userAvatar" style="height: 100%; width: 100%; object-fit: cover;" />
+						<span class="no-avatar-view" *ngIf="userAvatar == null">
+							<!-- <i class="pi pi-user"></i> -->
+							<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+									fill="#743F15" />
+							</svg>
+
+						</span>
+					</div>
+					<div class="text-center">
+						<p class="mb-0 h4"><strong>{{model.fullName}}</strong></p>
+						<p>Tài khoản: <strong>{{model.userName}}</strong></p>
+					</div>
+				</div>
+				<div class="box">
+					<div class="row mb-3">
+						<div class="col">
+							<p class="mb-1">Số điện thoại</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">{{model.phone}}</p>
+						</div>
+						<div class="col">
+							<p class="mb-1">Giới tính</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">
+								<span *ngIf="model.gender">Nam</span>
+								<span *ngIf="!model.gender">Nữ</span>
+							</p>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">
+							<p class="mb-1">Email</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">{{model.email}}</p>
+						</div>
+						<div class="col">
+							<p class="mb-1">Trạng thái</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">
+								<span *ngIf="model.isActived == listStatus[0].value" style="color: seagreen;">{{listStatus[0].text}}</span>
+								<span *ngIf="model.isActived == listStatus[1].value">{{listStatus[1].text}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-lg-12">
+							<p class="mb-1">Địa chỉ</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">{{model.address}}</p>
+						</div>
+					</div>
+				</div>
+				<!-- </form> -->
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="preUpdate(model.id)">Sửa thông tin</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Bạn có chắc chắn muốn xóa người dùng này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Bạn có chắc chắn muốn thay đổi trạng thái của người dùng này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onChangeUserStatus()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalHis">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 75%" role="document">
+		<div class="modal-content rounded">
+			<!-- <form class="form-horizontal" autocomplete="off"> -->
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Lịch sử: <span class="text-primary">{{emailUser}}</span></p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+						<div class="form-horizontal">
+							<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
+								<div class="col-12 col-sm-2 col-lg-2 form-group">
+									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
+									<div class="input-group">
+										<input class="form-control border-input" placeholder="Nhập..." 
+											[ngModelOptions]="{standalone: true}" [maxDate]="dataSearch2.toDate"
+											bsDatepicker #fd="bsDatepicker" maxlength="10"
+											[(ngModel)]="dataSearch2.fromDate" (bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
+											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" 
+										/>
+										<div class="input-group-addon p-2">
+											<i class="bi bi-calendar-date" (click)="fd.toggle()" [attr.aria-expanded]="fd.isOpen"></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-sm-2 col-lg-2 form-group">
+									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
+									<div class="input-group">
+										<input class="form-control border-input"
+											[ngModelOptions]="{standalone: true}" [minDate]="dataSearch2.fromDate"
+											placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10"
+											[(ngModel)]="dataSearch2.toDate" (bsValueChange)="onChangeToDate($event)"  appBsDatepickerInvalid
+											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
+										/>
+										<div class="input-group-addon p-2">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-sm-3 col-lg-3 form-group">
+									<label class="mb-1 text-uppercase"><strong>Nội dung</strong></label>
+									<input class="form-control" [(ngModel)]="dataSearch2.content" maxlength="100"
+										[ngModelOptions]="{standalone: true}"
+										(keydown.enter)="dataHisStateChange()" placeholder="Nhập..." />
+								</div>
+								<div class="col-12 col-sm-2 col-lg-2 form-group">
+									<label class="mb-1 text-uppercase"><strong>Trạng thái</strong></label>
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" [items]="listHisStatus" placeholder="Trạng thái..."
+										bindLabel="text" bindValue="value"
+										[ngModelOptions]="{standalone: true}"
+										[(ngModel)]="dataSearch2.status"
+										(change)="dataHisStateChange()">
+									</ng-select>
+								</div>
+								<div class="col-12 col-sm-3 form-group pr-0">
+									<label></label>
+									<div style="display:flex;">
+										<a (click)="dataHisStateChange()" class="btn grd-blue btn-sm rounded border-0 mr-3 text-white">
+											Tìm kiếm
+										</a>
+										<a (click)="onExport()" class="btn grd-brown3 btn-sm rounded border-0 mr-1 text-dark">
+											<i class="bi bi-file-earmark-excel mr-1"></i>
+											Xuất excel
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="card mb-0 shadow-none">
+									<div class="table-responsive">
+
+										<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onHisPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="20" [totalRecords]="hisTotalRecords" [responsive]="true"
+											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+
+											<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+												<tr>
+													<td style="width: 5%;">{{rowIndex + 1}}</td>
+													<td style="width: 20%;">{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date: 'dd/MM/yyyy'}} </td>
+													<td>{{item.description}}</td>
+													<td style="width: 20%;">
+														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
+														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white">Thất bại</span>
+													</td>
+												</tr>
+											</ng-template>
+											<ng-template pTemplate="emptymessage">
+												<tr>
+													<td class="text-center" colspan="5">Không có dữ liệu</td>
+												</tr>
+											</ng-template>
+										</p-table>
+										<div style="display: flex; float: right;">
+											<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" data-dismiss="modal">
+												Đóng
+											</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- </form> -->
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalChangePassword">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal" [formGroup]="formChangePassword" #formDir="ngForm">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Đổi mật khẩu</p>
+					</div>
+					<div class="modal-body no-padding-bottom pt-3 pb-3" style="border: none;">
+						<div class="row form-group">
+							<div class="col-sm-12 pb-2">
+								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
+								<input class="form-control" style="position: relative;"
+									pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$"
+									[type]="isShowPassword ? 'text' : 'password'" 
+									formControlName="newPassword" 
+									[(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
+								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
+								<div *ngIf="(submitted && f.newPassword.invalid) || (f.newPassword.invalid && (f.newPassword.dirty || f.newPassword.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.newPassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+									<div *ngIf="f.newPassword.errors.pattern">
+										<span class="help-block">Mật khẩu phải lớn hơn 6 ký tự và bao gồm cả chữ và số!</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12 pb-2">
+								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
+								<input class="form-control" formControlName="rePassword" [(ngModel)]="rePassword" maxlength="50" 
+								placeholder="Nhập..." [type]="isShowRePassword ? 'text' : 'password'" />
+								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowRePassword, 'bi bi-eye-slash': !isShowRePassword}" (click)="showRePassword()"></i>
+								<div *ngIf="(submitted && f.rePassword.invalid) || (f.rePassword.invalid && (f.rePassword.dirty || f.rePassword.touched))" class="has-error m-b-12">
+									<div *ngIf="f.rePassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+								<div *ngIf="samePass == true" class="has-error m-b-12">
+									<div>
+										<span class="help-block">Mật khẩu mới không trùng khớp</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer center" style="border: none;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onChangePassword()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+

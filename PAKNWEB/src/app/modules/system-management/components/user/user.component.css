@@ -1,0 +1,35 @@
+strong.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+strong.highlight {
+	cursor: pointer;
+}
+.cursor {
+	cursor: pointer;
+}
+.custom-show-pass {
+	position: absolute;
+	top: 30px;
+	right: 25px;
+	font-size: 20px;
+}
+
+.center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+:host ::ng-deep .ui-state-highlight,
+:host ::ng-deep .ui-sortable-column:hover {
+	background-color: transparent !important;
+	color: #333333 !important;
+}
+
+:host ::ng-deep .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon {
+	color: #111 !important;
+}
+/* .btn-icon {
+	width: 16px;
+} */

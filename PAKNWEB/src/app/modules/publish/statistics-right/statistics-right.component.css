@@ -1,0 +1,51 @@
+.red-bar {
+	background: linear-gradient(180deg, #ee5454 0%, #a61515 100%);
+	border-radius: 0px 4px 4px 0px;
+	width: 5px;
+	margin-right: 10px;
+}
+.text-3line a,
+.text-2line a,
+.card-text a {
+	color: #222222;
+}
+.square{
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+}
+
+.bg-blue-1{
+	background-color: #73BCFF !important;
+}
+
+.bg-blue-2{
+	background-color: #2E73D5 !important;
+}
+
+.bg-green{
+	background-color: #58A55C !important;
+}
+
+.bg-yellow{
+	background-color: #FFB200 !important;
+}
+.bg-red{
+	background-color: #DA2222 !important;
+}
+.margin-top-16{
+	margin-top: 16px !important;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px){
+.statistic-chart{
+    display: block!important;
+}
+}
+
+.statistic-chart canvas{
+	width: 150px!important;
+	height: 150px!important;
+}
+
+

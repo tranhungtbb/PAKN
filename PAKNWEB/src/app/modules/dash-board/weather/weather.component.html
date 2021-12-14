@@ -1,0 +1,12 @@
+<p class="d-flex justify-content-between align-items-center" style="margin-bottom: -15px;">
+  <span class="small">{{data.name || 'Nha Trang'}}</span>
+  <span class="small">{{curentDate|date:'dd/MM/yyyy'}}</span>
+</p>
+<p class="d-flex justify-content-between align-items-center" style="margin-bottom: -15px;">
+  <span class="h4 mb-0 font-weight-bold">{{curentDate|date:'HH:mm a'}}</span>
+  <span class="h4 mb-0 font-weight-bold d-flex align-items-center" style="cursor: pointer;" (click)="reloadData()">
+    <!-- <img *ngIf="data.weather.icon == '01d'" class="img-fluid" src="../../../assets/dist/icons/weather-icons/day.svg" alt=""> -->
+    <img [src]="weather.iconPath || '/assets/dist/icons/weather-icons/day.svg'" alt="">
+    {{tempCr.temp || '00'}}°c
+  </span>
+</p>
