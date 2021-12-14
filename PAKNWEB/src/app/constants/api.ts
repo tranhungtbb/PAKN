@@ -46,6 +46,7 @@ export class Api {
 	public static RecommendationProcess = 'recommendation/recommendation-on-process'
 	public static RecommendationUpdateStatus = 'recommendation/recommendation-update-status'
 	public static RecommendationOnProcessConclusion = 'recommendation/recommendation-on-process-conclusion'
+	public static RecommendationOnProcessConclusionUpdate = 'recommendation/recommendation-on-update-process-conclusion'
 	public static RecommendationDelete = 'recommendation/delete'
 	public static RecommendationExport = 'recommendation/MRRecommendationExportBase' // cái này bỏ
 	public static RecommendationGetSuggestCreate = 'recommendation/recommendation-get-suggest-create'

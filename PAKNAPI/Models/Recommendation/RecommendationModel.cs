@@ -111,6 +111,8 @@ namespace PAKNAPI.Models.Recommendation
         public IFormFileCollection Files { get; set; }
         public byte RecommendationStatus { get; set; }
         public List<DropdownObject> ListHashTag { get; set; }
+
+        public List<MRRecommendationConclusionFilesGetByConclusionId> FilesDelete { get; set; }
     }
 
     public class RecommendationSendProcess

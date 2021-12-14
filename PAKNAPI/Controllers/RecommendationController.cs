@@ -994,7 +994,10 @@ namespace PAKNAPI.Controller
                 request._mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 request._mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
                 await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(request._mRRecommendationForwardInsertIN);
-
+                if (request.IsForwardUnitChild == true)
+                {
+                    await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardUpdateStatusForwardDAO(request._mRRecommendationForwardInsertIN.RecommendationId);
+                }
                 if (!request.IsList)
                 {
                     MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
@@ -1097,7 +1100,7 @@ namespace PAKNAPI.Controller
                 _dataForward.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
                 _dataForward.UserSendId = UserSendId;
                 _dataForward.SendDate = DateTime.Now;
-                if (request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY && request.IsForwardMain == true) {
+                if (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_DENY && request.IsForwardMain == true) {
 
                     SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                     _dataForward.UnitSendId = UnitSendId;
@@ -1274,6 +1277,102 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("recommendation-on-update-process-conclusion")]
+        public async Task<ActionResult<object>> RecommendationOnUpdateProcessConclusion()
+        {
+            try
+            {
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                RecommendationOnProcessConclusionProcess request = new RecommendationOnProcessConclusionProcess();
+                request.DataConclusion = JsonConvert.DeserializeObject<MRRecommendationConclusionInsertIN>(Request.Form["DataConclusion"].ToString(), jss);
+                request.RecommendationStatus = JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationStatus"].ToString(), jss);
+                request.FilesDelete = JsonConvert.DeserializeObject<List<MRRecommendationConclusionFilesGetByConclusionId>>(Request.Form["FileDelete"].ToString(), jss);
+                request.Files = Request.Form.Files;
+                long UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                int UnitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                request.DataConclusion.UserCreatedId = UserId;
+                request.DataConclusion.UnitCreatedId = UnitId;
+                int? IdConclusion = Int32.Parse((await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionInsertDAO(request.DataConclusion)).ToString());
+
+                if (request.FilesDelete != null) {
+                    foreach (var file in request.FilesDelete) {
+                        await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(file.Id);
+                        
+                    }
+                }
+
+                if (request.Files != null && request.Files.Count > 0)
+                {
+                    string folder = "Upload\\Recommendation\\Conclusion\\" + IdConclusion;
+                    string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    foreach (var item in request.Files)
+                    {
+                        MRRecommendationConclusionFilesInsertIN file = new MRRecommendationConclusionFilesInsertIN();
+                        file.ConclusionId = IdConclusion;
+                        file.Name = Path.GetFileName(item.FileName).Replace("+", "");
+                        string filePath = Path.Combine(folderPath, file.Name);
+                        file.FilePath = Path.Combine(folder, file.Name);
+                        file.FileType = GetFileTypes.GetFileTypeInt(item.ContentType);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(stream);
+                        }
+                        await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(file);
+                    }
+                }
+
+                await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request.DataConclusion.RecommendationId, STEP_RECOMMENDATION.APPROVE);
+                MRRecommendationForwardInsertIN dataForward = new MRRecommendationForwardInsertIN();
+                dataForward.RecommendationId = request.DataConclusion.RecommendationId;
+                dataForward.UserSendId = UserId;
+                dataForward.UnitSendId = UnitId;
+                dataForward.ReceiveId = request.DataConclusion.ReceiverId;
+                dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                dataForward.Step = STEP_RECOMMENDATION.APPROVE;
+                dataForward.SendDate = DateTime.Now;
+                dataForward.IsViewed = false;
+                await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(dataForward);
+
+                MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
+                _mRRecommendationUpdateStatusIN.Id = request.DataConclusion.RecommendationId;
+                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
+
+
+
+                //HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
+                //hisData.ObjectId = request.DataConclusion.RecommendationId;
+                //hisData.Type = 1;
+                //hisData.Content = "Đến: " + (await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(request.DataConclusion.ReceiverId)).FirstOrDefault().FullName;
+                //hisData.Status = request.RecommendationStatus;
+                //hisData.CreatedBy = UserId;
+                //hisData.CreatedDate = DateTime.Now;
+                //await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                return new ResultApi { Success = ResultCode.OK };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
 
         /// <summary>
         /// cập nhập trạng thái pakn
@@ -2225,7 +2324,7 @@ namespace PAKNAPI.Controller
 
                         }
                         
-                        notification.Content = "PAKN số " + recommendation.Code + " yêu cầu giải quyết được gửi từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
+                        notification.Content = "PAKN số " + recommendation.Code + " từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
 
                         foreach (var item in listUserReceiveResolve)
                         {

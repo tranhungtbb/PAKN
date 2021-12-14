@@ -1,66 +1,52 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
-import { NotificationService } from 'src/app/services/notification.service'
-import { Router } from '@angular/router'
 
 declare var $: any
 
 @Component({
-	selector: 'app-list-receive-approved',
-	templateUrl: './list-receive-approved.component.html',
-	styleUrls: ['./list-receive-approved.component.css'],
+	selector: 'app-list-process-deny-main',
+	templateUrl: './list-process-deny-main.component.html',
+	styleUrls: ['./list-process-deny-main.component.css'],
 })
-export class ListReceiveApprovedComponent implements OnInit {
+export class ListProcessDenyMainComponent implements OnInit {
 	constructor(
 		private _service: RecommendationService,
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
-		private _fb: FormBuilder,
 		private _shareData: DataService,
-		private notificationService: NotificationService,
+		private _fb: FormBuilder,
 		private _router: Router
 	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
-	listStatus: any = [
-		{ value: 2, text: 'Chờ xử lý' },
-		{ value: 3, text: 'Từ chối xử lý' },
-		{ value: 4, text: 'Đã tiếp nhận' },
-		{ value: 5, text: 'Chờ giải quyết' },
-		{ value: 6, text: 'Từ chối giải quyết' },
-		{ value: 7, text: 'Đang giải quyết' },
-		{ value: 8, text: 'Chờ phê duyệt' },
-		{ value: 9, text: 'Từ chối phê duyệt' },
-		{ value: 10, text: 'Đã giải quyết' },
-	]
+
 	lstUnit: any = []
 	lstField: any = []
+	listUnitChild: any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
+	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
-
-	lstUnitNotMain: any = []
-	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
-	formForward: FormGroup
+	unitLoginId: number = this.storeageService.getUnitId()
 	dateNow: Date = new Date()
 	ngOnInit() {
 		this.buildForm()
-		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_DENY
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -75,6 +61,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
 					this.lstField = response.result.lstField
+					this.listUnitChild = response.result.lstUnitChild
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -96,7 +83,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 			Content: this.dataSearch.content,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			Status: RECOMMENDATION_STATUS.PROCESS_DENY_MAIN,
 			UnitProcessId: this.storeageService.getUnitId(),
 			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
@@ -152,7 +139,8 @@ export class ListReceiveApprovedComponent implements OnInit {
 			this.getList()
 		}
 	}
-
+	formForward: FormGroup
+	lstUnitNotMain: any = []
 	get f() {
 		return this.formForward.controls
 	}
@@ -172,24 +160,32 @@ export class ListReceiveApprovedComponent implements OnInit {
 			content: this.modelForward.content,
 		})
 	}
-	preForward(id: number) {
-		this.submitted = false
+	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
+	preForward(id: number, isForwardUnitChild: boolean = false) {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
+		this.submitted = false
 		this.rebuilForm()
-		this._service.recommendationGetDataForForward({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnitNotMain = response.result.lstUnitNotMain
-					$('#modal-tc-pakn').modal('show')
+		let obj = this.listData.find((x) => x.id == id)
+		debugger
+		if (isForwardUnitChild == true) {
+			this.lstUnitNotMain = this.listUnitChild
+			$('#modal-tc-pakn').modal('show')
+		} else {
+			this._service.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.lstUnitNotMain = response.result.lstUnitNotMain
+						$('#modal-tc-pakn').modal('show')
+					}
+				} else {
+					this._toastr.error(response.message)
 				}
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
+			}),
+				(error) => {
+					console.log(error)
+				}
+		}
 	}
 
 	onForward() {
@@ -209,45 +205,8 @@ export class ListReceiveApprovedComponent implements OnInit {
 		this._service.recommendationForward(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelForward.recommendationId }).subscribe((res) => { })
 				this.getList()
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
-	}
-
-	preProcessAccept(item: any) {
-		this.modelProcess = new RecommendationProcessObject()
-		this.modelProcess.recommendationId = item.id
-		this.modelProcess.id = item.processId
-		$('#modalAccept').modal('show')
-	}
-
-	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
-
-	onProcessAccept() {
-		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
-		this.modelProcess.reactionaryWord = false
-		this.modelProcess.status = PROCESS_STATUS_RECOMMENDATION.APPROVED
-		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
-
-		var request = {
-			_mRRecommendationForwardProcessIN: this.modelProcess,
-			RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
-			ReactionaryWord: this.modelProcess.reactionaryWord,
-			IsList: true
-		}
-		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
-				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
-				this.getList()
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -291,6 +250,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 			importedSaveAs(blob, fileName)
 		})
 	}
+
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
@@ -299,7 +259,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 			passingObj.UserProcessId = this.storeageService.getUserId()
 			passingObj.UserProcessName = this.storeageService.getFullName()
 		}
-		passingObj.TitleReport = 'DANH SÁCH TIẾP NHẬN XỬ LÝ'
+		passingObj.TitleReport = 'DANH SÁCH TỪ CHỐI GIẢI QUYẾT'
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

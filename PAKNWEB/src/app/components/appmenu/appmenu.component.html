@@ -67,7 +67,7 @@
 
 						<ng-container *ngIf="!isMainMenu">
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-									routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ tiếp nhận – giải quyết <span *ngIf="statistic"
+									routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ tiếp nhận - giải quyết <span *ngIf="statistic"
 										class="text-danger">({{statistic.processWait}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
@@ -75,7 +75,7 @@
 										class="text-danger">({{statistic.receiveDeny}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-									routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Từ chối giải quyết Trung tâm <span
+									routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet-trung-tam">Từ chối giải quyết Trung tâm <span
 										*ngIf="statistic" class="text-danger">({{statistic.processDeny}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
@@ -83,15 +83,21 @@
 										class="text-danger">({{statistic.processing}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-									routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Phân phối lại <span *ngIf="statistic"
-										class="text-danger">({{statistic.processDeny}})</span></a></li>
+									routerLink="/quan-tri/kien-nghi/da-chuyen">Đã chuyển đơn vị khác<span *ngIf="statistic"
+										class="text-danger">({{statistic.processing}})</span></a></li>
+
+							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
+									routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">
+									{{unitLevel == 1 ? 'Phân phối lại' : 'Từ chối giải quyết'}}
+									<span *ngIf="statistic" class="text-danger">({{statistic.processDeny}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/cho-phe-duyet">Chờ phê duyệt <span *ngIf="statistic"
 										class="text-danger">({{statistic.approveWait}})</span></a></li>
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-									routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">Đơn vị xử lý lại <span *ngIf="statistic"
-										class="text-danger">({{statistic.approveDeny}})</span></a></li>
+									routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">Đơn vị xử lý lại
+									<span *ngIf="statistic" class="text-danger">({{statistic.approveDeny}})</span></a>
+							</li>
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết <span *ngIf="statistic"
 										class="text-danger">({{statistic.finised}})</span></a></li>
@@ -118,7 +124,7 @@
 							routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận <span *ngIf="statistic"
 								class="text-danger">({{statistic.receiveDeny}})</span></a></li>
 					<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ giải quyết <span *ngIf="statistic"
+							routerLink="/quan-tri/kien-nghi/closeModalDelete">Chờ giải quyết <span *ngIf="statistic"
 								class="text-danger">({{statistic.processWait}})</span></a></li>
 					<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết <span *ngIf="statistic"

@@ -132,7 +132,8 @@ export class RECOMMENDATION_STATUS {
 	public static APPROVE_DENY = 9 //9 Từ chối phê duyệt
 	public static FINISED = 10 //10 Đã giải quyết
 
-	public static UPDATED = 11 //đã chuyển
+	public static FORWARD = 11 //đã chuyển
+	public static PROCESS_DENY_MAIN = 12 // từ chối giải quyết trung tâm
 }
 
 export class STEP_RECOMMENDATION {
@@ -141,6 +142,13 @@ export class STEP_RECOMMENDATION {
 	public static APPROVE = 3 //3 Phê duyệt
 	// riêng biệt
 	public static FORWARD_MAIN = 4 // 4 chuyển trung tâm
+}
+
+export class PROCESS_STATUS_RECOMMENDATION {
+	public static WAIT = 1 //Chờ xử lý
+	public static APPROVED = 2 //2 Đồng ý xử lý
+	public static DENY = 3 //3 Từ chối xử lý
+	public static FORWARD = 4 //3 Chuyển xử lý
 }
 
 export class TYPE_RECOMMENDATION {
@@ -160,13 +168,6 @@ export class TYPE_NOTIFICATION {
 	public static RECOMMENDATION = 2 // thông báo PAKN
 	public static INVITATION = 3 // thông báo có thư mời
 	public static ADMINISTRATIVE = 4 // administrative-formalities
-}
-
-export class PROCESS_STATUS_RECOMMENDATION {
-	public static WAIT = 1 //Chờ xử lý
-	public static APPROVED = 2 //2 Đồng ý xử lý
-	public static DENY = 3 //3 Từ chối xử lý
-	public static FORWARD = 4 //3 Chuyển xử lý
 }
 
 export class STATUS_HISNEWS {

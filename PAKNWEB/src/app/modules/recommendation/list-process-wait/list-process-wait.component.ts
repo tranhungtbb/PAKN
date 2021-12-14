@@ -28,7 +28,7 @@ export class ListProcessWaitComponent implements OnInit {
 		private notificationService: NotificationService,
 		private _router: Router,
 		private _fb: FormBuilder
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
 	isMain: boolean = this.storeageService.getIsMain()
@@ -180,17 +180,20 @@ export class ListProcessWaitComponent implements OnInit {
 	unitForward: any[] = []
 	recommendationStatusProcess: number = 0
 
-	preProcess(recommendationId, idProcess, status, isForwardProcess, isForwardMain: boolean = false) {
+	preProcess(model: any, idProcess, status, isForwardProcess, isForwardMain: boolean = false) {
 		this.modelProcess.status = status
 		this.modelProcess.id = idProcess
 		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
-		this.modelProcess.recommendationId = recommendationId
+		this.modelProcess.recommendationId = model.id
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardProcess = isForwardProcess
 		this.isForwardMain = isForwardMain
+		debugger
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (this.isForwardProcess) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 				this._service.recommendationGetDataForProcess({}).subscribe((response) => {
 					if (response.success == RESPONSE_STATUS.success) {
 						if (response.result != null) {
@@ -211,6 +214,13 @@ export class ListProcessWaitComponent implements OnInit {
 						alert(error)
 					}
 			} else {
+				if (!model.isForwardUnitChild && model.isForwardForUnit) {
+					this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+					this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
+				} else {
+					this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+					this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+				}
 				$('#modalReject').modal('show')
 				setTimeout(() => {
 					$('#targetReject').focus()
@@ -248,7 +258,7 @@ export class ListProcessWaitComponent implements OnInit {
 	onProcessAccept() {
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
-			RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
 		}
@@ -256,7 +266,7 @@ export class ListProcessWaitComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -276,7 +286,7 @@ export class ListProcessWaitComponent implements OnInit {
 			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
-				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+				RecommendationStatus: this.recommendationStatusProcess,
 				ReactionaryWord: this.modelProcess.reactionaryWord,
 				IsFakeImage: this.modelProcess.isFakeImage,
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
@@ -284,7 +294,7 @@ export class ListProcessWaitComponent implements OnInit {
 				IsList: true,
 				IsForwardMain: this.isForwardMain,
 			}
-
+			debugger
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
@@ -319,7 +329,7 @@ export class ListProcessWaitComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 				this.getList()
 			} else {

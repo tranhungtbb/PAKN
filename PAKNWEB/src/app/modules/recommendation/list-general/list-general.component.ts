@@ -251,8 +251,11 @@ export class ListGeneralComponent implements OnInit {
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
 
 		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
-		this.modelForward.status =
-			obj.isForwardUnitChild == true && obj.status == RECOMMENDATION_STATUS.PROCESS_DENY ? PROCESS_STATUS_RECOMMENDATION.WAIT : PROCESS_STATUS_RECOMMENDATION.FORWARD
+		if (obj.isForwardUnitChild) {
+			this.modelForward.status = obj.status == RECOMMENDATION_STATUS.PROCESS_DENY ? PROCESS_STATUS_RECOMMENDATION.WAIT : PROCESS_STATUS_RECOMMENDATION.FORWARD
+		} else {
+			this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
+		}
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
@@ -286,6 +289,7 @@ export class ListGeneralComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardMain = isForwardMain
+		debugger
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -308,10 +312,9 @@ export class ListGeneralComponent implements OnInit {
 						console.log(error)
 					}
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
-				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
-				debugger
 				if (this.isForwardProcess) {
+					this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+					this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 					this._service.recommendationGetDataForProcess({}).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
 							if (response.result != null) {
@@ -330,6 +333,13 @@ export class ListGeneralComponent implements OnInit {
 							console.log(error)
 						}
 				} else {
+					if (!model.isForwardUnitChild && model.isForwardForUnit) {
+						this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+						this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
+					} else {
+						this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+						this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+					}
 					$('#modalReject').modal('show')
 					setTimeout(() => {
 						$('#targetReject').focus()
@@ -359,6 +369,7 @@ export class ListGeneralComponent implements OnInit {
 			}
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
+			debugger
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
 			// this.contentForward = ''
@@ -396,7 +407,6 @@ export class ListGeneralComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {

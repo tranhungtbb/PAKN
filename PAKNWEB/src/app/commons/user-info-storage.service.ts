@@ -13,7 +13,6 @@ export class UserInfoStorageService {
 
 	constructor() { }
 	clear = () => {
-		debugger
 		var remember = this.getRecommentdationObjectRemember()
 		var satisfactionRecommendation = localStorage.getItem('satisfaction')
 		localStorage.clear()
@@ -34,6 +33,11 @@ export class UserInfoStorageService {
 	setUserId(id: string): void {
 		localStorage.setItem('userId', id)
 	}
+
+	setUnitLevel(id: number): void {
+		localStorage.setItem('unitLevel', String(id))
+	}
+
 
 	setAccessToken(token): void {
 		localStorage.setItem('accessToken', token)
@@ -124,6 +128,12 @@ export class UserInfoStorageService {
 	getUserId(): number {
 		return localStorage.getItem('userId') as any
 	}
+
+	getUnitLevel(): number {
+		return localStorage.getItem('unitLevel') as any
+	}
+
+
 
 	getIsMain(): boolean {
 		return localStorage.getItem('isMain') === 'true'

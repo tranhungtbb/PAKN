@@ -181,6 +181,7 @@ export class LoginAdminComponent implements OnInit {
 								this.storeageService.setTypeObject(data.typeObject)
 								this.storeageService.setIsUnitMain(data.isUnitMain)
 								this.storeageService.setIsAprove(data.isApprove)
+								this.storeageService.setUnitLevel(data.unitLevel)
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)

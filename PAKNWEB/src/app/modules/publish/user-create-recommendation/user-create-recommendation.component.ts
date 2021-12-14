@@ -264,6 +264,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 
 	getUnitByParent(event) {
+		this.model.unitChildId = null
 		if (event) {
 			this.unitService.getByParent({ ParentId: event.id }).subscribe(res => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -522,6 +523,9 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 	markerDragEnd(m: any, $event: MouseEvent) {
 		console.log('dragEnd', m, $event)
+	}
+	closeModalMap() {
+		$('#modalMaps').modal('hide')
 	}
 }
 

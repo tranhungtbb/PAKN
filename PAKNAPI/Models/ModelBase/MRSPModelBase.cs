@@ -383,6 +383,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_Conclusion_FilesDelete", DP));
 		}
+
+		public async Task<int> MRRecommendationConclusionFilesDeleteDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_Conclusion_FilesDelete", DP));
+		}
 	}
 
 	public class MRRecommendationConclusionFilesDeleteIN

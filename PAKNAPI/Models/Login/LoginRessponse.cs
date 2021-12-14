@@ -16,6 +16,7 @@ namespace PAKNAPI.Models.Results
         public bool? IsActive { get; set; }
         public int? TypeObject { get; set; }
         public string UnitName { get; set; }
+        public string UnitLevel { get; set; }
         public bool? IsMain { get; set; }
         public bool? IsAdmin { get; set; }
         public bool? IsUnitMain { get; set; }
@@ -48,6 +49,7 @@ namespace PAKNAPI.Models.Results
             IsHaveToken = true;
             RefreshToken = refreshToken;
             IsApprove = user.IsApprove;
+            UnitLevel = user.UnitLevel?.ToString();
         }
     }
 }

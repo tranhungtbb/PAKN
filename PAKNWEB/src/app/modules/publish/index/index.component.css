@@ -69,9 +69,6 @@
 	margin-right: 10px;
 }
 
-.title-notification {
-	width: 60%;
-}
 
 .notifications {
 	display: flex;
@@ -390,8 +387,9 @@
 
 .img-field {
 	border-radius: 12px 12px 0px 0px;
-	height: 120px;
+	height: 85px;
 }
+
 
 .read-more {
 	color: #707C97;
@@ -416,6 +414,7 @@
 }
 
 .title-notification {
+	font-family: 'Inter' , sans-serif;
 	font-style: normal;
 	font-weight: 600;
 	font-size: 16px;
@@ -446,4 +445,39 @@ ul li {
 }
 .margin-top-16{
 	margin-top: 16px !important;
+}
+
+.banner-index{
+	width: 100%;
+}
+
+
+@media (max-width: 575.98px) {
+	.banner-index{
+		height: 160px;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+	.banner-index{
+		height: 140px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+	.banner-index{
+		height: 140px;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	.banner-index{
+		height: 140px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.banner-index{
+		height: 170px;
+	}
 }

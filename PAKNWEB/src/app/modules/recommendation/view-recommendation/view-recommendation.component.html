@@ -169,7 +169,7 @@
 									</button>
 								</div>
 							</div>
-							<ng-container *ngIf="model.status == 7 || (model.status == 9 && model.userActive == userLoginId)">
+							<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10"
 									placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
@@ -266,7 +266,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row">
+								<div class="row" *ngIf="!(model.status == 8 && model.userActive == userLoginId)">
 									<div class="col-12 col-lg-3 form-group">
 										<label class="mb-1 mt-3">NGƯỜI PHÊ DUYỆT <span class="cl-red">(*)</span></label>
 									</div>
@@ -292,11 +292,18 @@
 									</div>
 									<div class="w-100"></div>
 								</div>
+								<div *ngIf="(model.status == 8 && model.userActive == userLoginId)"
+									class="tt-v1 mb-0 d-flex justify-content-end mr-3 mt-2">
+									<button type="button" class="btn grd-xanhngoc border-0 text-white btn-custom-send-process"
+										(click)="onProcessConclusion()">
+
+										Lưu nội dung
+									</button>
+								</div>
 							</ng-container>
-							<ng-container *ngIf="model.status > 7 && (model.status != 9 || model.userActive != userLoginId)">
+							<!-- (model.status != 9 || model.userActive != userLoginId) -->
+							<ng-container *ngIf="model.status > 7 && !(model.status == 8 && model.userActive == userLoginId)">
 								<p>{{modelConclusion.content}}</p>
-
-
 								<p *ngIf="files.length > 0">
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>

@@ -22,6 +22,7 @@ export class AppmenuComponent implements OnInit, AfterViewInit {
 	statistic: any = {}
 	isMainMenu: boolean = this.userStorage.getIsUnitMain()
 	isApprove = this.userStorage.getIsApprove()
+	unitLevel = this.userStorage.getUnitLevel()
 
 	ngOnInit() {
 		this.unitService.hasPermissionSMS({}).subscribe(res => {

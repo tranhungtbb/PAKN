@@ -33,6 +33,8 @@ import { ListReactionaryWordComponent } from './list-reactionary-word/list-react
 import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
 import { CommentModule } from '../publish/comment-recommendation/comment.module'
 import { InfomationExchangeModule } from './infomation-exchange/infomation-exchange.module'
+import { ListForwardComponent } from './list-forward/list-forward.component'
+import { ListProcessDenyMainComponent } from './list-process-deny-main/list-process-deny-main.component'
 
 @NgModule({
 	imports: [
@@ -74,7 +76,8 @@ import { InfomationExchangeModule } from './infomation-exchange/infomation-excha
 		RemindComponent,
 		ListReactionaryWordComponent,
 		ListFakeImageComponent,
-		ListRecommendationCommentComponent
+		ListRecommendationCommentComponent,
+		ListForwardComponent, ListProcessDenyMainComponent
 	],
 })
 export class RecommendationModule { }

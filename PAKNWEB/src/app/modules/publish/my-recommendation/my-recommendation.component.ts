@@ -180,6 +180,16 @@ export class MyRecommendationComponent implements OnInit {
 		this.router.navigateByUrl('/cong-bo/them-moi-kien-nghi')
 	}
 
+	closeModalDelete() {
+		$('#modalConfirmDelete').modal('hide')
+	}
+
+	closeModalSend() {
+		$('#modalConfirmSend').modal('hide')
+	}
+
+
+
 	//delete recommandateion
 	preDelete(id: number) {
 		this.recommandationId = id

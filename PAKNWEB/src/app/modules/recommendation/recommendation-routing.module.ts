@@ -17,6 +17,8 @@ import { ListReactionaryWordComponent } from './list-reactionary-word/list-react
 import { ListFakeImageComponent } from './list-fake-image/list-fake-image.component'
 import { RoleGuardService } from '../../guards/role-guard.service'
 import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
+import { ListForwardComponent } from './list-forward/list-forward.component'
+import { ListProcessDenyMainComponent } from './list-process-deny-main/list-process-deny-main.component'
 
 const routes: Routes = [
 	{
@@ -66,14 +68,26 @@ const routes: Routes = [
 				data: { role: 'E_I_3' },
 			},
 			{
+				path: 'da-chuyen',
+				component: ListForwardComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_3' },
+			},
+			{
 				path: 'dang-giai-quyet',
 				component: ListProcessingComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'E_I_3' },
 			},
 			{
-				path: 'tu-choi-giai-quyet',
+				path: 'tu-choi-giai-quyet', // đơn vị xử lý lại
 				component: ListProcessDenyComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_3' },
+			},
+			{
+				path: 'tu-choi-giai-quyet-trung-tam', // tu choi giai quyet trung tam
+				component: ListProcessDenyMainComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'E_I_3' },
 			},
@@ -127,4 +141,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class RecommendationRoutingModule {}
+export class RecommendationRoutingModule { }
