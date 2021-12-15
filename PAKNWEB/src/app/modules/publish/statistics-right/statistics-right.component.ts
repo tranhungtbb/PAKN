@@ -36,7 +36,6 @@ export class StatisticsRightComponent implements OnInit {
 			enabled: true,
 			callbacks: {
 				label: function (tooltipItem, data) {
-					debugger
 					let sum = 0;
 					let dataArr: any[] = data.datasets[0].data;
 					dataArr.map((data: number) => {
