@@ -26,11 +26,11 @@ import { BusinessIndividualService } from 'src/app/services/business-individual.
 declare var $: any
 
 @Component({
-	selector: 'app-view-recommendation',
-	templateUrl: './view-recommendation.component.html',
-	styleUrls: ['./view-recommendation.component.css'],
+	selector: 'app-view-combine-recommendation',
+	templateUrl: './view-combine-recommendation.component.html',
+	styleUrls: ['./view-combine-recommendation.component.css'],
 })
-export class ViewRecommendationComponent implements OnInit {
+export class ViewCombineRecommendationComponent implements OnInit {
 	model: RecommendationViewObject = new RecommendationViewObject()
 	modelConclusion: RecommendationConclusionObject = new RecommendationConclusionObject()
 	lstHashtag: any[] = []
@@ -57,7 +57,7 @@ export class ViewRecommendationComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
-
+	unitName = this.storeageService.getUnitName()
 	markers: any = {}
 	zoom: any = 15
 
@@ -90,7 +90,6 @@ export class ViewRecommendationComponent implements OnInit {
 				console.log(error)
 			}
 		)
-		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
 		this.getDropdown()
 		this.model = new RecommendationViewObject()
@@ -110,17 +109,15 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		})
 	}
-	conclusionCombine: any = []
 
 	getData() {
 		let request = {
 			Id: this.model.id,
 		}
 		this.getAllInfomationExchange(1)
-		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
+		this.recommendationService.recommendationCombineGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
-				this.conclusionCombine = response.result.conclusionCombine
 				if (this.model.lat && this.model.lng) {
 					this.markers.lat = Number(this.model.lat)
 					this.markers.lng = Number(this.model.lng)
@@ -313,23 +310,16 @@ export class ViewRecommendationComponent implements OnInit {
 		if (this.modelConclusion.content == '' || this.modelConclusion.content.trim() == '') {
 			this.toastr.error('Vui lòng nhập nội dung')
 			return
-		} else if (this.modelConclusion.receiverId == null) {
-			this.toastr.error('Vui lòng nhập người phê duyệt')
-			return
 		} else {
 			this.modelConclusion.recommendationId = this.model.id
 			var request = {
 				DataConclusion: this.modelConclusion,
-				Hashtags: this.lstHashtagSelected,
 				Files: this.files,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
-				FilesDelete: this.filesDelete
 			}
-			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
+			this.recommendationService.recommendationProcessConclusionCombine(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					$('#modalReject').modal('hide')
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
-					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
 				} else {
 					this.toastr.error(response.message)
 				}

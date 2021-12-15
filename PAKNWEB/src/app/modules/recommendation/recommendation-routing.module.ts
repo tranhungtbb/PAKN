@@ -19,6 +19,8 @@ import { RoleGuardService } from '../../guards/role-guard.service'
 import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
 import { ListForwardComponent } from './list-forward/list-forward.component'
 import { ListProcessDenyMainComponent } from './list-process-deny-main/list-process-deny-main.component'
+import { ListCombinationComponent } from './list-combination/list-combination.component'
+import { ViewCombineRecommendationComponent } from './view-combine-recommendation/view-combine-recommendation.component'
 
 const routes: Routes = [
 	{
@@ -97,6 +99,15 @@ const routes: Routes = [
 				canActivate: [RoleGuardService],
 				data: { role: 'E_I_4' },
 			},
+
+			{
+				path: 'chi-tiet-pakn-phoi-hop/:id',
+				component: ViewCombineRecommendationComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_4' },
+			},
+
+
 			{
 				path: 'cho-phe-duyet',
 				component: ListApproveWaitComponent,
@@ -112,6 +123,13 @@ const routes: Routes = [
 			{
 				path: 'da-giai-quyet',
 				component: ListApprovedComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_3' },
+			},
+
+			{
+				path: 'tham-muu-don-vi',
+				component: ListCombinationComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'E_I_3' },
 			},
