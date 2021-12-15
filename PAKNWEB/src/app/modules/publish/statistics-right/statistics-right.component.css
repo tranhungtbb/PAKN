@@ -38,9 +38,9 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px){
-	.statistic-chart{
-		display: block!important;
-	}
+.statistic-chart{
+    display: block!important;
+}
 }
 
 .statistic-chart canvas{
