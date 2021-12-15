@@ -1225,6 +1225,15 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("SY_UnitDropdown", DP)).ToList();
 		}
 
+		public async Task<List<SYUnitDropdown>> SYUnitGetByRecommnedationCombine(int RecommendationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("@RecommendationId", RecommendationId);
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("SY_UnitGetByRecommnedationCombine", DP)).ToList();
+		}
+
+		
+
 	}
 
 	public class SYUnitDropdown{

@@ -34,21 +34,25 @@ export class Api {
 	public static RecommendationGetDataForProcess = 'recommendation/get-data-for-process'
 	public static RecommendationGetList = 'recommendation/get-list-recommentdation-on-page'
 	public static RecommendationGetListProcess = 'recommendation/get-list-recommentdation-process-on-page'
+	public static RecommendationCombination = 'recommendation/get-list-recommentdation-combination-on-page'
+
 	public static RecommendationGetListReactionaryWord = 'recommendation/get-list-recommentdation-reactionary-word'
 	public static RecommendationGetListFakeImage = 'recommendation/get-list-recommentdation-fake-image'
 	public static RecommendationGetById = 'recommendation/get-by-id'
 	public static RecommendationGetByIdView = 'recommendation/get-detail-by-id'
+	public static RecommendationCombineGetByIdView = 'recommendation/get-detail-mr-combine-by-id'
+
 	public static RecommendationGetByIdViewPublic = 'recommendation/get-detail-public-by-id'
 
 	public static RecommendationGetHistories = 'recommendation/get-his-by-recommentdation'
 	public static RecommendationInsert = 'recommendation/insert'
 	public static RecommendationUpdate = 'recommendation/update'
 	public static RecommendationForward = 'recommendation/recommendation-forward'
-	public static RecommendationForwardMultiUnit = 'recommendation/recommendation-forward-multi-unit'
+	public static RecommendationCombine = 'recommendation/recommendation-combine-insert'
 	public static RecommendationProcess = 'recommendation/recommendation-on-process'
 	public static RecommendationUpdateStatus = 'recommendation/recommendation-update-status'
 	public static RecommendationOnProcessConclusion = 'recommendation/recommendation-on-process-conclusion'
-	public static RecommendationOnProcessConclusionUpdate = 'recommendation/recommendation-on-update-process-conclusion'
+	public static RecommendationOnProcessConclusionCombine = 'recommendation/recommendation-on-process-conclusion-combine'
 	public static RecommendationDelete = 'recommendation/delete'
 	public static RecommendationExport = 'recommendation/MRRecommendationExportBase' // cái này bỏ
 	public static RecommendationGetSuggestCreate = 'recommendation/recommendation-get-suggest-create'

@@ -35,6 +35,8 @@ import { CommentModule } from '../publish/comment-recommendation/comment.module'
 import { InfomationExchangeModule } from './infomation-exchange/infomation-exchange.module'
 import { ListForwardComponent } from './list-forward/list-forward.component'
 import { ListProcessDenyMainComponent } from './list-process-deny-main/list-process-deny-main.component'
+import { ListCombinationComponent } from './list-combination/list-combination.component'
+import { ViewCombineRecommendationComponent } from './view-combine-recommendation/view-combine-recommendation.component'
 
 @NgModule({
 	imports: [
@@ -77,7 +79,7 @@ import { ListProcessDenyMainComponent } from './list-process-deny-main/list-proc
 		ListReactionaryWordComponent,
 		ListFakeImageComponent,
 		ListRecommendationCommentComponent,
-		ListForwardComponent, ListProcessDenyMainComponent
+		ListForwardComponent, ListProcessDenyMainComponent, ListCombinationComponent, ViewCombineRecommendationComponent
 	],
 })
 export class RecommendationModule { }

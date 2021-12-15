@@ -545,6 +545,20 @@ namespace PAKNAPI.ModelBase
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Recommendation_ConclusionInsert", DP);
 		}
+
+		public async Task<decimal?> MRRecommendationConclusionCombineInsertDAO(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationConclusionInsertIN.RecommendationId);
+			DP.Add("UserCreatedId", _mRRecommendationConclusionInsertIN.UserCreatedId);
+			DP.Add("UnitCreatedId", _mRRecommendationConclusionInsertIN.UnitCreatedId);
+			DP.Add("ReceiverId", _mRRecommendationConclusionInsertIN.ReceiverId);
+			DP.Add("UnitReceiverId", _mRRecommendationConclusionInsertIN.UnitReceiverId);
+			DP.Add("Content", _mRRecommendationConclusionInsertIN.Content);
+			DP.Add("IsConclusionCombine", true);
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Recommendation_ConclusionCombineInsert", DP);
+		}
 	}
 
 	public class MRRecommendationConclusionInsertIN
@@ -789,6 +803,17 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationForwardUpdateStatusForwardDAO]", DP));
 		}
+		public async Task<int> MRRecommendationForwardUpdateStatusCombineDAO(int Id ,long? RecommendationId, int Step, int Status, DateTime ProcessingDate)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			DP.Add("RecommendationId", RecommendationId);
+			DP.Add("Step", Step);
+			DP.Add("Status", Status);
+			DP.Add("ProcessingDate", ProcessingDate);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationForwardUpdateStatusCombine]", DP));
+		}
+
 	}
 
 	public class MRRecommendationForwardProcessIN
@@ -1386,6 +1411,22 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllWithProcess>("MR_RecommendationGetAllWithProcess", DP)).ToList();
 		}
+
+		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationCombinationGetAllDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("SendName", SendName);
+			DP.Add("Content", Content);
+			DP.Add("UnitId", UnitId);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllWithProcess>("[MR_Recommendation_CombinationGetAll]", DP)).ToList();
+		}
 	}
 
 	public class MRRecommendationGetByHashtagAllOnPage
@@ -1528,6 +1569,7 @@ namespace PAKNAPI.ModelBase
 		public string Lat { get; set; }
 		public string Lng { get; set; }
 		public string Address { get; set; }
+		public bool? IsCombine { get; set; }
 
 		//public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
 		//{

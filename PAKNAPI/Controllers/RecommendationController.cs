@@ -191,6 +191,26 @@ namespace PAKNAPI.Controller
 
         [HttpGet]
         [Authorize("ThePolicy")]
+        [Route("get-detail-mr-combine-by-id")]
+        public async Task<ActionResult<object>> RecommendationCombineGetByIDView(int? Id)
+        {
+            try
+            {
+                RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+                var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationCombineGetByIDView(Id, userProcessId, unitProcessId) };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
         [Route("get-detail-public-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByIDViewPublic(int? Id)
         {
@@ -1047,34 +1067,36 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                MRRecommendationCombinationInsert model = new MRRecommendationCombinationInsert();
-                model.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                model.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                model.RecommendationId = request.RecommendationId;
-                model.SendDate = DateTime.Now;
+                request.RecommendationCombination.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                request.RecommendationCombination.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                request.RecommendationCombination.RecommendationId = request.RecommendationCombination.RecommendationId;
+                request.RecommendationCombination.SendDate = DateTime.Now;
 
                 if (request.ListUnit != null) {
                     foreach (var item in request.ListUnit) {
-                        model.UnitReceiveId = item;
-                        await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationInsertDAO(model);
+                        request.RecommendationCombination.UnitReceiveId = item;
+                        await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationInsertDAO(request.RecommendationCombination);
                     }
                 }
-                // update 
-
-
-
+                // update mr
                 MRRecommendationUpdateStatusByCombine _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusByCombine();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
-                _mRRecommendationUpdateStatusIN.Id = (int)request.RecommendationId;
+                _mRRecommendationUpdateStatusIN.Id = (int)request.RecommendationCombination.RecommendationId;
                 _mRRecommendationUpdateStatusIN.IsCombine =  true;
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusByCombineDAO(_mRRecommendationUpdateStatusIN);
-                
+
+                // update forward
+                await new MRRecommendationForwardProcess(_appSetting)
+                    .MRRecommendationForwardUpdateStatusCombineDAO((int)request.ProcessId, request.RecommendationCombination.RecommendationId, STEP_RECOMMENDATION.PROCESS, PROCESS_STATUS_RECOMMENDATION.APPROVED, DateTime.Now);
+
+
+
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
-                hisData.ObjectId = (int)request.RecommendationId;
+                hisData.ObjectId = (int)request.RecommendationCombination.RecommendationId;
                 hisData.Type = 1;
-                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(request.ListUnit.ToString())).FirstOrDefault().Name; ;
+                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(string.Join(", ", request.ListUnit))).FirstOrDefault().Name;
                 hisData.Status = request.RecommendationStatus;
-                hisData.CreatedBy = model.UserSendId;
+                hisData.CreatedBy = request.RecommendationCombination.UserSendId;
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
@@ -1246,12 +1268,22 @@ namespace PAKNAPI.Controller
                 request.DataConclusion = JsonConvert.DeserializeObject<MRRecommendationConclusionInsertIN>(Request.Form["DataConclusion"].ToString(), jss);
                 request.RecommendationStatus = JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationStatus"].ToString(), jss);
                 request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
+                request.FilesDelete = JsonConvert.DeserializeObject<List<MRRecommendationConclusionFilesGetByConclusionId>>(Request.Form["FileDelete"].ToString(), jss);
                 request.Files = Request.Form.Files;
                 long UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 int UnitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 request.DataConclusion.UserCreatedId = UserId;
                 request.DataConclusion.UnitCreatedId = UnitId;
                 int? IdConclusion = Int32.Parse((await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionInsertDAO(request.DataConclusion)).ToString());
+
+                if (request.FilesDelete != null)
+                {
+                    foreach (var file in request.FilesDelete)
+                    {
+                        await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(file.Id);
+
+                    }
+                }
 
                 if (request.Files != null && request.Files.Count > 0)
                 {
@@ -1331,7 +1363,7 @@ namespace PAKNAPI.Controller
 
         [HttpPost]
         [Authorize("ThePolicy")]
-        [Route("recommendation-on-update-process-conclusion")]
+        [Route("recommendation-on-process-conclusion-combine")]
         public async Task<ActionResult<object>> RecommendationOnUpdateProcessConclusion()
         {
             try
@@ -1344,21 +1376,12 @@ namespace PAKNAPI.Controller
                 };
                 RecommendationOnProcessConclusionProcess request = new RecommendationOnProcessConclusionProcess();
                 request.DataConclusion = JsonConvert.DeserializeObject<MRRecommendationConclusionInsertIN>(Request.Form["DataConclusion"].ToString(), jss);
-                request.RecommendationStatus = JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationStatus"].ToString(), jss);
-                request.FilesDelete = JsonConvert.DeserializeObject<List<MRRecommendationConclusionFilesGetByConclusionId>>(Request.Form["FileDelete"].ToString(), jss);
                 request.Files = Request.Form.Files;
                 long UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 int UnitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 request.DataConclusion.UserCreatedId = UserId;
                 request.DataConclusion.UnitCreatedId = UnitId;
-                int? IdConclusion = Int32.Parse((await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionInsertDAO(request.DataConclusion)).ToString());
-
-                if (request.FilesDelete != null) {
-                    foreach (var file in request.FilesDelete) {
-                        await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(file.Id);
-                        
-                    }
-                }
+                int? IdConclusion = Int32.Parse((await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionCombineInsertDAO(request.DataConclusion)).ToString());
 
                 if (request.Files != null && request.Files.Count > 0)
                 {
@@ -1383,35 +1406,6 @@ namespace PAKNAPI.Controller
                         await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(file);
                     }
                 }
-
-                await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request.DataConclusion.RecommendationId, STEP_RECOMMENDATION.APPROVE);
-                MRRecommendationForwardInsertIN dataForward = new MRRecommendationForwardInsertIN();
-                dataForward.RecommendationId = request.DataConclusion.RecommendationId;
-                dataForward.UserSendId = UserId;
-                dataForward.UnitSendId = UnitId;
-                dataForward.ReceiveId = request.DataConclusion.ReceiverId;
-                dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
-                dataForward.Step = STEP_RECOMMENDATION.APPROVE;
-                dataForward.SendDate = DateTime.Now;
-                dataForward.IsViewed = false;
-                await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(dataForward);
-
-                MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
-                _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
-                _mRRecommendationUpdateStatusIN.Id = request.DataConclusion.RecommendationId;
-                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
-
-
-
-
-                //HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
-                //hisData.ObjectId = request.DataConclusion.RecommendationId;
-                //hisData.Type = 1;
-                //hisData.Content = "Đến: " + (await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(request.DataConclusion.ReceiverId)).FirstOrDefault().FullName;
-                //hisData.Status = request.RecommendationStatus;
-                //hisData.CreatedBy = UserId;
-                //hisData.CreatedDate = DateTime.Now;
-                //await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new ResultApi { Success = ResultCode.OK };
             }
@@ -1556,6 +1550,46 @@ namespace PAKNAPI.Controller
             {
                 _bugsnag.Notify(ex);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
+        /// danh sach pakn ket hop xu ly
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="SendName"></param>
+        /// <param name="Content"></param>
+        /// <param name="UnitId"></param>
+        /// <param name="Field"></param>
+        /// <param name="Status"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-list-recommentdation-combination-on-page")]
+        public async Task<ActionResult<object>> MRRecommendationCombinationGetAllBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
+        {
+            try
+            {
+                var unitProcess = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                List<MRRecommendationGetAllWithProcess> rsMRRecommendationCombine = await new MRRecommendationGetAllWithProcess(_appSetting).MRRecommendationCombinationGetAllDAO(Code, SendName, Content, UnitId, Field, Status, unitProcess, PageSize, PageIndex);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"MRRecommendationCombine", rsMRRecommendationCombine},
+                        {"TotalCount", rsMRRecommendationCombine != null && rsMRRecommendationCombine.Count > 0 ? rsMRRecommendationCombine[0].RowNumber : 0},
+                        {"PageIndex", rsMRRecommendationCombine != null && rsMRRecommendationCombine.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsMRRecommendationCombine != null && rsMRRecommendationCombine.Count > 0 ? PageSize : 0},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }

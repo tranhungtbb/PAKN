@@ -25,6 +25,7 @@ export class ViewFileDirective {
 
   @HostListener('click', ['$event'])
   onClick(e) {
+
     if (this.linkfile != undefined && (this.type != 1 && this.type != 2)) {
       const dialogRef = this.dialog.open(ViewFileDialogComponent, {
         data: {
@@ -61,7 +62,7 @@ export class ViewFileDirective {
     } else if (this.linkfile != undefined && (this.type == 1 || this.type == 2)) {
       var request = {
         Linkfile: this.linkfile,
-       
+
       }
       this.files.getEncryptedPath(request).subscribe((result) => {
         if (result.status == 1) {
@@ -79,7 +80,7 @@ export class ViewFileDirective {
         } else {
           console.log(result.message)
         }
-        
+
       });
     }
   }

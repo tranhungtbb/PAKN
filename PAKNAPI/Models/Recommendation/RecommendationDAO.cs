@@ -141,6 +141,71 @@ namespace PAKNAPI.Models.Recommendation
 					}
 				}
 			}
+
+			if (data.Model.IsCombine == true) {
+				//dsfsdf
+				DP = new DynamicParameters();
+				DP.Add("RecommendationId", Id);
+				data.conclusionCombine = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionCombine>("SY_UnitGetByRecommnedationCombine", DP)).ToList();
+
+				foreach (var item in data.conclusionCombine) {
+					if (item.Status >= 8) {
+						// file
+						DP = new DynamicParameters();
+						DP.Add("Id", item.ConclusionCombineId);
+						item.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+						foreach (var file in item.filesConclusion)
+						{
+							file.FilePath = decrypt.EncryptData(file.FilePath);
+						}
+					}
+				}
+				
+			}
+			return data;
+		}
+
+		public async Task<RecommendationGetByIDViewResponse> RecommendationCombineGetByIDView(int? Id, long userProcessId, long unitProcessId)
+		{
+			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			DP.Add("UserprocessId", userProcessId);
+			DP.Add("UnitProcessId", unitProcessId);
+			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("[MR_RecommendationCombineGetByIDView]", DP)).FirstOrDefault();
+
+			DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
+			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+			foreach (var item in data.lstFiles)
+			{
+				item.FilePath = decrypt.EncryptData(item.FilePath);
+			}
+
+			if (data.Model.Status == STATUS_RECOMMENDATION.APPROVE_DENY || data.Model.Status == STATUS_RECOMMENDATION.PROCESS_DENY || data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_DENY)
+			{
+				DynamicParameters DPdeny = new DynamicParameters();
+				DPdeny.Add("RecommendationId", Id);
+				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
+			}
+
+			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			{
+				DP.Add("@UnitProcess", unitProcessId);
+				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("[MR_Recommendation_ConclusionCombineGetByRecommendationId]", DP)).FirstOrDefault();
+				DP = new DynamicParameters();
+				DP.Add("Id", data.ModelConclusion.Id);
+				if (data.ModelConclusion != null)
+				{
+					data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+					foreach (var item in data.filesConclusion)
+					{
+						item.FilePath = decrypt.EncryptData(item.FilePath);
+					}
+				}
+			}
 			return data;
 		}
 
