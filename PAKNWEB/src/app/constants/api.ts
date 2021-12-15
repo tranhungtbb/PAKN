@@ -4,6 +4,7 @@ export class Api {
 	//Account
 	public static LOGIN = 'contact/login'
 	public static FORGETPASSWORD = 'contact/forget-password'
+	public static GetTokenByEmail = 'contact/get-token-by-email'
 	public static logOut = 'contact/log-out'
 
 	// kha nang ko dùng

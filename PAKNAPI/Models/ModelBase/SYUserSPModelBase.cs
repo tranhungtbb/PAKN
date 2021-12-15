@@ -891,6 +891,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_Login", DP)).ToList();
 		}
+
+		public async Task<List<SYUSRLogin>> SYUSRGetByEmailDAO(string Email)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Email", Email);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_GetByEmail", DP)).ToList();
+		}
 		public async Task<SYUSRLogin> GetInfoByRefreshToken(string refreshToken)
 		{
 			DynamicParameters DP = new DynamicParameters();

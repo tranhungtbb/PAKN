@@ -14,6 +14,7 @@ export class ForgetPasswordComponent implements OnInit {
 	submitted: boolean = false
 	user: ForgetPasswordObject = {
 		phone: '',
+		email: ''
 	}
 	phoneHide: any = ''
 	forgetPasswordForm: FormGroup
@@ -23,11 +24,12 @@ export class ForgetPasswordComponent implements OnInit {
 		private _router: Router,
 		private toastr: ToastrService,
 		private formBuilder: FormBuilder
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.forgetPasswordForm = this.formBuilder.group({
-			phone: new FormControl(this.user.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]),
+			// phone: new FormControl(this.user.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]),
+			email: new FormControl(this.user.email, [Validators.required]),
 		})
 	}
 
@@ -37,7 +39,7 @@ export class ForgetPasswordComponent implements OnInit {
 
 		this.authenService.forgetpassword(this.user).subscribe(
 			(data) => {
-				if (data.status === 1) {
+				if (data.success === "OK") {
 					this._router.navigate(['/dang-nhap'])
 				} else if (data.status !== 2) {
 					this.toastr.error(data.message)
@@ -73,21 +75,21 @@ export class ForgetPasswordComponent implements OnInit {
 			.join('')
 		$('#modal-otp').modal('show')
 		setTimeout(() => {
-			$('#input_1').focus()	
+			$('#input_1').focus()
 		}, 400);
 	}
 
-	onChange =(event, index) =>{
+	onChange = (event, index) => {
 		debugger
-		if(event.target.value){
+		if (event.target.value) {
 			setTimeout(() => {
-				$('#input_' + String(index +1)).focus()	
+				$('#input_' + String(index + 1)).focus()
 			}, 1);
-		}else{
+		} else {
 			setTimeout(() => {
-				$('#input_' + String(index -1)).focus()	
+				$('#input_' + String(index - 1)).focus()
 			}, 1);
-			
+
 		}
 	}
 }
