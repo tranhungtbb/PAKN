@@ -92,6 +92,13 @@ namespace PAKNAPI.Models.Recommendation
 
         public bool? IsForwardUnitChild { get; set; }
     }
+
+    public class RecommendationCombineRequest
+    {
+        public byte RecommendationStatus { get; set; }
+        public long RecommendationId { get; set; }
+        public List<int> ListUnit { get; set; }
+    }
     public class RecommendationForwardProcess
     {
         public MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN { get; set; }

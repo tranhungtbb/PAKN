@@ -167,6 +167,14 @@ export class RecommendationService {
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationForward, headers)
 	}
 
+	recommendationForwardMultiUnit(request: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.FORWARD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationForwardMultiUnit, headers)
+	}
+
 	recommendationProcess(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),

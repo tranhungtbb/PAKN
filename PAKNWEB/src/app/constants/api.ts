@@ -43,6 +43,7 @@ export class Api {
 	public static RecommendationInsert = 'recommendation/insert'
 	public static RecommendationUpdate = 'recommendation/update'
 	public static RecommendationForward = 'recommendation/recommendation-forward'
+	public static RecommendationForwardMultiUnit = 'recommendation/recommendation-forward-multi-unit'
 	public static RecommendationProcess = 'recommendation/recommendation-on-process'
 	public static RecommendationUpdateStatus = 'recommendation/recommendation-update-status'
 	public static RecommendationOnProcessConclusion = 'recommendation/recommendation-on-process-conclusion'
