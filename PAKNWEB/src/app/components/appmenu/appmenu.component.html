@@ -79,6 +79,9 @@
 										*ngIf="statistic" class="text-danger">({{statistic.processDeny}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
+									routerLink="/quan-tri/kien-nghi/tham-muu-don-vi">Phối hợp xử lý</a></li>
+
+							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết <span *ngIf="statistic"
 										class="text-danger">({{statistic.processing}})</span></a></li>
 

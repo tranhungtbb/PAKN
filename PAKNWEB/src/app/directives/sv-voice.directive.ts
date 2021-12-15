@@ -27,7 +27,7 @@ export class SvVoiceDirective {
 			$(this.element).children()
 				.attr("src", "assets/dist/img/app-images/mic-animate.gif");
 			// .attr('class', 'bi bi-mic-fill')
-			$(this.element).next().html('Đang nhận diện giọng nói')
+			// $(this.element).next().html('Đang nhận diện giọng nói')
 			//$(this.element).children().removeClass("fa-microphone").addClass("fa-microphone-slash");
 			//this.toat.info("Bắt đầu nhận diện giọng nói");
 			this.speechRecognitionService.record().subscribe(
@@ -63,7 +63,7 @@ export class SvVoiceDirective {
 			$(this.element).children().attr("src", "assets/dist/img/app-images/mic.gif");
 			// .attr('class', 'bi bi-mic-mute-fill')
 			this.speechRecognitionService.DestroySpeechObject()
-			$(this.element).next().html('')
+			// $(this.element).next().html('')
 
 			this.ison = 0
 			//this.toat.success("Kết thúc nhận diện giọng nói");

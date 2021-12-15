@@ -79,9 +79,27 @@ namespace PAKNAPI.Models.Recommendation
         public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
         public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
         public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
-
         public List<MRRecommendationGetDenyContentsBase> denyContent { get; set; }
+
+        public List<MRRecommendationConclusionCombine> conclusionCombine { get; set;}
+
+        //public List<>
     }
+
+    public class MRRecommendationConclusionCombine {
+        public string UnitName { get; set; }
+
+        public int? Status { get; set; }
+        public string ConclusionCombineContent { get; set; }
+
+        public int? ConclusionCombineId { get; set; }
+
+        public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
+
+
+    }
+
+
 
     public class RecommendationForwardRequest
     {
@@ -95,9 +113,10 @@ namespace PAKNAPI.Models.Recommendation
 
     public class RecommendationCombineRequest
     {
+        public MRRecommendationCombinationInsert RecommendationCombination { get; set; }
         public byte RecommendationStatus { get; set; }
-        public long RecommendationId { get; set; }
         public List<int> ListUnit { get; set; }
+        public int? ProcessId { get; set; }
     }
     public class RecommendationForwardProcess
     {

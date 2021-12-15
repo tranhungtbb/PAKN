@@ -148,88 +148,6 @@
 							</p>
 						</div>
 					</div>
-
-					<ng-container *ngIf="model.isCombine">
-						<ng-container *ngFor="let item of conclusionCombine">
-							<div class="media pb-4 mb-1 box-message-publish">
-								<div class="mr-3">
-									<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
-										class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
-										<path
-											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
-									</svg>
-								</div>
-								<div class="media-body">
-									<div class="row">
-										<div class="col-md-8">
-											<span><i>Cơ quan chức năng tham mưu:</i></span>
-											<p class="h4 font-italic font-weight-bold">{{item.unitName}}:</p>
-										</div>
-									</div>
-									<ng-container *ngIf="item.status == 7">
-										<p class="cl-red">Chưa xử lý</p>
-									</ng-container>
-									<ng-container *ngIf="item.status > 7">
-										<p>{{item.conclusionCombineContent}}</p>
-										<p *ngIf="item.filesConclusion && item.filesConclusion.length > 0">
-											<span class="text-left">
-												<small class="small">Tài liệu đính kèm</small><br>
-												<div *ngFor="let file of item.filesConclusion" class="file-att">
-													<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<img src="../../../../assets/dist/images/file-word.svg"
-															style="width: 30px;padding-right: 5px;" alt="">
-														<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}}</span>
-													</a>
-													<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<img src="../../../../assets/dist/images/file-excel.svg"
-															style="width: 30px;padding-right: 5px;" alt="">
-														<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}}</span>
-													</a>
-													<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<img src="../../../../assets/dist/images/file-pdf.svg"
-															style="width: 30px;padding-right: 5px;" alt="">
-														<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}}</span>
-													</a>
-													<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<img src="../../../../assets/dist/images/file-image.svg"
-															style="width: 30px;padding-right: 5px;" alt="">
-														<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}}</span>
-													</a>
-													<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<img src="../../../../assets/dist/images/file-powerpoint.svg"
-															style="width: 30px;padding-right: 5px;" alt="">
-														<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}}</span>
-													</a>
-													<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
-															style="width: 30px;padding-right: 5px;" alt="">
-														<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}}</span>
-													</a>
-													<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
-														[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
-														<i class="bi bi-eye"></i>
-													</span>
-												</div>
-											</span>
-										</p>
-									</ng-container>
-								</div>
-							</div>
-						</ng-container>
-					</ng-container>
-
 					<div class="media pb-4 mb-4 box-message-publish" *ngIf="model.status > 6">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
@@ -241,8 +159,8 @@
 						<div class="media-body">
 							<div class="row">
 								<div class="col-md-8">
-									<span><i>Cơ quan chức năng giải quyết:</i></span>
-									<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
+									<span><i>Cơ quan chức năng phối hợp giải quyết:</i></span>
+									<p class="h4 font-italic font-weight-bold">{{unitName}}:</p>
 								</div>
 								<div class="col-md-4">
 									<button *ngIf="lstHashtagSelected.length > 0 && suggest == false" type="button"
@@ -251,7 +169,6 @@
 									</button>
 								</div>
 							</div>
-
 							<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10"
 									placeholder="Nhập nội dung..."></textarea>
@@ -349,7 +266,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row" *ngIf="!(model.status == 8 && model.userActive == userLoginId)">
+								<!-- <div class="row" *ngIf="!(model.status == 8 && model.userActive == userLoginId)">
 									<div class="col-12 col-lg-3 form-group">
 										<label class="mb-1 mt-3">NGƯỜI PHÊ DUYỆT <span class="cl-red">(*)</span></label>
 									</div>
@@ -374,13 +291,12 @@
 										</button>
 									</div>
 									<div class="w-100"></div>
-								</div>
-								<div *ngIf="(model.status == 8 && model.userActive == userLoginId)"
-									class="tt-v1 mb-0 d-flex justify-content-end mr-3 mt-2">
+								</div> -->
+								<div class="tt-v1 mb-0 d-flex justify-content-end mr-3 mt-2">
 									<button type="button" class="btn grd-xanhngoc border-0 text-white btn-custom-send-process"
 										(click)="onProcessConclusion()">
 
-										Lưu nội dung
+										Gửi trả lời
 									</button>
 								</div>
 							</ng-container>
@@ -443,7 +359,7 @@
 							</ng-container>
 						</div>
 					</div>
-					<div>
+					<!-- <div>
 						<div>
 							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi với người dân
 								({{totalInfomationExchange}})</p>
@@ -475,7 +391,7 @@
 									(click)="onInsertInfomationExchange(infomationExchangeQuery.pageIndex + 1)">Xem thêm trao đổi khác <i
 										class="bi bi-arrow-right"></i></a></p>
 						</div>
-					</div>
+					</div> -->
 					<!-- <app-infomation-exchange [RecommentId]="model.id" [IsPagePublic]="false"></app-infomation-exchange> -->
 					<ng-container *ngIf="model && model.status == 10">
 						<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="false"></app-comment-recommendation>

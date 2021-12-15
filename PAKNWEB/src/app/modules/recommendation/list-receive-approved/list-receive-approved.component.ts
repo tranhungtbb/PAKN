@@ -173,11 +173,12 @@ export class ListReceiveApprovedComponent implements OnInit {
 		})
 	}
 	isForwardMultiUnit: boolean
-	preForward(id: number, isForwardMultiUnit: boolean = false) {
+	preForward(item: any, isForwardMultiUnit: boolean = false) {
 		this.submitted = false
 		this.isForwardMultiUnit = isForwardMultiUnit
 		this.modelForward = new RecommendationForwardObject()
-		this.modelForward.recommendationId = id
+		this.modelForward.recommendationId = item.id
+		this.modelForward.id = item.processId
 		this.rebuilForm()
 		this._service.recommendationGetDataForForward({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -222,9 +223,17 @@ export class ListReceiveApprovedComponent implements OnInit {
 					console.error(err)
 				}
 		} else {
-			request['ListUnit'] = this.modelForward.unitReceiveId
-			request._mRRecommendationForwardInsertIN.unitReceiveId = null
-			this._service.recommendationForwardMultiUnit(request, obj.title).subscribe((response) => {
+			debugger
+			let requestCombine = {
+				RecommendationCombination: { ...this.modelForward, 'status': RECOMMENDATION_STATUS.PROCESSING },
+				RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+				ListUnit: this.modelForward.unitReceiveId,
+				ProcessId: this.modelForward.id
+			}
+			requestCombine.RecommendationCombination.unitReceiveId = null
+
+
+			this._service.recommendationCombineInsert(requestCombine, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modal-tc-pakn').modal('hide')
 					this.getList()
