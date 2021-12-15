@@ -37,6 +37,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	administrativeUnitId: any
 	administrativeUnitsBase: any[]
 	listIndividualAndBusinessGetByAdmintrativeId: any[]
+	listData: Array<smsManagementMapObject>
 	userId: any[] = []
 	individual: boolean = true
 	business: boolean = true
@@ -74,43 +75,43 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		this.getSMSModelById()
 	}
 
-	getAdministrativeUnits() {
-		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.administrativeUnitsBase = res.result.CAAdministrativeUnitsGetDropDown
-				if (this.administrativeUnitsBase.length > 0) {
-					var itemFirst = new TreeViewDrop()
-					itemFirst.text = this.administrativeUnitsBase[0].name
-					itemFirst.value = this.administrativeUnitsBase[0].id
-					itemFirst.children = []
-					itemFirst.checked = false
-					for (const iterator of this.administrativeUnitsBase.filter((x) => x.parentId == itemFirst.value)) {
-						var item = new TreeViewDrop()
-						item.value = iterator.id
-						item.text = iterator.name
-						item.children = []
-						item.checked = this.ltsUnitFirst.includes(iterator.id) == true ? true : false
-						item.collapsed = true
-						for (const iterator1 of this.administrativeUnitsBase.filter((x) => x.parentId == iterator.id)) {
-							let item2 = new TreeViewDrop()
-							item2.value = iterator1.id
-							item2.text = iterator1.name
-							item2.checked = this.ltsUnitFirst.includes(iterator1.id) == true ? true : false
-							item2.collapsed = false
-							if (item2.checked) {
-								item.collapsed = false
-							}
-							item.children.push(item2)
-						}
-						itemFirst.children.push(item)
-					}
-					this.administrativeUnits = [new TreeviewItem({ ...itemFirst })]
-				}
-			} else {
-				this.administrativeUnits = []
-			}
-		})
-	}
+	// getAdministrativeUnits() {
+	// 	this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
+	// 		if (res.success == RESPONSE_STATUS.success) {
+	// 			this.administrativeUnitsBase = res.result.CAAdministrativeUnitsGetDropDown
+	// 			if (this.administrativeUnitsBase.length > 0) {
+	// 				var itemFirst = new TreeViewDrop()
+	// 				itemFirst.text = this.administrativeUnitsBase[0].name
+	// 				itemFirst.value = this.administrativeUnitsBase[0].id
+	// 				itemFirst.children = []
+	// 				itemFirst.checked = false
+	// 				for (const iterator of this.administrativeUnitsBase.filter((x) => x.parentId == itemFirst.value)) {
+	// 					var item = new TreeViewDrop()
+	// 					item.value = iterator.id
+	// 					item.text = iterator.name
+	// 					item.children = []
+	// 					item.checked = this.ltsUnitFirst.includes(iterator.id) == true ? true : false
+	// 					item.collapsed = true
+	// 					for (const iterator1 of this.administrativeUnitsBase.filter((x) => x.parentId == iterator.id)) {
+	// 						let item2 = new TreeViewDrop()
+	// 						item2.value = iterator1.id
+	// 						item2.text = iterator1.name
+	// 						item2.checked = this.ltsUnitFirst.includes(iterator1.id) == true ? true : false
+	// 						item2.collapsed = false
+	// 						if (item2.checked) {
+	// 							item.collapsed = false
+	// 						}
+	// 						item.children.push(item2)
+	// 					}
+	// 					itemFirst.children.push(item)
+	// 				}
+	// 				this.administrativeUnits = [new TreeviewItem({ ...itemFirst })]
+	// 			}
+	// 		} else {
+	// 			this.administrativeUnits = []
+	// 		}
+	// 	})
+	// }
 
 	onSelectedChange(values: any[]) {
 		this.ltsAdministrativeUnitId = ''
@@ -144,17 +145,14 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result) {
 							this.model = { ...res.result.model }
-							this.listItemUserSelected = [...res.result.individualBusinessInfo]
-							this.listItemUserSelected.forEach((x) => {
-								this.ltsUnitFirst.push(x['administrativeUnitId'])
-							})
-							this.ltsUnitFirst = this.ltsUnitFirst.filter((item, index) => this.ltsUnitFirst.indexOf(item) === index)
-							this.getAdministrativeUnits()
+							this.userId = this.listItemUserSelected = [...res.result.individualBusinessInfo]
+
+							this.onLoadListIndividualAndBusiness()
 						}
 					}
 				})
 			} else {
-				this.getAdministrativeUnits()
+				this.onLoadListIndividualAndBusiness()
 			}
 		})
 		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
@@ -176,57 +174,31 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		})
 	}
 
-	onChange(category: number) {
-		if (category == 1) {
-			this.individual = !this.individual
-		} else if (category == 2) {
-			this.business = !this.business
-		}
-		this.onLoadListIndividualAndBusiness()
-	}
+
 
 	onLoadListIndividualAndBusiness() {
-		if (this.ltsAdministrativeUnitId == '' && this.checkFirst > 1) {
-			this._toastr.error('Vui lòng chọn đơn vị')
-			this.listIndividualAndBusinessGetByAdmintrativeId = []
-			return
-		} else {
-			this.checkFirst++
-		}
-
-		let type: number = 0
-		if (this.individual == true && this.business == true) {
-			type = 3
-		} else {
+		let type: any
+		if (this.individual && this.business) {
 			if (this.individual == true) {
 				type = 1
 			} else if (this.business == true) {
 				type = 2
 			} else {
-				this._toastr.error('Vui lòng chọn cá nhân hoặc doanh nghiệp')
-				this.listIndividualAndBusinessGetByAdmintrativeId = []
-				return
+				type = ''
 			}
+		} else {
+			type = ''
 		}
+
 		let obj = {
-			LtsAdministrativeId: this.ltsAdministrativeUnitId,
+			SmsId: !this.model.id || this.model.id == 0 ? '' : this.model.id,
 			type: type,
 		}
-		this.smsService.GetListIndividualAndBusinessByAdmintrativeUnitId(obj).subscribe((res) => {
+		this.smsService.GetListIndividualBusinessDrop(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.BIIndividualOrBusinessGetDropListByProviceId.length > 0) {
-					this.listIndividualAndBusinessGetByAdmintrativeId = res.result.BIIndividualOrBusinessGetDropListByProviceId
-					this.listItemUserSelected.forEach((item) => {
-						let user = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == item.id && x.category == item.category)
-						if (user) {
-							this.userId.push(user)
-						}
-					})
-				} else {
-					this.listIndividualAndBusinessGetByAdmintrativeId = []
-				}
+				this.listData = res.result
 			} else {
-				this.listIndividualAndBusinessGetByAdmintrativeId = []
+				this.listData = []
 			}
 		})
 	}
@@ -252,8 +224,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			s.push(item.category)
 			let ob = {
 				Id: item.id,
-				Category: item.category,
-				AdmintrativeUnitId: item.administrativeUnitId,
+				Category: item.category
 			}
 			this.individualBusinessInfo.push(ob)
 		})
@@ -321,29 +292,17 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
-		if (this.ltsAdministrativeUnitId == undefined || this.ltsAdministrativeUnitId == '') {
-			this._toastr.error('Vui lòng chọn đơn vị')
-			return
-		}
 		if (this.userId != undefined && this.userId.length > 0 && this.userId != null) {
-			this.listItemUserSelected = []
-			for (const iterator of this.userId) {
-				var obj = new smsManagementMapObject()
-				obj.id = iterator.id
-				obj.category = iterator.category
-				obj.name = iterator.name
-				obj.administrativeUnitName = iterator.administrativeUnitName
-				obj.administrativeUnitId = iterator.administrativeUnitId
-				this.listItemUserSelected.push(obj)
-			}
+			this.listItemUserSelected = [... this.userId]
 			this._toastr.success('Thêm mới thành công ' + this.userId.length + ' người dùng!')
+			// this.userId = []
 		} else {
 			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp')
-			return
 		}
 	}
 	onRemoveUser(item: any) {
-		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.id != item.id)
+		let index = this.listItemUserSelected.indexOf(item)
+		this.listItemUserSelected.splice(index, 1)
 		return
 	}
 }

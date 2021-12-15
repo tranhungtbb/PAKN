@@ -7,9 +7,8 @@ import { RecommendationService } from 'src/app/services/recommendation.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { saveAs as importedSaveAs } from 'file-saver'
-import {RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
+import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 declare var $: any
 
 @Component({
@@ -18,7 +17,6 @@ declare var $: any
 	styleUrls: ['./view-recommendation-personal.component.css'],
 })
 export class ViewRecommendationPersonalComponent implements OnInit {
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	model: RecommendationViewObject = new RecommendationViewObject()
 	modelConclusion: RecommendationConclusionObject = new RecommendationConclusionObject()
 	lstHashtag: any[] = []
@@ -40,12 +38,12 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private recommendationService: RecommendationService,
 		private router: Router,
-		private commentService : RecommendationCommentService,
+		private commentService: RecommendationCommentService,
 		private activatedRoute: ActivatedRoute
-	) {}
+	) { }
 
 	ngOnInit() {
-		
+
 		this.model = new RecommendationViewObject()
 		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
@@ -102,13 +100,13 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 
 
 
-	
+
 	infoExchangeModel: RecommnendationInfomationExchange = new RecommnendationInfomationExchange()
-	infomationExchangeQuery : any = {
-		pageIndex : 1,
-		pageSize : 20,
-		recommendationId : 0,
-		isPublish : true
+	infomationExchangeQuery: any = {
+		pageIndex: 1,
+		pageSize: 20,
+		recommendationId: 0,
+		isPublish: true
 	}
 	listInfomationExchange: any[] = []
 	totalInfomationExchange = 0
@@ -133,11 +131,11 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			this.listInfomationExchange.push(this.infoExchangeModel)
 			this.totalInfomationExchange += 1
 			this.infoExchangeModel = new RecommnendationInfomationExchange()
-			
+
 		})
 	}
 
-	getAllInfomationExchange(pageIndex : any) {
+	getAllInfomationExchange(pageIndex: any) {
 		this.infomationExchangeQuery.pageIndex = pageIndex
 		this.infomationExchangeQuery.recommendationId = this.model.id
 		this.commentService.getAllInfomationChangeOnPage(this.infomationExchangeQuery).subscribe((res) => {

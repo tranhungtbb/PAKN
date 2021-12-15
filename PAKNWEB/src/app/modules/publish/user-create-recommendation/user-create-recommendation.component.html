@@ -4,7 +4,7 @@
 <div class="content-nd">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col-lg-8 col-md-8">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/phan-anh-kien-nghi']">Phản ánh, Kiến nghị</a></li>
@@ -17,10 +17,11 @@
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
 						<div class="mb-1 d-flex">
-							<div class="label pl-0">Phản ánh, kiến nghị về việc</div>
-							<span class="cl-red">(*)</span>
+							<div class="label pl-0 center">Phản ánh, kiến nghị về việc</div>
+							<span class="cl-red center">(*)</span>
 							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'title'">
-								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
+								<!-- <i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i> -->
+								<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 							</button>
 						</div>
 						<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500"
@@ -46,10 +47,11 @@
 					</div>
 					<div class="col-12 form-group">
 						<div class="mb-1 d-flex">
-							<div class="label pl-0">Nội dung</div>
-							<span class="cl-red">(*)</span>
+							<div class="label pl-0 center">Nội dung</div>
+							<span class="cl-red center">(*)</span>
 							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (blur)="hightLightText()">
-								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
+								<!-- <i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i> -->
+								<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 							</button>
 						</div>
 						<div class="group-content-recommendation">
@@ -73,8 +75,7 @@
 					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">Lĩnh vực <span class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" placeholder="Chọn..."
-							formControlName="field" notFoundText="Không tìm thấy dữ liệu" (change)="getListUnit()"
-							[(ngModel)]="model.field">
+							formControlName="field" notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.field">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.text}}">{{item.text}}</div>
 							</ng-template>
@@ -86,7 +87,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 form-group">
+					<!-- <div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstUnit" bindLabel="text" bindValue="value"
 							notFoundText="Không tìm thấy dữ liệu" placeholder="Chọn..." formControlName="unitId"
@@ -110,9 +111,57 @@
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
+					</div> -->
+
+					<div class="col-12 col-lg-6 form-group">
+						<div class="label pl-0 mb-1">cấp cơ quan tiếp nhận<span class="cl-red">(*)</span></div>
+						<ng-select class="form-control" [items]="lstGroupUnit" bindValue="id" bindLabel="name" placeholder="Chọn..."
+							formControlName="groupUnitId" notFoundText="Không tìm thấy dữ liệu" (change)="onChangeGroup($event)"
+							[(ngModel)]="model.groupUnitId">
+							<ng-template ng-option-tmp let-item="item">
+								<div title="{{item.name}}">{{item.name}}</div>
+								<p *ngIf="item.isMain" class="cl-red mb-0" style="font-style: italic;">
+									(Trường hợp không chọn được đơn vị xử lý)
+								</p>
+							</ng-template>
+						</ng-select>
+						<div
+							*ngIf="(submitted && f.groupUnitId.invalid) || (f.groupUnitId.invalid && (f.groupUnitId.dirty || f.groupUnitId.touched))"
+							class="has-error">
+							<div *ngIf="f.groupUnitId.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
 					</div>
+
+					<div class="col-12 col-lg-6 form-group">
+						<div class="label pl-0 mb-1">cơ quan tiếp nhận <span *ngIf="!isChooseUnit" class="cl-red">(*)</span></div>
+						<ng-select class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name" placeholder="Chọn..."
+							notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.unitReceive"
+							[ngModelOptions]="{standalone: true}" (change)="getUnitByParent($event)">
+							<ng-template ng-option-tmp let-item="item">
+								<div title="{{item.name}}">{{item.name}}</div>
+							</ng-template>
+						</ng-select>
+						<div *ngIf="(submitted && !model.unitReceive && !isChooseUnit)" class="has-error">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+
+					</div>
+
+					<div class="col-12 col-lg-6 form-group" *ngIf="isShowUnitChild">
+						<div class="label pl-0 mb-1">đơn vị tiếp nhận</div>
+						<ng-select class="form-control" [items]="lstUnitChild" bindValue="id" bindLabel="name" placeholder="Chọn..."
+							notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.unitChildId"
+							[ngModelOptions]="{standalone: true}">
+							<ng-template ng-option-tmp let-item="item">
+								<div title="{{item.text}}">{{item.name}}</div>
+							</ng-template>
+						</ng-select>
+					</div>
+
 					<div class="col-12 col-sm-12 form-group">
-						<div class="label pl-0 mb-1">ĐỊA ĐIỂM PHẢN ÁNH HIỆN TRƯỜNG <span class="cl-red">(*)</span></div>
+						<div class="label pl-0 mb-1">Địa điểm phản ánh, kiến nghị <span class="cl-red">(*)</span></div>
 						<div class="ps-relative">
 							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300"
 								formControlName="address" placeholder="Nhập..." />
@@ -236,7 +285,7 @@
 					</div>
 				</div>
 				<form class="form-row mb-3 align-items-end" [formGroup]="form">
-					<div class="col-12 col-lg-4">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
 						<label class="mb-1">Mã số xác thực</label>
 						<div
 							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
@@ -246,7 +295,7 @@
 									style="font-size: 24px"></i></button>
 						</div>
 					</div>
-					<div class="col-12 col-lg-4">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
 						<label class="mb-1">Nhập kết quả <span class="cl-red">(*)</span></label>
 						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode"
 							style="height: 56px;" formControlName="captcha" maxlength="5">
@@ -258,22 +307,30 @@
 							</div>
 						</div>
 					</div>
+					<!-- 
+					<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+						<button type="button" class="btn text-white border-0 grd-xanhngoc justify-content-center"
+							style="width: 100%;" (click)="onSave(1)">Lưu</button>
+					</div>
 
-					<div class="col-4 col-lg-4 d-flex justify-content-end align-items-center" style="margin-top: 22px;">
-						<!-- <button type="button" class="btn border mr-3" (click)="reloadForm()">
-							<i class="bi bi-arrow-repeat d-flex" style="font-size: 24px"></i>
-							<span class="ml-2">Nhập lại</span>
-						</button> -->
+					<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+						<button type="button" class="btn text-white border-0 grd-blue justify-content-center" style="width: 100%;"
+							(click)="onSave(2)">
+							<span class="ml-2">Gửi</span>
+						</button>
+					</div> -->
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-end align-items-center"
+						style="margin-top: 22px;">
 						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3 px-5"
 							(click)="onSave(1)">Lưu</button>
-
 						<button type="button" class="btn text-white border-0 grd-blue px-5" (click)="onSave(2)">
 							<span class="ml-2">Gửi</span>
 						</button>
 					</div>
 				</form>
 			</div>
-			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 d-lg-block sidebar-ct pl-3">
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 			</div>
 		</div>

@@ -7,6 +7,7 @@ using PAKNAPI.Chat;
 using PAKNAPI.Chat.ResponseModel;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Chatbot;
 using PAKNAPI.Models.ModelBase;
 using System;
 using System.Collections.Generic;
@@ -41,13 +42,13 @@ namespace SignalR.Hubs
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
             if (room != null)
             {
-                int userId = await GetUserIdByUserName(httpContext);
-                int checkExist = await new BOTRoomUserLink(_appSetting).BOTCheckUserExistInRoom(userId, room.Id);
+                var resUserId = await GetUserIdByUserName(httpContext);
+                int checkExist = await new BOTRoomUserLink(_appSetting).BOTCheckUserExistInRoom(resUserId.Id, room.Id);
                 if (checkExist <= 0)
                 {
                     var botRoomUserLink = new BOTRoomUserLink();
                     botRoomUserLink.RoomId = room.Id;
-                    botRoomUserLink.UserId = userId;
+                    botRoomUserLink.UserId = resUserId.Id;
                     await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
                 }
 
@@ -88,19 +89,21 @@ namespace SignalR.Hubs
                 var httpContext = Context.GetHttpContext();
 
                 var senderUserName = GetUserName(httpContext);
-                var senderUserId = await GetUserIdByUserName(httpContext);
+                var resSenderUserId = await GetUserIdByUserName(httpContext);
                 
                 DateTime dateSent = DateTime.Now;
                 Message messageModel = new Message()
                 {
                     Content = message,
                     From = senderUserName,
-                    FromId = senderUserId.ToString(),
+                    FromId = resSenderUserId.Id.ToString(),
+                    FromFullName = resSenderUserId.Name,
+                    FromAvatarPath = resSenderUserId.AvatarUrl,
                     To = roomName,
-                    Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(),
+                    Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(), 
                     Type = MessageTypes.Conversation
                 };
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUserId, roomId, dateSent);
+                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, resSenderUserId.Id, roomId, resSenderUserId.Name, resSenderUserId.AvatarUrl, dateSent);
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
             }
         }
@@ -128,6 +131,7 @@ namespace SignalR.Hubs
                     HiddenAnswer = string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer,
                     Content = res.Answer,
                     From = "Bot",
+                    FromFullName = "Bot",
                     SubTags = (res.SubTags),
                     FromId = "Bot",
                     To = roomName,
@@ -135,7 +139,7 @@ namespace SignalR.Hubs
                     Type = MessageTypes.Conversation
                 };
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
-                var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id, foo);
+                var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id,"","", foo);
                 DateTime fooo = DateTime.Now;
                 double total = (fooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 1 " + total);
@@ -147,20 +151,37 @@ namespace SignalR.Hubs
             return !string.IsNullOrEmpty(httpContext.Request.Query["userName"]) ? httpContext.Request.Query["userName"] : httpContext.Request.Query["sysUserName"];
         }
 
-        private async Task<int> GetUserIdByUserName(HttpContext httpContext)
+        private async Task<UserChatModel> GetUserIdByUserName(HttpContext httpContext)
         {
             if (!string.IsNullOrEmpty(httpContext.Request.Query["userName"]))
             {
                 var senderUserName = httpContext.Request.Query["userName"];
                 BOTAnonymousUser ress = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
-                return ress.Id;
+                return new UserChatModel()
+                {
+                    Id = ress.Id,
+                    Name = "Người dân",
+                    AvatarUrl = ""
+                };
             }
             else if (!string.IsNullOrEmpty(httpContext.Request.Query["sysUserName"]))
             {
+               
                 int sysUserId = int.Parse(httpContext.Request.Query["sysUserName"]);
-                return sysUserId;
+                var ress = await new SYUser(_appSetting).SYUserGetByID(sysUserId);
+                return new UserChatModel()
+                {
+                    Id = sysUserId,
+                    Name = ress.FullName,
+                    AvatarUrl = ress.Avatar
+                };
+                
             }
-            return -1;
+            return new UserChatModel()
+            {
+                Id = -1,
+                AvatarUrl = ""
+            };
         }
 
         public override async Task OnConnectedAsync()

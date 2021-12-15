@@ -32,6 +32,21 @@ export class StatisticsRightComponent implements OnInit {
 			display: false,
 			position: 'bottom',
 		},
+		tooltips: {
+			enabled: true,
+			callbacks: {
+				label: function (tooltipItem, data) {
+					debugger
+					let sum = 0;
+					let dataArr: any[] = data.datasets[0].data;
+					dataArr.map((data: number) => {
+						sum += data;
+					});
+					let percentage = (dataArr[tooltipItem.index] * 100 / sum).toFixed(2) + "%: " + dataArr[tooltipItem.index];
+					return percentage;
+				},
+			},
+		},
 	};
 	chartType: ChartType = 'pie'
 

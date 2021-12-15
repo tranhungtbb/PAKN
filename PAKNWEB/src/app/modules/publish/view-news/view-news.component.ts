@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { NewsService } from 'src/app/services/news.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -27,7 +26,6 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 	) {
 		this.newsHightlight = []
 	}
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	@ViewChild('contents', { static: true }) contents: ElementRef
 
 	model: any = {}
@@ -71,7 +69,7 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 				alert(error)
 			}
 	}
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 	changeKeySearch(event) {
 		this.title = event.target.value
 	}

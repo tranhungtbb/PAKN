@@ -25,7 +25,7 @@ export class ListReceiveWaitComponent implements OnInit {
 		private _shareData: DataService,
 		private notificationService: NotificationService,
 		private _router: Router
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
@@ -150,7 +150,7 @@ export class ListReceiveWaitComponent implements OnInit {
 	preProcess(recommendationId, idProcess, status) {
 		this.modelProcess.status = status
 		this.modelProcess.id = idProcess
-		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+		this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 		this.modelProcess.recommendationId = recommendationId
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
@@ -188,7 +188,7 @@ export class ListReceiveWaitComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -216,7 +216,7 @@ export class ListReceiveWaitComponent implements OnInit {
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()
 				} else {

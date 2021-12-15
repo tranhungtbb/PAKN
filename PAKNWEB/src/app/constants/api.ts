@@ -44,9 +44,11 @@ export class Api {
 	public static RecommendationInsert = 'recommendation/insert'
 	public static RecommendationUpdate = 'recommendation/update'
 	public static RecommendationForward = 'recommendation/recommendation-forward'
+	public static RecommendationForwardMultiUnit = 'recommendation/recommendation-forward-multi-unit'
 	public static RecommendationProcess = 'recommendation/recommendation-on-process'
 	public static RecommendationUpdateStatus = 'recommendation/recommendation-update-status'
 	public static RecommendationOnProcessConclusion = 'recommendation/recommendation-on-process-conclusion'
+	public static RecommendationOnProcessConclusionUpdate = 'recommendation/recommendation-on-update-process-conclusion'
 	public static RecommendationDelete = 'recommendation/delete'
 	public static RecommendationExport = 'recommendation/MRRecommendationExportBase' // cái này bỏ
 	public static RecommendationGetSuggestCreate = 'recommendation/recommendation-get-suggest-create'
@@ -62,6 +64,8 @@ export class Api {
 	public static MRRecommendationCommentDelete = 'recommendation/delete-comment'
 	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-comment'
 	public static MRRecommendationCommentGetOnPageBase = 'recommendation/	get-all-comment-on-page'
+	public static MRRecommendationCommentGetAllByParentId = 'recommendation/get-all-comment-by-parent'
+	public static MRRecommendationCommentGetPageByParent = 'recommendation/get-comment-by-parent-on-page'
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	// infomationChange
@@ -122,6 +126,10 @@ export class Api {
 	public static UnitPermissionSMSInsert = 'unit/unit-permission-insert'
 	public static UnitNotPermissionSMSGetDrop = 'unit/get-unit-dropdown-not-permission'
 	public static UnitHasPermissionSMS = 'unit/unit-has-permission'
+	public static UnitGetByGroup = 'unit/unit-get-by-group'
+	public static UnitGetByParentId = 'unit/get-children-dropdown-by-parent'
+
+
 
 	//Position
 	public static PositionInsert = 'position/insert'
@@ -387,6 +395,7 @@ export class Api {
 	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'business/get-list-individual-business-by-provice-id'
 	public static OrganizationCheckExists = 'business/check-exists'
 	public static BusinessImportFile = 'business/import-data-business?folder=BusinessIndividual'
+	public static GetListIndividualBusinessDrop = 'business/get-drop-list-individual-business'
 
 	//Statistic admin
 

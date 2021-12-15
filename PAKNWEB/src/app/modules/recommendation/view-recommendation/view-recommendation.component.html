@@ -169,7 +169,7 @@
 									</button>
 								</div>
 							</div>
-							<ng-container *ngIf="model.status == 7 || (model.status == 9 && model.userActive == userLoginId)">
+							<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10"
 									placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
@@ -266,7 +266,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="row">
+								<div class="row" *ngIf="!(model.status == 8 && model.userActive == userLoginId)">
 									<div class="col-12 col-lg-3 form-group">
 										<label class="mb-1 mt-3">NGƯỜI PHÊ DUYỆT <span class="cl-red">(*)</span></label>
 									</div>
@@ -292,11 +292,18 @@
 									</div>
 									<div class="w-100"></div>
 								</div>
+								<div *ngIf="(model.status == 8 && model.userActive == userLoginId)"
+									class="tt-v1 mb-0 d-flex justify-content-end mr-3 mt-2">
+									<button type="button" class="btn grd-xanhngoc border-0 text-white btn-custom-send-process"
+										(click)="onProcessConclusion()">
+
+										Lưu nội dung
+									</button>
+								</div>
 							</ng-container>
-							<ng-container *ngIf="model.status > 7 && (model.status != 9 || model.userActive != userLoginId)">
+							<!-- (model.status != 9 || model.userActive != userLoginId) -->
+							<ng-container *ngIf="model.status > 7 && !(model.status == 8 && model.userActive == userLoginId)">
 								<p>{{modelConclusion.content}}</p>
-
-
 								<p *ngIf="files.length > 0">
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>
@@ -355,7 +362,8 @@
 					</div>
 					<div>
 						<div>
-							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi ({{totalInfomationExchange}})</p>
+							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi với người dân
+								({{totalInfomationExchange}})</p>
 						</div>
 						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
 							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..."
@@ -385,6 +393,10 @@
 										class="bi bi-arrow-right"></i></a></p>
 						</div>
 					</div>
+					<!-- <app-infomation-exchange [RecommentId]="model.id" [IsPagePublic]="false"></app-infomation-exchange> -->
+					<ng-container *ngIf="model && model.status == 10">
+						<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="false"></app-comment-recommendation>
+					</ng-container>
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct-ql pl-0 pt-4">
@@ -424,23 +436,16 @@
 						</div>
 					</div>
 
-					<div class="tags" *ngIf="model.status != 10">
+					<div class="tags">
 						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center"
 							*ngFor="let item of lstHashtagSelected">
 							<strong>{{item.text}}</strong>
-							<button type="button" class="close h-100 pl-2" (click)="onRemoveHashtag(item)"><span><i
-										class="mdi mdi-close"></i></span>
+							<button *ngIf="model.status != 10" type="button" class="close h-100 pl-2"
+								(click)="onRemoveHashtag(item)"><span><i class="mdi mdi-close"></i></span>
 							</button>
 						</div>
 					</div>
 
-					<div class="tags" *ngIf="model.status == 10">
-						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center"
-							*ngFor="let item of lstHashtagSelected">
-							<strong>{{item.text}}</strong>
-
-						</div>
-					</div>
 				</div>
 
 				<div class="mb-4">

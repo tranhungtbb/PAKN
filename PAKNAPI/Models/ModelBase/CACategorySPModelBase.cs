@@ -432,6 +432,9 @@ namespace PAKNAPI.ModelBase
 
 		public string FilePath { get; set; }
 
+		public int? OrderNumber { get; set; }
+		public bool? IsShowHome { get; set; }
+
 		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -1344,6 +1347,8 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 	}
 
+
+
 	public class CAUnitGetAll
 	{
 		private SQLCon _sQLCon;
@@ -1514,6 +1519,7 @@ namespace PAKNAPI.ModelBase
 		public string ListField { get; set; }
 		public string ListFieldName { get; set; }
 		public bool? IsPermission { get; set; }
+		public int? Group { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{
@@ -1582,6 +1588,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Index", _cAUnitInsertIN.Index);
 			DP.Add("ListField", _cAUnitInsertIN.ListField);
 			DP.Add("IsPermission", _cAUnitInsertIN.IsPermission);
+			DP.Add("Group", _cAUnitInsertIN.Group);
 
 			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitInsert", DP)).FirstOrDefault();
 		}
@@ -1600,13 +1607,13 @@ namespace PAKNAPI.ModelBase
 		public int? ParentId { get; set; }
 		public string Description { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 
 		public string Email { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
-		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		//[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 		public string Address { get; set; }
 
@@ -1619,6 +1626,9 @@ namespace PAKNAPI.ModelBase
 		public int Index { get; set; }
 		public bool? IsPermission { get; set; }
 		public string ListField { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm đơn vị không được để trống")]
+		public int? Group { get; set; }
 	}
 
 	public class CAUnitUpdate
@@ -1651,6 +1661,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Index", _cAUnitUpdateIN.Index);
 			DP.Add("ListField", _cAUnitUpdateIN.ListField);
 			DP.Add("IsPermission", _cAUnitUpdateIN.IsPermission);
+			DP.Add("Group", _cAUnitUpdateIN.Group);
 
 			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitUpdate", DP)).FirstOrDefault();
 		}
@@ -1670,11 +1681,11 @@ namespace PAKNAPI.ModelBase
 		public int? ParentId { get; set; }
 		public string Description { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
 		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 		public string Address { get; set; }
@@ -1688,6 +1699,9 @@ namespace PAKNAPI.ModelBase
 		public int Index { get; set; }
 		public bool? IsPermission { get; set; }
 		public string ListField { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm đơn vị không được để trống")]
+		public int? Group { get; set; }
 
 
 	}

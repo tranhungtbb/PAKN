@@ -11,9 +11,8 @@
 					</div>
 					<div class="card mb-0 shadow-none">
 						<div class="table-responsive">
-							<p-treeTable  #dataTable [value]="statistics" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
-								tableStyleClass="table table-sd table-responsive-md table-striped mb-0"
-							>
+							<p-treeTable #dataTable [value]="statistics" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
+								tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 								<ng-template pTemplate="header">
 									<tr>
 										<th rowspan="2" class="text-center middle" style="width: 60px;">STT</th>
@@ -28,8 +27,8 @@
 										<th rowspan="1" colspan="1" class="text-center middle">Đang xử lý</th>
 										<th rowspan="1" colspan="1" class="text-center middle">Quá hạn</th>
 
-										<th rowspan="1" colspan="1" class="text-center middle">Hài lòng</th>
-										<th rowspan="1" colspan="1" class="text-center middle">Chấp nhận</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Rất Hài lòng</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Hài lòng</th>
 										<th rowspan="1" colspan="1" class="text-center middle">Không hài lòng</th>
 									</tr>
 								</ng-template>
@@ -37,8 +36,9 @@
 									<tr>
 										<td class="text-center">{{ rowData.index }}</td>
 										<td rowspan="1" colspan="4" class="text-left">
-											<p-treeTableToggler *ngIf="rowData.existChild" [rowNode]="rowNode" ></p-treeTableToggler>
-											<span *ngIf="!rowData.existChild" [style.marginLeft.px]="rowData.unitLevel * 20" style="margin-left:  'rowData.unitLevel' px;"></span>
+											<p-treeTableToggler *ngIf="rowData.existChild" [rowNode]="rowNode"></p-treeTableToggler>
+											<span *ngIf="!rowData.existChild" [style.marginLeft.px]="rowData.unitLevel * 20"
+												style="margin-left:  'rowData.unitLevel' px;"></span>
 											<span class="mb-0">{{ rowData.unitName }}</span>
 										</td>
 										<td class="text-center">{{ rowData.totalResult }}</td>
@@ -52,14 +52,14 @@
 										<td class="text-center red">{{ rowData.unSatisfaction }}</td>
 									</tr>
 								</ng-template>
-								
+
 								<ng-template pTemplate="emptymessage">
 									<tr>
 										<td [attr.colspan]="10">
 											Không có dữ liệu hiển thị
 										</td>
 									</tr>
-									</ng-template>
+								</ng-template>
 							</p-treeTable>
 						</div>
 					</div>
@@ -73,15 +73,10 @@
 						<h4 class="statistic-title">Biểu đồ tình hình xử lý</h4>
 					</div>
 					<div>
-						<canvas #myCanvas baseChart height="30vh" width="80vw"
-							[datasets]="barChartData"
-							[labels]="barChartLabels"
-							[options]="barChartOptions"
-							[plugins]="barChartPlugins"
-							[legend]="barChartLegend"
-							[colors]="barChartColors"
-							[chartType]="barChartType">
-					</canvas>
+						<canvas #myCanvas baseChart height="30vh" width="80vw" [datasets]="barChartData" [labels]="barChartLabels"
+							[options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+							[colors]="barChartColors" [chartType]="barChartType">
+						</canvas>
 					</div>
 				</div>
 
@@ -92,6 +87,3 @@
 <!--**********************************
           Content body end
       ***********************************-->
-
-
-			

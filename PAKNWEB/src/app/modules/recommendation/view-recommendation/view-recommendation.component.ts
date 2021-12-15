@@ -58,8 +58,8 @@ export class ViewRecommendationComponent implements OnInit {
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
 
-	markers : any = {}
-	zoom : any = 15
+	markers: any = {}
+	zoom: any = 15
 
 	enableEdit = false
 
@@ -74,7 +74,7 @@ export class ViewRecommendationComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private commentService: RecommendationCommentService,
 		private biService: BusinessIndividualService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
@@ -119,7 +119,7 @@ export class ViewRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
-				if(this.model.lat && this.model.lng){
+				if (this.model.lat && this.model.lng) {
 					this.markers.lat = Number(this.model.lat)
 					this.markers.lng = Number(this.model.lng)
 				}
@@ -298,10 +298,13 @@ export class ViewRecommendationComponent implements OnInit {
 		this.file.nativeElement.value = ''
 	}
 
+	filesDelete: any = []
+
 	onRemoveFile(args) {
 		const index = this.files.indexOf(args)
 		const file = this.files[index]
 		this.files.splice(index, 1)
+		this.filesDelete.push(args)
 	}
 
 	onProcessConclusion() {
@@ -318,19 +321,36 @@ export class ViewRecommendationComponent implements OnInit {
 				Hashtags: this.lstHashtagSelected,
 				Files: this.files,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
+				FilesDelete: this.filesDelete
 			}
-			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modalReject').modal('hide')
-					this.toastr.success(COMMONS.PROCESS_SUCCESS)
-					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
-				} else {
-					this.toastr.error(response.message)
-				}
-			}),
-				(err) => {
-					console.error(err)
-				}
+			if (!this.modelConclusion.id || this.modelConclusion.id == 0) {
+				this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						$('#modalReject').modal('hide')
+						this.toastr.success(COMMONS.PROCESS_SUCCESS)
+						return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
+					} else {
+						this.toastr.error(response.message)
+					}
+				}),
+					(err) => {
+						console.error(err)
+					}
+			} else {
+
+
+				this.recommendationService.recommendationProcessConclusionUpdate(request).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						this.toastr.success(COMMONS.PROCESS_SUCCESS)
+					} else {
+						this.toastr.error(response.message)
+					}
+				}),
+					(err) => {
+						console.error(err)
+					}
+			}
+
 		}
 	}
 
@@ -495,7 +515,7 @@ export class ViewRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-						this.toastr.success(COMMONS.DENY_SUCCESS)
+					this.toastr.success(COMMONS.DENY_SUCCESS)
 					this.getData()
 				} else {
 					this.toastr.error(response.message)
@@ -557,11 +577,11 @@ export class ViewRecommendationComponent implements OnInit {
 
 	//infomationExchange area
 	infoExchangeModel: RecommnendationInfomationExchange = new RecommnendationInfomationExchange()
-	infomationExchangeQuery : any = {
-		pageIndex : 1,
-		pageSize : 20,
-		recommendationId : 0,
-		isPublish : false
+	infomationExchangeQuery: any = {
+		pageIndex: 1,
+		pageSize: 20,
+		recommendationId: 0,
+		isPublish: false
 	}
 	listInfomationExchange: any[] = []
 	totalInfomationExchange = 0
@@ -586,11 +606,11 @@ export class ViewRecommendationComponent implements OnInit {
 			this.listInfomationExchange.push(this.infoExchangeModel)
 			this.totalInfomationExchange += 1
 			this.infoExchangeModel = new RecommnendationInfomationExchange()
-			
+
 		})
 	}
 
-	getAllInfomationExchange(pageIndex : any) {
+	getAllInfomationExchange(pageIndex: any) {
 		this.infomationExchangeQuery.pageIndex = pageIndex
 		this.infomationExchangeQuery.recommendationId = this.model.id
 		this.commentService.getAllInfomationChangeOnPage(this.infomationExchangeQuery).subscribe((res) => {

@@ -40,6 +40,9 @@ export class RecommendationObject {
 	type: number
 	receptionType: number
 	isFakeImage: boolean
+	groupUnitId: number
+	unitReceive: number
+	unitChildId: number
 }
 export class RecommendationSearchObject {
 	constructor() {
@@ -167,6 +170,7 @@ export class RecommnendationCommentObject {
 	recommendationId: number
 	fullName: string
 	isPublish: boolean
+	parentId: number
 }
 
 export class RecommnendationInfomationExchange {
@@ -180,6 +184,7 @@ export class RecommnendationInfomationExchange {
 	fullName: string
 	createdDate: Date
 	isPublish: boolean
+	parentId: number
 }
 
 export class RecommendationSearchStatisticObject {

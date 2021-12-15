@@ -538,8 +538,8 @@ namespace PAKNAPI.Models.Statistic
 		public int Processing { get; set; } // 7
 		public int ApproveWait { get; set; } // 8
 		public int ApproveDeny { get; set; } // 9
-
 		public int Finised { get; set; }
+		public int TotalComment { get; set; }
 
 		public async Task<StatisticRecommendationForMenu> StatisticRecommendationForMenuDAO(int UnitProcessId, long UserProcessId)
 		{

@@ -50,7 +50,7 @@ export class MyRecommendationComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private authenService: AuthenticationService,
 		private sharedataService: DataService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.userName = this.storageService.getFullName()
@@ -143,15 +143,21 @@ export class MyRecommendationComponent implements OnInit {
 				break
 			case 2:
 				// đã tiếp nhận
-				this.getList(',4,5,7,8')
-				this.LtsStatus = ',4,5,7,8'
+				this.getList(',4')
+				this.LtsStatus = ',4'
 				break
 			case 3:
+				// đã trả lời
+				this.getList(',5,7,8')
+				this.LtsStatus = ',5,7,8'
+				break
+
+			case 4:
 				// đã trả lời
 				this.getList(',10')
 				this.LtsStatus = ',10'
 				break
-			case 4:
+			case 5:
 				// bị từ chối
 				this.getList(',3,6,9')
 				this.LtsStatus = ',3,6,9'
@@ -165,7 +171,7 @@ export class MyRecommendationComponent implements OnInit {
 	changeKeySearch(event) {
 		this.title = event.target.value
 	}
-	
+
 	redirectMyRecommendaton(status: any) {
 		this.filterMyRecommendation(status)
 	}
@@ -173,6 +179,16 @@ export class MyRecommendationComponent implements OnInit {
 	sendRecommandation() {
 		this.router.navigateByUrl('/cong-bo/them-moi-kien-nghi')
 	}
+
+	closeModalDelete() {
+		$('#modalConfirmDelete').modal('hide')
+	}
+
+	closeModalSend() {
+		$('#modalConfirmSend').modal('hide')
+	}
+
+
 
 	//delete recommandateion
 	preDelete(id: number) {

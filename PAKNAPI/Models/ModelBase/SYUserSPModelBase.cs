@@ -876,12 +876,14 @@ namespace PAKNAPI.ModelBase
 		public byte Type { get; set; }
 		public string PositionName { get; set; }
 		public int? UnitId { get; set; }
+		public int? UnitLevel { get; set; }
 		public string UnitName { get; set; }
 		public int TypeId { get; set; }
 		public bool? IsMain { get; set; }
 		public bool? IsAdmin { get; set; }
 		public int TypeObject { get; set; }
 		public bool? IsActived { get; set; }
+		public bool? IsApprove { get; set; }
 		public bool? IsUnitMain { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)

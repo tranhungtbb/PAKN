@@ -9,7 +9,6 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
@@ -33,10 +32,16 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		private _syService: SystemconfigService,
 		private _toa: ToastrService,
 		private storageService: UserInfoStorageService
-	) {}
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
+	) { }
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	ReflectionsRecommendations: Array<PuRecommendation>
+	recommendationsReceiveDeny: Array<PuRecommendation>
+	recommendationsHighLight: Array<PuRecommendation>
+	recommendationsProcessing: Array<PuRecommendation>
+	unitDissatisfactionRate: any[] = []
+	lateProcessingUnit: any[] = []
+	isPreview: boolean = false
+	dataNotification: any = {}
 	news: any[]
 	firstNews: any
 	Administrations: any[]
@@ -68,25 +73,10 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		nav: true,
 	}
 
-	// chart
-	doughnutChartLabels: Label[] = ['Hồ sơ đã giải quyết', 'Hồ sơ đã tiếp nhận']
-	doughnutChartData: MultiDataSet = [[950, 350]]
-	doughnutChartType: ChartType = 'doughnut'
-	doughnutChartColors: Color[] = [
-		{
-			backgroundColor: ['#58A55C', '#73BCFF'],
-		},
-	]
-	doughnutChartOptions: ChartOptions = {
-		responsive: true,
-		legend: {
-			position: 'bottom',
-		},
-		cutoutPercentage: 75,
-	}
-
 	indexSettingObj = new IndexSettingObjet()
 	async ngOnInit() {
+		this.isPreview = this._router.url.includes('xem-truoc') ? true : false
+
 		await this.getData()
 		this.indexSettingService.GetInfo({}).subscribe(
 			(res) => {
@@ -117,18 +107,84 @@ export class IndexComponent implements OnInit, AfterViewInit {
 				console.log(err)
 			}
 		)
-		//list news
-		this._newsService.getListHomePage({}).subscribe((res) => {
-			if (res.success != RESPONSE_STATUS.success) {
-				return
+
+		this._service
+			.getRecommendationReceiveDeny({
+				PageSize: 6,
+				PageIndex: 1,
+			})
+			.subscribe(
+				(res) => {
+					if (res.success == RESPONSE_STATUS.success) {
+						if (res.result.RecommendationReceiveDeny) {
+							this.recommendationsReceiveDeny = res.result.RecommendationReceiveDeny
+						}
+					} else {
+						this._toa.error(res.message)
+					}
+				},
+				(err) => {
+					console.log(err)
+				}
+			)
+		this._service.getListHightLight({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationsHighLight = res.result
 			}
-			if (res.result.length > 0) {
-				this.firstNews = res.result[0]
-				res.result.shift()
-				this.news = res.result
-			}
-			return
 		})
+
+		this._service.getListProcessing({
+			PageSize: 6,
+			PageIndex: 1,
+		}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationsProcessing = res.result.RecommendationProcessing
+			}
+		})
+
+		this._service.notificationGetDashboard({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.dataNotification = res.result
+			}
+		})
+		let obj = {
+			KeySearch: '',
+			PageSize: 4,
+			PageIndex: 1,
+		}
+		this._service.getUnitDissatisfactionRatePagedList(obj).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.listUnit.length > 0) {
+						this.unitDissatisfactionRate = res.result.listUnit
+					} else {
+						this.unitDissatisfactionRate = []
+					}
+				} else {
+					this._toa.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+
+		this._service.getLateProcessingUnitPagedList(obj).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.listUnit.length > 0) {
+						this.lateProcessingUnit = res.result.listUnit
+					} else {
+						this.lateProcessingUnit = []
+					}
+				} else {
+					this._toa.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 		// list thủ tục hành chính
 		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -140,7 +196,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		})
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
 	getShortName(string) {
 		if (!string) {

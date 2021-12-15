@@ -24,7 +24,9 @@ export class SvVoiceDirective {
 		let data = $('#' + this.target).val()
 		this.ison += 1
 		if (this.ison == 1) {
-			$(this.element).children().attr('class', 'bi bi-mic-fill')
+			$(this.element).children()
+				.attr("src", "assets/dist/img/app-images/mic-animate.gif");
+			// .attr('class', 'bi bi-mic-fill')
 			$(this.element).next().html('Đang nhận diện giọng nói')
 			//$(this.element).children().removeClass("fa-microphone").addClass("fa-microphone-slash");
 			//this.toat.info("Bắt đầu nhận diện giọng nói");
@@ -58,7 +60,8 @@ export class SvVoiceDirective {
 				() => { }
 			)
 		} else {
-			$(this.element).children().attr('class', 'bi bi-mic-mute-fill')
+			$(this.element).children().attr("src", "assets/dist/img/app-images/mic.gif");
+			// .attr('class', 'bi bi-mic-mute-fill')
 			this.speechRecognitionService.DestroySpeechObject()
 			$(this.element).next().html('')
 

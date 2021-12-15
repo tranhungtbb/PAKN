@@ -45,6 +45,11 @@ namespace PAKNAPI.Models.ModelBase
         public string UnitName { get; set; }
 
         public string FieldName { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
+
+        public string ReasonDeny { get; set; }
+        public DateTime? DenyDate { get; set; }
         public int TotalComment { get; set; }
 
         public PURecommendation(IAppSetting appSetting)

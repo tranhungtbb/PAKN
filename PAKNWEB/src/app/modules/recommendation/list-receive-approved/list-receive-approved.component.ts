@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -27,7 +27,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 		private _shareData: DataService,
 		private notificationService: NotificationService,
 		private _router: Router
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
@@ -153,29 +153,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 		}
 	}
 
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationDelete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				$('#modalConfirmDelete').modal('hide')
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
-	}
-
 	get f() {
 		return this.formForward.controls
 	}
@@ -195,8 +172,10 @@ export class ListReceiveApprovedComponent implements OnInit {
 			content: this.modelForward.content,
 		})
 	}
-	preForward(id: number) {
+	isForwardMultiUnit: boolean
+	preForward(id: number, isForwardMultiUnit: boolean = false) {
 		this.submitted = false
+		this.isForwardMultiUnit = isForwardMultiUnit
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.rebuilForm()
@@ -229,12 +208,64 @@ export class ListReceiveApprovedComponent implements OnInit {
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
-		this._service.recommendationForward(request, obj.title).subscribe((response) => {
+		if (!this.isForwardMultiUnit) {
+			this._service.recommendationForward(request, obj.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modal-tc-pakn').modal('hide')
+					this.getList()
+					this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		} else {
+			request['ListUnit'] = this.modelForward.unitReceiveId
+			request._mRRecommendationForwardInsertIN.unitReceiveId = null
+			this._service.recommendationForwardMultiUnit(request, obj.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modal-tc-pakn').modal('hide')
+					this.getList()
+					this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		}
+	}
+
+	preProcessAccept(item: any) {
+		this.modelProcess = new RecommendationProcessObject()
+		this.modelProcess.recommendationId = item.id
+		this.modelProcess.id = item.processId
+		$('#modalAccept').modal('show')
+	}
+
+	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
+
+	onProcessAccept() {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this.modelProcess.reactionaryWord = false
+		this.modelProcess.status = PROCESS_STATUS_RECOMMENDATION.APPROVED
+		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true
+		}
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				$('#modal-tc-pakn').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelForward.recommendationId }).subscribe((res) => {})
+				$('#modalAccept').modal('hide')
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
+				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
-				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 			} else {
 				this._toastr.error(response.message)
 			}

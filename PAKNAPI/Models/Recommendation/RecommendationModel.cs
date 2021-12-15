@@ -21,6 +21,8 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstGroupWord { get; set; }
         public List<DropdownObject> lstUnitChild { get; set; }
         public GeneralSetting generalSetting { get; set; }
+
+        public List<SYUnitDropdown> lstGroupUnit { get; set; }
     }
 
     public class RecommendationGetDataForForwardResponse
@@ -90,6 +92,13 @@ namespace PAKNAPI.Models.Recommendation
 
         public bool? IsForwardUnitChild { get; set; }
     }
+
+    public class RecommendationCombineRequest
+    {
+        public byte RecommendationStatus { get; set; }
+        public long RecommendationId { get; set; }
+        public List<int> ListUnit { get; set; }
+    }
     public class RecommendationForwardProcess
     {
         public MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN { get; set; }
@@ -109,6 +118,8 @@ namespace PAKNAPI.Models.Recommendation
         public IFormFileCollection Files { get; set; }
         public byte RecommendationStatus { get; set; }
         public List<DropdownObject> ListHashTag { get; set; }
+
+        public List<MRRecommendationConclusionFilesGetByConclusionId> FilesDelete { get; set; }
     }
 
     public class RecommendationSendProcess

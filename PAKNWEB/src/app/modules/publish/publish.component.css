@@ -65,11 +65,18 @@ ul.list-group.list-group-flush li {
 }
 
 .title-footer {
-	font-family: Inter;
+	font-family: inherit;
 	font-style: normal;
 	font-weight: 600;
 	font-size: 20px;
 	line-height: 24px;
+}
+.title-action{
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 20px;
+	color: #222;
 }
 
 /*-------------------- CSS Chat bot --------------------*/
@@ -733,8 +740,8 @@ a.text-1line.text-black.sub-menu-active {
 }
 
 .navbar-light .navbar-nav .nav-link {
-	padding: 15px 10px;
-	font-family: Inter;
+	padding: 15px 20px;
+	font-family: 'Inter', sans-serif;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 16px;
@@ -745,6 +752,22 @@ a.text-1line.text-black.sub-menu-active {
 	color: #fff;
 }
 
+.text-decoration-revert{
+	text-decoration: revert;
+}
+
+.menu-filter{
+	width: 40px;
+	height: 38px;
+	border-radius: 4px;
+	background-color: rgba(255,255,255,.2);
+	border: none;
+}
+
+ul.ft-list-rm li {
+	list-style: inside;
+}
+
 .navbar-light .navbar-nav .nav-link:hover {
 	background-color: #155bbf;
 }
@@ -753,7 +776,13 @@ a.text-1line.text-black.sub-menu-active {
 	height: 40px;
 	padding-right: 15px !important;
 }
-
+ul.ft-list-rm li::marker {
+	color: #2e73d5;
+	font-size: 20px;
+}
+ul.ft-list-rm li a {
+	color: #222;
+}
 ::placeholder {
 	color: #c8c8c8;
 	opacity: 1;
@@ -1190,6 +1219,17 @@ body, html {
 
 .typing .dot:last-child {
 	margin-right: 0;
+}
+
+.chat-now{
+	position: fixed;
+	width: 330px;
+	/* height: 60px; */
+	right: 0px;
+	bottom: 0px;
+	background: #2E73D5;
+	border-radius: 10px 10px 0px 0px;
+	z-index: 1000;
 }
 
 @keyframes mercuryTypingAnimation {

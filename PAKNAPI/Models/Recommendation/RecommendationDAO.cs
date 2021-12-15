@@ -32,7 +32,16 @@ namespace PAKNAPI.Models.Recommendation
 			data.Code = await _sQLCon.ExecuteScalarDapperAsync<string>("MR_Recommendation_GenCode_GetCode", DP);
 			DP.Add("Id", unitId);
 			data.lstUnitChild = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UnitGetChildDropdown]", DP)).ToList();
-
+			DP = new DynamicParameters();
+			SYUnitGetMainId unitMain = (await _sQLCon.ExecuteListDapperAsync<SYUnitGetMainId>("SY_UnitGetMainId", DP)).FirstOrDefault();
+			SYUnitDropdown unit = new SYUnitDropdown();
+			unit.Id = unitMain.Id;
+			unit.Name = unitMain.Name;
+			unit.IsMain = true;
+			data.lstGroupUnit = new List<SYUnitDropdown>();
+			data.lstGroupUnit.Add(unit);
+			data.lstGroupUnit.AddRange(GroupUnit.ListGroupUnit());
+			
 			DP = new DynamicParameters();
 			DP.Add("Type", TYPECONFIG.GENERAL);
 			var config = (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetByType", DP)).FirstOrDefault();

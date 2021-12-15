@@ -42,15 +42,15 @@
 				</div>
 			</div>
 			<div class="col main-ct">
-				<div class="box mt-5 mb-4">
+				<div class="box margin-top-16 mb-4">
 					<div class="form-group form-search">
-						<input placeholder="Nhập nội dung tìm kiếm..." class="form-control form-control"
-							[(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+						<input placeholder="Nhập nội dung tìm kiếm..." class="form-control" [(ngModel)]="dataSearch.name"
+							maxlength="100" (keydown.enter)="dataStateChange()" />
 						<a (click)="dataStateChange()" type="button">
 							<i class="fal fa-search"></i>
 						</a>
 					</div>
-					<div id="accordion-one" class="mb-4">
+					<div id="accordion-one" class="mb-2">
 						<div>
 							<div class="pointer text-right collapsed text-blue mb-3" data-toggle="collapse"
 								data-target="#default_collapseOne" aria-expanded="false">

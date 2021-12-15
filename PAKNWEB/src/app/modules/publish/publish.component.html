@@ -4,128 +4,114 @@
             Header start
         ***********************************-->
 	<div class="header-nd px-0">
-		<div class="header-content container">
-			<nav class="navbar navbar-expand pt-4 pb-4 px-0">
-				<div class="collapse navbar-collapse justify-content-between">
-					<div class="header-left">
-						<a href="/cong-bo/trang-chu"><img class="img-fluid" src="../../../assets/dist/images/header.svg" alt=""></a>
-					</div>
+		<div class="header-content container-fluid" style="background-color:#DDEDFF;">
+			
+			<div class="container">
+				<nav class="navbar navbar-expand pt-4 pb-4 px-0">
+					<div class="collapse navbar-collapse justify-content-between">
+						<div class="header-left">
+							<a href="/cong-bo/trang-chu"><img class="img-fluid" src="../../../assets/dist/images/Frame 3484.svg"
+									alt=""></a>
+						</div>
 
-					<ul class="navbar-nav header-right align-items-center" *ngIf="isHasToken">
-						<li class="nav-item d-none d-lg-block">
-							<button type="button" class="btn text-white border-0 no-grd-blue btn-index" style="border-radius: 10px;">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-									class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
-									<path
-										d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
-									<path
-										d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-								</svg>
-								<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh
-									kiến nghị</span>
-							</button>
-						</li>
-						<li class="nav-item d-none d-lg-block">
-							<div class="header-info">
-								<span class="">Xin chào! <strong>{{currentFullnName}}</strong></span>
-							</div>
-						</li>
-						<li class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
-							<a class="nav-link  bg-transparent" href="/quan-tri">
-								<i class="bi bi-grid"></i>
-							</a>
-						</li>
-						<li class="nav-item dropdown notification_dropdown">
-							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)"
-								role="button" data-toggle="dropdown">
-								<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
-								<i class="bi bi-bell"></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<div class="header-notification">
-									<div class="red-bar"></div>
-									<div class="title-notification">
-										<div style="font-weight: 500;
-										font-size: 16px; text-transform: uppercase;">Thông báo</div>
-										<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới
-										</div>
-									</div>
+						<ul class="navbar-nav header-right align-items-center" *ngIf="isHasToken">
 
+							<li class="nav-item d-none d-lg-block">
+								<div class="header-info">
+									<span class="">Xin chào! <strong>{{currentFullnName}}</strong></span>
 								</div>
-								<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3"
-									style="height: 550px;" [ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
-									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
-										<li *ngFor="let item of notifications" class="item-notification">
-											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId, item.type, item.typeSend)"
-												class="timeline-panel">
-												<div class="media mr-2 grd-brown">
-													<i class="bi bi-file-earmark-medical cl-brown"></i>
-												</div>
-												<div class="media-body">
-													<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm
-														dd/MM/yyyy'}}</small>
-													<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">
-														{{item.title}}</p>
-													<p class="mb-1 h4"
-														[ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">
-														{{item.content}}
-													</p>
-												</div>
-											</a>
-										</li>
-									</ul>
-									<div *ngIf="notifications && notifications.length == 0" style="display: flex;
+							</li>
+							<li class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
+								<a class="nav-link  bg-transparent" href="/quan-tri">
+									<i class="bi bi-grid"></i>
+								</a>
+							</li>
+							<li class="nav-item dropdown notification_dropdown">
+								<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)"
+									role="button" data-toggle="dropdown">
+									<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
+									<i class="bi bi-bell"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<div class="header-notification">
+										<div class="red-bar"></div>
+										<div class="title-notification">
+											<div style="font-weight: 500;
+										font-size: 16px; text-transform: uppercase;">Thông báo</div>
+											<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới
+											</div>
+										</div>
+
+									</div>
+									<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3"
+										style="height: 550px;" [ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
+										<ul class="timeline" id="notificationScroll" *ngIf="notifications">
+											<li *ngFor="let item of notifications" class="item-notification">
+												<a href="javascript:void(0)"
+													(click)="onClickNotification(item.dataId, item.type, item.typeSend)" class="timeline-panel">
+													<div class="media mr-2 grd-brown">
+														<i class="bi bi-file-earmark-medical cl-brown"></i>
+													</div>
+													<div class="media-body">
+														<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm
+															dd/MM/yyyy'}}</small>
+														<p class="mb-0 text-uppercase"
+															[ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">
+															{{item.title}}</p>
+														<p class="mb-1 h4"
+															[ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">
+															{{item.content}}
+														</p>
+													</div>
+												</a>
+											</li>
+										</ul>
+										<div *ngIf="notifications && notifications.length == 0" style="display: flex;
 									flex-direction: row;
 									justify-content: center;
 									align-items: center;">
-										<div>Bạn chưa có thông báo nào</div>
+											<div>Bạn chưa có thông báo nào</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</li>
-						<li class="nav-item dropdown header-profile">
-							<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
-								<div class="avatar-circle background-while">
-									<i class="bi bi-person-fill cl-dark"></i>
-								</div>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
-									<i class="bi bi-person-square"></i>
-									<span class="ml-2">Thông tin tài khoản </span>
+							</li>
+							<li class="nav-item dropdown header-profile">
+								<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+									<div class="avatar-circle background-while">
+										<i class="bi bi-person-fill cl-dark"></i>
+									</div>
 								</a>
-								<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon"
-									*ngIf="typeUserLoginPublish != 1">
-									<i class="bi bi-file-earmark-medical"></i>
-									<span class="ml-2">Phản ánh kiến nghị của tôi </span>
-								</a>
-								<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
-									<i class="bi bi-key"></i>
-									<span class="ml-2">Đổi mật khẩu </span>
-								</a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
+										<i class="bi bi-person-square"></i>
+										<span class="ml-2">Thông tin tài khoản </span>
+									</a>
+									<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon"
+										*ngIf="typeUserLoginPublish != 1">
+										<i class="bi bi-file-earmark-medical"></i>
+										<span class="ml-2">Phản ánh kiến nghị của tôi </span>
+									</a>
+									<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
+										<i class="bi bi-key"></i>
+										<span class="ml-2">Đổi mật khẩu </span>
+									</a>
 
-								<a class="dropdown-item ai-icon" (click)="signOut()">
-									<i class="bi bi-box-arrow-right"></i>
-									<span class="ml-2">Đăng xuất </span>
-								</a>
-							</div>
-						</li>
-					</ul>
-					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
-						<li class="nav-item dropdown header-profile">
-							<div class="header-info">
-								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-										class="bi bi-person-fill" viewBox="0 0 16 16">
-										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-									</svg>
-									<span class="ml-2" style="text-transform: none;">Đăng nhập</span>
-								</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</nav>
+									<a class="dropdown-item ai-icon" (click)="signOut()">
+										<i class="bi bi-box-arrow-right"></i>
+										<span class="ml-2">Đăng xuất </span>
+									</a>
+								</div>
+							</li>
+						</ul>
+						<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center title-action">
+
+							<span><a routerLink="/dang-ky/ca-nhan" >Đăng kí</a></span>
+							<span class="mx-1" style="color: #337ab7;">/</span>
+							<span><a routerLink="/dang-nhap" >Đăng nhập</a></span>
+						</ul>
+					</div>
+				</nav>
+			</div>
 		</div>
 		<div class="container-fluid p-0 bg-menu-blue">
 			<div class="container">
@@ -145,14 +131,10 @@
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./gioi-thieu']">Giới thiệu</a>
 							</li>
-							<!-- <li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./danh-sach-phan-anh-kien-nghi']" >Phản ánh - kiến nghị</a>
-							</li> -->
 							<li class="nav-item ps-relative">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./danh-sach-phan-anh-kien-nghi']">Phản ánh - kiến nghị <i
-										class="fas fa-caret-down ml-2"></i></a>
-								<ul class="bg-white rounded sub-nav border" style="z-index: 100000;">
+									[routerLink]="['/cong-bo/them-moi-kien-nghi']">Gửi phản ánh</a>
+								<!-- <ul class="bg-white rounded sub-nav border" style="z-index: 100000;">
 									<ng-container *ngFor="let item of subMenu;let i = index">
 										<li class="p-3 rounded sub-item" title="{{item.text}}">
 											<a class="text-1line text-black" [routerLink]="item.path"
@@ -160,27 +142,27 @@
 										</li>
 										<li class="border-bottom" *ngIf="i+1 < subMenu.length"></li>
 									</ng-container>
-								</ul>
+								</ul> -->
 							</li>
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
-							</li>
-							<li class="nav-item">
+							</li> -->
+							<!-- <li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./tin-tuc-su-kien']">Tin tức</a>
-							</li>
+							</li> -->
 							<li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./tong-hop-so-lieu']">Tổng hợp số liệu</a>
+									[routerLink]="['./tong-hop-so-lieu']">Thống kê</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">Hỗ
-									trợ</a>
+								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">Hướng
+									dẫn</a>
 							</li>
 						</ul>
 
-						<div class="menu-left">
+						<div class="menu-left d-flex">
 							<div class="search-bar center ps-relative">
 								<div class="p-0 m-0 show">
 									<form>
@@ -194,6 +176,10 @@
 									<i class="bi bi-search"></i>
 								</span>
 							</div>
+							<div class="search-bar center ml-2 pointer"><a routerlink="/cong-bo/danh-sach-phan-anh-kien-nghi"
+									href="/cong-bo/danh-sach-phan-anh-kien-nghi"><span
+										class="search_icon p-3 c-pointer center menu-filter"><img
+											src="../../../assets/dist/images/filter.svg"></span></a></div>
 						</div>
 					</div>
 				</nav>
@@ -210,7 +196,7 @@
 
 
 	<div class="footer px-0">
-		<div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
+		<!-- <div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
 			<div class="container">
 				<div class="row justify-content-between">
 					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
@@ -244,21 +230,66 @@
 					</div>
 
 					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
-						<h4 class="title-footer pb-1">Tải app</h4>
+						<h4 class="title-footer pb-1">Phiên bản ứng dụng di động</h4>
 						<div>
 							<a href="{{config.urlIOS}}" target="_blank">
-								<img style="width: 127px; border-radius: 6px;" class="img-cover pointer mr-3"
-									src="../../../assets/dist/images/ios.png">
+								<img style="width: 127px; border-radius: 6px; height: 44px;" class="img-cover pointer mr-3"
+									src="../../../assets/dist/images/app-store.svg">
 							</a>
 							<a href="{{config.urlAndroid}}" target="_blank">
-								<img style="width: 127px; border-radius: 6px;" class="img-cover pointer"
-									src="../../../assets/dist/images/google-play.png">
+								<img style="width: 127px; border-radius: 6px; height: 44px;" class="img-cover pointer"
+									src="../../../assets/dist/images/google-play.svg">
 							</a>
 
 						</div>
 						<p class="p-footer pt-3">
 							Giấy phép số: 01/GP-STTTT do Sở Thông tin và Truyền thông tỉnh Khánh Hòa cấp ngày 07/01/2016
 						</p>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+
+		<div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-3">
+						<h4 class="title-footer pb-1">Hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị Tỉnh Khánh Hòa</h4>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-building mr-2"></i>
+								<div><span class="fw-500">Cơ quan chủ quản:</span> Ủy ban nhân dân tỉnh Khánh Hòa </div>
+							</li>
+							<li class="list-group-item pb-2 pt-0 px-0 border-0 d-flex"><i class="fas fa-home mr-2"></i>
+								<div><span class="fw-500">Đơn vị quản lý vận hành:</span> Trung tâm Công nghệ thông tin và dịch vụ hành
+									chính công trực tuyến <br>(Trực thuộc Sở Thông tin Truyền thông tỉnh Khánh Hòa) </div>
+							</li>
+							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-phone-square-alt mr-2"></i>
+								<div><span class="fw-500">Tổng đài đường dây nóng:</span> 1900.1023 </div>
+							</li>
+							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-envelope-open mr-2"></i>
+								<div><span class="fw-500">Email: </span>pakn@khanhhoa.gov.vn</div>
+							</li>
+							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-map-marked-alt mr-2"></i>
+								<div><span class="fw-500">Địa chỉ: </span> 147 Thống Nhất, Nha Trang, Khánh Hòa </div>
+							</li>
+						</ul>
+					</div>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3">
+						<h4 class="title-footer pb-1">Phiên bản ứng dụng di động</h4>
+						<div class="pb-2 mb-1" style="border-bottom: 1px dashed #707C97;"><a target="_blank"
+								href="https://play.google.com/store/apps/details?id=com.vt.paknapp"><img class="img-cover pointer mr-3"
+									src="../../../assets/dist/images/app-store.svg"
+									style="width: 127px; border-radius: 6px; height: 44px;"></a><a target="_blank"
+								href="https://play.google.com/store/apps/details?id=com.vt.paknapp"><img class="img-cover pointer"
+									src="../../../assets/dist/images/google-play.svg"
+									style="width: 127px; border-radius: 6px; height: 44px;"></a></div>
+						<ul class="ft-list-rm">
+							<li class="fw-500 py-1"><a routerlink="/cong-bo/phan-anh-kien-nghi/da-tra-loi"
+									href="/cong-bo/phan-anh-kien-nghi/da-tra-loi">Phản ánh, kiến nghị đã xử lý</a></li>
+							<li class="fw-500 py-1"><a routerlink="/cong-bo/phan-anh-kien-nghi-dang-xu-ly"
+									href="/cong-bo/phan-anh-kien-nghi-dang-xu-ly">Phản ánh, kiến nghị đang xử lý</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -272,8 +303,30 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div class="call-now center  pointer">
+		<div class="call-content center">
+			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
+		</div>
+	</div>
+
+	<div class="chat-now pointer" (click)="showHideMessage()">
+		<div class="d-flex center">
+			<div class="mr-3">
+				<img src="../../../assets/dist/images/chat 1.svg">
+			</div>
+			<div class="py-2">
+				<h5 class="text-white" style="font-family: 'Inter';">Hỗ trợ trực tuyến</h5>
+				<p class="text-white mb-0">Bạn có câu hỏi? Bạn cần tư vấn?</p>
+			</div>
+			<i style="color: #fff;" class="bi bi-chevron-up ml-3"></i>
+			<!-- <i class="bi bi-chevron-down"></i> -->
+		</div>
+	</div>
+
 	<div class="message-now center pointer">
-		<div class="message-content center" (click)="showHideMessage()">
+		<!-- <div class="message-content center" (click)="showHideMessage()">
 			<div>
 				<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#fff" class="bi bi-messenger"
 					viewBox="0 0 16 16">
@@ -281,7 +334,7 @@
 						d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
 				</svg>
 			</div>
-		</div>
+		</div> -->
 		<div class="dropdown-menu dropdown-message" style="display: none;" id="message">
 			<div class="h-100">
 				<div class="row justify-content-center h-100">
@@ -307,8 +360,12 @@
 
 									<div *ngIf="message.fromId != 0" class="d-flex justify-content-start mb-4">
 										<div class="img_cont_msg">
-											<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+											<img *ngIf="message.fromAvatarPath == ''"
+												src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
 												class="rounded-circle user_img_msg">
+											<img *ngIf="message.fromAvatarPath != ''" [src]="message.fromAvatarPath"
+												class="rounded-circle user_img_msg">
+											{{message.fromFullName}}
 										</div>
 
 										<div class="msg_cotainer">
@@ -362,12 +419,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="call-now center  pointer">
-		<div class="call-content center">
-			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
 		</div>
 	</div>
 </div>

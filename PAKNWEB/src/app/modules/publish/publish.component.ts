@@ -119,6 +119,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (resCreate.success === 'OK') {
 			this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
+				console.log('ReceiveMessageToGroup ', data, this.myGuid);
 				if (this.myGuid !== data.from) {
 					this.loading = false
 
@@ -143,6 +144,8 @@ export class PublishComponent implements OnInit, OnChanges {
 						subTags: subTags,
 						link: link,
 						fromUserName: data.from,
+						fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
+						fromFullName: data.fromFullName,
 						toUserName: data.to,
 					}
 					if (this.messages) {

@@ -1622,6 +1622,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetNameById>("SY_UnitGetNameById", DP)).ToList();
 		}
+
+		public async Task<List<SYUnitGetNameById>> SYUnitGetNameByListIdDAO(string lstId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ListUnitId", lstId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetNameById>("SY_UnitGetNameByListId", DP)).ToList();
+		}
 	}
 
 	public class SYUnitGetByField

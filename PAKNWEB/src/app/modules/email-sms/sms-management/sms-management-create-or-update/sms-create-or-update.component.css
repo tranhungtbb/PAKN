@@ -147,6 +147,8 @@
 :host ::ng-deep .ui-multiselect{
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	/* justify-content: center; */
 	align-items: center;
+	border: none !important;
+
 }

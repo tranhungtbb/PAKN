@@ -127,8 +127,8 @@
 									</td>
 									<td><a class="ellipsis" [ngClass]="{ 'red' : item.isFakeImages}">{{item.name}}</a></td>
 									<td>
-										<p *ngIf="item.isFakeImages" class="text-2line mb-0 red">[Cần xác minh ảnh] {{item.title}}</p>
-										<p *ngIf="!item.isFakeImages" class="text-2line mb-0">{{item.title}}</p>
+										<p class="text-2line mb-0">{{item.title}}</p>
+										<p *ngIf="item.isFakeImages" class="text-2line mb-0 red">(Lưu ý: cần xác minh ảnh)</p>
 									</td>
 									<td>{{item.unitName}}</td>
 									<td>{{item.fieldName}}</td>

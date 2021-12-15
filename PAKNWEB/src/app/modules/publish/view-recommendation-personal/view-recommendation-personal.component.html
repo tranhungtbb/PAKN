@@ -47,7 +47,7 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
+							<p class="h4 font-italic font-weight-bold">Nội dung phản ánh kiến nghị:</p>
 							<p style="text-align: justify;">{{model.content}}</p>
 
 							<span class="text-left">
@@ -119,8 +119,15 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold">{{model.unitName}}:</p>
-							<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
+							<div class="tt-v1 d-flex justify-content-between">
+								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold">{{model.unitName}} trả lời:
+								</p>
+								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold">{{model.processUnitName}} trả
+									lời:</p>
+								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
+								<p *ngIf="[3].includes(model.status)" class="mb-0">{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
+							</div>
+
 							<ng-container *ngIf="[3,6].includes(model.status)">
 								<p style="text-align: justify;">{{model.reasonDeny}}</p>
 							</ng-container>
@@ -195,7 +202,7 @@
 				</div>
 				<div class="box mb-4" *ngIf="model.status > 4 && !(model.status == 5 && model.isForwardProcess)">
 					<h3 class="mb-3 text-uppercase">
-						Trao đổi <span>({{totalInfomationExchange}})</span>
+						Trao đổi với cơ quan xử lý PAKN <span>({{totalInfomationExchange}})</span>
 					</h3>
 					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
 						<div class="form-group mb-0">

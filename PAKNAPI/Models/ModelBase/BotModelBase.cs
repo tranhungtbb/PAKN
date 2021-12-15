@@ -65,7 +65,8 @@ namespace PAKNAPI.Models.ModelBase
 
 		public int? AnonymousId { get; set; }
 		public string Name { get; set; }
-
+		public string FromAvatar { get; set; }
+		public string FromFullName { get; set; }
 		public int? Type { get; set; }
 		public DateTime? CreatedDate { get; set; }
 
@@ -202,6 +203,8 @@ namespace PAKNAPI.Models.ModelBase
 		public async Task<int> BOTMessageInsertDAO(string MessageContent,
 			 int FromUserId,
 			 int RoomId,
+			 string FromFullName,
+			 string FromAvatar,
 			  DateTime DateSend)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -209,7 +212,8 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("FromUserId", FromUserId);
 			DP.Add("MessageContent", MessageContent);
 			DP.Add("DateSend", DateSend);
-
+			DP.Add("FromFullName", FromFullName);
+			DP.Add("FromAvatar", FromAvatar);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_MessageInsert", DP));
 		}
 
@@ -237,6 +241,12 @@ namespace PAKNAPI.Models.ModelBase
 		}
 		public int Id { get; set; }
 		public string MessageContent { get; set; }
+
+		public string fromFullName { get; set; }
+
+		public string fromAvatar { get; set; }
+
+
 		public int RoomId { get; set; }
 		public int FromUserId { get; set; }
 		public DateTime DateSend { get; set; }

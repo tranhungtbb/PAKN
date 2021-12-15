@@ -3,7 +3,6 @@ import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
 
 import { IntroduceService } from 'src/app/services/introduce.service'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { IntroduceObjet, IntroduceFunction, IntroduceUnit } from 'src/app/models/IntroductObject'
 import { Router } from '@angular/router'
 
@@ -17,10 +16,9 @@ export class IntroduceComponent implements OnInit {
 	model: any = new IntroduceObjet()
 	ltsIntroductUnit: Array<IntroduceUnit>
 	lstIntroduceFunction: Array<IntroduceFunction>
-	isPreview : boolean = false
+	isPreview: boolean = false
 
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
-	constructor(private _service: IntroduceService, private _router : Router) {
+	constructor(private _service: IntroduceService, private _router: Router) {
 		this.lstIntroduceFunction = []
 	}
 

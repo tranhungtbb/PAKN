@@ -15,7 +15,7 @@ import { TreeTableModule } from 'primeng/treetable'
 export class StatisticsComponent implements OnInit {
 	// property
 	statistics: TreeNode[]
-	constructor(private _service: PuRecommendationService, private _toastr: ToastrService) {}
+	constructor(private _service: PuRecommendationService, private _toastr: ToastrService) { }
 
 	// chart
 

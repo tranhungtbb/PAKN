@@ -5,6 +5,7 @@ import { ChatBotService } from './chatbot.service'
 import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { UserService } from 'src/app/services/user.service'
 
 @Component({
 	selector: 'app-dashboard',
@@ -23,12 +24,26 @@ export class DashboardChatBotComponent implements OnInit {
 	totalMessage: number = 0
 	roomActive: number = 0
 	userId: number
+	model: any = {}
+	userAvatar: string
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
-	constructor(private botService: ChatBotService, private user: UserInfoStorageService) { }
+	constructor(private botService: ChatBotService,
+		private userService: UserService
+		, private user: UserInfoStorageService) { }
 	ngOnInit() {
 		//console.log('ngOnInit 0')
 		this.userId = this.user.getUserId()
+		this.userService.getById({ id: this.userId }).subscribe((res) => {
+
+			this.model = res.result.SYUserGetByID[0]
+			console.log('userService ', this.model);
+			if (this.model.avatar == '' || this.model.avatar == null) {
+				this.userAvatar = ''
+			} else {
+				this.userAvatar = this.model.avatar
+			}
+		});
 		this.connection = new signalR.HubConnectionBuilder()
 			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${this.userId}`, {
 				skipNegotiation: true,
@@ -41,11 +56,12 @@ export class DashboardChatBotComponent implements OnInit {
 		this.connection.keepAliveIntervalInMilliseconds = 180000
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
-				//console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
+				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
-					this.messages = [...this.messages, { messageContent: data.content }]
+					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName }]
 					//console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
+
 
 				this.convertMessageToObjectList()
 			})
@@ -128,7 +144,7 @@ export class DashboardChatBotComponent implements OnInit {
 		if (this.newMessage !== '') {
 			//console.log('sendMessage ', this.newMessage)
 			this.connection.invoke('AdminSendToRoom', this.roomNameSelected, this.newMessage)
-			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId }]
+			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
 			this.newMessage = ''
 		}
 	}
@@ -160,9 +176,11 @@ export class DashboardChatBotComponent implements OnInit {
 	enabledBot() {
 		this.changeRoomStatus(true)
 	}
+
 	disabedBot() {
 		this.changeRoomStatus(false)
 	}
+
 	onScrollBoxChat(event: any) {
 		// if (event.target.scrollTop == 0) {
 		// 	if (this.pageIndex * this.pageSize < this.totalMessage) {
@@ -178,13 +196,15 @@ export class DashboardChatBotComponent implements OnInit {
 				const element = this.messages[index]
 				const { result, type } = this.stringToObject(element.messageContent)
 				element.messageContent = type === 'string' ? result : result.Content
+				element.fromAvatar = element.fromAvatar ? element.fromAvatar : '';
+				element.fromFullName = element.fromFullName ? element.fromFullName : '';
 				if (type === 'json' && result && result.SubTags) {
-					console.log('element 1', result)
 					if (result.SubTags && result.SubTags.length > 0) {
 						const rs: any = this.stringToObject(result.SubTags[0])
 						element.SubTags = rs.type === 'json' ? rs.result.data : []
 					}
 				}
+				console.log('element', element);
 			}
 		}
 	}

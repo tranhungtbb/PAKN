@@ -28,7 +28,9 @@ namespace PAKNAPI.Chat.ResponseModel
         public string FromId { get; set; }
         public string To { get; set; }
 
+        public string FromFullName { get; set; }
 
+        public string FromAvatarPath { get; set; }
         public List<string> SubTags { get; set; }
 
         public string Type { get; set; }

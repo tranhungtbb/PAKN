@@ -1,4 +1,7 @@
-﻿namespace PAKNAPI.Common
+﻿using PAKNAPI.ModelBase;
+using System.Collections.Generic;
+
+namespace PAKNAPI.Common
 {
 	public static class STATUS_RECOMMENDATION
 	{
@@ -93,5 +96,38 @@
 		public const int CREATE = 0; //khoi tao
 		public const int UPDATE = 1; // soan thao
 		public const int SEND = 2; //2 gửi
+	}
+
+	public class GroupUnit
+	{
+		public static List<SYUnitDropdown> ListGroupUnit()
+		{
+			var list = new List<SYUnitDropdown>
+									   {
+										   new SYUnitDropdown
+											   {
+												   Id = 1,
+												   Name = "Cơ quan chuyên môn thuộc tỉnh"
+											   },
+										   new SYUnitDropdown
+											   {
+												   Id = 2,
+												   Name = "Ban ngành thuộc tỉnh Khánh Hòa"
+											   },
+										   new SYUnitDropdown
+											  {
+												   Id = 3,
+												   Name = "Hạ tầng kỹ thuật"
+											   },
+										   new SYUnitDropdown
+											  {
+												   Id = 4,
+												   Name = "Ủy ban nhân dân các huyện, thành phố",
+												   IsAdministrative = true
+											   },
+									   };
+
+			return list;
+		}
 	}
 }

@@ -33,5 +33,19 @@
 .bg-red{
 	background-color: #DA2222 !important;
 }
+.margin-top-16{
+	margin-top: 16px !important;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px){
+.statistic-chart{
+    display: block!important;
+}
+}
+
+.statistic-chart canvas{
+	width: 150px!important;
+	height: 150px!important;
+}
 
 

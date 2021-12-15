@@ -7,9 +7,12 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 
-				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" *hasPermission="['3', 'C_III_0']" (click)="preCreate()">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" *hasPermission="['3', 'C_III_0']"
+					(click)="preCreate()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+						viewBox="0 0 16 16">
+						<path
+							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
 					Thêm mới
 				</button>
@@ -22,10 +25,8 @@
 				<div class="table-responsive">
 					<p-table #table [value]="listData" [paginator]="true" [rows]="20" sortMode="multiple"
 						[showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]"
-						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [totalRecords]="totalRecords"
-						[responsive]="true" 
-						autoLayout="true"
-						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [totalRecords]="totalRecords" [responsive]="true"
+						autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
 								<th style="width: 50px">
@@ -34,50 +35,51 @@
 									</p>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" 
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'name'">
 										<strong>Tên sở ngành <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="name"
 										[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
-									 	placeholder="Nhập..." />
+										placeholder="Nhập..." />
 									<button *ngIf="name" class="btn bg-transparent btn-clear-input" (click)="name=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="max-width: 250px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" 
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'groupName'">
 										<strong>Nhóm sở ngành <p-sortIcon [field]="'groupName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" [items]="listDepartmentGroup" placeholder="Chọn nhóm ..." bindLabel="name" bindValue="id"
-											[ngSwitch]="'groupName'"
-											(change)="table.filter($event?.name.toString(), 'groupName', 'contains')"
-										>
+										<ng-select notFoundText="Không có dữ liệu" [items]="listDepartmentGroup" placeholder="Chọn nhóm ..."
+											bindLabel="name" bindValue="id" [ngSwitch]="'groupName'"
+											(change)="table.filter($event?.name.toString(), 'groupName', 'contains')">
 										</ng-select>
 									</div>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'phone'">
+										[pSortableColumn]="'phone'">
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="phone"
-										[ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
-									 	placeholder="Nhập..." />
+										[ngSwitch]="'phone'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+										placeholder="Nhập..." />
 									<button *ngIf="phone" class="btn bg-transparent btn-clear-input" (click)="phone=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'email'">
+										[pSortableColumn]="'email'">
 										<strong>Email<p-sortIcon [field]="'email'"></p-sortIcon></strong>
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="email"
-										[ngSwitch]="'email'" (keydown.enter)="table.filter($event?.target.value.trim(), 'email', 'contains')"
-									 	placeholder="Nhập..." />
+										[ngSwitch]="'email'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'email', 'contains')"
+										placeholder="Nhập..." />
 									<button *ngIf="email" class="btn bg-transparent btn-clear-input" (click)="email=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -88,11 +90,9 @@
 										<strong>Trạng thái<p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" 
-											placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-											[ngSwitch]="'isActived'"
-											(change)="table.filter($event?.value.toString(), 'isActived')"
-											[closeOnSelect]="true">
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
+											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>
@@ -107,8 +107,10 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong  *hasNotPermission="['3', 'C_III_4']" class="highlight" title="Xem chi tiết">{{item.name}}</strong>
-									<strong *hasPermission="['3', 'C_III_4']" (click)="preView(item)" class="highlight" title="Xem chi tiết">{{item.name}}</strong>
+									<strong *hasNotPermission="['3', 'C_III_4']" class="highlight"
+										title="Xem chi tiết">{{item.name}}</strong>
+									<strong *hasPermission="['3', 'C_III_4']" (click)="preView(item)" class="highlight"
+										title="Xem chi tiết">{{item.name}}</strong>
 								</td>
 								<td>
 									<a class="ellipsis text-dark" type="button">{{item.groupName}}</a>
@@ -120,19 +122,26 @@
 									<a class="ellipsis text-dark" type="button">{{item.email}}</a>
 								</td>
 								<td>
-									<p  *ngIf="item.isActived == true" style="margin-bottom: 0px;">
-										<span type="button" *hasNotPermission="['3', 'C_III_5']" class="badge rounded-pill bg-success">Hiệu lực</span>
-										<span type="button" *hasPermission="['3', 'C_III_5']" (click)="preUpdateStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
+									<p *ngIf="item.isActived == true" style="margin-bottom: 0px;">
+										<span type="button" *hasNotPermission="['3', 'C_III_5']" class="badge rounded-pill bg-success">Hiệu
+											lực</span>
+										<span type="button" *hasPermission="['3', 'C_III_5']" (click)="preUpdateStatus(item)"
+											class="badge rounded-pill bg-success">Hiệu lực</span>
 									</p>
 									<p *ngIf="item.isActived == false" style="margin-bottom: 0px;">
-										<span type="button" *hasNotPermission="['3', 'C_III_6']" class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										<span type="button" *hasPermission="['3', 'C_III_6']"  (click)="preUpdateStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span type="button" *hasNotPermission="['3', 'C_III_6']" class="badge rounded-pill badge-light">Hết
+											hiệu lực</span>
+										<span type="button" *hasPermission="['3', 'C_III_6']" (click)="preUpdateStatus(item)"
+											class="badge rounded-pill badge-light">Hết hiệu lực</span>
 									</p>
 								</td>
 								<td style="text-align: center;">
 									<div class="d-flex justify-content-end">
-										<a type="button" *hasPermission="['3', 'C_III_1']" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
-										<a type="button" *hasPermission="['3', 'C_III_2']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a type="button" *hasPermission="['3', 'C_III_1']" (click)="preUpdate(item)"
+											class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i
+												class="bi bi-pencil-square"></i></a>
+										<a type="button" *hasPermission="['3', 'C_III_2']" (click)="preDelete(item.id)"
+											class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -165,8 +174,10 @@
 						<div class="row form-group">
 							<div class="col-sm-4">
 								<label class="control-label">Tên sở ngành <span class="text-danger">(*)</span></label>
-								<input id="target" autofocus svTrim placeholder="Nhập tên..." class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
-								<div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
+								<input id="target" autofocus svTrim placeholder="Nhập tên..." class="form-control"
+									formControlName="name" [(ngModel)]="model.name" maxlength="100" />
+								<div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -174,10 +185,12 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Nhóm sở ngành <span class="text-danger">(*)</span></label>
-								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listDepartmentGroup" bindValue="id" placeholder="Chọn..." bindLabel="name"
-									formControlName="departmentGroupId" [(ngModel)]="model.departmentGroupId">
+								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listDepartmentGroup"
+									bindValue="id" placeholder="Chọn..." bindLabel="name" formControlName="departmentGroupId"
+									[(ngModel)]="model.departmentGroupId">
 								</ng-select>
-								<div *ngIf="(submitted && f.departmentGroupId.invalid) || (f.departmentGroupId.invalid && (f.departmentGroupId.dirty || f.departmentGroupId.touched))"
+								<div
+									*ngIf="(submitted && f.departmentGroupId.invalid) || (f.departmentGroupId.invalid && (f.departmentGroupId.dirty || f.departmentGroupId.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.departmentGroupId.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -186,10 +199,13 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value"
+									placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 									[(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
-								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
+								<div
+									*ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.isActived.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -200,8 +216,10 @@
 						<div class="row form-group">
 							<div class="col-sm-4">
 								<label class="control-label">Điện thoại <span class="text-danger">(*)</span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="phone" [(ngModel)]="model.phone" maxlength="10" />
-								<div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
+								<input svTrim placeholder="Nhập..." class="form-control" formControlName="phone"
+									[(ngModel)]="model.phone" maxlength="10" />
+								<div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.phone.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -212,8 +230,10 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Email <span class="text-danger">(*)</span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="email" [(ngModel)]="model.email" maxlength="100" />
-								<div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
+								<input svTrim placeholder="Nhập..." class="form-control" formControlName="email"
+									[(ngModel)]="model.email" maxlength="100" />
+								<div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.email.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -224,7 +244,8 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Fax <span class="text-danger"></span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="fax" [(ngModel)]="model.fax" maxlength="100" />
+								<input svTrim placeholder="Nhập..." class="form-control" formControlName="fax" [(ngModel)]="model.fax"
+									maxlength="100" />
 								<!-- <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
                   class="has-error m-b-12">
                   <div *ngIf="f.name.errors.required">
@@ -236,7 +257,8 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Địa chỉ</label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="address" [(ngModel)]="model.address" maxlength="200" />
+								<input svTrim placeholder="Nhập..." class="form-control" formControlName="address"
+									[(ngModel)]="model.address" maxlength="200" />
 								<!-- <div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
                   class="has-error m-b-12">
                   <div *ngIf="f.address.errors.required">
@@ -248,21 +270,26 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả</label>
-								<textarea placeholder="Nhập..." class="form-control" formControlName="description" type="text" rows="4" [(ngModel)]="model.description"
-									maxlength="255"></textarea>
+								<textarea placeholder="Nhập..." class="form-control" formControlName="description" type="text" rows="4"
+									[(ngModel)]="model.description" maxlength="255"></textarea>
 							</div>
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-sm-8">
 								<button style="float:right" type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
 							</div>
 							<div class="col-sm-4">
 								<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</form>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onSave()">Xác
+					nhận</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -344,7 +371,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>
@@ -366,9 +394,9 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onUpdateStatus(dataUpdate)">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm"
+					(click)="onUpdateStatus(dataUpdate)">Xác nhận</button>
 			</div>
 		</div>
 	</div>
 </div>
-

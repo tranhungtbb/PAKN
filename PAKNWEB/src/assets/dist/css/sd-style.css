@@ -2,8 +2,6 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('../../../../node_modules/devextreme/dist/css/dx.common.css');
 @import url('../../../../node_modules/devextreme/dist/css/dx.light.css');
-/* @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss');
-@import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss'); */
 
 * {
 	font-family: 'Inter', sans-serif;
@@ -137,6 +135,14 @@ a:hover {
 .bg-blue2 {
 	background: #25A7D0;
 }
+
+.bg-blue3 {
+	background: #155bbf;
+}
+.border-left-blue3{
+	border-left: 3px solid #155bbf;
+}
+
 
 .cl-red {
 	color: #DA2222;
@@ -2105,10 +2111,10 @@ table thead .form-control ng-select {
 	width: 68px;
 	height: 68px;
 	right: 30px;
-	bottom: 30px;
+	bottom: 100px;
 	background: #cde2fd;
 	border-radius: 50%;
-	z-index: 1000;
+	z-index: 100;
 }
 
 .call-content {
@@ -2124,8 +2130,8 @@ table thead .form-control ng-select {
 	width: 68px;
 	height: 68px;
 	right: 30px;
-	bottom: 105px;
-	background: #cde2fd;
+	bottom: 30px;
+	/* background: #cde2fd; */
 	border-radius: 50%;
 	z-index: 1000;
 }
@@ -2297,6 +2303,13 @@ table thead .form-control ng-select {
 .border-left-blue2 {
 	border-left: 3px solid #25a7d0;
 }
+.bg-blue-3{
+	background-color: #2e73d5 !important;
+}
+
+.border-left-blue3{
+	border-left: 3px solid #2e73d5 ;
+}
 
 .border-left-blue {
 	border-left: 3px solid #22a246;
@@ -2416,5 +2429,15 @@ table thead .form-control ng-select {
 		right: 0px;
 		top: 0;
 		padding: 7px 15px !important;
+	}
+
+	.content-nd{
+		margin-top: 16px !important;
+	}
+	.border-bottom-blue {
+		border-bottom: 3px solid #2E73D5;
+	}
+	.margin-top-16{
+		margin-top: 16px !important;
 	}
 }
