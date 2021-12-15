@@ -119,7 +119,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<SYUSRLogin> user = await new SYUSRLogin(_appSetting).SYUSRLoginDAO(request.Email);
+				List<SYUSRLogin> user = await new SYUSRLogin(_appSetting).SYUSRGetByEmailDAO(request.Email);
 				if (user.Count == 0)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Không tồn tại email" };
@@ -199,6 +199,56 @@ namespace PAKNAPI.Controllers
 
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = "An error occurred" };
+			}
+		}
+
+		[HttpPost]
+		[Route("get-token-by-email")]
+		[AllowAnonymous]
+		public async Task<ActionResult<object>> GetTokenByEmail(GetTokenByEmail request)
+		{
+			try
+			{
+				
+					int length = 6;
+					string res = string.Empty;
+					Random rnd = new Random();
+                    for (int i = 0; i < length; i++)
+                    {
+						res+=rnd.Next(10);
+					}
+
+					// lưu db
+
+					var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
+					if (config.Count == 0)
+					{
+						return new ResultApi { Success = ResultCode.ORROR, Result = -1, Message = "Config email not exits" };
+					}
+					else
+					{
+						// gửi mail
+						var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config[0].Content);
+					string content =
+						"<p style ='font-family:times new roman,times,serif'>Mã OTP xác thực của bạn là  {OTP}</p>";
+						content = content.Replace("{OTP}", res.ToString());
+                        if (request.Type == 1)
+						{
+							MailHelper.SendMail(configEmail, request.Email, "Đăng ký tài khoản", content, null);
+						}
+						else if (request.Type == 2)
+						{
+							MailHelper.SendMail(configEmail, request.Email, "Quên mật khẩu", content, null);
+						}
+
+						return new ResultApi { Success = ResultCode.OK, Result = res, Message = ResultMessage.OK };
+
+					}
 			}
 			catch (Exception ex)
 			{

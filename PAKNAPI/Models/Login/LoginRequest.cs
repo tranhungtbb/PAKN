@@ -25,4 +25,12 @@ namespace PAKNAPI.Models.Results
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
 	}
+
+	public class GetTokenByEmail
+	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
+		public string Email { get; set; }
+		public int? Type { get; set; }
+	}
 }

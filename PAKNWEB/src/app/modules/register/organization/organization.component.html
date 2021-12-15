@@ -5,9 +5,11 @@
 			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group">
 					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập <span class="cl-red">(*)</span></label>
-					<input onlyNumber [(ngModel)]="model.businessRegistration" formControlName="businessRegistration" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
+					<input onlyNumber [(ngModel)]="model.businessRegistration" formControlName="businessRegistration" type="text"
+						placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
 						(change)="onCheckExist('BusinessRegistration',$event.target.value)" maxlength="20">
-					<div *ngIf="(fOrgInfoSubmitted && fLogin.businessRegistration.invalid)||(fLogin.businessRegistration.invalid && (fLogin.businessRegistration.dirty || fLogin.businessRegistration.touched))"
+					<div
+						*ngIf="(fOrgInfoSubmitted && fLogin.businessRegistration.invalid)||(fLogin.businessRegistration.invalid && (fLogin.businessRegistration.dirty || fLogin.businessRegistration.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.businessRegistration.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -16,7 +18,8 @@
 							<span class="help-block">Chỉ nhập tối đa 20 ký tự</span>
 						</div>
 					</div>
-					<div *ngIf="checkExists['BusinessRegistration'] && fLogin.businessRegistration.valid" class="has-error m-b-12">
+					<div *ngIf="checkExists['BusinessRegistration'] && fLogin.businessRegistration.valid"
+						class="has-error m-b-12">
 						<div *ngIf="checkExists['BusinessRegistration']">
 							<span class="help-block">Số chứng nhận ĐKKD đã tồn tại</span>
 						</div>
@@ -24,9 +27,11 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
-					<input svDisabledSpaceKey [(ngModel)]="model.password" formControlName="password" type="password" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown h-34px rounded-6px" pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$">
-					<div *ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
+					<input svDisabledSpaceKey [(ngModel)]="model.password" formControlName="password" type="password"
+						placeholder="Nhập..." autocomplete="off" class="form-control border-brown h-34px rounded-6px"
+						pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$">
+					<div
+						*ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.password.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -38,9 +43,10 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
-					<input svDisabledSpaceKey [(ngModel)]="model.rePassword" formControlName="rePassword" type="password" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown h-34px rounded-6px" value="">
-					<div *ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
+					<input svDisabledSpaceKey [(ngModel)]="model.rePassword" formControlName="rePassword" type="password"
+						placeholder="Nhập..." autocomplete="off" class="form-control border-brown h-34px rounded-6px" value="">
+					<div
+						*ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.rePassword.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -64,8 +70,10 @@
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.business" formControlName="business" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.business.invalid)||(fOrgInfo.business.invalid && (fOrgInfo.business.dirty || fOrgInfo.business.touched))"
+					<input [svTrim] [(ngModel)]="model.business" formControlName="business" type="text" placeholder="Nhập..."
+						class="form-control h-34px rounded-6px border-brown">
+					<div
+						*ngIf="(fOrgInfoSubmitted && fOrgInfo.business.invalid)||(fOrgInfo.business.invalid && (fOrgInfo.business.dirty || fOrgInfo.business.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.business.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -77,9 +85,12 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Điện thoại</label>
-					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.orgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="orgPhone" type="text" placeholder="Nhập..."
-						class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('OrgPhone',$event.target.value)">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.orgPhone.invalid)||(fOrgInfo.orgPhone.invalid && (fOrgInfo.orgPhone.dirty || fOrgInfo.orgPhone.touched))"
+					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.orgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
+						formControlName="orgPhone" type="text" placeholder="Nhập..."
+						class="form-control border-brown h-34px rounded-6px"
+						(change)="onCheckExist('OrgPhone',$event.target.value)">
+					<div
+						*ngIf="(fOrgInfoSubmitted && fOrgInfo.orgPhone.invalid)||(fOrgInfo.orgPhone.invalid && (fOrgInfo.orgPhone.dirty || fOrgInfo.orgPhone.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.orgPhone.errors.pattern">
 							<span class="help-block">Định dạng số điện thoại không hợp lệ</span>
@@ -94,19 +105,23 @@
 			</form>
 		</div>
 		<div class="col col-lg-9 border-right border-top p-4 border-brown">
-			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">địa chỉ trụ sở / văn phòng đại diện</span></h4>
+			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">địa chỉ trụ sở / văn phòng đại diện</span>
+			</h4>
 			<app-org-form-address></app-org-form-address>
 		</div>
 
 	</div>
-	<p class="cl-red font-italic mt-3">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một lần để sử dụng nhiều lần trên hệ thống</p>
+	<p class="cl-red font-italic mt-3">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một lần để sử dụng nhiều lần trên
+		hệ thống</p>
 	<div class="card-body d-flex justify-content-end px-0">
 		<a class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px" (click)="backToHome()">
 			<i class="bi bi-arrow-left"></i>
 			Quay lại
 		</a>
-		<button type="button" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px theme-dark" (click)="onReset()">Hủy</button>
-		<button type="button" class="btn text-white border-light no-grd-blue px-5 rounded-10px h-48px" (click)="onPreShowOtp()">Đăng ký</button>
+		<button type="button" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px theme-dark"
+			(click)="onReset()">Hủy</button>
+		<button type="button" class="btn text-white border-light no-grd-blue px-5 rounded-10px h-48px"
+			(click)="onPreShowOtp()">Đăng ký</button>
 	</div>
 </div>
 
@@ -116,8 +131,8 @@
 		<div class="modal-content">
 			<div class="modal-header d-block">
 				<h3 class="modal-title text-center text-uppercase">xác thực mã otp</h3>
-				<p class="text-center">Mã xác thực đã được gửi về SĐT:</p>
-				<p class="text-center mb-0 font-weight-bold" style="font-size: 22px">{{phoneHide}}</p>
+				<p class="text-center">Mã xác thực đã được gửi về email:</p>
+				<p class="text-center mb-0 font-weight-bold" style="font-size: 22px">{{model.orgEmail}}</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
@@ -125,12 +140,18 @@
 				<div class="otp-code">
 					<p class="text-center title-otp">Nhập mã OTP</p>
 					<div class="input-group-otp d-flex justify-content-center">
-						<input type="text" id="input_1" (keyup)="onChange($event,1)" [(ngModel)]="otp_1" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
-						<input type="text" id="input_2" (keyup)="onChange($event,2)" [(ngModel)]="otp_2" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
-						<input type="text" id="input_3" (keyup)="onChange($event,3)" [(ngModel)]="otp_3" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
-						<input type="text" id="input_4" (keyup)="onChange($event,4)" [(ngModel)]="otp_4" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
-						<input type="text" id="input_5" (keyup)="onChange($event,5)" [(ngModel)]="otp_5" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
-						<input type="text" id="input_6" (keyup)="onChange($event,6)" [(ngModel)]="otp_6" numbersOnly maxlength="1" class="form-control border-brown text-center">
+						<input type="text" id="input_1" (keyup)="onChange($event,1)" [(ngModel)]="otp_1" numbersOnly maxlength="1"
+							class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_2" (keyup)="onChange($event,2)" [(ngModel)]="otp_2" numbersOnly maxlength="1"
+							class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_3" (keyup)="onChange($event,3)" [(ngModel)]="otp_3" numbersOnly maxlength="1"
+							class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_4" (keyup)="onChange($event,4)" [(ngModel)]="otp_4" numbersOnly maxlength="1"
+							class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_5" (keyup)="onChange($event,5)" [(ngModel)]="otp_5" numbersOnly maxlength="1"
+							class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_6" (keyup)="onChange($event,6)" [(ngModel)]="otp_6" numbersOnly maxlength="1"
+							class="form-control border-brown text-center">
 					</div>
 				</div>
 			</div>
@@ -138,7 +159,8 @@
 				<p class="mr-2">Bạn chưa nhận được mã? <a (click)="clearOTP()" class="red">Gửi lại OTP</a></p>
 			</div>
 			<div class="modal-footer justify-content-center border-0">
-				<button type="button" class="btn no-grd-blue text-white rounded-xl border-0 text-uppercase my-3" (click)="onSave()">Xác thực</button>
+				<button type="button" class="btn no-grd-blue text-white rounded-xl border-0 text-uppercase my-3"
+					(click)="onSave()">Xác thực</button>
 			</div>
 		</div>
 	</div>

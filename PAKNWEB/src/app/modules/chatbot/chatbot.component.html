@@ -94,6 +94,7 @@
 										<span>{{ room.name }}</span>
 										<p>{{ room.createdDate | date:'dd/MM/yyyy' }}</p>
 									</div>
+									<span *ngIf="room.type == 1" class="square mr-3 bg-red"></span>
 								</div>
 							</li>
 						</ul>

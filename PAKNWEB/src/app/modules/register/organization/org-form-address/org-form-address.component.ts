@@ -11,7 +11,7 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 	styleUrls: ['./org-form-address.component.css'],
 })
 export class OrgFormAddressComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) { }
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
 	public model: OrganizationObject = new OrganizationObject()
@@ -90,7 +90,7 @@ export class OrgFormAddressComponent implements OnInit {
 			// OrgDistrict: [this.model.OrgDistrictId, []], //int
 			// OrgVillage: [this.model.OrgWardsId, []], //int
 			orgAddress: [this.model.orgAddress],
-			orgEmail: [this.model.orgEmail],
+			orgEmail: [this.model.orgEmail, [Validators.email, Validators.required]],
 		})
 		// this.onChangeNation()
 	}

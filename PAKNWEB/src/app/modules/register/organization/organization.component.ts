@@ -15,6 +15,7 @@ import { RegisterService } from 'src/app/services/register.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { OrganizationObject } from 'src/app/models/RegisterObject'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { AuthenticationService } from 'src/app/services/authentication.service'
 
 declare var $: any
 
@@ -34,7 +35,8 @@ export class OrganizationComponent implements OnInit {
 		private toast: ToastrService,
 		private formBuilder: FormBuilder,
 		private registerService: RegisterService,
-		private router: Router
+		private router: Router,
+		private authenticationService: AuthenticationService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -74,15 +76,17 @@ export class OrganizationComponent implements OnInit {
 		this.model.representativeGender = true
 	}
 
-	phoneHide : any = ''
-	otp_1 : any = ''
-	otp_2 : any = ''
-	otp_3 : any = ''
-	otp_4 : any = ''
-	otp_5 : any = ''
-	otp_6 : any = ''
-	
-	onPreShowOtp(){
+	phoneHide: any = ''
+	otp_1: any = ''
+	otp_2: any = ''
+	otp_3: any = ''
+	otp_4: any = ''
+	otp_5: any = ''
+	otp_6: any = ''
+	otp: string = "";
+
+	onPreShowOtp() {
+
 		this.clearOTP()
 		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
@@ -115,23 +119,28 @@ export class OrganizationComponent implements OnInit {
 			.join('')
 		$('#modal-otp').modal('show')
 		setTimeout(() => {
-			$('#input_1').focus()	
+			$('#input_1').focus()
 		}, 400);
 	}
 
-	onChange =(event, index) =>{
-		if(event.target.value){
+	onChange = (event, index) => {
+		if (event.target.value) {
 			setTimeout(() => {
-				$('#input_' + String(index +1)).focus()	
+				$('#input_' + String(index + 1)).focus()
 			}, 1);
-		}else{
+		} else {
 			setTimeout(() => {
-				$('#input_' + String(index -1)).focus()	
+				$('#input_' + String(index - 1)).focus()
 			}, 1);
-			
+
 		}
 	}
-	clearOTP = () =>{
+	clearOTP = () => {
+		this.authenticationService.getTokenByEmail({ Email: this.model.orgEmail, Type: 1 }).subscribe((res) => {
+			if (res.success == 'OK') {
+				this.otp = res.result
+			}
+		})
 		this.otp_1 = null
 		this.otp_2 = null
 		this.otp_3 = null
@@ -142,9 +151,15 @@ export class OrganizationComponent implements OnInit {
 
 	onSave() {
 		debugger
-		if(!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6){
+		if (!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6) {
 			this.toast.error('Vui lòng nhập otp!')
 			return
+		} else {
+			var otpInput = "" + this.otp_1 + this.otp_2 + this.otp_3 + this.otp_4 + this.otp_5 + this.otp_6;
+			if (otpInput != this.otp) {
+				this.toast.error('Mã otp bạn nhập không chính xác!')
+				return
+			}
 		}
 		$('#modal-otp').modal('hide')
 
@@ -187,7 +202,7 @@ export class OrganizationComponent implements OnInit {
 		this.formLogin = this.formBuilder.group(
 			{
 				businessRegistration: [this.model.businessRegistration, [Validators.required]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
+				password: [this.model.password, [Validators.required]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
