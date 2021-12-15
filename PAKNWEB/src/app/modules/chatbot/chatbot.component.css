@@ -157,7 +157,14 @@ img {
 .received_withd_msg {
 	width: 57%;
 }
-
+.square{
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+}
+.bg-red{
+	background-color: #DA2222 !important;
+}
 .mesgs {
 	float: left;
 	padding: 30px 15px 0 25px;

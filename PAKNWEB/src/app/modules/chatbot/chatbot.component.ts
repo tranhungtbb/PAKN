@@ -26,6 +26,8 @@ export class DashboardChatBotComponent implements OnInit {
 	userId: number
 	model: any = {}
 	userAvatar: string
+	audio: any
+
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
 	constructor(private botService: ChatBotService,
@@ -33,6 +35,11 @@ export class DashboardChatBotComponent implements OnInit {
 		, private user: UserInfoStorageService) { }
 	ngOnInit() {
 		//console.log('ngOnInit 0')
+
+		this.audio = new Audio()
+		this.audio.src = '../../../assets/img/ring.mp3'
+		this.audio.loop = true
+
 		this.userId = this.user.getUserId()
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
 
@@ -67,11 +74,23 @@ export class DashboardChatBotComponent implements OnInit {
 			})
 			this.connection.on('BroadcastMessage', (data: any) => {
 				//console.log('ngOnInit SignalR BroadcastMessage ', data)
-
+				this.playSoundWarning();
 				this.fetchRooms()
 			})
 		})
 		this.fetchRooms()
+	}
+
+	playSoundWarning() {
+		try {
+			console.log('playSoundWarning ')
+			this.audio = new Audio()
+			this.audio.src = '../../../assets/img/ring.mp3'
+			this.audio.load()
+			this.audio.play()
+		} catch (error) {
+			console.log('playSoundWarning error', error);
+		}
 	}
 
 	fetchRooms = async () => {
@@ -82,7 +101,7 @@ export class DashboardChatBotComponent implements OnInit {
 			this.botService.getRooms({}).subscribe((res) => {
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result) {
-						//console.log('fetchRooms ', res)
+						console.log('fetchRooms ', res)
 						this.rooms = res.result.Data
 						//console.log('fetchRooms ', this.rooms)
 					}
@@ -147,6 +166,7 @@ export class DashboardChatBotComponent implements OnInit {
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
 			this.newMessage = ''
 		}
+		this.playSoundWarning();
 	}
 
 	onKeyDown(event) {
@@ -171,6 +191,7 @@ export class DashboardChatBotComponent implements OnInit {
 	changeRoomStatus(status: boolean) {
 		console.log('changeRoomStatus ', this.roomNameSelected, status)
 		this.connection.invoke('EnableBot', this.roomNameSelected, status)
+
 	}
 
 	enabledBot() {
@@ -204,7 +225,7 @@ export class DashboardChatBotComponent implements OnInit {
 						element.SubTags = rs.type === 'json' ? rs.result.data : []
 					}
 				}
-				console.log('element', element);
+				//console.log('element', element);
 			}
 		}
 	}
