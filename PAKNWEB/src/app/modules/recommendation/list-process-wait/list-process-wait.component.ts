@@ -227,6 +227,7 @@ export class ListProcessWaitComponent implements OnInit {
 				}, 400)
 			}
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
+			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {

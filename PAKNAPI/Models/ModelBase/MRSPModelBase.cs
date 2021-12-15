@@ -59,7 +59,7 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public int RecommendationId { get; set; }
-		
+
 		public string? ReasonDeny { get; set; }
 		public string Content { get; set; }
 		public int? Status { get; set; }
@@ -136,7 +136,7 @@ namespace PAKNAPI.ModelBase
 
 		public bool? IsPublish { get; set; }
 
-		public async Task<List<MRInfomationExchange>> MRInfomationExchangeGetAllOnPage(long? RecommendationId,bool? IsPublish ,int? PageIndex, int? PageSize)
+		public async Task<List<MRInfomationExchange>> MRInfomationExchangeGetAllOnPage(long? RecommendationId, bool? IsPublish, int? PageIndex, int? PageSize)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RecommendationId", RecommendationId);
@@ -1309,7 +1309,7 @@ namespace PAKNAPI.ModelBase
 		public string UnitName { get; set; }
 		public string GroupWordName { get; set; }
 
-		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId,int? GroupWord, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? GroupWord, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -1416,7 +1416,7 @@ namespace PAKNAPI.ModelBase
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 
-		public async Task<List<MRRecommendationGetByHashtagAllOnPage>> MRRecommendationGetByHashtagAllOnPageDAO(string Code, string SendName, string Title, string Content, int? Status,long userId, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationGetByHashtagAllOnPage>> MRRecommendationGetByHashtagAllOnPageDAO(string Code, string SendName, string Title, string Content, int? Status, long userId, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -1650,7 +1650,7 @@ namespace PAKNAPI.ModelBase
 
 		public bool? IsFakeImage { get; set; }
 
-		public MRRecommendationInsertIN(){}
+		public MRRecommendationInsertIN() { }
 
 		public MRRecommendationInsertIN(FeedBackModel model) {
 			this.Code = model.FeedBackId.ToString();
@@ -2098,14 +2098,14 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-        public async Task<int> MRRecommendationUpdateStatusDAO(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
-        {
-            DynamicParameters DP = new DynamicParameters();
-            DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
-            DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
-            DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
-            return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
-        }
+		public async Task<int> MRRecommendationUpdateStatusDAO(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+			DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
+		}
 		public async Task<int> MRRecommendationUpdateStatusByForwardDAO(MRRecommendationUpdateStatusByForwardIN _mRRecommendationUpdateStatusIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -2114,6 +2114,15 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
 			DP.Add("IsForwardChild", _mRRecommendationUpdateStatusIN.IsForwardChild);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatusByForward", DP));
+		}
+
+		public async Task<int> MRRecommendationUpdateStatusByCombineDAO(MRRecommendationUpdateStatusByCombine _mRRecommendationUpdateStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+			DP.Add("IsCombine", _mRRecommendationUpdateStatusIN.IsCombine);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatusByCombine", DP));
 		}
 	}
 
@@ -2139,5 +2148,58 @@ namespace PAKNAPI.ModelBase
 			this.IsFakeImage = false;
 			this.IsForwardChild = false;
 		}
+	}
+
+	public class MRRecommendationUpdateStatusByCombine
+	{
+		public int? Id { get; set; }
+		public byte? Status { get; set; }
+		public bool? IsCombine { get; set; }
+	}
+
+
+	public class MRRecommendationCombination
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationCombination(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationCombination()
+		{
+		}
+
+		public async Task<int> MRRecommendationCombinationInsertDAO(MRRecommendationCombinationInsert _mRRecommendationCombinationInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Status", _mRRecommendationCombinationInsertIN.Status);
+			DP.Add("RecommendationId", _mRRecommendationCombinationInsertIN.RecommendationId);
+			DP.Add("UserSendId", _mRRecommendationCombinationInsertIN.UserSendId);
+			DP.Add("UnitSendId", _mRRecommendationCombinationInsertIN.UnitSendId);
+			DP.Add("ReceiveId", _mRRecommendationCombinationInsertIN.ReceiveId);
+			DP.Add("UnitReceiveId", _mRRecommendationCombinationInsertIN.UnitReceiveId);
+			DP.Add("Content", _mRRecommendationCombinationInsertIN.Content);
+			DP.Add("ReasonDeny", _mRRecommendationCombinationInsertIN.ReasonDeny);
+			DP.Add("SendDate", _mRRecommendationCombinationInsertIN.SendDate);
+			DP.Add("ProcessingDate", _mRRecommendationCombinationInsertIN.ProcessingDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_CombinationInsert", DP));
+		}
+	}
+
+	public class MRRecommendationCombinationInsert
+	{
+		public byte? Status { get; set; }
+		public long? RecommendationId { get; set; }
+		public long? UserSendId { get; set; }
+		public int? UnitSendId { get; set; }
+		public long? ReceiveId { get; set; }
+		public int? UnitReceiveId { get; set; }
+		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
 	}
 }

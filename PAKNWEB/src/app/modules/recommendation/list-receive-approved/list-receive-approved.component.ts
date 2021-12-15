@@ -172,8 +172,10 @@ export class ListReceiveApprovedComponent implements OnInit {
 			content: this.modelForward.content,
 		})
 	}
-	preForward(id: number) {
+	isForwardMultiUnit: boolean
+	preForward(id: number, isForwardMultiUnit: boolean = false) {
 		this.submitted = false
+		this.isForwardMultiUnit = isForwardMultiUnit
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.rebuilForm()
@@ -206,19 +208,35 @@ export class ListReceiveApprovedComponent implements OnInit {
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
-		this._service.recommendationForward(request, obj.title).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modal-tc-pakn').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelForward.recommendationId }).subscribe((res) => { })
-				this.getList()
-				this._toastr.success(COMMONS.FORWARD_SUCCESS)
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
+		if (!this.isForwardMultiUnit) {
+			this._service.recommendationForward(request, obj.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modal-tc-pakn').modal('hide')
+					this.getList()
+					this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		} else {
+			request['ListUnit'] = this.modelForward.unitReceiveId
+			request._mRRecommendationForwardInsertIN.unitReceiveId = null
+			this._service.recommendationForwardMultiUnit(request, obj.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modal-tc-pakn').modal('hide')
+					this.getList()
+					this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		}
 	}
 
 	preProcessAccept(item: any) {

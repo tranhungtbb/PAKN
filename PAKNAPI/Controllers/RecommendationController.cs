@@ -1042,6 +1042,56 @@ namespace PAKNAPI.Controller
 
         [HttpPost]
         [Authorize("ThePolicy")]
+        [Route("recommendation-combine-insert")]
+        public async Task<ActionResult<object>> RecommendationCombine(RecommendationCombineRequest request)
+        {
+            try
+            {
+                MRRecommendationCombinationInsert model = new MRRecommendationCombinationInsert();
+                model.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                model.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                model.RecommendationId = request.RecommendationId;
+                model.SendDate = DateTime.Now;
+
+                if (request.ListUnit != null) {
+                    foreach (var item in request.ListUnit) {
+                        model.UnitReceiveId = item;
+                        await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationInsertDAO(model);
+                    }
+                }
+                // update 
+
+
+
+                MRRecommendationUpdateStatusByCombine _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusByCombine();
+                _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
+                _mRRecommendationUpdateStatusIN.Id = (int)request.RecommendationId;
+                _mRRecommendationUpdateStatusIN.IsCombine =  true;
+                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusByCombineDAO(_mRRecommendationUpdateStatusIN);
+                
+                HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
+                hisData.ObjectId = (int)request.RecommendationId;
+                hisData.Type = 1;
+                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(request.ListUnit.ToString())).FirstOrDefault().Name; ;
+                hisData.Status = request.RecommendationStatus;
+                hisData.CreatedBy = model.UserSendId;
+                hisData.CreatedDate = DateTime.Now;
+                await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                return new ResultApi { Success = ResultCode.OK };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+        
+
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
         [Route("recommendation-on-process")]
         public async Task<ActionResult<object>> MRRecommendationOnProcess(RecommendationForwardProcess request)
         {
