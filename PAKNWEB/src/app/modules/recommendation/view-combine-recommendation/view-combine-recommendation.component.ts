@@ -320,6 +320,8 @@ export class ViewCombineRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcessConclusionCombine(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
+
+					return this.router.navigate(['/quan-tri/kien-nghi/tham-muu-don-vi'])
 				} else {
 					this.toastr.error(response.message)
 				}
