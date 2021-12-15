@@ -24,6 +24,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int? Creating { get; set; }
 		public int? ReceiveWait { get; set; }
 		public int? ReceiveApproved { get; set; }
 		public int? Processing { get; set; }

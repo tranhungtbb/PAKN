@@ -25,7 +25,6 @@ export class ViewFileDirective {
 
   @HostListener('click', ['$event'])
   onClick(e) {
-
     if (this.linkfile != undefined && (this.type != 1 && this.type != 2)) {
       const dialogRef = this.dialog.open(ViewFileDialogComponent, {
         data: {
@@ -61,27 +60,34 @@ export class ViewFileDirective {
 
     } else if (this.linkfile != undefined && (this.type == 1 || this.type == 2)) {
       var request = {
-        Linkfile: this.linkfile,
-
+        Path: this.linkfile,
+        Name: this.namefile
       }
-      this.files.getEncryptedPath(request).subscribe((result) => {
-        if (result.status == 1) {
-          console.log(result);
-
-          const dialogRef = this.dialog.open(ViewFileDialogComponent, {
-            data: {
-              link: encodeURI(result.pathDecrypt),
-              name: encodeURI(this.namefile),
-              path: encodeURI(this.linkfile),
-              listfile: [],
-              // type: this.DocType
-            }
-          });
-        } else {
-          console.log(result.message)
+      const dialogRef = this.dialog.open(ViewFileDialogComponent, {
+        data: {
+          link: encodeURI(this.linkfile),
+          name: encodeURI(this.namefile),
+          path: encodeURI(this.linkfile),
+          listfile: [],
+          // type: this.DocType
         }
-
       });
+      // this.files.getEncryptedPath(request).subscribe((result) => {
+      //   if (result) {
+      //     const dialogRef = this.dialog.open(ViewFileDialogComponent, {
+      //       data: {
+      //         link: encodeURI(result.pathDecrypt),
+      //         name: encodeURI(this.namefile),
+      //         path: encodeURI(this.linkfile),
+      //         listfile: [],
+      //         // type: this.DocType
+      //       }
+      //     });
+      //   } else {
+      //     console.log(result.message)
+      //   }
+
+      // });
     }
   }
 }
