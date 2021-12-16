@@ -166,7 +166,6 @@ export class DashboardChatBotComponent implements OnInit {
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
 			this.newMessage = ''
 		}
-		this.playSoundWarning();
 	}
 
 	onKeyDown(event) {
