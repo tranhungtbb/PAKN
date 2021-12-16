@@ -2229,6 +2229,19 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_CombinationInsert", DP));
 		}
+
+		public async Task<int> MRRecommendationCombinationUpdateDAO(MRRecommendationCombinationUpdate _mRRecommendationCombinationInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Status", _mRRecommendationCombinationInsertIN.Status);
+			DP.Add("RecommendationId", _mRRecommendationCombinationInsertIN.RecommendationId);
+			DP.Add("ReceiveId", _mRRecommendationCombinationInsertIN.RecommendationId);
+			DP.Add("UnitReceiveId", _mRRecommendationCombinationInsertIN.UnitReceiveId);
+			DP.Add("ReasonDeny", _mRRecommendationCombinationInsertIN.ReasonDeny);
+			DP.Add("ProcessingDate", _mRRecommendationCombinationInsertIN.ProcessingDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_CombinationUpdate", DP));
+		}
 	}
 
 	public class MRRecommendationCombinationInsert
@@ -2242,6 +2255,17 @@ namespace PAKNAPI.ModelBase
 		public string Content { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? SendDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+	}
+
+	public class MRRecommendationCombinationUpdate
+	{
+		public byte? Status { get; set; }
+		public long? RecommendationId { get; set; }
+		public long? ReceiveId { get; set; }
+		public int? UnitReceiveId { get; set; }
+		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
 		public DateTime? ProcessingDate { get; set; }
 	}
 }

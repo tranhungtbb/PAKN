@@ -1240,7 +1240,14 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("SY_UnitGetByRecommnedationCombine", DP)).ToList();
 		}
 
-		
+		public async Task<int?> SYUnitCheckCombine(int? RecommendationId, int unitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", RecommendationId);
+			DP.Add("UnitId", unitId);
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_UnitCheckRecommnedationCombine", DP));
+		}
+
 
 	}
 

@@ -224,7 +224,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 				}
 		} else {
 			let requestCombine = {
-				RecommendationCombination: { ...this.modelForward, 'status': RECOMMENDATION_STATUS.PROCESSING },
+				RecommendationCombination: { ...this.modelForward, 'status': RECOMMENDATION_STATUS.PROCESS_WAIT },
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
 				ListUnit: this.modelForward.unitReceiveId,
 				ProcessId: this.modelForward.id

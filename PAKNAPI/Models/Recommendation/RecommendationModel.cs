@@ -81,7 +81,9 @@ namespace PAKNAPI.Models.Recommendation
         public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
         public List<MRRecommendationGetDenyContentsBase> denyContent { get; set; }
 
-        public List<MRRecommendationConclusionCombine> conclusionCombine { get; set;}
+        public List<MRRecommendationConclusionCombine> conclusionCombine { get; set; }
+
+        public bool IsUnitCombine { get; set; }
 
         //public List<>
     }
@@ -91,7 +93,7 @@ namespace PAKNAPI.Models.Recommendation
 
         public int? Status { get; set; }
         public string ConclusionCombineContent { get; set; }
-
+        public string ConclusionCombineContentDeny { get; set; }
         public int? ConclusionCombineId { get; set; }
 
         public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }

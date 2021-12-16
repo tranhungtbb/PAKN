@@ -54,6 +54,7 @@ export class ViewRecommendationComponent implements OnInit {
 	lstGroupWordSelected: any = []
 	titleAccept: any = ''
 	lstDictionariesWord: any = []
+	denyContent: any
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
@@ -111,7 +112,8 @@ export class ViewRecommendationComponent implements OnInit {
 		})
 	}
 	conclusionCombine: any = []
-
+	isUnitCombine: boolean = false
+	unitName = this.storeageService.getUnitName()
 	getData() {
 		let request = {
 			Id: this.model.id,
@@ -119,6 +121,8 @@ export class ViewRecommendationComponent implements OnInit {
 		this.getAllInfomationExchange(1)
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
+				debugger
+				this.isUnitCombine = response.result.isUnitCombine
 				this.model = response.result.model
 				this.conclusionCombine = response.result.conclusionCombine
 				if (this.model.lat && this.model.lng) {
@@ -130,6 +134,9 @@ export class ViewRecommendationComponent implements OnInit {
 					this.files = response.result.filesConclusion
 				} else {
 					this.modelConclusion = new RecommendationConclusionObject()
+				}
+				if (this.model.status == 6 && response.result.denyContent) {
+					this.denyContent = response.result.denyContent[0] == undefined ? {} : response.result.denyContent[0]
 				}
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.filesModel = response.result.lstFiles
@@ -325,19 +332,33 @@ export class ViewRecommendationComponent implements OnInit {
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
 				FilesDelete: this.filesDelete
 			}
-			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modalReject').modal('hide')
-					this.toastr.success(COMMONS.PROCESS_SUCCESS)
-					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
-				} else {
-					this.toastr.error(response.message)
-				}
-			}),
-				(err) => {
-					console.error(err)
-				}
-
+			if (this.isUnitCombine) {
+				this.recommendationService.recommendationProcessConclusionCombine(request).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						this.toastr.success(COMMONS.PROCESS_SUCCESS)
+						return this.router.navigate(['/quan-tri/kien-nghi/tham-muu-don-vi'])
+					} else {
+						this.toastr.error(response.message)
+					}
+				}),
+					(err) => {
+						console.error(err)
+					}
+			}
+			else {
+				this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						$('#modalReject').modal('hide')
+						this.toastr.success(COMMONS.PROCESS_SUCCESS)
+						return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
+					} else {
+						this.toastr.error(response.message)
+					}
+				}),
+					(err) => {
+						console.error(err)
+					}
+			}
 		}
 	}
 
