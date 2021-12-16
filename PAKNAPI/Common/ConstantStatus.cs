@@ -18,7 +18,10 @@ namespace PAKNAPI.Common
 
 
 		//Action
-		public const int UPDATED = 11;
+		public const int UPDATED = 11; // chuyeenr tiep
+		public const int PROCESS_DENY_MAIN = 12; // tu choi giai quyet trung tam
+		public const int COMBINE = 13; // tu ueu cau phoi hop
+
 	}
 	public static class STEP_RECOMMENDATION
 	{

@@ -19,7 +19,8 @@
 				</div>
 				<ul class="navbar-nav header-right align-items-center">
 					<li class="nav-item dropdown notification_dropdown">
-						<a class="nav-link text-dark bg-transparent" title="Trang công bố" href="/cong-bo/trang-chu"><i class="bi bi-house"></i></a>
+						<a class="nav-link text-dark bg-transparent" title="Trang công bố" href="/cong-bo/trang-chu"><i
+								class="bi bi-house"></i></a>
 					</li>
 					<li class="nav-item dropdown notification_dropdown">
 						<a class="nav-link text-dark ai-icon bg-transparent" routerLink="/quan-tri/tin-nhan" title="Cuộc hội thoại">
@@ -32,8 +33,8 @@
 						</a>
 					</li>
 					<li class="nav-item dropdown notification_dropdown">
-						<a class="nav-link text-dark ai-icon bg-transparent" (click)="updateNotifications()" style="position: relative;" href="javascript:void(0)" role="button"
-							data-toggle="dropdown">
+						<a class="nav-link text-dark ai-icon bg-transparent" (click)="updateNotifications()"
+							style="position: relative;" href="javascript:void(0)" role="button" data-toggle="dropdown">
 							<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
 							<i class="bi bi-bell"></i>
 						</a>
@@ -45,20 +46,26 @@
                   font-size: 16px; text-transform: uppercase;">Thông báo</div>
 									<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới</div>
 								</div>
-								<div class="notifications"><a href="javascript:void(0)" (click)="redirectListNotification()">Xem tất cả<i class="ti-arrow-right"></i></a></div>
+								<div class="notifications"><a href="javascript:void(0)" (click)="redirectListNotification()">Xem tất
+										cả<i class="ti-arrow-right"></i></a></div>
 							</div>
-							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" (scroll)="onScroll($event)" style="height: 550px;"
-								[ngClass]="{ 'height-auto': Notifications && Notifications.length < 4}">
+							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" (scroll)="onScroll($event)"
+								style="height: 550px;" [ngClass]="{ 'height-auto': Notifications && Notifications.length < 4}">
 								<ul class="timeline" id="notificationScroll" *ngIf="Notifications">
 									<li *ngFor="let item of Notifications" class="item-notification">
-										<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
+										<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)"
+											class="timeline-panel">
 											<div class="media mr-2 grd-brown">
 												<i class="bi bi-file-earmark-medical cl-brown"></i>
 											</div>
 											<div class="media-body">
-												<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
-												<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
-												<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}</p>
+												<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm
+													dd/MM/yyyy'}}</small>
+												<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">
+													{{item.title}}</p>
+												<p class="mb-1 h4"
+													[ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">
+													{{item.content}}</p>
 											</div>
 										</a>
 									</li>
@@ -120,9 +127,11 @@
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
 									<div class="input-group">
-										<input class="form-control form-control-sm border-input" placeholder="Nhập..." [maxDate]="dataSearch.toDate" bsDatepicker #fd="bsDatepicker"
-											maxlength="10" id="fromDate" formControlName="fromDate" [(ngModel)]="dataSearch.fromDate" (bsValueChange)="onChangeFromDate($event)"
-											appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+										<input class="form-control form-control-sm border-input" placeholder="Nhập..."
+											[maxDate]="dataSearch.toDate" bsDatepicker #fd="bsDatepicker" maxlength="10" id="fromDate"
+											formControlName="fromDate" [(ngModel)]="dataSearch.fromDate"
+											(bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
+											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 										<div class="input-group-addon p-2">
 											<i class="bi bi-calendar-date" (click)="fd.toggle()" [attr.aria-expanded]="fd.isOpen"></i>
 										</div>
@@ -131,9 +140,10 @@
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
 									<div class="input-group">
-										<input class="form-control form-control-sm border-input" [minDate]="dataSearch.fromDate" placeholder="Nhập..." bsDatepicker
-											#n="bsDatepicker" maxlength="10" id="toDate" [(ngModel)]="dataSearch.toDate" formControlName="toDate"
-											(bsValueChange)="onChangeToDate($event)" appBsDatepickerInvalid
+										<input class="form-control form-control-sm border-input" [minDate]="dataSearch.fromDate"
+											placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
+											[(ngModel)]="dataSearch.toDate" formControlName="toDate" (bsValueChange)="onChangeToDate($event)"
+											appBsDatepickerInvalid
 											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 										<div class="input-group-addon p-2">
 											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -142,13 +152,14 @@
 								</div>
 								<div class="col-12 col-sm-3 col-lg-3 form-group">
 									<label class="mb-1 text-uppercase"><strong>Nội dung</strong></label>
-									<input class="form-control" [(ngModel)]="dataSearch.content" maxlength="100" formControlName="content" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập..." />
+									<input class="form-control" [(ngModel)]="dataSearch.content" maxlength="100" formControlName="content"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập..." />
 								</div>
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Trạng thái</strong></label>
-									<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái..." bindLabel="text" bindValue="value"
-										[(ngModel)]="dataSearch.status" formControlName="status" (change)="dataStateChange()">
+									<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái..." bindLabel="text"
+										bindValue="value" [(ngModel)]="dataSearch.status" formControlName="status"
+										(change)="dataStateChange()">
 									</ng-select>
 								</div>
 								<div class="col-12 col-sm-3 form-group">
@@ -170,14 +181,17 @@
 								<div class="card mb-0 shadow-none">
 									<div class="table-responsive">
 
-										<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-											currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true"
-											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+										<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)"
+											[paginator]="true" [showCurrentPageReport]="true"
+											currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+											[totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+											tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 
 											<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 												<tr>
 													<td style="width: 5%;">{{rowIndex + 1}}</td>
-													<td style="width: 20%;">{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date: 'dd/MM/yyyy'}} </td>
+													<td style="width: 20%;">{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date:
+														'dd/MM/yyyy'}} </td>
 													<td>{{item.description}}</td>
 													<td style="width: 20%;">
 														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
@@ -197,7 +211,8 @@
 													class="bi bi-file-earmark-excel mr-1"></i>Xuất
 												excel
 											</button> -->
-											<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" data-dismiss="modal">
+											<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white"
+												data-dismiss="modal">
 												Đóng
 											</button>
 										</div>
@@ -230,10 +245,14 @@
 						<div class="row form-group">
 							<div class="col-sm-12 pb-2">
 								<label class="control-label">Mật khẩu cũ <span class="text-danger">(*)</span></label>
-								<input class="form-control border-input" style="position: relative;" [type]="isShowPassword ? 'text' : 'password'" formControlName="oldPassword"
-									[(ngModel)]="oldPassword" maxlength="40" placeholder="Nhập..." />
-								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
-								<div *ngIf="(submitted && fChangePass.oldPassword.invalid) || (fChangePass.oldPassword.invalid && (fChangePass.oldPassword.dirty || fChangePass.oldPassword.touched))"
+								<input class="form-control border-input" style="position: relative;"
+									[type]="isShowPassword ? 'text' : 'password'" formControlName="oldPassword" [(ngModel)]="oldPassword"
+									maxlength="40" placeholder="Nhập..." />
+								<i class="custom-show-pass"
+									[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
+									(click)="showPassword()"></i>
+								<div
+									*ngIf="(submitted && fChangePass.oldPassword.invalid) || (fChangePass.oldPassword.invalid && (fChangePass.oldPassword.dirty || fChangePass.oldPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.oldPassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -242,10 +261,15 @@
 							</div>
 							<div class="col-sm-12 pb-2">
 								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
-								<input class="form-control border-input" style="position: relative;" [type]="isShowPasswordNew ? 'text' : 'password'" formControlName="newPassword"
-									[(ngModel)]="newPassword" maxlength="40" placeholder="Nhập..." pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" />
-								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPasswordNew, 'bi bi-eye-slash': !isShowPasswordNew}" (click)="showPasswordNew()"></i>
-								<div *ngIf="(submitted && fChangePass.newPassword.invalid) || (fChangePass.newPassword.invalid && (fChangePass.newPassword.dirty || fChangePass.newPassword.touched))"
+								<input class="form-control border-input" style="position: relative;"
+									[type]="isShowPasswordNew ? 'text' : 'password'" formControlName="newPassword"
+									[(ngModel)]="newPassword" maxlength="40" placeholder="Nhập..."
+									pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" />
+								<i class="custom-show-pass"
+									[ngClass]="{ 'bi bi-eye': isShowPasswordNew, 'bi bi-eye-slash': !isShowPasswordNew}"
+									(click)="showPasswordNew()"></i>
+								<div
+									*ngIf="(submitted && fChangePass.newPassword.invalid) || (fChangePass.newPassword.invalid && (fChangePass.newPassword.dirty || fChangePass.newPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.newPassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -257,11 +281,14 @@
 							</div>
 							<div class="col-sm-12">
 								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
-								<input class="form-control border-input" formControlName="rePassword" [type]="isShowRePasswordNew ? 'text' : 'password'" [(ngModel)]="rePassword"
-									maxlength="40" placeholder="Nhập..." />
-								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowRePasswordNew, 'bi bi-eye-slash': !isShowRePasswordNew}"
+								<input class="form-control border-input" formControlName="rePassword"
+									[type]="isShowRePasswordNew ? 'text' : 'password'" [(ngModel)]="rePassword" maxlength="40"
+									placeholder="Nhập..." />
+								<i class="custom-show-pass"
+									[ngClass]="{ 'bi bi-eye': isShowRePasswordNew, 'bi bi-eye-slash': !isShowRePasswordNew}"
 									(click)="showRePasswordNew()"></i>
-								<div *ngIf="(submitted && fChangePass.rePassword.invalid) || (fChangePass.rePassword.invalid && (fChangePass.rePassword.dirty || fChangePass.rePassword.touched))"
+								<div
+									*ngIf="(submitted && fChangePass.rePassword.invalid) || (fChangePass.rePassword.invalid && (fChangePass.rePassword.dirty || fChangePass.rePassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.rePassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -276,7 +303,8 @@
 						</div>
 					</div>
 					<div class="modal-footer center" style="border: none;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onChangePassword()">Xác
 							nhận</button>
 					</div>
@@ -302,7 +330,8 @@
 						<form [formGroup]="createUserForm" (ngSubmit)="onSave()">
 							<div class="align-items-center mb-4 avatar-bg">
 								<div class="avatar-frame">
-									<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }" style="height: 100%; width: 100%; object-fit: cover;" />
+									<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }"
+										style="height: 100%; width: 100%; object-fit: cover;" />
 									<span class="no-avatar-view" *ngIf="userAvatar == null">
 										<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd" clip-rule="evenodd"
@@ -312,7 +341,8 @@
 									</span>
 								</div>
 								<div class="text-center">
-									<input type="file" [hidden]="true" class="seclect-avatar" accept="{{fileAccept}}" (change)="changeSelectAvatar($event)">
+									<input type="file" [hidden]="true" class="seclect-avatar" accept="{{fileAccept}}"
+										(change)="changeSelectAvatar($event)">
 									<a class="color-brow" style="cursor: pointer;" (click)="onChangeAvatar()">
 										<i class="pi bi-image"></i>&nbsp;
 										Tải lên ảnh đại diện
@@ -322,9 +352,12 @@
 							<div class="form-row">
 								<div class="col-12 col-lg-8 form-group">
 									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-									<input disabled svTrim formControlName="email" [(ngModel)]="model.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
+									<input disabled svTrim formControlName="email" [(ngModel)]="model.email" type="text"
+										class="form-control" placeholder="Nhập..." maxlength="100"
 										(change)="onCheckExist('Email',$event.target.value)">
-									<div *ngIf="(submitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))" class="has-error m-b-12">
+									<div
+										*ngIf="(submitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="fUser.email.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -340,8 +373,10 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
-									<input svTrim formControlName="fullName" [(ngModel)]="model.fullName" type="text" class="form-control" placeholder="Nhập..." maxlength="100">
-									<div *ngIf="(submitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
+									<input svTrim formControlName="fullName" [(ngModel)]="model.fullName" type="text" class="form-control"
+										placeholder="Nhập..." maxlength="100">
+									<div
+										*ngIf="(submitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="fUser.fullName.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -350,9 +385,12 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
-									<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="model.phone" type="text" class="form-control"
-										placeholder="Nhập..." (change)="onCheckExist('Phone',$event.target.value)">
-									<div *ngIf="(submitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))" class="has-error m-b-12">
+									<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="model.phone"
+										type="text" class="form-control" placeholder="Nhập..."
+										(change)="onCheckExist('Phone',$event.target.value)">
+									<div
+										*ngIf="(submitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="fUser.phone.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -371,10 +409,12 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
 									<!--  -->
-									<ng-select class="form-control" placeholder="Chọn..." [items]="listSexs" bindLabel="text" bindValue="value" [(ngModel)]="model.gender"
-										formControlName="gender" [closeOnSelect]="true" [searchable]="false">
+									<ng-select class="form-control" placeholder="Chọn..." [items]="listSexs" bindLabel="text"
+										bindValue="value" [(ngModel)]="model.gender" formControlName="gender" [closeOnSelect]="true"
+										[searchable]="false">
 									</ng-select>
-									<div *ngIf="(submitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
+									<div
+										*ngIf="(submitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="fUser.gender.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -386,10 +426,12 @@
 									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
 									<!-- <input *ngIf="!isAdmin && model.id > 0 && model.isActived" disabled type="text" class="form-control" value="Hiệu lực">
 									<input *ngIf="!isAdmin && model.id > 0 && !model.isActived" disabled type="text" class="form-control" value="Hết hiệu lực"> -->
-									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatusUser" bindLabel="text" bindValue="value"
-										formControlName="isActived" [(ngModel)]="model.isActived" [closeOnSelect]="true" [searchable]="false">
+									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..."
+										[items]="listStatusUser" bindLabel="text" bindValue="value" formControlName="isActived"
+										[(ngModel)]="model.isActived" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
-									<div *ngIf="(submitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
+									<div
+										*ngIf="(submitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="fUser.isActived.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -398,7 +440,8 @@
 								</div>
 								<div class="col-12 form-group">
 									<label class="mb-1">Địa chỉ</label>
-									<textarea class="form-control" formControlName="address" [(ngModel)]="model.address" rows="4" placeholder="Nhập..." maxlength="300"></textarea>
+									<textarea class="form-control" formControlName="address" [(ngModel)]="model.address" rows="4"
+										placeholder="Nhập..." maxlength="300"></textarea>
 								</div>
 							</div>
 						</form>
@@ -473,7 +516,8 @@
 						<div class="col">
 							<p class="mb-1">Trạng thái</p>
 							<p class="h4 mb-0 pb-2 border-bottom mh-32">
-								<span *ngIf="model.isActived == listStatusUser[0].value" style="color: seagreen;">{{listStatusUser[0].text}}</span>
+								<span *ngIf="model.isActived == listStatusUser[0].value"
+									style="color: seagreen;">{{listStatusUser[0].text}}</span>
 								<span *ngIf="model.isActived == listStatusUser[1].value">{{listStatusUser[1].text}}</span>
 							</p>
 						</div>
@@ -492,7 +536,8 @@
 				<!-- </form> -->
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="preUpdate()">Sửa thông tin</button>
+				<button type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="preUpdate()">Sửa thông
+					tin</button>
 			</div>
 		</div>
 	</div>

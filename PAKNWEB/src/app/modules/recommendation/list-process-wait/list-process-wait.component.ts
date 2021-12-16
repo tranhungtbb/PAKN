@@ -53,7 +53,6 @@ export class ListProcessWaitComponent implements OnInit {
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
-	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -342,22 +341,6 @@ export class ListProcessWaitComponent implements OnInit {
 			}
 	}
 
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
 
 	exportExcel() {
 		let request = {

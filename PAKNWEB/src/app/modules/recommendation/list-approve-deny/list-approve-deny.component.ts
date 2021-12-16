@@ -21,7 +21,7 @@ export class ListApproveDenyComponent implements OnInit {
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private _router: Router
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
@@ -141,22 +141,6 @@ export class ListApproveDenyComponent implements OnInit {
 		}
 	}
 
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
 
 	exportExcel() {
 		let request = {

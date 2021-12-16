@@ -145,8 +145,8 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<span *ngIf="item.status == 7 && item.unitReceiveId == unitId && !item.isForwardUnitChild">
-												<a (click)="preForward(item.id)" class="btn-icon grd-blue text-white mr-2 ng-star-inserted"
+											<span *ngIf="!isUnitMain && item.unitReceiveId == unitId && !item.isForwardUnitChild">
+												<a (click)="preForward(item)" class="btn-icon grd-blue text-white mr-2 ng-star-inserted"
 													title="Chuyển tiếp cho đơn vị cấp dưới">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
 														fill="none">
@@ -156,13 +156,13 @@
 													</svg>
 												</a>
 											</span>
-											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc2 text-white mr-2"
-												title="Tiếp nhận xử lý"><i class="bi bi-file-earmark-check"></i></a>
-											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal"
-												data-target="#modal-tc-pakn" title="Từ chối tiếp nhận"><i
-													class="bi bi-file-earmark-break"></i></a>
-											<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories(item.id)"
-												title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+
+											<a *ngIf="item.unitReceiveId == unitId" (click)="preProcessCombine(item)"
+												class="btn-icon grd-blue text-white mr-2" title="Chuyển tham mưu">
+												<img src="../../../../assets/dist/images/svg/btn-btn-combine.svg">
+											</a>
+
+											<app-history-recommendation [recommendationId]="item.id"></app-history-recommendation>
 										</div>
 									</td>
 								</tr>
@@ -180,61 +180,6 @@
 	</div>
 
 </div>
-
-<div class="modal fade pr-0" id="modal-history-pakn">
-	<div class="modal-dialog modal-dialog-right vh-100" role="document">
-		<div class="modal-content rounded-0">
-			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">Lịch sử quy trình xử lý</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body py-3">
-				<div id="DZ_W_TimeLine" class="widget-timeline h-100 dz-scroll">
-					<ul class="timeline">
-						<li *ngFor="let item of lstHistories">
-							<div *ngIf="item.status == 1" class="timeline-badge info"></div>
-							<div *ngIf="item.status == 2" class="timeline-badge info"></div>
-							<div *ngIf="item.status == 3" class="timeline-badge danger"></div>
-							<div *ngIf="item.status == 4" class="timeline-badge primary"></div>
-							<div *ngIf="item.status == 5" class="timeline-badge info"></div>
-							<div *ngIf="item.status == 6" class="timeline-badge danger"></div>
-							<div *ngIf="item.status == 7" class="timeline-badge primary"></div>
-							<div *ngIf="item.status == 8" class="timeline-badge success"></div>
-							<div *ngIf="item.status == 9" class="timeline-badge danger"></div>
-							<div *ngIf="item.status == 10" class="timeline-badge success"></div>
-							<div *ngIf="item.status == 11" class="timeline-badge info"></div>
-							<div class="timeline-panel">
-								<p class="mb-2 h5">Người dùng: <strong>{{item.createdByName}}</strong></p>
-								<p class="mb-2 d-flex justify-content-between align-items-center">
-									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi
-										tạo</span>
-									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Gửi xử lý</span>
-									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối tiếp nhận</span>
-									<span *ngIf="item.status == 4" class="badge rounded-pill mb-0 bg-blue2">Đã tiếp nhận</span>
-									<span *ngIf="item.status == 5" class="badge rounded-pill mb-0 badge-outline-green2">Đã gửi giải
-										quyết</span>
-									<span *ngIf="item.status == 6" class="badge rounded-pill mb-0 bg-red">Từ chối giải quyết</span>
-									<span *ngIf="item.status == 7" class="badge rounded-pill mb-0 badge-outline-blue">Đang giải
-										quyết</span>
-									<span *ngIf="item.status == 8" class="badge rounded-pill mb-0 badge-outline-success">Đã gửi phê
-										duyệt</span>
-									<span *ngIf="item.status == 9" class="badge rounded-pill mb-0 bg-red">Từ chối phê duyệt</span>
-									<span *ngIf="item.status == 10" class="badge rounded-pill mb-0 badge-success">Đã giải quyết</span>
-									<span *ngIf="item.status == 11" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã cập
-										nhật</span>
-									<span class="text-dark mb-0">{{item.createdDate | date:'HH:mm | dd/MM/yyyy'}}</span>
-								</p>
-								<p class="mb-0 h5"><strong innerHTML="{{item.content | Change}}"></strong></p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <div class="modal fade" id="modal-tc-pakn">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -283,6 +228,61 @@
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary border w-127 mr-3" data-dismiss="modal">Hủy</button>
 				<button type="button" class="btn text-white grd-blue border-0 w-127" (click)="onForward()">Gửi</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modal-combine">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Gửi đơn vị tham mưu</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-0">
+				<form class="form-horizontal" [formGroup]="formCombine" #formDir="ngForm">
+					<div class="form-row">
+						<div class="col-12 col-lg-6 form-group">
+							<label class="mb-1">Đơn vị tham mưu <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control border-input" [items]="listUnitCombine" bindLabel="name" bindValue="id"
+								notFoundText="Không có dữ liệu" formControlName="unitReceiveId" placeholder="Chọn đơn vị tham mưu"
+								[(ngModel)]="modelForward.unitReceiveId" multiple="true" hideSelected="true" [closeOnSelect]="true">
+							</ng-select>
+							<div
+								*ngIf="(submitted && fCombine.unitReceiveId.invalid) || (fCombine.unitReceiveId.invalid && (fCombine.unitReceiveId.dirty || fCombine.unitReceiveId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fCombine.unitReceiveId.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6 form-group">
+							<label class="mb-1">Hạn giải quyết</label>
+							<div class="input-group">
+								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker
+									#n="bsDatepicker" maxlength="10" formControlName="expiredDate" [(ngModel)]="modelForward.expiredDate"
+									appBsDatepickerInvalid [minDate]="dateNow"
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Nội dung</label>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
+								placeholder="Nhập nội dung..." maxlength="500"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border w-127 mr-3" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn text-white grd-blue border-0 w-127" (click)="onProcessCombine()">Gửi</button>
 			</div>
 		</div>
 	</div>

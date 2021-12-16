@@ -176,7 +176,6 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
                 var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id,userProcessId,unitProcessId) };
@@ -196,7 +195,6 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
                 var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationCombineGetByIDView(Id, userProcessId, unitProcessId) };
@@ -1095,7 +1093,7 @@ namespace PAKNAPI.Controller
                 hisData.ObjectId = (int)request.RecommendationCombination.RecommendationId;
                 hisData.Type = 1;
                 hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(string.Join(", ", request.ListUnit))).FirstOrDefault().Name;
-                hisData.Status = request.RecommendationStatus;
+                hisData.Status = STATUS_RECOMMENDATION.COMBINE;
                 hisData.CreatedBy = request.RecommendationCombination.UserSendId;
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
@@ -1113,7 +1111,7 @@ namespace PAKNAPI.Controller
                     notification.DataId = (int)request.RecommendationCombination.RecommendationId;
                     notification.SendDate = DateTime.Now;
                     notification.Type = TYPENOTIFICATION.RECOMMENDATION;
-                    notification.TypeSend = mr.Status;
+                    notification.TypeSend = STATUS_RECOMMENDATION.COMBINE;
                     notification.IsViewed = true;
                     notification.IsReaded = true;
                     var tasks = new List<Task>();

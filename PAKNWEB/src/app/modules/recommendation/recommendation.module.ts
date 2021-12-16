@@ -37,6 +37,7 @@ import { ListForwardComponent } from './list-forward/list-forward.component'
 import { ListProcessDenyMainComponent } from './list-process-deny-main/list-process-deny-main.component'
 import { ListCombinationComponent } from './list-combination/list-combination.component'
 import { ViewCombineRecommendationComponent } from './view-combine-recommendation/view-combine-recommendation.component'
+import { HistoryRecommendationComponent } from './history-recommendation/history-recommendation.component'
 
 @NgModule({
 	imports: [
@@ -79,7 +80,8 @@ import { ViewCombineRecommendationComponent } from './view-combine-recommendatio
 		ListReactionaryWordComponent,
 		ListFakeImageComponent,
 		ListRecommendationCommentComponent,
-		ListForwardComponent, ListProcessDenyMainComponent, ListCombinationComponent, ViewCombineRecommendationComponent
+		ListForwardComponent, ListProcessDenyMainComponent, ListCombinationComponent, ViewCombineRecommendationComponent,
+		HistoryRecommendationComponent
 	],
 })
 export class RecommendationModule { }

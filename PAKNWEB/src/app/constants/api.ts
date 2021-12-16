@@ -132,6 +132,7 @@ export class Api {
 	public static UnitHasPermissionSMS = 'unit/unit-has-permission'
 	public static UnitGetByGroup = 'unit/unit-get-by-group'
 	public static UnitGetByParentId = 'unit/get-children-dropdown-by-parent'
+	public static UnitGetDropDownForCombine = 'unit/get-dropdown-for-combine'
 
 
 

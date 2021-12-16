@@ -105,7 +105,7 @@ export class AppheaderComponent implements OnInit {
 		private notificationService: NotificationService,
 		private accountService: AccountService,
 		private _userServiceChat: UserServiceChatBox
-	) {}
+	) { }
 
 	formChangePassword: FormGroup
 	oldPassword: string
@@ -300,7 +300,11 @@ export class AppheaderComponent implements OnInit {
 		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) {
 			// PAKN
 			this.updateIsReadNotification(dataId)
-			this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
+			if (typeSend == 13) {
+				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
+			} else {
+				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
+			}
 		} else if (type == TYPE_NOTIFICATION.INVITATION) {
 			// Thư mời
 			this.updateIsReadNotification(dataId)
@@ -336,7 +340,7 @@ export class AppheaderComponent implements OnInit {
 		}
 	}
 
-	onUpdate() {}
+	onUpdate() { }
 
 	// profile
 

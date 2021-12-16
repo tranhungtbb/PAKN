@@ -377,6 +377,25 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		[HttpGet]
+		[Route("get-dropdown-for-combine")]
+		public async Task<ActionResult<object>> SY_UnitGetDropdownForCombine(int? RecommendationId)
+		{
+			try
+			{
+				List<SYUnitDropdown> data = await new SYUnit(_appSetting).SYUnitGetDropdownForCombine(new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext) ,RecommendationId);
+
+				return new ResultApi { Success = ResultCode.OK, Result = data };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Route("unit-get-by-group")]
 		public async Task<ActionResult<object>> SY_UnitGetDropdown(int GroupId)
 		{

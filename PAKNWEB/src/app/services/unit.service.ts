@@ -99,4 +99,8 @@ export class UnitService {
 		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitGetByParentId)
 	}
 
+	getDropdownForCombine(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitGetDropDownForCombine)
+	}
+
 }

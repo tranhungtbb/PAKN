@@ -1,0 +1,59 @@
+<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories()" title="Xem lịch sử"><i
+		class="bi bi-clock-history"></i>
+</a>
+
+<div class="modal fade pr-0" id="history-pakn">
+	<div class="modal-dialog modal-dialog-right vh-100" role="document">
+		<div class="modal-content rounded-0">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử quy trình xử lý</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body py-3">
+				<div id="DZ_W_TimeLine" class="widget-timeline h-100 dz-scroll">
+					<ul class="timeline">
+						<li *ngFor="let item of lstHistories">
+							<div *ngIf="item.status == 1" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 2" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 3" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 4" class="timeline-badge primary"></div>
+							<div *ngIf="item.status == 5" class="timeline-badge info"></div>
+							<div *ngIf="item.status == 6" class="timeline-badge danger"></div>
+							<div *ngIf="[7,13].includes(item.status)" class="timeline-badge primary"></div>
+							<div *ngIf="item.status == 8" class="timeline-badge success"></div>
+							<div *ngIf="item.status == 9" class="timeline-badge danger"></div>
+							<div *ngIf="item.status == 10" class="timeline-badge success"></div>
+							<div *ngIf="item.status == 11" class="timeline-badge info"></div>
+							<div class="timeline-panel">
+								<p class="mb-2 h5">Người dùng: <strong>{{item.createdByName}}</strong></p>
+								<p class="mb-2 d-flex justify-content-between align-items-center">
+									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi
+										tạo</span>
+									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Gửi xử lý</span>
+									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối tiếp nhận</span>
+									<span *ngIf="item.status == 4" class="badge rounded-pill mb-0 bg-blue2">Đã tiếp nhận</span>
+									<span *ngIf="item.status == 5" class="badge rounded-pill mb-0 badge-outline-green2">Đã gửi giải
+										quyết</span>
+									<span *ngIf="item.status == 6" class="badge rounded-pill mb-0 bg-red">Từ chối giải quyết</span>
+									<span *ngIf="item.status == 7" class="badge rounded-pill mb-0 badge-outline-blue">Đang giải
+										quyết</span>
+									<span *ngIf="item.status == 8" class="badge rounded-pill mb-0 badge-outline-success">Đã gửi phê
+										duyệt</span>
+									<span *ngIf="item.status == 9" class="badge rounded-pill mb-0 bg-red">Từ chối phê duyệt</span>
+									<span *ngIf="item.status == 10" class="badge rounded-pill mb-0 badge-success">Đã giải quyết</span>
+									<span *ngIf="item.status == 11" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã cập
+										nhật</span>
+									<span *ngIf="item.status == 13" class="badge rounded-pill mb-0 badge-outline-blue">Đã yêu cầu tham
+										mưu</span>
+									<span class="text-dark mb-0">{{item.createdDate | date:'HH:mm | dd/MM/yyyy'}}</span>
+								</p>
+								<p class="mb-0 h5"><strong innerHTML="{{item.content | Change}}"></strong></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
