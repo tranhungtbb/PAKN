@@ -195,16 +195,20 @@ namespace PAKNAPI.Models.Recommendation
 			{
 				DP.Add("@UnitProcess", unitProcessId);
 				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("[MR_Recommendation_ConclusionCombineGetByRecommendationId]", DP)).FirstOrDefault();
-				DP = new DynamicParameters();
-				DP.Add("Id", data.ModelConclusion.Id);
 				if (data.ModelConclusion != null)
 				{
-					data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
-					foreach (var item in data.filesConclusion)
+					DP = new DynamicParameters();
+					DP.Add("Id", data.ModelConclusion.Id);
+					if (data.ModelConclusion != null)
 					{
-						item.FilePath = decrypt.EncryptData(item.FilePath);
+						data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+						foreach (var item in data.filesConclusion)
+						{
+							item.FilePath = decrypt.EncryptData(item.FilePath);
+						}
 					}
 				}
+				
 			}
 			return data;
 		}

@@ -28,7 +28,10 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 			request.url != AppSettings.API_ADDRESS + Api.StatisticsByUnitParentId &&
 			request.url != AppSettings.API_ADDRESS + Api.GetMessages &&
 			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetPageByParent &&
-			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPage
+			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPage &&
+			request.url != AppSettings.API_ADDRESS + Api.UnitGetByGroup &&
+			request.url != AppSettings.API_ADDRESS + Api.UnitGetByParentId
+
 		) {
 			this.env.isContentLoading = true
 		}

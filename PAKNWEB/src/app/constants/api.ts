@@ -18,7 +18,7 @@ export class Api {
 
 	// FileUpload/Download
 	public static DownloadApp = 'files/DownloadApp'
-	public static GetEncryptedPath = 'files/GetEncryptedPath'
+	public static GetEncryptedPath = 'files/download-file'
 	public static download = 'files/download-file'
 	public static DownloadFilebyId = 'files/DownloadFilebyId'
 	public static downloadFileSupport = 'files/download-file-support'
