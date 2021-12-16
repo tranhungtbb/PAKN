@@ -20,7 +20,7 @@ export class ViewFileDialogComponent implements OnInit {
 		private toastr: ToastrService,
 		private http: HttpClient,
 		private cdRef: ChangeDetectorRef
-	) {}
+	) { }
 	downloadId: number = 0
 	filename: string = ''
 	IsPDF: boolean = false
@@ -31,7 +31,7 @@ export class ViewFileDialogComponent implements OnInit {
 	typeFile: any
 	// @ViewChild('pdfViewer', { static: false }) pdfViewer
 	listImg: any
-	
+
 
 	ngOnInit() {
 		this.typeFile = this.data.type
@@ -75,6 +75,7 @@ export class ViewFileDialogComponent implements OnInit {
 			fileurl = fileurl
 			// fileurl = fileurl.replace(AppSettings.API_DOWNLOADFILES, "");
 			this.filename = fileurl
+			// window.open(this.filename);
 		}
 	}
 
@@ -151,8 +152,8 @@ export class ViewFileDialogComponent implements OnInit {
 	// }
 
 
-  public showFilePDF(link: string): void {
-   
+	public showFilePDF(link: string): void {
+
 		var request = {
 			Path: link,
 			Name: this.data.name,
@@ -166,7 +167,7 @@ export class ViewFileDialogComponent implements OnInit {
 				this.toastr.error('Không tìm thấy file trên hệ thống')
 			}
 		)
-  }
+	}
 
 	LoadViewImage(link, name) {
 		var request = {
