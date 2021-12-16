@@ -76,6 +76,7 @@ export class ViewFileDialogComponent implements OnInit {
 			fileurl = fileurl
 			// fileurl = fileurl.replace(AppSettings.API_DOWNLOADFILES, "");
 			this.filename = fileurl
+			// window.open(this.filename);
 		}
 	}
 

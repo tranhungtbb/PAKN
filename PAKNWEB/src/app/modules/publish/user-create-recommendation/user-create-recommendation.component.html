@@ -134,7 +134,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 form-group" *ngIf="!isChooseUnit">
+					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">cơ quan tiếp nhận <span *ngIf="!isChooseUnit" class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name" placeholder="Chọn..."
 							notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.unitReceive"
@@ -280,6 +280,7 @@
 									</a>
 								</div>
 							</div>
+
 						</ng-container>
 					</div>
 				</div>
@@ -306,13 +307,27 @@
 							</div>
 						</div>
 					</div>
+					<!-- 
+					<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+						<button type="button" class="btn text-white border-0 grd-xanhngoc justify-content-center"
+							style="width: 100%;" (click)="onSave(1)">Lưu</button>
+					</div>
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+						<button type="button" class="btn text-white border-0 grd-blue justify-content-center" style="width: 100%;"
+							(click)="onSave(2)">
+							<span class="ml-2">Gửi</span>
+						</button>
+					</div> -->
 
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-end align-items-center"
 						style="margin-top: 22px;">
-						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 mr-2"
-							(click)="onSave(1)">Lưu</button>
-						<button type="button" class="btn text-white border-0 grd-blue px-5 pr-0" (click)="onSave(2)">
-							<span class="ml-2">Gửi</span>
+						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 col-6 col-xs-4 col-sm-4"
+							(click)="onSave(1)" style="text-align:center; vertical-align:middle; display:table-cell;">Lưu</button>
+						<button type="button" class="btn text-white border-0 grd-blue px-5 pr-0 col-6 col-xs-4 col-sm-4"
+							style="margin-left:5px; text-align:center; vertical-align:middle; display:table-cell;"
+							(click)="onSave(2)">
+							Gửi
 						</button>
 					</div>
 				</form>
