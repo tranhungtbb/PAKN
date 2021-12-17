@@ -43,50 +43,85 @@
 
 							<span class="text-left">
 								<small class="small" *ngIf="lstFiles && lstFiles.length > 0">Tài liệu đính kèm</small><br>
-								<div *ngFor="let file of lstFiles">
+								<div *ngFor="let file of lstFiles" cursor="pointer">
 									<!-- file-att -->
-									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
+									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
+										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
 											alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 										<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
 											file.name}} -->
 									</a>
-									<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
+									<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
+										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
 											alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
+									<a *ngIf="file.fileType == 3" class="pointer" appViewFile [linkfile]="file.filePath"
+										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
 											alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
+									<a *ngIf="file.fileType == 4" class="pointer" appViewFile [linkfile]="file.filePath"
+										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
 											alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
+									<a *ngIf="file.fileType == 6" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+										title="Xem file" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-powerpoint.svg"
 											style="width: 30px;padding-right: 5px;" alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
+									<a *ngIf="file.fileType == 7" class="pointer" appViewFile [linkfile]="file.filePath"
+										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
 											style="width: 30px;padding-right: 5px;" alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
-									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
-										[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
-										<i class="bi bi-eye"></i>
+
+									<span style="margin-left:15px;" *ngFor="let file of lstFiles" class="pointer">
+										<span>
+
+											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333; width:auto;">
+												<i class="bi bi-download"></i>
+												<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
+												file.name}} -->
+											</a>
+											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333; width:auto;">
+												<i class="bi bi-download"></i>
+
+											</a>
+											<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333; width:auto;">
+												<i class="bi bi-download"></i>
+
+											</a>
+											<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333; width:auto;">
+												<i class="bi bi-download"></i>
+
+											</a>
+											<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333;">
+												<i class="bi bi-download"></i>
+
+											</a>
+											<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+												style="color: #333; width:auto;">
+												<i class="bi bi-download"></i>
+
+											</a>
+
+										</span>
 									</span>
+
 								</div>
 							</span>
 
@@ -124,66 +159,97 @@
 								<span *ngIf="model.fieldName">
 									<span class="my-0 h5">Lĩnh vực :</span> {{model.fieldName}}
 								</span>
-								<span class="pr-5" style="float:right;" *ngIf="model.unitName">
+								<span style="float:right;" *ngIf="model.unitName">
 									<span class="my-0 h5">Đơn vị tiếp nhận :</span> {{model.unitName}}
 								</span>
 
 							</div>
 							<br>
-
 							<p style="text-align:justify; text-justify:inter-word" *ngIf="lstConclusion"
 								innerHTML="{{lstConclusion.content | Change}}">
 							</p>
 							<p *ngIf="!lstConclusion">
 								{{model.contentConclusion != null ? model.contentConclusion : ''}}
 							</p>
-							<p class="mb-4" *ngFor="let file of lstConclusionFiles; let i = index">
-								<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-									style="color: #333;">
+							<div *ngFor="let file of lstConclusionFiles; let i = index" cursor="pointer">
+								<!-- file-att -->
+								<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
 										alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}}</span>
+									<span class="small text-truncate">{{file.name}}</span>
+									<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
+										file.name}} -->
 								</a>
-								<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-									style="color: #333;">
+								<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
 										alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}}</span>
+									<span class="small text-truncate">{{file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-									style="color: #333;">
+								<a *ngIf="file.fileType == 3" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}}</span>
+									<span class="small text-truncate">{{file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-									style="color: #333;">
+								<a *ngIf="file.fileType == 4" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
 										alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}}</span>
+									<span class="small text-truncate">{{file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-									style="color: #333;">
+								<a *ngIf="file.fileType == 6" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+									title="Xem file" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;"
 										alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}}</span>
+									<span class="small text-truncate">{{file.name}}</span>
 								</a>
-								<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-									style="color: #333;">
+								<a *ngIf="file.fileType == 7" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;"
 										alt="">
-									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}}</span>
+									<span class="small text-truncate">{{file.name}}</span>
 								</a>
-								<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
-									[linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
-									<i class="bi bi-eye"></i>
+
+								<span style="margin-left:15px;" *ngFor="let file of lstConclusionFiles; let i = index" class="pointer">
+									<span>
+
+										<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333; width:auto;">
+											<i class="bi bi-download"></i>
+											<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
+											file.name}} -->
+										</a>
+										<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333; width:auto;">
+											<i class="bi bi-download"></i>
+
+										</a>
+										<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333; width:auto;">
+											<i class="bi bi-download"></i>
+
+										</a>
+										<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333; width:auto;">
+											<i class="bi bi-download"></i>
+
+										</a>
+										<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333;">
+											<i class="bi bi-download"></i>
+
+										</a>
+										<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
+											style="color: #333; width:auto;">
+											<i class="bi bi-download"></i>
+
+										</a>
+
+									</span>
 								</span>
-							</p>
+
+							</div>
 							<div class="row d-flex justify-content-end ml-0" *ngIf="model && model.status == 10">
 								<div class="col col-lg-4 col-md-4 col-sm-12 pl-0 pr-10">
 									<button type="button" class="btn btn-outline-success mr-3" style="width: inherit;"
