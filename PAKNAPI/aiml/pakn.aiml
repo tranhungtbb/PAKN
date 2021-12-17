@@ -1,35 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <aiml version="1.0">
-
 <category>
-		<pattern>Xin chào</pattern>
-
-		<template>
-			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
-			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
-			<pakn>
-				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Phản ánh kiến nghị","image":"","link":""}]}
-			</pakn>
-		</template>
-	</category>
-	<category>
 		<pattern>*</pattern>
 		<template>
-					 <set name = "topic">Anh chị cần hỗ trợ gì</set>
-					
+					Anh/chị cần <set name = "topic">hỗ trợ</set> gì?
 				</template>
 	</category>
-	<topic name = "other">
-	
-	</topic>
-	<topic name = "Cần hỗ trợ gì">
-	<category>
+	<topic name = "hỗ trợ">
+     <category>
 		<pattern>*</pattern>
 		<template>
-					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không  <set name = "topic">other</set>
+					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không  <set name = "topic"></set>
 					<pakn>json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Sai","image":"","hiddenAnswer":"m45fe4a-d402-451c-b9ed-9c1a04247482"}]}</pakn>
 				</template>
 	</category>
+      
+   </topic>
 	<category>
 		<pattern>x245fe4a-d402-451c-b9ed-9c1a04247482</pattern>
 				<template>
@@ -53,7 +39,17 @@
 		</template>
 	</category>
 	
-	
+	<category>
+		<pattern>Xin chào</pattern>
+
+		<template>
+			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
+			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
+			<pakn>
+				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Phản ánh kiến nghị","image":"","link":""}]}
+			</pakn>
+		</template>
+	</category>
 
 <category>
 		<pattern>m45fe4a-d402-451c-b9ed-9c1a04247482</pattern>
@@ -158,5 +154,5 @@
 			</pakn>
 		</template>
 	</category>
-</topic>
+
 </aiml>
