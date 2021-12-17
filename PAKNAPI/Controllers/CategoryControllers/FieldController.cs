@@ -89,6 +89,28 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Route("get-all-list-field-icon-on-page")]
+		public async Task<ActionResult<object>> CAFieldGetAllIconOnPage()
+		{
+			try
+			{
+				List<CAFieldGetAllIconPath> rsCAFieldGetAllOnPage = await new CAFieldGetAllIconPath(_appSetting).CAFieldGetAllIconPathDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAFieldGetAllIconPath", rsCAFieldGetAllOnPage}
+						
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		/// <summary>
 		/// chi tiết lĩnh vực
 		/// </summary>
