@@ -21,6 +21,7 @@ export class ChatbotObject {
 export class BotRoom {
 	name: string
 	id: number
+	type: number
 }
 
 export class BotMessage {

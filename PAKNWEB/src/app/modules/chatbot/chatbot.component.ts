@@ -161,8 +161,14 @@ export class DashboardChatBotComponent implements OnInit {
 
 	sendMessage() {
 		if (this.newMessage !== '') {
-			//console.log('sendMessage ', this.newMessage)
+			console.log('sendMessage ', this.roomNameSelected, this.rooms)
 			this.connection.invoke('AdminSendToRoom', this.roomNameSelected, this.newMessage)
+
+
+			if (this.rooms.filter(room => room.name === this.roomNameSelected).length > 0) {
+				this.rooms.find(room => room.name === this.roomNameSelected).type = 2;
+			}
+
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
 			this.newMessage = ''
 		}
