@@ -20,13 +20,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="bin\**" />
-    <Compile Remove="Upload\**" />
     <Content Remove="bin\**" />
-    <Content Remove="Upload\**" />
     <EmbeddedResource Remove="bin\**" />
-    <EmbeddedResource Remove="Upload\**" />
     <None Remove="bin\**" />
-    <None Remove="Upload\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bugsnag.AspNet.Core" Version="2.2.1" />
@@ -66,7 +62,7 @@
     <Folder Include="DataBaseAuto\" />
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
-    <Folder Include="Upload\" />
+    <Folder Include="Upload\IconLinhVuc\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Common\ESConnection.cs" />

@@ -22,7 +22,7 @@
 								<p class="my-0 h5">{{model.name}}</p>
 							</div> -->
 						</div>
-						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date: 'dd/MM/yyyy'}}</span>
+
 					</div>
 
 
@@ -37,10 +37,13 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">Nội dung phản ánh kiến nghị:</p>
+							<div class="tt-v1 d-flex justify-content-between">
+								<p class="h4 font-italic font-weight-bold">Nội dung phản ánh kiến nghị:</p>
+
+								<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date: 'dd/MM/yyyy'}}</span>
+							</div>
 							<p style="text-align:justify; text-justify:inter-word" innerHTML="{{model.content | Change}}">
 							</p>
-
 							<span class="text-left">
 								<small class="small" *ngIf="lstFiles && lstFiles.length > 0">Tài liệu đính kèm</small><br>
 								<div *ngFor="let file of lstFiles" cursor="pointer">
