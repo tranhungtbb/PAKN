@@ -3,10 +3,19 @@
 <category>
 		<pattern>*</pattern>
 		<template>
-					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không
+					Anh/chị cần <set name = "topic">hỗ trợ</set> gì?
+				</template>
+	</category>
+	<topic name = "hỗ trợ">
+     <category>
+		<pattern>*</pattern>
+		<template>
+					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không  <set name = "topic"></set>
 					<pakn>json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Sai","image":"","hiddenAnswer":"m45fe4a-d402-451c-b9ed-9c1a04247482"}]}</pakn>
 				</template>
 	</category>
+      
+   </topic>
 	<category>
 		<pattern>x245fe4a-d402-451c-b9ed-9c1a04247482</pattern>
 				<template>

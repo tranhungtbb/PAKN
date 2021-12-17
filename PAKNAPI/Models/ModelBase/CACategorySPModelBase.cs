@@ -409,6 +409,30 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 	}
 
+	public class CAFieldGetAllIconPath
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldGetAllIconPath(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldGetAllIconPath()
+		{
+
+		}
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string IconPath { get; set; }
+
+		public async Task<List<CAFieldGetAllIconPath>> CAFieldGetAllIconPathDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetAllIconPath>("IconCAField", DP)).ToList();
+		}
+	}
+
 	public class CAFieldGetAllOnPage
 	{
 		private SQLCon _sQLCon;
