@@ -300,11 +300,7 @@ export class AppheaderComponent implements OnInit {
 		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) {
 			// PAKN
 			this.updateIsReadNotification(dataId)
-			if (typeSend == 13) {
-				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
-			} else {
-				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
-			}
+			this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
 		} else if (type == TYPE_NOTIFICATION.INVITATION) {
 			// Thư mời
 			this.updateIsReadNotification(dataId)

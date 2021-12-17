@@ -178,7 +178,21 @@ namespace PAKNAPI.Controller
             {
                 var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id,userProcessId,unitProcessId) };
+                // check đơn vị có được gửi phối hợp hay không
+                var check = await new SYUnit(_appSetting).SYUnitCheckCombine(Id, unitProcessId);
+                if (check > 0)
+                {
+                    return new ResultApi {
+                        Success = ResultCode.OK,
+                        Result = await new RecommendationDAO(_appSetting).RecommendationCombineGetByIDView(Id, userProcessId, unitProcessId)
+                    };
+                }
+                else {
+                    return new ResultApi { 
+                        Success = ResultCode.OK, 
+                        Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id, userProcessId, unitProcessId) 
+                    };
+                }
             }
             catch (Exception ex)
             {
@@ -188,24 +202,24 @@ namespace PAKNAPI.Controller
             }
         }
 
-        [HttpGet]
-        [Authorize("ThePolicy")]
-        [Route("get-detail-mr-combine-by-id")]
-        public async Task<ActionResult<object>> RecommendationCombineGetByIDView(int? Id)
-        {
-            try
-            {
-                var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationCombineGetByIDView(Id, userProcessId, unitProcessId) };
-            }
-            catch (Exception ex)
-            {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+        //[HttpGet]
+        //[Authorize("ThePolicy")]
+        //[Route("get-detail-mr-combine-by-id")]
+        //public async Task<ActionResult<object>> RecommendationCombineGetByIDView(int? Id)
+        //{
+        //    try
+        //    {
+        //        var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+        //        var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+        //        return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationCombineGetByIDView(Id, userProcessId, unitProcessId) };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
 
         [HttpGet]
         [Authorize("ThePolicy")]
@@ -1088,11 +1102,11 @@ namespace PAKNAPI.Controller
                     .MRRecommendationForwardUpdateStatusCombineDAO((int)request.ProcessId, request.RecommendationCombination.RecommendationId, STEP_RECOMMENDATION.PROCESS, PROCESS_STATUS_RECOMMENDATION.APPROVED, DateTime.Now);
 
 
-
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = (int)request.RecommendationCombination.RecommendationId;
                 hisData.Type = 1;
-                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(string.Join(", ", request.ListUnit))).FirstOrDefault().Name;
+                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(string.Join(", ", request.ListUnit))).FirstOrDefault().Name + " <br/ > " +
+                        "Với nội dung: " + request.RecommendationCombination.Content;
                 hisData.Status = STATUS_RECOMMENDATION.COMBINE;
                 hisData.CreatedBy = request.RecommendationCombination.UserSendId;
                 hisData.CreatedDate = DateTime.Now;
@@ -1157,6 +1171,27 @@ namespace PAKNAPI.Controller
             {
                 long UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 int UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+
+                // check don vi xem co phai duoc gui den tham muu hay khong
+                var check = await new SYUnit(_appSetting).SYUnitCheckCombine(request._mRRecommendationForwardProcessIN.RecommendationId, UnitSendId);
+                if (check > 0) {
+
+                    var rRecommendationCombinationUpdate = new MRRecommendationCombinationUpdate();
+                    rRecommendationCombinationUpdate.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
+                    rRecommendationCombinationUpdate.UnitReceiveId = UnitSendId;
+                    rRecommendationCombinationUpdate.ReceiveId = UserSendId;
+                    rRecommendationCombinationUpdate.Status = request.RecommendationStatus;
+                    rRecommendationCombinationUpdate.ReasonDeny = request._mRRecommendationForwardProcessIN.ReasonDeny;
+                    rRecommendationCombinationUpdate.ProcessingDate = DateTime.Now;
+                    if (request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY) {
+                        rRecommendationCombinationUpdate.DenyId = UserSendId;
+                    }
+                    
+
+                    await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationUpdateDAO(rRecommendationCombinationUpdate);
+                    return new ResultApi { Success = ResultCode.OK };
+                }
+
                 request._mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
                 request._mRRecommendationForwardProcessIN.UserId = UserSendId;
                 if (request.IsForwardUnitChild == true)
@@ -1418,6 +1453,17 @@ namespace PAKNAPI.Controller
                 request.DataConclusion.UserCreatedId = UserId;
                 request.DataConclusion.UnitCreatedId = UnitId;
                 int? IdConclusion = Int32.Parse((await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionCombineInsertDAO(request.DataConclusion)).ToString());
+
+                var rRecommendationCombinationUpdate = new MRRecommendationCombinationUpdate();
+                rRecommendationCombinationUpdate.RecommendationId = request.DataConclusion.RecommendationId;
+                rRecommendationCombinationUpdate.UnitReceiveId = UnitId;
+                rRecommendationCombinationUpdate.ReceiveId = request.DataConclusion.ReceiverId;
+                //rRecommendationCombinationUpdate.DenyId = ;
+                rRecommendationCombinationUpdate.Status = STATUS_RECOMMENDATION.APPROVE_WAIT;
+                rRecommendationCombinationUpdate.ReasonDeny = string.Empty;
+                rRecommendationCombinationUpdate.ProcessingDate = DateTime.Now;
+
+                await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationUpdateDAO(rRecommendationCombinationUpdate);
 
                 if (request.Files != null && request.Files.Count > 0)
                 {
