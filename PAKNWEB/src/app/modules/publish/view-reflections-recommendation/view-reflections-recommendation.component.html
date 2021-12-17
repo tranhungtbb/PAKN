@@ -253,7 +253,8 @@
 								</span>
 
 							</div>
-							<div class="row d-flex justify-content-end ml-0" *ngIf="model && model.status == 10">
+							<div class="row d-flex justify-content-end ml-0" style="margin-top:15px;"
+								*ngIf="model && model.status == 10">
 								<div class="col col-lg-4 col-md-4 col-sm-12 pl-0 pr-10">
 									<button type="button" class="btn btn-outline-success mr-3" style="width: inherit;"
 										(click)="changeSatisfaction(1)" [ngClass]="{ 'like': model.quantityType == 1 }">
