@@ -104,7 +104,7 @@
 						</div>
 						<div class="media-body">
 							<p class="h4 font-weight-bold">Nội dung kiến nghị:</p>
-							<p [innerHTML]="model.content"></p>
+							<p [innerHTML]="model.content | Change"></p>
 							<p *ngIf="filesModel.length && filesModel.length > 0">
 								<span class="text-left">
 									<small class="small">Tài liệu đính kèm</small><br>
@@ -199,8 +199,13 @@
 						<ng-container *ngFor="let item of conclusionCombine">
 							<div class="media pb-4 mb-1 box-message-publish">
 								<div class="mr-3">
-									<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
-										class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
+									<svg *ngIf="![6].includes(item.status)" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+										fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
+										<path
+											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+									</svg>
+									<svg *ngIf="[6].includes(item.status)" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+										fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #DA2222;" viewBox="0 0 16 16">
 										<path
 											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 									</svg>
@@ -212,17 +217,17 @@
 											<p class="h4 font-italic font-weight-bold">{{item.unitName}}:</p>
 										</div>
 									</div>
-									<ng-container *ngIf="[5,7].includes(item.status)">
+									<ng-container *ngIf="[5].includes(item.status)">
 										<p class="cl-red">Chưa xử lý</p>
 									</ng-container>
-									<ng-container *ngIf="[8,9].includes(item.status)">
+									<ng-container *ngIf="[7,8,9].includes(item.status)">
 										<p>Đang xử lý</p>
 									</ng-container>
 									<ng-container *ngIf="item.status == 6">
-										<p class="cl-red">{{item.conclusionCombineContentDeny}}</p>
+										<p class="cl-red" [innerHTML]="item.conclusionCombineContentDeny | Change"></p>
 									</ng-container>
 									<ng-container *ngIf="item.status == 10">
-										<p>{{item.conclusionCombineContent}}</p>
+										<p [innerHTML]="item.conclusionCombineContent | Change"></p>
 										<p *ngIf="item.filesConclusion && item.filesConclusion.length > 0">
 											<span class="text-left">
 												<small class="small">Tài liệu đính kèm</small><br>
@@ -345,7 +350,7 @@
 							</div>
 
 							<ng-container *ngIf="model.status==6">
-								<p *ngIf="denyContent">{{denyContent.content}}</p>
+								<p *ngIf="denyContent" [innerHTML]="denyContent.content | Change"></p>
 							</ng-container>
 
 							<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">
@@ -499,7 +504,7 @@
 							</ng-container>
 							<!-- (model.status != 9 || model.userActive != userLoginId) -->
 							<ng-container *ngIf="model.status > 7 && !(model.status == 8 && model.userActive == userLoginId)">
-								<p>{{modelConclusion.content}}</p>
+								<p [innerHTML]="modelConclusion.content | Change"></p>
 								<p *ngIf="files">
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>

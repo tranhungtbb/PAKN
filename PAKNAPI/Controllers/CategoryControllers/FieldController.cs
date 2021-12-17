@@ -170,7 +170,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <summary>
 		/// thêm mới lĩnh vực
 		/// </summary>
-		/// <param name="_cAFieldInsertIN"></param>
 		/// <returns></returns>
 
 		[HttpPost]
