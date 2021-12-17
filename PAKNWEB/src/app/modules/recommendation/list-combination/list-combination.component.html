@@ -122,7 +122,7 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet-pakn-phoi-hop/',item.id]" class="ellipsis"
+										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis"
 												title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
 									<td><a class="ellipsis">{{item.name}}</a></td>
@@ -132,23 +132,31 @@
 									<td>{{item.unitName}}</td>
 									<td>{{item.fieldName}}</td>
 									<td>
-										<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Chờ giải quyết</span>
-										<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Đã giải quyết</span>
-
+										<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải
+											quyết</span>
+										<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải
+											quyết</span>
+										<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
+										<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê
+											duyệt</span>
+										<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
+										<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<span *ngIf="item.status == 4 && item.createdBy == userLoginId">
-												<a *hasPermission="['3', 'E_I_1']" [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]"
-													class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i
-														class="bi bi-pencil-square"></i></a>
-											</span>
+											<a *ngIf="item.status == 5" class="btn-icon grd-xanhngoc2 text-white mr-2"
+												(click)="preProcess(item,2)" title="Tiếp nhận giải quyết">
+												<i class="bi bi-file-earmark-check"></i></a>
 
-											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc2 text-white mr-2"
-												title="Tiếp nhận xử lý"><i class="bi bi-file-earmark-check"></i></a>
-											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal"
-												data-target="#modal-tc-pakn" title="Từ chối tiếp nhận"><i
-													class="bi bi-file-earmark-break"></i></a>
+											<!-- <a *ngIf="item.status == 8" class="btn-icon grd-xanhngoc2 text-white mr-2"
+												(click)="preProcess(item,2)" title="Phê duyệt">
+												<i class="bi bi-file-earmark-check"></i></a> -->
+											<a *ngIf="item.status == 5" class="btn-icon grd-red text-white mr-2" (click)="preProcess(item,3)"
+												title="Từ chối giải quyết">
+												<i class="bi bi-file-earmark-break"></i></a>
+											<!-- <a *ngIf="item.status == 8" class="btn-icon grd-red text-white mr-2" (click)="preProcess(item,3)"
+												title="Từ chối phê duyệt">
+												<i class="bi bi-file-earmark-break"></i></a> -->
 											<app-history-recommendation [recommendationId]="item.id"></app-history-recommendation>
 										</div>
 									</td>
@@ -165,5 +173,48 @@
 			</div>
 		</div>
 	</div>
+</div>
 
+<div class="modal fade" id="modalAccept">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					{{titleAccept}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onProcessAccept()">Xác
+					nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalReject">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối tham mưu <strong>Phản ánh, kiến nghị</strong> này?</p>
+				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do..."
+					[(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
+
+			</div>
+			<div class="modal-footer justify-content-center border-top-0">
+				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger grd-red" (click)="onProcessDeny()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
 </div>

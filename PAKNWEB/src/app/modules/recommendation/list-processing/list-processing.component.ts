@@ -258,7 +258,7 @@ export class ListProcessingComponent implements OnInit {
 			return
 		}
 		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
-		this.modelForward.status = RECOMMENDATION_STATUS.PROCESSING
+		this.modelForward.status = RECOMMENDATION_STATUS.PROCESS_WAIT
 
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
 		let requestCombine = {
