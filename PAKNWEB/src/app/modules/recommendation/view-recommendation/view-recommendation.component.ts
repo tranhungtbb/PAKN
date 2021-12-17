@@ -121,7 +121,6 @@ export class ViewRecommendationComponent implements OnInit {
 		this.getAllInfomationExchange(1)
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				debugger
 				this.isUnitCombine = response.result.isUnitCombine
 				this.model = response.result.model
 				this.conclusionCombine = response.result.conclusionCombine

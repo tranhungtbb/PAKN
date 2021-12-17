@@ -549,7 +549,6 @@ namespace PAKNAPI.ModelBase
 		public async Task<decimal?> MRRecommendationConclusionCombineInsertDAO(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP = new DynamicParameters();
 			DP.Add("RecommendationId", _mRRecommendationConclusionInsertIN.RecommendationId);
 			DP.Add("UserCreatedId", _mRRecommendationConclusionInsertIN.UserCreatedId);
 			DP.Add("UnitCreatedId", _mRRecommendationConclusionInsertIN.UnitCreatedId);
@@ -2235,7 +2234,8 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Status", _mRRecommendationCombinationInsertIN.Status);
 			DP.Add("RecommendationId", _mRRecommendationCombinationInsertIN.RecommendationId);
-			DP.Add("ReceiveId", _mRRecommendationCombinationInsertIN.RecommendationId);
+			DP.Add("ReceiveId", _mRRecommendationCombinationInsertIN.ReceiveId);
+			DP.Add("DenyId", _mRRecommendationCombinationInsertIN.DenyId);
 			DP.Add("UnitReceiveId", _mRRecommendationCombinationInsertIN.UnitReceiveId);
 			DP.Add("ReasonDeny", _mRRecommendationCombinationInsertIN.ReasonDeny);
 			DP.Add("ProcessingDate", _mRRecommendationCombinationInsertIN.ProcessingDate);
@@ -2264,6 +2264,7 @@ namespace PAKNAPI.ModelBase
 		public long? RecommendationId { get; set; }
 		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
+		public long? DenyId { get; set; }
 		public string Content { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? ProcessingDate { get; set; }

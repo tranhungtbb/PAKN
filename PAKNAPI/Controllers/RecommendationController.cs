@@ -1102,11 +1102,11 @@ namespace PAKNAPI.Controller
                     .MRRecommendationForwardUpdateStatusCombineDAO((int)request.ProcessId, request.RecommendationCombination.RecommendationId, STEP_RECOMMENDATION.PROCESS, PROCESS_STATUS_RECOMMENDATION.APPROVED, DateTime.Now);
 
 
-
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = (int)request.RecommendationCombination.RecommendationId;
                 hisData.Type = 1;
-                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(string.Join(", ", request.ListUnit))).FirstOrDefault().Name;
+                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByListIdDAO(string.Join(", ", request.ListUnit))).FirstOrDefault().Name + " <br/ > " +
+                        "Với nội dung: " + request.RecommendationCombination.Content;
                 hisData.Status = STATUS_RECOMMENDATION.COMBINE;
                 hisData.CreatedBy = request.RecommendationCombination.UserSendId;
                 hisData.CreatedDate = DateTime.Now;
@@ -1183,7 +1183,11 @@ namespace PAKNAPI.Controller
                     rRecommendationCombinationUpdate.Status = request.RecommendationStatus;
                     rRecommendationCombinationUpdate.ReasonDeny = request._mRRecommendationForwardProcessIN.ReasonDeny;
                     rRecommendationCombinationUpdate.ProcessingDate = DateTime.Now;
+                    if (request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY) {
+                        rRecommendationCombinationUpdate.DenyId = UserSendId;
+                    }
                     
+
                     await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationUpdateDAO(rRecommendationCombinationUpdate);
                     return new ResultApi { Success = ResultCode.OK };
                 }
@@ -1453,7 +1457,8 @@ namespace PAKNAPI.Controller
                 var rRecommendationCombinationUpdate = new MRRecommendationCombinationUpdate();
                 rRecommendationCombinationUpdate.RecommendationId = request.DataConclusion.RecommendationId;
                 rRecommendationCombinationUpdate.UnitReceiveId = UnitId;
-                rRecommendationCombinationUpdate.ReceiveId = UserId;
+                rRecommendationCombinationUpdate.ReceiveId = request.DataConclusion.ReceiverId;
+                //rRecommendationCombinationUpdate.DenyId = ;
                 rRecommendationCombinationUpdate.Status = STATUS_RECOMMENDATION.APPROVE_WAIT;
                 rRecommendationCombinationUpdate.ReasonDeny = string.Empty;
                 rRecommendationCombinationUpdate.ProcessingDate = DateTime.Now;
