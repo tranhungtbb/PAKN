@@ -88,30 +88,30 @@
 						</div>
 					</div>
 					<!-- <div class="col-12 col-lg-6 form-group">
-						<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstUnit" bindLabel="text" bindValue="value"
-							notFoundText="Không tìm thấy dữ liệu" placeholder="Chọn..." formControlName="unitId"
-							[(ngModel)]="model.unitId">
-							<ng-template ng-option-tmp let-item="item">
-								<ul>
-									<li>
-										<p class="bg-hover mb-0" *ngIf="item.unitLevel == 1">
-											<strong>{{item.text}}</strong>
-										</p>
-										<p class="bg-hover mb-0" *ngIf="item.unitLevel != 1">{{item.text}}</p>
-										<p *ngIf="item.isMain" class="cl-red" style="font-style: italic;">
-											(Trường hợp không chọn được đơn vị xử lý)
-										</p>
-									</li>
-								</ul>
-							</ng-template>
-						</ng-select>
-						<div *ngIf="(submitted && f.unitId.invalid)" class="has-error">
-							<div *ngIf="f.unitId.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
-							</div>
-						</div>
-					</div> -->
+										<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
+										<ng-select class="form-control" [items]="lstUnit" bindLabel="text" bindValue="value"
+											notFoundText="Không tìm thấy dữ liệu" placeholder="Chọn..." formControlName="unitId"
+											[(ngModel)]="model.unitId">
+											<ng-template ng-option-tmp let-item="item">
+												<ul>
+													<li>
+														<p class="bg-hover mb-0" *ngIf="item.unitLevel == 1">
+															<strong>{{item.text}}</strong>
+														</p>
+														<p class="bg-hover mb-0" *ngIf="item.unitLevel != 1">{{item.text}}</p>
+														<p *ngIf="item.isMain" class="cl-red" style="font-style: italic;">
+															(Trường hợp không chọn được đơn vị xử lý)
+														</p>
+													</li>
+												</ul>
+											</ng-template>
+										</ng-select>
+										<div *ngIf="(submitted && f.unitId.invalid)" class="has-error">
+											<div *ngIf="f.unitId.errors.required">
+												<span class="help-block">Trường dữ liệu này không được để trống</span>
+											</div>
+										</div>
+									</div> -->
 
 					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">cấp cơ quan tiếp nhận<span class="cl-red">(*)</span></div>
@@ -134,7 +134,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 form-group">
+					<div class="col-12 col-lg-6 form-group" *ngIf="!isChooseUnit">
 						<div class="label pl-0 mb-1">cơ quan tiếp nhận <span *ngIf="!isChooseUnit" class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name" placeholder="Chọn..."
 							notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.unitReceive"
@@ -308,26 +308,24 @@
 						</div>
 					</div>
 					<!-- 
-					<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
-						<button type="button" class="btn text-white border-0 grd-xanhngoc justify-content-center"
-							style="width: 100%;" (click)="onSave(1)">Lưu</button>
-					</div>
-
-					<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
-						<button type="button" class="btn text-white border-0 grd-blue justify-content-center" style="width: 100%;"
-							(click)="onSave(2)">
-							<span class="ml-2">Gửi</span>
-						</button>
-					</div> -->
+									<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+										<button type="button" class="btn text-white border-0 grd-xanhngoc justify-content-center"
+											style="width: 100%;" (click)="onSave(1)">Lưu</button>
+									</div>
+				
+									<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+										<button type="button" class="btn text-white border-0 grd-blue justify-content-center" style="width: 100%;"
+											(click)="onSave(2)">
+											<span class="ml-2">Gửi</span>
+										</button>
+									</div> -->
 
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-end align-items-center"
 						style="margin-top: 22px;">
-						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 col-6 col-xs-4 col-sm-4"
-							(click)="onSave(1)" style="text-align:center; vertical-align:middle; display:table-cell;">Lưu</button>
-						<button type="button" class="btn text-white border-0 grd-blue px-5 pr-0 col-6 col-xs-4 col-sm-4"
-							style="margin-left:5px; text-align:center; vertical-align:middle; display:table-cell;"
-							(click)="onSave(2)">
-							Gửi
+						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 mr-3"
+							(click)="onSave(1)">Lưu</button>
+						<button type="button" class="btn text-white border-0 grd-blue px-5 pr-0" (click)="onSave(2)">
+							<span class="ml-2">Gửi</span>
 						</button>
 					</div>
 				</form>
