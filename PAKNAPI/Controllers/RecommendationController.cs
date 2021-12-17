@@ -23,6 +23,7 @@ using PAKNAPI.Models.Remind;
 using System.Threading;
 using static PAKNAPI.Common.FakeImageDetection;
 using System.Text;
+using PAKNAPI.Services;
 
 namespace PAKNAPI.Controller
 {
@@ -201,25 +202,7 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
-        //[HttpGet]
-        //[Authorize("ThePolicy")]
-        //[Route("get-detail-mr-combine-by-id")]
-        //public async Task<ActionResult<object>> RecommendationCombineGetByIDView(int? Id)
-        //{
-        //    try
-        //    {
-        //        var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-        //        var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-        //        return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationCombineGetByIDView(Id, userProcessId, unitProcessId) };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
-
-        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-        //    }
-        //}
+      
 
         [HttpGet]
         [Authorize("ThePolicy")]
@@ -1112,42 +1095,9 @@ namespace PAKNAPI.Controller
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 
+                // notificationpi
 
-                var mr = (await new MRRecommendationGetByID(_appSetting).MRRecommendationGetByIDDAO((int)request.RecommendationCombination.RecommendationId)).FirstOrDefault();
-                var lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId((int)request.RecommendationCombination.RecommendationId)).ToList();
-                var unitReceive = lstRMForward.Where(x => x.Status == 2).FirstOrDefault();//
-                var unitMain = (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))).FirstOrDefault().Name;
-                if (unitReceive != null)
-                {
-                    SYNotificationModel notification = new SYNotificationModel();
-                    notification.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                    notification.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                    notification.DataId = (int)request.RecommendationCombination.RecommendationId;
-                    notification.SendDate = DateTime.Now;
-                    notification.Type = TYPENOTIFICATION.RECOMMENDATION;
-                    notification.TypeSend = STATUS_RECOMMENDATION.COMBINE;
-                    notification.IsViewed = true;
-                    notification.IsReaded = true;
-                    var tasks = new List<Task>();
-
-                    foreach (var unit in request.ListUnit)
-                    {
-                        List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unit);
-                        var unitName = (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(unit)).FirstOrDefault().Name;
-                        foreach (var item in lstUser)
-                        {
-                            notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId ?? 0;
-                            notification.Title = "PAKN ĐƯỢC YÊU CẦU THAM MƯU";
-                            notification.SendOrgId = 0;
-                            notification.Content = "PAKN số " + mr.Code + " từ " + unitMain + " được yêu cầu tham mưu giải quyết";
-                            // insert notification
-                            tasks.Add(new SYNotification(_appSetting, _configuration).InsertNotification(notification));
-                        }
-                    }
-                    
-                    Task.WaitAll(tasks.ToArray());
-                }
+                await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForCombine((int)request.RecommendationCombination.RecommendationId, request.ListUnit);
 
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new ResultApi { Success = ResultCode.OK };
@@ -1186,9 +1136,11 @@ namespace PAKNAPI.Controller
                     if (request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY) {
                         rRecommendationCombinationUpdate.DenyId = UserSendId;
                     }
-                    
-
                     await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationUpdateDAO(rRecommendationCombinationUpdate);
+
+                    // insert notification
+                    await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForCombineProcess(request._mRRecommendationForwardProcessIN.RecommendationId,request.RecommendationStatus);
+
                     return new ResultApi { Success = ResultCode.OK };
                 }
 
@@ -1488,36 +1440,10 @@ namespace PAKNAPI.Controller
                         await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(file);
                     }
                 }
-                var mr = (await new MRRecommendationGetByID(_appSetting).MRRecommendationGetByIDDAO(request.DataConclusion.RecommendationId)).FirstOrDefault();
-                var lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(request.DataConclusion.RecommendationId)).ToList();
-                var unitReceive = lstRMForward.Where(x => x.Status == 2).FirstOrDefault();// 
-                if (unitReceive != null) {
-                    SYNotificationModel notification = new SYNotificationModel();
-                    notification.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                    notification.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                    notification.DataId = request.DataConclusion.RecommendationId;
-                    notification.SendDate = DateTime.Now;
-                    notification.Type = TYPENOTIFICATION.RECOMMENDATION;
-                    notification.TypeSend = mr.Status;
-                    notification.IsViewed = true;
-                    notification.IsReaded = true;
-                    var tasks = new List<Task>();
-                    List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceive.UnitReceiveId);
-                    var unitName = (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(request.DataConclusion.UnitCreatedId)).FirstOrDefault().Name;
-                    foreach (var item in lstUser)
-                    {
-
-                        notification.ReceiveId = item.Id;
-                        notification.ReceiveOrgId = item.UnitId ?? 0;
-                        notification.Title = "PAKN ĐÃ THAM MƯU";
-                        notification.SendOrgId = 0;
-                        notification.Content = "PAKN số " + mr.Code + " đã được " + unitName + " tham mưu giải quyết";
-                        // insert notification
-                        tasks.Add(new SYNotification(_appSetting, _configuration).InsertNotification(notification));
-                    }
-                    Task.WaitAll(tasks.ToArray());
+                if (rRecommendationCombinationUpdate.ReceiveId != UserId) {
+                    await new Notification(_appSetting, HttpContext,_configuration).NotificationInsertForCombineApprove(request.DataConclusion.RecommendationId, rRecommendationCombinationUpdate.ReceiveId);
                 }
-
+                
 
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new ResultApi { Success = ResultCode.OK };

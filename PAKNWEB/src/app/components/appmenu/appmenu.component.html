@@ -80,6 +80,8 @@
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/tham-muu-don-vi">Phối hợp xử lý</a></li>
+							<span *ngIf="statistic" class="text-danger">({{statistic.combine}})</span>
+
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết <span *ngIf="statistic"
@@ -108,11 +110,6 @@
 
 					</ng-container>
 					<ng-container *ngIf="isApprove">
-						<ng-container *ngIf="!isMainMenu">
-							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-									routerLink="/quan-tri/kien-nghi/tham-muu-don-vi">Phối hợp xử lý</a></li>
-						</ng-container>
-
 						<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 								routerLink="/quan-tri/kien-nghi/cho-phe-duyet">Cần phê duyệt <span *ngIf="statistic"
 									class="text-danger">({{statistic.approveWait}})</span></a></li>

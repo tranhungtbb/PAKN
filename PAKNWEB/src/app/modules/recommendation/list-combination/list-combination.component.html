@@ -111,6 +111,12 @@
 											<strong>Trạng thái</strong>
 
 										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
+												bindValue="value" notFoundText="Không có dữ liệu" [(ngModel)]="status" [closeOnSelect]="true"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
 									</th>
 									<th style="width: 100px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao

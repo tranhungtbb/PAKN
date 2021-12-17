@@ -27,16 +27,10 @@ export class ListCombinationComponent implements OnInit {
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
-		{ value: 2, text: 'Chờ xử lý' },
-		{ value: 3, text: 'Từ chối xử lý' },
-		{ value: 4, text: 'Đã tiếp nhận' },
 		{ value: 5, text: 'Chờ giải quyết' },
-		{ value: 6, text: 'Từ chối giải quyết' },
-		{ value: 7, text: 'Đang giải quyết' },
-		{ value: 8, text: 'Chờ phê duyệt' },
-		{ value: 9, text: 'Từ chối phê duyệt' },
-		{ value: 10, text: 'Đã giải quyết' },
+		{ value: 6, text: 'Từ chối giải quyết' }
 	]
+	status: number
 	lstUnit: any = []
 	lstField: any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
@@ -85,7 +79,7 @@ export class ListCombinationComponent implements OnInit {
 			Content: this.dataSearch.content,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			Status: this.status != null ? this.status : '',
 			UnitProcessId: this.storeageService.getUnitId(),
 			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
