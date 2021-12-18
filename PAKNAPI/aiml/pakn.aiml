@@ -46,7 +46,7 @@
 			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
 			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
 			<pakn>
-				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Phản ánh kiến nghị","image":"","link":""}]}
+				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":""}]}
 			</pakn>
 		</template>
 	</category>
@@ -58,7 +58,7 @@
 			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
 			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
 			<pakn>
-				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""}]}
+				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":""}]}
 			</pakn>
 		</template>
 	</category>
@@ -71,14 +71,14 @@
 	</category>
 
 	<category>
-		<pattern>phản ánh *</pattern>
+		<pattern>gửi phản ánh *</pattern>
 		<template>
 			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
 			<pakn>json{"type":"form","data":[{"title":"","image":"","link":"https://pakn.ziz.vn:6160/cong-bo/them-moi-kien-nghi"}]}</pakn>
 		</template>
 	</category>
 	<category>
-		<pattern>Phản ánh *</pattern>
+		<pattern>Gửi phản ánh *</pattern>
 		<template>
 			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
 			<pakn>json{"type":"form","data":[{"title":"","image":"","link":"https://pakn.ziz.vn:6160/cong-bo/them-moi-kien-nghi"}]}</pakn>
@@ -126,7 +126,15 @@
 	</category>
 
 
-
+<category>
+		<pattern>Dịch vụ công trực tuyến</pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":Tra cứu tiến độ giải quyết hồ sơ","image":""},{"title":"Nộp hồ sơ thủ tục hành chính","image":"","link":""}]}
+			</pakn>
+		</template>
+	</category>
 	<category>
 		<pattern>  Tra cứu hồ sơ * </pattern>
 		<template>
