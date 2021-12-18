@@ -485,6 +485,10 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		$('#modalMaps').modal('show')
 	}
 
+	closeMap() {
+		$('#modalMaps').modal('hide')
+	}
+
 	async onSaveMaps() {
 		if (this.markers == null || this.markers.lat == null) {
 			return this.toastr.error('Vui lòng chọn vị trí')

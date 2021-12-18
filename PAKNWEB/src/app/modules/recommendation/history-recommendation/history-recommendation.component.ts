@@ -27,8 +27,10 @@ export class HistoryRecommendationComponent implements OnInit {
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
 	}
+	checkShow: boolean = false
 
 	getHistories() {
+		this.checkShow = true
 		let request = {
 			Id: this.recommendationId
 		}

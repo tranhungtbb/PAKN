@@ -87,14 +87,13 @@
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
 
-									<span style="margin-left:15px;" *ngFor="let file of lstFiles" class="pointer">
-										<span>
+									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 
+									<!-- <span style="margin-left:15px;" *ngFor="let file of lstFiles" class="pointer">
+										<span>
 											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
 												style="color: #333; width:auto;">
 												<i class="bi bi-download"></i>
-												<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-												file.name}} -->
 											</a>
 											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
 												style="color: #333; width:auto;">
@@ -123,7 +122,7 @@
 											</a>
 
 										</span>
-									</span>
+									</span> -->
 
 								</div>
 							</span>
@@ -175,14 +174,11 @@
 								{{model.contentConclusion != null ? model.contentConclusion : ''}}
 							</p>
 							<div *ngFor="let file of lstConclusionFiles; let i = index" cursor="pointer">
-								<!-- file-att -->
 								<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
 										alt="">
 									<span class="small text-truncate">{{file.name}}</span>
-									<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-										file.name}} -->
 								</a>
 								<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
 									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -213,15 +209,15 @@
 										alt="">
 									<span class="small text-truncate">{{file.name}}</span>
 								</a>
+								<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 
-								<span style="margin-left:15px;" *ngFor="let file of lstConclusionFiles; let i = index" class="pointer">
+
+								<!-- <span style="margin-left:15px;" *ngFor="let file of lstConclusionFiles; let i = index" class="pointer">
 									<span>
 
 										<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
 											style="color: #333; width:auto;">
 											<i class="bi bi-download"></i>
-											<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}} -->
 										</a>
 										<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
 											style="color: #333; width:auto;">
@@ -250,7 +246,7 @@
 										</a>
 
 									</span>
-								</span>
+								</span> -->
 
 							</div>
 							<div class="row d-flex justify-content-end ml-0" style="margin-top:15px;"

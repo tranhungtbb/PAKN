@@ -53,7 +53,7 @@
 
 							<span class="text-left">
 								<small class="small" *ngIf="filesModel && filesModel.length > 0">Tài liệu đính kèm</small><br>
-							<div *ngFor="let file of filesModel" cursor="pointer">
+								<div *ngFor="let file of filesModel" cursor="pointer">
 									<!-- file-att -->
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -94,14 +94,12 @@
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
 
-									<span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
+									<!-- <span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
 										<span>
 
 											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
 												style="color: #333; width:auto;">
 												<i class="bi bi-download"></i>
-												<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-												file.name}} -->
 											</a>
 											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
 												style="color: #333; width:auto;">
@@ -130,7 +128,9 @@
 											</a>
 
 										</span>
-									</span>
+									</span> -->
+
+									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 
 								</div>
 							</span>
@@ -173,8 +173,6 @@
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
 											alt="">
 										<span class="small text-truncate">{{file.name}}</span>
-										<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}} -->
 									</a>
 									<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -206,15 +204,14 @@
 											style="width: 30px;padding-right: 5px;" alt="">
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
+									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 
-									<span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
+									<!-- <span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
 										<span>
 
 											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
 												style="color: #333; width:auto;">
 												<i class="bi bi-download"></i>
-												<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-												file.name}} -->
 											</a>
 											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
 												style="color: #333; width:auto;">
@@ -243,7 +240,7 @@
 											</a>
 
 										</span>
-									</span>
+									</span> -->
 
 								</div>
 							</ng-container>
