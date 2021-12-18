@@ -158,7 +158,7 @@
 											</a>
 
 											<a (click)="preForward(item, true)" class="btn-icon grd-blue text-white mr-2"
-												title="Chuyển tham mưu">
+												title="Chuyển phối hợp">
 												<img src="../../../../assets/dist/images/svg/btn-btn-combine.svg">
 											</a>
 											<app-history-recommendation [recommendationId]="item.id"></app-history-recommendation>
@@ -207,7 +207,8 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">{{isForwardMultiUnit == false ? 'Gửi đơn vị giải quyết' : 'Gửi đơn vị tham mưu'}}</p>
+				<p class="modal-title h4">{{isForwardMultiUnit == false ? 'Gửi đơn vị giải quyết' : 'Gửi đơn vị phối hợp'}}
+				</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
@@ -215,7 +216,7 @@
 				<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
-							<label class="mb-1">{{isForwardMultiUnit == false ? 'Đơn vị giải quyết' : 'Đơn vị tham mưu'}} <span
+							<label class="mb-1">{{isForwardMultiUnit == false ? 'Đơn vị giải quyết' : 'Đơn vị phối hợp'}} <span
 									class="cl-red">(*)</span></label>
 							<ng-select class="form-control" [items]="lstUnitNotMain" bindLabel="text" bindValue="value"
 								notFoundText="Không có dữ liệu" formControlName="unitReceiveId" [(ngModel)]="modelForward.unitReceiveId"

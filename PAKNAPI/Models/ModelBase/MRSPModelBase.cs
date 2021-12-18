@@ -549,6 +549,7 @@ namespace PAKNAPI.ModelBase
 		public async Task<decimal?> MRRecommendationConclusionCombineInsertDAO(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationConclusionInsertIN.Id);
 			DP.Add("RecommendationId", _mRRecommendationConclusionInsertIN.RecommendationId);
 			DP.Add("UserCreatedId", _mRRecommendationConclusionInsertIN.UserCreatedId);
 			DP.Add("UnitCreatedId", _mRRecommendationConclusionInsertIN.UnitCreatedId);
@@ -562,6 +563,7 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationConclusionInsertIN
 	{
+		public int? Id { get; set; }
 		public int? RecommendationId { get; set; }
 		public long? UserCreatedId { get; set; }
 		public int? UnitCreatedId { get; set; }

@@ -156,7 +156,7 @@ export class ListCombinationComponent implements OnInit {
 			}, 400)
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
 			if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận tham mưu PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận phối hợp giải quyết PAKN này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt Phản ánh, Kiến nghị này?'

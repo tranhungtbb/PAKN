@@ -19,6 +19,12 @@ namespace PAKNAPI.Models.ModelBase
         public int RowNumber { get; set; }
         public int Status { get; set; }
         public bool? IsForwardProcess { get; set; }
+        public string UnitName { get; set; }
+
+        public string FieldName { get; set; }
+        public string Address { get; set; }
+        public string FilePath { get; set; }
+        public string FieldFilePath { get; set; }
     }
     public class PURecommendation
     {

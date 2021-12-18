@@ -383,84 +383,69 @@
 													</label>
 												</div>
 											</div>
-											<div *ngFor="let file of files" cursor="pointer">
-												<!-- file-att -->
-												<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
-													[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
-													<img src="../../../../assets/dist/images/file-word.svg"
-														style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small text-truncate">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
-													[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
-													<img src="../../../../assets/dist/images/file-excel.svg"
-														style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small text-truncate">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 3" class="pointer" appViewFile [linkfile]="file.filePath"
-													[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
-													<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
-														alt="">
-													<span class="small text-truncate">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 4" class="pointer" appViewFile [linkfile]="file.filePath"
-													[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
-													<img src="../../../../assets/dist/images/file-image.svg"
-														style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small text-truncate">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 6" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
-													title="Xem file" style="color: #333;">
-													<img src="../../../../assets/dist/images/file-powerpoint.svg"
-														style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small text-truncate">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 7" class="pointer" appViewFile [linkfile]="file.filePath"
-													[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
-													<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
-														style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small text-truncate">{{file.name}}</span>
-												</a>
-
-												<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
-
-												<!-- <span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
-													<span>
-
-														<a *ngIf="file.fileType == 1" download href="javascript:void(0)"
-															(click)="DownloadFile(file)" style="color: #333; width:auto;">
-															<i  class="bi bi-download"></i>
+											<ng-container *ngFor="let item of files">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
+														</button>
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
+															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
-														<a *ngIf="file.fileType == 2" download href="javascript:void(0)"
-															(click)="DownloadFile(file)" style="color: #333; width:auto;">
-															<i class="bi bi-download"></i>
-
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
+														</button>
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
+															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
-														<a *ngIf="file.fileType == 3" download href="javascript:void(0)"
-															(click)="DownloadFile(file)" style="color: #333; width:auto;">
-															<i class="bi bi-download"></i>
-
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
+														</button>
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
+															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
-														<a *ngIf="file.fileType == 4" download href="javascript:void(0)"
-															(click)="DownloadFile(file)" style="color: #333; width:auto;">
-															<i class="bi bi-download"></i>
-
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
+														</button>
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
+															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
-														<a *ngIf="file.fileType == 6" download href="javascript:void(0)"
-															(click)="DownloadFile(file)" style="color: #333;">
-															<i class="bi bi-download"></i>
-
+													</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
+														style="width: 170px">
+														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+																	class="mdi mdi-close"></i></span>
+														</button>
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
+															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
-														<a *ngIf="file.fileType == 7" download href="javascript:void(0)"
-															(click)="DownloadFile(file)" style="color: #333; width:auto;">
-															<i class="bi bi-download"></i>
+													</div>
+												</div>
 
-														</a>
-
-													</span>
-												</span> -->
-
-											</div>
+											</ng-container>
 										</div>
 									</div>
 								</div>

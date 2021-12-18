@@ -361,35 +361,6 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 
-
-	async onProcessConclusionAsync() {
-		if (this.modelConclusion.content == '' || this.modelConclusion.content.trim() == '') {
-			this.toastr.error('Vui lòng nhập nội dung')
-			return
-		} else if (this.modelConclusion.receiverId == null) {
-			this.toastr.error('Vui lòng nhập người phê duyệt')
-			return
-		} else {
-			this.modelConclusion.recommendationId = this.model.id
-			var request = {
-				DataConclusion: this.modelConclusion,
-				Hashtags: this.lstHashtagSelected,
-				Files: this.files,
-				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
-				FilesDelete: this.filesDelete
-			}
-			await this.recommendationService.recommendationProcessConclusionCombine(request).toPromise().then((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					// $('#modalReject').modal('hide')
-				} else {
-					this.toastr.error(response.message)
-				}
-			}).catch((err) => {
-				console.log(err)
-			})
-		}
-	}
-
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	formForward: FormGroup
 	lstUnitNotMain: any = []
@@ -510,7 +481,6 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 	async onProcessAccept() {
-
 		if (this.model.status == 8 && this.model.userActive == this.userLoginId) {
 			if (this.modelConclusion.content == '' || this.modelConclusion.content.trim() == '') {
 				this.toastr.error('Vui lòng nhập nội dung')
@@ -525,18 +495,35 @@ export class ViewRecommendationComponent implements OnInit {
 					RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
 					FilesDelete: this.filesDelete
 				}
-				await this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).toPromise().then((response) => {
-					if (response.success == RESPONSE_STATUS.success) {
-					} else {
-						this.toastr.error(response.message)
+				debugger
+				if (this.isUnitCombine) {
+					await this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).toPromise().then((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+						} else {
+							this.toastr.error(response.message)
+							$('#modalAccept').modal('hide')
+							return
+						}
+					}).catch((err) => {
+						console.log(err)
 						$('#modalAccept').modal('hide')
 						return
-					}
-				}).catch((err) => {
-					console.log(err)
-					$('#modalAccept').modal('hide')
-					return
-				})
+					})
+				}
+				else {
+					await this.recommendationService.recommendationProcessConclusion(requestConclusion).toPromise().then((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+						} else {
+							this.toastr.error(response.message)
+							$('#modalAccept').modal('hide')
+							return
+						}
+					}).catch((err) => {
+						console.log(err)
+						$('#modalAccept').modal('hide')
+						return
+					})
+				}
 			}
 		}
 
