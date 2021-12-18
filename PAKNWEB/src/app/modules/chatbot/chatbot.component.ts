@@ -76,6 +76,7 @@ export class DashboardChatBotComponent implements OnInit {
 				//console.log('ngOnInit SignalR BroadcastMessage ', data)
 				this.playSoundWarning();
 				this.fetchRooms()
+
 			})
 		})
 		this.fetchRooms()
@@ -84,7 +85,7 @@ export class DashboardChatBotComponent implements OnInit {
 	playSoundWarning() {
 		try {
 			console.log('playSoundWarning ')
-			this.audio = new Audio()
+			this.audio = new Audio();
 			this.audio.src = '../../../assets/img/ring.mp3'
 			this.audio.load()
 			this.audio.play()
@@ -161,6 +162,7 @@ export class DashboardChatBotComponent implements OnInit {
 
 	sendMessage() {
 		if (this.newMessage !== '') {
+			//	this.playSoundWarning();
 			console.log('sendMessage ', this.roomNameSelected, this.rooms)
 			this.connection.invoke('AdminSendToRoom', this.roomNameSelected, this.newMessage)
 
@@ -171,6 +173,8 @@ export class DashboardChatBotComponent implements OnInit {
 
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
 			this.newMessage = ''
+
+			//	this.audio.stop();
 		}
 	}
 
