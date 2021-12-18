@@ -8,6 +8,7 @@ namespace PAKNAPI.Chat
 {
     public interface IChatHub
     {
+        Task NotifyAdmin(string msg);
         Task BroadcastMessage(Message msg);
         Task ReceiveMessageToGroup(Message msg);
         Task ReceiveRoomToGroup(Room room);

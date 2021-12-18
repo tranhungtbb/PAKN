@@ -74,8 +74,14 @@ export class DashboardChatBotComponent implements OnInit {
 			})
 			this.connection.on('BroadcastMessage', (data: any) => {
 				//console.log('ngOnInit SignalR BroadcastMessage ', data)
-				this.playSoundWarning();
+
 				this.fetchRooms()
+
+			})
+			this.connection.on('NotifyAdmin', (data: any) => {
+				//console.log('ngOnInit SignalR BroadcastMessage ', data)
+
+				this.playSoundWarning()
 
 			})
 		})

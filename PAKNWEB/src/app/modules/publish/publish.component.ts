@@ -133,6 +133,10 @@ export class PublishComponent implements OnInit, OnChanges {
 							if (par.type === 'carousel' || par.type === 'form') {
 								subTags = par.data
 							}
+							if (par.type === 'chat') {
+								console.log('NotifyAdmin ');
+								this.connection.invoke('NotifyAdmin', '')
+							}
 						} catch (error) {
 						}
 					}

@@ -35,6 +35,11 @@ namespace SignalR.Hubs
             await Clients.All.BroadcastMessage(msg);
         }
 
+        public async Task NotifyAdmin(string msg)
+        {
+            await Clients.All.NotifyAdmin(msg);
+        }
+
         public async Task JoinToRoom(string roomName)
         {
             var httpContext = Context.GetHttpContext();
