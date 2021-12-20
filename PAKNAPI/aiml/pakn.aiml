@@ -45,7 +45,7 @@
 		<template>
 		Xin chào anh/chị, mình là trợ lý ảo hỗ trợ giải đáp thông tin phản ánh, kiến nghị tỉnh Khánh Hòa. Anh/chị cần hỗ trợ về vấn đề gì ạ?
 			<pakn>
-				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":"","hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"}]}
+				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":"","hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Covid-19","image":"","link":""}]}
 			</pakn>
 		</template>
 	</category>
@@ -56,7 +56,7 @@
 		<template>
 			Xin chào anh/chị, mình là trợ lý ảo hỗ trợ giải đáp thông tin phản ánh, kiến nghị tỉnh Khánh Hòa. Anh/chị cần hỗ trợ về vấn đề gì ạ?
 			<pakn>
-				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":"","hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"}]}
+				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":"","hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Covid-19","image":"","link":""}]}
 			</pakn>
 		</template>
 	</category>
