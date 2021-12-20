@@ -99,9 +99,13 @@
 								<td>
 									<strong>
 										<a *hasNotPermission="['3', 'A_XI_4']" class="ellipsis text-dark" type="button"
-											title="Xem chi tiết">{{item.question}}</a>
+											title="Xem chi tiết">{{item.question.length > 120? item.question.slice(0,115) + "..." :
+											item.question
+											}}</a>
 										<a *hasPermission="['3', 'A_XI_4']" (click)="preView(item)" class="ellipsis text-dark" type="button"
-											title="Xem chi tiết">{{item.question}}</a>
+											title="Xem chi tiết">{{item.question.length > 120? item.question.slice(0,115) + "..." :
+											item.question
+											}}</a>
 									</strong>
 								</td>
 								<!-- <td>{{item.answer}}</td> -->
@@ -171,7 +175,7 @@
 							<div class="col-sm-8">
 								<label class="control-label">Câu trả lời <span class="text-danger">(*)</span></label>
 								<input id="target" placeholder="Nhập câu trả lời..." svTrim class="form-control"
-									formControlName="question" [(ngModel)]="model.question" maxlength="500" />
+									formControlName="question" [(ngModel)]="model.question" />
 								<div
 									*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
 									class="has-error m-b-12">
