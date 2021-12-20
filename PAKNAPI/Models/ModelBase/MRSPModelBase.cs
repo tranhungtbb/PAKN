@@ -532,10 +532,11 @@ namespace PAKNAPI.ModelBase
 		public async Task<decimal?> MRRecommendationConclusionInsertDAO(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _mRRecommendationConclusionInsertIN.RecommendationId);
-			await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionDelete", DP);
+			//DP.Add("Id", _mRRecommendationConclusionInsertIN.RecommendationId);
+			//await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionDelete", DP);
 
-			DP = new DynamicParameters();
+			//DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationConclusionInsertIN.Id);
 			DP.Add("RecommendationId", _mRRecommendationConclusionInsertIN.RecommendationId);
 			DP.Add("UserCreatedId", _mRRecommendationConclusionInsertIN.UserCreatedId);
 			DP.Add("UnitCreatedId", _mRRecommendationConclusionInsertIN.UnitCreatedId);
@@ -1550,6 +1551,9 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate { get; set; }
 		public string UnitName { get; set; }
 		public string FieldName { get; set; }
+
+		public string FieldFilePath { get; set; }
+
 		public int? UnitActive { get; set; }
 		public long? UserActive { get; set; }
 		public int? IdProcess { get; set; }

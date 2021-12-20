@@ -105,7 +105,7 @@
 						</ul>
 						<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center title-action">
 
-							<span><a routerLink="/dang-ky/ca-nhan">Đăng kí</a></span>
+							<span><a routerLink="/dang-ky/ca-nhan">Đăng ký</a></span>
 							<span class="mx-1" style="color: #337ab7;">|</span>
 							<span><a routerLink="/dang-nhap">Đăng nhập</a></span>
 						</ul>
@@ -297,7 +297,7 @@
 		<div class="copyright py-2" style="background: #CDDEF1">
 			<div class="container">
 				<p class="text-left">
-					<small class="fw600">Trung tâm Công nghệ thống tin và Dịch vụ hành chính công trực tuyến - Sở TTTT tỉnh Khánh
+					<small class="fw600">Trung tâm Công nghệ thông tin và Dịch vụ hành chính công trực tuyến - Sở TTTT tỉnh Khánh
 						Hòa</small>
 				</p>
 			</div>
@@ -305,13 +305,13 @@
 	</div>
 
 
-	<div class="call-now center  pointer">
+	<!-- <div class="call-now center  pointer">
 		<div class="call-content center">
 			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="chat-now pointer" (click)="showHideMessage()">
+	<div class="chat-now pointer" *ngIf="!showChatBot" (click)="showHideMessage()">
 		<div class="d-flex center">
 			<div class="mr-3">
 				<img src="../../../assets/dist/images/chat 1.svg">
@@ -325,16 +325,7 @@
 		</div>
 	</div>
 
-	<div class="message-now center pointer">
-		<!-- <div class="message-content center" (click)="showHideMessage()">
-			<div>
-				<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#fff" class="bi bi-messenger"
-					viewBox="0 0 16 16">
-					<path
-						d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
-				</svg>
-			</div>
-		</div> -->
+	<div class="message-now center pointer" style="width: 0px; height: 0px;">
 		<div class="dropdown-menu dropdown-message" style="display: none;" id="message">
 			<div class="h-100">
 				<div class="row justify-content-center h-100">

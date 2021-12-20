@@ -4,11 +4,14 @@
 			<div class="col-3 d-none d-lg-block sidebar-ct">
 				<div class="media pt-3 mb-3">
 					<div class="avatar-circle bg-light mr-2">
-						<i class="bi bi-person-fill text-dark" style="font-size: 24px"></i>
+						<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']">
+							<i class="bi bi-person-fill text-dark" style="font-size: 24px"></i>
+						</a>
+
 					</div>
 					<div class="media-body">
 						<p class="my-0 font-weight-bolder h4">{{userName}}</p>
-						<p class="mb-0 small">Tài khoản: {{phone}}</p>
+						<p class="mb-0 small">Tên đăng nhập: {{phone}}</p>
 					</div>
 				</div>
 				<ul class="nav nav-qltknd flex-column">

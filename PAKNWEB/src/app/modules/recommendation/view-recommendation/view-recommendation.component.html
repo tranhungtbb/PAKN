@@ -210,10 +210,17 @@
 									</svg>
 								</div>
 								<div class="media-body">
-									<div class="row">
-										<div class="col-md-8">
+									<div>
+										<div class="">
 											<span><i>Cơ quan chức năng tham mưu:</i></span>
-											<p class="h4 font-italic font-weight-bold">{{item.unitName}}:</p>
+											<div class="tt-v1 d-flex justify-content-between">
+												<p class="h4 font-italic font-weight-bold">{{item.unitName}}:</p>
+												<p *ngIf="[10].includes(item.status)" class="mb-0">{{item.processingDate |
+													date : 'HH:mm'}} ngày
+													{{item.processingDate |date :'dd/MM/yyyy'}}
+												</p>
+											</div>
+
 										</div>
 									</div>
 									<ng-container *ngIf="[5].includes(item.status)">

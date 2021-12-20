@@ -316,7 +316,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		return false
 	}
 
+	showChatBot: boolean = false
+
 	showHideMessage() {
+		this.showChatBot = !this.showChatBot
 		var message = document.getElementById('message')
 		if (message) {
 			if (message.classList.contains('show')) {

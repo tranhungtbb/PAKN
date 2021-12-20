@@ -95,6 +95,7 @@ namespace PAKNAPI.Models.Recommendation
         public string ConclusionCombineContent { get; set; }
         public string ConclusionCombineContentDeny { get; set; }
         public int? ConclusionCombineId { get; set; }
+        public DateTime? ProcessingDate { get; set; }
 
         public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
 

@@ -23,7 +23,7 @@
 							</div>
 
 						</div>
-						<span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
+						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
 					</div>
 					<div class="m-3">
 						<span class="pr-5">
@@ -49,7 +49,7 @@
 
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Nội dung phản ánh kiến nghị:</p>
-							<p style="text-align: justify;">{{model.content}}</p>
+							<p innerHTML="{{model.content | Change}}" style="text-align: justify;"></p>
 
 							<span class="text-left">
 								<small class="small" *ngIf="filesModel && filesModel.length > 0">Tài liệu đính kèm</small><br>
@@ -153,19 +153,23 @@
 						</div>
 						<div class="media-body">
 							<div class="tt-v1 d-flex justify-content-between">
-								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold">{{model.unitName}} trả lời:
+								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold max-w-75">{{model.unitName}}
+									trả lời:
 								</p>
-								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold">{{model.processUnitName}} trả
+								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold max-w-75">
+									{{model.processUnitName}} trả
 									lời:</p>
-								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
-								<p *ngIf="[3].includes(model.status)" class="mb-0">{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
+								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate | date:'HH:mm'}} ngày
+									{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
+								<p *ngIf="[3].includes(model.status)" class="mb-0">{{model.denyDate | date:'HH:mm'}} ngày
+									{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
 							</div>
 
 							<ng-container *ngIf="[3,6].includes(model.status)">
-								<p style="text-align: justify;">{{model.reasonDeny}}</p>
+								<p innerHTML="{{model.reasonDeny | Change}}" style="text-align: justify;"></p>
 							</ng-container>
 							<ng-container *ngIf="model.status > 5">
-								<p style="text-align: justify;">{{modelConclusion.content}}</p>
+								<p innerHTML="{{modelConclusion.content | Change}}" style="text-align: justify;"></p>
 								<div *ngFor="let file of filesModel" cursor="pointer">
 									<!-- file-att -->
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
