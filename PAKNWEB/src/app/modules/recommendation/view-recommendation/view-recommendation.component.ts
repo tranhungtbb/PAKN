@@ -418,7 +418,6 @@ export class ViewRecommendationComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
-		debugger
 
 		this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -481,7 +480,53 @@ export class ViewRecommendationComponent implements OnInit {
 			$('#modalAccept').modal('show')
 		}
 	}
-	onProcessAccept() {
+	async onProcessAccept() {
+		if (this.model.status == 8 && this.model.userActive == this.userLoginId) {
+			if (this.modelConclusion.content == '' || this.modelConclusion.content.trim() == '') {
+				this.toastr.error('Vui lòng nhập nội dung')
+				$('#modalAccept').modal('hide')
+				return
+			} else {
+				this.modelConclusion.recommendationId = this.model.id
+				var requestConclusion = {
+					DataConclusion: this.modelConclusion,
+					Hashtags: this.lstHashtagSelected,
+					Files: this.files,
+					RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
+					FilesDelete: this.filesDelete
+				}
+				debugger
+				if (this.isUnitCombine) {
+					await this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).toPromise().then((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+						} else {
+							this.toastr.error(response.message)
+							$('#modalAccept').modal('hide')
+							return
+						}
+					}).catch((err) => {
+						console.log(err)
+						$('#modalAccept').modal('hide')
+						return
+					})
+				}
+				else {
+					await this.recommendationService.recommendationProcessConclusion(requestConclusion).toPromise().then((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+						} else {
+							this.toastr.error(response.message)
+							$('#modalAccept').modal('hide')
+							return
+						}
+					}).catch((err) => {
+						console.log(err)
+						$('#modalAccept').modal('hide')
+						return
+					})
+				}
+			}
+		}
+
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: this.recommendationStatusProcess,

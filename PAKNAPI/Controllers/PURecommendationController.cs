@@ -215,12 +215,20 @@ namespace PAKNAPI.ControllerBase
 				}
 
 				result.Model = await new PURecommendation(_appSetting).PURecommendationGetById(Id, Status, UserId);
+
 				// file đính kèm
 				result.lstFiles = await new MRRecommendationFilesGetByRecommendationId(_appSetting).MRRecommendationFilesGetByRecommendationIdDAO(Id);
 				foreach (var item in result.lstFiles)
 				{
 					item.FilePath = decrypt.EncryptData(item.FilePath);
 				}
+				var file = result.lstFiles.Where(x => x.FileType == 4).FirstOrDefault();
+				if (file != null)
+				{
+					result.Model.FilePath = file.FilePathUrl;
+				}
+				// 
+
 				// nội dung phản hồi
 				result.lstConclusion = (await new MRRecommendationConclusionGetByRecommendationId(_appSetting).MRRecommendationConclusionGetByRecommendationIdDAO(Id)).ToList().FirstOrDefault();
 				// file đính kèm nội dung phản hồi
@@ -365,6 +373,8 @@ namespace PAKNAPI.ControllerBase
 			try
 			{
 				var pURecommendations = await new PURecommendation(_appSetting).PURecommendationProcessing(KeySearch, FieldId, UnitId, PageSize, PageIndex);
+
+
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"RecommendationProcessing", pURecommendations},

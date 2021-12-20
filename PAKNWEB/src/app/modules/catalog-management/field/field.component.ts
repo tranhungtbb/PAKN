@@ -25,7 +25,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		private _shareData: DataService,
 		private _serviceR: RecommendationService,
 		private fileService: UploadFileService
-	) {}
+	) { }
 
 	// child
 
@@ -45,6 +45,8 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	title: string = ''
 	name: string = ''
 	description: string = ''
+	orderNumber: number
+	isShowHome: number
 	filePost: any = null
 	allowImageExtend = ['image/jpeg', 'image/png']
 	@ViewChild('table', { static: false }) table: any
@@ -145,7 +147,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			model: this.model,
 			files: this.filePost
 		}
-		
+
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.fieldInsert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -304,7 +306,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		)
 	}
 
-	onRemoveImg(){
+	onRemoveImg() {
 		this.model.filePath = null;
 	}
 }

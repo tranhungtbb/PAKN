@@ -158,7 +158,7 @@
 											</span>
 
 											<a *ngIf="item.unitReceiveId == unitId" (click)="preProcessCombine(item)"
-												class="btn-icon grd-blue text-white mr-2" title="Chuyển tham mưu">
+												class="btn-icon grd-blue text-white mr-2" title="Chuyển phối hợp">
 												<img src="../../../../assets/dist/images/svg/btn-btn-combine.svg">
 											</a>
 
@@ -239,7 +239,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">Gửi đơn vị tham mưu</p>
+				<p class="modal-title h4">Gửi đơn vị phối hợp</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
@@ -247,9 +247,9 @@
 				<form class="form-horizontal" [formGroup]="formCombine" #formDir="ngForm">
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
-							<label class="mb-1">Đơn vị tham mưu <span class="cl-red">(*)</span></label>
+							<label class="mb-1">Đơn vị phối hợp <span class="cl-red">(*)</span></label>
 							<ng-select class="form-control border-input" [items]="listUnitCombine" bindLabel="name" bindValue="id"
-								notFoundText="Không có dữ liệu" formControlName="unitReceiveId" placeholder="Chọn đơn vị tham mưu"
+								notFoundText="Không có dữ liệu" formControlName="unitReceiveId" placeholder="Chọn đơn vị phối hợp"
 								[(ngModel)]="modelForward.unitReceiveId" multiple="true" hideSelected="true" [closeOnSelect]="true">
 							</ng-select>
 							<div

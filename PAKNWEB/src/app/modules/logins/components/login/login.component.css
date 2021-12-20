@@ -48,4 +48,24 @@ p.info{
 	font-size: 17px;
 	line-height: 23px;
 }
+.left-box{
+	top: 50%;  
+	left: 50%; 
+	transform: translate(-50%, -50%);
+	width:  100%;
+	text-align:  center;
+}
+.title-top, .title-bottom{
+	font-family: Oswald;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 26px;
+	line-height: 27px;
+	text-align: center;
+}
+.title-bottom{
+	font-weight: 500;
+	font-size: 34px;
+	line-height: 60px;
+}
 
