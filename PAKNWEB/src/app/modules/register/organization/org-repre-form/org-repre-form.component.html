@@ -7,10 +7,10 @@
 			*ngIf="(fInfoSubmitted && fInfo.representativeName.invalid)||(fInfo.representativeName.invalid && (fInfo.representativeName.dirty || fInfo.representativeName.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.representativeName.errors.required">
-				<span class="help-block">Trường dữ liệu này không được để trống</span>
+				<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 			</div>
 			<div *ngIf="fInfo.representativeName.errors.maxlength">
-				<span class="help-block">Trường chỉ nhập tối đa 100 ký tự</span>
+				<span class="help-block" style="font-weight: bold;">Trường chỉ nhập tối đa 100 ký tự</span>
 			</div>
 		</div>
 	</div>
@@ -25,15 +25,15 @@
 			*ngIf="(fInfoSubmitted && fInfo.phone.invalid)||(fInfo.phone.invalid && (fInfo.phone.dirty || fInfo.phone.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.phone.errors.required">
-				<span class="help-block">Trường dữ liệu này không được để trống</span>
+				<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 			</div>
 			<div *ngIf="fInfo.phone.errors.pattern">
-				<span class="help-block">Định dạng số điện thoại không đúng</span>
+				<span class="help-block" style="font-weight: bold;">Định dạng số điện thoại không đúng</span>
 			</div>
 		</div>
 		<div *ngIf="checkExists['Phone'] && fInfo.phone.valid" class="has-error m-b-12">
 			<div *ngIf="checkExists['Phone']">
-				<span class="help-block">Số điện thoại đã tồn tại</span>
+				<span class="help-block" style="font-weight: bold;">Số điện thoại đã tồn tại</span>
 			</div>
 		</div>
 	</div>
@@ -45,15 +45,15 @@
 			*ngIf="(fInfoSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.email.errors.required">
-				<span class="help-block">Trường dữ liệu này không được để trống</span>
+				<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 			</div>
 			<div *ngIf="fInfo.email.errors.email">
-				<span class="help-block">Định dạng email không hợp lệ</span>
+				<span class="help-block" style="font-weight: bold;">Định dạng email không hợp lệ</span>
 			</div>
 		</div>
 		<div *ngIf="checkExists['Email'] && fInfo.email.valid" class="has-error m-b-12">
 			<div *ngIf="checkExists['Email']">
-				<span class="help-block">Email đã tồn tại</span>
+				<span class="help-block" style="font-weight: bold;">Email đã tồn tại</span>
 			</div>
 		</div>
 	</div>
@@ -67,7 +67,7 @@
 			*ngIf="(fInfoSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.address.errors.required">
-				<span class="help-block">Trường dữ liệu này không được để trống</span>
+				<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 			</div>
 		</div>
 	</div>

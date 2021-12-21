@@ -37,7 +37,7 @@
 					<div class="media pb-4 mb-4 box-message-publish">
 						<div class="mr-3">
 							<div *ngIf="model.fieldFilePath==null">
-								<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+								<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
 									class="bi bi-chat-right-text" viewBox="0 0 16 16">
 									<path
 										d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
@@ -46,7 +46,8 @@
 								</svg>
 							</div>
 							<div *ngIf="model.fieldFilePath!=null">
-								<img [src]="model.fieldFilePath" width="60" height="60">
+								<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
+									208deg) brightness(99%) contrast(85%);">
 							</div>
 						</div>
 
@@ -141,7 +142,10 @@
 					</div>
 					<div class="media pb-4 mb-4 box-message-publish" *ngIf="[3,6,10].includes(model.status)">
 						<div class="mr-3">
-							<img [src]="model.fieldFilePath" width="60" height="60">
+							<img *ngIf="[10].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
+								208deg) brightness(99%) contrast(85%)">
+							<img *ngIf="[3].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40"
+								style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)">
 						</div>
 						<div class="media-body">
 							<div class="tt-v1 d-flex justify-content-between">

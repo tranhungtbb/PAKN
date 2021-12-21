@@ -10,7 +10,7 @@
 			<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))"
 				class="has-error m-b-12">
 				<div *ngIf="f.fullName.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
+					<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
@@ -38,10 +38,10 @@
 			<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))"
 				class="has-error m-b-12">
 				<div *ngIf="f.phone.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
+					<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 				</div>
 				<div *ngIf="f.phone.errors.pattern">
-					<span class="help-block">Số điện thoại không đúng</span>
+					<span class="help-block" style="font-weight: bold;">Số điện thoại không đúng</span>
 				</div>
 			</div>
 		</div>
@@ -52,10 +52,10 @@
 			<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))"
 				class="has-error m-b-12">
 				<div *ngIf="f.email.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
+					<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 				</div>
 				<div *ngIf="f.email.errors.email">
-					<span class="help-block">Email không hợp lệ</span>
+					<span class="help-block" style="font-weight: bold;">Email không hợp lệ</span>
 				</div>
 			</div>
 		</div>
@@ -67,10 +67,10 @@
 			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))"
 				class="has-error m-b-12">
 				<div *ngIf="f.idCard.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
+					<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 				</div>
 				<div *ngIf="f.idCard.errors.pattern">
-					<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
+					<span class="help-block" style="font-weight: bold;">Số CMND/CCCD không hợp lệ!</span>
 				</div>
 			</div>
 		</div>
@@ -83,7 +83,7 @@
 			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))"
 				class="has-error m-b-12">
 				<div *ngIf="f.address.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
+					<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
