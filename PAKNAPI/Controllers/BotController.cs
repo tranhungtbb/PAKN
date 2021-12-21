@@ -202,6 +202,21 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("get-library-by")]
+        public async Task<object> ChatbotGetLibraryBy(string input)
+        {
+            try
+            {
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = new BotGetLibrary(_appSetting).BotGetLibraryByInput(input) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
         [HttpPost]
         [Route("reload-library")]
 
