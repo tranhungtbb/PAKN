@@ -226,7 +226,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.form = new FormGroup({
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
-			field: new FormControl(this.model.field, [Validators.required]),
+			field: new FormControl(this.model.field),
 			unitId: new FormControl(this.model.unitId),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
@@ -386,7 +386,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				if (this.model.id == 0) {
 					this.recommendationService.recommendationInsert(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => { })
 							this.toastr.success(COMMONS.ADD_SUCCESS)
 							localStorage.removeItem('recommentdationObjRemember')
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])

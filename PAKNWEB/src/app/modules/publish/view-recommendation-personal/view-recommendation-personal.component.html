@@ -23,7 +23,7 @@
 							</div>
 
 						</div>
-						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
+						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date:'dd/MM/yyyy'}}</span>
 					</div>
 					<div class="m-3">
 						<span class="pr-5">
@@ -251,47 +251,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="box mb-4" *ngIf="model.status > 4 && !(model.status == 5 && model.isForwardProcess)">
-					<h3 class="mb-3 text-uppercase">
-						Trao đổi với cơ quan xử lý PAKN <span>({{totalInfomationExchange}})</span>
-					</h3>
-					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
-						<div class="form-group mb-0">
-							<textarea class="form-control px-4 py-3" [(ngModel)]="infoExchangeModel.contents" rows="3"
-								placeholder="Nhập bình luận..." id="comment" maxlength="500"></textarea>
-							<button type="button" class="btn text-white no-grd-blue border-0 px-5 mt-3"
-								(click)="onInsertInfomationExchange()">Gửi</button>
-						</div>
-					</div>
-					<ng-container *ngFor="let item of listInfomationExchange; let i = index">
-						<div class="media mt-3 border-top pt-3">
-							<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
-								{{getShortName(item.fullName)}}
-							</div>
-							<div class="media-body">
-								<p class="mb-0 h5">{{item.fullName}}</p>
-								<div class="d-flex">
-									<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-								</div>
-								<p class="mb-0">
-									{{item.contents}}
-								</p>
-							</div>
-						</div>
-					</ng-container>
-
-					<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
-						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 20 trao đổi khác
-							<span class="ml-2">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-									class="bi bi-arrow-right" viewBox="0 0 16 16">
-									<path fill-rule="evenodd"
-										d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-								</svg>
-							</span>
-						</a>
-					</p>
-				</div>
+				<app-infomation-exchange *ngIf="model.status > 4 && !(model.status == 5 && model.isForwardProcess)"
+					[RecommentId]="model.id" [IsPagePublic]="true">
+				</app-infomation-exchange>
 			</div>
 
 			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">

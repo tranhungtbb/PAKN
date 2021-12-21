@@ -4,12 +4,13 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<li class="breadcrumb-item"><a>Tin tức sự kiện</a></li>
+					<li class="breadcrumb-item"><a>Thông báo từ chính quyền</a></li>
 					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách đã công bố</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 
-					<a [routerLink]="['../them-moi']" class="btn grd-blue btn-sm rounded border-0 text-white" *hasPermission="['3', 'F_I_0']">
+					<a [routerLink]="['../them-moi']" class="btn grd-blue btn-sm rounded border-0 text-white"
+						*hasPermission="['3', 'F_I_0']">
 						<i class="bi bi-plus"></i>&nbsp;
 						Thêm mới
 					</a>
@@ -20,40 +21,42 @@
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<p-table #table [value]="listDataPaged" [rows]="query.pageSize" [totalRecords]="totalCount" currentPageReportTemplate="Tổng số {{totalCount}}"
-							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [rowsPerPageOptions]="[20,30,50]" [showCurrentPageReport]="true" autoLayout="true"
-							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<p-table #table [value]="listDataPaged" [rows]="query.pageSize" [totalRecords]="totalCount"
+							currentPageReportTemplate="Tổng số {{totalCount}}" (onLazyLoad)="onPageChange($event)" [lazy]="true"
+							[responsive]="true" [paginator]="true" [rowsPerPageOptions]="[20,30,50]" [showCurrentPageReport]="true"
+							autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
-											
+
 										</p>
-										<input [(ngModel)]="query.title" (keydown.enter)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<input [(ngModel)]="query.title" (keydown.enter)="filterChange()" type="text"
+											class="form-control form-control-sm" placeholder="Nhập ...">
 										<button *ngIf="query.title" class="btn bg-transparent btn-clear-input" (click)="query.title=''">
 											<i class="fa fa-times"></i>
 										</button>
 									</th>
-									<th style="width: 180px">
+									<!-- <th style="width: 180px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Loại tin tức</strong>
-											
+
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<!-- [items]="listNewCategories" bindLabel="name" bindValue="id" -->
-											<ng-select notFoundText="Không có dữ liệu"  class="" placeholder="Loại tin tức" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()"
+											<ng-select notFoundText="Không có dữ liệu" class="" placeholder="Loại tin tức"
+												[closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()"
 												style="width: 170px;">
 												<ng-option *ngFor="let nt of listNewCategories" [value]="nt.id">
 													{{nt.name}}
 												</ng-option>
 											</ng-select>
 										</div>
-									</th>
+									</th> -->
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead no-wrap">
 											<strong>Trạng thái</strong>
-											
+
 										</p>
 									</th>
 									<th class="text-center text-uppercase" style=width:130px;><strong>Thao tác</strong></th>
@@ -65,29 +68,39 @@
 										<img class="avatar-size rounded-3" [src]="item.imagePath">
 
 										<strong class="news-title col-sm-10 highlight">
-											<a *hasNotPermission="['3', 'F_I_4']" class="text-2line mb-0" href="javascript:void(0)" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
-											<a *hasPermission="['3', 'F_I_4']" class="text-2line mb-0" [routerLink]="['../chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
+											<a *hasNotPermission="['3', 'F_I_4']" class="text-2line mb-0" href="javascript:void(0)"
+												title="Chi tiết thông báo từ chính quyền">{{item.title}}</a>
+											<a *hasPermission="['3', 'F_I_4']" class="text-2line mb-0" [routerLink]="['../chi-tiet', item.id]"
+												title="Chi tiết thông báo từ chính quyền">{{item.title}}</a>
 										</strong>
 									</td>
-									<td>
+									<!-- <td>
 										{{listNewCategories | getCateName:item.newsType}}
-									</td>
+									</td> -->
 									<td>
-										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
-										<span *ngIf="item.status == listStatus[0].value" class="badge rounded-pill bg-xam text-dark">{{listStatus[0].text}}</span>
-										<span *ngIf="item.status == listStatus[1].value" class="badge rounded-pill bg-xanhla">{{listStatus[1].text}}</span>
+										<span *ngIf="item.status == listStatus[2].value"
+											class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
+										<span *ngIf="item.status == listStatus[0].value"
+											class="badge rounded-pill bg-xam text-dark">{{listStatus[0].text}}</span>
+										<span *ngIf="item.status == listStatus[1].value"
+											class="badge rounded-pill bg-xanhla">{{listStatus[1].text}}</span>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<button *hasPermission="['3', 'F_I_7']" class="btn-icon text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')"
+											<button *hasPermission="['3', 'F_I_7']" class="btn-icon text-white mr-2 border-0"
+												(click)="onOpenModalConfirm(item.id,'publish')"
 												[ngClass]="{'bg-xanhla':(item.status == 0 || item.status == 2), 'bg-xam':item.status == 1}">
 												<i class="bi bi-box-arrow-down text-dark" *ngIf="item.status ==1" title="Hủy công bố"></i>
 												<i class="bi bi-box-arrow-up" *ngIf="item.status == 0 || item.status == 2" title="Công bố"></i>
 											</button>
-											<a *hasPermission="['3', 'F_I_1']" [routerLink]="['/quan-tri/tin-tuc/chinh-sua/', item.id,query.pageIndex]" class="btn-icon mr-2 border-0" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
-											<button  *hasPermission="['3', 'F_I_2']" class="btn-icon mr-2 grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
+											<a *hasPermission="['3', 'F_I_1']"
+												[routerLink]="['/quan-tri/tin-tuc/chinh-sua/', item.id,query.pageIndex]"
+												class="btn-icon mr-2 border-0" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<button *hasPermission="['3', 'F_I_2']" class="btn-icon mr-2 grd-red text-white border-0"
+												data-toggle="modal" data-target="#modal-history-pakn"
 												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash" title="Xóa"></i></button>
-											<a  *hasPermission="['3', 'F_I_6']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a *hasPermission="['3', 'F_I_6']" class="btn-icon" style="cursor: pointer;"
+												(click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>
@@ -121,7 +134,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="acceptConfirm()">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>
@@ -129,7 +143,8 @@
 
 <div class="modal fade pr-0" id="modal-history">
 	<div class="modal-dialog modal-dialog-centered vh-100" role="document">
-		<div class="modal-content rounded-0 scroll-y" [ngClass]="{ 'h-100': listHisNews && listHisNews.length > 0 }" style="overflow-y: scroll; min-width: 150%;">
+		<div class="modal-content rounded-0 scroll-y" [ngClass]="{ 'h-100': listHisNews && listHisNews.length > 0 }"
+			style="overflow-y: scroll; min-width: 150%;">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h4">Lịch sử</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
@@ -148,8 +163,10 @@
 							<div class="timeline-panel">
 								<!-- <p class="mb-2 h5">Người dùng: <strong>{{item.createdByName}}</strong></p> -->
 								<p class="mb-2 d-flex justify-content-between align-items-center">
-									<span *ngIf="item.status == 0" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi tạo</span>
-									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-info">Đang soạn thảo</span>
+									<span *ngIf="item.status == 0" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi
+										tạo</span>
+									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-info">Đang soạn
+										thảo</span>
 									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Đã cập nhập</span>
 									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-blue2">Đã công bố</span>
 									<span *ngIf="item.status == 4" class="badge rounded-pill mb-0 bg-red">Hủy công bố</span>

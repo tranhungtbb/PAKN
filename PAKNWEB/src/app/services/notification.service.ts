@@ -11,11 +11,8 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class NotificationService {
-	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) {}
+	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) { }
 
-	insertNotificationTypeRecommendation(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationInsertTypeRecommendation)
-	}
 
 	getListNotificationOnPageByReceiveId(query: any): Observable<any> {
 		let tempheaders = new HttpHeaders({

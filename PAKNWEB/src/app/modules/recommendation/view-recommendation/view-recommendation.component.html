@@ -150,42 +150,6 @@
 										</a>
 
 										<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
-										<!-- 
-										<span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
-											<span>
-												<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-													style="color: #333; width:auto;">
-													<i class="bi bi-download"></i>
-												</a>
-												<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-													style="color: #333; width:auto;">
-													<i class="bi bi-download"></i>
-
-												</a>
-												<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-													style="color: #333; width:auto;">
-													<i class="bi bi-download"></i>
-
-												</a>
-												<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-													style="color: #333; width:auto;">
-													<i class="bi bi-download"></i>
-
-												</a>
-												<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-													style="color: #333;">
-													<i class="bi bi-download"></i>
-
-												</a>
-												<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-													style="color: #333; width:auto;">
-													<i class="bi bi-download"></i>
-
-												</a>
-
-											</span>
-										</span> -->
-
 									</div>
 								</span>
 							</p>
@@ -212,7 +176,12 @@
 								<div class="media-body">
 									<div>
 										<div class="">
-											<span><i>Cơ quan chức năng tham mưu:</i></span>
+											<div class="tt-v1 d-flex justify-content-between">
+												<i>Cơ quan chức năng phối hợp/tham mưu:</i>
+												<i *ngIf="item.status == 10" (click)="useConclustionUnit(item.conclusionCombineContent)"
+													title="Sử dụng câu trả lời" class="bi bi-clipboard-check"></i>
+
+											</div>
 											<div class="tt-v1 d-flex justify-content-between">
 												<p class="h4 font-italic font-weight-bold">{{item.unitName}}:</p>
 												<p *ngIf="[10].includes(item.status)" class="mb-0">{{item.processingDate |
@@ -244,8 +213,6 @@
 														<img src="../../../../assets/dist/images/file-word.svg"
 															style="width: 30px;padding-right: 5px;" alt="">
 														<span class="small text-truncate">{{file.name}}</span>
-														<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-															file.name}} -->
 													</a>
 													<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
 														[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -279,43 +246,6 @@
 													</a>
 
 													<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
-
-													<!-- <span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
-														<span>
-
-															<a *ngIf="file.fileType == 1" download href="javascript:void(0)"
-																(click)="DownloadFile(file)" style="color: #333; width:auto;">
-																<i class="bi bi-download"></i>
-															</a>
-															<a *ngIf="file.fileType == 2" download href="javascript:void(0)"
-																(click)="DownloadFile(file)" style="color: #333; width:auto;">
-																<i class="bi bi-download"></i>
-
-															</a>
-															<a *ngIf="file.fileType == 3" download href="javascript:void(0)"
-																(click)="DownloadFile(file)" style="color: #333; width:auto;">
-																<i class="bi bi-download"></i>
-
-															</a>
-															<a *ngIf="file.fileType == 4" download href="javascript:void(0)"
-																(click)="DownloadFile(file)" style="color: #333; width:auto;">
-																<i class="bi bi-download"></i>
-
-															</a>
-															<a *ngIf="file.fileType == 6" download href="javascript:void(0)"
-																(click)="DownloadFile(file)" style="color: #333;">
-																<i class="bi bi-download"></i>
-
-															</a>
-															<a *ngIf="file.fileType == 7" download href="javascript:void(0)"
-																(click)="DownloadFile(file)" style="color: #333; width:auto;">
-																<i class="bi bi-download"></i>
-
-															</a>
-
-														</span>
-													</span> -->
-
 												</div>
 											</span>
 										</p>
@@ -482,14 +412,21 @@
 									</div>
 									<div class="w-100"></div>
 								</div>
-								<!-- <div *ngIf="(model.status == 8 && model.userActive == userLoginId)"
-									class="tt-v1 mb-0 d-flex justify-content-end mr-3 mt-2">
-									<button type="button" class="btn grd-xanhngoc border-0 text-white btn-custom-send-process"
-										(click)="onProcessConclusion()">
 
-										Lưu nội dung
+								<div *ngIf="model.status == 8 && model.userActive == userLoginId"
+									class="tt-v1 mb-0 d-flex justify-content-end mr-3 mt-2">
+									<button type="button" class="btn grd-green btn-sm rounded border-0 text-white"
+										(click)="preProcess(2)">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+											class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
+											<path
+												d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+											<path
+												d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+										</svg>
+										Phê duyệt
 									</button>
-								</div> -->
+								</div>
 							</ng-container>
 							<!-- (model.status != 9 || model.userActive != userLoginId) -->
 							<ng-container *ngIf="model.status > 7 && !(model.status == 8 && model.userActive == userLoginId)">
@@ -538,84 +475,15 @@
 												<span class="small text-truncate">{{file.name}}</span>
 											</a>
 
-											<span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
-												<span>
-
-													<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333; width:auto;">
-														<i class="bi bi-download"></i>
-														<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-														file.name}} -->
-													</a>
-													<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333; width:auto;">
-														<i class="bi bi-download"></i>
-
-													</a>
-													<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333; width:auto;">
-														<i class="bi bi-download"></i>
-
-													</a>
-													<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333; width:auto;">
-														<i class="bi bi-download"></i>
-
-													</a>
-													<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333;">
-														<i class="bi bi-download"></i>
-
-													</a>
-													<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-														style="color: #333; width:auto;">
-														<i class="bi bi-download"></i>
-
-													</a>
-
-												</span>
-											</span>
-
+											<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 										</div>
 									</span>
 								</p>
 							</ng-container>
 						</div>
 					</div>
-					<div *ngIf="!isUnitCombine">
-						<div>
-							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi với người dân
-								({{totalInfomationExchange}})</p>
-						</div>
-						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
-							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..."
-								[(ngModel)]="infoExchangeModel.contents"></textarea>
-							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onInsertInfomationExchange()">
-								Gửi </button>
-						</div>
-						<div *ngFor="let item of listInfomationExchange" class="border-bottom mb-3">
-							<header class="clearfix">
-								<div class="cmt-avatar pull-left avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-									{{getShortName(item.fullName)}}
-								</div>
-								<div class="col-md-9">
-									<p class="h5">{{item.fullName}}</p>
-									<time style="font-size: 10pt;">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</time>
-								</div>
-							</header>
-							<div class="cmt-contents">
-								<p>
-									{{item.contents}}
-								</p>
-							</div>
-						</div>
-						<div *ngIf="listInfomationExchange && (totalInfomationExchange > listInfomationExchange.length)">
-							<p class="text-black"><a href="javascript:void(0);"
-									(click)="onInsertInfomationExchange(infomationExchangeQuery.pageIndex + 1)">Xem thêm trao đổi khác <i
-										class="bi bi-arrow-right"></i></a></p>
-						</div>
-					</div>
-					<!-- <app-infomation-exchange [RecommentId]="model.id" [IsPagePublic]="false"></app-infomation-exchange> -->
+					<app-infomation-exchange *ngIf="!isUnitCombine" [RecommentId]="model.id" [IsPagePublic]="false">
+					</app-infomation-exchange>
 					<ng-container *ngIf="!isUnitCombine && model.status == 10">
 						<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="false"></app-comment-recommendation>
 					</ng-container>

@@ -128,6 +128,9 @@ namespace PAKNAPI.ModelBase
 		public long ID { get; set; }
 		public long? UserId { get; set; }
 		public string FullName { get; set; }
+		public string UnitName { get; set; }
+		public int? TypeObject { get; set; }
+			
 		public string Contents { get; set; }
 		public long? RecommendationId { get; set; }
 		public DateTime? CreatedDate { get; set; }
@@ -2150,6 +2153,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
 			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+			DP.Add("Field", _mRRecommendationUpdateStatusIN.Field);
 			DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
 		}
@@ -2178,6 +2182,8 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 		public byte? Status { get; set; }
 		public bool? IsFakeImage { get; set; }
+
+		public int? Field { get; set; }
 
 		public MRRecommendationUpdateStatusIN() {
 			this.IsFakeImage = false;

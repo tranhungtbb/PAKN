@@ -133,6 +133,8 @@ namespace PAKNAPI.Models.Recommendation
         public bool? IsForwardUnitChild { get; set; }
         public bool? IsFakeImage { get; set; }
         public bool? IsForwardMain { get; set; }
+
+        public int? Field { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {

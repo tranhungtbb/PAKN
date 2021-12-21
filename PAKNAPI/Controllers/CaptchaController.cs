@@ -53,7 +53,7 @@ namespace PAKNAPI.Controllers
 				Random random = new Random();
 				number1 = random.Next(10);
 				number2 = random.Next(10 - number1);
-				var captchaCode = $"{number1.ToString()}+{number2.ToString()}=?";
+				var captchaCode = $"{number1.ToString()}+{number2.ToString()}=";
 				//var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
 
 				var result = new Captcha(_appSetting).GenerateCaptchaImage(width, height, captchaCode);
