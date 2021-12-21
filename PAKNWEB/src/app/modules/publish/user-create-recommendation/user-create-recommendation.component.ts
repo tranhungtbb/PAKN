@@ -49,7 +49,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	captchaCode: string = null
 	resultsRecommendation: any = []
 	lstDictionariesWord: any = []
-
+	flagRecommend: boolean;
 	unitSelected: any = { name: null, id: null }
 	lstUnitChild: any[] = []
 	isLogin: any
@@ -123,6 +123,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 							})
 						})
 					}
+					this.flagRecommend = true;
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -530,6 +531,9 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 	closeModalMap() {
 		$('#modalMaps').modal('hide')
+	}
+	hideRecommendBox() {
+		this.flagRecommend = false;
 	}
 }
 
