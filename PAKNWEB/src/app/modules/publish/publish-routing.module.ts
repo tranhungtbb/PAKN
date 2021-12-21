@@ -29,6 +29,7 @@ import { InfomationPublicComponent } from './infomation-public/infomation-public
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
+import { GovernmentNoticeComponent } from './government-notice/government-notice.component'
 
 const routes: Routes = [
 	{
@@ -68,11 +69,16 @@ const routes: Routes = [
 				component: NewsComponent,
 			},
 			{
+				path: 'danh-sach-thong-bao',
+				component: GovernmentNoticeComponent,
+			},
+
+			{
 				path: 'tin-tuc-su-kien/xem-truoc/:id',
 				component: ViewNewsComponent,
 			},
 			{
-				path: 'tin-tuc-su-kien/:id',
+				path: 'thong-bao-chinh-quyen/:id',
 				component: ViewNewsComponent,
 			},
 			{

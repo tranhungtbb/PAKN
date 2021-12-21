@@ -1,18 +1,15 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { OwlOptions } from 'ngx-owl-carousel-o'
-import { ChartType, ChartOptions } from 'chart.js'
-import { Color, MultiDataSet, Label } from 'ng2-charts'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
-import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
-import { SystemconfigService } from 'src/app/services/systemconfig.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
@@ -29,7 +26,6 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private indexSettingService: IndexSettingService,
-		private _syService: SystemconfigService,
 		private _toa: ToastrService,
 		private storageService: UserInfoStorageService
 	) { }
@@ -41,9 +37,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 	unitDissatisfactionRate: any[] = []
 	lateProcessingUnit: any[] = []
 	isPreview: boolean = false
-	dataNotification: any = {}
-	news: any[]
-	firstNews: any
+	listNotification: any[]
 	Administrations: any[]
 	isGrid: boolean = false
 	isHomeMain: boolean = false
@@ -73,15 +67,17 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		nav: true,
 	}
 
-	indexSettingObj = new IndexSettingObjet()
-	async ngOnInit() {
+	ngOnInit() {
 		this.isPreview = this._router.url.includes('xem-truoc') ? true : false
 
-		await this.getData()
-		this.indexSettingService.GetInfo({}).subscribe(
+		this.getData()
+
+
+
+		this._newsService.getListHomePage({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					this.indexSettingObj = res.result.model
+					this.listNotification = res.result
 				}
 			},
 			(error) => {
@@ -142,11 +138,11 @@ export class IndexComponent implements OnInit, AfterViewInit {
 			}
 		})
 
-		this._service.notificationGetDashboard({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.dataNotification = res.result
-			}
-		})
+		// this._service.notificationGetDashboard({}).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 		this.dataNotification = res.result
+		// 	}
+		// })
 		let obj = {
 			KeySearch: '',
 			PageSize: 4,
