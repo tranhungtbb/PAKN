@@ -92,12 +92,10 @@ export class PublishComponent implements OnInit, OnChanges {
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'], text: 'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà' },
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
-	}
-	redirectCreateRecommendation() {
-		this._router.navigate(['/cong-bo/them-moi-kien-nghi'])
-	}
 
-	async onConnectChatBot() {
+		this.handleInitConnectionToChatBot();
+	}
+	async handleInitConnectionToChatBot() {
 		this.myGuid = this.storageService.getClientUserId();
 		if (!this.myGuid) {
 			this.myGuid = uuidv4();
@@ -168,13 +166,17 @@ export class PublishComponent implements OnInit, OnChanges {
 						}, 300)
 					}
 				})
-				this.sendMessage({ title: 'Xin chào' }, false)
+
 			}
 		}
+	}
 
+	redirectCreateRecommendation() {
+		this._router.navigate(['/cong-bo/them-moi-kien-nghi'])
+	}
 
-
-
+	async onConnectChatBot() {
+		this.sendMessage({ title: 'Xin chào' }, false)
 	}
 
 	sendMessage(message: any, append: boolean = true) {
@@ -216,10 +218,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	onDisconnectChatBot() {
-		if (this.connection) {
-			this.connection.off('ReceiveMessageToGroup')
-			this.connection.stop()
-		}
+
 	}
 
 	onActivate(event) {
@@ -341,6 +340,13 @@ export class PublishComponent implements OnInit, OnChanges {
 				message.style.display = 'block'
 				this.onConnectChatBot()
 			}
+		}
+	}
+
+	ngOnDestroy() {
+		if (this.connection) {
+			this.connection.off('ReceiveMessageToGroup')
+			this.connection.stop()
 		}
 	}
 

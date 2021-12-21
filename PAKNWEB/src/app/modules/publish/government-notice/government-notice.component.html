@@ -1,0 +1,66 @@
+<div class="content-nd pt-5">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+        <ol class="breadcrumb px-0 bg-transparent mb-0">
+          <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+          <li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Thông báo từ chính quyền</a></li>
+        </ol>
+        <div class="box">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0" *ngFor="let item of listData">
+              <div class="media">
+                <!-- <a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="image-box ratio-5-3 rounded mr-3"
+                  style="width: 12rem">
+                  <img class="image" style="object-fit: cover; width: 100%; height: 100%;" title="{{item.title}}"
+                    [src]="item.imagePath">
+                </a> -->
+                <div class="media-body">
+
+                  <p class="h3 my-1">
+                    <a class="text-2line title-item-article"
+                      routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}">{{item.title}}</a>
+                  </p>
+                  <div class="createDate mb-2">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :
+                    'dd/MM/yyyy'}}</div>
+                  <p class="mb-0 article-summary">
+                    <a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">{{item.summary}}</a>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <nav aria-label="navigation" *ngIf="listData.length > 0">
+          <ul class="pagination pagination-lg justify-content-end align-items-center">
+            <li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == 1 }">
+              <a (click)="changePagination(query.pageIndex - 1)" class="page-link border rounded-pill p-1 pr-3 cursor"
+                tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
+                  class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+            </li>
+            <li class="d-flex justify-content-center align-items-center">
+              <a *ngIf="query.pageIndex > 4">...</a>
+              <p class="mb-0 page-item" *ngFor="let item of pagination; let i = index"
+                [ngClass]="{ 'active': item.index === query.pageIndex }">
+                <a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex"
+                  class="page-link cursor">{{item.index}}</a>
+              </p>
+              <a *ngIf="query.pageIndex < pagination.length -4">...</a>
+            </li>
+            <li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == totalRecords }">
+              <a (click)="changePagination(query.pageIndex + 1)" class="page-link border rounded-pill p-1 cursor">
+                &nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+
+      </div>
+      <div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 mb-2">
+        <app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+      </div>
+    </div>
+  </div>
+</div>
