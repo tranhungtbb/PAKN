@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
@@ -10,7 +10,7 @@ declare var $: any
 	templateUrl: './history-recommendation.component.html',
 	styleUrls: ['./history-recommendation.component.css'],
 })
-export class HistoryRecommendationComponent implements OnInit {
+export class HistoryRecommendationComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: RecommendationService,
 		private _toastr: ToastrService,
@@ -26,6 +26,9 @@ export class HistoryRecommendationComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		// $("#history_pakn").on('hide.bs.modal', function () {
+		// 	alert('The modal is about to be hidden.');
+		// });
 	}
 	checkShow: boolean = false
 
@@ -37,7 +40,7 @@ export class HistoryRecommendationComponent implements OnInit {
 		this._service.recommendationGetHistories(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstHistories = [...response.result.HISRecommendationGetByObjectId]
-				$('#history-pakn').modal('show')
+				$('#history_pakn_' + this.recommendationId).modal('show')
 			} else {
 				this._toastr.error(response.message)
 			}

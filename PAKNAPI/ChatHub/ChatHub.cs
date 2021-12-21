@@ -21,9 +21,11 @@ namespace SignalR.Hubs
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
         private readonly IAppSetting _appSetting;
         private readonly IManageBots _bots;
+
         public ChatHub(
             IAppSetting appSetting,
             IManageBots bots
+   
         )
         {
             _bots = bots;
@@ -212,29 +214,29 @@ namespace SignalR.Hubs
                 //}
                 //else
                 //{
-                //    List<Room> rooms = _roomRepository.GetRoomsByUserId(user.Id);
-                //    List<Task> joinGroupTasks = new List<Task>();
-                //    foreach (var item in rooms)
-                //    {
 
-                //        await (Groups.AddToGroupAsync(id, item.Name));
-                //    }
-                //    await Task.WhenAll(joinGroupTasks);
-                //}
-                //await (Groups.AddToGroupAsync(id, "roomAll"));
+                string roomName = "Room_" + userName;
+                BOTRoom room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                if (room!=null)
+                {
+                    await (Groups.AddToGroupAsync(id, roomName));
+                }
+               
+
                 var data = new { userName };
                 var respone = new { data, success = ResultCode.OK };
                 //wait Clients.Caller.SendAsync(EventType.GetProfileInfo, respone);
             }
             catch (Exception ex)
             {
+
             }
 
 
 
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
             var id = Context.ConnectionId;
             var httpContext = Context.GetHttpContext();
@@ -245,6 +247,16 @@ namespace SignalR.Hubs
                 _ConnectionsMap.Remove(userName + "x_x" + id);
             }
             _bots.RemoveBot(userName);
+
+            string roomName = "Room_" + userName;
+            BOTRoom room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+            if (room != null)
+            {
+                await(Groups.RemoveFromGroupAsync(id, roomName));
+            }
+
+
+
             //var user = _userRepository.GetByKey(nameof(User.userName), userName.ToString());
             //try
             //{
@@ -260,8 +272,10 @@ namespace SignalR.Hubs
             //{
 
             //}
-
-            return base.OnDisconnectedAsync(exception);
+            base.OnDisconnectedAsync(exception);
+            var data = new { userName };
+            var respone = new { data, success = ResultCode.OK };
+            //return 
         }
     }
 }

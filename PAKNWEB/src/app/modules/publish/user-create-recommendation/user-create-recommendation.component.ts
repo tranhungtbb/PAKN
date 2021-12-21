@@ -49,7 +49,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	captchaCode: string = null
 	resultsRecommendation: any = []
 	lstDictionariesWord: any = []
-
+	flagRecommend: boolean;
 	unitSelected: any = { name: null, id: null }
 	lstUnitChild: any[] = []
 	isLogin: any
@@ -72,6 +72,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		private notificationService: NotificationService,
 		private eRef: ElementRef,
 		private locationService: LocationService
+
 	) { }
 
 	ngOnInit() {
@@ -79,6 +80,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.model.typeObject = this.storageService.getTypeObject()
 		this.reloadImage()
 		this.getDropdown()
+
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.model.id = +params['id']
@@ -88,22 +90,29 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.getData()
 			} else {
 				this.model.typeObject = 1
-				this.setCurrentLocation()
+				// this.setCurrentLocation()
 			}
 			this.builForm()
 		})
+		//this.firstLoadMap();
+		// this.showMaps();
 		this.isLogin = this.storageService.getAccessToken()
-		$('[data-toggle="tooltip"]').tooltip()
+
 	}
 
 	ngAfterViewInit() {
-
+		this.setCurrentLocation()
+		$('[data-toggle="tooltip"]').tooltip()
 	}
 
 	private setCurrentLocation() {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
+				// this.onSaveMaps()
+				this.getAddress(this.model.lat, this.model.lng).then((res) => {
+					this.model.address = String(res)
+				})
 			})
 		}
 	}
@@ -123,6 +132,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 							})
 						})
 					}
+					this.flagRecommend = true;
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -226,7 +236,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.form = new FormGroup({
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
-			field: new FormControl(this.model.field, [Validators.required]),
+			field: new FormControl(this.model.field),
 			unitId: new FormControl(this.model.unitId),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
@@ -386,7 +396,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				if (this.model.id == 0) {
 					this.recommendationService.recommendationInsert(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => { })
 							this.toastr.success(COMMONS.ADD_SUCCESS)
 							localStorage.removeItem('recommentdationObjRemember')
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
@@ -462,6 +471,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			$('#contentRecommendation').html(content)
 		}
 		$('[data-toggle="tooltip"]').tooltip()
+		this.hideRecommendBox();
 	}
 
 
@@ -488,14 +498,60 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	closeMap() {
 		$('#modalMaps').modal('hide')
 	}
+	getCurrentMark() {
+		$('#modalMaps').modal('show');
+		console.log('markers :' + this.markers)
 
+
+	}
+	firstLoadMap() {
+		this.showMaps()
+		this.onSaveMaps1();
+		// this.model.lat = this.markers.lat
+		// this.model.lng = this.markers.lng
+		// await this.getAddress(this.model.lat, this.model.lng).then((res) => {
+		// 	this.model.address = String(res)
+		// })
+
+	}
+	onSaveMaps1() {
+		if (this.markers == null || this.markers.lat == null) {
+			return this.toastr.error('Vui lòng chọn vị trí')
+		} else {
+			this.model.lat = this.markers.lat
+			this.model.lng = this.markers.lng
+			this.getAddress1(this.model.lat, this.model.lng).then((res) => {
+				this.model.address = String(res)
+			})
+			$('#modalMaps').modal('hide')
+			$('#modal').modal('show')
+		}
+	}
+	getAddress1(latitude, longitude) {
+		this.geoCoder = new google.maps.Geocoder()
+		return new Promise((resolve, reject) => {
+			this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+				if (status === 'OK') {
+					if (results[0]) {
+						resolve(results[0].formatted_address)
+					} else {
+						window.alert('No results found')
+						reject('No results found')
+					}
+				} else {
+					window.alert('Geocoder failed due to: ' + status)
+					reject('Geocoder failed due to: ' + status)
+				}
+			})
+		})
+	}
 	async onSaveMaps() {
 		if (this.markers == null || this.markers.lat == null) {
 			return this.toastr.error('Vui lòng chọn vị trí')
 		} else {
 			this.model.lat = this.markers.lat
 			this.model.lng = this.markers.lng
-			await this.getAddress(this.model.lat, this.model.lng).then((res) => {
+			this.getAddress(this.model.lat, this.model.lng).then((res) => {
 				this.model.address = String(res)
 			})
 			$('#modalMaps').modal('hide')
@@ -503,6 +559,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		}
 	}
 	async getAddress(latitude, longitude) {
+		debugger
 		this.geoCoder = new google.maps.Geocoder()
 		return new Promise((resolve, reject) => {
 			this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
@@ -530,6 +587,9 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 	closeModalMap() {
 		$('#modalMaps').modal('hide')
+	}
+	hideRecommendBox() {
+		this.flagRecommend = false;
 	}
 }
 

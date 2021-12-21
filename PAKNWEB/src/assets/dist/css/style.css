@@ -20621,8 +20621,8 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   .email-list .message {
     position: relative;
     display: block;
-    height: 3.125rem;
-    line-height: 3.125rem;
+    height: 2.125rem;
+    line-height: 2.125rem;
     cursor: default;
     transition-duration: 0.3s; }
     .email-list .message a {

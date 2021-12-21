@@ -1,6 +1,10 @@
 <div class="box mb-4">
-	<p class="h3 text-uppercase mt-4" style="font-weight: normal;">
-		{{ 'IsPagePublic == true' ? 'TRAO ĐỔI VỚI NGƯỜI DÂN' : 'TRAO ĐỔI VỚI CƠ QUAN XỬ LÝ PAKN'}}
+	<p *ngIf="!IsPagePublic" class="h3 text-uppercase mt-4" style="font-weight: normal;">
+		TRAO ĐỔI VỚI NGƯỜI DÂN
+		<span>({{total_Comments}})</span>
+	</p>
+	<p *ngIf="IsPagePublic" class="h3 text-uppercase mt-4" style="font-weight: normal;">
+		TRAO ĐỔI VỚI CƠ QUAN XỬ LÝ PAKN
 		<span>({{total_Comments}})</span>
 	</p>
 	<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
@@ -17,45 +21,16 @@
 				{{getShortName(item.fullName)}}
 			</div>
 			<div class="media-body">
-				<p class="mb-0 h5">{{item.fullName}}</p>
+				<p *ngIf="item.typeObject == 1 && !IsPagePublic" class="mb-0 h5">{{item.fullName + " - " + item.unitName}}</p>
+				<p *ngIf="item.typeObject == 1 && IsPagePublic" class="mb-0 h5">{{item.unitName}}</p>
+				<p *ngIf="item.typeObject != 1 && IsPagePublic" class="mb-0 h5">{{item.fullName}}</p>
+
 				<div class="d-flex">
 					<p class="mt-1 mb-0">{{item.contents}}</p>
 				</div>
 				<div class="d-flex">
 					<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-					<p class="ml-3 cursor my-0 h5 center mb-1" (click)="item.isShowChild =! item.isShowChild"
-						style="font-size: 12px;">
-						Phản hồi</p>
 				</div>
-				<app-infomation-exchange-reply *ngIf="item.isShowChild" [RecommentId]="RecommentId" [ParentId]="item.id">
-				</app-infomation-exchange-reply>
-				<ng-container *ngFor="let itemChild of item.listChild; let i = index">
-					<div class="media mt-3 border-top pt-3">
-						<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
-							{{getShortName(itemChild.fullName)}}
-						</div>
-						<div class="media-body">
-							<p class="mb-0 h5">{{itemChild.fullName}}</p>
-							<div class="d-flex">
-								<p class="mt-1 mb-0">{{itemChild.contents}}</p>
-							</div>
-							<div class="d-flex">
-								<p class="small mb-1">{{itemChild.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-								<p class="ml-3 cursor my-0 h5 center mb-1" (click)="itemChild.isShowChild =! itemChild.isShowChild"
-									style="font-size: 12px;">
-									Phản hồi</p>
-							</div>
-							<app-infomation-exchange-reply *ngIf="itemChild.isShowChild" [RecommentId]="RecommentId"
-								[ParentId]="item.id">
-							</app-infomation-exchange-reply>
-						</div>
-					</div>
-
-
-				</ng-container>
-				<a href="javascript:void(0)" *ngIf="item.existChild && item.rowNumberChild > item.listChild?.length"
-					class="small" (click)="loadCommentChild(item)">Xem
-					thêm phản hồi</a>
 
 			</div>
 		</div>

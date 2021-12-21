@@ -47,6 +47,9 @@ import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/un
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
 import { CommentModule } from './comment-recommendation/comment.module'
+import { InfomationExchangeModule } from '../recommendation/infomation-exchange/infomation-exchange.module'
+import { GovernmentNoticeComponent } from './government-notice/government-notice.component'
+
 
 @NgModule({
 	declarations: [
@@ -82,6 +85,7 @@ import { CommentModule } from './comment-recommendation/comment.module'
 		UnitDissatisfactionRateComponent,
 		LateProcessingUnitComponent,
 		ProcessingRecommendationsComponent,
+		GovernmentNoticeComponent
 	],
 	imports: [
 		CommonModule,
@@ -91,6 +95,7 @@ import { CommentModule } from './comment-recommendation/comment.module'
 		FormsModule,
 		SharedModule,
 		CommentModule,
+		InfomationExchangeModule,
 		TableModule,
 		CheckboxModule,
 		PaginatorModule,

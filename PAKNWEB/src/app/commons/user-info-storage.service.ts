@@ -213,4 +213,13 @@ export class UserInfoStorageService {
 		if (r == '0') return true
 		return false
 	}
+
+	setClientUserId(value): void {
+		localStorage.setItem('ClientUserId', value)
+	}
+
+	getClientUserId(): string {
+		return localStorage.getItem('ClientUserId')
+
+	}
 }

@@ -39,7 +39,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private sanitizer: DomSanitizer,
 		private http: HttpClient,
 		private fileService: UploadFileService
-	) {}
+	) { }
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
 	public ckConfig = {
@@ -74,8 +74,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
 			summary: [this.model.summary, [Validators.required]],
 			contents: [this.model.contents, [Validators.required]],
-			newsType: [this.model.newsType, [Validators.required]],
-			postType: [this.model.postType, [Validators.required]],
+			newsType: [this.model.newsType],
+			postType: [this.model.postType],
 			imagePath: [this.model.imagePath, [Validators.required]],
 			pushNotify: [''],
 		})
@@ -203,7 +203,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					if (res.success != 'OK') {
 						let result = Number(res.result)
 						if (result && result == -1) {
-							this.toast.error('Tiêu đề bài viết bị trùng')
+							this.toast.error('Tiêu đề thông báo bị trùng')
 							return
 						} else {
 							this.toast.error(COMMONS.UPDATE_FAILED)
@@ -223,7 +223,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				if (res.success != 'OK') {
 					let result = Number(res.result)
 					if (result && result == -1) {
-						this.toast.error('Tiêu đề bài viết bị trùng')
+						this.toast.error('Tiêu đề thông báo bị trùng')
 					} else {
 						this.toast.error(COMMONS.ADD_FAILED)
 					}

@@ -148,7 +148,7 @@ namespace PAKNAPI.Models.Recommendation
 				DP = new DynamicParameters();
 				DP.Add("RecommendationId", Id);
 				data.conclusionCombine = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionCombine>("SY_UnitGetByRecommnedationCombine", DP)).ToList();
-
+				// ConclusionProcessDate
 				foreach (var item in data.conclusionCombine) {
 					if (item.Status >= 8) {
 						// file
