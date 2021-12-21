@@ -462,6 +462,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			$('#contentRecommendation').html(content)
 		}
 		$('[data-toggle="tooltip"]').tooltip()
+		this.hideRecommendBox();
 	}
 
 

@@ -3,7 +3,7 @@
         ***********************************-->
 <div class="content-nd">
 	<div class="container">
-		<div class="row justify-content-between pt-5">
+		<div class="row justify-content-between pt-4">
 			<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
@@ -27,14 +27,11 @@
 						<div class="ps-relative">
 							<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500"
 								formControlName="title" (blur)="searchRecommendation()" placeholder="Nhập..." />
-							<div *ngIf="flagRecommend==true" class="input-group-customform pointer ps-absolute"
-								style="right: 15px; top: 8px;" title="Đóng" (click)="hideRecommendBox()">
-								<i class="fa fa-times"></i>
-							</div>
+
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 								class="has-error">
 								<div *ngIf="f.title.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
+									<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 								</div>
 							</div>
 						</div>
@@ -42,7 +39,10 @@
 
 					</div>
 					<div class="col-12 form-group" *ngIf="resultsRecommendation.length>0 && flagRecommend==true">
-
+						<div *ngIf="flagRecommend==true" class="input-group-customform pointer ps-absolute"
+							style="right: 15px; top: 8px; margin-right: 12px;" title="Đóng" (click)="hideRecommendBox()">
+							<i class="fa fa-times"></i>
+						</div>
 						<div class="email-list mini-scroll">
 							<div>
 								<span style="font-weight: bold; font-size: 20;">Phản ánh kiến nghị cùng chủ đề</span>
@@ -76,7 +76,7 @@
 							*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
 							class="has-error">
 							<div *ngIf="f.content.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 						<div *ngIf="model.content && !isSuitableContent">
@@ -95,7 +95,7 @@
 						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))"
 							class="has-error">
 							<div *ngIf="f.field.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 					</div> -->
@@ -132,7 +132,7 @@
 							[(ngModel)]="model.groupUnitId">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
-								<p *ngIf="item.isMain" class="cl-red mb-0" style="font-style: italic;">
+								<p *ngIf="item.isMain" class="cl-red mb-0" style="font-style: italic; font-weight: bold;">
 									(Trường hợp không chọn được đơn vị xử lý)
 								</p>
 							</ng-template>
@@ -141,7 +141,7 @@
 							*ngIf="(submitted && f.groupUnitId.invalid) || (f.groupUnitId.invalid && (f.groupUnitId.dirty || f.groupUnitId.touched))"
 							class="has-error">
 							<div *ngIf="f.groupUnitId.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 					</div>
@@ -156,7 +156,7 @@
 							</ng-template>
 						</ng-select>
 						<div *ngIf="(submitted && !model.unitReceive && !isChooseUnit)" class="has-error">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
+							<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 						</div>
 
 					</div>
@@ -186,7 +186,7 @@
 								*ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
 								class="has-error">
 								<div *ngIf="f.address.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
+									<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 								</div>
 							</div>
 						</div>

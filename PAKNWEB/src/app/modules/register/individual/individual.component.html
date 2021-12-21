@@ -15,15 +15,15 @@
 							*ngIf="(fLoginSubmitted && fLogin.iDCard.invalid)||(fLogin.iDCard.invalid && (fLogin.iDCard.dirty || fLogin.iDCard.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fLogin.iDCard.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 							<div *ngIf="fLogin.iDCard.errors.pattern">
-								<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
+								<span class="help-block" style="font-weight: bold;">Số CMND/CCCD không hợp lệ!</span>
 							</div>
 						</div>
 						<div *ngIf="checkExists['IDCard'] && model.iDCard" class="has-error m-b-12">
 							<div *ngIf="checkExists['IDCard']">
-								<span class="help-block">Số CMND/CCCD đã tồn tại</span>
+								<span class="help-block" style="font-weight: bold;">Số CMND/CCCD đã tồn tại</span>
 							</div>
 						</div>
 					</div>
@@ -36,10 +36,11 @@
 							*ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fLogin.password.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 							<div *ngIf="fLogin.password.errors.pattern">
-								<span class="help-block">Mật khẩu phải lớn hơn 6 ký tự và bao gồm cả chữ và số!</span>
+								<span class="help-block" style="font-weight: bold;">Mật khẩu phải lớn hơn 6 ký tự và bao gồm cả chữ và
+									số!</span>
 							</div>
 						</div>
 					</div>
@@ -51,10 +52,10 @@
 							*ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fLogin.rePassword.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 							<div *ngIf="fLogin.rePassword.errors.mustMatch">
-								<span class="help-block">Mật khẩu không khớp!</span>
+								<span class="help-block" style="font-weight: bold;">Mật khẩu không khớp!</span>
 							</div>
 						</div>
 					</div>
@@ -72,10 +73,10 @@
 							*ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fInfo.fullName.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 							<div *ngIf="fInfo.fullName.errors.maxlength">
-								<span class="help-block">Chỉ nhập tối đa 100 ký tự</span>
+								<span class="help-block" style="font-weight: bold;">Chỉ nhập tối đa 100 ký tự</span>
 							</div>
 						</div>
 					</div>
@@ -89,15 +90,15 @@
 							*ngIf="(fLoginSubmitted && fInfo.phone.invalid)||(fInfo.phone.invalid && (fInfo.phone.dirty || fInfo.phone.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fInfo.phone.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 							<div *ngIf="fInfo.phone.errors.pattern">
-								<span class="help-block">Số điện thoại không đúng</span>
+								<span class="help-block" style="font-weight: bold;">Số điện thoại không đúng</span>
 							</div>
 						</div>
 						<div *ngIf="checkExists['Phone'] && fInfo.phone.valid" class="has-error m-b-12">
 							<div *ngIf="checkExists['Phone']">
-								<span class="help-block">Số điện thoại đã tồn tại</span>
+								<span class="help-block" style="font-weight: bold;">Số điện thoại đã tồn tại</span>
 							</div>
 						</div>
 					</div>
@@ -110,15 +111,15 @@
 							*ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fInfo.email.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 							<div *ngIf="fInfo.email.errors.email">
-								<span class="help-block">Email không hợp lệ</span>
+								<span class="help-block" style="font-weight: bold;">Email không hợp lệ</span>
 							</div>
 						</div>
 						<div *ngIf="checkExists['Email'] && fInfo.email.valid" class="has-error m-b-12">
 							<div *ngIf="checkExists['Email']">
-								<span class="help-block">Email đã tồn tại</span>
+								<span class="help-block" style="font-weight: bold;">Email đã tồn tại</span>
 							</div>
 						</div>
 					</div>
@@ -132,7 +133,7 @@
 							*ngIf="(fLoginSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="fInfo.address.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 					</div>
@@ -142,7 +143,8 @@
 				</form>
 			</div>
 		</div>
-		<p class="cl-red font-italic mt-3">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một lần để sử dụng nhiều lần
+		<p class="cl-red font-italic mt-3" style="font-weight: bold;">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một
+			lần để sử dụng nhiều lần
 			trên hệ thống</p>
 		<div class="card-body d-flex justify-content-end px-0">
 			<a (click)="backToHome()" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px">

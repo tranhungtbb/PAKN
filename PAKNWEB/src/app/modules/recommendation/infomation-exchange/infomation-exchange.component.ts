@@ -36,7 +36,7 @@ export class InfomationExchangeComponent implements OnInit {
 
 
 
-	model: RecommnendationInfomationExchange = new RecommnendationInfomationExchange()
+	model: any = new RecommnendationInfomationExchange()
 	commentQuery: any = {
 		pageSize: 5,
 		pageIndex: 1,
@@ -60,8 +60,6 @@ export class InfomationExchangeComponent implements OnInit {
 	}
 
 	onSendInfomationExchange() {
-		// fullName: string
-		// createdDate: Date
 		this.model.fullName = this.storeageService.getFullName()
 		this.model.createdDate = new Date()
 		this.model.recommendationId = this.RecommentId
@@ -78,10 +76,14 @@ export class InfomationExchangeComponent implements OnInit {
 				return
 			}
 			this._toastr.success('Thêm trao đổi thành công')
-			this.listData.push(this.model)
+			if (this.typeObject == 1) {
+				this.model.unitName = this.storeageService.getUnitName()
+			}
+
+			this.listData.push({ ...this.model, 'typeObject': this.typeObject })
+
 			this.total_Comments += 1
 			this.model = new RecommnendationInfomationExchange()
-			// this.getInfomationExchangePaged()
 		})
 	}
 

@@ -1,37 +1,26 @@
 <div class="content-nd">
 	<div class="container">
+		<p class="h4 red-title mb-2" *ngIf="isPreview">(Xem trước)</p>
 		<div class="row justify-content-between">
-			<p class="col-12 h4 red-title mb-2" *ngIf="isPreview">(Xem trước)</p>
-			<div class="col-12 col-sm-12 col-md-4 col-lg-4 pr-0">
-				<a href="javascript:void(0)"><img class="img-fluid card" style="width: 100%; height: 160px;"
-						src="../../../../assets/dist/images/Frame 3558.png" alt="">
-				</a>
-			</div>
-			<div class="col-12 col-sm-12 col-md-4 col-lg-4 pr-0">
-				<a href="javascript:void(0)"><img class="img-fluid card" style="width: 100%; height: 160px;"
-						src="../../../../assets/dist/images/Frame 3559.png" alt="">
-				</a>
-			</div>
-			<div class="col-12 col-sm-12 col-md-4 col-lg-4">
-				<div class="card border p-3 bg-notification" style="height: 160px;">
-					<div class="tt-v1 mb-2 d-flex justify-content-start d-flex">
-						<h4 class="title-notification mb-1 mr-2 text-uppercase">[thông báo]</h4>
-						<div class="title-notification mb-1">{{dataNotification.title}}</div>
-					</div>
-					<!-- <div class="title-notification mb-1">{{dataNotification.title}}</div> -->
-					<p class="content-notification text-3line mb-2" [innerHTML]="dataNotification.content"></p>
-					<div class="tt-v1 mb-0 d-flex justify-content-end mr-3">
-						<a class="read-more" title="Xem thêm" routerLink="/cong-bo/thong-tin-cong-bo"> Xem thêm
+			<div class="col-lg-8 col-md-8 pr-0 ">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 pr-7">
+						<a href="javascript:void(0)"><img class="img-fluid card" style="width: 100%; height: 160px;"
+								src="../../../../assets/dist/images/Frame 3558.png" alt="">
 						</a>
 					</div>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 pl-7">
+						<a href="javascript:void(0)"><img class="img-fluid card" style="width: 100%; height: 160px;"
+								src="../../../../assets/dist/images/Frame 3559.png" alt="">
+						</a>
+					</div>
+
 				</div>
-			</div>
-			<div class="col-lg-8 col-md-8 pr-0 ">
+
 				<div class="box">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase border-bottom-blue">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
 					</div>
-					<!-- <h4 class="text-uppercase border-bottom-blue mb-3">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4> -->
 					<div class="row">
 						<ng-container *ngFor="let item of recommendationsReceiveDeny">
 							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -158,7 +147,8 @@
 										<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"
 											class="image-box ratio-16-9 bd-12">
 											<span class="image">
-												<img class="img-cover" *ngIf="!mr.filePath" src="../../../../assets/dist/images/Thumnail.png">
+												<img class="img-cover" *ngIf="!mr.filePath"
+													src="../../../../assets/dist/images/Logo_PAKNKH.png">
 												<img class="img-cover" *ngIf="mr.filePath" src="{{mr.filePath}}">
 											</span>
 										</a>
@@ -184,10 +174,28 @@
 				</div>
 			</div>
 			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3">
-				<!-- <a href="javascript:void(0)">
-					<img class="img-fluid card" style="height: 209px; width: 100%;"
-						src="../../../../assets/dist/images/index2/Frame 3482.png" alt="">
-				</a> -->
+				<div class="card border p-3 bg-notification">
+					<div class="tt-v1 mb-2 justify-content-start">
+						<h4 class="title-notification mb-1 mr-2 text-uppercase">thông báo</h4>
+					</div>
+					<!-- <p class="content-notification text-3line mb-2" [innerHTML]="dataNotification.content"></p> -->
+					<div class="list-article">
+						<ul>
+							<ng-container *ngFor="let item of listNotification; let i = index">
+								<li *ngIf="i < 5" [ngClass]="{'border-bottom-none' : i == 4}">
+									<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">
+										{{item.title}}
+									</a>
+								</li>
+							</ng-container>
+						</ul>
+					</div>
+
+					<div class="tt-v1 mb-0 d-flex justify-content-end mr-3">
+						<a class="read-more" title="Xem thêm" routerLink="/cong-bo/danh-sach-thong-bao"> Xem thêm
+						</a>
+					</div>
+				</div>
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 
 				<div class="margin-top-16">
