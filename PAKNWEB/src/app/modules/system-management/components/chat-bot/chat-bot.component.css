@@ -2,6 +2,19 @@
 	background-color: transparent !important;
 	color: #333333 !important;
 }
-:host ::ng-deep .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon{
+
+:host ::ng-deep .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon {
 	color: #111 !important;
+}
+
+.tooltipAll {
+	position: absolute;
+	width: auto;
+	background: #2e73d5;
+	color: #fff;
+	padding: 5px 10px;
+	border-radius: 15px;
+	transition: visibility 0s, opacity 0.5s linear;
+	z-index: 9;
+	cursor: pointer;
 }

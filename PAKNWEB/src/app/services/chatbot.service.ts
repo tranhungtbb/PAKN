@@ -16,11 +16,13 @@ export class ChatbotService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) { }
 
 	UpdateChatbot(data: any): Observable<any> {
+		const formData = new FormData()
+		formData.append('ChatbotUpdateIN', JSON.stringify(data))
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX + ' ' + data.question),
 		}
-		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotUpdate, headers)
+		return this.serviceInvoker.postwithHeaders(formData, AppSettings.API_ADDRESS + Api.ChatbotUpdate, headers)
 	}
 	chatbotGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetList)
@@ -46,11 +48,13 @@ export class ChatbotService {
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotUpdate, headers)
 	}
 	chatbotInsertQuestion(data: any): Observable<any> {
+		const formData = new FormData()
+		formData.append('data', JSON.stringify(data))
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX + ' ' + data.question),
 		}
-		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion, headers)
+		return this.serviceInvoker.postwithHeaders(formData, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion, headers)
 	}
 	getNewUserId() {
 		return this.http.get(urlChatbot + '/Conversation/new')
