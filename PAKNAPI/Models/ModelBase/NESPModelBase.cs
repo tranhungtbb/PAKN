@@ -259,7 +259,7 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsInsertIN
 	{
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
 		public string PostType { get; set; }
 		public bool? IsPublished { get; set; }
 
@@ -276,8 +276,8 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public string ImagePath { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
-		[Range(0, int.MaxValue, ErrorMessage = "Kiểu bài viết không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
+		//[Range(0, int.MaxValue, ErrorMessage = "Kiểu bài viết không đúng định dạng")]
 		public int? NewsType { get; set; }
 		public int? ViewCount { get; set; }
 		public string Url { get; set; }
@@ -337,7 +337,7 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsUpdateIN
 	{
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
 		public string PostType { get; set; }
 		public bool? IsPublished { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
@@ -355,8 +355,8 @@ namespace PAKNAPI.ModelBase
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn ảnh không được để trống")]
 		public string ImagePath { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
-		[Range(0, int.MaxValue, ErrorMessage = "Kiểu bài viết không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
+		//[Range(0, int.MaxValue, ErrorMessage = "Kiểu bài viết không đúng định dạng")]
 		public int? NewsType { get; set; }
 		public int? ViewCount { get; set; }
 		public string Url { get; set; }

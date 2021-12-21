@@ -211,6 +211,10 @@ export class ViewRecommendationComponent implements OnInit {
 		$('#modalSuggestReply').modal('hide')
 	}
 
+	useConclustionUnit(contentConclustion: string) {
+		this.modelConclusion.content = this.modelConclusion.content + contentConclustion
+	}
+
 	getShortName(string) {
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()

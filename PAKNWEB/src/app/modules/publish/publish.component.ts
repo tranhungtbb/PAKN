@@ -98,73 +98,83 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	async onConnectChatBot() {
-		this.myGuid = uuidv4()
-		this.connection = new signalR.HubConnectionBuilder()
-			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${this.myGuid}`, {
-				skipNegotiation: true,
-				transport: signalR.HttpTransportType.WebSockets,
-			})
-			.withAutomaticReconnect()
-			.build()
-		this.connection.serverTimeoutInMilliseconds = 180000
-		this.connection.keepAliveIntervalInMilliseconds = 180000
-
-		const resConnect = await this.connection.start()
-		const resCreate = await this.botService
-			.createRoom({
-				userName: this.myGuid,
-			})
-			.toPromise()
-		//console.log('resCreate ', resCreate)
-		if (resCreate.success === 'OK') {
-			this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
-			this.connection.on('ReceiveMessageToGroup', (data: any) => {
-				console.log('ReceiveMessageToGroup ', data, this.myGuid);
-				if (this.myGuid !== data.from) {
-					this.loading = false
-
-					let link = ''
-					let subTags
-					let typeFrom
-					if (data.subTags && data.subTags.length > 0) {
-						try {
-							const par = JSON.parse(data.subTags)
-							typeFrom = par.type
-							if (par.type === 'carousel' || par.type === 'form') {
-								subTags = par.data
-							}
-							if (par.type === 'chat') {
-								console.log('NotifyAdmin ');
-								this.connection.invoke('NotifyAdmin', '')
-							}
-						} catch (error) {
-						}
-					}
-
-					const newMessage = {
-						dateSent: data.timestamp,
-						title: data.content,
-						type: typeFrom,
-						subTags: subTags,
-						link: link,
-						fromUserName: data.from,
-						fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
-						fromFullName: data.fromFullName,
-						toUserName: data.to,
-					}
-					if (this.messages) {
-						this.messages = [...this.messages, newMessage]
-					} else {
-						this.messages = [newMessage]
-					}
-					setTimeout(() => {
-						var objDiv = document.getElementById('bodyMessage')
-						objDiv.scrollTop = objDiv.scrollHeight
-					}, 300)
-				}
-			})
-			this.sendMessage({ title: 'Xin chào' }, false)
+		this.myGuid = this.storageService.getClientUserId();
+		if (!this.myGuid) {
+			this.myGuid = uuidv4();
+			this.storageService.setClientUserId(this.myGuid);
 		}
+		console.log('onConnectChatBot ', this.myGuid);
+		if (!this.connection) {
+			this.connection = new signalR.HubConnectionBuilder()
+				.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${this.myGuid}`, {
+					skipNegotiation: true,
+					transport: signalR.HttpTransportType.WebSockets,
+				})
+				.withAutomaticReconnect()
+				.build()
+			this.connection.serverTimeoutInMilliseconds = 180000
+			this.connection.keepAliveIntervalInMilliseconds = 180000
+			const resConnect = await this.connection.start()
+			const resCreate = await this.botService
+				.createRoom({
+					userName: this.myGuid,
+				})
+				.toPromise()
+			//console.log('resCreate ', resCreate)
+			if (resCreate.success === 'OK') {
+				this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
+				this.connection.on('ReceiveMessageToGroup', (data: any) => {
+					console.log('ReceiveMessageToGroup ', data, this.myGuid);
+					if (this.myGuid !== data.from) {
+						this.loading = false
+
+						let link = ''
+						let subTags
+						let typeFrom
+						if (data.subTags && data.subTags.length > 0) {
+							try {
+								const par = JSON.parse(data.subTags)
+								typeFrom = par.type
+								if (par.type === 'carousel' || par.type === 'form') {
+									subTags = par.data
+								}
+								if (par.type === 'chat') {
+									console.log('NotifyAdmin ');
+									this.connection.invoke('NotifyAdmin', '')
+								}
+							} catch (error) {
+							}
+						}
+
+						const newMessage = {
+							dateSent: data.timestamp,
+							title: data.content,
+							type: typeFrom,
+							subTags: subTags,
+							link: link,
+							fromUserName: data.from,
+							fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
+							fromFullName: data.fromFullName,
+							toUserName: data.to,
+						}
+						if (this.messages) {
+							this.messages = [...this.messages, newMessage]
+						} else {
+							this.messages = [newMessage]
+						}
+						setTimeout(() => {
+							var objDiv = document.getElementById('bodyMessage')
+							objDiv.scrollTop = objDiv.scrollHeight
+						}, 300)
+					}
+				})
+				this.sendMessage({ title: 'Xin chào' }, false)
+			}
+		}
+
+
+
+
 	}
 
 	sendMessage(message: any, append: boolean = true) {
@@ -316,7 +326,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		return false
 	}
 
+	showChatBot: boolean = false
+
 	showHideMessage() {
+		this.showChatBot = !this.showChatBot
 		var message = document.getElementById('message')
 		if (message) {
 			if (message.classList.contains('show')) {

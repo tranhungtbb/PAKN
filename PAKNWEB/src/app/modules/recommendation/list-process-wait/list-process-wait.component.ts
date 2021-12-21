@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { RecommendationObject, RecommendationProcessObject, RecommendationSearchObject, RecommendationForwardObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -19,7 +19,7 @@ declare var $: any
 	templateUrl: './list-process-wait.component.html',
 	styleUrls: ['./list-process-wait.component.css'],
 })
-export class ListProcessWaitComponent implements OnInit {
+export class ListProcessWaitComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: RecommendationService,
 		private storeageService: UserInfoStorageService,
@@ -61,6 +61,7 @@ export class ListProcessWaitComponent implements OnInit {
 	titleAccept: any = ''
 	ngOnInit() {
 		this.buildForm()
+		this.buildFormAccept()
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_WAIT
 		this.getDataForCreate()
 		this.getList()
@@ -68,6 +69,9 @@ export class ListProcessWaitComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		$("#modalAcceptWithFiled").on('hide.bs.modal', function () {
+			this.fieldSelected = null
+		});
 	}
 
 	get f() {
@@ -228,7 +232,15 @@ export class ListProcessWaitComponent implements OnInit {
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
-			$('#modalAccept').modal('show')
+			if (isForwardProcess) {
+				this.submitted = false
+				this.fieldSelected = null
+				this.rebuilFormAccept()
+				$('#modalAcceptWithFiled').modal('show')
+			} else {
+				$('#modalAccept').modal('show')
+			}
+
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
@@ -255,18 +267,38 @@ export class ListProcessWaitComponent implements OnInit {
 			}, 400)
 		}
 	}
+
+	formAccept: FormGroup
+	fieldSelected: number
+	get fAccept() {
+		return this.formAccept.controls
+	}
+
+	buildFormAccept() {
+		this.formAccept = this._fb.group({
+			field: [this.fieldSelected, Validators.required]
+		})
+	}
+
+	rebuilFormAccept() {
+		this.formAccept.reset({
+			field: this.fieldSelected
+		})
+	}
+
+
 	onProcessAccept() {
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
+			Field: this.fieldSelected,
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -277,6 +309,34 @@ export class ListProcessWaitComponent implements OnInit {
 				console.error(err)
 			}
 	}
+
+	onProcessAcceptWithField() {
+		this.submitted = true
+		if (!this.formAccept.valid) {
+			return
+		}
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: this.recommendationStatusProcess,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
+			Field: this.fieldSelected,
+		}
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalAcceptWithFiled').modal('hide')
+				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+
 
 	onProcessDeny() {
 		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
@@ -329,7 +389,6 @@ export class ListProcessWaitComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 				this.getList()
 			} else {

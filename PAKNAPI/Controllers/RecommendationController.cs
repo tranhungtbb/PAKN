@@ -1173,6 +1173,7 @@ namespace PAKNAPI.Controller
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
                 _mRRecommendationUpdateStatusIN.IsFakeImage = _mRRecommendationUpdateStatusIN.IsFakeImage == null ? false : request.IsFakeImage;
+                _mRRecommendationUpdateStatusIN.Field = request.Field;
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
 
                 if (!request.IsList)
@@ -1399,12 +1400,22 @@ namespace PAKNAPI.Controller
                 };
                 RecommendationOnProcessConclusionProcess request = new RecommendationOnProcessConclusionProcess();
                 request.DataConclusion = JsonConvert.DeserializeObject<MRRecommendationConclusionInsertIN>(Request.Form["DataConclusion"].ToString(), jss);
+                request.FilesDelete = JsonConvert.DeserializeObject<List<MRRecommendationConclusionFilesGetByConclusionId>>(Request.Form["FileDelete"].ToString(), jss);
                 request.Files = Request.Form.Files;
                 long UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 int UnitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 request.DataConclusion.UserCreatedId = UserId;
                 request.DataConclusion.UnitCreatedId = UnitId;
                 int? IdConclusion = Int32.Parse((await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionCombineInsertDAO(request.DataConclusion)).ToString());
+
+                if (request.FilesDelete != null)
+                {
+                    foreach (var file in request.FilesDelete)
+                    {
+                        await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(file.Id);
+
+                    }
+                }
 
                 var rRecommendationCombinationUpdate = new MRRecommendationCombinationUpdate();
                 rRecommendationCombinationUpdate.RecommendationId = request.DataConclusion.RecommendationId;

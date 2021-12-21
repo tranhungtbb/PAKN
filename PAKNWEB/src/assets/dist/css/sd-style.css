@@ -2346,6 +2346,10 @@ table thead .form-control ng-select {
 	vertical-align: middle !important;
 }
 
+.max-w-75{
+	max-width: 75%;
+}
+
 
 @media (max-width: 992px) {
 	.navbar-light .navbar-toggler {

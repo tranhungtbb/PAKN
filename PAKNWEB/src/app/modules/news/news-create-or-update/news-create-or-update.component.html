@@ -2,21 +2,25 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="breadcrumb title-module px-0 bg-transparent" style="font-size: 18px;font-weight: 600;">
-				<p class="mb-0 h4">Trang chủ / Tin tức / <strong *ngIf="model.id == null || model.id == 0">Tạo mới tin tức</strong><strong *ngIf="model.id != null && model.id > 0">Sửa
-						tin tức</strong> </p>
+				<p class="mb-0 h4">Trang chủ / Thông báo / <strong *ngIf="model.id == null || model.id == 0">Tạo mới thông
+						báo</strong><strong *ngIf="model.id != null && model.id > 0">Sửa thông báo</strong> </p>
 			</div>
 			<div class="btn-group group-button-table" role="group">
 				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" (click)="back()">
 					<i class="bi bi-arrow-left"></i>&nbsp;
 					Quay lại
 				</a>
-				<button class="btn btn-sm grd-blue text-white rounded border-0 mr-3" (click)="onSave(true,model.isPublished,true)">Xem trước</button>
-				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(true)">&nbsp;&nbsp;&nbsp;&nbsp;Lưu&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				<!-- <button class="btn btn-sm grd-blue text-white rounded border-0 mr-3"
+					(click)="onSave(true,model.isPublished,true)">Xem trước</button> -->
+				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3"
+					(click)="onSave(true)">&nbsp;&nbsp;&nbsp;&nbsp;Lưu&nbsp;&nbsp;&nbsp;&nbsp;</button>
 				<span *ngIf="model.id > 0 && model.status == 1">
-					<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave(false,false)">Hủy công bố</button>
+					<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0"
+						(click)="onSave(false,false)">Hủy công bố</button>
 				</span>
 				<span *ngIf="model.id == 0 || model.status == 0 || model.status == 2">
-					<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave(false,true)">Công bố</button>
+					<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0"
+						(click)="onSave(false,true)">Công bố</button>
 				</span>
 			</div>
 		</div>
@@ -27,8 +31,10 @@
 				<div class="col-md-9 col-lg-9 col-xl-9 col-xxl-8">
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tiêu đề </span> <span class="cl-red">(*)</span></label>
-						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm" placeholder="Nhập...">
-						<div *ngIf="(submitted && f.title.invalid)||(f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm"
+							placeholder="Nhập...">
+						<div *ngIf="(submitted && f.title.invalid)||(f.title.invalid && (f.title.dirty || f.title.touched))"
+							class="has-error m-b-12">
 							<div *ngIf="f.title.errors?.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -39,17 +45,20 @@
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
-						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
-						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+						<textarea class="form-control text-area-height" cols="10" formControlName="summary"
+							[(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
+						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))"
+							class="has-error m-b-12">
 							<div *ngIf="f.summary.errors?.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-12 form-group mb-6">
+					<!-- <div class="col-12 col-lg-12 form-group mb-6">
 						<div class="clearfix mb-2">
 							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span></label>
-							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()">
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right"
+								(click)="onModalNewsRelate()">
 								<i class="bi bi-list"></i> Chọn bài
 							</button>
 						</div>
@@ -64,11 +73,15 @@
 								</span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">Nội dung bài viết </span> <span class="cl-red">(*)</span></label>
-						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
-						<div *ngIf="(submitted && f.contents.invalid)||(f.contents.invalid && (f.contents.dirty || f.contents.touched))" class="has-error m-b-12">
+						<label class="mb-1"><span class="text-uppercase">Nội dung thông báo </span> <span
+								class="cl-red">(*)</span></label>
+						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents"
+							(ready)="onReady($event)"></ckeditor>
+						<div
+							*ngIf="(submitted && f.contents.invalid)||(f.contents.invalid && (f.contents.dirty || f.contents.touched))"
+							class="has-error m-b-12">
 							<div *ngIf="f.contents.errors?.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -76,8 +89,8 @@
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
-					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">Loại tin tức </span> <span class="cl-red">(*)</span></label>
+					<!-- <div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">Loại tin tức </span> <span class="cl-red">(*)</span></label>
 						<ng-select notFoundText="Không có dữ liệu"  formControlName="newsType" id="newsTypeId" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
@@ -101,14 +114,17 @@
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">ảnh đại diện </span> <span class="cl-red">(*)</span></label>
-						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
+						<label class="mb-1"><span class="text-uppercase">ảnh đại diện </span> <span
+								class="cl-red">(*)</span></label>
+						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg"
+							(change)="onAvatarChange($event)">
 						<div class="news-avatar border ps-relative br-15px" (click)="onChangeAvatar()">
 							<img *ngIf="model.imagePath" class="br-15px" [src]="model.imagePath | sanitizerUrl" alt="">
 							<img *ngIf="!model.imagePath" class="br-15px" [src]="avatarUrl" alt="">
-							<div class="ps-absolute info-upload-avartar" *ngIf="!model.imagePath">Click vào đây để tải lên ảnh của bạn</div>
+							<div class="ps-absolute info-upload-avartar" *ngIf="!model.imagePath">Click vào đây để tải lên ảnh của bạn
+							</div>
 							<input hidden formControlName="imagePath" [(ngModel)]="model.imagePath" />
 						</div>
 						<div *ngIf="(submitted)" class="has-error m-b-12">
@@ -131,29 +147,47 @@
 							<div *ngIf="!files || files.length == 0">Chưa có file media nào</div>
 							<ng-container>
 								<p class="mb-2 d-flex border p-2 br-8px" *ngFor="let file of files; let i = index">
-									<a *ngIf="file.fileType == 1" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 1" class="d-flex flex-1" download href="javascript:void(0)"
+										(click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;margin-right: 17px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 2" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 2" class="d-flex flex-1" download href="javascript:void(0)"
+										(click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;margin-right: 17px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 3" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 3" class="d-flex flex-1" download href="javascript:void(0)"
+										(click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;margin-right: 17px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 4" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 4" class="d-flex flex-1" download href="javascript:void(0)"
+										(click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;margin-right: 17px;"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 6" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 6" class="d-flex flex-1" download href="javascript:void(0)"
+										(click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg"
+											style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+											file.name}}</span>
 									</a>
-									<a *ngIf="file.fileType == 7" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
-										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									<a *ngIf="file.fileType == 7" class="d-flex flex-1" download href="javascript:void(0)"
+										(click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
+											style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+											file.name}}</span>
 									</a>
 									<span class="mr-2 center" title="Xóa" (click)="onDeleteMedia(file)">
 										<i class="bi bi-x" style="font-size: 26px;"></i>
@@ -168,7 +202,8 @@
 					<div class="col-12 col-lg-12 form-group" *hasPermission="['3', 'F_I_5']">
 						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
 						<div class="checkbox">
-							<label><input [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify" checked> Gửi thông báo đến người dân, doanh nghiệp</label>
+							<label><input [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify" checked> Gửi
+								thông báo đến người dân, doanh nghiệp</label>
 						</div>
 					</div>
 				</div>
