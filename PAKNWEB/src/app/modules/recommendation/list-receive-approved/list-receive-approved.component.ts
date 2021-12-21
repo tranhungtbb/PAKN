@@ -52,7 +52,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
 
 	lstUnitNotMain: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
@@ -271,7 +270,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -281,26 +279,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
-	}
-
-
-
-	exportExcel() {
-		let request = {
-			IsActived: this.isActived,
-		}
-
-		this._service.recommendationExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
 	}
 	onExport() {
 		let passingObj: any = {}

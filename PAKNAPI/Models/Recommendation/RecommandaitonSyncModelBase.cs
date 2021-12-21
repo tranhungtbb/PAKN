@@ -309,6 +309,8 @@ namespace PAKNAPI.Models.Recommendation
 
         public string Term { get; set; }
 
+        public DateTime EndDate { get; set; }
+
         public async Task<List<MR_CuTriTinhKhanhHoaGetPage>> MR_Sync_CuTriTinhKhanhHoaGetListDAO(string Content, string UnitPreside, string Place, int? Field, int? Status, int? PageSize, int? PageIndex)
         {
             DynamicParameters DP = new DynamicParameters();

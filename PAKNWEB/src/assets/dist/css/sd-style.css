@@ -1850,7 +1850,7 @@ body .ui-paginator .ui-dropdown .ui-dropdown-trigger, body .ui-paginator .ui-dro
 	box-shadow: 0px 12px 23px 0px rgb(62 73 84 / 20%);
 	padding: 15px;
 	border-radius: 8px;
-	max-height: 280px;
+	max-height: 135px;
 	overflow: auto;
 }
 
@@ -2344,6 +2344,10 @@ table thead .form-control ng-select {
 
 .middle {
 	vertical-align: middle !important;
+}
+
+.max-w-75{
+	max-width: 75%;
 }
 
 

@@ -4,14 +4,14 @@
 	</div>
 	<div class="media-body">
 		<p class="my-0 font-weight-bolder h4">{{modelInfo.fullName}}</p>
-		<p class="mb-0 small">Tài khoản: {{modelInfo.userName}}</p>
+		<p class="mb-0 small">Tên đăng nhập: {{modelInfo.userName}}</p>
 	</div>
 </div>
 <ul class="nav nav-qltknd flex-column">
 	<li class="nav-item border-bottom">
-		<a class="nav-link px-0 h5" aria-current="page" [routerLink]="['../thong-tin']" 
+		<a class="nav-link px-0 h5" aria-current="page" [routerLink]="['../thong-tin']"
 			[ngClass]="{'active':['thong-tin-doanh-nghiep','thong-tin'].includes(urlPath)}">
-				Thông tin tài khoản
+			Thông tin tài khoản
 		</a>
 	</li>
 	<li class="nav-item border-bottom">

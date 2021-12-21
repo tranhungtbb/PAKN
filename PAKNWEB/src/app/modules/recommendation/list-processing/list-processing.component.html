@@ -146,7 +146,7 @@
 									<td>
 										<div class="d-flex justify-content-end">
 											<span *ngIf="!isUnitMain && item.unitReceiveId == unitId && !item.isForwardUnitChild">
-												<a (click)="preForward(item)" class="btn-icon grd-blue text-white mr-2 ng-star-inserted"
+												<a (click)="preForward(item.id)" class="btn-icon grd-blue text-white mr-2 ng-star-inserted"
 													title="Chuyển tiếp cho đơn vị cấp dưới">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
 														fill="none">

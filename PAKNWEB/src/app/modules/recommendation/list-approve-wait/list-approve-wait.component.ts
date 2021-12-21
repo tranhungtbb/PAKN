@@ -172,7 +172,6 @@ export class ListApproveWaitComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.APPROVED_SUCCESS)
 				this.getList()
 			} else {
@@ -197,7 +196,6 @@ export class ListApproveWaitComponent implements OnInit {
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()

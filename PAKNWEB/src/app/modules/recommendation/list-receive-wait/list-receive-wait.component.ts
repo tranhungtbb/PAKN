@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
-import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { NotificationService } from 'src/app/services/notification.service'
 import { Router } from '@angular/router'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 declare var $: any
 
@@ -17,14 +17,15 @@ declare var $: any
 	templateUrl: './list-receive-wait.component.html',
 	styleUrls: ['./list-receive-wait.component.css'],
 })
-export class ListReceiveWaitComponent implements OnInit {
+export class ListReceiveWaitComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: RecommendationService,
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private notificationService: NotificationService,
-		private _router: Router
+		private _router: Router,
+		private _fb: FormBuilder,
 	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
@@ -52,14 +53,36 @@ export class ListReceiveWaitComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_WAIT
 		this.getDataForCreate()
 		this.getList()
+		this.buildForm()
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		$("#modalAcceptWithFiled").on('hide.bs.modal', function () {
+			this.fieldSelected = null
+		});
+	}
+
+	formAccept: FormGroup
+	get fAccept() {
+		return this.formAccept.controls
+	}
+
+	buildForm() {
+		this.formAccept = this._fb.group({
+			field: [this.fieldSelected, Validators.required]
+		})
+	}
+
+	rebuilForm() {
+		this.formAccept.reset({
+			field: this.fieldSelected
+		})
 	}
 
 	getDataForCreate() {
@@ -173,21 +196,29 @@ export class ListReceiveWaitComponent implements OnInit {
 					alert(error)
 				}
 		} else {
+			this.submitted = false
+			this.fieldSelected = null
+			this.rebuilForm()
 			$('#modalAccept').modal('show')
 		}
 	}
+	fieldSelected: number
 	onProcessAccept() {
+		this.submitted = true
+		if (!this.formAccept.valid) {
+			return
+		}
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_APPROVED,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
+			Field: this.fieldSelected,
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -215,7 +246,6 @@ export class ListReceiveWaitComponent implements OnInit {
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()
 				} else {

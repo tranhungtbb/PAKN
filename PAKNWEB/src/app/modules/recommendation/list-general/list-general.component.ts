@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -17,7 +17,7 @@ declare var $: any
 	templateUrl: './list-general.component.html',
 	styleUrls: ['./list-general.component.css'],
 })
-export class ListGeneralComponent implements OnInit {
+export class ListGeneralComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: RecommendationService,
 		private storeageService: UserInfoStorageService,
@@ -64,12 +64,16 @@ export class ListGeneralComponent implements OnInit {
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	ngOnInit() {
 		this.buildForm()
+		this.buildFormAccept()
 		this.getDataForCreate()
 		// this.getList()
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		$("#modalAcceptWithFiled").on('hide.bs.modal', function () {
+			this.fieldSelected = null
+		});
 	}
 
 	getDataForCreate() {
@@ -106,6 +110,24 @@ export class ListGeneralComponent implements OnInit {
 			unitReceiveId: this.modelForward.unitReceiveId,
 			expiredDate: this.modelForward.expiredDate,
 			content: this.modelForward.content,
+		})
+	}
+
+	formAccept: FormGroup
+	fieldSelected: number
+	get fAccept() {
+		return this.formAccept.controls
+	}
+
+	buildFormAccept() {
+		this.formAccept = this._fb.group({
+			field: [this.fieldSelected, Validators.required]
+		})
+	}
+
+	rebuilFormAccept() {
+		this.formAccept.reset({
+			field: this.fieldSelected
 		})
 	}
 
@@ -273,6 +295,7 @@ export class ListGeneralComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardMain = isForwardMain
+		debugger
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -341,10 +364,22 @@ export class ListGeneralComponent implements OnInit {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
+				this.fieldSelected = null
+				this.submitted = false
+				this.rebuilFormAccept()
+				$('#modalAcceptWithFiled').modal('show')
+				return
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+				if (this.isForwardProcess) {
+					this.fieldSelected = null
+					this.submitted = false
+					this.rebuilFormAccept()
+					$('#modalAcceptWithFiled').modal('show')
+					return
+				}
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
@@ -401,6 +436,35 @@ export class ListGeneralComponent implements OnInit {
 			}
 	}
 
+	onProcessAcceptWithField() {
+		this.submitted = true
+		if (!this.formAccept.valid) {
+			return
+		}
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: this.recommendationStatusProcess,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
+			Field: this.fieldSelected,
+			IsForwardUnitChild: obj.isForwardUnitChild,
+		}
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalAcceptWithFiled').modal('hide')
+				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+
+
 	onProcessForward() {
 		this.submitted = true
 		this.modelForward.content = this.modelForward.content == null ? '' : this.modelForward.content.trim()
@@ -420,7 +484,6 @@ export class ListGeneralComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => { })
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 				this.getList()
 			} else {

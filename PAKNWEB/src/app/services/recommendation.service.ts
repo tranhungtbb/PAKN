@@ -270,6 +270,7 @@ export class RecommendationService {
 		})
 		const form = new FormData()
 		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
+		form.append('FileDelete', JSON.stringify(request.FilesDelete))
 
 		if (request.Files) {
 			request.Files.forEach((item) => {
