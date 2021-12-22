@@ -212,7 +212,7 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	useConclustionUnit(contentConclustion: string) {
-		this.modelConclusion.content = this.modelConclusion.content + contentConclustion
+		this.modelConclusion.content = this.modelConclusion.content + "\n" + contentConclustion
 	}
 
 	getShortName(string) {

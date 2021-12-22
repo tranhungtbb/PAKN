@@ -2,7 +2,7 @@
 	<div class="col form-group">
 		<label class="mb-1">Người đại diện<span class="cl-red">(*)</span></label>
 		<input [svTrim] maxlength="100" [(ngModel)]="model.representativeName" formControlName="representativeName"
-			type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px">
+			type="text" placeholder="Nhập họ và tên" class="form-control border-brown h-34px rounded-6px">
 		<div
 			*ngIf="(fInfoSubmitted && fInfo.representativeName.invalid)||(fInfo.representativeName.invalid && (fInfo.representativeName.dirty || fInfo.representativeName.touched))"
 			class="has-error m-b-12">

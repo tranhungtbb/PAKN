@@ -68,7 +68,7 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
 						<input [svTrim] maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text"
-							placeholder="Nhập..." class="h-34px rounded-6px form-control border-brown">
+							placeholder="Nhập họ tên" class="h-34px rounded-6px form-control border-brown">
 						<div
 							*ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))"
 							class="has-error m-b-12">
@@ -125,9 +125,9 @@
 					</div>
 					<div class="w-100"></div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-						<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..."
-							class="form-control border-brown h-34px rounded-6px">
+						<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
+						<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text"
+							placeholder="Nhập địa chỉ thường trú..." class="form-control border-brown h-34px rounded-6px">
 						<!--  -->
 						<div
 							*ngIf="(fLoginSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"
@@ -143,9 +143,10 @@
 				</form>
 			</div>
 		</div>
-		<p class="cl-red font-italic mt-3" style="font-weight: bold;">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một
-			lần để sử dụng nhiều lần
-			trên hệ thống</p>
+		<p class="cl-red font-italic mt-3" style="font-weight: bold;">* Vui lòng nhập thông tin và số điện thoại chính xác
+			để
+			Hệ thống gửi tin nhắn SMS và thông báo cập nhật kết quả giải quyết</p>
+		<p class="cl-red font-italic mt-3" style="font-weight: bold;">* Các thông tin có dấu (*) bắt buộc</p>
 		<div class="card-body d-flex justify-content-end px-0">
 			<a (click)="backToHome()" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px">
 				<i class="bi bi-arrow-left"></i>
