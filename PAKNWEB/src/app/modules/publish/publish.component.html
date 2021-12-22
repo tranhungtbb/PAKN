@@ -14,96 +14,111 @@
 									alt=""></a>
 						</div>
 
-						<ul class="navbar-nav header-right align-items-center" *ngIf="isHasToken">
+						<div class="" *ngIf="isHasToken">
+							<div class="row">
+								<div class="nav-item d-none d-lg-block">
+									<div class="header-info">
+										<span class=""><strong>{{currentFullnName}}</strong></span>
 
-							<li class="nav-item d-none d-lg-block">
-								<div class="header-info">
-									<span class="">Xin chào! <strong>{{currentFullnName}}</strong></span>
-
+									</div>
 								</div>
-							</li>
-							<li class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
-								<a class="nav-link  bg-transparent" href="/quan-tri">
-									<i class="bi bi-grid"></i>
-								</a>
-							</li>
-							<li class="nav-item dropdown notification_dropdown">
-								<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)"
-									role="button" data-toggle="dropdown">
-									<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
-									<i class="bi bi-bell"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<div class="header-notification">
-										<div class="red-bar"></div>
-										<div class="title-notification">
-											<div style="font-weight: 500;
-										font-size: 16px; text-transform: uppercase;">Thông báo</div>
-											<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới
+							</div>
+							<div class="row">
+								<div class="col-4 col-xl-4 col-md-4"></div>
+								<div class="col-4 col-xl-4 col-md-4" style="padding-left: 5px;">
+									<div class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
+										<a class="nav-link  bg-transparent" href="/quan-tri">
+											<i class="bi bi-grid"></i>
+										</a>
+									</div>
+									<div class="nav-item dropdown notification_dropdown"
+										style="display: flex; margin-top: 5px; align-items: center;">
+										<a class=" nav-link ai-icon bg-transparent"
+											style="position: relative; vertical-align:middle; align-items: center;" href="javascript:void(0)"
+											role="button" data-toggle="dropdown">
+											<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
+											<i class="bi bi-bell fa-2x"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<div class="header-notification">
+												<div class="red-bar"></div>
+												<div class="title-notification">
+													<div style="font-weight: 500;
+												font-size: 16px; text-transform: uppercase;">Thông báo</div>
+													<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo
+														mới
+													</div>
+												</div>
+
+											</div>
+											<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3"
+												style="height: 550px;" [ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
+												<ul class="timeline" id="notificationScroll" *ngIf="notifications">
+													<li *ngFor="let item of notifications" class="item-notification">
+														<a href="javascript:void(0)"
+															(click)="onClickNotification(item.dataId, item.type, item.typeSend)"
+															class="timeline-panel">
+															<div class="media mr-2 grd-brown">
+																<i class="bi bi-file-earmark-medical cl-brown"></i>
+															</div>
+															<div class="media-body">
+																<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm
+																	dd/MM/yyyy'}}</small>
+																<p class="mb-0 text-uppercase"
+																	[ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">
+																	{{item.title}}</p>
+																<p class="mb-1 h4"
+																	[ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">
+																	{{item.content}}
+																</p>
+															</div>
+														</a>
+													</li>
+												</ul>
+												<div *ngIf="notifications && notifications.length == 0" style="display: flex;
+											flex-direction: row;
+											justify-content: center;
+											align-items: center;">
+													<div>Bạn chưa có thông báo nào</div>
+												</div>
 											</div>
 										</div>
-
 									</div>
-									<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3"
-										style="height: 550px;" [ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
-										<ul class="timeline" id="notificationScroll" *ngIf="notifications">
-											<li *ngFor="let item of notifications" class="item-notification">
-												<a href="javascript:void(0)"
-													(click)="onClickNotification(item.dataId, item.type, item.typeSend)" class="timeline-panel">
-													<div class="media mr-2 grd-brown">
-														<i class="bi bi-file-earmark-medical cl-brown"></i>
-													</div>
-													<div class="media-body">
-														<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm
-															dd/MM/yyyy'}}</small>
-														<p class="mb-0 text-uppercase"
-															[ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">
-															{{item.title}}</p>
-														<p class="mb-1 h4"
-															[ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">
-															{{item.content}}
-														</p>
-													</div>
-												</a>
-											</li>
-										</ul>
-										<div *ngIf="notifications && notifications.length == 0" style="display: flex;
-									flex-direction: row;
-									justify-content: center;
-									align-items: center;">
-											<div>Bạn chưa có thông báo nào</div>
+								</div>
+								<div class="col-4 col-xl-4 col-md-4" style="padding-left: 5px;">
+									<div class="nav-item dropdown header-profile" style="display: flex;">
+										<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+											<div class="avatar-circle background-while">
+												<i class="bi bi-person-fill cl-dark"></i>
+											</div>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
+												<i class="bi bi-person-square"></i>
+												<span class="ml-2">Thông tin tài khoản </span>
+											</a>
+											<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon"
+												*ngIf="typeUserLoginPublish != 1">
+												<i class="bi bi-file-earmark-medical"></i>
+												<span class="ml-2">Phản ánh kiến nghị của tôi </span>
+											</a>
+											<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
+												<i class="bi bi-key"></i>
+												<span class="ml-2">Đổi mật khẩu </span>
+											</a>
+
+											<a class="dropdown-item ai-icon" (click)="signOut()">
+												<i class="bi bi-box-arrow-right"></i>
+												<span class="ml-2">Đăng xuất </span>
+											</a>
 										</div>
 									</div>
 								</div>
-							</li>
-							<li class="nav-item dropdown header-profile">
-								<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
-									<div class="avatar-circle background-while">
-										<i class="bi bi-person-fill cl-dark"></i>
-									</div>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
-										<i class="bi bi-person-square"></i>
-										<span class="ml-2">Thông tin tài khoản </span>
-									</a>
-									<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon"
-										*ngIf="typeUserLoginPublish != 1">
-										<i class="bi bi-file-earmark-medical"></i>
-										<span class="ml-2">Phản ánh kiến nghị của tôi </span>
-									</a>
-									<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
-										<i class="bi bi-key"></i>
-										<span class="ml-2">Đổi mật khẩu </span>
-									</a>
 
-									<a class="dropdown-item ai-icon" (click)="signOut()">
-										<i class="bi bi-box-arrow-right"></i>
-										<span class="ml-2">Đăng xuất </span>
-									</a>
-								</div>
-							</li>
-						</ul>
+
+							</div>
+
+						</div>
 						<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center title-action">
 
 							<span><a routerLink="/dang-ky/ca-nhan">Đăng ký</a></span>

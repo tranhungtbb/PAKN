@@ -102,7 +102,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 
-	private setCurrentLocation() {
+	setCurrentLocation() {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
@@ -552,8 +552,11 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.markers.lat = $event.coords.lat
 		this.markers.lng = $event.coords.lng
 	}
-	markerDragEnd(m: any, $event: MouseEvent) {
-		console.log('dragEnd', m, $event)
+	dragEnd(event): void {
+		this.markers = {}
+		this.markers.lat = event.coords.lat
+		this.markers.lng = event.coords.lng
+
 	}
 	closeModalMap() {
 		$('#modalMaps').modal('hide')
