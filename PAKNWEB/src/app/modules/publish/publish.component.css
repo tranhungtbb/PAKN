@@ -71,7 +71,8 @@ ul.list-group.list-group-flush li {
 	font-size: 20px;
 	line-height: 24px;
 }
-.title-action{
+
+.title-action {
 	font-style: normal;
 	font-weight: 500;
 	font-size: 18px;
@@ -752,15 +753,15 @@ a.text-1line.text-black.sub-menu-active {
 	color: #fff;
 }
 
-.text-decoration-revert{
+.text-decoration-revert {
 	text-decoration: revert;
 }
 
-.menu-filter{
+.menu-filter {
 	width: 40px;
 	height: 38px;
 	border-radius: 4px;
-	background-color: rgba(255,255,255,.2);
+	background-color: rgba(255, 255, 255, .2);
 	border: none;
 }
 
@@ -776,13 +777,16 @@ ul.ft-list-rm li {
 	height: 40px;
 	padding-right: 15px !important;
 }
+
 ul.ft-list-rm li::marker {
 	color: #2e73d5;
 	font-size: 20px;
 }
+
 ul.ft-list-rm li a {
 	color: #222;
 }
+
 ::placeholder {
 	color: #c8c8c8;
 	opacity: 1;
@@ -1087,6 +1091,14 @@ body, html {
 	color: #000;
 }
 
+.msg_cotainer_answer {
+	background-color: #db8e3f;
+	padding: 0.5rem;
+	margin-top: 0.5rem;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
 .msg_cotainer_child {
 	background-color: #fff;
 	padding: 0.5rem;
@@ -1221,7 +1233,7 @@ body, html {
 	margin-right: 0;
 }
 
-.chat-now{
+.chat-now {
 	position: fixed;
 	width: 330px;
 	/* height: 60px; */

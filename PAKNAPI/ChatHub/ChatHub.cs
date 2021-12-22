@@ -20,15 +20,15 @@ namespace SignalR.Hubs
     {
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
         private readonly IAppSetting _appSetting;
-        private readonly IManageBots _bots;
+        //private readonly IManageBots _bots;
 
         public ChatHub(
-            IAppSetting appSetting,
-            IManageBots bots
+            IAppSetting appSetting
+            //IManageBots bots
    
         )
         {
-            _bots = bots;
+            //_bots = bots;
             _appSetting = appSetting;
         }
 
@@ -129,17 +129,18 @@ namespace SignalR.Hubs
             {
                 DateTime foo = DateTime.Now;
                 //var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
-                ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                //ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                List<ResultBotNew> results = ResultBot(string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
                 DateTime foooo = DateTime.Now;
                 double totall = (foooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 0 " + totall);
                 Message messageModel = new Message()
                 {
                     HiddenAnswer = string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer,
-                    Content = res.Answer,
                     From = "Bot",
                     FromFullName = "Bot",
-                    SubTags = (res.SubTags),
+
+                    Results = results,
                     FromId = "Bot",
                     To = roomName,
                     Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString(),
@@ -259,7 +260,7 @@ namespace SignalR.Hubs
             {
                 _ConnectionsMap.Remove(userName + "x_x" + id);
             }
-            _bots.RemoveBot(userName);
+            //_bots.RemoveBot(userName);
 
             string roomName = "Room_" + userName;
             BOTRoom room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
