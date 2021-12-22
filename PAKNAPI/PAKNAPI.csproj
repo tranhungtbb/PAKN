@@ -69,6 +69,7 @@
     <Compile Remove="Models\UserExtended.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="customaiml.xml" />
     <None Remove="ExportGrid\BI_Business_List.repx" />
     <None Remove="ExportGrid\BI_Individual_List.repx" />
     <None Remove="ExportGrid\HIS_SystemLog.repx" />
