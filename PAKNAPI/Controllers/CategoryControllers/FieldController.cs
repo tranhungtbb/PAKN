@@ -146,7 +146,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-drop-down")]
 		public async Task<ActionResult<object>> CAFieldGetDropdownBase()
 		{

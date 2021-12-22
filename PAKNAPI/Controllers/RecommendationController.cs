@@ -1333,7 +1333,7 @@ namespace PAKNAPI.Controller
                     }
                 }
 
-                await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request.DataConclusion.RecommendationId, STEP_RECOMMENDATION.APPROVE);
+                //await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request.DataConclusion.RecommendationId, STEP_RECOMMENDATION.APPROVE);
                 MRRecommendationForwardInsertIN dataForward = new MRRecommendationForwardInsertIN();
                 dataForward.RecommendationId = request.DataConclusion.RecommendationId;
                 dataForward.UserSendId = UserId;
@@ -1343,6 +1343,7 @@ namespace PAKNAPI.Controller
                 dataForward.Step = STEP_RECOMMENDATION.APPROVE;
                 dataForward.SendDate = DateTime.Now;
                 dataForward.IsViewed = false;
+                dataForward.ProcessingDate = DateTime.Now;
                 await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(dataForward);
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
@@ -1374,7 +1375,7 @@ namespace PAKNAPI.Controller
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 await SYNotificationInsertTypeRecommendation (request.DataConclusion.RecommendationId);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-                return new ResultApi { Success = ResultCode.OK };
+                return new ResultApi { Success = ResultCode.OK , Result = IdConclusion };
             }
             catch (Exception ex)
             {
@@ -1457,7 +1458,7 @@ namespace PAKNAPI.Controller
                 
 
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
-                return new ResultApi { Success = ResultCode.OK };
+                return new ResultApi { Success = ResultCode.OK , Result = IdConclusion };
             }
             catch (Exception ex)
             {

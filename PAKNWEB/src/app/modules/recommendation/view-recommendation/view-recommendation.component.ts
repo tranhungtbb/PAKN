@@ -529,6 +529,7 @@ export class ViewRecommendationComponent implements OnInit {
 				if (this.isUnitCombine) {
 					await this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).toPromise().then((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
+
 						} else {
 							this.toastr.error(response.message)
 							$('#modalAccept').modal('hide')
@@ -556,7 +557,13 @@ export class ViewRecommendationComponent implements OnInit {
 				}
 			}
 		}
+		this.onProcessAcceptStatus()
+	}
 
+	onProcessAcceptStatus(idProcess: number = null) {
+		if (idProcess) {
+			this.modelProcess.id = idProcess
+		}
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: this.recommendationStatusProcess,

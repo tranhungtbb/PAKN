@@ -155,6 +155,20 @@
 							</div>
 						</div>
 						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="control-label">Câu trả lời <span class="text-danger">(*)</span></label>
+								<textarea id="target" rows="6" placeholder="Nhập câu trả lời..." class="form-control"
+									formControlName="question" [(ngModel)]="model.question" (mouseup)="mouseUpevent($event)"></textarea>
+								<div
+									*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.question.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row form-group">
 							<div class="col-sm-3">
 								<label class="control-label">Loại câu hỏi <span class="text-danger">(*)</span></label>
 								<ng-select notFoundText="Không có dữ liệu" [clearable]="false" class="form-control " [items]="listType"
@@ -189,18 +203,6 @@
 								<div id="addHashtagButton" class="tooltipAll" *ngIf="isAddButton" (click)="addHashtagFromHighlight()">
 									Thêm
 									nhãn</div>
-								<div class="col-sm-12">
-									<label class="control-label">Câu trả lời <span class="text-danger">(*)</span></label>
-									<textarea id="target" rows="6" placeholder="Nhập câu trả lời..." class="form-control"
-										formControlName="question" [(ngModel)]="model.question" (mouseup)="mouseUpevent($event)"></textarea>
-									<div
-										*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
-										class="has-error m-b-12">
-										<div *ngIf="f.question.errors.required">
-											<span class="help-block">Trường dữ liệu này không để trống</span>
-										</div>
-									</div>
-								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-sm-5">
@@ -267,6 +269,11 @@
 										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
 											[ngModelOptions]="{standalone: true}" maxlength="500" />
 									</div>
+									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 3">
+										<label class="mb-1 department">Lời chào mặc định</label>
+										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+											[ngModelOptions]="{standalone: true}" maxlength="500" />
+									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px;"
 											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onAddAnswer()">
@@ -279,7 +286,7 @@
 							<div class="col-sm-12">
 								<div class="title-user-map center" style="text-transform: none;" *ngIf="lstAnswer.length ==0">Chưa
 									có lựa chọn</div>
-								<div class="row" *ngFor="let item of lstAnswer">
+								<div class="row" *ngFor="let item of lstAnswer; let i = index">
 									<div class="col-12 col-lg-5 form-group">
 										{{item.answer}}
 									</div>
@@ -293,7 +300,7 @@
 									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"
-											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onRemoveAnswer(item)">
+											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onRemoveAnswer(i)">
 											<i class="bi bi-node-minus"></i>
 										</button>
 									</div>
