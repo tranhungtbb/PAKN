@@ -352,7 +352,7 @@ namespace PAKNAPI.ModelBase
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung bài viết không được để trống")]
 		public string Contents { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn ảnh không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn ảnh không được để trống")]
 		public string ImagePath { get; set; }
 
 		//[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
