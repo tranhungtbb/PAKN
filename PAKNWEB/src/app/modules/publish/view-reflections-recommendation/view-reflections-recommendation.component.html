@@ -102,15 +102,15 @@
 					</div>
 					<div class="media pb-4 border-bottom mb-4 mb-4 box-message-publish"
 						*ngIf="model && [3,10].includes(model.status)">
-						<div class="mr-3">
-							<img *ngIf="[10].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
+						<div class="mr-3" style="width:40px">
+							<!-- <img *ngIf="[10].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 								208deg) brightness(99%) contrast(85%)">
 							<img *ngIf="[3].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40"
-								style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)">
+								style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)"> -->
 						</div>
 						<div class="media-body">
 							<div class="tt-v1 d-flex justify-content-between">
-								<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ?
+								<p class="h4 font-italic font-weight-bold max-w-75">{{model.processUnitName != null ?
 									model.processUnitName
 									: 'Cơ quan chức năng'}} trả lời:</p>
 								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate |
@@ -122,14 +122,12 @@
 									{{model.denyDate |date :'dd/MM/yyyy'}}</p>
 							</div>
 							<div>
-								<span *ngIf="model.fieldName" class="my-0 h5">Lĩnh vực:</span> {{model.fieldName}}
-								<span *ngIf="model.unitName" class="my-0 ml-2 h5">Đơn vị tiếp nhận:</span> {{model.unitName}}
-								<!-- <span *ngIf="model.fieldName">
-									<span class="my-0 h5">Lĩnh vực :</span> {{model.fieldName}}
+								<span *ngIf="model.fieldName">
+									<span class="my-0 h5"> Lĩnh vực :</span>{{model.fieldName}}
 								</span>
 								<span style="float:right;" *ngIf="model.unitName">
-									<span class="my-0 h5">Đơn vị tiếp nhận :</span> {{model.unitName}}
-								</span> -->
+									<span class="my-0 h5">Đơn vị tiếp nhận :</span>{{model.unitName}}
+								</span>
 
 							</div>
 							<br>

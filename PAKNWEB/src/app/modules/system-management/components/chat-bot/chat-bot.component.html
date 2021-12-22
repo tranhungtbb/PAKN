@@ -155,6 +155,20 @@
 							</div>
 						</div>
 						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="control-label">Câu trả lời <span class="text-danger">(*)</span></label>
+								<textarea id="target" rows="6" placeholder="Nhập câu trả lời..." class="form-control"
+									formControlName="question" [(ngModel)]="model.question" (mouseup)="mouseUpevent($event)"></textarea>
+								<div
+									*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.question.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row form-group">
 							<div class="col-sm-3">
 								<label class="control-label">Loại câu hỏi <span class="text-danger">(*)</span></label>
 								<ng-select notFoundText="Không có dữ liệu" [clearable]="false" class="form-control " [items]="listType"
@@ -189,18 +203,6 @@
 								<div id="addHashtagButton" class="tooltipAll" *ngIf="isAddButton" (click)="addHashtagFromHighlight()">
 									Thêm
 									nhãn</div>
-								<div class="col-sm-12">
-									<label class="control-label">Câu trả lời <span class="text-danger">(*)</span></label>
-									<textarea id="target" rows="6" placeholder="Nhập câu trả lời..." class="form-control"
-										formControlName="question" [(ngModel)]="model.question" (mouseup)="mouseUpevent($event)"></textarea>
-									<div
-										*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
-										class="has-error m-b-12">
-										<div *ngIf="f.question.errors.required">
-											<span class="help-block">Trường dữ liệu này không để trống</span>
-										</div>
-									</div>
-								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-sm-5">

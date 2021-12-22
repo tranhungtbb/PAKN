@@ -166,8 +166,8 @@
 						<ng-container *ngFor="let item of conclusionCombine">
 							<div class="media pb-4 mb-1 box-message-publish">
 								<div class="mr-3">
-									<div *ngIf="![6].includes(item.status)">
-										<div *ngIf="model.fieldFilePath==null">
+									<div *ngIf="![6].includes(item.status)" style="width:40px;height: 40px;">
+										<!-- <div *ngIf="model.fieldFilePath==null">
 											<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
 												class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
 												<path
@@ -179,7 +179,7 @@
 										<div *ngIf="model.fieldFilePath!=null">
 											<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 													208deg) brightness(99%) contrast(85%)">
-										</div>
+										</div> -->
 									</div>
 									<div *ngIf="[6].includes(item.status)">
 										<img [src]="model.fieldFilePath" width="40" height="40"
