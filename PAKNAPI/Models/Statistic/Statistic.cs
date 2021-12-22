@@ -302,12 +302,48 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticByByUnitParent>> StatisticByUnitParentDAO(int? ParentId)
+		public async Task<List<StatisticByByUnitParent>> StatisticByUnitParentDAO(int? ParentId, int? UnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("ParentId", ParentId);
+			DP.Add("UnitId", UnitId);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticByByUnitParent>("TK_RecommendationPublicByUnit", DP)).ToList();
+		}
+	}
+
+	public class StatisticByField
+	{
+		private SQLCon _sQLCon;
+		public int Id { get; set; }
+		public string FieldName { get; set; }
+		public int? TotalResult { get; set; }
+		public int? ReceiveApproved { get; set; }
+		public int? Finised { get; set; }
+		public int? Processing { get; set; }
+		public int? Expired { get; set; }
+		public int? Satisfaction { get; set; }
+		public int? Accept { get; set; }
+		public int? UnSatisfaction { get; set; }
+		public StatisticByField(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticByField()
+		{
+		}
+
+		public async Task<List<StatisticByField>> StatisticByFieldDAO(int? Field, DateTime? FromDate, DateTime? ToDate)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticByField>("TK_RecommendationPublicByField", DP)).ToList();
 		}
 	}
 

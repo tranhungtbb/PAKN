@@ -278,13 +278,31 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("recommendation-statistic-by-unit-parent")]
-		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId = 0)
+		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId, int? UnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
-				List<StatisticByByUnitParent> statisticByByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(ParentId);
+				List<StatisticByByUnitParent> statisticByByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(ParentId, UnitId, FromDate, ToDate);
 
 				return new ResultApi { Success = ResultCode.OK, Result = statisticByByUnitParent };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("recommendation-statistic-by-field")]
+		public async Task<ActionResult<object>> RecommendationStatisticByField(int? Field, DateTime? FromDate, DateTime? ToDate)
+		{
+			try
+			{
+				List<StatisticByField> statisticByFields = await new StatisticByField(_appSetting).StatisticByFieldDAO(Field, FromDate, ToDate);
+
+				return new ResultApi { Success = ResultCode.OK, Result = statisticByFields };
 			}
 			catch (Exception ex)
 			{
@@ -301,11 +319,11 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("recommendation-statistic-for-chart")]
-		public async Task<ActionResult<object>> RecommendationStatisticForChart()
+		public async Task<ActionResult<object>> RecommendationStatisticForChart(int? UnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
-				List<StatisticByByUnitParent> statisticByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(0);
+				List<StatisticByByUnitParent> statisticByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(0,UnitId,FromDate, ToDate);
 
 				
 				var titles = new List<string>();
