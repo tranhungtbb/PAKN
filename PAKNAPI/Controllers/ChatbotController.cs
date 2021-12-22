@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Chatbot;
 using SignalR.Hubs;
@@ -64,11 +65,12 @@ namespace PAKNAPI.Controllers.ChatbotController
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-list-chat-bot-on-page")]
-        public async Task<ActionResult<object>> ChatbotGetAllOnPageBase()
+        public async Task<ActionResult<object>> ChatbotGetAllOnPageBase(int PageIndex, int PageSize, string Title, string Question, bool? IsActive)
         {
             try
             {
-                List<ChatbotGetAllOnPage> rsChatbotGetAllOnPage = await new ChatbotGetAllOnPage(_appSetting).ChatbotGetAllOnPageDAO();
+                List<ChatbotGetAllOnPage> rsChatbotGetAllOnPage = 
+                    await new ChatbotGetAllOnPage(_appSetting).ChatbotGetAllOnPageDAO(PageIndex,PageSize, Title, Question, IsActive);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"ChatbotGetAllOnPage", rsChatbotGetAllOnPage},
@@ -131,9 +133,11 @@ namespace PAKNAPI.Controllers.ChatbotController
             try
             {
                 List<ChatbotGetAllActive> ChatbotGetAllActive = await new ChatbotGetAllActive(_appSetting).ChatbotGetAllActiveDAO();
+                List<DropdownObject> ListHashtag = await new ChatbotGetAllActive(_appSetting).GetDropdownHashtag();
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"ChatbotGetAll", ChatbotGetAllActive},
+                        {"ListHashtag", ListHashtag},
                     };
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
             }
@@ -154,14 +158,16 @@ namespace PAKNAPI.Controllers.ChatbotController
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-by-id")]
-        public async Task<ActionResult<object>> ChatbotGetByIDBase(int? Id)
+        public async Task<ActionResult<object>> ChatbotGetByIDBase(long Id)
         {
             try
             {
                 List<ChatbotGetByID> rsChatbotGetByID = await new ChatbotGetByID(_appSetting).ChatbotGetByIDDAO(Id);
+                List<ChatbotHashtag> rsChatbotHashtag = await new ChatbotGetByID(_appSetting).ChatbotHashtagGetByChatbotDAO(Id);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"ChatbotGetByID", rsChatbotGetByID},
+                        {"ListChatbotHashtag", rsChatbotHashtag},
                     };
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
             }
@@ -210,10 +216,17 @@ namespace PAKNAPI.Controllers.ChatbotController
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("insert-question")]
-        public async Task<object> ChatbotInsertQuestion(ChatbotInsertIN _chatbotInsertIN)
+        public async Task<object> ChatbotInsertQuestion()
         {
             try
             {
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                ChatbotInsertIN _chatbotInsertIN = JsonConvert.DeserializeObject<ChatbotInsertIN>(Request.Form["data"].ToString(), jss);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 var resInsert = await new ChatbotInsert(_webHostEnvironment, _appSetting).ChatbotInsertDAO(_chatbotInsertIN);
                 await _bots.ReloadBots();
@@ -236,10 +249,17 @@ namespace PAKNAPI.Controllers.ChatbotController
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("update")]
-        public async Task<ActionResult<object>> ChatbotUpdateBase(ChatbotUpdateIN ChatbotUpdateIN)
+        public async Task<ActionResult<object>> ChatbotUpdateBase()
         {
             try
             {
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                ChatbotUpdateIN ChatbotUpdateIN = JsonConvert.DeserializeObject<ChatbotUpdateIN>(Request.Form["ChatbotUpdateIN"].ToString(), jss);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 var resUpdate = await new ChatbotUpdate(_webHostEnvironment, _appSetting).ChatbotUpdateDAO(ChatbotUpdateIN);
                 await _bots.ReloadBots();

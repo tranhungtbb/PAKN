@@ -16,7 +16,13 @@ namespace SignalR.Hubs
         public string Answer { get; set; }
         public List<string> SubTags { get; set; }
     }
-    
+
+    public class ResultBotNew
+    {
+        public string Answer { get; set; }
+        public string SubTags { get; set; }
+    }
+
 
     public class ManageBots : IManageBots
     {

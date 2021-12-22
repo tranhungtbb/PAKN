@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using PAKNAPI.Common;
+using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -295,6 +296,48 @@ namespace PAKNAPI.Models.ModelBase
 			public string pakn { get; set; }
 		}
 
+		private List<BotLib> changeDataNew(List<BotGetLibrary> libraries)
+		{
+			List<BotLib> lstLib = new List<BotLib>();
+
+			foreach (BotGetLibrary item in libraries)
+			{
+				if (lstLib.Count == 0)
+				{
+					BotLib lib = new BotLib();
+					lib.id = item.Id;
+					lib.pattern = item.Title;
+					lib.template = new template();
+					lib.template.title = item.Question;
+					lib.template.pakn = SetJson(item.Id, libraries);
+					lstLib.Add(lib);
+				}
+				else
+				{
+					bool checkDuplicate = false;
+					foreach (BotLib itemLib in lstLib)
+					{
+						if (itemLib.id == item.Id)
+						{
+							checkDuplicate = true;
+							break;
+						}
+					}
+					if (!checkDuplicate)
+					{
+						BotLib lib = new BotLib();
+						lib.id = item.Id;
+						lib.pattern = item.Title;
+						lib.template = new template();
+						lib.template.title = item.Question;
+						lib.template.pakn = SetJson(item.Id, libraries);
+						lstLib.Add(lib);
+					}
+				}
+			}
+			return lstLib;
+		}
+
 		private string changeData(List<BotGetLibrary> libraries)
 		{
 			string result = "";
@@ -376,7 +419,7 @@ namespace PAKNAPI.Models.ModelBase
 			}
 			if (result != "")
 			{
-				result = @"json{""type"":""carousel"",""data"":[" + result + "]}";
+				result = @"{""type"":""carousel"",""data"":[" + result + "]}";
 			}
 			return result;
 		}
@@ -404,6 +447,25 @@ namespace PAKNAPI.Models.ModelBase
             }
 
             return result;
+		}
+
+		public List<ResultBotNew> BotGetLibraryByInput(string input)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("InputString", input);
+			List<BotGetLibrary> libraries = (_sQLCon.ExecuteListDapper<BotGetLibrary>("SY_Chatbot_Library_GetByInput", DP)).ToList();
+			//
+			var result = changeDataNew(libraries);
+
+			List<ResultBotNew> rs = new List<ResultBotNew>();
+            foreach (var item in result)
+            {
+                ResultBotNew rb = new ResultBotNew();
+                rb.Answer = item.template.title;
+                rb.SubTags = item.template.pakn;
+				rs.Add(rb);
+            }
+            return rs;
 		}
 	}
 }

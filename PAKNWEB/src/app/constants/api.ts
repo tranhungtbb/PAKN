@@ -112,6 +112,9 @@ export class Api {
 	public static HashtagUpdate = 'hashtag/update'
 	public static HashtagDelete = 'hashtag/delete'
 
+	//HashtagChatbot
+	public static HashtagChatbotInsert = 'hashtagchatbot/insert'
+
 	//Unit
 	public static UnitGetPagedList = 'unit/get-list-unit-on-page'
 	public static UnitGetAll = 'unit/get-all'

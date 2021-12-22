@@ -153,6 +153,19 @@ namespace SignalR.Hubs
             }
         }
 
+        private List<ResultBotNew> ResultBot(string input)
+        {
+            try
+            {
+                var result = new BotGetLibrary(_appSetting).BotGetLibraryByInput(input);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new List<ResultBotNew>();
+            }
+        }
+
         private StringValues GetUserName(HttpContext httpContext)
         {
             return !string.IsNullOrEmpty(httpContext.Request.Query["userName"]) ? httpContext.Request.Query["userName"] : httpContext.Request.Query["sysUserName"];
