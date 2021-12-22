@@ -78,6 +78,7 @@ namespace PAKNAPI.Models.Recommendation
 			DynamicParameters DP = new DynamicParameters();
 			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagGetDropdown", DP)).ToList();
 			data.lstGroupWord = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_GroupWordGetListSuggest", DP)).ToList();
+			data.lstField = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_FieldGetDropdown", DP)).ToList();
 			DP.Add("UnitId", UnitId);
 			data.lstUsers = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UsersGetDropdownByUnitId", DP)).ToList();
 			data.lstUsersProcess = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UsersProcessDropdownByUnitId]", DP)).Where(x=>x.Value != userId).ToList();

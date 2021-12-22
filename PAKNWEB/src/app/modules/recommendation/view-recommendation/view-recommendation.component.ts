@@ -1,14 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
-import { CONSTANTS, FILETYPE, MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import {
 	RecommendationConclusionObject,
 	RecommendationForwardObject,
 	RecommendationProcessObject,
 	RecommendationViewObject,
 	RecommendationSuggestObject,
-	RecommnendationInfomationExchange,
 } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -19,7 +18,6 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 import { AppSettings } from 'src/app/constants/app-setting'
-import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 
@@ -45,7 +43,6 @@ export class ViewRecommendationComponent implements OnInit {
 	unitLoginId: number = this.storeageService.getUnitId()
 	pageIndex: number = 1
 	pageSize: number = 20
-	APIADDRESS: string
 	listData = new Array<RecommendationSuggestObject>()
 	suggest: boolean = false
 	totalRecords: number = 0
@@ -55,6 +52,7 @@ export class ViewRecommendationComponent implements OnInit {
 	titleAccept: any = ''
 	lstDictionariesWord: any = []
 	denyContent: any
+	lstField: any = []
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
@@ -73,12 +71,10 @@ export class ViewRecommendationComponent implements OnInit {
 		private router: Router,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
-		private commentService: RecommendationCommentService,
 		private biService: BusinessIndividualService
 	) { }
 
 	ngOnInit() {
-		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 		this._serviceCatalog.wordGetListSuggest({}).subscribe(
 			(response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -93,6 +89,7 @@ export class ViewRecommendationComponent implements OnInit {
 		)
 		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
+		this.buildFormAccept()
 		this.getDropdown()
 		this.model = new RecommendationViewObject()
 		this.activatedRoute.params.subscribe((params) => {
@@ -118,7 +115,6 @@ export class ViewRecommendationComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.getAllInfomationExchange(1)
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.isUnitCombine = response.result.isUnitCombine
@@ -162,6 +158,7 @@ export class ViewRecommendationComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstHashtag = response.result.lstHashtag
 				this.lstUsers = response.result.lstUsersProcess
+				this.lstField = response.result.lstField
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -389,6 +386,28 @@ export class ViewRecommendationComponent implements OnInit {
 			content: this.modelForward.content,
 		})
 	}
+
+	formAccept: FormGroup
+	fieldSelected: number
+	get fAccept() {
+		return this.formAccept.controls
+	}
+
+	buildFormAccept() {
+		this.formAccept = this._fb.group({
+			field: [this.fieldSelected, Validators.required]
+		})
+	}
+
+	rebuilFormAccept() {
+		this.submitted = false
+		this.fieldSelected = null
+		this.formAccept.reset({
+			field: this.fieldSelected
+		})
+	}
+
+
 	preForward() {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = this.model.id
@@ -474,9 +493,17 @@ export class ViewRecommendationComponent implements OnInit {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+				this.rebuilFormAccept()
+				$('#modalAcceptWithFiled').modal('show')
+				return
 			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+				if (!this.model.field) {
+					this.rebuilFormAccept()
+					$('#modalAcceptWithFiled').modal('show')
+					return
+				}
 			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
@@ -499,7 +526,6 @@ export class ViewRecommendationComponent implements OnInit {
 					RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
 					FilesDelete: this.filesDelete
 				}
-				debugger
 				if (this.isUnitCombine) {
 					await this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).toPromise().then((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
@@ -555,6 +581,35 @@ export class ViewRecommendationComponent implements OnInit {
 				console.error(err)
 			}
 	}
+
+	onProcessAcceptWithField() {
+		this.submitted = true
+		if (!this.formAccept.valid) {
+			return
+		}
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: this.recommendationStatusProcess,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
+			Field: this.fieldSelected
+		}
+		this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalAcceptWithFiled').modal('hide')
+				this.model.status = this.recommendationStatusProcess
+				this.submitted = false
+				this.toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.getData()
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+
 	onProcessDeny() {
 		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
 			this.toastr.error('Vui lòng nhập lý do')
@@ -630,54 +685,6 @@ export class ViewRecommendationComponent implements OnInit {
 				return
 		}
 	}
-
-	//infomationExchange area
-	infoExchangeModel: RecommnendationInfomationExchange = new RecommnendationInfomationExchange()
-	infomationExchangeQuery: any = {
-		pageIndex: 1,
-		pageSize: 20,
-		recommendationId: 0,
-		isPublish: false
-	}
-	listInfomationExchange: any[] = []
-	totalInfomationExchange = 0
-
-	onInsertInfomationExchange() {
-		this.infoExchangeModel.fullName = this.storeageService.getFullName()
-		this.infoExchangeModel.createdDate = new Date()
-		this.infoExchangeModel.recommendationId = this.model.id
-		this.infoExchangeModel.isPublish = false
-		this.infoExchangeModel.contents = this.infoExchangeModel.contents == null ? '' : this.infoExchangeModel.contents.trim()
-		if (!this.infoExchangeModel.contents) {
-			this.toastr.error('Nội dung trao đổi không được để trống')
-			return
-		}
-
-		this.commentService.insertInfomationExchange(this.infoExchangeModel).subscribe((res) => {
-			if (res.success != RESPONSE_STATUS.success) {
-				this.toastr.error(res.message)
-				return
-			}
-			this.toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-			this.listInfomationExchange.push(this.infoExchangeModel)
-			this.totalInfomationExchange += 1
-			this.infoExchangeModel = new RecommnendationInfomationExchange()
-
-		})
-	}
-
-	getAllInfomationExchange(pageIndex: any) {
-		this.infomationExchangeQuery.pageIndex = pageIndex
-		this.infomationExchangeQuery.recommendationId = this.model.id
-		this.commentService.getAllInfomationChangeOnPage(this.infomationExchangeQuery).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.listInfomationExchange = res.result.MRInfomationExchangeAllOnPage
-				this.totalInfomationExchange = res.result.TotalCount
-			}
-		})
-	}
-
-
 	// sugest
 	sugestText = () => {
 		if ([2, 5, 8].includes(this.model.status)) {
