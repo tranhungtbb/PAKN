@@ -34,14 +34,14 @@
 				<div class="box">
 					<ng-container *ngFor="let item of ReflectionsRecommendations;let i = index">
 						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
-							<div class="card-header pt-3 pb-0 align-items-center">
+							<div class="card-header pt-3 pb-0 align-items-center" style="padding-left: 6px;">
 								<p class="card-text mb-1">
 									<a class="h4 text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 										{{item.title}}
 									</a>
 								</p>
 							</div>
-							<div class="card-body pt-1 pb-3">
+							<div class="card-body pt-1 pb-3" style="padding-left: 6px;">
 								<div class="d-flex align-items-center justify-content-between">
 									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
 									<a class="read-more" *ngIf="item.totalComment" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"> <i
