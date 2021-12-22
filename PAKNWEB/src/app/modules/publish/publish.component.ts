@@ -132,15 +132,6 @@ export class PublishComponent implements OnInit, OnChanges {
 						if (data.results && data.results.length > 0) {
 							console.log('ReceiveMessageToGroup 2', data.results);
 							try {
-								// const par = JSON.parse(data.subTags)
-								// typeFrom = par.type
-								// if (par.type === 'carousel' || par.type === 'form') {
-								// 	subTags = par.data
-								// }
-								// if (par.type === 'chat') {
-								// 	console.log('NotifyAdmin ');
-								// 	this.connection.invoke('NotifyAdmin', '')
-								// }
 								for (let index = 0; index < data.results.length; index++) {
 									const element = data.results[index];
 									if (element.subTags !== '') {
@@ -188,14 +179,32 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	async onConnectChatBot() {
-		this.sendMessage({ title: 'Xin chào' }, false)
+		this.sendMessage({ title: 'Xin chào', idSuggetLibrary: '' }, false)
 	}
 
 	sendMessage(message: any, append: boolean = true) {
 		console.log('message ', message)
+		if (message.typeSuggest && message.typeSuggest == "2") {
+			window.open(message.linkSuggest, '_blank')
+			return
+		}
+		else if (message.typeSuggest && message.typeSuggest == "3") {
+			this.connection.invoke('NotifyAdmin', '')
+			this.messages = [
+				...this.messages,
+				{
+					dateSent: '',
+					title: message.linkSuggest,
+					fromId: 19,
+					fromAvatarPath: '',
+					answers: []
+				},
+			]
+			return
+		}
 		this.loading = true
 		if (message.hiddenAnswer && message.hiddenAnswer !== '') {
-			this.connection.invoke('AnonymousChatWithBot', message.title, message.hiddenAnswer)
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.idSuggetLibrary ? message.idSuggetLibrary : '', message.hiddenAnswer)
 			if (append) {
 				this.messages = [
 					...this.messages,
@@ -211,7 +220,7 @@ export class PublishComponent implements OnInit, OnChanges {
 				}, 300)
 			}
 		} else {
-			this.connection.invoke('AnonymousChatWithBot', message.title, '')
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.idSuggetLibrary ? message.idSuggetLibrary : '', '')
 			if (append) {
 				this.messages = [
 					...this.messages,

@@ -134,7 +134,7 @@
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
 										<img *ngIf="message.fromAvatar == ''|| message.fromAvatar == null "
-											src="../../../assets/dist/images/Icon app.png" class="rounded-circle user_img_msg">
+											src="../../../assets/dist/images/Icon_app.png" class="rounded-circle user_img_msg">
 										<img *ngIf="message.fromAvatar != ''" [src]="message.fromAvatar"
 											class="rounded-circle user_img_msg">
 
@@ -142,13 +142,21 @@
 									<div class="msg_cotainer">
 
 										{{message.messageContent}}
-										<ng-container *ngFor="let tag of message.SubTags">
-											<div *ngIf="tag.title" class="msg_cotainer_child">
-												<span class="item p-2">{{tag.title}}</span>
+										<ng-container *ngFor="let ans of message.answers">
+											<div *ngIf="ans.answer" class="msg_cotainer_answer">
+												{{ans.answer}}
 											</div>
-											<a *ngIf="tag.link" routerLink="tag.link">
+											<!-- <a *ngIf="tag.link" class="pointer" (click)="goToLink(tag.link)">
 												{{tag.link}}
-											</a>
+											</a> -->
+											<ng-container *ngFor="let tag of ans.subTags.data">
+												<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
+													{{tag.title}}
+												</div>
+												<!-- <a *ngIf="tag.link" class="pointer" (click)="goToLink(tag.link)">
+													{{tag.link}}
+												</a> -->
+											</ng-container>
 										</ng-container>
 										<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
 									</div>

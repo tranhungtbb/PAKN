@@ -5,7 +5,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { PublishRoutingModule } from './publish-routing.module'
 import { PaginatorModule } from 'primeng/paginator'
-import { CarouselModule } from 'ngx-owl-carousel-o'
+import { CarouselModule } from 'primeng/carousel';
 import { ChartsModule } from 'ng2-charts'
 import { TreeTableModule } from 'primeng/treetable'
 import { PublishComponent } from './publish.component'
