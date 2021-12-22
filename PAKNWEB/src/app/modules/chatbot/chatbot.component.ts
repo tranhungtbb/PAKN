@@ -30,9 +30,7 @@ export class DashboardChatBotComponent implements OnInit {
 
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
-	constructor(private botService: ChatBotService,
-		private userService: UserService
-		, private user: UserInfoStorageService) { }
+	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService) { }
 	ngOnInit() {
 		//console.log('ngOnInit 0')
 
@@ -42,7 +40,6 @@ export class DashboardChatBotComponent implements OnInit {
 
 		this.userId = this.user.getUserId()
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
-
 			this.model = res.result.SYUserGetByID[0]
 			//console.log('userService ', this.model);
 			if (this.model.avatar == '' || this.model.avatar == null) {
@@ -50,7 +47,7 @@ export class DashboardChatBotComponent implements OnInit {
 			} else {
 				this.userAvatar = this.model.avatar
 			}
-		});
+		})
 		this.connection = new signalR.HubConnectionBuilder()
 			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${this.userId}`, {
 				skipNegotiation: true,
@@ -63,10 +60,51 @@ export class DashboardChatBotComponent implements OnInit {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
-					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, }]
-					//console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
-				}
 
+					const answers = [];
+					if (data.results) {
+						console.log('answers 2', data.results)
+						for (let ind = 0; ind < data.results.length; ind++) {
+							const el = data.results[ind]
+							if (el.subTags !== '') {
+								const subTags = JSON.parse(el.subTags)
+								console.log('answers 3', subTags)
+								answers.push({ answer: el.answer, subTags: subTags })
+							}
+						}
+					}
+
+					console.log('answers 4', answers)
+					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, answers }]
+
+
+					// 				answers: [{…}]
+					// dateSend: "2021-12-22T15:31:15.247+07:00"
+					// fromAvatar: ""
+					// fromFullName: ""
+					// fromUserId: 0
+					// id: 26232
+					// messageContent: ""
+					// roomId: 21031
+					// rowNumber: 12
+
+					// content: null
+					// from: "Bot"
+					// fromAvatarPath: null
+					// fromFullName: "Bot"
+					// fromId: "Bot"
+					// hiddenAnswer: "alo"
+					// results: [{…}]
+					// subTags: null
+					// timestamp: "1640161884"
+					// to: "Room_24f03130-73c9-4256-aa48-09448126851e"
+					// type: "Conversation"
+
+					//this.convertMessageToObjectList()
+
+
+					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
+				}
 
 				this.convertMessageToObjectList()
 			})
@@ -74,13 +112,11 @@ export class DashboardChatBotComponent implements OnInit {
 				//console.log('ngOnInit SignalR BroadcastMessage ', data)
 
 				this.fetchRooms()
-
 			})
 			this.connection.on('NotifyAdmin', (data: any) => {
 				//console.log('ngOnInit SignalR BroadcastMessage ', data)
 
 				this.playSoundWarning()
-
 			})
 		})
 		this.fetchRooms()
@@ -89,12 +125,12 @@ export class DashboardChatBotComponent implements OnInit {
 	playSoundWarning() {
 		try {
 			console.log('playSoundWarning ')
-			this.audio = new Audio();
+			this.audio = new Audio()
 			this.audio.src = '../../../assets/img/ring.mp3'
 			this.audio.load()
 			this.audio.play()
 		} catch (error) {
-			console.log('playSoundWarning error', error);
+			console.log('playSoundWarning error', error)
 		}
 	}
 
@@ -136,7 +172,7 @@ export class DashboardChatBotComponent implements OnInit {
 			this.connection.invoke('JoinToRoom', roomName)
 			this.botService.getMessages(request).subscribe((result) => {
 				console.log('getMessage 1', result)
-				let res = { ...result };
+				let res = { ...result }
 
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result && res.result.length > 0) {
@@ -173,9 +209,8 @@ export class DashboardChatBotComponent implements OnInit {
 			console.log('sendMessage ', this.roomNameSelected, this.rooms)
 			this.connection.invoke('AdminSendToRoom', this.roomNameSelected, this.newMessage)
 
-
-			if (this.rooms.filter(room => room.name === this.roomNameSelected).length > 0) {
-				this.rooms.find(room => room.name === this.roomNameSelected).type = 2;
+			if (this.rooms.filter((room) => room.name === this.roomNameSelected).length > 0) {
+				this.rooms.find((room) => room.name === this.roomNameSelected).type = 2
 			}
 
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
@@ -207,7 +242,6 @@ export class DashboardChatBotComponent implements OnInit {
 	changeRoomStatus(status: boolean) {
 		console.log('changeRoomStatus ', this.roomNameSelected, status)
 		this.connection.invoke('EnableBot', this.roomNameSelected, status)
-
 	}
 
 	enabledBot() {
@@ -228,41 +262,49 @@ export class DashboardChatBotComponent implements OnInit {
 	}
 
 	convertMessageToObjectList() {
-		if (this.messages) {
-			for (let index = 0; index < this.messages.length; index++) {
-				const element = this.messages[index]
-				const { result, type } = this.stringToObject(element.messageContent)
-				element.fromAvatar = element.fromAvatar ? element.fromAvatar : '';
-				element.fromFullName = element.fromFullName ? element.fromFullName : '';
-				const answers = [];
+		try {
+			if (this.messages) {
+				for (let index = 0; index < this.messages.length; index++) {
+					const element = this.messages[index]
+					let result, type
 
-				if (type === 'string') {
-					element.messageContent = result
-				} else if (type === 'json') {
-
-					console.log('answers ', result);
-					if (result.Results && result.Results.length > 0) {
-						console.log('answers 1', result.Results);
-						try {
-							for (let ind = 0; ind < result.Results.length; ind++) {
-								const el = result.Results[ind];
-								if (el.SubTags !== '') {
-									const subTags = JSON.parse(el.SubTags)
-									console.log('answers 2', subTags);
-									answers.push({ answer: el.answer, subTags: subTags });
-								}
-							}
-						} catch (error) {
-						}
+					if (element.xresults) {
+						result = element.xresults
+						type = 'json'
+					} else {
+						const rs = this.stringToObject(element.messageContent)
+						result = rs.result
+						type = rs.type
 					}
-					element.messageContent = ''
+
+					element.fromAvatar = element.fromAvatar ? element.fromAvatar : ''
+					element.fromFullName = element.fromFullName ? element.fromFullName : ''
+					const answers = []
+
+					if (type === 'string') {
+						element.messageContent = result
+					} else if (type === 'json') {
+						console.log('answers ', result)
+						if (result.Results && result.Results.length > 0) {
+							console.log('answers 1', result.Results)
+							try {
+								for (let ind = 0; ind < result.Results.length; ind++) {
+									const el = result.Results[ind]
+									if (el.SubTags !== '') {
+										const subTags = JSON.parse(el.SubTags)
+										console.log('answers 2', subTags)
+										answers.push({ answer: el.answer, subTags: subTags })
+									}
+								}
+							} catch (error) { }
+						}
+						element.messageContent = ''
+					}
+					element.answers = answers
 				}
-				element.answers = answers;
-
 			}
-
-		}
-		console.log('ReceiveMessageToGroup 2', this.messages);
+			console.log('ReceiveMessageToGroup 2', this.messages)
+		} catch (error) { }
 	}
 
 	stringToObject(string) {
