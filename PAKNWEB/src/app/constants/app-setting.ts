@@ -1,7 +1,7 @@
 //const BASE_URL = `http://14.177.236.88:6161`
-//const BASE_URL = `https://pakn.ziz.vn:6164`
+const BASE_URL = `https://pakn.ziz.vn:6164`
 //const BASE_URL = `http://localhost/PAKNAPI`
-const BASE_URL = `http://localhost:51046/`
+// const BASE_URL = `http://localhost:51046/`
 
 export class AppSettings {
 	public static HostingAddress = `${BASE_URL}`
