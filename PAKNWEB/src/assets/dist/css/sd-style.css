@@ -139,7 +139,8 @@ a:hover {
 .bg-blue3 {
 	background: #155bbf;
 }
-.border-left-blue3{
+
+.border-left-blue3 {
 	border-left: 3px solid #155bbf;
 }
 
@@ -177,7 +178,7 @@ a:hover {
 .grd-blue {
 	/* background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%); */
 	background-color: #2E73D5;
-	background: #2E73D5 ;
+	background: #2E73D5;
 }
 
 .grd-brown {
@@ -2204,9 +2205,11 @@ table thead .form-control ng-select {
 .no-grd-blue {
 	background-color: #2E73D5;
 }
+
 .no-grd-green {
 	background-color: #00ff55;
 }
+
 .btn-outline-blue {
 	color: #2E73D5;
 	border-color: #2E73D5;
@@ -2306,12 +2309,13 @@ table thead .form-control ng-select {
 .border-left-blue2 {
 	border-left: 3px solid #25a7d0;
 }
-.bg-blue-3{
+
+.bg-blue-3 {
 	background-color: #2e73d5 !important;
 }
 
-.border-left-blue3{
-	border-left: 3px solid #2e73d5 ;
+.border-left-blue3 {
+	border-left: 3px solid #2e73d5;
 }
 
 .border-left-blue {
@@ -2346,7 +2350,7 @@ table thead .form-control ng-select {
 	vertical-align: middle !important;
 }
 
-.max-w-75{
+.max-w-75 {
 	max-width: 75%;
 }
 
@@ -2438,17 +2442,19 @@ table thead .form-control ng-select {
 		padding: 7px 15px !important;
 	}
 
-	.content-nd{
-		margin-top: 16px !important;
-	}
-	.border-bottom-blue {
-		border-bottom: 3px solid #2E73D5;
-	}
-	.margin-top-16{
+	.content-nd {
 		margin-top: 16px !important;
 	}
 
-	.box.box-margin-top{
-		margin-top:20px;
+	.border-bottom-blue {
+		border-bottom: 3px solid #2E73D5;
+	}
+
+	.margin-top-16 {
+		margin-top: 16px !important;
+	}
+
+	.box.box-margin-top {
+		margin-top: 20px;
 	}
 }

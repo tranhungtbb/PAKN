@@ -33,6 +33,11 @@ export class ChatBotComponent implements OnInit {
 		{ value: 1, text: 'QnA' },
 		{ value: 2, text: 'Kịch bản' },
 	]
+	listTypeAnswer: any = [
+		{ value: 1, text: 'Câu trả lời' },
+		{ value: 2, text: 'Link' },
+		{ value: 3, text: 'Chat' },
+	]
 	form: FormGroup
 	model: any = new ChatbotObject()
 	submitted: boolean = false
@@ -45,9 +50,11 @@ export class ChatBotComponent implements OnInit {
 	question: any = ''
 	// answer: any = ''
 	textAnswer: any = ''
+	typeSuggest: number = 1
+	linkSuggest: string = ""
 	lstAnswer: any = [];
 	lstQuestion: any = [];
-	questionId: number = 0;
+	questionId: number = null;
 	pageIndex: number = 1;
 	pageSize: number = 20;
 	dataSearch: any = {
@@ -450,22 +457,28 @@ export class ChatBotComponent implements OnInit {
 			this._toastr.error('Vui lòng nhập câu trả lời!')
 			return
 		}
-		if (this.questionId) {
-			let bussiness = this.lstQuestion.find((x) => x.id == this.questionId)
-			if (bussiness) {
-				let obj = { answer: this.textAnswer, idSuggetLibrary: this.questionId, questionAnswers: bussiness.question }
+		if (this.typeSuggest == 1) {
+			if (this.questionId) {
+				let bussiness = this.lstQuestion.find((x) => x.id == this.questionId)
+				if (bussiness) {
+					let obj = { answer: this.textAnswer, typeSuggest: this.typeSuggest, linkSuggest: this.linkSuggest, idSuggetLibrary: this.questionId, questionAnswers: bussiness.question }
+					this.lstAnswer.push(obj)
+				}
+			} else {
+				let obj = { answer: this.textAnswer, typeSuggest: this.typeSuggest, linkSuggest: this.linkSuggest, idSuggetLibrary: this.questionId, questionAnswers: null }
 				this.lstAnswer.push(obj)
 			}
 		} else {
-			let obj = { answer: this.textAnswer, idSuggetLibrary: this.questionId, questionAnswers: null }
+			let obj = { answer: this.textAnswer, typeSuggest: this.typeSuggest, linkSuggest: this.linkSuggest, idSuggetLibrary: this.questionId, questionAnswers: this.linkSuggest }
 			this.lstAnswer.push(obj)
 		}
 		this.textAnswer = '';
 		this.questionId = null
+		this.linkSuggest = '';
 	}
 
 	onRemoveAnswer = (item: any) => {
-		this.lstAnswer = this.lstAnswer.filter((x) => x.answer != item.answer && x.idSuggetLibrary != item.idSuggetLibrary)
+		this.lstAnswer = this.lstAnswer.filter((x) => x.answer != item.answer && x.typeSuggest != item.typeSuggest)
 		return
 	}
 }
