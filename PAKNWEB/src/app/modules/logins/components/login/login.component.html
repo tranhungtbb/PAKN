@@ -94,11 +94,11 @@
 
 															<div class="form-group position-relative">
 																<div
-																	class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px">
+																	class="bg-white d-flex justify-content-between shadow align-items-center rounded-8px h-50px">
 																	<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
 																	<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
-																		maxlength="2" style="font-size: 20px"
+																		maxlength="2" style="font-size: 20px; border: none;"
 																		(change)="captchaCodeProduct=captchaCodeProduct.trim()"
 																		placeholder="Nhập kết quả..." class="form-control bg-transparent" value="">
 

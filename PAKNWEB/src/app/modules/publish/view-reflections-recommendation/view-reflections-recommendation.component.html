@@ -4,7 +4,8 @@
 			<div class="col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-					<li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Phản ánh, Kiến nghị</a></li>
+					<li class="breadcrumb-item active"><a [routerLink]="['/cong-bo/danh-sach-phan-anh-kien-nghi']"
+							class="font-weight-bold">Phản ánh, Kiến nghị</a></li>
 				</ol>
 				<div class="box" *ngIf="!model" style="text-align: center;">
 					<strong>Không tìm thấy dữ liệu</strong>

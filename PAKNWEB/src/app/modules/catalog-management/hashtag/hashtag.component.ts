@@ -165,7 +165,7 @@ export class HashtagComponent implements OnInit {
 
 	preCreate() {
 		this.hashtag = new HashtagObject()
-		this.Title = 'Thêm mới hashtag'
+		this.Title = 'Thêm mới nhãn dữ liệu'
 		this.submitted = false
 		this.rebuilForm()
 		$('#modal').modal('show')
@@ -176,7 +176,7 @@ export class HashtagComponent implements OnInit {
 
 	preUpdate(obj: any) {
 		this.hashtag = Object.assign(new HashtagObject(), obj)
-		this.Title = 'Chỉnh sửa hashtag'
+		this.Title = 'Chỉnh sửa nhãn dữ liệu'
 		$('#modal').modal('show')
 		setTimeout(() => {
 			$('#target').focus()
