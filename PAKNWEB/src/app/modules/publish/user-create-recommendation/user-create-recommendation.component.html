@@ -27,7 +27,8 @@
 						</div>
 						<div class="ps-relative">
 							<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500"
-								formControlName="title" (blur)="searchRecommendation()" placeholder="Nhập..." />
+								formControlName="title" (focus)="inputTitleFocus()" (blur)="searchRecommendation()"
+								placeholder="Nhập..." />
 
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 								class="has-error">
@@ -174,11 +175,11 @@
 					</div>
 
 					<div class="col-12 col-sm-12 form-group">
-						<div class="label pl-0 mb-1">Nhập địa chỉ cụ thể phản ánh, kiến nghị….. <span class="cl-red">(*)</span>
+						<div class="label pl-0 mb-1"> ĐỊA ĐIỂM PHẢN ÁNH, KIẾN NGHỊ <span class="cl-red">(*)</span>
 						</div>
 						<div class="ps-relative">
 							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300"
-								formControlName="address" placeholder="Nhập..." />
+								formControlName="address" placeholder="Nhập địa chỉ cụ thể phản ánh, kiến nghị...." />
 
 							<div class="mt-2" style="right: 15px; top: 8px;" title="Chọn vị trí trên bản đồ">
 								<span style="color: #5e72e4;cursor:pointer;" (click)="showMaps()">

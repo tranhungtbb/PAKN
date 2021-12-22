@@ -167,8 +167,19 @@
 							<div class="media pb-4 mb-1 box-message-publish">
 								<div class="mr-3">
 									<div *ngIf="![6].includes(item.status)">
-										<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
-											208deg) brightness(99%) contrast(85%)">
+										<div *ngIf="model.fieldFilePath==null">
+											<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+												class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
+												<path
+													d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+											</svg>
+
+										</div>
+
+										<div *ngIf="model.fieldFilePath!=null">
+											<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
+													208deg) brightness(99%) contrast(85%)">
+										</div>
 									</div>
 									<div *ngIf="[6].includes(item.status)">
 										<img [src]="model.fieldFilePath" width="40" height="40"
@@ -263,13 +274,30 @@
 					<div class="media pb-4 mb-4 box-message-publish"
 						*ngIf="model.status > 6 || (model.status == 6 && isUnitCombine)">
 						<div class="mr-3">
+							<!--123-->
 							<div *ngIf="![6].includes(model.status)">
-								<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
-											208deg) brightness(99%) contrast(85%)">
+								<div *ngIf="model.fieldFilePath==null">
+									<!-- <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+										class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
+										<path
+											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+									</svg> -->
+									<div style="width:40px;height: 40px;">
+									</div>
+								</div>
+
+								<div *ngIf="model.fieldFilePath!=null">
+									<!-- <img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
+											208deg) brightness(99%) contrast(85%)"> -->
+									<div style="width:40px;height: 40px;">
+									</div>
+								</div>
 							</div>
 							<div *ngIf="[6].includes(model.status)">
-								<img [src]="model.fieldFilePath" width="40" height="40"
-									style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)">
+								<!-- <img [src]="model.fieldFilePath" width="40" height="40"
+									style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)"> -->
+								<div style="width:40px;height: 40px;">
+								</div>
 							</div>
 						</div>
 						<div class="media-body">

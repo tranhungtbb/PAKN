@@ -112,10 +112,13 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 					this.getAddress(this.model.lat, this.model.lng).then((res) => {
 						this.model.address = String(res)
 					})
-				}, 0)
+				}, 200)
 
 			})
 		}
+	}
+	inputTitleFocus() {
+		this.flagInputContent = false;
 	}
 	onFocusContent() {
 		this.flagInputContent = true;
