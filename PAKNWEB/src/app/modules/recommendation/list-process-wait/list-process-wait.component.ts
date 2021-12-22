@@ -233,8 +233,6 @@ export class ListProcessWaitComponent implements OnInit, AfterViewInit {
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 			if (isForwardProcess) {
-				this.submitted = false
-				this.fieldSelected = null
 				this.rebuilFormAccept()
 				$('#modalAcceptWithFiled').modal('show')
 			} else {
@@ -281,6 +279,8 @@ export class ListProcessWaitComponent implements OnInit, AfterViewInit {
 	}
 
 	rebuilFormAccept() {
+		this.submitted = false
+		this.fieldSelected = null
 		this.formAccept.reset({
 			field: this.fieldSelected
 		})

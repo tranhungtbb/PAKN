@@ -166,16 +166,6 @@
 						<ng-container *ngFor="let item of conclusionCombine">
 							<div class="media pb-4 mb-1 box-message-publish">
 								<div class="mr-3">
-									<!-- <svg *ngIf="![6].includes(item.status)" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
-										fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
-										<path
-											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
-									</svg>
-									<svg *ngIf="[6].includes(item.status)" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
-										fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #DA2222;" viewBox="0 0 16 16">
-										<path
-											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
-									</svg> -->
 									<div *ngIf="![6].includes(item.status)">
 										<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 											208deg) brightness(99%) contrast(85%)">
@@ -191,8 +181,9 @@
 										<div class="">
 											<div class="tt-v1 d-flex justify-content-between">
 												<i>Cơ quan chức năng phối hợp/tham mưu:</i>
-												<i *ngIf="item.status == 10" (click)="useConclustionUnit(item.conclusionCombineContent)"
-													title="Sử dụng câu trả lời" class="bi bi-clipboard-check"></i>
+												<i *ngIf="item.status == 10 && model.status != 10"
+													(click)="useConclustionUnit(item.conclusionCombineContent)" title="Sử dụng câu trả lời"
+													class="bi bi-clipboard-check"></i>
 
 											</div>
 											<div class="tt-v1 d-flex justify-content-between">
@@ -272,16 +263,6 @@
 					<div class="media pb-4 mb-4 box-message-publish"
 						*ngIf="model.status > 6 || (model.status == 6 && isUnitCombine)">
 						<div class="mr-3">
-							<!-- <svg *ngIf="![6].includes(model.status)" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
-								fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;" viewBox="0 0 16 16">
-								<path
-									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
-							</svg>
-							<svg *ngIf="[6].includes(model.status)" xmlns="http://www.w3.org/2000/svg" width="60" height="60"
-								fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #DA2222;" viewBox="0 0 16 16">
-								<path
-									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
-							</svg> -->
 							<div *ngIf="![6].includes(model.status)">
 								<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 											208deg) brightness(99%) contrast(85%)">
@@ -343,61 +324,66 @@
 												</div>
 											</div>
 											<ng-container *ngFor="let item of files">
-												<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 1" appViewFile [namefile]="item.name"
+													[linkfile]="item.filePath">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
 														style="width: 170px">
 														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
 																	class="mdi mdi-close"></i></span>
 														</button>
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
 															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
 													</div>
 												</div>
-												<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 2" appViewFile [namefile]="item.name"
+													[linkfile]="item.filePath">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
 														style="width: 170px">
 														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
 																	class="mdi mdi-close"></i></span>
 														</button>
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
 															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
 													</div>
 												</div>
-												<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 4" appViewFile [namefile]="item.name"
+													[linkfile]="item.filePath">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
 														style="width: 170px">
 														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
 																	class="mdi mdi-close"></i></span>
 														</button>
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
 															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
 													</div>
 												</div>
-												<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 3" appViewFile [namefile]="item.name"
+													[linkfile]="item.filePath">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
 														style="width: 170px">
 														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
 																	class="mdi mdi-close"></i></span>
 														</button>
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
 															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
 													</div>
 												</div>
-												<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+												<div class="col-auto mb-4" *ngIf="item.fileType == 6" appViewFile [namefile]="item.name"
+													[linkfile]="item.filePath">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
 														style="width: 170px">
 														<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
 																	class="mdi mdi-close"></i></span>
 														</button>
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
 															<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}<br></span>
 														</a>
@@ -450,21 +436,17 @@
 									</button>
 								</div>
 							</ng-container>
-							<!-- (model.status != 9 || model.userActive != userLoginId) -->
 							<ng-container *ngIf="model.status > 7 && !(model.status == 8 && model.userActive == userLoginId)">
 								<p [innerHTML]="modelConclusion.content | Change"></p>
 								<p *ngIf="files">
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>
 										<div *ngFor="let file of files" cursor="pointer">
-											<!-- file-att -->
 											<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 												[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
 													alt="">
 												<span class="small text-truncate">{{file.name}}</span>
-												<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-													file.name}} -->
 											</a>
 											<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
 												[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -679,6 +661,46 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modalAcceptWithFiled">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn muốn tiếp nhận PAKN này?
+				</span>
+				<form class="form-horizontal" [formGroup]="formAccept" #formDir="ngForm">
+					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
+						<label class="mb-1">Chọn lĩnh vực <span class="cl-red">(*)</span></label>
+						<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn..." formControlName="field"
+							class="form-control" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="fieldSelected"
+							[closeOnSelect]="true">
+						</ng-select>
+						<div
+							*ngIf="(submitted && fAccept.field.invalid) || (fAccept.field.invalid && (fAccept.field.dirty || fAccept.field.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="fAccept.field.errors.required">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm"
+					(click)="onProcessAcceptWithField()">Xác
+					nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <div class="modal fade" id="modalReject">
@@ -816,55 +838,9 @@
 							<strong class="control-label lb600">CMND</strong>
 							<p>{{modelDetail.idCard}}</p>
 						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Nơi cấp</strong>
-							<p>{{modelDetail.issuedPlace}}</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Ngày cấp</strong>
-							<p>{{modelDetail.dateOfIssue | date: 'dd/MM/yyyy'}}</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Quốc tịch</strong>
-							<p>{{modelDetail.nation}}</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Tỉnh thành phố</strong>
-							<p>{{modelDetail.proviceName}}</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Huyện/Thị xã</strong>
-							<p>{{modelDetail.districtName}}</p>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Phường/Thị trấn</strong>
-							<p>{{modelDetail.wardsName}}</p>
-						</div>
 						<div class="col-sm-8">
 							<strong class="control-label lb600">Địa chỉ cụ thể</strong>
 							<p>{{modelDetail.address}}</p>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Giới tính</strong>
-							<p *ngIf="modelDetail.gender == false">Nữ</p>
-							<p *ngIf="modelDetail.gender == true">Nam</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Ngày sinh</strong>
-							<p>{{modelDetail.birthDay | date: 'dd/MM/yyyy'}}</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Trạng thái</strong>
-							<p *ngIf="modelDetail.isActived == true">Hiệu lực</p>
-							<p *ngIf="modelDetail.isActived == false">Hết hiệu lực</p>
 						</div>
 					</div>
 				</div>
@@ -891,25 +867,6 @@
 
 					<div class="row">
 						<div class="col-sm-3">
-							<strong class="control-label lb600">Quốc tịch</strong>
-							<p>{{modelDetail.nation}}</p>
-						</div>
-						<div class="col-sm-3">
-							<strong class="control-label lb600">Tỉnh/Thành phố</strong>
-							<p>{{modelDetail.provinceName}}</p>
-						</div>
-						<div class="col-sm-3">
-							<strong class="control-label lb600">Huyện/Thị xã</strong>
-							<p>{{modelDetail.districtName}}</p>
-						</div>
-						<div class="col-sm-3">
-							<strong class="control-label lb600">Xã/Phường/Thị trấn</strong>
-							<p>{{modelDetail.wardsName}}</p>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
 							<strong class="control-label lb600">Giới tính</strong>
 							<p *ngIf="modelDetail.representativeGender == true">Nam</p>
 							<p *ngIf="modelDetail.representativeGender == false">Nữ</p>
@@ -931,37 +888,9 @@
 							<strong class="control-label lb600">Số chứng nhận ĐKKD</strong>
 							<p>{{modelDetail.businessRegistration}}</p>
 						</div>
-						<div class="col-sm-3">
-							<strong class="control-label lb600">Số quyết định thành lập</strong>
-							<p>{{modelDetail.decisionOfEstablishing}}</p>
-						</div>
-						<div class="col-sm-3">
-							<strong class="control-label lb600">Ngày cấp / Thành lập</strong>
-							<p>{{modelDetail.dateOfIssue | date: 'dd/MM/yyyy'}}</p>
-						</div>
-						<div class="col-sm-3">
-							<strong class="control-label lb600">Mã số thuế</strong>
-							<p>{{modelDetail.tax}}</p>
-						</div>
 					</div>
 
 					<p class="modal-title h4 title-detail">Địa chỉ cụ thể / Văn phòng đại diện</p>
-
-					<div class="row">
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Tỉnh thành phố</strong>
-							<p>{{modelDetail.orgProvinceName}}</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Quận / Huyện / Thị xã</strong>
-							<p>{{modelDetail.orgDistrictName}}</p>
-						</div>
-						<div class="col-sm-4">
-							<strong class="control-label lb600">Xã / Phường / Thị trấn</strong>
-							<p>{{modelDetail.orgWardsName}}</p>
-						</div>
-					</div>
-
 					<div class="row">
 						<div class="col-sm-4">
 							<strong class="control-label lb600">Số điện thoại</strong>

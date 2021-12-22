@@ -126,6 +126,8 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 	}
 
 	rebuilFormAccept() {
+		this.submitted = false
+		this.fieldSelected = null
 		this.formAccept.reset({
 			field: this.fieldSelected
 		})
@@ -364,8 +366,6 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
-				this.fieldSelected = null
-				this.submitted = false
 				this.rebuilFormAccept()
 				$('#modalAcceptWithFiled').modal('show')
 				return
@@ -374,8 +374,6 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 				if (this.isForwardProcess) {
-					this.fieldSelected = null
-					this.submitted = false
 					this.rebuilFormAccept()
 					$('#modalAcceptWithFiled').modal('show')
 					return

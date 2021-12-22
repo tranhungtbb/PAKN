@@ -280,6 +280,9 @@ namespace PAKNAPI.Models.ModelBase
 		public string Title { get; set; }
 		public string Question { get; set; }
 		public int? IdSuggetLibrary { get; set; }
+		public byte TypeChat { get; set; }
+		public byte? TypeSuggest { get; set; }
+		public string LinkSuggest { get; set; }
 		public string Answers { get; set; }
 		public string TitleAnswers { get; set; }
 		public string QuestionAnswers { get; set; }
