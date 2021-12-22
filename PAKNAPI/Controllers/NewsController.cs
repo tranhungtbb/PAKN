@@ -417,12 +417,12 @@ namespace PAKNAPI.Controller
 						his.Status = STATUS_HISNEWS.CANCEL;
 						await HISNewsInsert(his);
 					}
-					// thông báo
-					//if (_nENewsUpdateIN.IsNotification == true)
-					//{
-					//	await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
-					//}
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                    // thông báo
+                    if (_nENewsUpdateIN.IsNotification == true)
+                    {
+                        await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
+                    }
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
 				}
 				else if (res == -1)
@@ -590,19 +590,19 @@ namespace PAKNAPI.Controller
 				switch (_hISNews.Status)
 				{
 					case STATUS_HISNEWS.CREATE:
-						_hISNews.Content = userName + " đã khởi tạo bài viết";
+						_hISNews.Content = userName + " đã khởi tạo thông báo";
 						break;
 					case STATUS_HISNEWS.UPDATE:
-						_hISNews.Content = userName + " đã cập nhập bài viết";
+						_hISNews.Content = userName + " đã cập nhập thông báo";
 						break;
 					case STATUS_HISNEWS.COMPILE:
-						_hISNews.Content = userName + " đang soạn thảo bài viết";
+						_hISNews.Content = userName + " đang soạn thảo thông báo";
 						break;
 					case STATUS_HISNEWS.PUBLIC:
-						_hISNews.Content = userName + " đã công bố bài viết";
+						_hISNews.Content = userName + " đã công bố thông báo";
 						break;
 					case STATUS_HISNEWS.CANCEL:
-						_hISNews.Content = userName + " đã hủy công bố bài viết";
+						_hISNews.Content = userName + " đã hủy công bố thông báo";
 						break;
 				}
 				await new HISNews(_appSetting).HISNewsInsert(_hISNews);
@@ -636,7 +636,7 @@ namespace PAKNAPI.Controller
 						model.DataId = Id;
 						model.SendDate = DateTime.Now;
 						model.Type = TYPENOTIFICATION.NEWS;
-						model.Title = isCreateNews == true ? senderName + " vừa đăng một bài viết mới" : senderName + " vừa cập nhập một bài viết";
+						model.Title = "Bạn vừa nhận được một thông báo từ chính quyền";
 						model.Content = Title;
 						model.IsViewed = true;
 						model.IsReaded = true;

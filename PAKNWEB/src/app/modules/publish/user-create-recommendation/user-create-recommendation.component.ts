@@ -90,12 +90,9 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.getData()
 			} else {
 				this.model.typeObject = 1
-				// this.setCurrentLocation()
 			}
 			this.builForm()
 		})
-		//this.firstLoadMap();
-		// this.showMaps();
 		this.isLogin = this.storageService.getAccessToken()
 
 	}
@@ -109,10 +106,14 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
-				// this.onSaveMaps()
-				this.getAddress(this.model.lat, this.model.lng).then((res) => {
-					this.model.address = String(res)
-				})
+				this.model.lat = this.markers.lat
+				this.model.lng = this.markers.lng
+				setTimeout(() => {
+					this.getAddress(this.model.lat, this.model.lng).then((res) => {
+						this.model.address = String(res)
+					})
+				}, 0)
+
 			})
 		}
 	}
@@ -504,47 +505,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 
 
 	}
-	firstLoadMap() {
-		this.showMaps()
-		this.onSaveMaps1();
-		// this.model.lat = this.markers.lat
-		// this.model.lng = this.markers.lng
-		// await this.getAddress(this.model.lat, this.model.lng).then((res) => {
-		// 	this.model.address = String(res)
-		// })
-
-	}
-	onSaveMaps1() {
-		if (this.markers == null || this.markers.lat == null) {
-			return this.toastr.error('Vui lòng chọn vị trí')
-		} else {
-			this.model.lat = this.markers.lat
-			this.model.lng = this.markers.lng
-			this.getAddress1(this.model.lat, this.model.lng).then((res) => {
-				this.model.address = String(res)
-			})
-			$('#modalMaps').modal('hide')
-			$('#modal').modal('show')
-		}
-	}
-	getAddress1(latitude, longitude) {
-		this.geoCoder = new google.maps.Geocoder()
-		return new Promise((resolve, reject) => {
-			this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-				if (status === 'OK') {
-					if (results[0]) {
-						resolve(results[0].formatted_address)
-					} else {
-						window.alert('No results found')
-						reject('No results found')
-					}
-				} else {
-					window.alert('Geocoder failed due to: ' + status)
-					reject('Geocoder failed due to: ' + status)
-				}
-			})
-		})
-	}
 	async onSaveMaps() {
 		if (this.markers == null || this.markers.lat == null) {
 			return this.toastr.error('Vui lòng chọn vị trí')
@@ -559,7 +519,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		}
 	}
 	async getAddress(latitude, longitude) {
-		debugger
 		this.geoCoder = new google.maps.Geocoder()
 		return new Promise((resolve, reject) => {
 			this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
