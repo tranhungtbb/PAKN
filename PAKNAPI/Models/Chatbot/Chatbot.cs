@@ -219,6 +219,8 @@ namespace PAKNAPI.Models.Chatbot
 		public int IdSuggetLibrary { get; set; }
 		public string Answer { get; set; }
 		public string QuestionAnswers { get; set; }
+		public byte TypeSuggest { get; set; }
+		public string LinkSuggest { get; set; }
 
 		public async Task<List<ChatbotLibGetByID>> ChatbotLibGetByIDDAO(int? Id)
 		{
@@ -362,6 +364,8 @@ namespace PAKNAPI.Models.Chatbot
 				DP.Add("IdBotLib", id);
 				DP.Add("Answers", item.Answer);
 				DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
+				DP.Add("TypeSuggest", item.TypeSuggest);
+				DP.Add("LinkSuggest", item.LinkSuggest);
 				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
 			}
 			return 1;
@@ -518,6 +522,8 @@ namespace PAKNAPI.Models.Chatbot
         public string Answer { get; set; }
         public int? IdSuggetLibrary { get; set; }
         public string QuestionAnswers { get; set; }
+        public byte TypeSuggest { get; set; }
+        public string LinkSuggest { get; set; }
     }
 
     #endregion
@@ -628,6 +634,8 @@ namespace PAKNAPI.Models.Chatbot
 				DP.Add("IdBotLib", id);
 				DP.Add("Answers", item.Answer);
 				DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
+				DP.Add("TypeSuggest", item.TypeSuggest);
+				DP.Add("LinkSuggest", item.LinkSuggest);
 				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
 			}
 			return 1;
