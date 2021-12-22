@@ -12,7 +12,8 @@
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
 				<!-- <div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div> -->
-				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến
+				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red" style="font-weight: bold;">Vui lòng đăng
+					nhập để gửi phản ánh kiến
 					nghị!</p>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
@@ -173,14 +174,20 @@
 					</div>
 
 					<div class="col-12 col-sm-12 form-group">
-						<div class="label pl-0 mb-1">Địa điểm phản ánh, kiến nghị <span class="cl-red">(*)</span></div>
+						<div class="label pl-0 mb-1">Nhập địa chỉ cụ thể phản ánh, kiến nghị….. <span class="cl-red">(*)</span>
+						</div>
 						<div class="ps-relative">
 							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300"
 								formControlName="address" placeholder="Nhập..." />
 
-							<div class="input-group-customform pointer ps-absolute" style="right: 15px; top: 8px;"
-								title="Chọn vị trí trên bản đồ" (click)="showMaps()">
-								<i class="fas fa-map-marker-alt"></i>
+							<div class="mt-2" style="right: 15px; top: 8px;" title="Chọn vị trí trên bản đồ">
+								<span style="color: #5e72e4;cursor:pointer;" (click)="showMaps()">
+									<i class="fas fa-map-marker-alt"></i>
+									<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">Sử dụng
+										vị trí hiện
+										tại của tôi</p>
+								</span>
+
 							</div>
 							<div
 								*ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
@@ -315,7 +322,7 @@
 							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"
 							class="has-error">
 							<div *ngIf="f.captcha.errors.required">
-								<span class="help-block">Vui lòng nhập kết quả</span>
+								<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
 							</div>
 						</div>
 					</div>

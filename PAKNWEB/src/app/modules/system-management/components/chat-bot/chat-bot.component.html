@@ -75,7 +75,7 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									{{item.title}}
+									{{item.title}} <label *ngIf="item.isDefault" class="badge badge-primary">Mặc định</label>
 								</td>
 								<td>
 									<strong>
@@ -109,9 +109,11 @@
 										<a *hasPermission="['3', 'A_XI_1']" type="button" (click)="preUpdate(item)"
 											class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i
 												class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_XI_2']" type="button" (click)="preDelete(item.id, item.categoryId)"
-											class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
-												class="bi bi-trash"></i></a>
+										<ng-container *ngIf="!item.isDefault">
+											<a *hasPermission="['3', 'A_XI_2']" type="button" (click)="preDelete(item.id, item.categoryId)"
+												class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													class="bi bi-trash"></i></a>
+										</ng-container>
 									</div>
 								</td>
 							</tr>
@@ -153,7 +155,7 @@
 							</div>
 						</div>
 						<div class="row form-group">
-							<div class="col-sm-5">
+							<div class="col-sm-3">
 								<label class="control-label">Loại câu hỏi <span class="text-danger">(*)</span></label>
 								<ng-select notFoundText="Không có dữ liệu" [clearable]="false" class="form-control " [items]="listType"
 									bindValue="value" placeholder="Chọn loại" bindLabel="text" formControlName="typeChat"
@@ -167,7 +169,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-2">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
 								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value"
 									placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
@@ -245,12 +247,25 @@
 										<input id="target" placeholder="Nhập lựa chọn..." svTrim class="form-control"
 											[(ngModel)]="textAnswer" [ngModelOptions]="{standalone: true}" maxlength="500" />
 									</div>
-									<div class="col-12 col-lg-6 form-group">
+									<div class="col-2 col-lg-2 form-group">
+										<label class="mb-1 department">Loại trả lời</label>
+										<ng-select notFoundText="Không có dữ liệu" [clearable]="false" class="form-control"
+											[items]="listTypeAnswer" placeholder="Chọn ..." bindLabel="text" bindValue="value"
+											[virtualScroll]="true" [(ngModel)]="typeSuggest" [ngModelOptions]="{standalone: true}"
+											[closeOnSelect]="true">
+										</ng-select>
+									</div>
+									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 1">
 										<label class="mb-1 department">Gợi ý câu trả lời cho lựa chọn</label>
 										<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstQuestion"
 											placeholder="Chọn ..." bindLabel="question" bindValue="id" [virtualScroll]="true"
 											[(ngModel)]="questionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
 										</ng-select>
+									</div>
+									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 2">
+										<label class="mb-1 department">Url link</label>
+										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+											[ngModelOptions]="{standalone: true}" maxlength="500" />
 									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px;"
@@ -268,7 +283,12 @@
 									<div class="col-12 col-lg-5 form-group">
 										{{item.answer}}
 									</div>
-									<div class="col-12 col-lg-6 form-group">
+									<div class="col-12 col-lg-2 form-group">
+										<span *ngIf="item.typeSuggest == 1">Câu trả lời</span>
+										<span *ngIf="item.typeSuggest == 2">Link</span>
+										<span *ngIf="item.typeSuggest == 3">Chat</span>
+									</div>
+									<div class="col-12 col-lg-4 form-group">
 										{{item.questionAnswers}}
 									</div>
 									<div class="col-lg-1 action padding-item center">

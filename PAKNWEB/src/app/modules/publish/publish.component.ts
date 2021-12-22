@@ -110,8 +110,7 @@ export class PublishComponent implements OnInit, OnChanges {
 				})
 				.withAutomaticReconnect()
 				.build()
-			this.connection.serverTimeoutInMilliseconds = 180000
-			this.connection.keepAliveIntervalInMilliseconds = 180000
+
 			const resConnect = await this.connection.start()
 			const resCreate = await this.botService
 				.createRoom({
@@ -127,20 +126,32 @@ export class PublishComponent implements OnInit, OnChanges {
 						this.loading = false
 
 						let link = ''
-						let subTags
-						let typeFrom
-						if (data.subTags && data.subTags.length > 0) {
+						let answers = []
+						let typeFrom;
+						console.log('ReceiveMessageToGroup 1', data.results);
+						if (data.results && data.results.length > 0) {
+							console.log('ReceiveMessageToGroup 2', data.results);
 							try {
-								const par = JSON.parse(data.subTags)
-								typeFrom = par.type
-								if (par.type === 'carousel' || par.type === 'form') {
-									subTags = par.data
+								// const par = JSON.parse(data.subTags)
+								// typeFrom = par.type
+								// if (par.type === 'carousel' || par.type === 'form') {
+								// 	subTags = par.data
+								// }
+								// if (par.type === 'chat') {
+								// 	console.log('NotifyAdmin ');
+								// 	this.connection.invoke('NotifyAdmin', '')
+								// }
+								for (let index = 0; index < data.results.length; index++) {
+									const element = data.results[index];
+									if (element.subTags !== '') {
+										const subTags = JSON.parse(element.subTags)
+										answers.push({ answer: element.answer, subTags: subTags });
+									}
+
 								}
-								if (par.type === 'chat') {
-									console.log('NotifyAdmin ');
-									this.connection.invoke('NotifyAdmin', '')
-								}
+								console.log('answers ', answers);
 							} catch (error) {
+								console.log('answers ', error);
 							}
 						}
 
@@ -148,13 +159,14 @@ export class PublishComponent implements OnInit, OnChanges {
 							dateSent: data.timestamp,
 							title: data.content,
 							type: typeFrom,
-							subTags: subTags,
+							answers: answers,
 							link: link,
 							fromUserName: data.from,
 							fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
 							fromFullName: data.fromFullName,
 							toUserName: data.to,
 						}
+						console.log('ReceiveMessageToGroup 3', newMessage);
 						if (this.messages) {
 							this.messages = [...this.messages, newMessage]
 						} else {
