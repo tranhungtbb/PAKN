@@ -223,14 +223,14 @@ namespace PAKNAPI.Controller
 				{
 					Directory.CreateDirectory(folderPath);
 				}
-				string filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+				string filePath = string.Empty;
 
 
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					fileAvatar[0].CopyTo(stream);
-				}
-				_nENewsInsertIN.ImagePath = filePath;
+				//using (var stream = new FileStream(filePath, FileMode.Create))
+				//{
+				//	fileAvatar[0].CopyTo(stream);
+				//}
+				//_nENewsInsertIN.ImagePath = filePath;
 
 				// insert news
 				int res = Int32.Parse((await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN)).ToString());

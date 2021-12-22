@@ -91,30 +91,28 @@
 																	</div>
 																</div>
 															</div> -->
-															<div class="row">
-																<div class="col-6 form-group position-relative pr-0">
-																	<div
-																		class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px shadow">
-																		<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
-																		<button type="button" (click)="reloadImage()"
-																			class="btn p-1 rounded-10px ml-4 position-absolute"
-																			style="right: 10px; width: 28px;">
-																			<i class="bi bi-arrow-repeat" style="font-size: 25px"></i>
-																		</button>
-																	</div>
-																</div>
 
-																<div class="col-6 form-group">
+															<div class="form-group position-relative">
+																<div
+																	class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px">
+																	<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
+
 																	<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
-																		maxlength="5" style="font-size: 20px"
+																		maxlength="2" style="font-size: 20px"
 																		(change)="captchaCodeProduct=captchaCodeProduct.trim()"
 																		placeholder="Nhập kết quả..." class="form-control bg-transparent" value="">
-																	<div
-																		*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
-																		class="has-error m-b-12">
-																		<div *ngIf="floginFormProduct.captcha.errors.required">
-																			<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
-																		</div>
+
+																	<button type="button" (click)="reloadImage()"
+																		class="btn p-1 rounded-10px ml-4 position-absolute"
+																		style="right: 10px; width: 28px;">
+																		<i class="bi bi-arrow-repeat" style="font-size: 25px"></i>
+																	</button>
+																</div>
+																<div
+																	*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
+																	class="has-error m-b-12">
+																	<div *ngIf="floginFormProduct.captcha.errors.required">
+																		<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
 																	</div>
 																</div>
 															</div>

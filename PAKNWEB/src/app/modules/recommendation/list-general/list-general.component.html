@@ -404,7 +404,7 @@
 					Anh/Chị có chắc chắn muốn tiếp nhận PAKN này?
 				</span>
 				<form class="form-horizontal" [formGroup]="formAccept" #formDir="ngForm">
-					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
+					<div class="mt-3 mb-3">
 						<label class="mb-1">Chọn lĩnh vực <span class="cl-red">(*)</span></label>
 						<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn..." formControlName="field"
 							class="form-control" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="fieldSelected"

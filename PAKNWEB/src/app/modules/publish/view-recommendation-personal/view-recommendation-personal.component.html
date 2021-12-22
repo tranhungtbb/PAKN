@@ -149,10 +149,10 @@
 						</div>
 						<div class="media-body">
 							<div class="tt-v1 d-flex justify-content-between">
-								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold max-w-75">{{model.unitName}}
+								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold ">{{model.unitName}}
 									trả lời:
 								</p>
-								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold max-w-75">
+								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold ">
 									{{model.processUnitName}} trả
 									lời:</p>
 								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate | date:'HH:mm'}} ngày

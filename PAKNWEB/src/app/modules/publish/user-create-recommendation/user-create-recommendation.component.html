@@ -304,18 +304,28 @@
 						</ng-container>
 					</div>
 				</div>
-				<form class="form-row mb-3 align-items-end" [formGroup]="form">
+				<form class="form-row mb-3 align-items-end justify-content-between" [formGroup]="form">
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-						<label class="mb-1">Mã số xác thực</label>
+						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
 						<div
-							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha"
+							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute"
+							style="border: none !important; box-shadow: none !important;">
+							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 60%;" id="img-captcha"
 								[src]="captchaImage" />
+							<input type="text" numbersOnly class="form-control" [(ngModel)]="captchaCode" style="height: 40px;"
+								formControlName="captcha" maxlength="2">
 							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
 									style="font-size: 24px"></i></button>
 						</div>
+						<div
+							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"
+							class="has-error">
+							<div *ngIf="f.captcha.errors.required">
+								<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
+							</div>
+						</div>
 					</div>
-					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+					<!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
 						<label class="mb-1">Nhập kết quả <span class="cl-red">(*)</span></label>
 						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode"
 							style="height: 56px;" formControlName="captcha" maxlength="5">
@@ -326,23 +336,11 @@
 								<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
 							</div>
 						</div>
-					</div>
-					<!-- 
-									<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
-										<button type="button" class="btn text-white border-0 grd-xanhngoc justify-content-center"
-											style="width: 100%;" (click)="onSave(1)">Lưu</button>
-									</div>
-				
-									<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
-										<button type="button" class="btn text-white border-0 grd-blue justify-content-center" style="width: 100%;"
-											(click)="onSave(2)">
-											<span class="ml-2">Gửi</span>
-										</button>
-									</div> -->
+					</div> -->
 
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-end align-items-center"
 						style="margin-top: 22px;">
-						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 mr-3"
+						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 mr-4"
 							(click)="onSave(1)">Lưu</button>
 						<button type="button" class="btn text-white border-0 grd-blue px-5 pr-0" (click)="onSave(2)">
 							<span class="ml-2">Gửi</span>

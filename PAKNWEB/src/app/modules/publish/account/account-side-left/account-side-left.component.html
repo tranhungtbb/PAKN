@@ -21,46 +21,7 @@
 		<a class="nav-link px-0 h5" href="javascript:void(0);" (click)="signOut()">Đăng xuất</a>
 	</li>
 </ul>
-<!-- <div class="sb-tk-pakn mb-4" *ngIf="typeUserLoginPublish != 1">
-	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
-		<h4 class="text-uppercase pointer">Thống kê PAKN của tôi</h4>
-		<h4 class="counter">{{totalRecommentdation}}</h4>
-	</div>
-	<div class="card-body p-0">
-		<p class="mb-1 pointer" (click)="redirectMyRecommendaton(1)">Chờ xử lý
-			<span class="pull-right font-weight-bold cl-yellow counter">{{recommendationStatistics.receiveWait}}</span>
-		</p>
-		<div class="progress pointer" (click)="redirectMyRecommendaton(1)">
-			<div class="progress-bar grd-yellow1 progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveWait)" role="progressbar">
-			</div>
-		</div>
 
-		<p class="mb-1 mt-4 pointer" (click)="redirectMyRecommendaton(2)">Đã tiếp nhận
-			<span class="pull-right font-weight-bold cl-blue2 counter">{{recommendationStatistics.receiveApproved}}</span>
-		</p>
-		<div class="progress pointer" (click)="redirectMyRecommendaton(2)">
-			<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveApproved)" role="progressbar">
-			</div>
-		</div>
-
-		<p class="mb-1 mt-4 pointer" (click)="redirectMyRecommendaton(3)">Đã trả lời
-			<span class="pull-right font-weight-bold cl-blue counter">{{recommendationStatistics.finised}}</span>
-		</p>
-		<div class="progress pointer" (click)="redirectMyRecommendaton(3)">
-			<div class="progress-bar grd-blue progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.finised)" role="progressbar">
-			</div>
-		</div>
-
-		<p class="mb-1 mt-4 pointer" (click)="redirectMyRecommendaton(4)">Bị từ chối
-			<span class="pull-right font-weight-bold cl-red counter">{{recommendationStatistics.approve}}</span>
-		</p>
-		<div class="progress pointer" (click)="redirectMyRecommendaton(4)">
-			<div class="progress-bar grd-red progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.approve)" role="progressbar">
-			</div>
-		</div>
-
-	</div>
-</div> -->
 
 <div class="sb-tk-pakn mb-4 card-my-recommentdation" *ngIf="typeUserLoginPublish != 1 && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
@@ -84,7 +45,17 @@
 				{{recommendationStatistics.receiveApproved}}
 			</div>
 		</div>
-		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
+
+		<div class="border-left-blue3 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
+			<div class="pf-4">
+				<p class="title-status-rm ml-3 mb-0">Đang giải quyết</p>
+			</div>
+			<div class="circle bg-blue3 center text-white cursor">
+				{{recommendationStatistics.processing}}
+			</div>
+		</div>
+
+		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
 			</div>
@@ -92,7 +63,7 @@
 				{{recommendationStatistics.finised}}
 			</div>
 		</div>
-		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
+		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(5)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
 			</div>
