@@ -210,9 +210,9 @@ namespace PAKNAPI.Controller
                 }
 
 				var fileAvatar = Request.Form.Files.Where(x=>x.Name == "avatar").ToList();
-				if (fileAvatar.Count == 0) {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ảnh đại diện bài viết không được để trống" };
-				}
+				//if (fileAvatar.Count == 0) {
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ảnh đại diện bài viết không được để trống" };
+				//}
 				
 
 				// insert avatar
@@ -339,28 +339,29 @@ namespace PAKNAPI.Controller
 					});
 				}
 
-				var fileAvatar = Request.Form.Files.Where(x => x.Name == "avatar").ToList();
-				string folder = "Upload\\News\\Avatar";
-				var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
-				string filePath = string.Empty;
+                var fileAvatar = Request.Form.Files.Where(x => x.Name == "avatar").ToList();
+                string folder = "Upload\\News\\Avatar";
+                var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
+                string filePath = string.Empty;
 
-				// avatar
-				if (fileAvatar.Count() > 0) {
+                // avatar
+                if (fileAvatar.Count() > 0)
+                {
 
-					deletefile(_nENewsUpdateIN.ImagePath);
-					if (!Directory.Exists(folderPath))
-					{
-						Directory.CreateDirectory(folderPath);
-					}
-					filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
-					using (var stream = new FileStream(filePath, FileMode.Create))
-					{
-						fileAvatar[0].CopyTo(stream);
-					}
-					_nENewsUpdateIN.ImagePath = filePath;
-				}
+                    deletefile(_nENewsUpdateIN.ImagePath);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fileAvatar[0].CopyTo(stream);
+                    }
+                    _nENewsUpdateIN.ImagePath = filePath;
+                }
 
-				int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
+                int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
 
 				// delete file remove
 				List<NEFileAttach> filesDelete = JsonConvert.DeserializeObject<List<NEFileAttach>>(Request.Form["fileDelete"].ToString(), jss);

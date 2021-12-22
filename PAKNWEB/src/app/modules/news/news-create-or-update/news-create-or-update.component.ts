@@ -76,7 +76,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			contents: [this.model.contents, [Validators.required]],
 			newsType: [this.model.newsType],
 			postType: [this.model.postType],
-			imagePath: [this.model.imagePath, [Validators.required]],
+			imagePath: [this.model.imagePath],
 			pushNotify: [''],
 		})
 

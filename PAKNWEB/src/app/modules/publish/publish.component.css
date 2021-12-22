@@ -1244,6 +1244,20 @@ body, html {
 	z-index: 1000;
 }
 
+::ng-deep .ui-carousel-dots-container {
+	display: none !important;
+}
+
+::ng-deep .ui-carousel-next {
+	position: absolute;
+	right: -20px;
+}
+
+::ng-deep .ui-carousel-prev {
+	position: absolute;
+	left: -20px;
+}
+
 @keyframes mercuryTypingAnimation {
 	0% {
 		transform: translateY(0px);
