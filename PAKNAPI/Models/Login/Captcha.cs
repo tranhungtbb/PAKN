@@ -197,8 +197,8 @@ namespace PAKNAPI.Models.Results
                     {
                         for (int y = 0; y < nHeight; ++y)
                         {
-                            var xo = nWave * Math.Sin(2.0 * 3.1415 * y / 128.0);
-                            var yo = nWave * Math.Cos(2.0 * 3.1415 * x / 128.0);
+                            var xo = nWave * Math.Sin(1);
+                            var yo = nWave * Math.Cos(1);
 
                             var newX = x + xo;
                             var newY = y + yo;

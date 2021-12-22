@@ -522,7 +522,8 @@
 							</ng-container>
 						</div>
 					</div>
-					<app-infomation-exchange *ngIf="!isUnitCombine" [RecommentId]="model.id" [IsPagePublic]="false">
+					<app-infomation-exchange *ngIf="!isUnitCombine && model.status > 6" [RecommentId]="model.id"
+						[IsPagePublic]="false">
 					</app-infomation-exchange>
 					<ng-container *ngIf="!isUnitCombine && model.status == 10">
 						<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="false"></app-comment-recommendation>
@@ -750,15 +751,6 @@
 				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
 				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny"
 					maxlength="500"></textarea>
-				<!-- <div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="model.status == 2">
-					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord"
-						id="basic_checkbox_1">
-					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
-				</div>
-				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 3"
-					placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord" bindLabel="text" bindValue="value"
-					[(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
-				</ng-select> -->
 			</div>
 			<div class="modal-footer justify-content-center border-top-0">
 				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
