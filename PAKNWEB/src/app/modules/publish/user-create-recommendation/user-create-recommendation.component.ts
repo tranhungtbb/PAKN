@@ -72,6 +72,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		private notificationService: NotificationService,
 		private eRef: ElementRef,
 		private locationService: LocationService
+
 	) { }
 
 	ngOnInit() {
@@ -79,6 +80,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.model.typeObject = this.storageService.getTypeObject()
 		this.reloadImage()
 		this.getDropdown()
+
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.model.id = +params['id']
@@ -88,22 +90,30 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.getData()
 			} else {
 				this.model.typeObject = 1
-				this.setCurrentLocation()
 			}
 			this.builForm()
 		})
 		this.isLogin = this.storageService.getAccessToken()
-		$('[data-toggle="tooltip"]').tooltip()
+
 	}
 
 	ngAfterViewInit() {
-
+		this.setCurrentLocation()
+		$('[data-toggle="tooltip"]').tooltip()
 	}
 
 	private setCurrentLocation() {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
+				this.model.lat = this.markers.lat
+				this.model.lng = this.markers.lng
+				setTimeout(() => {
+					this.getAddress(this.model.lat, this.model.lng).then((res) => {
+						this.model.address = String(res)
+					})
+				}, 0)
+
 			})
 		}
 	}
@@ -489,14 +499,19 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	closeMap() {
 		$('#modalMaps').modal('hide')
 	}
+	getCurrentMark() {
+		$('#modalMaps').modal('show');
+		console.log('markers :' + this.markers)
 
+
+	}
 	async onSaveMaps() {
 		if (this.markers == null || this.markers.lat == null) {
 			return this.toastr.error('Vui lòng chọn vị trí')
 		} else {
 			this.model.lat = this.markers.lat
 			this.model.lng = this.markers.lng
-			await this.getAddress(this.model.lat, this.model.lng).then((res) => {
+			this.getAddress(this.model.lat, this.model.lng).then((res) => {
 				this.model.address = String(res)
 			})
 			$('#modalMaps').modal('hide')
