@@ -21,6 +21,7 @@ declare var $: any
 	styleUrls: ['./my-recommendation.component.css'],
 })
 export class MyRecommendationComponent implements OnInit {
+	modelUser: any = {}
 	userName: string = ''
 	phone: string = ''
 	title: string = ''
@@ -79,9 +80,9 @@ export class MyRecommendationComponent implements OnInit {
 	getSoDienThoai() {
 		this.userService.getById({ id: this.storageService.getUserId() }).subscribe((res) => {
 			if (res.success != 'OK') return
-			var modelUser = res.result.SYUserGetByID[0]
-			if (modelUser && modelUser.phone) {
-				this.phone = modelUser.phone
+			this.modelUser = res.result.SYUserGetByID[0]
+			if (this.modelUser && this.modelUser.phone) {
+				this.phone = this.modelUser.phone
 			}
 		})
 	}

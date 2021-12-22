@@ -68,9 +68,9 @@
 							</button>
 						</div>
 						<div class="group-content-recommendation">
-							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content"
-								style="height: 158px; border-radius: 0.75rem;" rows="6" placeholder="Nhập nội dung..."
-								(click)="hightLightText()" (blur)="hightLightText()"></textarea>
+							<textarea id="inputContent" (focus)="onFocusContent()" class="form-control" [(ngModel)]="model.content"
+								formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
+								placeholder="Nhập nội dung..." (click)="hightLightText()" (blur)="hightLightText()"></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
 						<div

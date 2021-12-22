@@ -6,9 +6,9 @@
 				<form [formGroup]="formLogin" class="px-3" autocomplete="off">
 					<div class="form-group">
 						<label class="mb-1">Số CMND/CCCD<span class="cl-red">(*)</span></label>
-						<input maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
-							class="form-control border-brown h-34px rounded-6px"
-							pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$"
+						<input minlength="9" maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text"
+							placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px"
+							pattern="^(\w{1}[0-9]{8}|[0-9]{9}|[0-9]{10}|[0-9]{11}|[0-9]{12})$"
 							(change)="onCheckExist('IDCard',$event.target.value)">
 
 						<div
