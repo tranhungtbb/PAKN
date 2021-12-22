@@ -53,7 +53,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	unitSelected: any = { name: null, id: null }
 	lstUnitChild: any[] = []
 	isLogin: any
-
+	flagInputContent: boolean = false;
 	// map
 	markers: any = {}
 	private geoCoder
@@ -117,7 +117,9 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			})
 		}
 	}
-
+	onFocusContent() {
+		this.flagInputContent = true;
+	}
 	searchRecommendation() {
 		this.resultsRecommendation = []
 		if (this.model.title != '' && this.model.title.trim() != '') {
@@ -133,7 +135,13 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 							})
 						})
 					}
-					this.flagRecommend = true;
+					if (this.flagInputContent == true) {
+						this.flagRecommend = false;
+					}
+					else {
+						this.flagRecommend = true;
+					}
+					this.flagInputContent = false;
 				} else {
 					this.toastr.error(response.message)
 				}
