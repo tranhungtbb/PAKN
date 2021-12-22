@@ -157,14 +157,17 @@ img {
 .received_withd_msg {
 	width: 57%;
 }
-.square{
+
+.square {
 	width: 16px;
 	height: 16px;
 	border-radius: 4px;
 }
-.bg-red{
+
+.bg-red {
 	background-color: #DA2222 !important;
 }
+
 .mesgs {
 	float: left;
 	padding: 30px 15px 0 25px;
@@ -271,7 +274,7 @@ img {
 }
 
 
-.msg_cotainer_child{
+.msg_cotainer_child {
 	/* background-color: #fff;
 	padding: 0.5rem;
 	margin-top: 0.5rem;
@@ -285,4 +288,19 @@ img {
 	border-radius: 10px;
 	border: 1px solid #c8c8c8;
 	color: #000;
+}
+
+
+::ng-deep .ui-carousel-dots-container {
+	display: none !important;
+}
+
+::ng-deep .ui-carousel-next {
+	position: absolute;
+	right: -20px;
+}
+
+::ng-deep .ui-carousel-prev {
+	position: absolute;
+	left: -20px;
 }

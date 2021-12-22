@@ -18,6 +18,7 @@ import { DxDropDownBoxModule, DxTreeViewModule, DxDataGridModule } from 'devextr
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview'
 import { ChartModule } from 'primeng/chart'
+import { CarouselModule } from 'primeng/carousel';
 
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
@@ -59,6 +60,7 @@ import { DashboardChatBotComponent } from './chatbot/chatbot.component'
 		UserModule,
 		DropdownModule,
 		ChartModule,
+		CarouselModule,
 	],
 	declarations: [
 		BusinessComponent,

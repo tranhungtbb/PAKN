@@ -477,8 +477,8 @@ export class ChatBotComponent implements OnInit {
 		this.linkSuggest = '';
 	}
 
-	onRemoveAnswer = (item: any) => {
-		this.lstAnswer = this.lstAnswer.filter((x) => x.answer != item.answer && x.typeSuggest != item.typeSuggest && x.linkSuggest != item.linkSuggest)
+	onRemoveAnswer = (index) => {
+		this.lstAnswer.splice(index, 1)
 		return
 	}
 }

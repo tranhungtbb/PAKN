@@ -267,6 +267,11 @@
 										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
 											[ngModelOptions]="{standalone: true}" maxlength="500" />
 									</div>
+									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 3">
+										<label class="mb-1 department">Lời chào mặc định</label>
+										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+											[ngModelOptions]="{standalone: true}" maxlength="500" />
+									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px;"
 											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onAddAnswer()">
@@ -279,7 +284,7 @@
 							<div class="col-sm-12">
 								<div class="title-user-map center" style="text-transform: none;" *ngIf="lstAnswer.length ==0">Chưa
 									có lựa chọn</div>
-								<div class="row" *ngFor="let item of lstAnswer">
+								<div class="row" *ngFor="let item of lstAnswer; let i = index">
 									<div class="col-12 col-lg-5 form-group">
 										{{item.answer}}
 									</div>
@@ -293,7 +298,7 @@
 									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"
-											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onRemoveAnswer(item)">
+											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onRemoveAnswer(i)">
 											<i class="bi bi-node-minus"></i>
 										</button>
 									</div>
