@@ -132,15 +132,6 @@ export class PublishComponent implements OnInit, OnChanges {
 						if (data.results && data.results.length > 0) {
 							console.log('ReceiveMessageToGroup 2', data.results);
 							try {
-								// const par = JSON.parse(data.subTags)
-								// typeFrom = par.type
-								// if (par.type === 'carousel' || par.type === 'form') {
-								// 	subTags = par.data
-								// }
-								// if (par.type === 'chat') {
-								// 	console.log('NotifyAdmin ');
-								// 	this.connection.invoke('NotifyAdmin', '')
-								// }
 								for (let index = 0; index < data.results.length; index++) {
 									const element = data.results[index];
 									if (element.subTags !== '') {

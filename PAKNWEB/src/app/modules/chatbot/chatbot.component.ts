@@ -44,7 +44,7 @@ export class DashboardChatBotComponent implements OnInit {
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
 
 			this.model = res.result.SYUserGetByID[0]
-			console.log('userService ', this.model);
+			//console.log('userService ', this.model);
 			if (this.model.avatar == '' || this.model.avatar == null) {
 				this.userAvatar = ''
 			} else {
@@ -59,13 +59,11 @@ export class DashboardChatBotComponent implements OnInit {
 			.configureLogging(signalR.LogLevel.Information)
 			.withAutomaticReconnect()
 			.build()
-		this.connection.serverTimeoutInMilliseconds = 180000
-		this.connection.keepAliveIntervalInMilliseconds = 180000
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
-					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName }]
+					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, }]
 					//console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
 
@@ -134,9 +132,12 @@ export class DashboardChatBotComponent implements OnInit {
 				PageIndex: this.pageIndex,
 				PageSize: this.pageSize,
 			}
-			//console.log('getMessage ', roomName)
+			console.log('getMessage ', roomName)
 			this.connection.invoke('JoinToRoom', roomName)
-			this.botService.getMessages(request).subscribe((res) => {
+			this.botService.getMessages(request).subscribe((result) => {
+				console.log('getMessage 1', result)
+				let res = { ...result };
+
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result && res.result.length > 0) {
 						if (this.pageIndex == 1) {
@@ -231,18 +232,37 @@ export class DashboardChatBotComponent implements OnInit {
 			for (let index = 0; index < this.messages.length; index++) {
 				const element = this.messages[index]
 				const { result, type } = this.stringToObject(element.messageContent)
-				element.messageContent = type === 'string' ? result : result.Content
 				element.fromAvatar = element.fromAvatar ? element.fromAvatar : '';
 				element.fromFullName = element.fromFullName ? element.fromFullName : '';
-				if (type === 'json' && result && result.SubTags) {
-					if (result.SubTags && result.SubTags.length > 0) {
-						const rs: any = this.stringToObject(result.SubTags[0])
-						element.SubTags = rs.type === 'json' ? rs.result.data : []
+				const answers = [];
+
+				if (type === 'string') {
+					element.messageContent = result
+				} else if (type === 'json') {
+
+					console.log('answers ', result);
+					if (result.Results && result.Results.length > 0) {
+						console.log('answers 1', result.Results);
+						try {
+							for (let ind = 0; ind < result.Results.length; ind++) {
+								const el = result.Results[ind];
+								if (el.SubTags !== '') {
+									const subTags = JSON.parse(el.SubTags)
+									console.log('answers 2', subTags);
+									answers.push({ answer: el.answer, subTags: subTags });
+								}
+							}
+						} catch (error) {
+						}
 					}
+					element.messageContent = ''
 				}
-				//console.log('element', element);
+				element.answers = answers;
+
 			}
+
 		}
+		console.log('ReceiveMessageToGroup 2', this.messages);
 	}
 
 	stringToObject(string) {
