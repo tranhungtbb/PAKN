@@ -180,7 +180,7 @@
 										<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 											208deg) brightness(99%) contrast(85%)">
 									</div>
-									<div *ngIf="[6].includes(model.status)">
+									<div *ngIf="[6].includes(item.status)">
 										<img [src]="model.fieldFilePath" width="40" height="40"
 											style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)">
 									</div>
@@ -282,7 +282,7 @@
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg> -->
-							<div *ngIf="![6].includes(item.status)">
+							<div *ngIf="![6].includes(model.status)">
 								<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 											208deg) brightness(99%) contrast(85%)">
 							</div>
