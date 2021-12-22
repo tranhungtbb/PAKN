@@ -188,14 +188,32 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	async onConnectChatBot() {
-		this.sendMessage({ title: 'Xin chào' }, false)
+		this.sendMessage({ title: 'Xin chào', idSuggetLibrary: '' }, false)
 	}
 
 	sendMessage(message: any, append: boolean = true) {
 		console.log('message ', message)
+		if (message.typeSuggest && message.typeSuggest == "2") {
+			window.open(message.linkSuggest, '_blank')
+			return
+		}
+		else if (message.typeSuggest && message.typeSuggest == "3") {
+			this.connection.invoke('NotifyAdmin', '')
+			this.messages = [
+				...this.messages,
+				{
+					dateSent: '',
+					title: message.linkSuggest,
+					fromId: 19,
+					fromAvatarPath: '',
+					answers: []
+				},
+			]
+			return
+		}
 		this.loading = true
 		if (message.hiddenAnswer && message.hiddenAnswer !== '') {
-			this.connection.invoke('AnonymousChatWithBot', message.title, message.hiddenAnswer)
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.idSuggetLibrary ? message.idSuggetLibrary : '', message.hiddenAnswer)
 			if (append) {
 				this.messages = [
 					...this.messages,
@@ -211,7 +229,7 @@ export class PublishComponent implements OnInit, OnChanges {
 				}, 300)
 			}
 		} else {
-			this.connection.invoke('AnonymousChatWithBot', message.title, '')
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.idSuggetLibrary ? message.idSuggetLibrary : '', '')
 			if (append) {
 				this.messages = [
 					...this.messages,

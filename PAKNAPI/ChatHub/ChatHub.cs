@@ -115,7 +115,7 @@ namespace SignalR.Hubs
             }
         }
 
-        public async Task AnonymousChatWithBot(string message,string hiddenAnswer = "")
+        public async Task AnonymousChatWithBot(string message, string idSuggestLibrary,string hiddenAnswer = "")
         {
             var httpContext = Context.GetHttpContext();
             var senderUserName = GetUserName(httpContext);
@@ -130,7 +130,15 @@ namespace SignalR.Hubs
                 DateTime foo = DateTime.Now;
                 //var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
                 //ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
-                List<ResultBotNew> results = ResultBot(string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                List<ResultBotNew> results = new List<ResultBotNew>();
+                if (String.IsNullOrEmpty(idSuggestLibrary))
+                {
+                    results = ResultBot(string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                }
+                else
+                {
+                    results = new BotGetLibrary(_appSetting).BotGetLibraryById(idSuggestLibrary);
+                }                
                 DateTime foooo = DateTime.Now;
                 double totall = (foooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 0 " + totall);

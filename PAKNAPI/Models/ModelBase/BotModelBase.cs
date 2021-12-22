@@ -415,9 +415,9 @@ namespace PAKNAPI.Models.ModelBase
 				if (item.Id == idLib)
 				{
 					if (result == "")
-						result += @"{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
+						result += @"{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @""", ""typeSuggest"":""" + item.TypeSuggest + @""", ""linkSuggest"":""" + item.LinkSuggest + @""", ""idSuggetLibrary"":""" + item.IdSuggetLibrary + @"""}";
 					else
-						result += @",{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
+						result += @",{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @""", ""typeSuggest"":""" + item.TypeSuggest + @""", ""linkSuggest"":""" + item.LinkSuggest + @""", ""idSuggetLibrary"":""" + item.IdSuggetLibrary + @"""}";
 				}
 			}
 			if (result != "")
@@ -457,6 +457,25 @@ namespace PAKNAPI.Models.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("InputString", input);
 			List<BotGetLibrary> libraries = (_sQLCon.ExecuteListDapper<BotGetLibrary>("SY_Chatbot_Library_GetByInput", DP)).ToList();
+			//
+			var result = changeDataNew(libraries);
+
+			List<ResultBotNew> rs = new List<ResultBotNew>();
+            foreach (var item in result)
+            {
+                ResultBotNew rb = new ResultBotNew();
+                rb.Answer = item.template.title;
+                rb.SubTags = item.template.pakn;
+				rs.Add(rb);
+            }
+            return rs;
+		}
+
+		public List<ResultBotNew> BotGetLibraryById(string idSuggestLibrary)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("IdSuggestLibrary", idSuggestLibrary);
+			List<BotGetLibrary> libraries = (_sQLCon.ExecuteListDapper<BotGetLibrary>("SY_Chatbot_Library_GetByIdSuggest", DP)).ToList();
 			//
 			var result = changeDataNew(libraries);
 
