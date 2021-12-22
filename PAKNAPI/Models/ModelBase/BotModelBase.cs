@@ -412,7 +412,7 @@ namespace PAKNAPI.Models.ModelBase
 			string result = "";
 			foreach (var item in getLibraries)
 			{
-				if (item.Id == idLib && item.IdSuggetLibrary != null)
+				if (item.Id == idLib)
 				{
 					if (result == "")
 						result += @"{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
