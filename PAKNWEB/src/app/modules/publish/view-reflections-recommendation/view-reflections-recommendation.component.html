@@ -109,7 +109,7 @@
 						</div>
 						<div class="media-body">
 							<div class="tt-v1 d-flex justify-content-between">
-								<p class="h4 font-italic font-weight-bold max-w-75">{{model.processUnitName != null ?
+								<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ?
 									model.processUnitName
 									: 'Cơ quan chức năng'}} trả lời:</p>
 								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate |
@@ -121,12 +121,14 @@
 									{{model.denyDate |date :'dd/MM/yyyy'}}</p>
 							</div>
 							<div>
-								<span *ngIf="model.fieldName">
+								<span *ngIf="model.fieldName" class="my-0 h5">Lĩnh vực:</span> {{model.fieldName}}
+								<span *ngIf="model.unitName" class="my-0 ml-2 h5">Đơn vị tiếp nhận:</span> {{model.unitName}}
+								<!-- <span *ngIf="model.fieldName">
 									<span class="my-0 h5">Lĩnh vực :</span> {{model.fieldName}}
 								</span>
 								<span style="float:right;" *ngIf="model.unitName">
 									<span class="my-0 h5">Đơn vị tiếp nhận :</span> {{model.unitName}}
-								</span>
+								</span> -->
 
 							</div>
 							<br>

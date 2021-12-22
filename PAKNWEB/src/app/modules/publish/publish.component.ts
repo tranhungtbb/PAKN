@@ -298,7 +298,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	onClickNotification(id: number, type: number, typeSend: number) {
 		this.updateIsReadNotification(id)
 		if (type == TYPE_NOTIFICATION.NEWS) {
-			this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
+			this._router.navigate(['cong-bo/thong-bao-chinh-quyen/' + id])
 		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) {
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
