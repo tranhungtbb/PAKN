@@ -18,19 +18,22 @@
 							<div class="row">
 								<div class="nav-item d-none d-lg-block">
 									<div class="header-info">
-										<span class=""><strong>{{currentFullnName}}</strong></span>
+										<span style="float:right;"><strong>{{currentFullnName}}</strong></span>
 
 									</div>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-4 col-xl-4 col-md-4"></div>
-								<div class="col-4 col-xl-4 col-md-4" style="padding-left: 5px;">
-									<div class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
+								<div class="col-4 col-xl-4 col-md-4">
+									<div class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1"
+										style="display: flex; margin-top: 5px; align-items: center;">
 										<a class="nav-link  bg-transparent" href="/quan-tri">
-											<i class="bi bi-grid"></i>
+											<i class="bi bi-grid fa-2x"></i>
 										</a>
 									</div>
+								</div>
+								<div class="col-4 col-xl-4 col-md-4" style="padding-left: 5px;">
+
 									<div class="nav-item dropdown notification_dropdown"
 										style="display: flex; margin-top: 5px; align-items: center;">
 										<a class=" nav-link ai-icon bg-transparent"

@@ -288,6 +288,7 @@
 									có lựa chọn</div>
 								<div class="row" *ngFor="let item of lstAnswer; let i = index">
 									<div class="col-12 col-lg-5 form-group">
+
 										{{item.answer}}
 									</div>
 									<div class="col-12 col-lg-2 form-group">
@@ -296,7 +297,10 @@
 										<span *ngIf="item.typeSuggest == 3">Chat</span>
 									</div>
 									<div class="col-12 col-lg-4 form-group">
-										{{item.questionAnswers}}
+										<p readonly="true">
+											{{item.questionAnswers}}
+										</p>
+
 									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"

@@ -181,36 +181,29 @@
 							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300"
 								formControlName="address" placeholder="Nhập địa chỉ cụ thể phản ánh, kiến nghị...." />
 
-							<div class="row">
-								<div class="col-3 col-xl-4 col-md-4">
-									<div class="mt-2">
-										<span style="color:#5e72e4;">
-											Chọn vị trí :
-										</span>
-									</div>
-
-								</div>
-								<div class="col-3 col-xl-4 col-md-4">
-									<div class="mt-2" title="Chọn vị trí hiện tại" style="padding-left:15px;">
-										<span style="color: #5e72e4;cursor:pointer;" (click)="setCurrentLocation()">
-											<i class="far fa-location"></i>
-											<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">
-												Vị trí hiện tại của tôi</p>
-										</span>
-									</div>
-								</div>
-								<div class="col-3 col-xl-4 col-md-4">
-									<div class="mt-2" style="float: right;" title="Chọn vị trí trên bản đồ">
-										<span style="color: #5e72e4;cursor:pointer;" (click)="showMaps()">
-											<i class="fas fa-map-marker-alt"></i>
-											<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">
-												Chọn vị trí trên bản đồ</p>
-										</span>
-									</div>
-								</div>
 
 
+							<div style="color:#5e72e4; display: inline-block; width: auto;">
+								Chọn vị trí :
 							</div>
+
+
+							<div style="color: #5e72e4; cursor:pointer;  display: inline-block;" class="ml-4"
+								(click)="setCurrentLocation()">
+								<i class="far fa-location"></i>
+								<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">
+									Vị trí hiện tại của tôi</p>
+							</div>
+
+
+							<div style="color: #5e72e4; cursor:pointer;  display: inline-block;" class="ml-4" (click)="showMaps()">
+								<i class="fas fa-map-marker-alt"></i>
+								<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">
+									Chọn vị trí trên bản đồ</p>
+							</div>
+
+
+
 							<div
 								*ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
 								class="has-error">
@@ -390,8 +383,9 @@
 				<div class="row form-group">
 					<div class="col-md-12">
 						<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false"
-							[zoomControl]="false" (mapClick)="mapClicked($event)" (dragEnd)="dragEnd($event)">
-							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true">
+							[zoomControl]="false" (mapClick)="mapClicked($event)">
+							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"
+								(dragEnd)="dragEnd($event)">
 							</agm-marker>
 						</agm-map>
 					</div>
