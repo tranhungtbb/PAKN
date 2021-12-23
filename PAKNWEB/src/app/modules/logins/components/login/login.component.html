@@ -38,11 +38,11 @@
 																	*ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.name.errors.required">
-																		<span class="help-block" style="font-weight: bold;">Trường này không được để
+																		<span class="help-block">Trường này không được để
 																			trống</span>
 																	</div>
 																	<div *ngIf="floginFormProduct.name.errors.pattern">
-																		<span class="help-block" style="font-weight: bold;">Định dạng không đúng</span>
+																		<span class="help-block">Định dạng không đúng</span>
 																	</div>
 																</div>
 															</div>
@@ -59,7 +59,7 @@
 																	*ngIf="floginFormProduct.pass.invalid && (floginFormProduct.pass.dirty || floginFormProduct.pass.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.pass.errors.required">
-																		<span class="help-block" style="font-weight: bold;">Trường này không được để
+																		<span class="help-block">Trường này không được để
 																			trống</span>
 																	</div>
 																</div>
@@ -112,7 +112,7 @@
 																	*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.captcha.errors.required">
-																		<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
+																		<span class="help-block">Vui lòng nhập kết quả</span>
 																	</div>
 																</div>
 															</div>

@@ -202,7 +202,12 @@ a:hover {
 	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
 	color: #fff !important;
 }
-
+input:placeholder-shown {
+	font-style: italic;
+}
+textarea:placeholder-shown{
+	font-style: italic;
+}
 .bg-login {
 	min-height: 100vh;
 }
