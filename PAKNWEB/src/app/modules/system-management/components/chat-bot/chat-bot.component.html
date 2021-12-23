@@ -145,7 +145,7 @@
 							<div class="col-sm-12">
 								<label class="control-label">Câu hỏi</label>
 								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="title"
-									[(ngModel)]="model.title" maxlength="500" />
+									[(ngModel)]="model.title" />
 								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.title.errors.required">
@@ -247,7 +247,7 @@
 									<div class="col-12 col-lg-5 form-group">
 										<label class="mb-1 department">Lựa chọn</label>
 										<input id="target" placeholder="Nhập lựa chọn..." svTrim class="form-control"
-											[(ngModel)]="textAnswer" [ngModelOptions]="{standalone: true}" maxlength="500" />
+											[(ngModel)]="textAnswer" [ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-2 col-lg-2 form-group">
 										<label class="mb-1 department">Loại trả lời</label>
@@ -267,12 +267,12 @@
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 2">
 										<label class="mb-1 department">Url link</label>
 										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
-											[ngModelOptions]="{standalone: true}" maxlength="500" />
+											[ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 3">
 										<label class="mb-1 department">Lời chào mặc định</label>
 										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
-											[ngModelOptions]="{standalone: true}" maxlength="500" />
+											[ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-lg-1 action padding-item center">
 										<button type="button" style="width: 40px; height: 40px;"
