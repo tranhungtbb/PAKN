@@ -22,7 +22,9 @@
 	display: flex;
 	border-radius: 4px;
 }
-
+.btn-hight-light:hover {
+	color: #ee5454;
+}
 .red-bar {
 	background: linear-gradient(180deg, #ee5454 0%, #a61515 100%);
 	border-radius: 0px 4px 4px 0px;

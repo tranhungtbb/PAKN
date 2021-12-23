@@ -100,22 +100,44 @@
 										<h4 class="text-uppercase mb-0 text-white pointer"
 											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}">{{item.fieldName}}</h4>
 									</div>
-									<div class="ml-3 mr-3 mb-3">
+									<div class="ml-3 mr-3 mb-3" style="height: 363.38px;">
 										<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
-											<div class="mt-3" [ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
-												<p class="align-items-center mb-1">
-													<a class="h4 title-sm color-dark text-1line"
+											<div *ngIf="mr.recommendation.title.length >= 66"
+												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
+												<p class="align-items-center mb-1" style="display:inline;height:75px;">
+													<a class="h4 title-sm color-dark"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														{{mr.recommendation.title}}
+														{{mr.recommendation.title.slice(0,64)}} -
 													</a>
-												</p>
-												<div class="tt-v1 mb-1 d-flex justify-content-between">
-													<p class="card-date mb-2">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
+													<i class="bi bi-alarm cl-blue"></i>
+													<span class="card-date mb-2" style="margin-left:3px;">{{mr.recommendation.createdDate | date
+														: 'dd/MM/yyyy
+														HH:mm'}}</span>
 													<a class="read-more" *ngIf="mr.recommendation.totalComment"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														<i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
+														<i class="bi bi-chat-right-fill cl-blue" style="margin-left:3px;"></i>
+														{{mr.recommendation.totalComment}}
 													</a>
-												</div>
+												</p>
+											</div>
+											<div *ngIf="mr.recommendation.title.length <66" style="height:75px;"
+												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
+												<p class="align-items-center mb-1" style="display:inline;height:75px;">
+													<a class="h4 title-sm color-dark"
+														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
+														{{mr.recommendation.title}} -
+													</a>
+													<i class="bi bi-alarm cl-blue"></i>
+													<span class="card-date mb-2" style="margin-left:3px;">{{mr.recommendation.createdDate | date
+														:
+														'dd/MM/yyyy HH:mm'}}</span>
+													<a class="read-more" *ngIf="mr.recommendation.totalComment"
+														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
+														<i class="bi bi-chat-right-fill cl-blue" style="margin-left:3px;"></i>
+														{{mr.recommendation.totalComment}}
+													</a>
+												</p>
+
 
 											</div>
 										</ng-container>
@@ -148,8 +170,7 @@
 										<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"
 											class="image-box ratio-16-9 bd-12">
 											<span class="image">
-												<img class="img-cover" *ngIf="!mr.filePath"
-													src="../../../../assets/dist/images/Icon_app_new.png">
+												<img class="img-cover" *ngIf="!mr.filePath" src="../../../../assets/dist/images/Thumbnail.png">
 												<img class="img-cover" *ngIf="mr.filePath" src="{{mr.filePath}}">
 											</span>
 										</a>

@@ -124,9 +124,9 @@
 						</div>
 						<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center title-action">
 
-							<span><a routerLink="/dang-ky/ca-nhan">Đăng ký</a></span>
+							<span><a class="btn-hight-light" routerLink="/dang-ky/ca-nhan">Đăng ký</a></span>
 							<span class="mx-1" style="color: #337ab7;">|</span>
-							<span><a routerLink="/dang-nhap">Đăng nhập</a></span>
+							<span><a class="btn-hight-light" routerLink="/dang-nhap">Đăng nhập</a></span>
 						</ul>
 					</div>
 					<div style="margin-left:15px; display:inherit">
@@ -190,11 +190,11 @@
 
 						<div class="menu-left d-flex">
 							<div class="search-bar center ps-relative">
-								<div class="p-0 m-0 show">
+								<div class="p-0 m-0 show pi-italic">
 									<form>
 										<input class="form-control" type="text" [(ngModel)]="keySearch"
 											[ngModelOptions]="{standalone: true}" (keydown.enter)="searchRecommendation()"
-											placeholder="Tìm kiếm phản ánh kiến nghị..." aria-label="Search">
+											placeholder="Tìm kiếm phản ánh kiến nghị.." aria-label="Search">
 									</form>
 								</div>
 								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;"

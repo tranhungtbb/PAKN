@@ -202,7 +202,32 @@ a:hover {
 	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
 	color: #fff !important;
 }
+.pi-italic input:placeholder-shown {
+	font-style: italic;
+}
 
+/* input:placeholder-shown {
+	font-style: italic;
+}
+input[type="combobox"]:placeholder-shown{
+	font-style: italic;
+}
+
+.ng-select:placeholder-shown{
+	font-style: italic;
+}
+.ng-input input:placeholder-shown{
+	font-style: italic;
+}
+
+.custom ::ng-deep .ng-placeholder::placeholder-shown{
+	font-style: italic;
+	
+} */
+
+textarea:placeholder-shown{
+	font-style: italic;
+}
 .bg-login {
 	min-height: 100vh;
 }
@@ -2069,7 +2094,11 @@ table thead .form-control ng-select {
 	justify-content: center;
 	align-items: center;
 }
-
+.statistics-right{
+	margin-left: 3px;
+	color: red;
+	margin-bottom: 0;
+}
 :host ::ng-deep .ui-state-highlight {
 	background-color: transparent !important;
 	color: #333333 !important;
