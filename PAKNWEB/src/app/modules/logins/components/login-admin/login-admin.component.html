@@ -46,7 +46,7 @@
 												<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
 												<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="2"
-													style="font-size: 20px; height: 38px; border: none;" (change)="captchaCode=captchaCode.trim()"
+													style="font-size: 20px; height: 38px;" (change)="captchaCode=captchaCode.trim()"
 													placeholder="Nhập kết quả ..."
 													class="form-control rounded-8px px-4 border-brown bg-white mr-1" value="">
 												<button type="button" (click)="reloadImage()"

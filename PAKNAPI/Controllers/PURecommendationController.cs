@@ -98,10 +98,6 @@ namespace PAKNAPI.ControllerBase
 
 				List<RecommendationGroupByFieldResponse> result = new List<RecommendationGroupByFieldResponse>();
 
-				//foreach (var field in lstFieldHome) {
-				//	var lstRecommendation =  await new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id);
- 			//		result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
-				//}
 				lstFieldHome.ForEach((field) =>
 				{
 					var lstRecommendation = new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id).Result;
@@ -395,12 +391,19 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("recommendations-hight-light")]
-		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick()
+		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
 		{
 			try
 			{
-				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(STATUS_RECOMMENDATION.FINISED);
-				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage };
+				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(KeySearch, FieldId, UnitId, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"PURecommendation", rsPURecommendationOnPage},
+						{"TotalCount", rsPURecommendationOnPage != null && rsPURecommendationOnPage.Count > 0 ? rsPURecommendationOnPage[0].RowNumber : 0},
+						{"PageIndex", rsPURecommendationOnPage != null && rsPURecommendationOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsPURecommendationOnPage != null && rsPURecommendationOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{

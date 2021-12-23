@@ -78,10 +78,32 @@
 				</div>
 
 				<p *ngIf="(viewDemo && !model) || !model">Thông báo chưa được công bố</p>
-
+				<div *ngIf="viewDemo || model" class="mb-3">
+					<h5 class="pb-0 border-top text-uppercase pt-3" style="font-size: 14pt;">Thông báo liên quan khác</h5>
+					<div *ngIf="newsRelates && newsRelates.length == 0">Chưa có thông báo liên quan nào</div>
+					<div class="box">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item px-0" *ngFor="let item of newsRelates">
+								<div class="media">
+									<div class="media-body">
+										<p class="h3 my-1">
+											<a class="text-2line title-item-article" style="font-weight: bold!important;"
+												routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}">{{item.title}}</a>
+										</p>
+										<div class="createDate mb-2">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :
+											'dd/MM/yyyy'}}</div>
+										<p class="mb-0 article-summary">
+											<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">{{item.summary}}</a>
+										</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 			<div class="col-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0 mb-2">
-				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+				<app-statistics-right [isShowSatisfationChart]="true" [isShowNotification]="true"></app-statistics-right>
 			</div>
 		</div>
 	</div>

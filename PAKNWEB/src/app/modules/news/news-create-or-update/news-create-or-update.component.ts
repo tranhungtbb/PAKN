@@ -74,10 +74,10 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
 			summary: [this.model.summary],
 			contents: [this.model.contents, [Validators.required]],
-			newsType: [this.model.newsType],
+			newsType: [this.model.newsType, [Validators.required]],
 			postType: [this.model.postType],
 			imagePath: [this.model.imagePath],
-			pushNotify: [''],
+			pushNotify: [this.model.isNotification],
 		})
 
 		this.postTypeSelected = this.model.postType.trim().split(',')
@@ -127,6 +127,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			newsType: this.model.newsType,
 			postType: this.model.postType,
 			imagePath: this.model.imagePath,
+			pushNotify: this.model.isNotification
 		})
 	}
 

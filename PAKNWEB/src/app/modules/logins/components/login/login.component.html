@@ -98,9 +98,9 @@
 																	<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
 																	<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
-																		maxlength="2" style="font-size: 20px; border: none;"
+																		maxlength="2" style="font-size: 20px;"
 																		(change)="captchaCodeProduct=captchaCodeProduct.trim()"
-																		placeholder="Nhập kết quả..." class="form-control bg-transparent" value="">
+																		placeholder="Nhập kết quả..." class="form-control bg-transparent mr-1" value="">
 
 																	<button type="button" (click)="reloadImage()"
 																		class="btn p-1 rounded-10px ml-4 position-absolute"

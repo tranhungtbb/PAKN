@@ -48,4 +48,30 @@
 	height: 150px!important;
 }
 
+.bg-notification {
+	background-color: #FFF7EF;
+}
+.list-article ul li {
+	padding: 10px 0px;
+	list-style: none;
+	border-bottom: 1px solid rgba(214, 214, 214, 0.8);
+}
+
+.border-bottom-none {
+	border-bottom: none !important;
+}
+
+.list-article ul li a {
+	color: #222222;
+	font-size: 14px;
+	line-height: 21px;
+	font-weight: 500;
+}
+.read-more {
+	color: #707C97;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+}
 
