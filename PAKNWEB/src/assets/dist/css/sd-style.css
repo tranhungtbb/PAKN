@@ -205,7 +205,8 @@ a:hover {
 .pi-italic input:placeholder-shown {
 	font-style: italic;
 }
-input:placeholder-shown {
+
+/* input:placeholder-shown {
 	font-style: italic;
 }
 input[type="combobox"]:placeholder-shown{
@@ -222,7 +223,7 @@ input[type="combobox"]:placeholder-shown{
 .custom ::ng-deep .ng-placeholder::placeholder-shown{
 	font-style: italic;
 	
-}
+} */
 
 textarea:placeholder-shown{
 	font-style: italic;

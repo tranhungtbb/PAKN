@@ -3,7 +3,7 @@
 		<div class="col col-lg-3 border-right p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
 			<form class="px-3" [formGroup]="formLogin">
-				<div class="form-group">
+				<div class="form-group pi-italic">
 					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập <span class="cl-red">(*)</span></label>
 					<input minlength="10" maxlength="13" onlyNumber="true" [(ngModel)]="model.businessRegistration"
 						formControlName="businessRegistration" type="text"
@@ -30,7 +30,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group pi-italic">
 					<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey [(ngModel)]="model.password" formControlName="password" type="password"
 						placeholder="Nhập mật khẩu.." autocomplete="off" class="form-control border-brown h-34px rounded-6px"
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group pi-italic">
 					<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey [(ngModel)]="model.rePassword" formControlName="rePassword" type="password"
 						placeholder="Nhập lại mật khẩu.." autocomplete="off" class="form-control border-brown h-34px rounded-6px"
@@ -75,7 +75,7 @@
 		<div class="col col-lg-3 border-right border-top p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin doanh nghiệp</span></h4>
 			<form class="px-3" [formGroup]="formOrgInfo">
-				<div class="form-group">
+				<div class="form-group pi-italic">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
 					<input [svTrim] [(ngModel)]="model.business" formControlName="business" type="text"
 						placeholder="Nhập tên tổ chức, doanh nghiệp.." class="form-control h-34px rounded-6px border-brown">
@@ -90,7 +90,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group pi-italic">
 					<label class="mb-1">Điện thoại</label>
 					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.orgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
 						formControlName="orgPhone" type="text" placeholder="Nhập số điện thoại.."
