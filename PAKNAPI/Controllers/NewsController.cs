@@ -280,7 +280,7 @@ namespace PAKNAPI.Controller
 						await HISNewsInsert(his);
 					}
 					// thông báo
-					if (_nENewsInsertIN.IsNotification == true)
+					if (_nENewsInsertIN.IsNotification == true && _nENewsInsertIN.Status == 1)
 					{
 						await SYNotificationInsertTypeNews(res, _nENewsInsertIN.Title, true);
 					}
@@ -419,7 +419,7 @@ namespace PAKNAPI.Controller
 						await HISNewsInsert(his);
 					}
                     // thông báo
-                    if (_nENewsUpdateIN.IsNotification == true)
+                    if (_nENewsUpdateIN.IsNotification == true && _nENewsUpdateIN.Status == 1)
                     {
                         await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
                     }
@@ -637,7 +637,7 @@ namespace PAKNAPI.Controller
 						model.DataId = Id;
 						model.SendDate = DateTime.Now;
 						model.Type = TYPENOTIFICATION.NEWS;
-						model.Title = "Bạn vừa nhận được một thông báo từ chính quyền";
+						model.Title = string.Empty;
 						model.Content = Title;
 						model.IsViewed = true;
 						model.IsReaded = true;

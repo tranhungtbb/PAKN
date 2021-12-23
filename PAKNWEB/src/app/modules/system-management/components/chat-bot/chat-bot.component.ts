@@ -37,6 +37,7 @@ export class ChatBotComponent implements OnInit {
 		{ value: 1, text: 'Câu trả lời' },
 		{ value: 2, text: 'Link' },
 		{ value: 3, text: 'Chat' },
+		{ value: 4, text: 'Gửi phản ánh kiến nghị' }
 	]
 	form: FormGroup
 	model: any = new ChatbotObject()

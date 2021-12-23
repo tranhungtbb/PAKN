@@ -44,7 +44,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
+						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
 						<textarea class="form-control text-area-height" cols="10" formControlName="summary"
 							[(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
 						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))"
@@ -54,17 +54,17 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="col-12 col-lg-12 form-group mb-6">
+					<div class="col-12 col-lg-12 form-group mb-6">
 						<div class="clearfix mb-2">
-							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span></label>
+							<label class="mb-1"><span class="text-uppercase">Thông báo liên quan</span></label>
 							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right"
 								(click)="onModalNewsRelate()">
-								<i class="bi bi-list"></i> Chọn bài
+								<i class="bi bi-list"></i> Chọn thông báo
 							</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
 							<div class="p-2 border mb-2 item-news-relate" *ngFor="let relateItem of newsRelatesSelected">
-								<img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imagePath" />
+								<!-- <img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imagePath" /> -->
 								<span class="col-md-10 p-1 ml-3">
 									<strong class="text-2line p-0">{{relateItem.title}}</strong>
 								</span>
@@ -73,7 +73,7 @@
 								</span>
 							</div>
 						</div>
-					</div> -->
+					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">Nội dung thông báo </span> <span
 								class="cl-red">(*)</span></label>
@@ -89,18 +89,22 @@
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
-					<!-- <div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">Loại tin tức </span> <span class="cl-red">(*)</span></label>
-						<ng-select notFoundText="Không có dữ liệu"  formControlName="newsType" id="newsTypeId" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">Loại thông báo </span> <span
+								class="cl-red">(*)</span></label>
+						<ng-select notFoundText="Không có dữ liệu" formControlName="newsType" id="newsTypeId"
+							[(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
-						<div *ngIf="(submitted && f.newsType.invalid)||(f.newsType.invalid && (f.newsType.dirty || f.newsType.touched))" class="has-error m-b-12">
+						<div
+							*ngIf="(submitted && f.newsType.invalid)||(f.newsType.invalid && (f.newsType.dirty || f.newsType.touched))"
+							class="has-error m-b-12">
 							<div *ngIf="!model.newsType">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-12 form-group">
+					<!--<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài </span> <span class="cl-red">(*)</span></label>
 						<input hidden formControlName="postType" [(ngModel)]="model.postType" />
 						<div class="checkbox dis-inline mr-3" *ngFor="let pType of postTypes">
@@ -202,7 +206,7 @@
 					<div class="col-12 col-lg-12 form-group" *hasPermission="['3', 'F_I_5']">
 						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
 						<div class="checkbox">
-							<label><input [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify" checked> Gửi
+							<label><input [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify"> Gửi
 								thông báo đến người dân, doanh nghiệp</label>
 						</div>
 					</div>

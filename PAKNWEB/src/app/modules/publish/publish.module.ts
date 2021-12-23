@@ -49,6 +49,7 @@ import { ProcessingRecommendationsComponent } from './processing-recommendations
 import { CommentModule } from './comment-recommendation/comment.module'
 import { InfomationExchangeModule } from '../recommendation/infomation-exchange/infomation-exchange.module'
 import { GovernmentNoticeComponent } from './government-notice/government-notice.component'
+import { HightLightRecommendationsComponent } from './hight-light-recommendations/hight-light-recommendations.component'
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { GovernmentNoticeComponent } from './government-notice/government-notice
 		UnitDissatisfactionRateComponent,
 		LateProcessingUnitComponent,
 		ProcessingRecommendationsComponent,
-		GovernmentNoticeComponent
+		GovernmentNoticeComponent,
+		HightLightRecommendationsComponent
 	],
 	imports: [
 		CommonModule,

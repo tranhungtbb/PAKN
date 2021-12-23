@@ -30,6 +30,7 @@ import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/un
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
 import { GovernmentNoticeComponent } from './government-notice/government-notice.component'
+import { HightLightRecommendationsComponent } from './hight-light-recommendations/hight-light-recommendations.component'
 
 const routes: Routes = [
 	{
@@ -120,6 +121,11 @@ const routes: Routes = [
 			{
 				path: 'phan-anh-kien-nghi-dang-xu-ly',
 				component: ProcessingRecommendationsComponent,
+			},
+
+			{
+				path: 'phan-anh-kien-nghi-tieu-bieu',
+				component: HightLightRecommendationsComponent,
 			},
 
 			{

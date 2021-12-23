@@ -14,28 +14,28 @@
 									<div class="row">
 										<div class="form-group col-12">
 											<input class="form-control rounded-8px h-50px px-4 border-brown bg-white"
-												(change)="user.UserName=user.UserName.trim()" placeholder="Nhập email.." type="text"
+												(change)="user.UserName=user.UserName.trim()" placeholder="Nhập email..." type="text"
 												id="username" formControlName="name" [(ngModel)]="user.UserName" required>
 											<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
 												<div *ngIf="name.errors.email">
-													<span class="help-block">Email không hợp lệ</span>
+													<span class="help-block" style="font-weight: bold;">Email không hợp lệ</span>
 												</div>
 												<div *ngIf="name.errors.required">
-													<span class="help-block">Trường này không được để trống</span>
+													<span class="help-block" style="font-weight: bold;">Trường này không được để trống</span>
 												</div>
 											</div>
 										</div>
 										<div class="col-12 form-group position-relative">
 											<input class="form-control rounded-8px h-50px px-4 border-brown bg-white"
 												[type]="isShowPassword ? 'text' : 'password'" id="userpass"
-												(change)="user.Password=user.Password.trim()" placeholder="Nhập mật khẩu.."
+												(change)="user.Password=user.Password.trim()" placeholder="Nhập mật khẩu..."
 												formControlName="pass" [(ngModel)]="user.Password" required>
 											<i class="custom-show-pass"
 												[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
 												(click)="showPassword()"></i>
 											<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
 												<div *ngIf="pass.errors.required">
-													<span class="help-block">Trường này không được để trống</span>
+													<span class="help-block" style="font-weight: bold;">Trường này không được để trống</span>
 												</div>
 											</div>
 										</div>
@@ -46,8 +46,8 @@
 												<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
 												<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="2"
-													style="font-size: 20px; height: 38px; border: none;" (change)="captchaCode=captchaCode.trim()"
-													placeholder="Nhập kết quả.."
+													style="font-size: 20px; height: 38px;" (change)="captchaCode=captchaCode.trim()"
+													placeholder="Nhập kết quả ..."
 													class="form-control rounded-8px px-4 border-brown bg-white mr-1" value="">
 												<button type="button" (click)="reloadImage()"
 													class="btn p-1 rounded-10px ml-4 position-absolute" style="right: 17px; width: 40px;">

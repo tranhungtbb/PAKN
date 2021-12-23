@@ -14,7 +14,6 @@
 								src="../../../../assets/dist/images/Frame 3559.png" alt="">
 						</a>
 					</div>
-
 				</div>
 
 				<div class="box">
@@ -94,10 +93,12 @@
 						<ng-container *ngFor="let item of ReflectionsRecommendations; let i = index">
 							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" [ngClass]="i % 2 == 0 ? 'pr-7' : 'pl-7'">
 								<div class="card border">
-									<img class="img-fluid img-cover img-field" style="width: 100%;" [src]="item.filePath"
-										alt="{{item.fieldName}}">
+									<img class="img-fluid img-cover img-field pointer"
+										routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}" style="width: 100%;"
+										[src]="item.filePath" alt="{{item.fieldName}}">
 									<div class="tt-v1 mb-1 d-flex justify-content-between no-grd-blue title-field pl-3 center">
-										<h4 class="text-uppercase mb-0  text-white">{{item.fieldName}}</h4>
+										<h4 class="text-uppercase mb-0 text-white pointer"
+											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}">{{item.fieldName}}</h4>
 									</div>
 									<div class="ml-3 mr-3 mb-3" style="height: 363.38px;">
 										<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
@@ -180,7 +181,6 @@
 											{{mr.recommendation.title}}
 										</a>
 									</p>
-									<!-- <p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p> -->
 									<div class="tt-v1 mb-3 d-flex justify-content-between">
 										<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
 										<a class="read-more" *ngIf="mr.recommendation.totalComment"
@@ -195,29 +195,8 @@
 				</div>
 			</div>
 			<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3">
-				<div class="card border p-3 bg-notification">
-					<div class="tt-v1 mb-2 justify-content-start">
-						<h4 class="title-notification mb-1 mr-2 text-uppercase">thông báo</h4>
-					</div>
-					<!-- <p class="content-notification text-3line mb-2" [innerHTML]="dataNotification.content"></p> -->
-					<div class="list-article">
-						<ul>
-							<ng-container *ngFor="let item of listNotification; let i = index">
-								<li *ngIf="i < 5" [ngClass]="{'border-bottom-none' : i == 4}">
-									<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">
-										{{item.title}}
-									</a>
-								</li>
-							</ng-container>
-						</ul>
-					</div>
 
-					<div class="tt-v1 mb-0 d-flex justify-content-end mr-3">
-						<a class="read-more" title="Xem thêm" routerLink="/cong-bo/danh-sach-thong-bao"> Xem thêm
-						</a>
-					</div>
-				</div>
-				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+				<app-statistics-right [isShowSatisfationChart]="true" [isShowNotification]="true"></app-statistics-right>
 
 				<div class="margin-top-16">
 					<div class="card border pt-4 p-3 bg-notification">
@@ -287,6 +266,10 @@
 								</div>
 							</div>
 						</ng-container>
+						<div class="tt-v1 d-flex justify-content-end">
+							<a class="read-more" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi-tieu-bieu"> Xem thêm
+							</a>
+						</div>
 					</div>
 				</div>
 

@@ -184,7 +184,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	sendMessage(message: any, append: boolean = true) {
 		console.log('message ', message)
-		if (message.typeSuggest && message.typeSuggest == "2") {
+		if (message.typeSuggest && message.typeSuggest == "2" || message.typeSuggest && message.typeSuggest == "4") {
 			window.open(message.linkSuggest, '_blank')
 			return
 		}
