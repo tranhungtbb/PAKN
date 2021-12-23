@@ -29,7 +29,7 @@
 														<!-- <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh
 															nghiệp.</p> -->
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
-															<div class="form-group mb-4">
+															<div class="form-group pi-italic mb-4">
 																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px"
 																	placeholder="Nhập CMND,CCCD,Số ĐKKD.." maxlength="14" id="productname" type="text"
 																	formControlName="name" [(ngModel)]="userProduct.UserName" required onlyNumber="true"
@@ -38,19 +38,19 @@
 																	*ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.name.errors.required">
-																		<span class="help-block" style="font-weight: bold;">Trường này không được để
+																		<span class="help-block">Trường này không được để
 																			trống</span>
 																	</div>
 																	<div *ngIf="floginFormProduct.name.errors.pattern">
-																		<span class="help-block" style="font-weight: bold;">Định dạng không đúng</span>
+																		<span class="help-block">Định dạng không đúng</span>
 																	</div>
 																</div>
 															</div>
-															<div class="form-group" style="position: relative;">
+															<div class="form-group pi-italic" style="position: relative;">
 																<input class="form-control rounded-8px h-50px px-4 border-brown"
 																	[type]="isShowPassword ? 'text' : 'password'" id="productpass"
 																	(change)="userProduct.Password=userProduct.Password.trim()" style="font-size: 20px"
-																	placeholder="Nhập mật khẩu..." formControlName="pass"
+																	placeholder="Nhập mật khẩu.." formControlName="pass"
 																	[(ngModel)]="userProduct.Password" required>
 																<i class="custom-show-pass"
 																	[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
@@ -59,48 +59,21 @@
 																	*ngIf="floginFormProduct.pass.invalid && (floginFormProduct.pass.dirty || floginFormProduct.pass.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.pass.errors.required">
-																		<span class="help-block" style="font-weight: bold;">Trường này không được để
+																		<span class="help-block">Trường này không được để
 																			trống</span>
 																	</div>
 																</div>
 															</div>
 
-															<!-- <div class="d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
-																<div class="form-group">
-																	<div
-																		class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px shadow">
-																		<img class="img-fluid rounded-xl mr-2 pl-3" id="img-captcha" [src]="captchaImage" />
-																		<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl ml-5"><i
-																				class="bi bi-arrow-repeat" style="font-size: 34px"></i></button>
-																	</div>
-																</div>
-																<div class="form-group bg-white rounded-xl border border-brown position-relative">
-																	<div>
-																		<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
-																			maxlength="5" style="font-size: 20px"
-																			(change)="captchaCodeProduct=captchaCodeProduct.trim()"
-																			placeholder="Nhập mã xác thực..." class="form-control bg-transparent border-0 "
-																			value="">
-																	</div>
-																	<div
-																		*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
-																		class="form-row has-error m-b-12">
-																		<div *ngIf="floginFormProduct.captcha.errors.required">
-																			<span class="help-block">Vui lòng nhập mã xác thực</span>
-																		</div>
-																	</div>
-																</div>
-															</div> -->
-
-															<div class="form-group position-relative">
+															<div class="form-group pi-italic position-relative">
 																<div
 																	class="bg-white d-flex justify-content-between shadow align-items-center rounded-8px h-50px">
 																	<img class="img-fluid rounded-xl ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
 																	<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
 																		maxlength="2" style="font-size: 20px;"
-																		(change)="captchaCodeProduct=captchaCodeProduct.trim()"
-																		placeholder="Nhập kết quả..." class="form-control bg-transparent mr-1" value="">
+																		(change)="captchaCodeProduct=captchaCodeProduct.trim()" placeholder="Nhập kết quả.."
+																		class="form-control bg-transparent mr-1" value="">
 
 																	<button type="button" (click)="reloadImage()"
 																		class="btn p-1 rounded-10px ml-4 position-absolute"
@@ -112,7 +85,7 @@
 																	*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.captcha.errors.required">
-																		<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
+																		<span class="help-block">Vui lòng nhập kết quả</span>
 																	</div>
 																</div>
 															</div>
