@@ -6,7 +6,7 @@ import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { UserService } from 'src/app/services/user.service'
-// import playAlert from 'alert-sound-notify'
+import playAlert from 'alert-sound-notify'
 //playAlert = require('alert-sound-notify')
 
 
@@ -35,7 +35,7 @@ export class DashboardChatBotComponent implements OnInit {
 	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService) { }
 	ngOnInit() {
 
-		// playAlert.content['foo'] = ['../../../assets/img/ring.mp3']
+		playAlert.content['foo'] = ['../../../assets/img/ring.mp3']
 		this.userId = this.user.getUserId()
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
 			this.model = res.result.SYUserGetByID[0]
@@ -123,7 +123,7 @@ export class DashboardChatBotComponent implements OnInit {
 	playSoundWarning() {
 		try {
 			console.log('playSoundWarning ')
-			// playAlert('foo');
+			playAlert('foo');
 		} catch (error) {
 			console.log('playSoundWarning error', error)
 		}
