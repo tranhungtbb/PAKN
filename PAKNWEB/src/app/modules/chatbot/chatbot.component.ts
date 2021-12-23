@@ -6,9 +6,6 @@ import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { UserService } from 'src/app/services/user.service'
-import playAlert from 'alert-sound-notify'
-//playAlert = require('alert-sound-notify')
-
 
 @Component({
 	selector: 'app-dashboard',
@@ -29,13 +26,18 @@ export class DashboardChatBotComponent implements OnInit {
 	userId: number
 	model: any = {}
 	userAvatar: string
+	audio: any
 
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
 	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService) { }
 	ngOnInit() {
+		//console.log('ngOnInit 0')
 
-		playAlert.content['foo'] = ['../../../assets/img/ring.mp3']
+		this.audio = new Audio()
+		this.audio.src = '../../../assets/img/ring.mp3'
+		this.audio.loop = true
+
 		this.userId = this.user.getUserId()
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
 			this.model = res.result.SYUserGetByID[0]
@@ -123,7 +125,10 @@ export class DashboardChatBotComponent implements OnInit {
 	playSoundWarning() {
 		try {
 			console.log('playSoundWarning ')
-			playAlert('foo');
+			this.audio = new Audio()
+			this.audio.src = '../../../assets/img/ring.mp3'
+			this.audio.load()
+			this.audio.play()
 		} catch (error) {
 			console.log('playSoundWarning error', error)
 		}
