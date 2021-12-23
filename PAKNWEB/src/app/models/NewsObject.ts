@@ -18,6 +18,7 @@ export class NewsModel {
 		this.viewCount = 0
 		this.withdrawDate = ''
 		this.withdrawDate = ''
+		this.isNotification = true
 	}
 	id: number
 	title: string
