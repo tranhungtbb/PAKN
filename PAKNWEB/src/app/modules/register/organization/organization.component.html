@@ -77,8 +77,8 @@
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.business" formControlName="business" type="text" placeholder="Nhập..."
-						class="form-control h-34px rounded-6px border-brown">
+					<input [svTrim] [(ngModel)]="model.business" formControlName="business" type="text"
+						placeholder="Nhập tên tổ chức, doanh nghiệp.." class="form-control h-34px rounded-6px border-brown">
 					<div
 						*ngIf="(fOrgInfoSubmitted && fOrgInfo.business.invalid)||(fOrgInfo.business.invalid && (fOrgInfo.business.dirty || fOrgInfo.business.touched))"
 						class="has-error m-b-12">
@@ -93,7 +93,7 @@
 				<div class="form-group">
 					<label class="mb-1">Điện thoại</label>
 					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.orgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
-						formControlName="orgPhone" type="text" placeholder="Nhập..."
+						formControlName="orgPhone" type="text" placeholder="Nhập số điện thoại.."
 						class="form-control border-brown h-34px rounded-6px"
 						(change)="onCheckExist('OrgPhone',$event.target.value)">
 					<div
@@ -120,8 +120,8 @@
 	</div>
 	<p class="cl-red font-italic mt-3">* Vui lòng nhập thông tin và số điện thoại chính xác để
 		Hệ thống gửi tin nhắn SMS và thông báo cập nhật kết quả giải quyết</p>
-	<p class="cl-red font-italic mt-3">* Các thông tin có dấu (*) bắt buộc</p>
-	<div class="card-body d-flex justify-content-end px-0">
+	<p class="cl-red font-italic mt-0">* Các thông tin có dấu (*) bắt buộc</p>
+	<div class="card-body d-flex justify-content-end px-0 pt-0">
 		<a class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px" (click)="backToHome()">
 			<i class="bi bi-arrow-left"></i>
 			Quay lại

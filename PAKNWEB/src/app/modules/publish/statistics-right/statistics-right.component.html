@@ -57,26 +57,26 @@
 		<h4 class="text-uppercase">Thống kê kết quả xử lý</h4>
 	</div>
 	<div class="tt-v1 mb-3 d-flex justify-content-between text-center statistic-chart">
-		<div class="center">
+		<div class="center statistics-right">
 			<canvas baseChart height="150px" width="150px" [data]="pieChartData" [colors]="pieChartColors"
 				[labels]="pieChartLabels" [options]="chartOptions" [chartType]="chartType">
 			</canvas>
 		</div>
 		<div class="center" style="flex: 1 1 0;">
 			<div style="flex: 1 1 0;">
-				<div class="tt-v1 pl-3 justify-content-between justify-content-between d-flex">
+				<div class="tt-v1 pl-3  d-flex">
 					<div class="d-flex center">
 						<span class="square mr-2 bg-blue-1"></span>
 						<p class="mb-0">Hồ sơ đã tiếp nhận</p>
 					</div>
-					<b class="center">{{pieChartData ? pieChartData[1] : ''}}</b>
+					<p class="center statistics-right">({{pieChartData ? pieChartData[1] : ''}})</p>
 				</div>
-				<div class="tt-v1 pl-3 justify-content-between justify-content-between d-flex">
+				<div class="tt-v1 pl-3  d-flex">
 					<div class="d-flex center">
 						<span class="square mr-2 bg-green"></span>
 						<p class="mb-0">Hồ sơ đã giải quyết</p>
 					</div>
-					<b class="center">{{pieChartData ? pieChartData[0] : ''}}</b>
+					<p class="center statistics-right">({{pieChartData ? pieChartData[0] : ''}})</p>
 				</div>
 			</div>
 		</div>
@@ -97,27 +97,37 @@
 		</div>
 		<div style="flex: 1 1 0;" class="center">
 			<div style="flex: 1 1 0;">
-				<div class="tt-v1 pl-3 justify-content-between justify-content-between d-flex">
+				<div class="tt-v1 pl-3  d-flex">
 					<div class="d-flex center">
 						<span class="square mr-3 bg-blue-2"></span>
 						<p class="mb-0">Rất Hài lòng</p>
 					</div>
-					<b class="center">{{satisfactionChartData ? satisfactionChartData[0] : ''}}</b>
+					<p class="center statistics-right" style=" margin-bottom: 0;">(<span
+							style="color: red;margin-bottom: 0;">{{satisfactionChartData ?
+							satisfactionChartData[0] : ''}}</span>)
+					</p>
 				</div>
 
-				<div class="tt-v1 pl-3 justify-content-between justify-content-between d-flex">
+				<div class="tt-v1 pl-3  d-flex">
 					<div class="d-flex center">
 						<span class="square mr-3 bg-yellow"></span>
 						<p class="mb-0">Hài lòng</p>
 					</div>
-					<b class="center">{{satisfactionChartData ? satisfactionChartData[2] : ''}}</b>
+					<p class="center statistics-right" style=" margin-bottom: 0;">(<span
+							style="color: red;margin-bottom: 0;">{{satisfactionChartData ?
+							satisfactionChartData[2] : ''}}</span>)
+					</p>
 				</div>
-				<div class="tt-v1 pl-3 justify-content-between justify-content-between d-flex">
+				<!-- justify-content-between justify-content-between -->
+				<div class="tt-v1 pl-3 d-flex">
 					<div class="d-flex center">
 						<span class="square mr-3 bg-red"></span>
 						<p class="mb-0">Không hài lòng</p>
 					</div>
-					<b class="center">{{satisfactionChartData ? satisfactionChartData[1] : ''}}</b>
+					<p class="center statistics-right" style=" margin-bottom: 0;">(<span
+							style="color: red;">{{satisfactionChartData ?
+							satisfactionChartData[1] : ''}}</span>)
+					</p>
 				</div>
 			</div>
 		</div>

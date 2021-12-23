@@ -29,7 +29,7 @@
 						<div class="ps-relative">
 							<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500"
 								formControlName="title" (focus)="inputTitleFocus()" (blur)="searchRecommendation()"
-								(onchange)="searchRecommendation()" placeholder="Nhập..." />
+								(onchange)="searchRecommendation()" placeholder="Nhập tiêu đề.." />
 
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 								class="has-error">
@@ -72,7 +72,7 @@
 						<div class="group-content-recommendation">
 							<textarea id="inputContent" (focus)="onFocusContent()" class="form-control" [(ngModel)]="model.content"
 								formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
-								placeholder="Nhập nội dung..." (click)="hightLightText()" (blur)="hightLightText()"></textarea>
+								placeholder="Nhập nội dung.." (click)="hightLightText()" (blur)="hightLightText()"></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
 						<div
@@ -128,11 +128,11 @@
 										</div>
 									</div> -->
 
-					<div class="col-12 col-lg-6 form-group">
+					<div class="col-12 col-lg-6 form-group ng-select-test">
 						<div class="label pl-0 mb-1">cấp cơ quan tiếp nhận<span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstGroupUnit" bindValue="id" bindLabel="name" placeholder="Chọn..."
-							formControlName="groupUnitId" notFoundText="Không tìm thấy dữ liệu" (change)="onChangeGroup($event)"
-							[(ngModel)]="model.groupUnitId">
+						<ng-select class="form-control ng-select custom ng-input" [items]="lstGroupUnit" bindValue="id"
+							bindLabel="name" placeholder="Chọn cấp cơ quan tiếp nhận.." formControlName="groupUnitId"
+							notFoundText="Không tìm thấy dữ liệu" (change)="onChangeGroup($event)" [(ngModel)]="model.groupUnitId">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
 								<p *ngIf="item.isMain" class="cl-red mb-0" style="font-style: italic; font-weight: bold;">
@@ -151,9 +151,9 @@
 
 					<div class="col-12 col-lg-6 form-group" *ngIf="!isChooseUnit">
 						<div class="label pl-0 mb-1">cơ quan tiếp nhận <span *ngIf="!isChooseUnit" class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name" placeholder="Chọn..."
-							notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.unitReceive"
-							[ngModelOptions]="{standalone: true}" (change)="getUnitByParent($event)">
+						<ng-select class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name"
+							placeholder="Chọn cơ quan tiếp nhận.." notFoundText="Không tìm thấy dữ liệu"
+							[(ngModel)]="model.unitReceive" [ngModelOptions]="{standalone: true}" (change)="getUnitByParent($event)">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.name}}">{{item.name}}</div>
 							</ng-template>
