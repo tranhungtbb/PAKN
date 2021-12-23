@@ -47,6 +47,3 @@ ul.category-article li a.active {
 	font-size: 14px;
 	line-height: 17px;
 }
-:host ::ng-deep ng-select.form-control>.ng-select-container .ng-placeholder{
-	font-style : italic !important;
-}

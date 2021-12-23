@@ -6,17 +6,27 @@
           <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
           <li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Thông báo từ chính quyền</a></li>
         </ol>
+
         <div class="box">
+          <div class="row m-0 d-flex justify-content-between">
+            <div class="col-lg-10 form-group p-0 pr-2 p-xs-0">
+              <input placeholder="Tìm kiếm thông báo..." class="form-control form-control border-radius-4"
+                [(ngModel)]="keySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
+            </div>
+
+            <div class="col-lg-2 col-xs-2 form-group px-2 p-xs-0">
+              <button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px"
+                style="text-transform: none;" (click)="dataStateChange()">
+                <!-- <i class="bi bi-search"></i> -->
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+
           <ul class="list-group list-group-flush">
             <li class="list-group-item px-0" *ngFor="let item of listData">
               <div class="media">
-                <!-- <a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="image-box ratio-5-3 rounded mr-3"
-                  style="width: 12rem">
-                  <img class="image" style="object-fit: cover; width: 100%; height: 100%;" title="{{item.title}}"
-                    [src]="item.imagePath">
-                </a> -->
                 <div class="media-body">
-
                   <p class="h3 my-1">
                     <a class="text-2line title-item-article" style="font-weight: bold!important;"
                       routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}">{{item.title}}</a>
@@ -59,7 +69,7 @@
 
       </div>
       <div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 mb-2">
-        <app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
+        <app-statistics-right [isShowSatisfationChart]="true" [isShowNotification]="true"></app-statistics-right>
       </div>
     </div>
   </div>

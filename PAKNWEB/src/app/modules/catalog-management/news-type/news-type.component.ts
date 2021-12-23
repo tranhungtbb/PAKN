@@ -15,7 +15,7 @@ declare var $: any
 	styleUrls: ['./news-type.component.css'],
 })
 export class NewsTypeComponent implements OnInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
@@ -87,7 +87,7 @@ export class NewsTypeComponent implements OnInit {
 		this.model = new FieldObject()
 		this.rebuilForm()
 		this.submitted = false
-		this.title = 'Thêm mới loại tin tức'
+		this.title = 'Thêm mới loại thông báo'
 		$('#modal').modal('show')
 		setTimeout(() => {
 			$('#target').focus()
@@ -150,7 +150,7 @@ export class NewsTypeComponent implements OnInit {
 		this._service.newsTypeGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
-				this.title = 'Chỉnh sửa loại tin tức'
+				this.title = 'Chỉnh sửa loại thông báo'
 				this.model = response.result.CANewsTypeGetByID[0]
 				$('#modal').modal('show')
 				setTimeout(() => {
@@ -180,7 +180,7 @@ export class NewsTypeComponent implements OnInit {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				} else {
-					this._toastr.error('Loại tin tức đã nằm trong quy trình!')
+					this._toastr.error('Loại thông báo đã nằm trong quy trình!')
 				}
 				$('#modalConfirmDelete').modal('hide')
 				this.getList()

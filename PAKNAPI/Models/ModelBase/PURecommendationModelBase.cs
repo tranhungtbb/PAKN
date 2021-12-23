@@ -130,11 +130,15 @@ namespace PAKNAPI.Models.ModelBase
             return (await _sQLCon.ExecuteListDapperAsync<MyRecommendation>("My_RecommendationAllOnPage", DP)).ToList();
         }
 
-        public async Task<List<PURecommendation>> PURecommendationGetListOrderByCountClick(int? Status)
+        public async Task<List<PURecommendation>> PURecommendationGetListOrderByCountClick(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
         {
             DynamicParameters DP = new DynamicParameters();
 
-            DP.Add("Status", Status);
+            DP.Add("KeySearch", KeySearch);
+            DP.Add("FieldId", FieldId);
+            DP.Add("UnitId", UnitId);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetListOrderByCountClick", DP)).ToList();
         }

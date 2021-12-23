@@ -7,6 +7,7 @@ import { Color, MultiDataSet, Label, SingleDataSet } from 'ng2-charts'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { NewsService } from 'src/app/services/news.service'
 
 declare var $: any
 
@@ -16,9 +17,10 @@ declare var $: any
 	styleUrls: ['./statistics-right.component.css'],
 })
 export class StatisticsRightComponent implements OnInit {
-	constructor(private _router: Router, private _toastr: ToastrService, private storageService: UserInfoStorageService, private _service: PuRecommendationService) { }
+	constructor(private _router: Router, private _newsService: NewsService, private _toastr: ToastrService, private storageService: UserInfoStorageService, private _service: PuRecommendationService) { }
 
 	@Input() isShowSatisfationChart: boolean
+	@Input() isShowNotification: boolean
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	typeObject: number = this.storageService.getTypeObject()
 	recommendationStatistics: any
@@ -70,8 +72,22 @@ export class StatisticsRightComponent implements OnInit {
 		},
 	]
 	onTime: number = 0
+	listNotification: any = []
 
 	ngOnInit() {
+
+		this._newsService.getListHomePage({}).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.listNotification = res.result
+				}
+			},
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
+		)
+
 		this._service.recommendationStatisticsProvince({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {

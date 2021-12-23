@@ -5,11 +5,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
-import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { IndexSettingService } from 'src/app/services/index-setting.service'
-import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
@@ -23,9 +20,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: PuRecommendationService,
 		private _router: Router,
-		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
-		private indexSettingService: IndexSettingService,
 		private _toa: ToastrService,
 		private storageService: UserInfoStorageService
 	) { }
@@ -74,17 +69,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
 
 
-		this._newsService.getListHomePage({}).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.listNotification = res.result
-				}
-			},
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
-		)
+
 	}
 	getData() {
 		this._service.getHomePage({}).subscribe(
@@ -123,9 +108,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
 					console.log(err)
 				}
 			)
-		this._service.getListHightLight({}).subscribe((res) => {
+		this._service.getListHightLight({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.recommendationsHighLight = res.result
+				this.recommendationsHighLight = res.result.PURecommendation
 			}
 		})
 

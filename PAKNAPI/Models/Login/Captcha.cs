@@ -150,7 +150,7 @@ namespace PAKNAPI.Models.Results
                 void DrawCaptchaCode()
                 {
                     SolidBrush fontBrush = new SolidBrush(Color.Black);
-                    int fontSize = GetFontSize(width, captchaCode.Length);
+                    int fontSize = GetFontSize(width-10, captchaCode.Length);
                     Font font = new Font(FontFamily.GenericSerif, fontSize, FontStyle.Bold, GraphicsUnit.Pixel);
                     for (int i = 0; i < captchaCode.Length; i++)
                     {

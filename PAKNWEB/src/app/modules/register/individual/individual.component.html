@@ -4,10 +4,10 @@
 			<div class="col-12 col-lg-3 border-right p-4 border-brown">
 				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
 				<form [formGroup]="formLogin" class="px-3" autocomplete="off">
-					<div class="form-group">
+					<div class="form-group pi-italic">
 						<label class="mb-1">Số CMND/CCCD<span class="cl-red">(*)</span></label>
 						<input minlength="9" maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text"
-							onlyNumber="true" placeholder="Nhập số CMND/CCCD.." class="form-control border-brown h-34px rounded-6px"
+							onlyNumber="true" placeholder="Nhập số CMND/CCCD.." class="form-control border-brown h-34px rounded-6px "
 							pattern="^(\w{1}[0-9]{8}||[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
 
 						<div
@@ -26,7 +26,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group pi-italic">
 						<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
 						<input svDisabledSpaceKey [(ngModel)]="model.password"
 							pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" formControlName="password" type="password"
@@ -43,7 +43,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group pi-italic">
 						<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
 						<input svDisabledSpaceKey [(ngModel)]="model.rePassword" formControlName="rePassword" type="password"
 							placeholder="Nhập lại mật khẩu.." autocomplete="off" class="form-control border-brown h-34px rounded-6px"
@@ -65,10 +65,10 @@
 			<div class="col-12 col-lg-9 p-4 border-brown">
 				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin cá nhân</span></h4>
 				<form [formGroup]="formInfo" class="form-row px-3" autocomplete="off">
-					<div class="col-12 col-lg-12 form-group">
+					<div class="col-12 col-lg-12 form-group pi-italic">
 						<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
 						<input [svTrim] maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text"
-							placeholder="Nhập họ tên" class="h-34px rounded-6px form-control border-brown">
+							placeholder="Nhập họ và tên.." class="h-34px rounded-6px form-control border-brown">
 						<div
 							*ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))"
 							class="has-error m-b-12">
@@ -81,7 +81,7 @@
 						</div>
 					</div>
 					<div class="w-100"></div>
-					<div class="col-12 col-lg-12 form-group">
+					<div class="col-12 col-lg-12 form-group pi-italic">
 						<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
 						<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text"
 							placeholder="Nhập số điện thoại.." autocomplete="off" class="form-control border-brown h-34px rounded-6px"
@@ -102,7 +102,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-12 form-group">
+					<div class="col-12 col-lg-12 form-group pi-italic">
 						<label class="mb-1">Email <span class="cl-red">(*)</span></label>
 						<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập email.."
 							class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Email',$event.target.value)">
@@ -124,7 +124,7 @@
 						</div>
 					</div>
 					<div class="w-100"></div>
-					<div class="col-12 col-lg-12 form-group">
+					<div class="col-12 col-lg-12 form-group pi-italic">
 						<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
 						<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text"
 							placeholder="Nhập địa chỉ thường trú..." class="form-control border-brown h-34px rounded-6px">
@@ -146,8 +146,8 @@
 		<p class="cl-red font-italic mt-3">* Vui lòng nhập thông tin và số điện thoại chính xác
 			để
 			Hệ thống gửi tin nhắn SMS và thông báo cập nhật kết quả giải quyết</p>
-		<p class="cl-red font-italic mt-3">* Các thông tin có dấu (*) bắt buộc</p>
-		<div class="card-body d-flex justify-content-end px-0">
+		<p class="cl-red font-italic mt-0">* Các thông tin có dấu (*) bắt buộc</p>
+		<div class="card-body d-flex justify-content-end px-0 pt-0">
 			<a (click)="backToHome()" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px">
 				<i class="bi bi-arrow-left"></i>
 				Quay lại

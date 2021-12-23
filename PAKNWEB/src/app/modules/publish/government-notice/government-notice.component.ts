@@ -1,10 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { Router, ActivatedRoute } from '@angular/router'
-import { ToastrService } from 'ngx-toastr'
-
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { CatalogService } from 'src/app/services/catalog.service'
-import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { NewsService } from 'src/app/services/news.service'
 
 @Component({
@@ -24,34 +19,27 @@ export class GovernmentNoticeComponent implements OnInit {
 	pagination = []
 	Status: number = 1 // trạng thái đã công bố
 	totalRecords: number = 0
-
-	//
-	ltsIndexSettingWebsite: any = []
+	keySearch: string = null
 
 	constructor(
-		private _toastr: ToastrService,
-		private newsService: NewsService,
-		private _router: Router,
-		private activatedRoute: ActivatedRoute,
-		private _catalogService: CatalogService,
-		private indexSettingService: IndexSettingService
+		private newsService: NewsService
 	) {
 	}
 
-	async ngOnInit() {
+	ngOnInit() {
 		this.getListPaged()
 	}
 
 	// get type news
 
-	dataStateChange(newsType) {
-		this.query.newsType = newsType
+	dataStateChange() {
 		this.getListPaged()
 	}
 
+
 	getListPaged() {
 		this.query.newsType == null ? '' : this.query.newsType
-		this.query.title == null ? '' : this.query.title.trim(),
+		this.query.title = this.keySearch == null ? '' : this.keySearch.trim(),
 			this.newsService
 				.getAllPagedList({
 					PageIndex: this.query.pageIndex,
@@ -82,9 +70,6 @@ export class GovernmentNoticeComponent implements OnInit {
 						}
 					}
 				})
-	}
-	redirectDetail(id: any) {
-		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
 	}
 	padi() {
 		this.pagination = []
