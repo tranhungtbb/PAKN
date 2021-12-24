@@ -24,7 +24,9 @@ form.form-row {
 	border: 1px solid #e9e9e9;
 	margin: 10px;
 }
-
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
 .card-list-pakn {
 	display: flex;
 	flex-direction: column;
@@ -71,6 +73,6 @@ form.form-row {
 	cursor: pointer;
 }
 
-a.nav-link.px-0.h5:hover{
+/* a.nav-link.px-0.h5:hover{
   color: #1673D8 !important;
-}
+} */

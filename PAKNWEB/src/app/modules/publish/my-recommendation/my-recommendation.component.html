@@ -16,14 +16,16 @@
 				</div>
 				<ul class="nav nav-qltknd flex-column">
 					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5" [routerLink]="['/cong-bo/tai-khoan/thong-tin']" aria-current="page">Thông tin
+						<a class="nav-link px-0 h5 p-title-hover" [routerLink]="['/cong-bo/tai-khoan/thong-tin']"
+							aria-current="page">Thông tin
 							tài khoản</a>
 					</li>
 					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5" [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']">Đổi mật khẩu</a>
+						<a class="nav-link px-0 h5 p-title-hover" [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']">Đổi mật
+							khẩu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link px-0 h5" (click)="mySignOut()">Đăng xuất</a>
+						<a class="nav-link px-0 h5 p-title-hover" (click)="mySignOut()">Đăng xuất</a>
 					</li>
 				</ul>
 
@@ -123,10 +125,11 @@
 					<div class="card-body pt-3 pb-2">
 						<p class="card-text mb-1">
 							<a [routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]" title="{{item.title}}"
-								class="h3 text-2line">{{item.title}}</a>
+								class="h3 text-2line p-title-hover">{{item.title}}</a>
 						</p>
 						<p class="card-text">
-							<a class="text-2line" [routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]">{{item.content}}</a>
+							<a class="text-2line p-title-hover"
+								[routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]">{{item.content}}</a>
 						</p>
 					</div>
 					<div class="card-footer pt-0 border-top-0 d-flex justify-content-between align-items-center">

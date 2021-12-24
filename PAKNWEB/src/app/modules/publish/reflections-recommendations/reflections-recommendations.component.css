@@ -51,3 +51,6 @@ ul.category-article li a.active {
 	font-style : italic !important;
 	font-family: Segoe UI !important;
 }
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
