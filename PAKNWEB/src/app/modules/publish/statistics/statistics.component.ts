@@ -23,7 +23,7 @@ export class StatisticsComponent implements OnInit {
 		responsive: true,
 		title: {
 			display: true,
-			text: 'Biểu đồ tổng hợp số liệu',
+			text: 'Biểu đồ tổng hợp số liệu',
 			fontSize: 16,
 			position: 'bottom',
 		},
