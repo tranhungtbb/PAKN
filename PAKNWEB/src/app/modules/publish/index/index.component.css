@@ -387,7 +387,7 @@
 
 .img-field {
 	border-radius: 12px 12px 0px 0px;
-	height: 120px;
+	height: 80px;
 }
 
 .read-more {
@@ -425,9 +425,7 @@ ul li {
 }
 
 .statistic {
-	font-weight: 600;
-	font-size: 16px;
-	line-height: 19px;
+	font-size: 14px;	
 	color: #DA2222;
 }
 .pr-7{
