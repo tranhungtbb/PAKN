@@ -1279,3 +1279,8 @@ body, html {
 .p-title-hover:hover{
 	color:#f35f1b !important;
 }
+
+.dropdown:hover .dropdown-menu {
+	display: block;
+	margin-top: 0; 
+}
