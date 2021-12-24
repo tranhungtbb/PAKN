@@ -8,18 +8,18 @@
 
 					</div>
 					<div class="d-flex justify-content-between">
-						<div class="col-4 form-group p-0 pr-2">
-							<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4"
+						<div class="col-4 form-group p-0 pr-2 pi-italic">
+							<input placeholder="Nhập tên phản ánh, kiến nghị.." class="form-control form-control border-radius-4"
 								[(ngModel)]="KeySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
 						</div>
 						<div class="col-4 form-group px-2">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý..."
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý.."
 								class="form-control border-brown border-radius-4" [items]="lstUnit" bindLabel="text" bindValue="value"
 								[(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 							</ng-select>
 						</div>
 						<div class="col-3 form-group px-2">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..."
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực.."
 								class="form-control border-brown border-radius-4" [items]="lstField" bindLabel="text" bindValue="value"
 								[(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 							</ng-select>
@@ -35,14 +35,14 @@
 				<div class="box">
 					<ng-container *ngFor="let item of listRecommendation;let i = index">
 						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
-							<div class="card-header pt-3 pb-0 align-items-center">
+							<div class="card-header pt-3 pb-0 align-items-center" style="padding: 0;">
 								<p class="card-text mb-1">
-									<a class="h4 text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+									<a class="h4 text-2line p-title-hover" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 										{{item.title}}
 									</a>
 								</p>
 							</div>
-							<div class="card-body pt-1 pb-3">
+							<div class="card-body pt-1 pb-3" style="padding: 0;">
 								<div class="d-flex align-items-center justify-content-between">
 									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
 								</div>
@@ -70,13 +70,13 @@
 										class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 							</li>
 							<li class="d-flex justify-content-center align-items-center">
-								<a *ngIf="PageIndex > 4" class="cursor">...</a>
+								<a *ngIf="PageIndex > 4" class="cursor">..</a>
 								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index"
 									[ngClass]="{ 'active': item.index ===PageIndex }">
 									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex"
 										class="page-link">{{item.index}}</a>
 								</p>
-								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">...</a>
+								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">..</a>
 							</li>
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == Total }">
 								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1">

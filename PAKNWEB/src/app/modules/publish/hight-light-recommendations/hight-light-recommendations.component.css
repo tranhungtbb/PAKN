@@ -17,6 +17,9 @@
 .f-6 {
 	flex: 6;
 }
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
 :host ::ng-deep ng-select.form-control>.ng-select-container .ng-placeholder{
 	font-style : italic;
 }
