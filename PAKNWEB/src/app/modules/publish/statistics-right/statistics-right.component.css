@@ -50,6 +50,7 @@
 .statistic-chart canvas {
 	width: 120px !important;
 	height: 120px !important;
+	margin-left: -10px;
 }
 
 .bg-notification {

@@ -108,14 +108,14 @@
 	<div class="tt-v1 pt-4 mb-3 justify-content-between text-center">
 		<h4 class="text-uppercase">thống kê mức độ hài lòng</h4>
 	</div>
-	<div class="tt-v1 mb-3 d-flex justify-content-between text-center statistic-chart">
+	<div class="tt-v1 mb-3 d-flex  text-center statistic-chart">
 		<div class="center">
 			<canvas baseChart height="150px" width="150px" [data]="satisfactionChartData" [colors]="satisfactionChartColors"
 				[labels]="satisfactionChartLabels" [options]="chartOptions" [chartType]="chartType">
 			</canvas>
 		</div>
-		<div style="flex: 1 1 0;">
-			<div class="tt-v1 ml-2  d-flex">
+		<div style="flex: 1 1 0;" style="margin-top:20px!important;">
+			<div class="tt-v1 ml-2 d-flex">
 				<div class="d-flex center">
 					<span class="square mr-2 bg-blue-2"></span>
 					<p class="mb-0">Rất Hài lòng</p>
