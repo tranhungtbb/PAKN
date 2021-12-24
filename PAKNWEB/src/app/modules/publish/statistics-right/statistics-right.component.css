@@ -46,7 +46,9 @@
 		display: block !important;
 	}
 }
-
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
 .statistic-chart canvas {
 	width: 120px !important;
 	height: 120px !important;
