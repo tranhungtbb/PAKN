@@ -49,4 +49,5 @@ ul.category-article li a.active {
 }
 :host ::ng-deep ng-select.form-control>.ng-select-container .ng-placeholder{
 	font-style : italic !important;
+	font-family: Segoe UI !important;
 }

@@ -57,7 +57,9 @@ export class OrganizationComponent implements OnInit {
 	}
 
 	serverMsg = {}
-
+	closeModalOtp() {
+		$('#modal-otp').modal('hide');
+	}
 	onReset() {
 		this.formLogin.reset()
 		this.formOrgInfo.reset()

@@ -57,7 +57,7 @@ namespace PAKNAPI.Models.Results
             return sb.ToString();
         }
 
-        public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context,DateTime createdDate)
+        public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context, DateTime createdDate)
         {
             var isValid = false;
             DynamicParameters parameters = new DynamicParameters();
@@ -113,14 +113,15 @@ namespace PAKNAPI.Models.Results
                 Random rand = new Random();
 
                 graph.Clear(GetRandomLightColor());
-
+                //graph.Clear(Color.FromArgb(0,0,0,0));
+                //baseMap.MakeTransparent();
                 DrawCaptchaCode();
                 //DrawDisorderLine();
                 AdjustRippleEffect();
 
                 MemoryStream ms = new MemoryStream();
 
-                baseMap.Save(ms, ImageFormat.Png);
+                baseMap.Save(ms, ImageFormat.Gif);
 
                 return new CaptchaResult { CaptchaCode = captchaCode, CaptchaByteData = ms.ToArray(), Timestamp = DateTime.Now };
 
@@ -150,7 +151,7 @@ namespace PAKNAPI.Models.Results
                 void DrawCaptchaCode()
                 {
                     SolidBrush fontBrush = new SolidBrush(Color.Black);
-                    int fontSize = GetFontSize(width-10, captchaCode.Length);
+                    int fontSize = GetFontSize(width - 10, captchaCode.Length);
                     Font font = new Font(FontFamily.GenericSerif, fontSize, FontStyle.Bold, GraphicsUnit.Pixel);
                     for (int i = 0; i < captchaCode.Length; i++)
                     {
@@ -340,7 +341,8 @@ namespace PAKNAPI.Models.Results
         public DateTime ExpireDate { get; set; }
         public bool IsUse { get; set; }
 
-        public OTP(string code, string userAgent) {
+        public OTP(string code, string userAgent)
+        {
             this.Code = code;
             this.UserAgent = userAgent;
             this.CreatedDate = DateTime.Now;
