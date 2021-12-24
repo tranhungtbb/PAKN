@@ -1284,3 +1284,8 @@ body, html {
 	display: block;
 	margin-top: 0; 
 }
+
+#liDichVuCong .dropdown-menu {
+	padding: 0;
+	border-radius: unset !important;
+}

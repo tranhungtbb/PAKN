@@ -10,11 +10,11 @@ import { DataService } from 'src/app/services/sharedata.service'
 declare var $: any
 
 @Component({
-	selector: 'app-support-document',
-	templateUrl: './support-list-document.component.html',
-	styleUrls: ['./support-list-document.component.css'],
+	selector: 'app-support-public',
+	templateUrl: './support-list-public.component.html',
+	styleUrls: ['./support-list-public.component.css'],
 })
-export class SupportListDocumentComponent implements OnInit, AfterViewInit {
+export class SupportListPublicComponent implements OnInit, AfterViewInit {
 	constructor(
 		private localStorage: UserInfoStorageService,
 		private fileService: UploadFileService,
