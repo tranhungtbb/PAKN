@@ -24,12 +24,12 @@
 	*ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
-		<h4 class="counter cursor">{{totalRecommentdation}}</h4>
+		<h4 class="counter cursor" style="padding-right:14px !important;">{{totalRecommentdation}}</h4>
 	</div>
 	<div>
 		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
 			<div class="pf-4">
-				<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
+				<p class="title-status-rm ml-3 mb-0">Chờ tiếp nhận</p>
 			</div>
 			<div class="circle bg-yellow center text-white cursor">
 				{{recommendationStatistics.receiveWait}}
@@ -53,7 +53,7 @@
 		</div>
 		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
 			<div class="pf-4">
-				<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
+				<p class="title-status-rm ml-3 mb-0">Đã giải quyết</p>
 			</div>
 			<div class="circle bg-blue center text-white cursor">
 				{{recommendationStatistics.finised}}

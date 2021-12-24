@@ -783,6 +783,11 @@ ul.ft-list-rm li {
 	padding-right: 15px !important;
 }
 
+.i-diamon{
+	filter: invert(52%) sepia(21%) saturate(1843%) hue-rotate(173deg) brightness(100%) contrast(103%);
+
+}
+
 ul.ft-list-rm li::marker {
 	color: #2e73d5;
 	font-size: 20px;
