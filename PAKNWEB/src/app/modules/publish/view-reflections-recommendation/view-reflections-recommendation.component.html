@@ -11,23 +11,23 @@
 					<strong>Không tìm thấy dữ liệu</strong>
 				</div>
 				<div class="box" *ngIf="model">
-					<p class="card-text h3 mb-3"><span style="font-weight: 300;">Kiến nghị về việc: </span>
+					<p class="card-text  mb-3" style="font-size: 20px;"><span style="font-weight: 300;">Kiến nghị về việc: </span>
 						{{model.title}}
 					</p>
-					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
+					<!-- <div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
 						<div class="media align-items-center">
-							<!-- <div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
+							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
 								{{model.shortName}}
 							</div>
 							<div class="media-body">
 								<p class="my-0 h5">{{model.name}}</p>
-							</div> -->
+							</div>
 						</div>
 
-					</div>
+					</div> -->
 
 
-					<div class="media pb-3 border-bottom  box-message-publish" style="margin: 0!important;">
+					<div class="media pb-3  box-message-publish" style="margin: 0!important;">
 						<div class="mr-3">
 							<div *ngIf="model.fieldFilePath==null">
 								<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
@@ -52,9 +52,9 @@
 							</div>
 							<p style="text-align:justify; text-justify:inter-word" innerHTML="{{model.content | Change}}">
 							</p>
-							<span class="text-left">
+							<span *ngIf="lstFiles && lstFiles.length>0" class="text-left ">
 								<small class="small" *ngIf="lstFiles && lstFiles.length > 0">Tài liệu đính kèm</small><br>
-								<div *ngFor="let file of lstFiles" cursor="pointer">
+								<div *ngFor="let file of lstFiles" style="padding-bottom: 2px!important;" cursor="pointer">
 									<!-- file-att -->
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -96,11 +96,12 @@
 									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 								</div>
 							</span>
+							<hr style="border-top: 1px; margin: 0! important; margin-top: 2px !important;">
 
 						</div>
+
 					</div>
-					<div class="media pb-4 border-bottom mb-4 mb-4 box-message-publish"
-						*ngIf="model && [3,10].includes(model.status)">
+					<div class="media pb-4  mb-4 mb-4 box-message-publish" *ngIf="model && [3,10].includes(model.status)">
 						<div class="mr-3" style="width:40px">
 							<!-- <img *ngIf="[10].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
 								208deg) brightness(99%) contrast(85%)">
@@ -121,12 +122,13 @@
 									{{model.denyDate |date :'dd/MM/yyyy'}}</p>
 							</div>
 							<div>
-								<span *ngIf="model.fieldName">
-									<span class="my-0 h5"> Lĩnh vực :</span>{{model.fieldName}}
-								</span>
-								<span style="float:right;" *ngIf="model.unitName">
-									<span class="my-0 h5">Đơn vị tiếp nhận :</span>{{model.unitName}}
-								</span>
+								<div *ngIf="model.fieldName">
+									<span class="my-0 h5"> Lĩnh vực:</span> {{model.fieldName}}
+								</div>
+
+								<div class="mt-2" *ngIf="model.unitName">
+									<span class="my-0 h5">Đơn vị tiếp nhận:</span> {{model.unitName}}
+								</div>
 
 							</div>
 							<br>

@@ -7,13 +7,14 @@
 				routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
 		</p>
 		<div class="form-group mb-0">
-			<textarea class="form-control px-4 py-3" [(ngModel)]="commentModel.contents" rows="3"
-				placeholder="Nhập bình luận..." id="comment" maxlength="500"></textarea>
-			<button type="button" class="btn text-white no-grd-blue border-0 px-5 mt-3" (click)="onSendComment()">Gửi</button>
+			<textarea class="form-control px-4 py-3" style="height: 75px;" [(ngModel)]="commentModel.contents" rows="3"
+				placeholder="Nhập bình luận.." id="comment" maxlength="500"></textarea>
+			<button type="button" class="btn text-white no-grd-blue border-0 px-5 mt-3" style="height: 40px;"
+				(click)="onSendComment()">Gửi</button>
 		</div>
 	</div>
 	<ng-container *ngFor="let item of listCommentsPaged; let parentIndex = index">
-		<div class="media mt-3 border-top pt-3">
+		<div class="media mt-3">
 			<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
 				{{getShortName(item.fullName)}}
 			</div>
@@ -31,7 +32,7 @@
 				<app-comment-reply *ngIf="item.isShowChild" [RecommentId]="RecommentId" [ParentId]="item.id">
 				</app-comment-reply>
 				<ng-container *ngFor="let itemChild of item.listChild; let i = index">
-					<div class="media mt-3 border-top pt-3">
+					<div class="media mt-3 ">
 						<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
 							{{getShortName(itemChild.fullName)}}
 						</div>

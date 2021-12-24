@@ -22,7 +22,7 @@
 					</div> -->
 				</div>
 
-			
+
 
 
 				<div style="margin-top:20px;" *ngIf="isHomeMain">
@@ -85,15 +85,15 @@
 										<h4 class="text-uppercase mb-0 text-white pointer p-title-hover"
 											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}">{{item.fieldName}}</h4>
 									</div>
-									<div class="ml-3 mr-3 mb-3" style="height: 300px;">
+									<div class="ml-3 mr-3 mb-3">
 										<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
-											<div *ngIf="mr.recommendation.title.length >= 85" class="div-hover "
+											<div *ngIf="mr.recommendation.title.length >= 65" class="div-hover "
 												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }"
 												style="padding: 6px 0px;">
 												<p class="align-items-center mb-2 mt-2 p-item-title" style="display:inline;height:75px;">
 													<a class="h4 title-sm color-dark p-title-hover p-item-title"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														{{mr.recommendation.title.slice(0,83)}}... -
+														{{mr.recommendation.title.slice(0,60)}}... -
 													</a>
 													<i class="bi bi-alarm cl-blue ml-2 p-item-title "></i>
 													<span class="card-date mb-2 mt-1 p-item-title"
@@ -108,7 +108,7 @@
 													</a>
 												</p>
 											</div>
-											<div *ngIf="mr.recommendation.title.length <85" class="div-hover " style="padding: 6px 0px;"
+											<div *ngIf="mr.recommendation.title.length <65" class="div-hover " style="padding: 6px 0px;"
 												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
 												<p class="align-items-center mb-2 mt-2 p-item-title " style="display:inline;height:75px;">
 													<a class="h4 title-sm color-dark p-title-hover p-item-title"
@@ -302,18 +302,17 @@
 				</div>
 				<div class="margin-top-16">
 					<div class="card border pt-4 p-1 bg-notification">
-						<div class="tt-v1 mb-3 justify-content-between title-field text-center" >
+						<div class="tt-v1 mb-3 justify-content-between title-field text-center">
 							<h4 class="text-uppercase mb-0">phản ánh kiến nghị <br>không đủ điều kiện tiếp nhận</h4>
 						</div>
 						<ng-container *ngFor="let item of recommendationsReceiveDeny">
 							<div class="mt-1" class="border-bottom">
 								<p class="align-items-center mb-1 mt-1">
-									<a class="h4 title-sm color-dark  p-title-hover"
-										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+									<a class="h4 title-sm color-dark  p-title-hover" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 										{{item.title}}
 									</a>
 								</p>
-								
+
 							</div>
 						</ng-container>
 						<div class="tt-v1 d-flex justify-content-end">
@@ -323,7 +322,7 @@
 							</a>
 						</div>
 					</div>
-				
+
 
 					<!-- <div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase border-bottom-blue">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
@@ -341,13 +340,13 @@
 							</div>
 						</ng-container>
 					</div> -->
-				
+
 				</div>
 				<div class="margin-top-16">
 					<app-gallery></app-gallery>
 				</div>
 			</div>
-		
+
 		</div>
 
 		<!-- start banner -->
@@ -403,7 +402,7 @@
 		<!-- End banner -->
 
 		<!-- Start TTHC -->
-<!-- 
+		<!-- 
 		<div class="row justify-content-between">
 			<div class="col-lg-8 col-md-8">
 				<div class="box">
