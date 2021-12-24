@@ -35,7 +35,7 @@
 						</span>
 					</div>
 
-					<div class="media pb-4 mb-4 box-message-publish">
+					<div class="media pb-4 mb-4 box-message-publish" style="margin: 0!important;">
 						<div class="mr-3">
 							<div *ngIf="model.fieldFilePath==null">
 								<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
@@ -154,8 +154,7 @@
 									trả lời:
 								</p>
 								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold ">
-									{{model.processUnitName}} trả
-									lời:</p>
+									{{model.processUnitName}}:</p>
 								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate | date:'HH:mm'}} ngày
 									{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
 								<p *ngIf="[3].includes(model.status)" class="mb-0">{{model.denyDate | date:'HH:mm'}} ngày

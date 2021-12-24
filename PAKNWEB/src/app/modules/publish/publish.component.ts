@@ -179,7 +179,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	async onConnectChatBot() {
-		this.sendMessage({ title: 'Xin chào', idSuggetLibrary: '' }, false)
+		this.sendMessage({ title: '', idSuggetLibrary: '' }, false)
 	}
 
 	sendMessage(message: any, append: boolean = true) {
