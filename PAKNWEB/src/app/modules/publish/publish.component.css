@@ -1276,3 +1276,6 @@ body, html {
 		background-color: #79b7ff;
 	}
 }
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}

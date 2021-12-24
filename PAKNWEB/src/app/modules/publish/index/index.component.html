@@ -104,37 +104,40 @@
 									</div>
 									<div class="ml-3 mr-3 mb-3" style="height: 300px;">
 										<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
-											<div *ngIf="mr.recommendation.title.length >= 55" class="div-hover"
-												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
-												<p class="align-items-center mb-2 mt-2" style="display:inline;height:75px;">
-													<a class="h4 title-sm color-dark p-title-hover"
+											<div *ngIf="mr.recommendation.title.length >= 85" class="div-hover "
+												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }"
+												style="padding: 6px 0px;">
+												<p class="align-items-center mb-2 mt-2 p-item-title" style="display:inline;height:75px;">
+													<a class="h4 title-sm color-dark p-title-hover p-item-title"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														{{mr.recommendation.title.slice(0,53)}} -
+														{{mr.recommendation.title.slice(0,83)}}... -
 													</a>
-													<i class="bi bi-alarm cl-blue"></i>
-													<span class="card-date mb-2 mt-1" style="margin-left:3px;">{{mr.recommendation.createdDate |
+													<i class="bi bi-alarm cl-blue ml-2 p-item-title "></i>
+													<span class="card-date mb-2 mt-1 p-item-title"
+														style="margin-left:4px;">{{mr.recommendation.createdDate |
 														date
 														: 'dd/MM/yyyy
 														HH:mm'}}</span>
-													<a class="read-more" *ngIf="mr.recommendation.totalComment"
+													<a class="read-more p-item-title" *ngIf="mr.recommendation.totalComment"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														<i class="bi bi-chat-right-fill cl-blue" style="margin-left:3px;"></i>
+														<i class="bi bi-chat-right-fill cl-blue " style="margin-left:3px;"></i>
 														{{mr.recommendation.totalComment}}
 													</a>
 												</p>
 											</div>
-											<div *ngIf="mr.recommendation.title.length <55" class="div-hover"
+											<div *ngIf="mr.recommendation.title.length <85" class="div-hover " style="padding: 6px 0px;"
 												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
-												<p class="align-items-center mb-2 mt-2 " style="display:inline;height:75px;">
-													<a class="h4 title-sm color-dark p-title-hover"
+												<p class="align-items-center mb-2 mt-2 p-item-title " style="display:inline;height:75px;">
+													<a class="h4 title-sm color-dark p-title-hover p-item-title"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
 														{{mr.recommendation.title}} -
 													</a>
-													<i class="bi bi-alarm cl-blue"></i>
-													<span class="card-date mb-2" style="margin-left:3px;">{{mr.recommendation.createdDate | date
+													<i class="bi bi-alarm cl-blue ml-2"></i>
+													<span class="card-date mb-2 p-item-title"
+														style="margin-left:4px;">{{mr.recommendation.createdDate | date
 														:
 														'dd/MM/yyyy HH:mm'}}</span>
-													<a class="read-more" *ngIf="mr.recommendation.totalComment"
+													<a class="read-more p-item-title" *ngIf="mr.recommendation.totalComment"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
 														<i class="bi bi-chat-right-fill cl-blue" style="margin-left:3px;"></i>
 														{{mr.recommendation.totalComment}}

@@ -101,7 +101,15 @@
 	color: #222222;
 }
 
+.p-item-title{
+	line-height: 1.4rem !important;
+	font-size: 14px !important;
+}
 
+.border-bottom{
+	padding: 6px 0px !important;
+	border-bottom: 1px dashed #ddd !important;
+}
 .border-bottom-blue {
 	border-bottom: 3px solid #2E73D5;
 }

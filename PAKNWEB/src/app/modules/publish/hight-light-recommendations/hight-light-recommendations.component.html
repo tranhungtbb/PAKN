@@ -7,18 +7,18 @@
 						<h4 class="text-uppercase">Phản ánh, kiến nghị tiêu biểu</h4>
 					</div>
 					<div class="row m-0 d-flex justify-content-between">
-						<div class="col-lg-4 form-group p-0 pr-2 p-xs-0">
-							<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4"
+						<div class="col-lg-4 form-group p-0 pr-2 p-xs-0 pi-italic">
+							<input placeholder="Nhập tên phản ánh, kiến nghị.." class="form-control form-control border-radius-4"
 								[(ngModel)]="KeySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
 						</div>
 						<div class="col-lg-4 form-group px-2 p-xs-0">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý..."
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý.."
 								class="form-control border-brown border-radius-4" [items]="lstUnit" bindLabel="text" bindValue="value"
 								[(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 							</ng-select>
 						</div>
 						<div class="col-lg-3 col-xs-8 form-group px-2 p-xs-0">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..."
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực.."
 								class="form-control border-brown border-radius-4" [items]="lstField" bindLabel="text" bindValue="value"
 								[(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 							</ng-select>
