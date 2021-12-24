@@ -45,7 +45,7 @@
 								<p class="small mb-1">{{itemChild.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
 								<p class="ml-3 cursor my-0 h5 center mb-1" *ngIf="IsPagePublic"
 									(click)="itemChild.isShowChild =! itemChild.isShowChild" style="font-size: 12px;">
-									Phản hồi</p>
+									Phản hồi</p>
 							</div>
 							<app-comment-reply *ngIf="itemChild.isShowChild" [RecommentId]="RecommentId" [ParentId]="item.id">
 							</app-comment-reply>
