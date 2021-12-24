@@ -1,19 +1,20 @@
 <div class="card border p-3 bg-notification mb-3" *ngIf="isShowNotification">
-	<div class="tt-v1 mb-2 justify-content-start">
+	<div class="tt-v1 ustify-content-start">
 		<h4 class="title-notification mb-1 mr-2 text-uppercase text-center">thông báo</h4>
 	</div>
 	<div class="list-article">
 		<ul>
 			<ng-container *ngFor="let item of listNotification; let i = index">
 				<li *ngIf="i < 5" [ngClass]="{'border-bottom-none' : i == 4}">
-					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line p-title-hover" style="text-align:justify; text-justify:inter-word">
+					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line p-title-hover"
+						style="text-align:justify; text-justify:inter-word">
 						{{item.title}}
 					</a>
 				</li>
 			</ng-container>
 		</ul>
 	</div>
-	<div class="tt-v1 mb-0 d-flex justify-content-end mr-3">
+	<div class="tt-v1 mb-0 d-flex justify-content-end">
 		<a class="read-more p-title-hover" title="Xem thêm" routerLink="/cong-bo/danh-sach-thong-bao"> Xem thêm
 		</a>
 	</div>

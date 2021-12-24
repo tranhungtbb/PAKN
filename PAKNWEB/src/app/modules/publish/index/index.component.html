@@ -22,7 +22,7 @@
 					</div> -->
 				</div>
 
-			
+
 
 
 				<div style="margin-top:20px;" *ngIf="isHomeMain">
@@ -188,11 +188,11 @@
 				<app-statistics-right [isShowSatisfationChart]="true" [isShowNotification]="true"></app-statistics-right>
 
 				<div class="margin-top-16">
-					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3 justify-content-between text-center">
+					<div class="card border pt-4 pr-3 pl-3 bg-notification">
+						<div class="tt-v1 mb-2 justify-content-between text-center">
 							<h4 class="text-uppercase mb-0">tỷ lệ không hài lòng</h4>
 						</div>
-						<div class="pl-3 pr-3 mb-2">
+						<div class="pl-3 pr-3">
 							<ul>
 								<li *ngFor="let item of unitDissatisfactionRate">
 									<div class="tt-v1 d-flex">
@@ -204,7 +204,7 @@
 							</ul>
 						</div>
 
-						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
+						<div class="tt-v1 mb-2 d-flex justify-content-end ">
 							<a class="read-more p-title-hover" title="Xem thêm" routerLink="/cong-bo/ti-le-khong-hai-long"> Xem thêm
 							</a>
 						</div>
@@ -212,11 +212,11 @@
 				</div>
 
 				<div class="margin-top-16" *ngIf="lateProcessingUnit">
-					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3  text-center">
+					<div class="card border pt-4 pr-3 pl-3 bg-notification">
+						<div class="tt-v1 mb-2  text-center">
 							<h4 class="text-uppercase mb-0">đơn vị xử lý trễ hạn</h4>
 						</div>
-						<div class="pl-3 pr-3 mb-2">
+						<div class="pl-3 pr-3">
 							<ul>
 								<li *ngFor="let item of lateProcessingUnit">
 									<div class="tt-v1 d-flex">
@@ -228,7 +228,7 @@
 							</ul>
 						</div>
 
-						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
+						<div class="tt-v1 mb-2 d-flex justify-content-end ">
 							<a class="read-more" title="Xem thêm" routerLink="/cong-bo/don-vi-xu-ly-tre-han"> Xem thêm
 							</a>
 						</div>
@@ -248,7 +248,7 @@
 									<a class="h4 title-sm color-dark text-2line p-title-hover"
 										routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}">
 										{{ mr.title }} <span *ngIf="mr.totalComment" class="bi bi-chat-right-fill cl-blue ml-1 mb-0"
-											style="margin-bottom: 0!important;">{{mr.totalComment}}</span>
+											style="margin-bottom: 0!important;"> {{mr.totalComment}}</span>
 									</a>
 								</p>
 								<!-- <div class="tt-v1 mb-1 d-flex justify-content-between">
@@ -302,18 +302,18 @@
 				</div>
 				<div class="margin-top-16">
 					<div class="card border pt-4 p-1 bg-notification">
-						<div class="tt-v1 mb-3 justify-content-between title-field text-center" >
-							<h4 class="text-uppercase mb-0">phản ánh kiến nghị <br>không đủ điều kiện tiếp nhận</h4>
+						<div class="tt-v1 mb-3 justify-content-between title-field text-center" style="margin: 0!important;
+						">
+							<h4 class="text-uppercase mb-0">phản ánh kiến nghị không đủ <br>điều kiện tiếp nhận</h4>
 						</div>
-						<ng-container *ngFor="let item of recommendationsReceiveDeny">
-							<div class="mt-1" class="border-bottom">
+						<ng-container *ngFor="let item of recommendationsReceiveDeny ;let i = index">
+							<div class="mt-1" [ngClass]="{ 'border-bottom': i + 1 != recommendationsReceiveDeny.length}">
 								<p class="align-items-center mb-1 mt-1">
-									<a class="h4 title-sm color-dark  p-title-hover"
-										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+									<a class="h4 title-sm color-dark  p-title-hover" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 										{{item.title}}
 									</a>
 								</p>
-								
+
 							</div>
 						</ng-container>
 						<div class="tt-v1 d-flex justify-content-end">
@@ -323,7 +323,7 @@
 							</a>
 						</div>
 					</div>
-				
+
 
 					<!-- <div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase border-bottom-blue">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
@@ -341,13 +341,13 @@
 							</div>
 						</ng-container>
 					</div> -->
-				
+
 				</div>
 				<div class="margin-top-16">
 					<app-gallery></app-gallery>
 				</div>
 			</div>
-		
+
 		</div>
 
 		<!-- start banner -->
@@ -403,7 +403,7 @@
 		<!-- End banner -->
 
 		<!-- Start TTHC -->
-<!-- 
+		<!-- 
 		<div class="row justify-content-between">
 			<div class="col-lg-8 col-md-8">
 				<div class="box">
