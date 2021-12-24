@@ -114,13 +114,11 @@ namespace PAKNAPI.Models.Results
 
                 graph.Clear(GetRandomLightColor());
                 //graph.Clear(Color.FromArgb(0,0,0,0));
-                //baseMap.MakeTransparent();
                 DrawCaptchaCode();
                 //DrawDisorderLine();
                 AdjustRippleEffect();
 
                 MemoryStream ms = new MemoryStream();
-
                 baseMap.Save(ms, ImageFormat.Gif);
 
                 return new CaptchaResult { CaptchaCode = captchaCode, CaptchaByteData = ms.ToArray(), Timestamp = DateTime.Now };
@@ -264,7 +262,6 @@ namespace PAKNAPI.Models.Results
                             p += nOffset;
                         }
                     }
-
                     baseMap.UnlockBits(bitmapData);
                     bSrc.UnlockBits(bmSrc);
                     bSrc.Dispose();

@@ -46,8 +46,8 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				int width = 200;
-				int height = 60;
+				int width = 120;
+				int height = 26;
 				int number1 = 0;
 				int number2 = 0;
 				Random random = new Random();
