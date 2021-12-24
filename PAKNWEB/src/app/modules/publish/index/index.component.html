@@ -231,8 +231,9 @@
 
 
 				<div class="margin-top-16" *ngIf="recommendationsHighLight">
-					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3 justify-content-between text-center">
+					<div class="card border pt-4 p-1 bg-notification">
+						<div class="tt-v1 mb-3 justify-content-between text-center" style="margin: 0!important;
+						">
 							<h4 class="text-uppercase mb-0 ">phản ánh kiến nghị tiêu biểu</h4>
 						</div>
 						<ng-container *ngFor="let mr of recommendationsHighLight;let i = index">
@@ -263,8 +264,9 @@
 
 
 				<div class="margin-top-16" *ngIf="recommendationsProcessing">
-					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3 justify-content-between title-field text-center">
+					<div class="card border pt-4 p-1 bg-notification">
+						<div class="tt-v1 mb-3 justify-content-between  text-center" style="margin: 0!important;
+						">
 							<h4 class="text-uppercase mb-0">phản ánh kiến nghị đang xử lý</h4>
 						</div>
 						<ng-container *ngFor="let mr of recommendationsProcessing;let i = index">
@@ -293,19 +295,19 @@
 					</div>
 				</div>
 				<div class="margin-top-16">
-					<div class="card border pt-4 p-3 bg-notification">
-						<div class="tt-v1 mb-3  text-center">
+					<div class="card border pt-4 p-1 bg-notification">
+						<div class="tt-v1 mb-3 justify-content-between title-field text-center" >
 							<h4 class="text-uppercase mb-0">phản ánh kiến nghị <br>không đủ điều kiện tiếp nhận</h4>
 						</div>
 						<ng-container *ngFor="let item of recommendationsReceiveDeny">
-							<div class="mt-1">
+							<div class="mt-1" class="border-bottom">
 								<p class="align-items-center mb-1 mt-1">
 									<a class="h4 title-sm color-dark  p-title-hover"
 										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 										{{item.title}}
 									</a>
 								</p>
-								<hr style="height: 0px;" class="mt-0">
+								
 							</div>
 						</ng-container>
 						<div class="tt-v1 d-flex justify-content-end">
