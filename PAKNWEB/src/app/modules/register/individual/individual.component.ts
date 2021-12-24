@@ -68,6 +68,9 @@ export class IndividualComponent implements OnInit {
 			event.target.value = ''
 		}
 	}
+	closeModalOtp() {
+		$('#modal-otp').modal('hide');
+	}
 	backDefaultValue() {
 		this.isOtherNation = false
 		this.model.nation = null
@@ -89,7 +92,6 @@ export class IndividualComponent implements OnInit {
 		this.model.wardsId = null
 
 		if (this.model.nation == 'Việt Nam') {
-			debugger
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
@@ -193,7 +195,6 @@ export class IndividualComponent implements OnInit {
 	}
 
 	onChange = (event, index) => {
-		debugger
 		if (event.target.value) {
 			setTimeout(() => {
 				$('#input_' + String(index + 1)).focus()
@@ -334,3 +335,5 @@ function MustMatch(controlName: string, matchingControlName: string) {
 		}
 	}
 }
+
+

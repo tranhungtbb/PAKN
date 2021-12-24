@@ -62,7 +62,7 @@
 	<div class="col-12 col-lg-12 form-group pi-italic">
 		<label class="mb-1">Địa chỉ cụ thể </label>
 		<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text"
-			placeholder="Nhập địa chỉ cụ thể.." class="form-control h-34px rounded-6px border-brown">
+			placeholder="Nhập địa chỉ thường trú.." class="form-control h-34px rounded-6px border-brown">
 		<div
 			*ngIf="(fInfoSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"
 			class="has-error m-b-12">

@@ -100,17 +100,18 @@
 										<h4 class="text-uppercase mb-0 text-white pointer"
 											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}">{{item.fieldName}}</h4>
 									</div>
-									<div class="ml-3 mr-3 mb-3" style="height: 363.38px;">
+									<div class="ml-3 mr-3 mb-3" style="height: 300px;">
 										<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
-											<div *ngIf="mr.recommendation.title.length >= 66"
+											<div *ngIf="mr.recommendation.title.length >= 55"
 												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
 												<p class="align-items-center mb-1" style="display:inline;height:75px;">
 													<a class="h4 title-sm color-dark"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														{{mr.recommendation.title.slice(0,64)}} -
+														{{mr.recommendation.title.slice(0,53)}} -
 													</a>
 													<i class="bi bi-alarm cl-blue"></i>
-													<span class="card-date mb-2" style="margin-left:3px;">{{mr.recommendation.createdDate | date
+													<span class="card-date mb-2 mt-1" style="margin-left:3px;">{{mr.recommendation.createdDate |
+														date
 														: 'dd/MM/yyyy
 														HH:mm'}}</span>
 													<a class="read-more" *ngIf="mr.recommendation.totalComment"
@@ -120,9 +121,9 @@
 													</a>
 												</p>
 											</div>
-											<div *ngIf="mr.recommendation.title.length <66" style="height:75px;"
+											<div *ngIf="mr.recommendation.title.length <55"
 												[ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
-												<p class="align-items-center mb-1" style="display:inline;height:75px;">
+												<p class="align-items-center mb-1 " style="display:inline;height:75px;">
 													<a class="h4 title-sm color-dark"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
 														{{mr.recommendation.title}} -

@@ -1,7 +1,7 @@
 <div class="tab-pane fade show active" id="dk-canhan" role="tabpanel">
 	<div class="mx-0">
 		<div class="row mx-0 border border-brown rounded-xl">
-			<div class="col-12 col-lg-3 border-right p-4 border-brown">
+			<div class="col-12 col-xl-4 col-lg-3  col-md-4 border-right p-4 border-brown">
 				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
 				<form [formGroup]="formLogin" class="px-3" autocomplete="off">
 					<div class="form-group pi-italic">
@@ -59,10 +59,10 @@
 							</div>
 						</div>
 					</div>
-					<p class="font-italic mb-0">Sử dụng 6 ký tự trở lên, bao gồm cả ký tự chữ và số</p>
+					<p class="font-italic mb-0">Sử dụng từ 6 ký tự trở lên, bao gồm cả ký tự chữ và số</p>
 				</form>
 			</div>
-			<div class="col-12 col-lg-9 p-4 border-brown">
+			<div class="col-12 col-xl-8 col-lg-9 col-md-8 p-4 border-brown">
 				<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin cá nhân</span></h4>
 				<form [formGroup]="formInfo" class="form-row px-3" autocomplete="off">
 					<div class="col-12 col-lg-12 form-group pi-italic">
@@ -127,7 +127,7 @@
 					<div class="col-12 col-lg-12 form-group pi-italic">
 						<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
 						<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text"
-							placeholder="Nhập địa chỉ thường trú..." class="form-control border-brown h-34px rounded-6px">
+							placeholder="Nhập địa chỉ thường trú.." class="form-control border-brown h-34px rounded-6px">
 						<!--  -->
 						<div
 							*ngIf="(fLoginSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"
@@ -143,7 +143,7 @@
 				</form>
 			</div>
 		</div>
-		<p class="cl-red font-italic mt-3">* Vui lòng nhập thông tin và số điện thoại chính xác
+		<p class="cl-red font-italic" style="margin: 0;">* Vui lòng nhập thông tin và số điện thoại chính xác
 			để
 			Hệ thống gửi tin nhắn SMS và thông báo cập nhật kết quả giải quyết</p>
 		<p class="cl-red font-italic mt-0">* Các thông tin có dấu (*) bắt buộc</p>
@@ -167,7 +167,7 @@
 				<h3 class="modal-title text-center text-uppercase">xác thực mã otp</h3>
 				<p class="text-center">Mã xác thực đã được gửi về email:</p>
 				<p class="text-center mb-0 font-weight-bold" style="font-size: 22px">{{model.email}}</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				<button type="button" class="close" data-dismiss="modal" (click)="closeModalOtp()"><span>&times;</span>
 				</button>
 			</div>
 			<div class="modal-body" style="background: #F8FBFF">
