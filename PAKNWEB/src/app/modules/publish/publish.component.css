@@ -773,7 +773,7 @@ ul.ft-list-rm li {
 
 .navbar-light .navbar-nav .nav-link:hover {
 	background-color: #155bbf;
-	color: #f35f1b;
+	/* color: #f35f1b; */
 }
 
 .header-left .search_bar .search_icon {

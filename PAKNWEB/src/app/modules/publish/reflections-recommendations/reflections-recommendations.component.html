@@ -35,8 +35,8 @@
 					<ng-container *ngFor="let item of ReflectionsRecommendations;let i = index">
 						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
 							<div class="card-header pt-3 pb-0 align-items-center" style="padding-left: 6px;">
-								<p class="card-text mb-1">
-									<a class="h4 text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+								<p class="card-text mb-1 ">
+									<a class="h4 text-2line p-title-hover" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
 										{{item.title}}
 									</a>
 								</p>
@@ -72,13 +72,13 @@
 										class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 							</li>
 							<li class="d-flex justify-content-center align-items-center">
-								<a *ngIf="PageIndex > 4" class="cursor">...</a>
+								<a *ngIf="PageIndex > 4" class="cursor">..</a>
 								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index"
 									[ngClass]="{ 'active': item.index ===PageIndex }">
 									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex"
 										class="page-link">{{item.index}}</a>
 								</p>
-								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">...</a>
+								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">..</a>
 							</li>
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == Total }">
 								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1">
