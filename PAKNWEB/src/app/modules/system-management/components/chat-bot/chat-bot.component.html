@@ -267,6 +267,11 @@
 										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
 											[ngModelOptions]="{standalone: true}" />
 									</div>
+									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 4">
+										<label class="mb-1 department">Url link</label>
+										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+											[ngModelOptions]="{standalone: true}" />
+									</div>
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 3">
 										<label class="mb-1 department">Lời chào mặc định</label>
 										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
@@ -293,6 +298,7 @@
 										<span *ngIf="item.typeSuggest == 1">Câu trả lời</span>
 										<span *ngIf="item.typeSuggest == 2">Link</span>
 										<span *ngIf="item.typeSuggest == 3">Chat</span>
+										<span *ngIf="item.typeSuggest == 4">Gửi phản ánh kiến nghị</span>
 									</div>
 									<div class="col-12 col-lg-4 form-group">
 										<p>
