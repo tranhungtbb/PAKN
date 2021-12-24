@@ -4,54 +4,58 @@
 	width: 5px;
 	margin-right: 10px;
 }
+
 .text-3line a,
 .text-2line a,
 .card-text a {
 	color: #222222;
 }
-.square{
+
+.square {
 	width: 16px;
 	height: 16px;
 	border-radius: 4px;
 }
 
-.bg-blue-1{
+.bg-blue-1 {
 	background-color: #73BCFF !important;
 }
 
-.bg-blue-2{
+.bg-blue-2 {
 	background-color: #2E73D5 !important;
 }
 
-.bg-green{
+.bg-green {
 	background-color: #58A55C !important;
 }
 
-.bg-yellow{
+.bg-yellow {
 	background-color: #FFB200 !important;
 }
-.bg-red{
+
+.bg-red {
 	background-color: #DA2222 !important;
 }
-.margin-top-16{
+
+.margin-top-16 {
 	margin-top: 16px !important;
 }
 
-@media (min-width: 992px) and (max-width: 1199.98px){
-.statistic-chart{
-    display: block!important;
-}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	.statistic-chart {
+		display: block !important;
+	}
 }
 
-.statistic-chart canvas{
-	width: 120px!important;
-	height: 120px!important;
-	margin-left: -10px;
+.statistic-chart canvas {
+	width: 120px !important;
+	height: 120px !important;
 }
 
 .bg-notification {
 	background-color: #FFF7EF;
 }
+
 .list-article ul li {
 	padding: 10px 0px;
 	list-style: none;
@@ -68,6 +72,7 @@
 	line-height: 21px;
 	font-weight: 500;
 }
+
 .read-more {
 	color: #707C97;
 	font-style: normal;
@@ -76,3 +81,13 @@
 	line-height: 17px;
 }
 
+.no-margin {
+	margin: 0;
+}
+
+
+@media (min-width: 992px) and (max-width: 1200px) {
+	.statistic-chart {
+		display: block !important;
+	}
+}
