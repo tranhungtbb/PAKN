@@ -149,16 +149,28 @@
 								style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)"> -->
 						</div>
 						<div class="media-body">
-							<div class="tt-v1 d-flex justify-content-between">
+							<div class="tt-v1">
 								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold ">{{model.unitName}}
 									trả lời:
 								</p>
-								<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold ">
-									{{model.processUnitName}}:</p>
-								<p *ngIf="[10].includes(model.status)" class="mb-0">{{model.approvedDate | date:'HH:mm'}} ngày
-									{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
-								<p *ngIf="[3].includes(model.status)" class="mb-0">{{model.denyDate | date:'HH:mm'}} ngày
-									{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
+								<div class="row">
+									<div class="col col-8 col-lg-8 col-md-8 col-xl-8">
+										<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold ">
+											{{model.processUnitName}}:</p>
+									</div>
+									<div class="col col-4 col-lg-4 col-md-4 col-xl-4" style="float: right;">
+										<p *ngIf="[10].includes(model.status)" class="mb-0"
+											style="float: right!important; padding: 0!important;">{{model.approvedDate |
+											date:'HH:mm'}} ngày
+											{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
+										<p *ngIf="[3].includes(model.status)" class="mb-0"
+											style="float: right!important; padding: 0!important;">{{model.denyDate |
+											date:'HH:mm'}} ngày
+											{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
+									</div>
+								</div>
+
+
 							</div>
 
 							<ng-container *ngIf="[3,6].includes(model.status)">

@@ -68,7 +68,6 @@ export class GalleryComponent implements OnInit {
 	ngOnInit() {
 		this.indexSettingService.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				debugger
 				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
 			}
 		}),
