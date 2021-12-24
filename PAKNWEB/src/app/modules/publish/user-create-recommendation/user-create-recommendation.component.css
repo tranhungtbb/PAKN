@@ -47,4 +47,5 @@ agm-map {
 }
 :host ::ng-deep ng-select.form-control>.ng-select-container .ng-placeholder{
 	font-style : italic !important;
+	font-size: 0.95rem !important;
 }
