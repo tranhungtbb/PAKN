@@ -747,7 +747,7 @@ a.text-1line.text-black.sub-menu-active {
 	font-family: 'Inter', sans-serif;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 19px;
 	text-transform: none;
 	align-items: center;
@@ -927,6 +927,7 @@ body, html {
 .card-footer {
 	border-radius: 0 0 15px 15px !important;
 	border-top: 0 !important;
+	padding: 1rem 1.875rem 1rem;
 }
 
 .container {
@@ -1097,8 +1098,8 @@ body, html {
 }
 
 .msg_cotainer_answer {
-	padding: 0.5rem;
-	margin-top: 0.5rem;
+	padding: 0 0.5rem;
+	/* margin-top: 0.5rem; */
 	border-radius: 10px;
 	cursor: pointer;
 }
