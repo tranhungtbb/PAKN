@@ -10,9 +10,8 @@
 								<img class="img-fluid" style="object-fit: cover;" src="../../../../../assets/dist/images/BG.svg" alt="">
 								<div class="left-box position-absolute">
 									<img class="mb-4" src="../../../../../assets/dist/images/logo.png">
-									<h4 class="text-uppercase mb-0 text-white title-top mb-2">hệ thống thông tin tiếp nhận, trả lời PHẢN
-										ÁNH,
-										KIẾN NGHị
+									<h4 class="text-uppercase mb-0 text-white title-top mb-2">hệ thống thông tin tiếp nhận, trả lời phản
+										ảnh, kiến nghị
 									</h4>
 									<h4 class="text-uppercase mb-0 text-white title-bottom">TỈNH KHÁNH HOÀ</h4>
 								</div>
@@ -31,7 +30,7 @@
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group pi-italic mb-4">
 																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px"
-																	placeholder="Nhập CMND,CCCD,Số ĐKKD.." maxlength="14" id="productname" type="text"
+																	placeholder="Nhập CMND, CCCD, Số ĐKKD.." maxlength="14" id="productname" type="text"
 																	formControlName="name" [(ngModel)]="userProduct.UserName" required onlyNumber="true"
 																	(change)="userProduct.UserName=userProduct.UserName.trim()">
 																<div
@@ -74,8 +73,7 @@
 																		(change)="captchaCodeProduct=captchaCodeProduct.trim()" placeholder="Nhập kết quả.."
 																		class="form-control bg-transparent mr-1" value="">
 
-																	<button type="button" (click)="reloadImage()"
-																		class="btn p-1 rounded-10px ml-4 position-absolute"
+																	<button type="button" (click)="reloadImage()" class="btn p-1 rounded-10px ml-4"
 																		style="right: 10px; width: 28px;">
 																		<i class="bi bi-arrow-repeat" style="font-size: 25px"></i>
 																	</button>
@@ -84,7 +82,8 @@
 																	*ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.captcha.errors.required">
-																		<span class="help-block">Vui lòng nhập kết quả</span>
+																		<span class="help-block">Trường này không được để
+																			trống</span>
 																	</div>
 																</div>
 															</div>
@@ -143,7 +142,7 @@
 															<div class="mt-4">
 																<div class="d-flex justify-content-center center">
 																	<i class="fas fa-phone-square-alt mr-2 cl-blue"></i>
-																	<p class="info mb-0">1900.1023</p>
+																	<p class="info mb-0">1900 1023</p>
 																</div>
 																<div class="d-flex justify-content-center center mt-2">
 																	<i class="fas fa-envelope-open mr-2 cl-blue"></i>
