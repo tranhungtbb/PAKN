@@ -443,3 +443,7 @@ ul li {
 .margin-top-16{
 	margin-top: 16px !important;
 }
+
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}

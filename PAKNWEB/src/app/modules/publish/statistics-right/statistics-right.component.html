@@ -6,7 +6,7 @@
 		<ul>
 			<ng-container *ngFor="let item of listNotification; let i = index">
 				<li *ngIf="i < 5" [ngClass]="{'border-bottom-none' : i == 4}">
-					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">
+					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line p-title-hover">
 						{{item.title}}
 					</a>
 				</li>
@@ -14,7 +14,7 @@
 		</ul>
 	</div>
 	<div class="tt-v1 mb-0 d-flex justify-content-end mr-3">
-		<a class="read-more" title="Xem thêm" routerLink="/cong-bo/danh-sach-thong-bao"> Xem thêm
+		<a class="read-more p-title-hover" title="Xem thêm" routerLink="/cong-bo/danh-sach-thong-bao"> Xem thêm
 		</a>
 	</div>
 </div>

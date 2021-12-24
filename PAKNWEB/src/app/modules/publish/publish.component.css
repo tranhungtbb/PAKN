@@ -23,7 +23,7 @@
 	border-radius: 4px;
 }
 .btn-hight-light:hover {
-	color: #ee5454;
+	color: #f35f1b;
 }
 .red-bar {
 	background: linear-gradient(180deg, #ee5454 0%, #a61515 100%);
@@ -773,6 +773,7 @@ ul.ft-list-rm li {
 
 .navbar-light .navbar-nav .nav-link:hover {
 	background-color: #155bbf;
+	color: #f35f1b;
 }
 
 .header-left .search_bar .search_icon {
