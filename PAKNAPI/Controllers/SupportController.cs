@@ -64,7 +64,6 @@ namespace PAKNAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-by-type")]
         public async Task<object> SYSupportGetByType(int? Type)
         {
