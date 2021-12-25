@@ -301,6 +301,8 @@ export class Api {
 	// support
 
 	public static SYSupportGetAllByCategory = 'support/get-by-category'
+	public static SYSupportGetAllByType = 'support/get-by-type'
+
 	public static SYSupportInsert = 'support/insert'
 	public static SYSupportUpdate = 'support/update'
 	public static SYSupportDelete = 'support/delete'

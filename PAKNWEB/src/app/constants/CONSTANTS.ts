@@ -188,6 +188,11 @@ export class CATEGORY_SUPPORT {
 	public static VIDEO = 1 //2 cap nhap
 }
 
+export class TYPE_SUPPORT {
+	public static SYSTEM = 1 // he thong
+	public static PUBLIC = 2 //2 ca nhan doanh ng
+}
+
 export class USER_TYPE {
 	public static SYSTEM = 1 // hệ thống
 	public static INDIVIDUAL = 2 // Người dân

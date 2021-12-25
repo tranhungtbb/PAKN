@@ -1,53 +1,44 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
-import { Router, ActivatedRoute, Params } from '@angular/router'
 import { PuSupportService } from 'src/app/services/pu-support.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import { SupportService } from 'src/app/services/support.service'
+import { RESPONSE_STATUS, TYPE_SUPPORT } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-support',
 	templateUrl: './support.component.html',
 	styleUrls: ['./support.component.css'],
 })
-export class SupportComponent implements OnInit, AfterViewInit {
-	constructor(private router: Router, private activatedRoute: ActivatedRoute, private _PuSupportService: PuSupportService, private sanitizer: DomSanitizer) {
-		
+export class SupportComponent implements OnInit {
+	constructor(private supportService: SupportService, private sanitizer: DomSanitizer) {
+
 	}
 
-	listDoc: any[] = []
-
-	model: any = {
-		src: '',
-		date: new Date(),
-	}
-	contentType = 0
-	type = 2
-
-	@ViewChild('docView', { static: true }) docView: ElementRef
+	listData: any[] = []
+	model: any
 
 	ngOnInit() {
-		this._PuSupportService.getData({}).subscribe((res) => {
-			if (res) {
-				this.listDoc = res.result.ListData
-				this.loadDocView(this.contentType, this.type)
+		this.getList()
+	}
+
+	getList() {
+		this.supportService.GetListByType({ Type: TYPE_SUPPORT.PUBLIC }).subscribe(
+			(res) => {
+				if (res.success != RESPONSE_STATUS.success) return
+				this.listData = res.result
+				if (this.listData && this.listData.length > 0) {
+					this.selectMenu(this.listData[0].id)
+				}
+			},
+			(err) => {
+				console.log(err)
 			}
-		})
+		)
 	}
-	changeDoc() {
-		this.loadDocView(this.contentType, this.type)
+
+	selectMenu = (id: any) => {
+		debugger
+		this.model = this.listData.find(x => x.id == id)
 	}
-	currentFileName: string = ''
-	loadDocView(contentType: number, type: number) {
-		this.type = type
-		let item = this.listDoc.find((c) => c.category == contentType && c.type == type)
-		this.model = { ...item }
-		this.model.src = item.filePath
-		let splString = item.filePath.split('/')
-		this.currentFileName = splString[splString.length - 1]
-	}
-	safe(url: string) {
-		return this.sanitizer.bypassSecurityTrustResourceUrl(url)
-	}
-	ngAfterViewInit() {
-		//docView.src =
-	}
+
 }

@@ -11,11 +11,16 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 	providedIn: 'root',
 })
 export class SupportService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	GetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.SYSupportGetAllByCategory)
 	}
+	GetListByType(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.SYSupportGetAllByType)
+	}
+
+
 
 	Insert(request: any, isVideo: boolean = false): Observable<any> {
 		let tempheaders = new HttpHeaders({
