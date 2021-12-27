@@ -13,6 +13,8 @@ import { CalendarModule } from 'primeng/calendar'
 import { TreeModule } from 'primeng/tree'
 import { SupportListDocumentComponent } from './support-list-document/support-list-document.component'
 import { SupportListVideoComponent } from './support-list-video/support-list-video.component'
+import { SupportListPublicComponent } from './support-list-public/support-list-public.component'
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular'
 
 @NgModule({
 	imports: [
@@ -27,7 +29,8 @@ import { SupportListVideoComponent } from './support-list-video/support-list-vid
 		SharedModule,
 		CalendarModule,
 		TreeModule,
+		CKEditorModule
 	],
-	declarations: [SupportManagementComponent, SupportListDocumentComponent, SupportListVideoComponent],
+	declarations: [SupportManagementComponent, SupportListDocumentComponent, SupportListVideoComponent, SupportListPublicComponent],
 })
-export class SupportManagementModule {}
+export class SupportManagementModule { }

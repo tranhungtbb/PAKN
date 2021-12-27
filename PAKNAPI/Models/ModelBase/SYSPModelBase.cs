@@ -143,6 +143,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYSupportMenu>("[SY_SupportMenuGetAllByCategory]", DP)).ToList();
 		}
+		public async Task<List<SYSupportMenu>> SYSupportMenuGetByTypeDAO(int? Type)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Type", Type);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSupportMenu>("[SY_SupportMenuGetAllByType]", DP)).ToList();
+		}
 
 		public async Task<int?> SYSupportMenuUpdateDAO(SYSupportMenu model)
 		{
