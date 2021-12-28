@@ -2329,7 +2329,17 @@ table thead .form-control ng-select {
 	font-size: 16px;
 	line-height: 20px;
 	color: #000;
+	cursor: pointer;
 }
+
+.title-status-rm:hover{
+	color :#f35f1b !important;
+}
+.cl-gray{
+	color: #666666;
+}
+
+
 
 .border-left-yellow {
 	border-left: 3px solid #db8e3f;

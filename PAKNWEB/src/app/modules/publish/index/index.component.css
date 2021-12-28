@@ -165,6 +165,13 @@
 	line-height: 19px;
 	color: #666666;
 }
+.d-inline-block{
+	display: inline-block;
+}
+
+.cl-gray{
+	color: #666666;
+}
 
 .italic {
 	font-style: italic;

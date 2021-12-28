@@ -1,7 +1,7 @@
 <form class="form-row px-3" [formGroup]="formInfo">
 	<div class="col form-group pi-italic">
 		<label class="mb-1">Người đại diện<span class="cl-red">(*)</span></label>
-		<input [svTrim] maxlength="100" [(ngModel)]="model.representativeName" formControlName="representativeName"
+		<input svTrim maxlength="100" [(ngModel)]="model.representativeName" formControlName="representativeName"
 			type="text" placeholder="Nhập họ và tên.." class="form-control border-brown h-34px rounded-6px">
 		<div
 			*ngIf="(fInfoSubmitted && fInfo.representativeName.invalid)||(fInfo.representativeName.invalid && (fInfo.representativeName.dirty || fInfo.representativeName.touched))"
@@ -39,7 +39,7 @@
 	</div>
 	<div class="col-12 form-group pi-italic">
 		<label class="mb-1">Email </label>
-		<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập email.."
+		<input [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập email.."
 			class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Email',$event.target.value)">
 		<div
 			*ngIf="(fInfoSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))"
@@ -61,7 +61,7 @@
 	<div class="w-100"></div>
 	<div class="col-12 col-lg-12 form-group pi-italic">
 		<label class="mb-1">Địa chỉ cụ thể </label>
-		<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text"
+		<input svTrim [(ngModel)]="model.address" formControlName="address" type="text"
 			placeholder="Nhập địa chỉ thường trú.." class="form-control h-34px rounded-6px border-brown">
 		<div
 			*ngIf="(fInfoSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"

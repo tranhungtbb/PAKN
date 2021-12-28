@@ -4,21 +4,21 @@
       <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
         <ol class="breadcrumb px-0 bg-transparent mb-0" style="font-size: 1.1rem;">
           <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-          <li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Thông báo từ chính quyền</a></li>
+          <li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Thông báo từ chính quyền</a></li>
         </ol>
 
         <div class="box">
           <div class="row m-0 d-flex justify-content-between ">
-            <div class="col-lg-10 form-group p-0 pr-2 p-xs-0 pi-italic">
+            <div class="col-lg-11 form-group p-0 pr-2 p-xs-0 pi-italic">
               <input placeholder="Tìm kiếm thông báo.." class="form-control form-control border-radius-4"
                 [(ngModel)]="keySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
             </div>
 
-            <div class="col-lg-2 col-xs-2 form-group px-2 p-xs-0">
+            <div class="col-1 form-group px-2 p-xs-0">
               <button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px"
                 style="text-transform: none;" (click)="dataStateChange()">
-                <!-- <i class="bi bi-search"></i> -->
-                Tìm kiếm
+                <!-- Tìm kiếm -->
+                <i class="bi bi-search"></i>
               </button>
             </div>
           </div>
@@ -31,8 +31,12 @@
                     <a class="text-2line title-item-article p-title-hover" style="font-weight: bold!important;"
                       routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}">{{item.title}}</a>
                   </p>
-                  <div class="createDate mb-2">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :
-                    'dd/MM/yyyy'}}</div>
+                  <span style="display: inline-block;">
+                    <i class="bi bi-alarm cl-gray mt-1 ml-2 p-item-title "></i>
+                    <span class="createDate mb-2 p-item-title">
+                      {{ item.createdDate | date : 'dd/MM/yyyy HH:mm' }}
+                    </span>
+                  </span>
                   <p class="mb-0 article-summary">
                     <a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">{{item.summary}}</a>
                   </p>

@@ -11,8 +11,6 @@ import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
-import { BotMessage } from 'src/app/models/chatbotObject'
-import { link } from 'fs'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
 import { SystemConfigObject } from 'src/app/models/SystemConfigObject'
 
@@ -76,7 +74,6 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.config = JSON.parse(res.result.SYConfigGetByType.content)
-				console.log(this.config)
 			}
 		}),
 			(error) => {

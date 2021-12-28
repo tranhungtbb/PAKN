@@ -61,10 +61,14 @@ export class OrganizationComponent implements OnInit {
 		$('#modal-otp').modal('hide');
 	}
 	onReset() {
+		this.model = new OrganizationObject()
+		this.model._RepresentativeBirthDay = ''
+		this.model._DateOfIssue = ''
+		this.model.representativeGender = true
+		this.child_OrgRepreForm.resetObject()
 		this.formLogin.reset()
 		this.formOrgInfo.reset()
 		this.child_OrgRepreForm.formInfo.reset()
-		this.child_OrgRepreForm.resetObject()
 		this.child_OrgAddressForm.formOrgAddress.reset()
 		this.child_OrgRepreForm.formInfo.get('Gender').setValue(true)
 
@@ -72,10 +76,7 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgRepreForm.fInfoSubmitted = false
 		this.fOrgInfoSubmitted = false
 		this.child_OrgAddressForm.fOrgAddressSubmitted = false
-		this.model = new OrganizationObject()
-		this.model._RepresentativeBirthDay = ''
-		this.model._DateOfIssue = ''
-		this.model.representativeGender = true
+
 	}
 
 	phoneHide: any = ''
@@ -94,7 +95,15 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
+		this.model.representativeName = this.model.representativeName == null ? '' : this.model.representativeName.trim()
+		this.model.phone = this.model.phone == null ? '' : this.model.phone.trim()
+		this.model.address = this.model.address == null ? '' : this.model.address.trim()
+		this.model.email = this.model.email == null ? '' : this.model.email.trim()
 
+		this.model.business = this.model.business == null ? '' : this.model.business.trim()
+		this.model.orgAddress = this.model.orgAddress == null ? '' : this.model.orgAddress.trim()
+		this.model.orgPhone = this.model.orgPhone == null ? '' : this.model.orgPhone.trim()
+		this.model.orgEmail = this.model.orgEmail == null ? '' : this.model.orgEmail.trim()
 		if (
 			this.checkExists['Phone'] ||
 			this.checkExists['BusinessRegistration'] ||
@@ -152,7 +161,6 @@ export class OrganizationComponent implements OnInit {
 	}
 
 	onSave() {
-		debugger
 		if (!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6) {
 			this.toast.error('Vui lòng nhập otp!')
 			return

@@ -6,9 +6,10 @@
 				<form [formGroup]="formLogin" class="px-3" autocomplete="off">
 					<div class="form-group pi-italic">
 						<label class="mb-1">Số CMND/CCCD<span class="cl-red">(*)</span></label>
-						<input minlength="9" maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text"
-							onlyNumber="true" placeholder="Nhập số CMND/CCCD.." class="form-control border-brown h-34px rounded-6px "
-							pattern="^(\w{1}[0-9]{8}||[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+						<input minlength="9" maxlength="12" autocomplete="off" [(ngModel)]="model.iDCard" formControlName="iDCard"
+							type="text" onlyNumber="true" placeholder="Nhập số CMND/CCCD.."
+							class="form-control border-brown h-34px rounded-6px " pattern="^(\w{1}[0-9]{8}||[0-9]{12})$"
+							(change)="onCheckExist('IDCard',$event.target.value)">
 
 						<div
 							*ngIf="(fLoginSubmitted && fLogin.iDCard.invalid)||(fLogin.iDCard.invalid && (fLogin.iDCard.dirty || fLogin.iDCard.touched))"
@@ -30,8 +31,8 @@
 						<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
 						<input svDisabledSpaceKey [(ngModel)]="model.password"
 							pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" formControlName="password" type="password"
-							placeholder="Nhập mật khẩu.." autocomplete="off" class="form-control border-brown h-34px rounded-6px"
-							value="">
+							placeholder="Nhập mật khẩu.." autocomplete="new-password"
+							class="form-control border-brown h-34px rounded-6px" value="">
 						<div
 							*ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
 							class="has-error m-b-12">
@@ -104,7 +105,7 @@
 					</div>
 					<div class="col-12 col-lg-12 form-group pi-italic">
 						<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-						<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập email.."
+						<input [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập email.."
 							class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Email',$event.target.value)">
 						<!--  -->
 						<div

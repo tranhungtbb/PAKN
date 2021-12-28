@@ -337,7 +337,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                 model.CategoryId = 0;
                 model.TypeChat = 1;
 
-                for (int i = 3; i <= rows; i++)
+                for (int i = 2; i <= rows; i++)
                 {
                     model.Title = worksheet.Cells[i, 2].Value?.ToString();
                     model.Question = worksheet.Cells[i, 3].Value?.ToString();

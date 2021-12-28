@@ -87,9 +87,17 @@ export class MyRecommendationComponent implements OnInit {
 		})
 	}
 
+	preSignOut() {
+		$('#acceptSignOut').modal('show')
+	}
+	closeModal() {
+		$('#acceptSignOut').modal('hide')
+	}
+
 	mySignOut(): void {
 		this.authenService.logOut({}).subscribe((success) => {
 			if (success.success == RESPONSE_STATUS.success) {
+				$('#acceptSignOut').modal('hide')
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
 				this.storageService.clear()

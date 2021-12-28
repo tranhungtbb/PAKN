@@ -160,24 +160,8 @@
 							<li class="nav-item ps-relative">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['/cong-bo/them-moi-kien-nghi']">Gửi phản ánh</a>
-								<!-- <ul class="bg-white rounded sub-nav border" style="z-index: 100000;">
-									<ng-container *ngFor="let item of subMenu;let i = index">
-										<li class="p-3 rounded sub-item" title="{{item.text}}">
-											<a class="text-1line text-black" [routerLink]="item.path"
-												routerLinkActive="sub-menu-active">{{item.text}}</a>
-										</li>
-										<li class="border-bottom" *ngIf="i+1 < subMenu.length"></li>
-									</ng-container>
-								</ul> -->
+
 							</li>
-							<!-- <li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
-							</li> -->
-							<!-- <li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./tin-tuc-su-kien']">Tin tức</a>
-							</li> -->
 							<li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
 									[routerLink]="['./tong-hop-so-lieu']">Thống kê</a>
@@ -238,66 +222,12 @@
 
 
 	<div class="footer px-0">
-		<!-- <div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
-			<div class="container">
-				<div class="row justify-content-between">
-					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
-						<h4 class="title-footer pb-1">Thông tin đường dây nóng,<br />hỗ trợ kỹ thuật</h4>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item pb-2 pt-0 px-0 border-0 fw-500"><i class="fas fa-home mr-2"></i>Trung tâm CNTT
-								và dịch
-								vụ hành chính công trực tuyến</li>
-							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-phone-square-alt mr-2"></i>1900 1023</li>
-							<li class="list-group-item py-2 px-0 border-0"><i
-									class="fas fa-envelope-open mr-2"></i>hanhchinhcongkh@gmail.com</li>
-							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-map-marked-alt mr-2"></i>147 Thống Nhất,
-								Nha Trang, Khánh Hòa</li>
-							<li class="list-group-item py-2 px-0 border-0"><i
-									class="fab fa-facebook-square mr-2"></i>facebook.com/hanhchinhcongKH</li>
-						</ul>
-					</div>
-					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
-						<h4 class="title-footer pb-1">Tiếp nhận phản ánh, kiến nghị về quy định hành chính</h4>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item pb-2 pt-0 px-0 border-0 fw-500"><i class="fas fa-home mr-2"></i>Văn phòng UBND
-								Tỉnh
-								Khánh Hòa</li>
-							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-phone-square-alt mr-2"></i>0258.3563.531
-							</li>
-							<li class="list-group-item py-2 px-0 border-0"><i
-									class="fas fa-envelope-open mr-2"></i>pkstthc.vpub@khanhhoa.gov.vn</li>
-							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-map-marked-alt mr-2"></i>Số 01 Trần Phú,
-								Nha Trang, Khánh Hòa</li>
-						</ul>
-					</div>
 
-					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
-						<h4 class="title-footer pb-1">Phiên bản ứng dụng di động</h4>
-						<div>
-							<a href="{{config.urlIOS}}" target="_blank">
-								<img style="width: 127px; border-radius: 6px; height: 44px;" class="img-cover pointer mr-3"
-									src="../../../assets/dist/images/app-store.svg">
-							</a>
-							<a href="{{config.urlAndroid}}" target="_blank">
-								<img style="width: 127px; border-radius: 6px; height: 44px;" class="img-cover pointer"
-									src="../../../assets/dist/images/google-play.svg">
-							</a>
-
-						</div>
-						<p class="p-footer pt-3">
-							Giấy phép số: 01/GP-STTTT do Sở Thông tin và Truyền thông tỉnh Khánh Hòa cấp ngày 07/01/2016
-						</p>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
-
-		<div class="ct-footer " style="background: #DDEDFF; padding-top: 1.5rem !important;">
+		<div class="ct-footer pt-2" style="background: #DDEDFF;">
 			<div class="container">
 				<div class="row justify-content-between">
 					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-3">
-						<h4 class="title-footer pb-2">Hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị tỉnh Khánh Hòa</h4>
+						<h4 class="title-footer">Hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị tỉnh Khánh Hòa</h4>
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-building mr-2"></i>
 								<div><span class="fw-500">Cơ quan chủ quản: </span>Ủy ban nhân dân tỉnh Khánh Hòa </div>
@@ -310,7 +240,10 @@
 								<div><span class="fw-500">Tổng đài đường dây nóng:</span> 1900 1023 </div>
 							</li>
 							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-envelope-open mr-2"></i>
-								<div><span class="fw-500">Email: </span>pakn@khanhhoa.gov.vn</div>
+								<div>
+									<span class="fw-500">Email: </span>
+									<a class="color-dark" href="mailto:pakn@khanhhoa.gov.vn">pakn@khanhhoa.gov.vn</a>
+								</div>
 							</li>
 							<li class="list-group-item py-2 px-0 border-0 d-flex"><i class="fas fa-map-marked-alt mr-2"></i>
 								<div><span class="fw-500">Địa chỉ: </span> 147 Thống Nhất, Nha Trang, Khánh Hòa </div>
@@ -318,30 +251,17 @@
 						</ul>
 					</div>
 					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3">
-						<h4 class="title-footer pb-1">Phiên bản ứng dụng di động</h4>
-						<div class="pb-2 mb-1"><a target="_blank"
-								href="https://play.google.com/store/apps/details?id=com.vt.paknapp"><img class="img-cover pointer mr-3"
-									src="../../../assets/dist/images/app-store.svg"
-									style="width: 127px; border-radius: 6px; height: 44px;"></a><a target="_blank"
-								href="https://play.google.com/store/apps/details?id=com.vt.paknapp"><img class="img-cover pointer"
-									src="../../../assets/dist/images/google-play.svg"
-									style="width: 127px; border-radius: 6px; height: 44px;"></a></div>
-						<!-- <ul class="ft-list-rm">
-							<li class="fw-500 py-1"><a routerlink="/cong-bo/phan-anh-kien-nghi/da-tra-loi"
-									href="/cong-bo/phan-anh-kien-nghi/da-tra-loi">Phản ánh, kiến nghị đã xử lý</a></li>
-							<li class="fw-500 py-1"><a routerlink="/cong-bo/phan-anh-kien-nghi-dang-xu-ly"
-									href="/cong-bo/phan-anh-kien-nghi-dang-xu-ly">Phản ánh, kiến nghị đang xử lý</a></li>
-						</ul> -->
-						<!-- <a class="" src="">Dịch vụ trực tuyến</a> -->
-						<!-- <div class="col-6 col-md-6 col-xl-6 col-xs-6">
-							<ul class="ft-list-rm">
-								<li><a [routerLink]="['./trang-chu']" href="./trang-chu"></a>Trang chủ</li>
-								<li><a [routerLink]="['./trang-chu']" ></a>Trang chủ</li>
-								<li><a [routerLink]="['./trang-chu']"></a>Trang chủ</li>
-							</ul>
-						</div> -->
-
-
+						<h4 class="title-footer">Phiên bản ứng dụng di động</h4>
+						<div class="pb-2 mb-1">
+							<a target="_blank" [attr.href]="config.urlIOS">
+								<img class="img-cover pointer mr-3" src="../../../assets/dist/images/app-store.svg"
+									style="width: 127px; border-radius: 6px; height: 44px;">
+							</a>
+							<a target="_blank" [attr.href]="config.urlAndroid">
+								<img class="img-cover pointer" src="../../../assets/dist/images/google-play.svg"
+									style="width: 127px; border-radius: 6px; height: 44px;">
+							</a>
+						</div>
 						<div class="row">
 							<div class="col-6 col-md-6 col-xl-6 col-xs-6">
 								<div class="mb-2">

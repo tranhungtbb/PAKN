@@ -39,13 +39,13 @@
 	</div> -->
 	<div class="col-12 form-group pi-italic">
 		<label class="mb-1">Địa chỉ</label>
-		<input [svTrim] [(ngModel)]="model.orgAddress" formControlName="orgAddress" type="text"
+		<input [(ngModel)]="model.orgAddress" formControlName="orgAddress" type="text"
 			placeholder="Nhập địa chỉ trụ sở/văn phòng đại diện.." class="form-control h-34px rounded-6px border-brown">
 
 	</div>
 	<div class="col form-group pi-italic">
 		<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-		<input [svTrim] [(ngModel)]="model.orgEmail" formControlName="orgEmail" type="text" placeholder="Nhập email.."
+		<input [(ngModel)]="model.orgEmail" formControlName="orgEmail" type="text" placeholder="Nhập email.."
 			class="form-control h-34px rounded-6px border-brown" (change)="onCheckExist('orgEmail',$event.target.value)">
 		<div
 			*ngIf="(fOrgAddressSubmitted && fOrgAdr.orgEmail.invalid)||(fOrgAdr.orgEmail.invalid && (fOrgAdr.orgEmail.dirty || fOrgAdr.orgEmail.touched))"

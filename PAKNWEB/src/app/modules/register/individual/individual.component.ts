@@ -143,12 +143,31 @@ export class IndividualComponent implements OnInit {
 	validateDateOfIssue: any = true
 
 	onReset() {
-		this.formLogin.reset()
-		this.formInfo.reset()
+		debugger
+		this.model = new IndividualObject()
+		this.formLogin.reset({
+			iDCard: this.model.iDCard,
+			password: this.model.password,
+			rePassword: this.model.rePassword
+		})
+		this.formInfo.reset({
+			fullName: this.model.fullName,
+			gender: this.model.gender,
+			dob: this.model.birthDay,
+			nation: this.model.nation,
+			province: this.model.provinceId,
+			district: this.model.districtId,
+			village: this.model.wardsId,
 
+			email: this.model.email,
+			address: this.model.address,
+			phone: this.model.phone,
+			placeIssue: this.model.issuedPlace,
+			dateIssue: this.model.dateOfIssue,
+		})
 		this.fLoginSubmitted = false
 		this.fInfoSubmitted = false
-		this.model = new IndividualObject()
+
 		this.model.gender = true
 		this.formInfo.get('gender').setValue(this.model.gender)
 	}
@@ -166,7 +185,7 @@ export class IndividualComponent implements OnInit {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
-		if (!this.model.email) this.model.email = ''
+		this.model.email = this.model.email == null ? '' : this.model.email.trim()
 		if (this.model.nation == 'Nhập...') this.model.nation = ''
 		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
 			return
@@ -266,7 +285,7 @@ export class IndividualComponent implements OnInit {
 		this.formLogin = this.formBuilder.group(
 			{
 				iDCard: [this.model.iDCard, [Validators.required]],
-				password: [this.model.password, [Validators.required]], //, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
+				password: [this.model.password, [Validators.required]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }

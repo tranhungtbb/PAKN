@@ -40,7 +40,7 @@
 							</div>
 							<div *ngIf="model.fieldFilePath!=null">
 								<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
-									208deg) brightness(99%) contrast(85%); border-ra">
+									208deg) brightness(99%) contrast(85%);">
 							</div>
 
 						</div>
@@ -52,10 +52,9 @@
 							</div>
 							<p style="text-align:justify; text-justify:inter-word" innerHTML="{{model.content | Change}}">
 							</p>
-							<span *ngIf="lstFiles && lstFiles.length>0" class="text-left ">
-								<small class="small" *ngIf="lstFiles && lstFiles.length > 0">Tài liệu đính kèm</small><br>
-								<div *ngFor="let file of lstFiles" style="padding-bottom: 2px!important;" cursor="pointer">
-									<!-- file-att -->
+							<span *ngIf="lstFiles && lstFiles.length > 0" class="text-left ">
+								<small class="small">Tài liệu đính kèm</small><br>
+								<div *ngFor="let file of lstFiles" class="mb-2 pointer">
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"

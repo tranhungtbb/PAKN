@@ -14,12 +14,10 @@ namespace PAKNAPI.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên không được để trống")]
         public string FullName { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
-        [DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
         public DateTime? DateOfBirth { get;set; }
 
-        [DataType(DataType.EmailAddress, ErrorMessage = "Ngày sinh người đại diện không đúng định dạng")]
-
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email không được để trống")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Email không đúng định dạng")]
         public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
@@ -46,7 +44,7 @@ namespace PAKNAPI.Models
         public DateTime? IssuedDate { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
     }
 
     public class BusinessAccountInfoModel

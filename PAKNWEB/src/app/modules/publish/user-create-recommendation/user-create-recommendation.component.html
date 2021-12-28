@@ -243,7 +243,7 @@
 								</label>
 							</div>
 						</div>
-						<ng-container *ngFor="let item of files">
+						<!-- <ng-container *ngFor="let item of files">
 							<div class="col-auto mb-4" *ngIf="item.fileType == 1">
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
 									style="width: 170px ; margin: 0!important; padding: 0!important;">
@@ -318,12 +318,55 @@
 								</div>
 							</div>
 
-						</ng-container>
+						</ng-container> -->
+
+						<div class="mb-4">
+							<div *ngFor="let file of files" class="mb-2 mr-3 pointer" style="display:  inline-block;">
+								<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 3" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 4" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 6" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+									title="Xem file" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 7" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+
+								<i (click)="onRemoveFile(item)" class="ml-2 mdi mdi-close"></i>
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<form class="form-row mb-3 align-items-end justify-content-between" [formGroup]="form">
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-						<label class="mb-1">MÃ SỐ XÁC THỰC <span class="cl-red">(*)</span></label>
+						<label class="mb-1 label-authorize">MÃ SỐ XÁC THỰC <span class="cl-red">(*)</span></label>
 						<div
 							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute"
 							style="border: none !important; box-shadow: none !important;">

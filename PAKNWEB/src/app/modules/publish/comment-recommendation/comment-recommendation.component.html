@@ -3,8 +3,10 @@
 		Bình luận <span>({{total_Comments}})</span>
 	</p>
 	<div class="py-3 px-4 rounded-xl mb-4 border" *ngIf="IsPagePublic" style="background: #FEFEFE">
-		<p *ngIf="!isLogin">Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue"
-				routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
+		<p *ngIf="!isLogin">Hãy
+			<a href="javascript:void(0)" routerLink="/dang-nhap">đăng nhập</a> hoặc
+			<a href="javascript:void(0)" routerLink="/dang-ky/ca-nhan">tạo tài khoản</a>
+			để gửi bình luận
 		</p>
 		<div class="form-group mb-0">
 			<textarea class="form-control px-4 py-3" style="height: 75px;" [(ngModel)]="commentModel.contents" rows="3"
