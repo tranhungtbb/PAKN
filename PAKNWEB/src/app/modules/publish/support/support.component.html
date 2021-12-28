@@ -2,18 +2,17 @@
 	<div class="container">
 		<div class="justify-content-between">
 			<div class="row">
-				<div class="col-lg-4 d-none d-lg-block sidebar-ct pl-3 mb-2">
+				<div class="col-lg-3 d-none d-lg-block sidebar-ct pl-3 mb-2">
 					<div class="card border p-3 bg-notification mb-3">
 						<div class="list-document">
 							<ul>
 								<li>
-									<h4 class="title-notification mb-1 mr-2 text-uppercase text-center">Hướng dẫn</h4>
+									<h4 class="title-notification mb-1 mr-2 text-uppercase text-center">Hướng dẫn</h4>
 								</li>
 								<ng-container *ngFor="let item of listData; let i = index">
 									<li class="pointer p-title-hover" [ngClass]="{'border-bottom-none' : i == (listData.length -1)}"
 										(click)="selectMenu(item.id)">
-										<a class="text-2line" style="text-align:justify; text-justify:inter-word"
-											[ngClass]="{'d-active':(model?.id && model?.id == item.id)}">
+										<a class="text-2line" [ngClass]="{'d-active':(model?.id && model?.id == item.id)}">
 											{{item.title}}
 										</a>
 									</li>
@@ -22,8 +21,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-					<div class="box mb-3">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+					<div class="box mb-3 infomation-support">
 						<h4 class="title-notification text-uppercase text-center mb-4">{{model?.title}}</h4>
 						<p [innerHTML]="model?.content"></p>
 					</div>

@@ -8,6 +8,8 @@ using PAKNAPI.Models.Chatbot;
 using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers.ChatbotController
@@ -41,13 +43,13 @@ namespace PAKNAPI.Controllers.ChatbotController
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotDelete(_webHostEnvironment, _appSetting).ChatbotDeleteDAO(_ChatbotDeleteIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -69,8 +71,8 @@ namespace PAKNAPI.Controllers.ChatbotController
         {
             try
             {
-                List<ChatbotGetAllOnPage> rsChatbotGetAllOnPage = 
-                    await new ChatbotGetAllOnPage(_appSetting).ChatbotGetAllOnPageDAO(PageIndex,PageSize, Title, Question, IsActive);
+                List<ChatbotGetAllOnPage> rsChatbotGetAllOnPage =
+                    await new ChatbotGetAllOnPage(_appSetting).ChatbotGetAllOnPageDAO(PageIndex, PageSize, Title, Question, IsActive);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"ChatbotGetAllOnPage", rsChatbotGetAllOnPage},
@@ -227,7 +229,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                     DateParseHandling = DateParseHandling.DateTimeOffset,
                 };
                 ChatbotInsertIN _chatbotInsertIN = JsonConvert.DeserializeObject<ChatbotInsertIN>(Request.Form["data"].ToString(), jss);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 var resInsert = await new ChatbotInsert(_webHostEnvironment, _appSetting).ChatbotInsertDAO(_chatbotInsertIN);
                 await _bots.ReloadBots();
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resInsert };
@@ -235,7 +237,7 @@ namespace PAKNAPI.Controllers.ChatbotController
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -260,7 +262,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                     DateParseHandling = DateParseHandling.DateTimeOffset,
                 };
                 ChatbotUpdateIN ChatbotUpdateIN = JsonConvert.DeserializeObject<ChatbotUpdateIN>(Request.Form["ChatbotUpdateIN"].ToString(), jss);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 var resUpdate = await new ChatbotUpdate(_webHostEnvironment, _appSetting).ChatbotUpdateDAO(ChatbotUpdateIN);
                 await _bots.ReloadBots();
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resUpdate };
@@ -268,7 +270,7 @@ namespace PAKNAPI.Controllers.ChatbotController
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -293,5 +295,66 @@ namespace PAKNAPI.Controllers.ChatbotController
             }
         }
 
+        [HttpPost]
+        [Route("import-data-chat-bot")]
+        [Authorize("ThePolicy")]
+        public async Task<ActionResult<object>> ImportData()
+        {
+            var file = Request.Form.Files[0];
+
+            if (file.Length <= 0)
+            {
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
+            }
+            string folder = "Upload\\ChatBot\\";
+            string folderPath = Path.Combine(_webHostEnvironment.ContentRootPath, folder);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var name = Path.GetFileName(file.FileName).Replace("+", "");
+            string filePath = Path.Combine(folderPath, name);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            FileInfo fileInfo = new FileInfo(filePath);
+
+            OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+            OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+            try
+            {
+                // get number of rows and columns in the sheet
+
+                int rows = worksheet.Dimension.Rows;
+                int columns = worksheet.Dimension.Columns;
+                ChatbotInsertIN model = new ChatbotInsertIN();
+                model.IsActived = true;
+                model.IsDeleted = false;
+                model.CategoryId = 0;
+                model.TypeChat = 1;
+
+                for (int i = 3; i <= rows; i++)
+                {
+                    model.Title = worksheet.Cells[i, 2].Value?.ToString();
+                    model.Question = worksheet.Cells[i, 3].Value?.ToString();
+                    await new ChatbotInsert(_webHostEnvironment, _appSetting).ChatbotInsertDAO(model);
+                }
+
+                await _bots.ReloadBots();
+
+                return new Models.Results.ResultApi { Success = ResultCode.OK};
+            }
+            catch (Exception ex)
+            {
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+            finally {
+                System.IO.File.Delete(filePath);
+            }
+        }
     }
 }

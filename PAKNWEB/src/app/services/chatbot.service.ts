@@ -71,4 +71,8 @@ export class ChatbotService {
 	chatbotGetAllActive(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetAllActive)
 	}
+
+	importExcel(request: any): Observable<any> {
+		return this.serviceInvoker.postfile(request, AppSettings.API_ADDRESS + Api.ChatbotImportFile)
+	}
 }

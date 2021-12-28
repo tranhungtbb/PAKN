@@ -5,7 +5,7 @@ import { ChatbotObject } from 'src/app/models/chatbotObject'
 import { ChatbotService } from 'src/app/services/chatbot.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, PathSampleFiles, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { MatGridTileHeaderCssMatStyler } from '@angular/material'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
@@ -44,6 +44,7 @@ export class ChatBotComponent implements OnInit {
 	submitted: boolean = false
 	categoryId: string = ''
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild('file', { static: false }) file: any
 	totalRecords: number = 0
 	idDelete: number = 0
 	categoryIdDelete: number = 0
@@ -481,5 +482,34 @@ export class ChatBotComponent implements OnInit {
 	onRemoveAnswer = (index) => {
 		this.lstAnswer.splice(index, 1)
 		return
+	}
+	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+	srcDownLoadFile: string
+	preImportExcel() {
+		$('#fileImport').click()
+	}
+	downLoadFile() {
+		$('#ifDownloadFile').attr('src', PathSampleFiles.PathSampleFilesChatBot)
+	}
+	onImportExcel(event: any) {
+		var file = event.target.files[0]
+		if (!this.allowExcelExtend.includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp excel')
+			return
+		}
+
+		let formData = new FormData()
+		formData.append('file', file, file.name)
+
+		this._service.importExcel(formData).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
+				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				return
+			} else {
+				this._toastr.success('Import thành công')
+				this.getList()
+			}
+		})
+		this.file.nativeElement.value = ''
 	}
 }

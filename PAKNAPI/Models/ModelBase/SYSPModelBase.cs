@@ -134,6 +134,7 @@ namespace PAKNAPI.ModelBase
 		public string Content { get; set; }
 		public string? FilePath { get; set; }
 		public int? FileType { get; set; }
+		public int? Index { get; set; }
 
 		public string FileName { get; set; }
 		public async Task<List<SYSupportMenu>> SYSupportMenuGetByCategoryDAO(int? Category)
@@ -164,6 +165,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FilePath", model.FilePath);
 			DP.Add("FileType", model.FileType);
 			DP.Add("FileName", model.FileName);
+			DP.Add("Index", model.Index);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuUpdate]", DP);
 		}
@@ -179,6 +181,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FilePath", model.FilePath);
 			DP.Add("FileType", model.FileType);
 			DP.Add("FileName", model.FileName);
+			DP.Add("Index", model.Index);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuInsert]", DP);
 		}

@@ -358,30 +358,36 @@ namespace PAKNAPI.Models.Chatbot
 
 		private async Task<int> InsertChatbotLibDAO(List<lstAnswer> lstAnswers, decimal id)
 		{
-            foreach (var item in lstAnswers)
-            {
-				DynamicParameters DP = new DynamicParameters();
-				DP.Add("IdBotLib", id);
-				DP.Add("Answers", item.Answer);
-				DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
-				DP.Add("TypeSuggest", item.TypeSuggest);
-				DP.Add("LinkSuggest", item.LinkSuggest);
-				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
+			if (lstAnswers != null) {
+				foreach (var item in lstAnswers)
+				{
+					DynamicParameters DP = new DynamicParameters();
+					DP.Add("IdBotLib", id);
+					DP.Add("Answers", item.Answer);
+					DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
+					DP.Add("TypeSuggest", item.TypeSuggest);
+					DP.Add("LinkSuggest", item.LinkSuggest);
+					await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
+				}
 			}
 			return 1;
 		}
 
 		public async void ChatbotHashtagInsert(List<ChatbotHashtag> lstData, long ChatBotId)
 		{
-			DynamicParameters DP = new DynamicParameters();
-			foreach (var item in lstData)
+			if (lstData != null)
 			{
-				DP = new DynamicParameters();
-				DP.Add("ChatBotId", ChatBotId);
-				DP.Add("HashtagId", item.HashtagId);
-				DP.Add("HashtagName", item.HashtagName);
-				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_Hashtag_Insert", DP);
-			}
+				DynamicParameters DP = new DynamicParameters();
+				foreach (var item in lstData)
+				{
+					DP = new DynamicParameters();
+					DP.Add("ChatBotId", ChatBotId);
+					DP.Add("HashtagId", item.HashtagId);
+					DP.Add("HashtagName", item.HashtagName);
+					await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_Hashtag_Insert", DP);
+				}
+			}	
+			
 		}
 
 		//public async Task<string> ChatbotInsertFile(ChatbotInsertIN _chatbotInsertIN)

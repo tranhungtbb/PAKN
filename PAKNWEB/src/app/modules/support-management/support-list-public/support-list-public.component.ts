@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterContentInit, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { UploadFileService } from 'src/app/services/uploadfiles.service'
-import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { CONSTANTS, FILETYPE, RESPONSE_STATUS, CATEGORY_SUPPORT, TYPE_SUPPORT } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, CATEGORY_SUPPORT, TYPE_SUPPORT } from 'src/app/constants/CONSTANTS'
 import { SupportService } from 'src/app/services/support.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
 import { DataService } from 'src/app/services/sharedata.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
-import { UploadAdapter } from 'src/app/services/uploadAdapter'
 import { HttpClient } from '@angular/common/http'
+import { UploadDocumentAdapter } from 'src/app/services/UploadDocumentAdapter'
 declare var $: any
 
 @Component({
@@ -21,8 +19,6 @@ declare var $: any
 })
 export class SupportListPublicComponent implements OnInit, AfterViewInit {
 	constructor(
-		private localStorage: UserInfoStorageService,
-		private fileService: UploadFileService,
 		private toastr: ToastrService,
 		private supportService: SupportService,
 		private _shareData: DataService,
@@ -48,13 +44,15 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 		parentId: 0,
 		level: 1,
 		type: 2,
+		index: null
+
 	}
 	action: string = 'Thêm mới'
 
 	public Editor = ClassicEditor
 	public ckConfig = {
 		simpleUpload: {
-			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageNews,
+			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageDocument,
 		},
 	}
 
@@ -62,7 +60,8 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 		this.getAll()
 		this.form = this._fb.group({
 			title: [this.model.title, [Validators.required]],
-			content: [this.model.content, [Validators.required]]
+			content: [this.model.content, [Validators.required]],
+			index: [this.model.index]
 		})
 	}
 	ngAfterViewInit() {
@@ -77,6 +76,7 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 			parentId: 0,
 			level: 1,
 			type: TYPE_SUPPORT.PUBLIC,
+			index: null
 		}
 	}
 
@@ -107,6 +107,7 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 		this.form.reset({
 			title: this.model.title,
 			content: this.model.content,
+			index: this.model.index
 		})
 	}
 
@@ -190,7 +191,7 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 	public onReady(editor) {
 		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
 		editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-			return new UploadAdapter(loader, this.http)
+			return new UploadDocumentAdapter(loader, this.http)
 		}
 	}
 }

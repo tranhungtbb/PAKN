@@ -244,7 +244,7 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("recommendation-by-field-detail")]
-		public async Task<ActionResult<object>> RecommendationsByFieldDetailGetAllOnPageBase(int FiledId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> RecommendationsByFieldDetailGetAllOnPageBase(int FiledId, string Code, string CreateName, string Title, string LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
@@ -278,7 +278,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("recommendation-statistic-by-unit-parent")]
-		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId, int? UnitId, DateTime? FromDate, DateTime? ToDate)
+		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId, string UnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
@@ -294,9 +294,11 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		// api cho app
+
 		[HttpGet]
 		[Route("recommendation-statistic-by-field")]
-		public async Task<ActionResult<object>> RecommendationStatisticByField(int? Field, DateTime? FromDate, DateTime? ToDate)
+		public async Task<ActionResult<object>> RecommendationStatisticByField(string Field, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
@@ -319,7 +321,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("recommendation-statistic-for-chart")]
-		public async Task<ActionResult<object>> RecommendationStatisticForChart(int? UnitId, DateTime? FromDate, DateTime? ToDate)
+		public async Task<ActionResult<object>> RecommendationStatisticForChart(string UnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{

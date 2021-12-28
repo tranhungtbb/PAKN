@@ -302,11 +302,11 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticByByUnitParent>> StatisticByUnitParentDAO(int? ParentId, int? UnitId, DateTime? FromDate, DateTime? ToDate)
+		public async Task<List<StatisticByByUnitParent>> StatisticByUnitParentDAO(int? ParentId, string ListUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("ParentId", ParentId);
-			DP.Add("UnitId", UnitId);
+			DP.Add("UnitId", ListUnitId);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
 
@@ -336,10 +336,10 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticByField>> StatisticByFieldDAO(int? Field, DateTime? FromDate, DateTime? ToDate)
+		public async Task<List<StatisticByField>> StatisticByFieldDAO(string ListField, DateTime? FromDate, DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Field", Field);
+			DP.Add("Field", ListField);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
 

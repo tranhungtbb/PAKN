@@ -24,6 +24,7 @@ export class Api {
 	public static downloadFileSupport = 'files/download-file-support'
 	public static GetFile = 'files/get-file'
 	public static UploadImageNews = 'upload-files/upload-image-news'
+	public static UploadImageDocument = 'upload-files/upload-image-document'
 	public static getFileImage = 'files/get-file'
 	public static getFileSupport = 'files/GetFileSupport'
 
@@ -370,6 +371,7 @@ export class Api {
 	public static ChatbotInsertData = 'chat-bot/insert-data'
 	public static ChatbotGetListHistory = 'chat-bot/list-his'
 	public static ChatbotGetAllActive = 'chat-bot/get-all-active'
+	public static ChatbotImportFile = 'chat-bot/import-data-chat-bot'
 
 	//systemConfig
 	public static SYConfigSystemGetAllOnPage = 'system-config/get-list-system-config-on-page'
