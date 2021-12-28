@@ -118,7 +118,7 @@ export class NewsRelateModalComponent implements OnInit {
 
 	//mở modal, được gọi từ comp cha
 	openModal(newsRelate: any[], parentNews: number) {
-		debugger
+
 		this.parentNews = parentNews
 		this.newsRelate = newsRelate.concat(this.newsSelected)
 		this.newsRelate = this.newsRelate.filter((item, index) => this.newsRelate.indexOf(item) === index)

@@ -166,7 +166,7 @@ export class ListProcessDenyMainComponent implements OnInit {
 		this.submitted = false
 		this.rebuilForm()
 		let obj = this.listData.find((x) => x.id == id)
-		debugger
+
 		if (isForwardUnitChild == true) {
 			this.lstUnitNotMain = this.listUnitChild
 			$('#modal-tc-pakn').modal('show')

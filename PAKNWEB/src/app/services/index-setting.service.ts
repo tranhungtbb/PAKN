@@ -11,7 +11,7 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 	providedIn: 'root',
 })
 export class IndexSettingService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	Update(request: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
@@ -20,7 +20,7 @@ export class IndexSettingService {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_INDEXSETTING),
 		})
-		debugger
+
 		const form = new FormData()
 		form.append('model', JSON.stringify(request.model))
 		form.append('ltsIndexWebsite', JSON.stringify(request.ltsIndexWebsite))

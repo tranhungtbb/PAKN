@@ -351,7 +351,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.model.unitId = this.model.unitReceive
 			}
 		}
-		debugger
+
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {
@@ -489,7 +489,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 
 	checkContent() {
 		for (let index = 0; index < this.lstDictionariesWord.length; index++) {
-			console.log('Model :' + this.model.content + ',x :' + this.lstDictionariesWord[index].name + ' result :' + this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()))
 			if (this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()) != -1) {
 				return false
 			}

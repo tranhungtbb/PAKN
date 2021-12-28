@@ -80,7 +80,7 @@ export class ForgetPasswordComponent implements OnInit {
 	}
 
 	onChange = (event, index) => {
-		debugger
+
 		if (event.target.value) {
 			setTimeout(() => {
 				$('#input_' + String(index + 1)).focus()

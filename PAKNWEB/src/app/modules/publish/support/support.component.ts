@@ -37,7 +37,7 @@ export class SupportComponent implements OnInit {
 	}
 
 	selectMenu = (id: any) => {
-		debugger
+
 		this.model = this.listData.find(x => x.id == id)
 	}
 

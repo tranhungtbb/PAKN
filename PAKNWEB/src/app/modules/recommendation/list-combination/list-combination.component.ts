@@ -139,7 +139,7 @@ export class ListCombinationComponent implements OnInit {
 	recommendationStatusProcess: number
 	titleAccept: string
 	preProcess(model: any, status: number) {
-		debugger
+
 		this.modelProcess.status = status
 		this.modelProcess.id = model.processId
 		this.modelProcess.recommendationId = model.id

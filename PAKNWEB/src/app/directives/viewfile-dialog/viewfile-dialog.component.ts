@@ -34,7 +34,7 @@ export class ViewFileDialogComponent implements OnInit {
 
 
 	ngOnInit() {
-		debugger
+
 		this.typeFile = this.data.type
 		if (this.data.link != null) {
 			this.IsPDF = false

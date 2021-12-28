@@ -79,7 +79,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		decoupleChildFromParent: false,
 		maxHeight: 400,
 	})
-	onFilterChange(value: string): void {}
+	onFilterChange(value: string): void { }
 	onSelectedChange(values: []) {
 		this.listUserSelected = []
 		if (values.length > 0) {
@@ -286,7 +286,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			}
 			this.userMap.push(item)
 		}
-		debugger
+
 		for (const i of this.lstIndividualBussiness) {
 			let item = {
 				UserId: i.id,

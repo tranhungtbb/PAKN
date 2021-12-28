@@ -2339,6 +2339,10 @@ table thead .form-control ng-select {
 	color: #666666;
 }
 
+.card-date{
+	font-size: 15px !important;
+}
+
 
 
 .border-left-yellow {
@@ -2393,6 +2397,16 @@ table thead .form-control ng-select {
 	max-width: 75%;
 }
 
+.left-box img{
+	width: 114px;
+	height: 114px;
+}
+.text-tranform-first{
+	display: block;
+}
+.text-tranform-first:first-letter {
+	text-transform: uppercase;
+}
 
 @media (max-width: 992px) {
 	.navbar-light .navbar-toggler {

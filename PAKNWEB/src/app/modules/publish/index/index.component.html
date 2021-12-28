@@ -81,8 +81,7 @@
 												<p class="align-items-center mb-2 mt-2 p-item-title" style="display:inline;height:75px;">
 													<a class="h4 title-sm color-dark p-title-hover p-item-title"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
-														{{ mr.recommendation.title.length >= 65 ? mr.recommendation.title.slice(0,60) + '...' :
-														mr.recommendation.title}} -
+														{{ shortTitle(mr.recommendation.title)}} -
 													</a>
 													<span class="d-inline-block">
 														<i class="bi bi-alarm cl-gray mt-1 ml-2 p-item-title "></i>
@@ -111,7 +110,6 @@
 
 							</div>
 						</ng-container>
-
 					</div>
 
 					<div *ngIf="isGrid">
@@ -157,6 +155,11 @@
 								</div>
 							</ng-container>
 						</div>
+					</div>
+					<div class="tt-v1 mb-3 text-center">
+						<a class="read-more p-title-hover" title="Xem thêm" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi">
+							Xem thêm lĩnh vực khác
+						</a>
 					</div>
 				</div>
 			</div>
@@ -222,9 +225,13 @@
 								<li *ngFor="let mr of recommendationsHighLight">
 									<div class="tt-v1 d-flex">
 										<p class="mb-0" style="display: inline;">
-											<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}">{{ mr.title }}<span *ngIf="mr.totalComment"
-													class="bi bi-chat-right-fill cl-blue ml-1 mb-0" style="margin-bottom: 0!important;">
-													{{mr.totalComment}}</span></a>
+											<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}" class="text-tranform-first">
+												{{ mr.title }}
+												<span *ngIf="mr.totalComment" class="bi bi-chat-right-fill cl-blue ml-1 mb-0"
+													style="margin-bottom: 0!important;">
+													{{mr.totalComment}}
+												</span>
+											</a>
 										</p>
 										<!-- <p class="statistic"></p> -->
 									</div>
@@ -249,9 +256,11 @@
 								<li *ngFor="let mr of recommendationsProcessing">
 									<div class="tt-v1 d-flex">
 										<p class="mb-0" style="display: inline;">
-											<a routerLink="/cong-bo/phan-anh-kien-nghi//{{mr.id}}">
-												{{ mr.title }} <span *ngIf="mr.totalComment" class="bi bi-chat-right-fill cl-blue ml-1 mb-0">
-													{{mr.totalComment}}</span>
+											<a routerLink="/cong-bo/phan-anh-kien-nghi//{{mr.id}}" class="text-tranform-first">
+												{{ mr.title }}
+												<span *ngIf="mr.totalComment" class="bi bi-chat-right-fill cl-blue ml-1 mb-0">
+													{{mr.totalComment}}
+												</span>
 											</a>
 										</p>
 										<!-- <p class="statistic"></p> -->
@@ -301,7 +310,7 @@
 								<li *ngFor="let item of recommendationsReceiveDeny">
 									<div class="tt-v1 d-flex">
 										<p class="mb-0" style="display: inline;">
-											<a routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+											<a routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" class="text-tranform-first">
 												{{item.title}}
 											</a>
 										</p>

@@ -30,7 +30,7 @@ export class EmailCreateComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private smsService: SMSManagementService,
 		private fileService: UploadFileService
-	) {}
+	) { }
 
 	fileAccept = ''
 	redirectList: any
@@ -175,7 +175,7 @@ export class EmailCreateComponent implements OnInit {
 			this._toastr.error('Vui lòng chọn đơn vị')
 			return
 		}
-		debugger
+
 		if (this.userId != undefined && this.userId.length > 0 && this.userId != null) {
 			let indexSuccess = 0
 			let indexError = 0

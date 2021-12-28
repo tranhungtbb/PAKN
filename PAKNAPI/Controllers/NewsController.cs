@@ -637,7 +637,7 @@ namespace PAKNAPI.Controller
 						model.DataId = Id;
 						model.SendDate = DateTime.Now;
 						model.Type = TYPENOTIFICATION.NEWS;
-						model.Title = string.Empty;
+						model.Title = "THÔNG BÁO";
 						model.Content = Title;
 						model.IsViewed = true;
 						model.IsReaded = true;

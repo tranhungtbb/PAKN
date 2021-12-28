@@ -192,7 +192,7 @@ export class ListProcessWaitComponent implements OnInit, AfterViewInit {
 		this.modelProcess.reasonDeny = ''
 		this.isForwardProcess = isForwardProcess
 		this.isForwardMain = isForwardMain
-		debugger
+
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (this.isForwardProcess) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -354,7 +354,7 @@ export class ListProcessWaitComponent implements OnInit, AfterViewInit {
 				IsList: true,
 				IsForwardMain: this.isForwardMain,
 			}
-			debugger
+
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')

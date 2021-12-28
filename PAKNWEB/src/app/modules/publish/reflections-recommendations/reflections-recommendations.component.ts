@@ -34,7 +34,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		private routers: Router,
 		private recommendationService: RecommendationService,
 		private _toas: ToastrService
-	) {}
+	) { }
 
 	async ngOnInit() {
 		await this.activatedRoute.params.subscribe((params) => {
@@ -43,7 +43,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 				this.field = s
 			}
 			let key = params['keysearch']
-			if(key){
+			if (key) {
 				this.KeySearch = key
 			}
 		})
@@ -89,8 +89,14 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 				if (res.result.PURecommendation.length > 0) {
 					this.ReflectionsRecommendations = res.result.PURecommendation.map((item) => {
 						item.shortName = this.getShortName(item.name)
+
+						// if (this.checkIncludeString(item.title)) {
+						// 	item.title = item.title.replaceAll(this.KeySearch, '<span class ="txthighlight">' + this.KeySearch + '</span>')
+						// }
+
 						return item
 					})
+
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
 					this.padi()
@@ -106,6 +112,14 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 			}
 		})
 	}
+
+	checkIncludeString(title: string) {
+		if (this.KeySearch && title.toUpperCase().indexOf(this.KeySearch.toUpperCase()) != -1) {
+			return true
+		}
+		return false
+	}
+
 	getShortName(string) {
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()

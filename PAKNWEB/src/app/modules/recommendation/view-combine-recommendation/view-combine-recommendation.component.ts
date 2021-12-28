@@ -390,7 +390,7 @@ export class ViewCombineRecommendationComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
-		debugger
+
 
 		this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {

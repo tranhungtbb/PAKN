@@ -110,6 +110,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize("ThePolicy")]
         [Route("update-is-viewed")]
         public async Task<object> SYNotificationUpdateIsViewed()
         {
@@ -137,6 +138,7 @@ namespace PAKNAPI.Controllers
         /// <param name="ObjectId"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize("ThePolicy")]
         [Route("update-is-readed")]
         public async Task<object> SYNotificationUpdateReaded(int? ObjectId)
         {

@@ -52,7 +52,7 @@ export class RecommendationsByTypeDetailComponent implements OnInit {
 	totalRecords: number = 0
 	ngOnInit() {
 		this.activatedRoute.params.subscribe((params) => {
-			debugger
+
 			this.dataSearch.type = +params['type']
 			if (this.dataSearch.type == 1) // linh vuc
 			{

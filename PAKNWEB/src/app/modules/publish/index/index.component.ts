@@ -198,4 +198,13 @@ export class IndexComponent implements OnInit, AfterViewInit {
 	redirectDetailNews(id: any) {
 		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
 	}
+
+	shortTitle(title: string) {
+		const arr = title.split(' ')
+		if (arr.length > 16) {
+			return arr.slice(0, 15).join(' ') + '...'
+		} else {
+			return title
+		}
+	}
 }

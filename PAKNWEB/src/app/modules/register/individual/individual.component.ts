@@ -143,7 +143,7 @@ export class IndividualComponent implements OnInit {
 	validateDateOfIssue: any = true
 
 	onReset() {
-		debugger
+
 		this.model = new IndividualObject()
 		this.formLogin.reset({
 			iDCard: this.model.iDCard,

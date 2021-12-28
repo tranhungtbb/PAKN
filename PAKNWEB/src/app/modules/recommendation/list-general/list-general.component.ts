@@ -229,7 +229,7 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 		this.submitted = false
 		this.rebuilForm()
 		let obj = this.listData.find((x) => x.id == id)
-		debugger
+
 		if (isForwardUnitChild == true && obj.status == RECOMMENDATION_STATUS.PROCESS_DENY) {
 			this.lstUnitNotMain = this.listUnitChild
 			$('#modal-tc-pakn').modal('show')
@@ -297,7 +297,7 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardMain = isForwardMain
-		debugger
+
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -385,7 +385,7 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 			}
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
-			debugger
+
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
 			// this.contentForward = ''

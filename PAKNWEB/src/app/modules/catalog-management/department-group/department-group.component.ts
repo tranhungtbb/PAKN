@@ -15,7 +15,7 @@ declare var $: any
 	styleUrls: ['./department-group.component.css'],
 })
 export class DepartmentGroupComponent implements OnInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
@@ -98,7 +98,7 @@ export class DepartmentGroupComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		debugger
+
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.departmentGroupInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
