@@ -1,6 +1,6 @@
 <div class="content-nd">
 	<div class="container">
-		<div class="row justify-content-between pt-5">
+		<div class="row justify-content-between margin-top-16">
 			<div class="col main-ct pr-3 pr-lg-5 col-lg-9">
 				<div class="clearfix">
 					<span>Trang chủ / <strong>Thông báo</strong></span>
@@ -18,7 +18,7 @@
 							<i class="bi bi-envelope"></i>
 							{{notification.senderName}}
 						</time>
-						
+
 					</div>
 					<div>
 					</div>
@@ -37,16 +37,20 @@
 						<ng-container *ngFor="let item of lstNotification;let i = index">
 							<li class="list-group-item px-0" *ngIf="i != id">
 								<div class="media center">
-									<a href="javascript:void(0)" (click)="redirectDetail(item.id)" class="image-box ratio-4-3 rounded mr-3 center"
-									style="background: #F7F7F7;border-radius: 15px !important;width: 3rem;height: 3rem;">
+									<a href="javascript:void(0)" (click)="redirectDetail(item.id)"
+										class="image-box ratio-4-3 rounded mr-3 center"
+										style="background: #F7F7F7;border-radius: 15px !important;width: 3rem;height: 3rem;">
 										<i [ngClass]="{ 'bi bi-newspaper': item.type ==1, 'bi bi-file-earmark-break' : item.type ==2 ,' bi bi-envelope' : item.type ==3}"
-										style="font-size: 20px;"
-										></i>
+											style="font-size: 20px;"></i>
 									</a>
 									<div class="media-body">
-										<small><span class="createDate" style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{getTime(item.sendDate)}}</span></small>
-										<p class="mb-0 text-uppercase" style="cursor: pointer;" (click)="redirectDetail(item.id)" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
-										<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
+										<small><span class="createDate"
+												style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{getTime(item.sendDate)}}</span></small>
+										<p class="mb-0 text-uppercase" style="cursor: pointer;" (click)="redirectDetail(item.id)"
+											[ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
+										<p class="mb-1 h4"
+											[ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">
+											{{item.content}}
 										</p>
 									</div>
 								</div>

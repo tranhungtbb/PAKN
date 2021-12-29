@@ -24,7 +24,7 @@ export class ProcessingRecommendationsComponent implements OnInit {
 	pagination = []
 	// arr
 	lstUnit: [] = []
-	lstField: [] = []
+	lstField: any[] = []
 
 	listRecommendation = new Array<PuRecommendation>()
 
@@ -37,7 +37,6 @@ export class ProcessingRecommendationsComponent implements OnInit {
 	) { }
 
 	async ngOnInit() {
-		this.getList()
 		this.recommendationService.recommendationGetDataForSearch({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -48,11 +47,13 @@ export class ProcessingRecommendationsComponent implements OnInit {
 					this.lstUnit = []
 					this._toas.error(res.message)
 				}
+				this.getList()
 			},
 			(err) => {
 				console.log(err)
 			}
 		)
+
 	}
 
 	redirect(id: any) {
@@ -62,6 +63,7 @@ export class ProcessingRecommendationsComponent implements OnInit {
 	dataStateChange = () => {
 		this.getList()
 	}
+	fieldName: string
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
@@ -79,6 +81,11 @@ export class ProcessingRecommendationsComponent implements OnInit {
 						item.shortName = this.getShortName(item.name)
 						return item
 					})
+					if (this.field) {
+						this.fieldName = this.lstField.find(x => x.value == this.field).text
+					} else {
+						this.fieldName = null
+					}
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
 					this.padi()

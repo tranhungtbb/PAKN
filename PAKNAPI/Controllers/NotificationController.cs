@@ -216,6 +216,22 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize("ThePolicy")]
+        [Route("notification-statistic-unread")]
+        public async Task<ActionResult<object>> NotificationStatistic()
+        {
+            try
+            {
+                var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationStatisticDAO(userId) };
+            }
+            catch (Exception ex)
+            {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
         [Route("publish-get-all")]
         public async Task<ActionResult<object>> PublishNotificationGetAll()
         {

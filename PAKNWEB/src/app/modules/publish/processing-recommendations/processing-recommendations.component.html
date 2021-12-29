@@ -1,11 +1,11 @@
-<div class="content-nd mt-5 mb-5">
+<div class="content-nd margin-top-16 mb-5">
 	<div class="container">
 		<div class="row justify-content-between">
 			<div class="col-lg-8 col-md-8">
 				<div class="box">
 					<div class="tt-v1 mb-3 d-flex justify-content-between center">
-						<h4 *ngIf="!KeySearch" class="text-uppercase">PHẢN ÁNH KIẾN NGHỊ ĐANG XỬ LÝ</h4>
-						<h4 *ngIf="KeySearch" class="text-uppercase">PHẢN ÁNH KIẾN NGHỊ ĐANG XỬ LÝ: {{KeySearch}}</h4>
+						<h4 *ngIf="!field" class="text-uppercase">PHẢN ÁNH KIẾN NGHỊ ĐANG XỬ LÝ</h4>
+						<h4 *ngIf="field" class="text-uppercase">PHẢN ÁNH KIẾN NGHỊ ĐANG XỬ LÝ: {{fieldName}}</h4>
 
 					</div>
 					<div class="d-flex justify-content-between">

@@ -405,5 +405,17 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("Id", data.Id);
 			return (await _sQLCon.ExecuteListDapperAsync<int?>("SY_PublishNotificationDelete", DP)).FirstOrDefault();
 		}
+
+		public async Task<List<SY_NotificationStatistic>> PublishNotificationStatisticDAO(long userId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", userId);
+			return (await _sQLCon.ExecuteListDapperAsync<SY_NotificationStatistic>("SY_NotificationStatistic", DP)).ToList();
+		}
+	}
+
+	public class SY_NotificationStatistic {
+		public int Type { get; set; }
+		public int Count { get; set; }
 	}
 }

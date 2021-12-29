@@ -242,7 +242,7 @@
 										right: 4px; padding-top: 3px;" (click)="onRemoveImg()"></i>
 									<img *ngIf="model.filePath" class="br-15px" [src]="model.filePath | sanitizerUrl" alt="">
 									<img *ngIf="!model.filePath" class="br-15px" [src]="avatarUrl" alt="">
-									<div class="ps-absolute info-upload-avartar pointer" (click)="onChangeImage()"
+									<div class="ps-absolute info-upload-avartar pointer text-danger" (click)="onChangeImage()"
 										*ngIf="!model.filePath">Click vào đây để tải lên
 										ảnh của
 										bạn</div>

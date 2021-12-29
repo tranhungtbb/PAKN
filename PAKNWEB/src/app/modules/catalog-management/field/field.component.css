@@ -40,3 +40,8 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
 	width: 100%;
 	min-height: 120px;
 }
+
+.sv-pointer{
+	font-size: 18px;
+	font-weight: 500;
+}

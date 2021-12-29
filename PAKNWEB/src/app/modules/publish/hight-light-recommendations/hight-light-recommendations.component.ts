@@ -24,7 +24,7 @@ export class HightLightRecommendationsComponent implements OnInit {
 	pagination = []
 	// arr
 	lstUnit: [] = []
-	lstField: [] = []
+	lstField: any[] = []
 
 	ReflectionsRecommendations = new Array<PuRecommendation>()
 
@@ -62,6 +62,7 @@ export class HightLightRecommendationsComponent implements OnInit {
 	dataStateChange = () => {
 		this.getList()
 	}
+	fieldName: string
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
@@ -75,11 +76,12 @@ export class HightLightRecommendationsComponent implements OnInit {
 		this.service.getListHightLight(obj).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.PURecommendation.length > 0) {
-					this.ReflectionsRecommendations = res.result.PURecommendation
-					// .map((item) => {
-					// 	item.shortName = this.getShortName(item.name)
-					// 	return item
-					// })
+					this.ReflectionsRecommendations = res.result.PuRecommendation
+					if (this.field) {
+						this.fieldName = this.lstField.find(x => x.value == this.field).text
+					} else {
+						this.fieldName = null
+					}
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
 					this.padi()

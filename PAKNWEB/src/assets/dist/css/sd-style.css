@@ -2503,11 +2503,14 @@ table thead .form-control ng-select {
 		border-bottom: 3px solid #2E73D5;
 	}
 
-	.margin-top-16 {
-		margin-top: 16px !important;
-	}
+	
 
 	.box.box-margin-top {
 		margin-top: 20px;
 	}
+	
+}
+
+.margin-top-16 {
+	margin-top: 16px !important;
 }

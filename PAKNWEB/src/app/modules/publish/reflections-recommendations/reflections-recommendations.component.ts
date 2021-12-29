@@ -24,7 +24,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	pagination = []
 	// arr
 	lstUnit: [] = []
-	lstField: [] = []
+	lstField: any[] = []
 
 	ReflectionsRecommendations = new Array<PuRecommendation>()
 
@@ -47,9 +47,6 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 				this.KeySearch = key
 			}
 		})
-
-		this.getList()
-
 		this.recommendationService.recommendationGetDataForSearch({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -60,6 +57,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 					this.lstUnit = []
 					this._toas.error(res.message)
 				}
+				this.getList()
 			},
 			(err) => {
 				console.log(err)
@@ -74,9 +72,11 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	dataStateChange = () => {
 		this.getList()
 	}
+	fieldName: string
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
+
 		var obj = {
 			KeySearch: this.KeySearch,
 			UnitId: this.unitId == null ? '' : this.unitId,
@@ -96,6 +96,12 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 
 						return item
 					})
+
+					if (this.field) {
+						this.fieldName = this.lstField.find(x => x.value == this.field).text
+					} else {
+						this.fieldName = null
+					}
 
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
