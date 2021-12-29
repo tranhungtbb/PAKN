@@ -206,7 +206,7 @@
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li *hasPermission="['3', 'B_IV_10']"><a routerLinkActive="mm-active" routerLink="/quan-tri/thu-moi">Thư
 							mời</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/email-sms/sms">SMS</a></li>
+					<li *ngIf="hasPermissionSMS"><a routerLinkActive="mm-active" routerLink="/quan-tri/email-sms/sms">SMS</a></li>
 				</ul>
 			</li>
 
