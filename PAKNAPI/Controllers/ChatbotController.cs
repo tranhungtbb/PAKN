@@ -22,13 +22,13 @@ namespace PAKNAPI.Controllers.ChatbotController
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
-        private readonly IManageBots _bots;
-        public ChatbotController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting, IClient bugsnag, IManageBots bots)
+        //private readonly IManageBots _bots;
+        public ChatbotController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting, IClient bugsnag)
         {
             _webHostEnvironment = webHostEnvironment;
             _appSetting = appSetting;
             _bugsnag = bugsnag;
-            _bots = bots;
+            //_bots = bots;
         }
         /// <summary>
         /// xóa câu hỏi chatbot
@@ -231,7 +231,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                 ChatbotInsertIN _chatbotInsertIN = JsonConvert.DeserializeObject<ChatbotInsertIN>(Request.Form["data"].ToString(), jss);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 var resInsert = await new ChatbotInsert(_webHostEnvironment, _appSetting).ChatbotInsertDAO(_chatbotInsertIN);
-                await _bots.ReloadBots();
+                //await _bots.ReloadBots();
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resInsert };
             }
             catch (Exception ex)
@@ -264,7 +264,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                 ChatbotUpdateIN ChatbotUpdateIN = JsonConvert.DeserializeObject<ChatbotUpdateIN>(Request.Form["ChatbotUpdateIN"].ToString(), jss);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 var resUpdate = await new ChatbotUpdate(_webHostEnvironment, _appSetting).ChatbotUpdateDAO(ChatbotUpdateIN);
-                await _bots.ReloadBots();
+                //await _bots.ReloadBots();
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resUpdate };
             }
             catch (Exception ex)
@@ -284,7 +284,7 @@ namespace PAKNAPI.Controllers.ChatbotController
             {
                 var resInsert = await new ChatbotInsertData(_appSetting).InsertDataChatbotDAO(_chatbotDataInsertIN);
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-                await _bots.ReloadBots();
+                //await _bots.ReloadBots();
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = resInsert };
             }
             catch (Exception ex)
@@ -337,6 +337,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                 model.CategoryId = 0;
                 model.TypeChat = 1;
 
+
                 for (int i = 2; i <= rows; i++)
                 {
                     model.Title = worksheet.Cells[i, 2].Value?.ToString();
@@ -344,7 +345,7 @@ namespace PAKNAPI.Controllers.ChatbotController
                     await new ChatbotInsert(_webHostEnvironment, _appSetting).ChatbotInsertDAO(model);
                 }
 
-                await _bots.ReloadBots();
+                //await _bots.ReloadBots();
 
                 return new Models.Results.ResultApi { Success = ResultCode.OK};
             }
