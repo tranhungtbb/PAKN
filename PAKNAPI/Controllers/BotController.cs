@@ -28,15 +28,15 @@ namespace PAKNAPI.Controllers
 
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
-        private readonly IHubContext<ChatHub, IChatHub> _hubContext;
+
         private readonly IManageBots _bots;
 
-        public BotController(IAppSetting appSetting, IClient bugsnag, IHubContext<ChatHub, IChatHub> hubContext, IManageBots bots)
+        public BotController(IAppSetting appSetting, IClient bugsnag)
         {
             this._appSetting = appSetting;
             this._bugsnag = bugsnag;
-            _hubContext = hubContext;
-            _bots = bots;
+           
+      
         }
 
 
@@ -120,7 +120,7 @@ namespace PAKNAPI.Controllers
                                 Type = MessageTypes.All
                             };
 
-                            _hubContext.Clients.All.BroadcastMessage(messageModel);
+                            //_hubContext.Clients.All.BroadcastMessage(messageModel);
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                         }
 
@@ -154,7 +154,7 @@ namespace PAKNAPI.Controllers
                             Type = MessageTypes.All
                         };
 
-                        _hubContext.Clients.All.BroadcastMessage(messageModel);
+                        //_hubContext.Clients.All.BroadcastMessage(messageModel);
                         return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                     }
                     else
