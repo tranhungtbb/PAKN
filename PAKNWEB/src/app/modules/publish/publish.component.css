@@ -65,6 +65,14 @@ ul.list-group.list-group-flush li {
 	font-size: 14px;
 	line-height: 16px;
 }
+.info-action{
+	font-style: normal;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 15px;
+	color: #DA2222;
+}
+
 
 .title-footer {
 	font-family: inherit;
@@ -1299,4 +1307,16 @@ body, html {
 #liDichVuCong .dropdown-menu {
 	padding: 0;
 	border-radius: unset !important;
+}
+
+.title-top, .title-bottom{
+	font-family: Oswald;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+}
+
+.title-bottom{
+	font-weight: 500;
+	font-size: 26px;
 }

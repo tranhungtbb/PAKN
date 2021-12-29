@@ -84,6 +84,11 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}
+		if (this.field) {
+			this.fieldName = this.lstField.find(x => x.value == this.field).text
+		} else {
+			this.fieldName = null
+		}
 		this.service.getAllPagedList(obj).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.PURecommendation.length > 0) {
@@ -96,12 +101,6 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 
 						return item
 					})
-
-					if (this.field) {
-						this.fieldName = this.lstField.find(x => x.value == this.field).text
-					} else {
-						this.fieldName = null
-					}
 
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount

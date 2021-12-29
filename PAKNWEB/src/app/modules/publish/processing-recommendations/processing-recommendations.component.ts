@@ -74,6 +74,11 @@ export class ProcessingRecommendationsComponent implements OnInit {
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}
+		if (this.field) {
+			this.fieldName = this.lstField.find(x => x.value == this.field).text
+		} else {
+			this.fieldName = null
+		}
 		this.service.getListProcessing(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.RecommendationProcessing.length > 0) {
@@ -81,11 +86,6 @@ export class ProcessingRecommendationsComponent implements OnInit {
 						item.shortName = this.getShortName(item.name)
 						return item
 					})
-					if (this.field) {
-						this.fieldName = this.lstField.find(x => x.value == this.field).text
-					} else {
-						this.fieldName = null
-					}
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
 					this.padi()
