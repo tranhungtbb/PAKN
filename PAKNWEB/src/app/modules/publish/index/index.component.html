@@ -14,7 +14,7 @@
 
 
 
-				<div style="margin-top:20px;" *ngIf="isHomeMain">
+				<div *ngIf="isHomeMain">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase border-bottom-blue">Danh sách phản ánh, kiến nghị đã được xử lý</h4>
 						<a class="read-more" style="font-size: 1.5rem;" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi"><i
@@ -55,7 +55,7 @@
 				</div>
 
 
-				<div style="margin-top:20px;" *ngIf="!isHomeMain">
+				<div *ngIf="!isHomeMain">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase border-bottom-blue center">Danh sách phản ánh, kiến nghị đã được xử lý</h4>
 						<button class="btn text-dark border border-radius-4 btn-girl" type="button" (click)="isGrid =!isGrid">

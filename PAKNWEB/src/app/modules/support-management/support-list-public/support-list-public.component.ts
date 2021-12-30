@@ -53,7 +53,7 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 	public ckConfig = {
 		simpleUpload: {
 			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageDocument,
-		},
+		}
 	}
 
 	ngOnInit() {

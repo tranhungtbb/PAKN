@@ -244,6 +244,12 @@ namespace PAKNAPI
 			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
 			app.UseDevExpressControls();
 			app.UseStaticFiles();
+
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Document")),
+				RequestPath = new PathString("/Upload/Document")
+			});
 			// end
 
 			app.UseRouting();
