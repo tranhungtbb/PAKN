@@ -22,7 +22,7 @@ export class StatisticsComponent implements OnInit {
 	barChartOptions: ChartOptions = {
 		responsive: true,
 		title: {
-			display: true,
+			display: false,
 			text: 'Biểu đồ tổng hợp số liệu',
 			fontSize: 16,
 			position: 'bottom',

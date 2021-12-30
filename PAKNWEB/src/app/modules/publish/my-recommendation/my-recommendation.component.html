@@ -31,8 +31,8 @@
 
 				<div class="sb-tk-pakn mb-4 card-my-recommentdation"
 					*ngIf="typeUserLoginPublish != 1 && recommendationStatistics">
-					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
-						<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
+					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-center" (click)="redirectMyRecommendaton(0)">
+						<h4 class="text-uppercase">Phản ánh, kiến nghị của tôi</h4>
 						<!-- <h4 class="counter cursor" style="padding-right: 14px;">{{totalRecommentdation}}</h4> -->
 					</div>
 					<div>
@@ -194,7 +194,7 @@
 
 				<nav aria-label="navigation" class="pagination-xs mt-4 ps-relative">
 					<span class="justify-content-start align-items-center ps-absolute">
-						<strong>Tổng số: {{totalRecords}}</strong> <span class="ml-2">phản ánh kiến nghị</span>
+						<strong>Tổng số: {{totalRecords}}</strong> <span class="ml-2">phản ánh, kiến nghị</span>
 					</span>
 					<ul class="pagination pagination-lg justify-content-end align-items-center">
 						<li class="page-item center cursor" [ngClass]="{ 'disabled':pageIndex == 1 }">
