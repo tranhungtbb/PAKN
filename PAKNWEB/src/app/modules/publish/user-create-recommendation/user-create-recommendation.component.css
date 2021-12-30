@@ -49,3 +49,11 @@ agm-map {
 	font-style : italic !important;
 	font-size: 0.95rem !important;
 }
+#contentRecommendation{
+	font-family: 'Helvetica Neue','Segoe UI',Helvetica,Verdana,sans-serif;
+	line-height: 1.35715;
+	padding: 6px 12px;
+	font-size: 1rem;
+	font-weight: 400; 
+	color: black;
+}

@@ -25,7 +25,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		private storageService: UserInfoStorageService
 	) { }
 	isLogin: boolean = this.storageService.getIsHaveToken()
-	ReflectionsRecommendations: Array<PuRecommendation>
+	ReflectionsRecommendations: any = []
 	recommendationsReceiveDeny: Array<PuRecommendation>
 	recommendationsHighLight: Array<PuRecommendation>
 	recommendationsProcessing: Array<PuRecommendation>
@@ -64,20 +64,24 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
 	ngOnInit() {
 		this.isPreview = this._router.url.includes('xem-truoc') ? true : false
-
+		this.getListRecommendationByFiled()
 		this.getData()
-
-
-
-
 	}
-	getData() {
-		this._service.getHomePage({}).subscribe(
+	pageIndex: number = 0
+	totalCount: number = 0
+
+	getListRecommendationByFiled() {
+		this.pageIndex = this.pageIndex + 1
+		this._service.getHomePage({ PageIndex: this.pageIndex }).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					if (res.result) {
 						this.isHomeMain = res.result.IsHomeDefault
-						this.ReflectionsRecommendations = [...res.result.PURecommendation]
+						this.ReflectionsRecommendations =
+							!this.ReflectionsRecommendations || this.ReflectionsRecommendations.length == 0 ? [...res.result.PURecommendation] : this.ReflectionsRecommendations.concat([...res.result.PURecommendation])
+						if (!this.isHomeMain) {
+							this.totalCount = res.result.TotalCount
+						}
 					}
 				} else {
 					this.ReflectionsRecommendations = []
@@ -88,6 +92,10 @@ export class IndexComponent implements OnInit, AfterViewInit {
 				console.log(err)
 			}
 		)
+	}
+
+	getData() {
+
 
 		this._service
 			.getRecommendationReceiveDeny({
@@ -167,14 +175,14 @@ export class IndexComponent implements OnInit, AfterViewInit {
 			}
 		)
 		// list thủ tục hành chính
-		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.DAMAdministrationGetListTop) {
-					this.Administrations = res.result.DAMAdministrationGetListTop
-				}
-			}
-			return
-		})
+		// this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 		if (res.result.DAMAdministrationGetListTop) {
+		// 			this.Administrations = res.result.DAMAdministrationGetListTop
+		// 		}
+		// 	}
+		// 	return
+		// })
 	}
 
 	ngAfterViewInit() { }

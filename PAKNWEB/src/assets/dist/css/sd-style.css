@@ -1345,6 +1345,9 @@ textarea:placeholder-shown{
 	top: 14px;
 	right: 15px;
 }
+.table-responsive{
+	overflow: overlay;
+}
 
 
 

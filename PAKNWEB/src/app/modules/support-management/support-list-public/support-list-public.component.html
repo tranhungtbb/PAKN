@@ -68,8 +68,8 @@
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
 							</div>
-							<ckeditor id="editor" [editor]="Editor" formControlName="content" [(ngModel)]="model.content"
-								(ready)="onReady($event)"></ckeditor>
+							<ckeditor id="editor" [config]="config" [editor]="Editor" formControlName="content"
+								[(ngModel)]="model.content" (ready)="onReady($event)"></ckeditor>
 
 						</div>
 					</div>

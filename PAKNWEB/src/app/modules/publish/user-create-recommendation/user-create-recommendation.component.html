@@ -65,14 +65,13 @@
 							<div class="label pl-0 center">Nội dung</div>
 							<span class="cl-red center">(*)</span>
 							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (blur)="hightLightText()">
-								<!-- <i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i> -->
 								<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 							</button>
 						</div>
 						<div class="group-content-recommendation">
 							<textarea id="inputContent" (focus)="onFocusContent()" class="form-control" [(ngModel)]="model.content"
-								formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
-								placeholder="Nhập nội dung.." (click)="hightLightText()" (blur)="hightLightText()"></textarea>
+								formControlName="content" (blur)="hightLightText()" style="height: 158px; border-radius: 0.75rem;"
+								rows="6" placeholder="Nhập nội dung.."></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
 						<div

@@ -203,6 +203,9 @@
 .bg-gray {
 	background-color: #f6f6f6;
 }
+.text-align-justify{
+	text-align:justify;
+}
 
 .read-more {
 	color: #1673d8;

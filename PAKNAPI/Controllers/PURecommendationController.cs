@@ -74,7 +74,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("get-list-recommentdation-home-page")]
-		public async Task<ActionResult<object>> PURecommendationHomePage()
+		public async Task<ActionResult<object>> PURecommendationHomePage(int? PageIndex = 1)
 		{
 			try
 			{
@@ -88,13 +88,13 @@ namespace PAKNAPI.ControllerBase
 					json = new Dictionary<string, object>
 					{
 						{"IsHomeDefault", true},
-						{"PURecommendation", rsPURecommendationOnPage},
+						{"PURecommendation", rsPURecommendationOnPage}
 					};
 					return new ResultApi { Success = ResultCode.OK, Result = json };
 				}
 
 				// list filed show home
-				List<CAFieldGetAllOnPage> lstFieldHome = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllShowHome();
+				List<CAFieldGetAllOnPage> lstFieldHome = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllShowHome(PageIndex);
 
 				List<RecommendationGroupByFieldResponse> result = new List<RecommendationGroupByFieldResponse>();
 
@@ -107,6 +107,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"IsHomeDefault", false},
 						{"PURecommendation", result},
+						{"TotalCount" , lstFieldHome != null && lstFieldHome.Count > 0 ? lstFieldHome[0].RowNumber : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

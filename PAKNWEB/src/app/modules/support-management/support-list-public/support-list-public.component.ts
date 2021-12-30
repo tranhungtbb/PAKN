@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterContentInit, AfterViewInit } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import * as ClassicEditor from '../../../../assets/dist/ckeditor5'
 import { RESPONSE_STATUS, CATEGORY_SUPPORT, TYPE_SUPPORT } from 'src/app/constants/CONSTANTS'
 import { SupportService } from 'src/app/services/support.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -10,6 +10,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { HttpClient } from '@angular/common/http'
 import { UploadDocumentAdapter } from 'src/app/services/UploadDocumentAdapter'
+
 declare var $: any
 
 @Component({
@@ -55,6 +56,80 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageDocument,
 		}
 	}
+
+	config = {
+		simpleUpload: {
+			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageDocument,
+		},
+		toolbar: {
+			items: [
+				'heading', '|',
+				'fontfamily', 'fontsize',
+				'alignment',
+				'fontColor', 'fontBackgroundColor', '|',
+				'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+				'link', '|',
+				'outdent', 'indent', '|',
+				'bulletedList', '-', 'numberedList', 'todoList', '|',
+				'code', 'codeBlock', '|',
+				'insertTable', '|',
+				'imageUpload', 'blockQuote', '|',
+				'todoList',
+				'undo', 'redo',
+			],
+			shouldNotGroupWhenFull: true,
+
+		},
+		image: {
+			// Configure the available styles.
+			styles: [
+				'alignLeft', 'alignCenter', 'alignRight'
+			],
+
+			// Configure the available image resize options.
+			resizeOptions: [
+				{
+					name: 'resizeImage:original',
+					label: 'Original',
+					value: null
+				},
+				{
+					name: 'resizeImage:50',
+					label: '25%',
+					value: '25'
+				},
+				{
+					name: 'resizeImage:50',
+					label: '50%',
+					value: '50'
+				},
+				{
+					name: 'resizeImage:75',
+					label: '75%',
+					value: '75'
+				}
+			],
+
+			// You need to configure the image toolbar, too, so it shows the new style
+			// buttons as well as the resize buttons.
+			toolbar: [
+				'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+				'|',
+				'ImageResize',
+				'|',
+				'imageTextAlternative'
+			]
+		},
+		// simpleUpload: {
+		//    The URL that the images are uploaded to.
+		// uploadUrl: 'http://localhost:52536/api/Image/ImageUpload',
+
+		//   Enable the XMLHttpRequest.withCredentials property.
+
+		//},
+
+		language: 'en'
+	};
 
 	ngOnInit() {
 		this.getAll()
@@ -189,6 +264,9 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 	}
 
 	public onReady(editor) {
+		if (editor.model.schema.isRegistered('image')) {
+			editor.model.schema.extend('image', { allowAttributes: 'blockIndent' });
+		}
 		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
 		editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
 			return new UploadDocumentAdapter(loader, this.http)
