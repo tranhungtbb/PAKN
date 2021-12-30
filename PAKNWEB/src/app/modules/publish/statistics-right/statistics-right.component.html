@@ -6,9 +6,8 @@
 		<ul>
 			<ng-container *ngFor="let item of listNotification; let i = index">
 				<li *ngIf="i < 5" [ngClass]="{'border-bottom-none' : i == 4}">
-					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line p-title-hover"
-						style="text-align:justify; text-justify:inter-word">
-						{{item.title}}
+					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="p-title-hover" style="text-align:justify;">
+						{{shortTitle(item.title)}}
 					</a>
 				</li>
 			</ng-container>
@@ -87,14 +86,14 @@
 						<span class="square mr-2 bg-blue-1"></span>
 						<p class="mb-0">Hồ sơ đã tiếp nhận</p>
 					</div>
-					<p class="center statistics-right">({{pieChartData ? pieChartData[1] : ''}})</p>
+					<p class="center statistics-right">({{pieChartData[1] || 0}})</p>
 				</div>
 				<div class="tt-v1 ml-2  d-flex">
 					<div class="d-flex center">
 						<span class="square mr-2 bg-green"></span>
 						<p class="mb-0">Hồ sơ đã giải quyết</p>
 					</div>
-					<p class="center statistics-right">({{pieChartData ? pieChartData[0] : ''}})</p>
+					<p class="center statistics-right">({{pieChartData[0] || 0}})</p>
 				</div>
 			</div>
 		</div>
@@ -120,8 +119,7 @@
 					<p class="mb-0">Rất Hài lòng</p>
 				</div>
 				<p class="center statistics-right" style=" margin-bottom: 0;">(<span
-						style="color: red;margin-bottom: 0;">{{satisfactionChartData ?
-						satisfactionChartData[0] : ''}}</span>)
+						style="color: red;margin-bottom: 0;">{{satisfactionChartData[0] || 0}}</span>)
 				</p>
 			</div>
 
@@ -131,8 +129,7 @@
 					<p class="mb-0">Hài lòng</p>
 				</div>
 				<p class="center statistics-right" style=" margin-bottom: 0;">(<span
-						style="color: red;margin-bottom: 0;">{{satisfactionChartData ?
-						satisfactionChartData[2] : ''}}</span>)
+						style="color: red;margin-bottom: 0;">{{satisfactionChartData[2] || 0}}</span>)
 				</p>
 			</div>
 			<!-- justify-content-between justify-content-between -->
@@ -141,9 +138,8 @@
 					<span class="square mr-2 bg-red"></span>
 					<p class="mb-0">Không hài lòng</p>
 				</div>
-				<p class="center statistics-right" style=" margin-bottom: 0;">(<span style="color: red;">{{satisfactionChartData
-						?
-						satisfactionChartData[1] : ''}}</span>)
+				<p class="center statistics-right" style=" margin-bottom: 0;">(<span style="color: red;">{{
+						satisfactionChartData[1] || 0}}</span>)
 				</p>
 			</div>
 		</div>

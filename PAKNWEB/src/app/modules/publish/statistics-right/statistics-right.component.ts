@@ -135,4 +135,12 @@ export class StatisticsRightComponent implements OnInit {
 	}
 
 	ngAfterViewInit() { }
+	shortTitle(title: string) {
+		const arr = title.split(' ')
+		if (arr.length > 20) {
+			return arr.slice(0, 19).join(' ') + '...'
+		} else {
+			return title
+		}
+	}
 }
