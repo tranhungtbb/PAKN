@@ -19,7 +19,7 @@
 	</div>
 </div>
 
-<div class="sb-tk-pakn card-my-recommentdation"
+<div class="sb-tk-pakn card-my-recommentdation" style="padding-top:0px;padding-bottom:1px"
 	*ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-center" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase">Phản ánh, kiến nghị của tôi</h4>
@@ -70,7 +70,7 @@
 </div>
 <div class="sb-tk-pakn text-center card-my-chart px-3"
 	[ngClass]="{'margin-top-16' : (typeObject == 2 || typeObject == 3)}">
-	<div class="tt-v1 pt-4 mb-3 justify-content-between text-center">
+	<div class="tt-v1  mb-3 justify-content-between text-center" style="padding-top: 16px;">
 		<h4 class="text-uppercase">Thống kê kết quả xử lý</h4>
 	</div>
 	<div class="tt-v1 mb-3 d-flex justify-content-between text-center statistic-chart">
@@ -103,7 +103,7 @@
 <!-- </div> -->
 <!-- <div class="col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 p-0"> -->
 <div class="sb-tk-pakn text-center card-my-chart px-3 margin-top-16" *ngIf="isShowSatisfationChart">
-	<div class="tt-v1 pt-4 mb-3 justify-content-between text-center">
+	<div class="tt-v1  mb-3 justify-content-between text-center" style="padding-top: 16px;">
 		<h4 class="text-uppercase">thống kê mức độ hài lòng</h4>
 	</div>
 	<div class="tt-v1 mb-3 d-flex  text-center statistic-chart">
