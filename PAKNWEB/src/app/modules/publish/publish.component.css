@@ -463,7 +463,7 @@ div.bubble.reply {
 	border-radius: 100%;
 	text-align: center;
 	padding: 2px;
-	z-index: 1000;
+	z-index: 1;
 }
 
 .btn-login {

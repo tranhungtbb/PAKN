@@ -4,19 +4,19 @@
 <div class="content-nd">
 	<div class="container">
 		<div class="row justify-content-between margin-top-16">
-			<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-				<ol class="breadcrumb px-0 bg-transparent">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8" style="padding-right: 0!important;">
+				<ol class="breadcrumb px-0 bg-transparent" style="padding: 0!important; margin-bottom: 3px;">
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/danh-sach-phan-anh-kien-nghi']">Phản ánh, Kiến
 							nghị</a></li>
-					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
-					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
+					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, kiến nghị</li>
+					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, kiến nghị</li>
 				</ol>
 				<!-- <div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div> -->
 				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red" style="font-weight: bold;">Vui lòng đăng
 					nhập để gửi phản ánh kiến
 					nghị!</p>
-				<form class="form-row mb-3" [formGroup]="form">
+				<form class="form-row mb-3" [formGroup]="form" style="margin-bottom:3px!important">
 					<div class="col-12 form-group">
 						<div class="mb-1 d-flex">
 							<div class="label pl-0 center">Phản ánh, kiến nghị về việc</div>
@@ -215,7 +215,7 @@
 					</div>
 				</form>
 				<div class="box attach-ct">
-					<p class="h5 text-uppercase mb-3">
+					<p class="h5 text-uppercase" style="margin:0;">
 						<span>
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip"
 								viewBox="0 0 16 16">
@@ -227,7 +227,7 @@
 						Tài liệu đính kèm
 					</p>
 					<div class="attach-file row">
-						<div class="col-auto mb-4">
+						<div class="col-auto mb-2">
 							<div class="alert alert-dark h-100 d-flex align-items-center"
 								style="width: 170px; margin: 0; padding: 0;">
 								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
@@ -367,13 +367,14 @@
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
 						<label class="mb-1 label-authorize">MÃ SỐ XÁC THỰC <span class="cl-red">(*)</span></label>
 						<div
-							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute pi-italic"
+							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow  pi-italic"
 							style="border: none !important; box-shadow: none !important;">
 							<img style="max-height: 56px; max-width: 60%;" id="img-captcha" [src]="captchaImage" />
-							<input type="text" class="form-control" [(ngModel)]="captchaCode" style="height: 40px;"
+							<input type="text" class="form-control" [(ngModel)]="captchaCode" style="height: 40px;width: 100px;"
 								formControlName="captcha" maxlength="2" placeholder="Nhập..">
 							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
 									style="font-size: 24px"></i></button>
+
 						</div>
 						<div
 							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"

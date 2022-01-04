@@ -3,8 +3,9 @@
 		<div class="row justify-content-between margin-top-16">
 			<div class="col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
-					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-					<li class="breadcrumb-item"><a href="#" class="font-weight-bold">Thông báo chính quyền</a></li>
+					<li class="breadcrumb-item p-title-hover"><a class="p-title-hover" href="/">Trang chủ</a></li>
+					<li class="breadcrumb-item p-title-hover"><a href="#" class="font-weight-bold p-title-hover">Thông
+							báo</a></li>
 				</ol>
 				<div *ngIf="viewDemo || model != null">
 					<h1 style="line-height: 1.5; font-weight: 500;font-size: 28px;line-height: 34px;">
@@ -87,7 +88,7 @@
 								<div class="media">
 									<div class="media-body">
 										<p class="h3 my-1">
-											<a class="text-2line title-item-article" style="font-weight: bold!important;"
+											<a class="text-2line title-item-article p-title-hover" style="font-weight: bold!important;"
 												routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}">{{item.title}}</a>
 										</p>
 										<div class="createDate mb-2">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :

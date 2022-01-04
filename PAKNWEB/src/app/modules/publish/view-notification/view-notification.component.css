@@ -26,3 +26,6 @@
 	justify-content: center;
 	align-items: center;
 }
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
