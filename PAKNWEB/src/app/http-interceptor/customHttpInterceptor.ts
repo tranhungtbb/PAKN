@@ -49,6 +49,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					logObject: logObject,
 					ipAddress: localStorage.getItem('IpAddress') && localStorage.getItem('IpAddress') != null ? localStorage.getItem('IpAddress') : '',
 					macAddress: macAddress,
+					'content-type': 'application/json'
 				}),
 			})
 		}

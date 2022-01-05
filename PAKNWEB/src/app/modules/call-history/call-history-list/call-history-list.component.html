@@ -13,8 +13,10 @@
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<p-table #table [value]="listData" [rows]="query.pageSize" [totalRecords]="totalCount" [rowsPerPageOptions]="[20,30,50]" currentPageReportTemplate="Tổng số {{totalCount}}"
-							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
+						<p-table #table [value]="listData" [rows]="query.pageSize" [totalRecords]="totalCount"
+							[rowsPerPageOptions]="[20,30,50]" currentPageReportTemplate="Tổng số {{totalCount}}"
+							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
+							[showCurrentPageReport]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -22,13 +24,14 @@
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>STT</strong>
 										</p>
-									
+
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Số điện thoại</strong>
 										</p>
-										<input [(ngModel)]="query.phone" (keydown.enter)="getDataPageList()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<input [(ngModel)]="query.phone" (keydown.enter)="getDataPageList()" type="text"
+											class="form-control form-control-sm" placeholder="Nhập ...">
 										<button *ngIf="query.phone" class="btn bg-transparent btn-clear-input" (click)="query.phone=''">
 											<i class="fa fa-times"></i>
 										</button>
@@ -39,8 +42,9 @@
 											<!--  -->
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm" style="width: 170px;">
-											<ng-select notFoundText="Không có dữ liệu" class="" placeholder="Loại cuộc gọi" [items]="callTypes" bindLabel="text" bindValue="value" [closeOnSelect]="true"
-												[(ngModel)]="query.type" (change)="getDataPageList()" [searchable]="false">
+											<ng-select notFoundText="Không có dữ liệu" class="" placeholder="Loại cuộc gọi"
+												[items]="callTypes" bindLabel="text" bindValue="value" [closeOnSelect]="true" [(ngModel)]="type"
+												(change)="getDataPageList()" [searchable]="false">
 											</ng-select>
 										</div>
 									</th>
@@ -68,7 +72,8 @@
 									<td>
 										<span *ngIf="item.type == 0"
 											class="badge rounded-pill badge-outline-light bg-blue-light text-white">{{callTypes[0].text}}</span>
-										<span *ngIf="item.type == 1" class="badge rounded-pill bg-green-light text-white">{{callTypes[1].text}}</span>
+										<span *ngIf="item.type == 1"
+											class="badge rounded-pill bg-green-light text-white">{{callTypes[1].text}}</span>
 										<span *ngIf="item.type == 2" class="badge rounded-pill bg-green">{{callTypes[2].text}}</span>
 									</td>
 									<td>
@@ -79,11 +84,12 @@
 									</td>
 									<td class="text-center">
 										<span *hasPermission="['3', 'A_XX_1']">
-											<a (click)="confirm(item,true)" style="cursor: pointer;" title="Xóa" class="btn-icon grd-red text-white cursor mr-2 pull-right" data-toggle="modal" data-target="#modal-tc-pakn"><i
-												class="bi bi-trash"></i>
+											<a (click)="confirm(item,true)" style="cursor: pointer;" title="Xóa"
+												class="btn-icon grd-red text-white cursor mr-2 pull-right" data-toggle="modal"
+												data-target="#modal-tc-pakn"><i class="bi bi-trash"></i>
 											</a>
 										</span>
-										
+
 									</td>
 								</tr>
 							</ng-template>
@@ -112,7 +118,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="confirm(null,false)">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="confirm(null,false)">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>

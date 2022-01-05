@@ -17,6 +17,12 @@ namespace PAKNAPI
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseKestrel(options =>
+                {
+                    options.Limits.MaxRequestBodySize = long.MaxValue;
+                    options.AddServerHeader = false;
+
+                })
                 .UseDefaultServiceProvider(x => x.ValidateScopes = false);
     }
 }

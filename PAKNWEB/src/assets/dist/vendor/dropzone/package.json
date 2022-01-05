@@ -13,14 +13,14 @@
   "maintainers": [
     {
       "name": "Matias Meno",
-      "email": "m@tias.me",
+      
       "web": "http://www.colorglare.com"
     }
   ],
   "contributors": [
     {
       "name": "Matias Meno",
-      "email": "m@tias.me",
+      
       "web": "http://www.colorglare.com"
     }
   ],
@@ -29,7 +29,7 @@
     "test-prebuilt": "mocha-headless-chrome -f test/test-prebuilt.html -a no-sandbox -a disable-setuid-sandbox"
   },
   "bugs": {
-    "email": "m@tias.me",
+    
     "url": "https://gitlab.com/meno/dropzone/issues"
   },
   "license": "MIT",

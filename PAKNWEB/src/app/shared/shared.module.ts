@@ -23,6 +23,7 @@ import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
 import { HasNotPermissionDirective } from 'src/app/directives/sv-notpermission.directive'
 import { TrimDirective } from 'src/app/directives/sv-trim-keydown-enter.derective'
 import { OembedPipe } from 'src/app/pipes/oembed.pipe'
+import { SafeHtmlPipe } from '../pipes/safe-html.pipe'
 
 @NgModule({
 	declarations: [
@@ -52,6 +53,7 @@ import { OembedPipe } from 'src/app/pipes/oembed.pipe'
 		TrimDirective,
 		OembedPipe,
 		RemoveTagPipe,
+		SafeHtmlPipe
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -80,6 +82,7 @@ import { OembedPipe } from 'src/app/pipes/oembed.pipe'
 		TrimDirective,
 		OembedPipe,
 		RemoveTagPipe,
+		SafeHtmlPipe
 	],
 })
-export class SharedModule {}
+export class SharedModule { }

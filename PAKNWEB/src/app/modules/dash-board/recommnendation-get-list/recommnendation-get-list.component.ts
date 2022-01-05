@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { ToastrService } from 'ngx-toastr'
-import {Router} from '@angular/router'
+import { Router } from '@angular/router'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 declare var $: any
@@ -12,23 +12,23 @@ declare var $: any
 	styleUrls: ['./recommnendation-get-list.component.css'],
 })
 export class RecommnendationGetListComponent implements OnInit {
-	constructor(private _service: RecommendationService, private _toast: ToastrService, private storeageService: UserInfoStorageService, private router : Router) {}
+	constructor(private _service: RecommendationService, private _toast: ToastrService, private storeageService: UserInfoStorageService, private router: Router) { }
 
-	listData: any[] =[]
+	listData: any[] = []
 	dataSearch: any = {}
 	totalRecords: number = 0
 	isMain: boolean = true
-	title : any 
+	title: any
 	ngOnInit() {
 		this.isMain = this.storeageService.getIsMain()
 		this.getList()
-		if(this.isMain == true){
-			this.title = 'Danh sách phản ánh kiến nghị chờ xử lý'
-		}else{
-			this.title =  'Danh sách phản ánh kiến nghị chưa giải quyết'
+		if (this.isMain == true) {
+			this.title = 'Danh sách phản ánh, kiến nghị chờ xử lý'
+		} else {
+			this.title = 'Danh sách phản ánh, kiến nghị chưa giải quyết'
 		}
 	}
-	
+
 	getList() {
 		let request = {
 			Status: this.isMain == true ? 2 : 5,
@@ -42,7 +42,7 @@ export class RecommnendationGetListComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.MRRecommendationGetAllWithProcess
-				
+
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -62,10 +62,10 @@ export class RecommnendationGetListComponent implements OnInit {
 		}
 		return initials
 	}
-	redirectList(){
-		if(this.isMain == true){
+	redirectList() {
+		if (this.isMain == true) {
 			this.router.navigate(['/quan-tri/kien-nghi/cho-xu-ly'])
-		}else{
+		} else {
 			this.router.navigate(['/quan-tri/kien-nghi/cho-giai-quyet'])
 		}
 	}

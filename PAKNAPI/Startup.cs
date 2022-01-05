@@ -225,13 +225,19 @@ namespace PAKNAPI
 			{
 				app.UseHsts();
 			}
+			app.Use(async (context, next) =>
+			{
+				context.Response.Headers.Add("X-Frame-Options", "DENY");
+				await next();
+			});
 
 			app.UseMiddleware<CustomMiddleware>();
 
 			app.UseCors(
 				options => options.WithOrigins("http://localhost:8081", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:8080/")
 				.AllowAnyOrigin()
-				.AllowAnyMethod()
+				//.AllowAnyMethod()
+				.WithMethods("PUT", "DELETE", "GET", "POST")
 				.AllowAnyHeader()
 			);
 			app.UseOpenApi();

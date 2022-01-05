@@ -34,7 +34,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { LightboxModule } from 'ngx-lightbox'
 import { TreeModule } from 'primeng/tree'
 import { TreeTableModule } from 'primeng/treetable'
-import { PolicyPageComponent } from './modules/policy-page/policy-page.component'
+import { PolicyPageComponent } from './modules/policy-page/policy-page.component';
 
 
 /// template 2
