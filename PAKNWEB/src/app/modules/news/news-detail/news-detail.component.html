@@ -31,20 +31,18 @@
 							[(ngModel)]="model.summary" placeholder="Nhập..." readonly></textarea>
 
 					</div>
-					<div class="col-12 col-lg-12 form-group mb-6">
+					<!-- <div class="col-12 col-lg-12 form-group mb-6">
 						<div class="clearfix mb-2">
 							<label class="mb-1"><span class="text-uppercase">thông báo liên quan</span></label>
-
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
 							<div class="p-2 border mb-2 item-news-relate" *ngFor="let relateItem of newsRelatesSelected">
-								<!-- <img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imagePath" /> -->
 								<span class="col-md-12 p-1 ml-3">
 									<strong class="text-2line p-0">{{relateItem.title}}</strong>
 								</span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">Nội dung thông báo </span></label>
 						<ckeditor id="editor" [disabled]="true" [editor]="Editor" formControlName="contents"
@@ -54,7 +52,7 @@
 				</div>
 				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">Loại tin tức</span></label>
+						<label class="mb-1"><span class="text-uppercase">Loại thông báo</span></label>
 						<input class="form-control" formControlName="newsType" [(ngModel)]="model.newsType" disabled>
 					</div>
 					<!-- <div class="col-12 col-lg-12 form-group">

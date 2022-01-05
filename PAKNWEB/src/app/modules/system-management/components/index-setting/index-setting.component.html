@@ -21,7 +21,31 @@
 		<div class="col-md-9" style="padding-left: 60px;padding-top: 20px;">
 			<form class="form-horizontal" [formGroup]="form">
 				<div class="row form-group">
-					<div class="col-sm-12 padding-col" style="position: relative; padding-bottom: 20px;">
+					<div class="col-sm-12">
+						<label class="control-label">Meta title <span class="text-danger">(*)</span></label>
+						<input placeholder="Nhập nội dung ..." svTrim class="form-control" formControlName="metaTitle"
+							[(ngModel)]="model.metaTitle" maxlength="200" />
+						<div
+							*ngIf="(submitted && f.metaTitle.invalid) || (f.metaTitle.invalid && (f.metaTitle.dirty || f.metaTitle.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="f.metaTitle.errors.required">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<label class="control-label">Meta description <span class="text-danger">(*)</span></label>
+						<textarea placeholder="Nhập nội dung ..." svTrim class="form-control" rows="4"
+							formControlName="metaDescription" [(ngModel)]="model.metaDescription" maxlength="350"></textarea>
+						<div
+							*ngIf="(submitted && f.metaDescription.invalid) || (f.metaDescription.invalid && (f.metaDescription.dirty || f.metaDescription.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="f.metaDescription.errors.required">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 padding-col ps-relative pb-4">
 						<label class="control-label department">Banner lớn</label>
 						<input class="form-control" (change)="ChangeBanner($event)" id="bannerImg" hidden type="file" />
 						<a *hasPermission="['3', 'A_XIX_1']" class="btn btn-sm btn-default rounded mr-3 btn-change-banner"

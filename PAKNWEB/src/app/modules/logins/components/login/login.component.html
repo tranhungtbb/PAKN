@@ -5,7 +5,6 @@
 				<div class="authincation-content bg-transparent shadow-none">
 					<div class="row no-gutters">
 						<div class="col-xl-6 border-right border-brown remove-boder-right position-relative">
-							<!-- style="object-fit: cover; width: 50vh; height: 100vh; background-image: url('../../../../../assets/dist/images/BG.svg');"> -->
 							<a href="/cong-bo">
 								<img class="img-fluid" style="object-fit: cover;" src="../../../../../assets/dist/images/BG.svg" alt="">
 								<div class="left-box position-absolute">
@@ -25,12 +24,10 @@
 											<div class="row">
 												<div class="col">
 													<div class="auth-form p-0">
-														<!-- <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh
-															nghiệp.</p> -->
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group pi-italic mb-4">
 																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px"
-																	placeholder="Nhập số CMND, số CCCD, số ĐKKD.." maxlength="14" id="productname"
+																	placeholder="Nhập số CMND, số CCCD, số ĐKKD.." maxlength="12" id="productname"
 																	type="text" formControlName="name" [(ngModel)]="userProduct.UserName" required
 																	onlyNumber="true" (change)="userProduct.UserName=userProduct.UserName.trim()">
 																<div
@@ -68,8 +65,8 @@
 																<div class="d-flex justify-content-between align-items-center">
 																	<img class="ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
-																	<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct"
-																		maxlength="2" style="font-size: 20px;"
+																	<input type="text" numbersOnly formControlName="captcha"
+																		[(ngModel)]="captchaCodeProduct" maxlength="1" style="font-size: 20px;"
 																		(change)="captchaCodeProduct=captchaCodeProduct.trim()" placeholder="Nhập kết quả.."
 																		class="form-control bg-transparent mr-1" value="">
 

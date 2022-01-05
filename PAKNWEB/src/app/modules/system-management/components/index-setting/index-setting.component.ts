@@ -70,6 +70,8 @@ export class IndexSettingComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
+			metaTitle: [this.model.metaTitle, [Validators.required]],
+			metaDescription: [this.model.metaDescription, [Validators.required]],
 			phone: [this.model.phone, [Validators.required, Validators.pattern('[- +()0-9]+')]],
 			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, Validators.required],

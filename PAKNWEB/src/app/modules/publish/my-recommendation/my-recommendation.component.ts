@@ -121,7 +121,13 @@ export class MyRecommendationComponent implements OnInit {
 		this.puRecommendationService.getMyRecommentdation(request).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.MyRecommendation.length > 0) {
-					this.listData = res.result.MyRecommendation
+					this.listData = res.result.MyRecommendation.map((item) => {
+						if (this.title) {
+							item.title = this.replaceAll(item.title, this.title, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.title) + '</span>')
+							item.content = this.replaceAll(item.content, this.title, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.title) + '</span>')
+						}
+						return item
+					})
 					this.totalRecords = res.result.TotalCount
 					this.padi()
 				} else {
@@ -139,6 +145,14 @@ export class MyRecommendationComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+	}
+
+	capitalizeFirstLetter = (string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	replaceAll(str, find, replace) {
+		return str.replace(new RegExp(find, 'gi'), replace);
 	}
 
 	filterMyRecommendation(status: any) {

@@ -118,15 +118,16 @@
 					<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
 						<div class="card-header pt-2 px-2 pb-0 align-items-center">
 							<p class="card-text mb-1 ">
-								<a class="h4 text-2line p-title-hover mb-0" routerLink="/cong-bo/chi-tiet-kien-nghi/{{item.id}}">
-									{{item.title}}
+								<a class="h4 text-2line p-title-hover mb-0 text-tranform-first"
+									routerLink="/cong-bo/chi-tiet-kien-nghi/{{item.id}}" innerHTML="{{item.title}}">
+									<!-- {{item.title}} -->
 								</a>
 							</p>
 						</div>
 						<div class="card-body px-2 py-1">
 							<p class="card-text">
-								<a class="text-2line mb-0 p-title-hover"
-									[routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]">{{item.content}}</a>
+								<a class="text-2line mb-0 p-title-hover text-tranform-first"
+									[routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]" innerHTML="{{item.content | Change}}"></a>
 							</p>
 						</div>
 						<div class="card-footer pt-0 px-2 border-top-0 d-flex justify-content-between align-items-center">
@@ -166,31 +167,6 @@
 						</div>
 					</div>
 				</ng-container>
-
-				<!-- <nav aria-label="navigation" *ngIf="listData.length > 0">
-					<ul class="pagination pagination-lg justify-content-between align-items-center">
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == 1 }">
-							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill p-3"
-								href="javascript:void(0)" tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
-									class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
-						</li>
-						<li class="d-flex justify-content-center align-items-center">
-							<a *ngIf="pageIndex > 4">...</a>
-							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index"
-								[ngClass]="{ 'active': item.index === pageIndex }">
-								<a (click)="changePagination(item.index)" *ngIf="i - 3 < pageIndex && i + 5 > pageIndex"
-									class="page-link" href="javascript:void(0)">{{item.index}}</a>
-							</p>
-							<a *ngIf="pageIndex < pagination.length -4">..</a>
-						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == totalRecords }">
-							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill p-3"
-								href="javascript:void(0)">
-								&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-							</a>
-						</li>
-					</ul>
-				</nav> -->
 
 				<nav aria-label="navigation" class="pagination-xs mt-4 ps-relative">
 					<span class="justify-content-start align-items-center ps-absolute">

@@ -44,7 +44,7 @@
 											<div class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px">
 												<img class="ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
-												<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="2"
+												<input type="text" numbersOnly formControlName="captcha" [(ngModel)]="captchaCode" maxlength="1"
 													style="font-size: 20px; height: 38px;" (change)="captchaCode=captchaCode.trim()"
 													placeholder="Nhập.." class="form-control rounded-8px px-4 border-brown bg-white mr-1"
 													value="">

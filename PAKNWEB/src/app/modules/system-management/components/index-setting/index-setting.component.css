@@ -122,3 +122,7 @@ input {
 .lstWebsite {
 	padding-top: 10px;
 }
+
+::placeholder {
+  font-style: normal;
+}

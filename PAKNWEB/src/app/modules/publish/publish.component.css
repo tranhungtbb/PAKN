@@ -455,7 +455,7 @@ div.bubble.reply {
 	color: #ffff;
 	position: absolute;
 	font-size: 12px;
-	top: 4px;
+	top: 0px;
 	left: 32px;
 	min-width: 17px;
 	height: 16px;
@@ -1299,10 +1299,10 @@ body, html {
 	color:#f35f1b !important;
 }
 
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
 	display: block;
 	margin-top: 0; 
-}
+} */
 
 #liDichVuCong .dropdown-menu {
 	padding: 0;
@@ -1319,4 +1319,14 @@ body, html {
 .title-bottom{
 	font-weight: 500;
 	font-size: 26px;
+}
+
+.border-bottom-radius{
+	border-bottom-left-radius: 1.1rem;
+	border-bottom-right-radius: 1.1rem;
+}
+
+.border-top-radius{
+	border-top-left-radius: 1.1rem;
+	border-top-right-radius: 1.1rem;
 }

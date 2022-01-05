@@ -83,7 +83,10 @@ export class ProcessingRecommendationsComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.RecommendationProcessing.length > 0) {
 					this.listRecommendation = res.result.RecommendationProcessing.map((item) => {
-						item.shortName = this.getShortName(item.name)
+						if (this.KeySearch) {
+							item.title = this.replaceAll(item.title, this.KeySearch, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.KeySearch) + '</span>')
+							item.content = this.replaceAll(item.content, this.KeySearch, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.KeySearch) + '</span>')
+						}
 						return item
 					})
 					this.PageIndex = res.result.PageIndex
@@ -100,6 +103,14 @@ export class ProcessingRecommendationsComponent implements OnInit {
 				this.Total = 0
 			}
 		})
+	}
+
+	capitalizeFirstLetter = (string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	replaceAll(str, find, replace) {
+		return str.replace(new RegExp(find, 'gi'), replace);
 	}
 	getShortName(string) {
 		var names = string.split(' '),

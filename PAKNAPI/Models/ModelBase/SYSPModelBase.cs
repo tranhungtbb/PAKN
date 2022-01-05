@@ -524,6 +524,12 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "MetaTitle không được để trống")]
+		public string MetaTitle { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "MetaDescription không được để trống")]
+		public string MetaDescription { get; set; }
+			
 		public string BannerUrl { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
@@ -551,6 +557,8 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", sy.Id);
+			DP.Add("MetaTitle", sy.MetaTitle);
+			DP.Add("MetaDescription", sy.MetaDescription);
 			DP.Add("BannerUrl", sy.BannerUrl);
 			DP.Add("Phone", sy.Phone);
 			DP.Add("Email", sy.Email);

@@ -12,7 +12,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
-import { SystemConfigObject } from 'src/app/models/SystemConfigObject'
+import { MetaService } from 'src/app/services/tag-meta.service'
 
 declare var $: any
 
@@ -30,7 +30,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
-		private systemConfig: SystemconfigService
+		private systemConfig: SystemconfigService,
+		private metaService: MetaService
 	) { }
 
 	activeUrl: string = ''
@@ -64,12 +65,12 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.indexSettingService.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.indexSettingObj = res.result.model
+				this.metaService.updateTitle(this.indexSettingObj.metaTitle)
+				this.metaService.updateDescription(this.indexSettingObj.metaDescription)
 			}
-		}),
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
+		}, (error) => {
+			console.log(error)
+		})
 
 		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {

@@ -85,13 +85,14 @@
 					<div class="box">
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item px-0" *ngFor="let item of newsRelates">
-								<div class="media">
+								<div class=" media">
 									<div class="media-body">
 										<p class="h3 my-1">
 											<a class="text-2line title-item-article p-title-hover" style="font-weight: bold!important;"
 												routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}">{{item.title}}</a>
 										</p>
-										<div class="createDate mb-2">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date :
+										<div class="createDate mb-2">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date
+											:
 											'dd/MM/yyyy'}}</div>
 										<p class="mb-0 article-summary">
 											<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="text-2line">{{item.summary}}</a>
@@ -99,6 +100,8 @@
 									</div>
 								</div>
 							</li>
+							<!-- </ng-template> -->
+
 						</ul>
 					</div>
 				</div>

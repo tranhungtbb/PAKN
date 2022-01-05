@@ -83,7 +83,11 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.RecommendationReceiveDeny.length > 0) {
 					this.listRecommendation = res.result.RecommendationReceiveDeny.map((item) => {
-						item.shortName = this.getShortName(item.name)
+						// item.shortName = this.getShortName(item.name)
+						if (this.KeySearch) {
+							item.title = this.replaceAll(item.title, this.KeySearch, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.KeySearch) + '</span>')
+							item.content = this.replaceAll(item.content, this.KeySearch, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.KeySearch) + '</span>')
+						}
 						return item
 					})
 
@@ -102,6 +106,14 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 			}
 		})
 	}
+	capitalizeFirstLetter = (string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	replaceAll(str, find, replace) {
+		return str.replace(new RegExp(find, 'gi'), replace);
+	}
+
 	getShortName(string) {
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()
