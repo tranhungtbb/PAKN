@@ -202,6 +202,7 @@ a:hover {
 	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
 	color: #fff !important;
 }
+
 .pi-italic input:placeholder-shown {
 	font-style: italic;
 }
@@ -225,9 +226,10 @@ input[type="combobox"]:placeholder-shown{
 	
 } */
 
-textarea:placeholder-shown{
+textarea:placeholder-shown {
 	font-style: italic;
 }
+
 .bg-login {
 	min-height: 100vh;
 }
@@ -1345,7 +1347,8 @@ textarea:placeholder-shown{
 	top: 14px;
 	right: 15px;
 }
-.table-responsive{
+
+.table-responsive {
 	overflow: overlay;
 }
 
@@ -2097,11 +2100,13 @@ table thead .form-control ng-select {
 	justify-content: center;
 	align-items: center;
 }
-.statistics-right{
+
+.statistics-right {
 	margin-left: 3px;
 	color: red;
 	margin-bottom: 0;
 }
+
 :host ::ng-deep .ui-state-highlight {
 	background-color: transparent !important;
 	color: #333333 !important;
@@ -2335,14 +2340,15 @@ table thead .form-control ng-select {
 	cursor: pointer;
 }
 
-.title-status-rm:hover{
-	color :#f35f1b !important;
+.title-status-rm:hover {
+	color: #f35f1b !important;
 }
-.cl-gray{
+
+.cl-gray {
 	color: #666666;
 }
 
-.card-date{
+.card-date {
 	font-size: 15px !important;
 }
 
@@ -2400,13 +2406,15 @@ table thead .form-control ng-select {
 	max-width: 75%;
 }
 
-.left-box img{
+.left-box img {
 	width: 114px;
 	height: 114px;
 }
-.text-tranform-first{
+
+.text-tranform-first {
 	display: block;
 }
+
 .text-tranform-first:first-letter {
 	text-transform: uppercase;
 }
@@ -2506,12 +2514,12 @@ table thead .form-control ng-select {
 		border-bottom: 3px solid #2E73D5;
 	}
 
-	
+
 
 	.box.box-margin-top {
 		margin-top: 20px;
 	}
-	
+
 }
 
 .margin-top-16 {
@@ -2519,5 +2527,5 @@ table thead .form-control ng-select {
 }
 
 .highlight-key-search {
-	color:#f35f1b
+	color: #f35f1b
 }
