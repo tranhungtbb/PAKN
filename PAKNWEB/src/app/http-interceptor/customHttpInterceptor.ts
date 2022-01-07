@@ -31,7 +31,8 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPage &&
 			request.url != AppSettings.API_ADDRESS + Api.UnitGetByGroup &&
 			request.url != AppSettings.API_ADDRESS + Api.UnitGetByParentId &&
-			request.url != AppSettings.API_ADDRESS + Api.CreateRoom
+			request.url != AppSettings.API_ADDRESS + Api.CreateRoom &&
+			request.url != AppSettings.API_ADDRESS + Api.UpdateStatusRoom
 
 
 		) {
@@ -49,9 +50,18 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					logObject: logObject,
 					ipAddress: localStorage.getItem('IpAddress') && localStorage.getItem('IpAddress') != null ? localStorage.getItem('IpAddress') : '',
 					macAddress: macAddress,
-					'content-type': 'application/json'
 				}),
 			})
+			if (request.body instanceof FormData) {
+				// not
+			} else {
+				request = request.clone({
+					setHeaders: {
+						'content-type': 'application/json',
+					},
+				});
+			}
+
 		}
 
 		//console.log(request);

@@ -26,15 +26,31 @@
 		<!-- <h4 class="counter cursor" style="padding-right:14px !important;">{{totalRecommentdation}}</h4> -->
 	</div>
 	<div>
-		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
-			<div class="pf-4">
-				<p class="title-status-rm ml-3 mb-0">Chờ tiếp nhận</p>
+		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(0)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Tất cả</p>
 			</div>
 			<div class="circle bg-yellow center text-white cursor">
+				{{totalRecommentdation}}
+			</div>
+		</div>
+		<div class="border-left-xanh-nhat mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Đang soạn thảo</p>
+			</div>
+			<div class="circle bg-xanh-nhat center text-white cursor">
+				{{recommendationStatistics.creating}}
+			</div>
+		</div>
+		<div class="border-left-green mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(2)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Chờ tiếp nhận</p>
+			</div>
+			<div class="circle bg-green center text-white cursor">
 				{{recommendationStatistics.receiveWait}}
 			</div>
 		</div>
-		<div class="border-left-blue2 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(2)">
+		<div class="border-left-blue2 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
 			</div>
@@ -42,7 +58,7 @@
 				{{recommendationStatistics.receiveApproved}}
 			</div>
 		</div>
-		<div class="border-left-blue3 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
+		<div class="border-left-blue3 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đang giải quyết</p>
 			</div>
@@ -50,7 +66,7 @@
 				{{recommendationStatistics.processing}}
 			</div>
 		</div>
-		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
+		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(5)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đã giải quyết</p>
 			</div>
@@ -58,7 +74,7 @@
 				{{recommendationStatistics.finised}}
 			</div>
 		</div>
-		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(5)">
+		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(6)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
 			</div>
@@ -90,7 +106,7 @@
 				</div>
 				<div class="tt-v1 ml-2  d-flex">
 					<div class="d-flex center">
-						<span class="square mr-2 bg-green"></span>
+						<span class="square mr-2 bg-green2"></span>
 						<p class="mb-0">Hồ sơ đã giải quyết</p>
 					</div>
 					<p class="center statistics-right">({{pieChartData[0] || 0}})</p>

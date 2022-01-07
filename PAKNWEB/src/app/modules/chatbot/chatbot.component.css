@@ -159,9 +159,9 @@ img {
 }
 
 .square {
-	width: 16px;
-	height: 16px;
-	border-radius: 4px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
 }
 
 .bg-red {
@@ -303,4 +303,23 @@ img {
 ::ng-deep .ui-carousel-prev {
 	position: absolute;
 	left: -20px;
+}
+
+.room-selected{
+	background: #2f4cdd;
+	color: #fff;
+}
+.chatbox .contacts li:hover,
+.chatbox .contacts li:hover .user_info span {
+	background: #2f4cdd;
+	color: #fff;
+}
+
+.chatbox .contacts li {
+	padding: 7px 1rem;
+	border: 1px solid #eee;
+	cursor: pointer;
+	margin: 5px 2px;
+	border-radius: 7px;
+	padding-right: 5px;
 }

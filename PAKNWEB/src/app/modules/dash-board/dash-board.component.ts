@@ -102,7 +102,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					return acc
 				}, {})
 
-				console.log(this.dataAll)
+				// console.log(this.dataAll)
 				setTimeout(() => {
 					$('.data-attr').peity('donut')
 				}, 100)

@@ -47,19 +47,20 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 			if (params['id']) {
 				this.getData(params['id'])
 				// this.getNewsRelates(params['id'])
+				this.newsService.getListHomePage({}).subscribe(
+					(res) => {
+						if (res.success == RESPONSE_STATUS.success) {
+							this.newsRelates = res.result.filter(x => x.id != params['id'])
+						}
+					},
+					(error) => {
+						console.log(error)
+						alert(error)
+					}
+				)
 			}
 		})
-		this.newsService.getListHomePage({}).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.newsRelates = res.result
-				}
-			},
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
-		)
+
 	}
 	ngAfterViewInit() { }
 	changeKeySearch(event) {

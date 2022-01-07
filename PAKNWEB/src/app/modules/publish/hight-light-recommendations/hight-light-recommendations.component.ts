@@ -84,8 +84,8 @@ export class HightLightRecommendationsComponent implements OnInit {
 				if (res.result.PURecommendation.length > 0) {
 					this.ReflectionsRecommendations = res.result.PURecommendation.map(item => {
 						if (this.KeySearch) {
-							item.title = this.replaceAll(item.title, this.KeySearch, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.KeySearch) + '</span>')
-							item.content = this.replaceAll(item.content, this.KeySearch, '<span class ="highlight-key-search">' + this.capitalizeFirstLetter(this.KeySearch) + '</span>')
+							item.title = this.highlight(item.title, this.KeySearch)
+							item.content = this.highlight(item.content, this.KeySearch)
 						}
 						return item
 					});
@@ -104,14 +104,12 @@ export class HightLightRecommendationsComponent implements OnInit {
 			}
 		})
 	}
-
-
-	replaceAll(str, find, replace) {
-		return str.replace(new RegExp(find, 'gi'), replace);
-	}
-
-	capitalizeFirstLetter = (string) => {
-		return string.charAt(0).toUpperCase() + string.slice(1);
+	highlight(inputText, text) {
+		var index = inputText.toUpperCase().indexOf(text.toUpperCase());
+		if (index >= 0) {
+			inputText = inputText.substring(0, index) + "<span class='highlight-key-search'>" + inputText.substring(index, index + text.length) + "</span>" + inputText.substring(index + text.length);
+		}
+		return inputText
 	}
 
 	getShortName(string) {

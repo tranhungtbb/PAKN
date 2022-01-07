@@ -11,13 +11,14 @@
 </div>
 <ul class="nav nav-qltknd flex-column">
 	<li class="nav-item border-bottom">
-		<a class="nav-link px-0 h5" aria-current="page" [routerLink]="['../thong-tin']"
+		<a class="nav-link px-0 h5" aria-current="page" [routerLink]="['/cong-bo/tai-khoan/thong-tin']"
 			[ngClass]="{'active':['thong-tin-doanh-nghiep','thong-tin'].includes(urlPath)}">
 			Thông tin tài khoản
 		</a>
 	</li>
 	<li class="nav-item border-bottom">
-		<a class="nav-link px-0 h5" routerLinkActive="active" [routerLink]="['../thay-doi-mat-khau']">Đổi mật khẩu</a>
+		<a class="nav-link px-0 h5" routerLinkActive="active" [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']">Đổi
+			mật khẩu</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link px-0 h5" href="javascript:void(0);" (click)="preSignOut()">Đăng xuất</a>
@@ -31,14 +32,31 @@
 		<!-- <h4 class="counter">{{totalRecommentdation}}</h4> -->
 	</div>
 	<div>
-		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
-			<div class="pf-4">
-				<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
+		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(0)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Tất cả</p>
 			</div>
-			<div class="circle bg-yellow center text-white">
+			<div class="circle bg-yellow center text-white cursor">
+				{{totalRecommentdation}}
+			</div>
+		</div>
+		<div class="border-left-xanh-nhat mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Đang soạn thảo</p>
+			</div>
+			<div class="circle bg-xanh-nhat center text-white cursor">
+				{{recommendationStatistics.creating}}
+			</div>
+		</div>
+		<div class="border-left-green mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(2)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Chờ tiếp nhận</p>
+			</div>
+			<div class="circle bg-green center text-white cursor">
 				{{recommendationStatistics.receiveWait}}
 			</div>
 		</div>
+
 		<div class="border-left-blue2 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(2)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>

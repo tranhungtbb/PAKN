@@ -12,7 +12,7 @@ import { tap, catchError } from 'rxjs/operators'
 	providedIn: 'root',
 })
 export class ChatBotService {
-	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) {}
+	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) { }
 
 	getRooms(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.BotRooms)
@@ -24,5 +24,8 @@ export class ChatBotService {
 
 	createRoom(body: any) {
 		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.CreateRoom)
+	}
+	updateStatusRoom(body: any) {
+		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.UpdateStatusRoom)
 	}
 }
