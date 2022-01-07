@@ -1,6 +1,6 @@
 //const BASE_URL = `http://14.177.236.88:6161`
-const BASE_URL = `https://pakn.ziz.vn:6164`
-//const BASE_URL = `https://tuongtac.khanhhoa.gov.vn:6899`
+//const BASE_URL = `https://pakn.ziz.vn:6164`
+const BASE_URL = `https://tuongtac.khanhhoa.gov.vn:6899`
 //const BASE_URL = `http://localhost/PAKNAPI`
 
 export class AppSettings {

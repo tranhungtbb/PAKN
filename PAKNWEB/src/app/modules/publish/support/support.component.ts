@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { PuSupportService } from 'src/app/services/pu-support.service'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { SupportService } from 'src/app/services/support.service'
@@ -7,7 +7,7 @@ import { RESPONSE_STATUS, TYPE_SUPPORT } from 'src/app/constants/CONSTANTS'
 @Component({
 	selector: 'app-support',
 	templateUrl: './support.component.html',
-	styleUrls: ['./support.component.css'],
+	styleUrls: ['./support.component.css']
 })
 export class SupportComponent implements OnInit {
 	constructor(private supportService: SupportService, private sanitizer: DomSanitizer) {

@@ -279,7 +279,7 @@
 									<span class="small text-truncate">{{file.name}}</span>
 								</a>
 
-								<i (click)="onRemoveFile(item)" class="ml-2 mdi mdi-close"></i>
+								<i (click)="onRemoveFile(file)" class="ml-2 mdi mdi-close"></i>
 							</div>
 						</div>
 
@@ -306,30 +306,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-						<label class="mb-1">Nhập kết quả </label>
-						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode"
-							style="height: 56px;" formControlName="captcha" maxlength="5">
-						<div
-							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"
-							class="has-error">
-							<div *ngIf="f.captcha.errors.required">
-								<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
-							</div>
-						</div>
-					</div> -->
-					<!-- 
-									<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
-										<button type="button" class="btn text-white border-0 grd-xanhngoc justify-content-center"
-											style="width: 100%;" (click)="onSave(1)">Lưu</button>
-									</div>
-				
-									<div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
-										<button type="button" class="btn text-white border-0 grd-blue justify-content-center" style="width: 100%;"
-											(click)="onSave(2)">
-											<span class="ml-2">Gửi</span>
-										</button>
-									</div> -->
 
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-end align-items-center"
 						style="margin-top: 22px;">

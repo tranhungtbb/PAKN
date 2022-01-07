@@ -93,6 +93,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 		this.handleInitConnectionToChatBot();
 	}
+	roomId: any
 	async handleInitConnectionToChatBot() {
 		this.myGuid = this.storageService.getClientUserId();
 		if (!this.myGuid) {
@@ -115,9 +116,25 @@ export class PublishComponent implements OnInit, OnChanges {
 					userName: this.myGuid,
 				})
 				.toPromise()
-			//console.log('resCreate ', resCreate)
 			if (resCreate.success === 'OK') {
 				this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
+				this.roomId = resCreate.result.RoomId
+				if (resCreate.result.IsCreateRoom === "True") {
+					const room = {
+						Id: Number(resCreate.result.RoomId),
+						AnonymousId: Number(resCreate.result.AnonymousId),
+						Name: resCreate.result.RoomName,
+						Type: Number(resCreate.result.Type),
+						CreatedDate: new Date()
+					}
+					this.connection.invoke('ReceiveRoomToGroup', room).then(res => {
+						console.log('ReceiveRoomToGroup : ' + res)
+					})
+						.catch(err => {
+							console.log('ReceiveRoomToGroup : ' + err)
+						})
+				}
+
 				this.connection.on('ReceiveMessageToGroup', (data: any) => {
 					console.log('ReceiveMessageToGroup ', data, this.myGuid);
 					if (this.myGuid !== data.from) {
@@ -187,7 +204,8 @@ export class PublishComponent implements OnInit, OnChanges {
 			return
 		}
 		else if (message.typeSuggest && message.typeSuggest == "3") {
-			this.connection.invoke('NotifyAdmin', '')
+			debugger
+			this.connection.invoke('NotifyAdmin', this.roomId)
 			this.messages = [
 				...this.messages,
 				{

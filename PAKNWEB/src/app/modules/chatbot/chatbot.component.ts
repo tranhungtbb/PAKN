@@ -6,6 +6,7 @@ import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { UserService } from 'src/app/services/user.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
 	selector: 'app-dashboard',
@@ -18,6 +19,7 @@ export class DashboardChatBotComponent implements OnInit {
 	messages: any = []
 	newMessage = ''
 	rooms: BotRoom[]
+	roomsShow: any[] = []
 	connection: signalR.HubConnection
 	pageIndex: number = 1
 	pageSize: number = 10
@@ -30,14 +32,13 @@ export class DashboardChatBotComponent implements OnInit {
 
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
-	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService) { }
+	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService, private toast: ToastrService) { }
 	ngOnInit() {
 		//console.log('ngOnInit 0')
 
 		this.audio = new Audio()
 		this.audio.src = '../../../assets/img/ring.mp3'
 		this.audio.loop = true
-
 		this.userId = this.user.getUserId()
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
 			this.model = res.result.SYUserGetByID[0]
@@ -77,37 +78,17 @@ export class DashboardChatBotComponent implements OnInit {
 					console.log('answers 4', answers)
 					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, answers }]
 
-
-					// 				answers: [{…}]
-					// dateSend: "2021-12-22T15:31:15.247+07:00"
-					// fromAvatar: ""
-					// fromFullName: ""
-					// fromUserId: 0
-					// id: 26232
-					// messageContent: ""
-					// roomId: 21031
-					// rowNumber: 12
-
-					// content: null
-					// from: "Bot"
-					// fromAvatarPath: null
-					// fromFullName: "Bot"
-					// fromId: "Bot"
-					// hiddenAnswer: "alo"
-					// results: [{…}]
-					// subTags: null
-					// timestamp: "1640161884"
-					// to: "Room_24f03130-73c9-4256-aa48-09448126851e"
-					// type: "Conversation"
-
-					//this.convertMessageToObjectList()
-
-
 					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
 
 				this.convertMessageToObjectList()
 			})
+
+			this.connection.on('ReceiveRoomToGroup', data => {
+				debugger
+				this.rooms.unshift(data)
+			})
+
 			this.connection.on('BroadcastMessage', (data: any) => {
 				//console.log('ngOnInit SignalR BroadcastMessage ', data)
 
@@ -135,16 +116,14 @@ export class DashboardChatBotComponent implements OnInit {
 	}
 
 	fetchRooms = async () => {
-		//console.log('fetchRooms 0')
-
 		try {
 			//console.log('fetchRooms 1')
 			this.botService.getRooms({}).subscribe((res) => {
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result) {
-						console.log('fetchRooms ', res)
+						console.log('fetchRooms ', res.result.Data)
 						this.rooms = res.result.Data
-						//console.log('fetchRooms ', this.rooms)
+						this.roomsShow = res.result.ListRoomIsShow
 					}
 				} else {
 					//this._toastr.error(res.message)
@@ -315,6 +294,15 @@ export class DashboardChatBotComponent implements OnInit {
 			} catch (error) {
 				return { result: string, type: 'string' }
 			}
+		}
+	}
+
+	updateStatus(data: any, selectedRoom: boolean = false) {
+		let index = this.roomsShow.indexOf(data);
+		this.roomsShow.splice(index, 1)
+		this.botService.updateStatusRoom({ roomId: data.id }).subscribe()
+		if (selectedRoom) {
+			this.resetGetMessage(data.id, data.name)
 		}
 	}
 }

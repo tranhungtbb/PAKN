@@ -464,4 +464,5 @@ export class Api {
 	public static BotRooms = 'bot/rooms'
 	public static GetMessages = 'bot/get-message'
 	public static CreateRoom = 'bot/bot-create-room'
+	public static UpdateStatusRoom = 'bot/bot-update-room'
 }

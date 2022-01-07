@@ -237,7 +237,7 @@ namespace PAKNAPI.Controller
                 if (!new Captcha(_appSetting).ValidateCaptchaCode(model.Captcha, captChaCode, createdDAte))
                 {
                     await new Captcha(_appSetting).DeleteCaptcha("", createdDAte);
-                    return new ResultApi { Success = ResultCode.ORROR, Message = "Vui lòng nhập lại mã captcha" };
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Vui lòng nhập lại mã xác thực" };
                 }
                 else
                 {

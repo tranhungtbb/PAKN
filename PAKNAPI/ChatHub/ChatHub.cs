@@ -24,8 +24,8 @@ namespace SignalR.Hubs
 
         public ChatHub(
             IAppSetting appSetting
-            //IManageBots bots
-   
+        //IManageBots bots
+
         )
         {
             //_bots = bots;
@@ -37,9 +37,15 @@ namespace SignalR.Hubs
             await Clients.All.BroadcastMessage(msg);
         }
 
-        public async Task NotifyAdmin(string msg)
+        public async Task NotifyAdmin(long roomId)
         {
-            await Clients.All.NotifyAdmin(msg);
+            //update status for room
+            await new BOTRoom(_appSetting).BOTRoomUpdateStatus(roomId, true);
+            await Clients.All.NotifyAdmin(roomId);
+        }
+
+        public async Task ReceiveRoomToGroup(Room room) {
+            await Clients.All.ReceiveRoomToGroup(room);
         }
 
         public async Task JoinToRoom(string roomName)

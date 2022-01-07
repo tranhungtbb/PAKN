@@ -29,14 +29,13 @@ namespace PAKNAPI.Controllers
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
 
-        private readonly IManageBots _bots;
+        //private readonly IManageBots _bots;
 
         public BotController(IAppSetting appSetting, IClient bugsnag)
         {
             this._appSetting = appSetting;
             this._bugsnag = bugsnag;
-           
-      
+
         }
 
 
@@ -50,10 +49,12 @@ namespace PAKNAPI.Controllers
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"Data", rsNENewsGetAllOnPage},
-                        {"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
-                        {"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
-                        {"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
+                        {"ListRoomIsShow", await new BOTRoomGetAllByStatus(_appSetting).BOTRoomGetAllByStatusDAO()},
+                        //{"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
+                        //{"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
+                        //{"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
                     };
+
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             }
             catch (Exception ex)
@@ -90,44 +91,37 @@ namespace PAKNAPI.Controllers
                         var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
                         if (room != null && room.Id > 0)
                         {
-
-                            SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                             IDictionary<string, string> json = new Dictionary<string, string>
-                        {
-                            {"AnonymousId",  id.ToString()},
-                            {"AnonymousName", guid},
-                            {"RoomId", room.Id.ToString()},
-                             {"RoomName", roomName}
-                        };
+                            {
+                                {"AnonymousId",  id.ToString()},
+                                {"AnonymousName", guid},
+                                {"RoomId", room.Id.ToString()},
+                                {"RoomName", roomName},
+                                {"Type", room.Type.ToString()},
+                                {"IsCreateRoom", false.ToString()},
+                            };
 
-                            return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+                            return new ResultApi { Success = ResultCode.OK, Result = json };
                         }
                         else
                         {
                             var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, (int)BotStatus.Enable))).ToString());
-                            SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-
                             IDictionary<string, string> json = new Dictionary<string, string>
-                        {
-                            {"AnonymousId",  id.ToString()},
-                            {"AnonymousName", guid},
-                            {"RoomId", roomId.ToString()},
-                             {"RoomName", roomName}
-                        };
-                            Message messageModel = new Message()
                             {
-
-                                Type = MessageTypes.All
+                                {"AnonymousId",  id.ToString()},
+                                {"AnonymousName", guid},
+                                {"RoomId", roomId.ToString()},
+                                {"RoomName", roomName},
+                                {"Type", ((int)BotStatus.Enable).ToString()},
+                                {"IsCreateRoom", true.ToString()},
                             };
-
-                            //_hubContext.Clients.All.BroadcastMessage(messageModel);
-                            return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+                            return new ResultApi { Success = ResultCode.OK, Result = json };
                         }
 
                     }
                     else
                     {
-                        return new Models.Results.ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
+                        return new ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
                     }
                 }
                 else
@@ -138,35 +132,46 @@ namespace PAKNAPI.Controllers
                         // create room
 
                         var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, (int)BotStatus.Enable))).ToString());
-                        SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-
-
+                        
                         IDictionary<string, string> json = new Dictionary<string, string>
                         {
                             {"AnonymousId",  id.ToString()},
                             {"AnonymousName", guid},
                             {"RoomId", roomId.ToString()},
-                             {"RoomName", roomName}
+                            {"RoomName", roomName},
+                            {"Type", ((int)BotStatus.Enable).ToString()},
+                            {"IsCreateRoom", true.ToString()},
                         };
-                        Message messageModel = new Message()
-                        {
-
-                            Type = MessageTypes.All
-                        };
-
                         //_hubContext.Clients.All.BroadcastMessage(messageModel);
-                        return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+                        return new ResultApi { Success = ResultCode.OK, Result = json };
                     }
                     else
                     {
-                        return new Models.Results.ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
+                        return new ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Message = ex.Message };
+                return new ResultApi { Success = ResultCode.OK, Message = ex.Message };
+            }
+        }
+
+        
+
+        [HttpPost]
+        [Route("bot-update-room")]
+        public async Task<object> ChatbotGetByRoomIdDAO(long roomId)
+        {
+            try
+            {
+                return new ResultApi { Success = ResultCode.OK, Result = await new BOTRoom(_appSetting).BOTRoomUpdateStatus(roomId,false) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
@@ -177,13 +182,13 @@ namespace PAKNAPI.Controllers
             try
             {
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotGetByRoomId(_appSetting).ChatbotGetByRoomIdDAO(RoomId, PageIndex, PageSize) };
+                return new ResultApi { Success = ResultCode.OK, Result = await new ChatbotGetByRoomId(_appSetting).ChatbotGetByRoomIdDAO(RoomId, PageIndex, PageSize) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
-                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
@@ -193,12 +198,12 @@ namespace PAKNAPI.Controllers
         {
             try
             {
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new BotGetLibrary(_appSetting).BotGetAllLibrary() };
+                return new ResultApi { Success = ResultCode.OK, Result = await new BotGetLibrary(_appSetting).BotGetAllLibrary() };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
@@ -208,12 +213,12 @@ namespace PAKNAPI.Controllers
         {
             try
             {
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = new BotGetLibrary(_appSetting).BotGetLibraryByInput(input) };
+                return new ResultApi { Success = ResultCode.OK, Result = new BotGetLibrary(_appSetting).BotGetLibraryByInput(input) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
@@ -226,13 +231,12 @@ namespace PAKNAPI.Controllers
             {
                 string result = await new BotGetLibrary(_appSetting).BotGetAllLibrary();
              
-                await _bots.ReloadBots();
-                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
+                return new ResultApi { Success = ResultCode.OK, Result = result };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
     }

@@ -1349,7 +1349,7 @@ textarea:placeholder-shown {
 }
 
 .table-responsive {
-	overflow: overlay;
+	overflow-x: scroll;
 }
 
 
@@ -1360,10 +1360,10 @@ textarea:placeholder-shown {
 
 @media (min-width: 993px) {
 
-	.table-responsive,
+	/* .table-responsive,
 	.ui-table-auto-layout>.ui-table-wrapper {
 		overflow-x: unset !important;
-	}
+	} */
 }
 
 @media (max-width: 1366px) {
@@ -2392,6 +2392,29 @@ table thead .form-control ng-select {
 
 .bg-red {
 	background-color: #da2222;
+}
+
+.border-left-red {
+	border-left: 3px solid #da2222;
+}
+
+/*  */
+
+
+.bg-xanh-nhat {
+	background-color: #73BCFF;
+}
+
+.border-left-xanh-nhat {
+	border-left: 3px solid #73BCFF;
+}
+
+.bg-green {
+	background-color: #3797ef !important;
+}
+
+.border-left-green {
+	border-left: 3px solid #3797ef;
 }
 
 .h-184 {
