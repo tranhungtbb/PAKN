@@ -58,10 +58,9 @@ import { PolicyPageComponent } from './modules/policy-page/policy-page.component
 		RouterModule,
 		TreeTableModule,
 		ToastrModule.forRoot({
-			timeOut: 15000,
+			timeOut: 3000,
 			positionClass: 'toast-bottom-right',
 			preventDuplicates: true,
-			closeButton: true
 		}),
 		MatDialogModule,
 		BsDatepickerModule.forRoot(),

@@ -333,7 +333,7 @@
 							</div>
 
 							<ng-container *ngIf="model.status==6">
-								<p *ngIf="denyContent" [innerHTML]="denyContent.content | Change"></p>
+								<p *ngIf="denyContent" [innerHTML]="denyContent.reasonDeny | Change"></p>
 							</ng-container>
 
 							<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">

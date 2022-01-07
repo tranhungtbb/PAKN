@@ -181,7 +181,7 @@ export class IndividualComponent implements OnInit {
 	onPreShowOtp() {
 
 
-		this.clearOTP()
+
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
@@ -207,6 +207,7 @@ export class IndividualComponent implements OnInit {
 				return item
 			})
 			.join('')
+		this.clearOTP()
 		$('#modal-otp').modal('show')
 		setTimeout(() => {
 			$('#input_1').focus()
@@ -226,17 +227,17 @@ export class IndividualComponent implements OnInit {
 		}
 	}
 	clearOTP = () => {
-		this.authenticationService.getTokenByEmail({ Email: this.model.email, Type: 1 }).subscribe((res) => {
-			if (res.success == 'OK') {
-				this.otp = res.result
-			}
-		})
 		this.otp_1 = null
 		this.otp_2 = null
 		this.otp_3 = null
 		this.otp_4 = null
 		this.otp_5 = null
 		this.otp_6 = null
+		this.authenticationService.getTokenByEmail({ Email: this.model.email, Type: 1 }).subscribe((res) => {
+			if (res.success == 'OK') {
+				this.otp = res.result
+			}
+		})
 	}
 
 	onSave() {
