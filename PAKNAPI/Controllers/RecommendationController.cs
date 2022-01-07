@@ -1487,14 +1487,15 @@ namespace PAKNAPI.Controller
                 if (oldRecommendation.Model.UnitId == dataMain.Id) {
                     request.status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
                 }
-                if (oldRecommendation.Model.Status == 1 && request.status == 5) {
-                    // insert forwa
-                    MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
-                    var userInfo = await new SYUser(_appSetting).SYUserGetByID(oldRecommendation.Model.SendId);
+                MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
+                var userInfo = await new SYUser(_appSetting).SYUserGetByID(oldRecommendation.Model.SendId);
 
-                    _mRRecommendationForwardInsertIN.RecommendationId = request.id;
-                    _mRRecommendationForwardInsertIN.UserSendId = oldRecommendation.Model.SendId;
-                    _mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+                _mRRecommendationForwardInsertIN.RecommendationId = request.id;
+                _mRRecommendationForwardInsertIN.UserSendId = oldRecommendation.Model.SendId;
+                _mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+                if (oldRecommendation.Model.Status == 1 && request.status == STATUS_RECOMMENDATION.PROCESS_WAIT)
+                {
+                    // insert forwa
                     if (userInfo.TypeId != 1)
                     {
                         _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.PROCESS;
@@ -1502,20 +1503,24 @@ namespace PAKNAPI.Controller
                         _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
                         _mRRecommendationForwardInsertIN.IsViewed = false;
                     }
-                    await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
-
                     // insert his
-                    
                 }
+                else {
+                    _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
+                    _mRRecommendationForwardInsertIN.UnitReceiveId = oldRecommendation.Model.UnitId;
+                    _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                    _mRRecommendationForwardInsertIN.IsViewed = false;
+                }
+                await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
 
                 var hisData = new HISRecommendationInsertIN();
-                hisData.ObjectId = oldRecommendation.Model.Id;
-                hisData.Type = 1;
-                hisData.CreatedBy = oldRecommendation.Model.CreatedBy;
-                hisData.CreatedDate = DateTime.Now;
-                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(oldRecommendation.Model.UnitId)).FirstOrDefault().Name;
-                hisData.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
-                await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                    hisData.ObjectId = oldRecommendation.Model.Id;
+                    hisData.Type = 1;
+                    hisData.CreatedBy = oldRecommendation.Model.CreatedBy;
+                    hisData.CreatedDate = DateTime.Now;
+                    hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(oldRecommendation.Model.UnitId)).FirstOrDefault().Name;
+                    hisData.Status = request.status;
+                    await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.status;
