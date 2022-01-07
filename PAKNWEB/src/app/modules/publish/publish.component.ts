@@ -154,7 +154,7 @@ export class PublishComponent implements OnInit, OnChanges {
 									const element = data.results[index];
 									if (element.subTags !== '') {
 										const subTags = JSON.parse(element.subTags)
-										answers.push({ answer: element.answer, subTags: subTags });
+										answers.push({ answer: this.urlify(element.answer), subTags: subTags });
 									}
 
 								}
@@ -419,5 +419,11 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	goToLink(url: string) {
 		window.open(url, '_blank')
+	}
+	urlify(text) {
+		var urlRegex = /(https?:\/\/[^\s]+)/g;
+		return text.replace(urlRegex, function (url) {
+			return '<a target="_blank" href="' + url + '">' + url + '</a>';
+		})
 	}
 }
