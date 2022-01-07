@@ -1349,6 +1349,10 @@ textarea:placeholder-shown{
 	overflow-x: scroll;
 } */
 
+.ui-table-auto-layout > .ui-table-wrapper {
+	overflow-x: scroll;
+}
+
 
 
 

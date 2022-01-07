@@ -1484,6 +1484,9 @@ namespace PAKNAPI.Controller
             {
                 var oldRecommendation = await new RecommendationDAO(_appSetting).RecommendationGetByID(request.id);
                 SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                if (oldRecommendation.Model.UnitId == dataMain.Id) {
+                    request.status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
+                }
                 if (oldRecommendation.Model.Status == 1 && request.status == 5) {
                     // insert forwa
                     MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
@@ -1502,15 +1505,18 @@ namespace PAKNAPI.Controller
                     await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
 
                     // insert his
-                    var hisData = new HISRecommendationInsertIN();
-                    hisData.ObjectId = oldRecommendation.Model.Id;
-                    hisData.Type = 1;
-                    hisData.CreatedBy = oldRecommendation.Model.CreatedBy;
-                    hisData.CreatedDate = DateTime.Now;
-                    hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(oldRecommendation.Model.UnitId)).FirstOrDefault().Name;
-                    hisData.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
-                    await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                    
                 }
+
+                var hisData = new HISRecommendationInsertIN();
+                hisData.ObjectId = oldRecommendation.Model.Id;
+                hisData.Type = 1;
+                hisData.CreatedBy = oldRecommendation.Model.CreatedBy;
+                hisData.CreatedDate = DateTime.Now;
+                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(oldRecommendation.Model.UnitId)).FirstOrDefault().Name;
+                hisData.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.status;
                 _mRRecommendationUpdateStatusIN.Id = request.id;

@@ -449,13 +449,13 @@ namespace PAKNAPI.ModelBase
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
 
-		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long? Id,bool? IsSystem)
+		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
 			DP.Add("Id", Id);
-			DP.Add("IsSystem", IsSystem);
+			
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
 		}
