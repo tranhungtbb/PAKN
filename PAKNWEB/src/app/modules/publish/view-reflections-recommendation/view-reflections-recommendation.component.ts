@@ -111,7 +111,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 							break
 					}
 				} else {
-					this._toastr.error('Đánh giá thất bại!')
+					this._toastr.error('Bạn đã đánh giá Phản ánh, Kiến nghị này!')
 				}
 			})
 		} else {
