@@ -24,7 +24,7 @@
 				<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
 					<div class="box mb-3 infomation-support">
 						<h4 class="title-notification text-uppercase text-center mb-4">{{model?.title}}</h4>
-						<p [innerHTML]="model?.content"></p>
+						<div [innerHtml]="model?.content | safeHtml"></div>
 					</div>
 				</div>
 			</div>

@@ -33,20 +33,37 @@
 					*ngIf="typeUserLoginPublish != 1 && recommendationStatistics">
 					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-center" (click)="redirectMyRecommendaton(0)">
 						<h4 class="text-uppercase">Phản ánh, kiến nghị của tôi</h4>
-						<!-- <h4 class="counter cursor" style="padding-right: 14px;">{{totalRecommentdation}}</h4> -->
 					</div>
 					<div>
 						<div class="border-left-yellow mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(0)">
+							<div class="pf-4 pointer">
+								<p class="title-status-rm ml-3 mb-0">Tất cả</p>
+							</div>
+							<div class="circle bg-yellow center text-white cursor">
+								{{totalRecommentdation}}
+							</div>
+						</div>
+						<div class="border-left-xanh-nhat mb-3 d-flex justify-content-between center"
 							(click)="redirectMyRecommendaton(1)">
+							<div class="pf-4 pointer">
+								<p class="title-status-rm ml-3 mb-0">Đang soạn thảo</p>
+							</div>
+							<div class="circle bg-xanh-nhat center text-white cursor">
+								{{recommendationStatistics.creating}}
+							</div>
+						</div>
+						<div class="border-left-green mb-3 d-flex justify-content-between center"
+							(click)="redirectMyRecommendaton(2)">
 							<div class="pf-4 pointer">
 								<p class="title-status-rm ml-3 mb-0">Chờ tiếp nhận</p>
 							</div>
-							<div class="circle bg-yellow center text-white cursor">
+							<div class="circle bg-green center text-white cursor">
 								{{recommendationStatistics.receiveWait}}
 							</div>
 						</div>
 						<div class="border-left-blue2 mb-3 d-flex justify-content-between center"
-							(click)="redirectMyRecommendaton(2)">
+							(click)="redirectMyRecommendaton(3)">
 							<div class="pf-4 pointer">
 								<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
 							</div>
@@ -55,7 +72,7 @@
 							</div>
 						</div>
 						<div class="border-left-blue3 mb-3 d-flex justify-content-between center"
-							(click)="redirectMyRecommendaton(3)">
+							(click)="redirectMyRecommendaton(4)">
 							<div class="pf-4 pointer">
 								<p class="title-status-rm ml-3 mb-0">Đang giải quyết</p>
 							</div>
@@ -64,7 +81,7 @@
 							</div>
 						</div>
 						<div class="border-left-blue mb-3 d-flex justify-content-between center"
-							(click)="redirectMyRecommendaton(4)">
+							(click)="redirectMyRecommendaton(5)">
 							<div class="pf-4 pointer">
 								<p class="title-status-rm ml-3 mb-0">Đã giải quyết</p>
 							</div>
@@ -73,7 +90,7 @@
 							</div>
 						</div>
 						<div class="border-left-red mb-3 d-flex justify-content-between center"
-							(click)="redirectMyRecommendaton(5)">
+							(click)="redirectMyRecommendaton(6)">
 							<div class="pf-4 pointer">
 								<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
 							</div>
@@ -84,6 +101,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="col main-ct pl-3 pl-lg-4">
 				<div class="row mb-3">
 					<div class="col-md-12 col-lg-12">
@@ -118,15 +136,16 @@
 					<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
 						<div class="card-header pt-2 px-2 pb-0 align-items-center">
 							<p class="card-text mb-1 ">
-								<a class="h4 text-2line p-title-hover mb-0" routerLink="/cong-bo/chi-tiet-kien-nghi/{{item.id}}">
-									{{item.title}}
+								<a class="h4 text-2line p-title-hover mb-0 text-tranform-first"
+									routerLink="/cong-bo/chi-tiet-kien-nghi/{{item.id}}" innerHTML="{{item.title}}">
+									<!-- {{item.title}} -->
 								</a>
 							</p>
 						</div>
 						<div class="card-body px-2 py-1">
 							<p class="card-text">
-								<a class="text-2line mb-0 p-title-hover"
-									[routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]">{{item.content}}</a>
+								<a class="text-2line mb-0 p-title-hover text-tranform-first"
+									[routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]" innerHTML="{{item.content | Change}}"></a>
 							</p>
 						</div>
 						<div class="card-footer pt-0 px-2 border-top-0 d-flex justify-content-between align-items-center">
@@ -167,34 +186,9 @@
 					</div>
 				</ng-container>
 
-				<!-- <nav aria-label="navigation" *ngIf="listData.length > 0">
-					<ul class="pagination pagination-lg justify-content-between align-items-center">
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == 1 }">
-							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill p-3"
-								href="javascript:void(0)" tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
-									class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
-						</li>
-						<li class="d-flex justify-content-center align-items-center">
-							<a *ngIf="pageIndex > 4">...</a>
-							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index"
-								[ngClass]="{ 'active': item.index === pageIndex }">
-								<a (click)="changePagination(item.index)" *ngIf="i - 3 < pageIndex && i + 5 > pageIndex"
-									class="page-link" href="javascript:void(0)">{{item.index}}</a>
-							</p>
-							<a *ngIf="pageIndex < pagination.length -4">..</a>
-						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == totalRecords }">
-							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill p-3"
-								href="javascript:void(0)">
-								&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-							</a>
-						</li>
-					</ul>
-				</nav> -->
-
 				<nav aria-label="navigation" class="pagination-xs mt-4 ps-relative">
 					<span class="justify-content-start align-items-center ps-absolute">
-						<strong>Tổng số: {{totalRecords}}</strong> <span class="ml-2">phản ánh, kiến nghị</span>
+						<strong>Tổng số: {{totalRecords}}</strong> <span class="ml-2">phản ánh, kiến nghị</span>
 					</span>
 					<ul class="pagination pagination-lg justify-content-end align-items-center">
 						<li class="page-item center cursor" [ngClass]="{ 'disabled':pageIndex == 1 }">

@@ -21,6 +21,7 @@ import { IndexTypeSettingComponent } from './components/index-type-setting/index
 import { ApplicationSettingComponent } from './components/application-setting/application-setting.component'
 import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
 import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
+import { StatisticAccessComponent } from './components/statistic-access/statistic-access.component'
 
 const routes: Routes = [
 	{
@@ -77,7 +78,7 @@ const routes: Routes = [
 				data: { role: 'A_I_0' },
 			},
 
-			
+
 			{
 				path: 'cau-hinh-switchboard/:id',
 				component: SwitchboardSettingComponent,
@@ -147,6 +148,12 @@ const routes: Routes = [
 				path: 'thong-bao',
 				component: PublishNotificationComponent,
 			},
+			{
+				path: 'thong-ke-truy-cap',
+				component: StatisticAccessComponent,
+			},
+
+
 		],
 	},
 ]
@@ -155,4 +162,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class SystemManagementRoutingModule {}
+export class SystemManagementRoutingModule { }

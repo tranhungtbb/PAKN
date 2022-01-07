@@ -433,7 +433,7 @@ textarea:placeholder-shown{
 }
 
 .text-2line {
-	display: -webkit-box;
+	display: -webkit-box !important;
 	/* autoprefixer: off */
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
@@ -1345,8 +1345,12 @@ textarea:placeholder-shown{
 	top: 14px;
 	right: 15px;
 }
-.table-responsive{
-	overflow: overlay;
+/* .table-responsive{
+	overflow-x: scroll;
+} */
+
+.ui-table-auto-layout > .ui-table-wrapper {
+	overflow-x: scroll;
 }
 
 
@@ -1357,10 +1361,10 @@ textarea:placeholder-shown{
 
 @media (min-width: 993px) {
 
-	.table-responsive,
+	/* .table-responsive,
 	.ui-table-auto-layout>.ui-table-wrapper {
 		overflow-x: unset !important;
-	}
+	} */
 }
 
 @media (max-width: 1366px) {
@@ -2388,6 +2392,29 @@ table thead .form-control ng-select {
 	background-color: #da2222;
 }
 
+.border-left-red {
+	border-left: 3px solid #da2222;
+}
+
+/*  */
+
+
+.bg-xanh-nhat {
+	background-color: #73BCFF;
+}
+
+.border-left-xanh-nhat {
+	border-left: 3px solid #73BCFF;
+}
+
+.bg-green {
+	background-color: #3797ef !important;
+}
+
+.border-left-green {
+	border-left: 3px solid #3797ef;
+}
+
 .h-184 {
 	height: 184.4px;
 }
@@ -2516,4 +2543,8 @@ table thead .form-control ng-select {
 
 .margin-top-16 {
 	margin-top: 16px !important;
+}
+
+.highlight-key-search {
+	color:#f35f1b
 }

@@ -12,7 +12,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
-import { SystemConfigObject } from 'src/app/models/SystemConfigObject'
+import { MetaService } from 'src/app/services/tag-meta.service'
 
 declare var $: any
 
@@ -30,7 +30,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
-		private systemConfig: SystemconfigService
+		private systemConfig: SystemconfigService,
+		private metaService: MetaService
 	) { }
 
 	activeUrl: string = ''
@@ -51,6 +52,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	loading: boolean
 	myGuid: string
 	config: any = {}
+	room: any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -64,12 +66,12 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.indexSettingService.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.indexSettingObj = res.result.model
+				this.metaService.updateTitle(this.indexSettingObj.metaTitle)
+				this.metaService.updateDescription(this.indexSettingObj.metaDescription)
 			}
-		}),
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
+		}, (error) => {
+			console.log(error)
+		})
 
 		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -92,6 +94,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 		this.handleInitConnectionToChatBot();
 	}
+	roomId: any
 	async handleInitConnectionToChatBot() {
 		this.myGuid = this.storageService.getClientUserId();
 		if (!this.myGuid) {
@@ -114,9 +117,25 @@ export class PublishComponent implements OnInit, OnChanges {
 					userName: this.myGuid,
 				})
 				.toPromise()
-			//console.log('resCreate ', resCreate)
 			if (resCreate.success === 'OK') {
 				this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
+				this.roomId = resCreate.result.RoomId
+				this.room = {
+					Id: Number(resCreate.result.RoomId),
+					AnonymousId: Number(resCreate.result.AnonymousId),
+					Name: resCreate.result.RoomName,
+					Type: Number(resCreate.result.Type),
+					CreatedDate: new Date()
+				}
+				if (resCreate.result.IsCreateRoom === "True") {
+					this.connection.invoke('ReceiveRoomToGroup', this.room).then(res => {
+						console.log('ReceiveRoomToGroup : ' + res)
+					})
+						.catch(err => {
+							console.log('ReceiveRoomToGroup : ' + err)
+						})
+				}
+
 				this.connection.on('ReceiveMessageToGroup', (data: any) => {
 					console.log('ReceiveMessageToGroup ', data, this.myGuid);
 					if (this.myGuid !== data.from) {
@@ -186,7 +205,7 @@ export class PublishComponent implements OnInit, OnChanges {
 			return
 		}
 		else if (message.typeSuggest && message.typeSuggest == "3") {
-			this.connection.invoke('NotifyAdmin', '')
+			this.connection.invoke('NotifyAdmin', this.room)
 			this.messages = [
 				...this.messages,
 				{

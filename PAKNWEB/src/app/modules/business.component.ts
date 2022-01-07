@@ -8,11 +8,11 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 import { SocketService } from '../services/socket.service'
 import { Router, NavigationEnd } from '@angular/router'
 import { filter } from 'rxjs/operators'
-import 'rxjs/add/operator/pairwise'
 import { StoreLink } from '../constants/store-link'
 import { environment } from '../../environments/environment'
-import { UploadFileService } from '../services/uploadfiles.service'
-import { DataService } from '../services/sharedata.service'
+import { MetaService } from '../services/tag-meta.service'
+import { IndexSettingService } from '../services/index-setting.service'
+import { RESPONSE_STATUS } from '../constants/CONSTANTS'
 
 defineLocale('vi', viLocale)
 
@@ -26,15 +26,15 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 	userId: number
 	url: string = ''
 	currentRouter: string = ''
-	isMain : any = this.userInfoService.getIsMain()
+	isMain: any = this.userInfoService.getIsMain()
 
 	constructor(
 		private localeService: BsLocaleService,
 		public userInfoService: UserInfoStorageService,
 		public socketService: SocketService,
 		private _router: Router,
-		private sharedataService: DataService,
-		private filesService: UploadFileService
+		private metaService: MetaService,
+		private indexSetting: IndexSettingService
 	) {
 		this._router.events
 			.pipe(filter((event) => event instanceof NavigationEnd))
@@ -54,11 +54,8 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 						}
 					}
 					if ((backlink && currentlink) || (environment.olderbacklink !== e[1].url && currentlink)) {
-						//this.sharedata.setobjectBack({});
 					}
 					environment.olderbacklink = e[0].url
-					//var str: string = e[1].url;
-					//this.sharedataService.setUrl(str);
 				}
 			})
 	}
@@ -67,7 +64,13 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		this.localeService.use('vi')
 		this.userInfoService.setReturnUrl('')
-
+		this.indexSetting.GetInfo({}).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				let settingModel = res.result.model
+				this.metaService.updateTitle(settingModel.metaTitle)
+				this.metaService.updateDescription(settingModel.metaDescription)
+			}
+		})
 		// this.loadScript('assets/dist/vendor/global/global.min.js')
 		// this.loadScript('assets/dist/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')
 		//this.loadScript('assets/dist/js/custom.min.js')
@@ -83,13 +86,13 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 		this.currentRouter = this._router.url
 		setTimeout(() => {
 			var widthMenu = $(".header-right").width();
-			var css = '.group-button-table { right: '+(widthMenu + 25) + 'px; }',
+			var css = '.group-button-table { right: ' + (widthMenu + 25) + 'px; }',
 				head = document.head || document.getElementsByTagName('head')[0],
 				style = document.createElement('style');
-	
+
 			head.appendChild(style);
 			style.appendChild(document.createTextNode(css));
-		},500)
+		}, 500)
 	}
 	public loadScript(url: string) {
 		$('script[src="' + url + '"]').remove()

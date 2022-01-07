@@ -45,31 +45,26 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
+				window.scroll(0, 0)
 				this.getData(params['id'])
-				this.getNewsRelates(params['id'])
+				this.newsService.getListHomePage({}).subscribe(
+					(res) => {
+						if (res.success == RESPONSE_STATUS.success) {
+							this.newsRelates = res.result.filter(x => x.id != params['id'])
+						}
+					},
+					(error) => {
+						console.log(error)
+						alert(error)
+					}
+				)
 			}
-		})
-		this.newsService.getListHomePage({}).subscribe((res) => {
-			if (res.success != RESPONSE_STATUS.success) {
-				return
-			}
-			if (res.result.length > 0) {
-				this.newsHightlight = res.result
-			}
-			return
 		})
 
-		this.indexSettingService.GetInfo({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
-			}
-		}),
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
 	}
-	ngAfterViewInit() { }
+	ngAfterViewInit() {
+
+	}
 	changeKeySearch(event) {
 		this.title = event.target.value
 	}
@@ -97,15 +92,15 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 		}
 	}
 
-	getNewsRelates(id) {
-		this.newsService.getAllRelates({ id }).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.newsRelates = res.result.NENewsGetAllRelates
-			} else {
-				this.newsRelates = []
-			}
-		})
-	}
+	// getNewsRelates(id) {
+	// 	this.newsService.getAllRelates({ id }).subscribe((res) => {
+	// 		if (res.success == RESPONSE_STATUS.success) {
+	// 			this.newsRelates = res.result.NENewsGetAllRelates
+	// 		} else {
+	// 			this.newsRelates = []
+	// 		}
+	// 	})
+	// }
 	redirectDetail(id: any) {
 		this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
 	}

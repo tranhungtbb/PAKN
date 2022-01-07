@@ -51,7 +51,6 @@ import { InfomationExchangeModule } from '../recommendation/infomation-exchange/
 import { GovernmentNoticeComponent } from './government-notice/government-notice.component'
 import { HightLightRecommendationsComponent } from './hight-light-recommendations/hight-light-recommendations.component'
 
-
 @NgModule({
 	declarations: [
 		PublishComponent,
@@ -87,7 +86,7 @@ import { HightLightRecommendationsComponent } from './hight-light-recommendation
 		LateProcessingUnitComponent,
 		ProcessingRecommendationsComponent,
 		GovernmentNoticeComponent,
-		HightLightRecommendationsComponent
+		HightLightRecommendationsComponent,
 	],
 	imports: [
 		CommonModule,

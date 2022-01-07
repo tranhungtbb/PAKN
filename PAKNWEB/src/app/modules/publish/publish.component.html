@@ -41,12 +41,10 @@
 									</div>
 								</div>
 								<div class="col-4 col-xl-4 col-md-4 mb-0" style="padding-left: 5px;">
-
 									<div class="nav-item dropdown notification_dropdown"
 										style="display: flex; margin-top: 5px; align-items: center;">
-										<a class=" nav-link ai-icon bg-transparent py-0"
-											style="position: relative; vertical-align:middle; align-items: center;" href="javascript:void(0)"
-											role="button" data-toggle="dropdown">
+										<a class="nav-link ai-icon bg-transparent py-0" (click)="updateNotifications()"
+											href="javascript:void(0)" role="button" data-toggle="dropdown">
 											<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
 											<i class="bi bi-bell fa-2x"></i>
 										</a>
@@ -55,7 +53,7 @@
 												<div class="red-bar"></div>
 												<div class="title-notification">
 													<div style="font-weight: 500;
-												font-size: 16px; text-transform: uppercase;">Thông báo</div>
+												font-size: 16px;" class="text-uppercase">Thông báo</div>
 													<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo
 														mới
 													</div>
@@ -86,10 +84,7 @@
 														</a>
 													</li>
 												</ul>
-												<div *ngIf="notifications && notifications.length == 0" style="display: flex;
-											flex-direction: row;
-											justify-content: center;
-											align-items: center;">
+												<div *ngIf="notifications && notifications.length == 0" class="center">
 													<div>Bạn chưa có thông báo nào</div>
 												</div>
 											</div>
@@ -104,7 +99,8 @@
 											</div>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
+											<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']"
+												class="dropdown-item ai-icon border-top-radius">
 												<i class="bi bi-person-square"></i>
 												<span class="ml-2">Thông tin tài khoản </span>
 											</a>
@@ -118,7 +114,7 @@
 												<span class="ml-2">Đổi mật khẩu </span>
 											</a>
 
-											<a class="dropdown-item ai-icon" (click)="signOut()" style="cursor: pointer;">
+											<a class="dropdown-item ai-icon pointer border-bottom-radius" (click)="signOut()">
 												<i class="bi bi-box-arrow-right"></i>
 												<span class="ml-2">Đăng xuất </span>
 											</a>
@@ -225,7 +221,7 @@
 	<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-	<router-outlet (activate)="onActivate($event)">
+	<router-outlet (activate)='onActivate($event)'>
 	</router-outlet>
 
 	<!-- <div class="zalo-chat-widget" data-oaid="3231248114241019328" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="12" data-width="350" data-height="420"></div> -->
@@ -337,10 +333,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="copyright py-2" style="background: #CDDEF1">
+		<!-- <div class="copyright py-2" style="background: #CDDEF1">
 			<div class="container">
 			</div>
-		</div>
+		</div> -->
 	</div>
 
 

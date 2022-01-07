@@ -170,7 +170,7 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 	treeViewActive(model: any) {
 		this.model = { ...model }
 		this.submitted = false
-		this.action = 'Cập nhập'
+		this.action = 'Cập nhật'
 		this.rebuidForm()
 		return
 	}

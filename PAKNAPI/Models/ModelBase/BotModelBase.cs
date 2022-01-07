@@ -82,8 +82,32 @@ namespace PAKNAPI.Models.ModelBase
 		}
 	}
 
+	public class BOTRoomGetAllByStatus
+	{
+		private SQLCon _sQLCon;
+		public long Id { get; set; }
+		public string Name { get; set; }
 
-	public class BOTRoom
+		public DateTime? CreatedDate { get; set; }
+
+		public BOTRoomGetAllByStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BOTRoomGetAllByStatus()
+		{
+		}
+
+		public async Task<List<BOTRoomGetAllByStatus>> BOTRoomGetAllByStatusDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllByStatus>("BOT_RoomGetAllByStatus", DP)).ToList();
+		}
+	}
+
+
+		public class BOTRoom
 	{
 		private SQLCon _sQLCon;
 
@@ -121,6 +145,14 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("Name", roomName);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomGetByName", DP)).FirstOrDefault();
+		}
+
+		public async Task<int?> BOTRoomUpdateStatus(long roomId, bool status)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RoomId", roomId);
+			DP.Add("Status", status);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_RoomUpdateStatus", DP));
 		}
 
 		public async Task<int> BOTRoomEnableBot(string roomName,int type)

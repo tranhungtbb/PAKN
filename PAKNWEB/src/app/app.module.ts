@@ -34,7 +34,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { LightboxModule } from 'ngx-lightbox'
 import { TreeModule } from 'primeng/tree'
 import { TreeTableModule } from 'primeng/treetable'
-import { PolicyPageComponent } from './modules/policy-page/policy-page.component'
+import { PolicyPageComponent } from './modules/policy-page/policy-page.component';
 
 
 /// template 2
@@ -58,9 +58,10 @@ import { PolicyPageComponent } from './modules/policy-page/policy-page.component
 		RouterModule,
 		TreeTableModule,
 		ToastrModule.forRoot({
-			timeOut: 2000,
+			timeOut: 15000,
 			positionClass: 'toast-bottom-right',
 			preventDuplicates: true,
+			closeButton: true
 		}),
 		MatDialogModule,
 		BsDatepickerModule.forRoot(),

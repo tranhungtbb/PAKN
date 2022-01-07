@@ -115,8 +115,8 @@
 								routerLink="/quan-tri/kien-nghi/cho-phe-duyet">Cần phê duyệt <span *ngIf="statistic"
 									class="text-danger">({{statistic.approveWait}})</span></a></li>
 						<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
-								routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">{{ isMainMenu ? 'Trung tâm xử lý lại':'Đơn vị xử
-								lý lại'}} <span *ngIf="statistic" class="text-danger">({{statistic.approveDeny}})</span></a></li>
+								routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">{{ isMainMenu ? 'Trung tâm xử lý lại':'Đơn vị xử lý
+								lại'}} <span *ngIf="statistic" class="text-danger">({{statistic.approveDeny}})</span></a></li>
 						<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 								routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết <span *ngIf="statistic"
 									class="text-danger">({{statistic.finised}})</span></a></li>
@@ -288,7 +288,7 @@
 					<li *hasPermission="['3', 'C_III_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
 					<li *hasPermission="['3', 'C_VIII_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/hashtag">Nhãn dữ liệu</a></li>
+							routerLink="/quan-tri/danh-muc/hashtag">Nhãn dữ liệu</a></li>
 				</ul>
 			</li>
 			<li *hasPermission="['1','A']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -320,8 +320,10 @@
 					</li>
 					<li *hasPermission="['3', 'A_XIX_0']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thong-bao">Thông báo</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thong-ke-truy-cap">Thống kê truy cập</a>
+					</li>
 				</ul>
 			</li>
 			<li *hasPermission="['1','D']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -378,7 +380,7 @@
 					<li *hasPermission="['3', 'G_II_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/huong-dan-su-dung/video">Video hướng dẫn sử dụng</a></li>
 					<li *hasPermission="['3', 'G_II_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/huong-dan-su-dung/nguoi-dan-doanh-nghiep">Hướng dẫn sử dụng</a></li>
+							routerLink="/quan-tri/huong-dan-su-dung/nguoi-dan-doanh-nghiep">Hướng dẫn người dân, doanh nghiệp</a></li>
 
 				</ul>
 			</li>

@@ -82,7 +82,13 @@ export class HightLightRecommendationsComponent implements OnInit {
 		this.service.getListHightLight(obj).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.PURecommendation.length > 0) {
-					this.ReflectionsRecommendations = res.result.PURecommendation
+					this.ReflectionsRecommendations = res.result.PURecommendation.map(item => {
+						if (this.KeySearch) {
+							item.title = this.highlight(item.title, this.KeySearch)
+							item.content = this.highlight(item.content, this.KeySearch)
+						}
+						return item
+					});
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
 					this.padi()
@@ -98,6 +104,14 @@ export class HightLightRecommendationsComponent implements OnInit {
 			}
 		})
 	}
+	highlight(inputText, text) {
+		var index = inputText.toUpperCase().indexOf(text.toUpperCase());
+		if (index >= 0) {
+			inputText = inputText.substring(0, index) + "<span class='highlight-key-search'>" + inputText.substring(index, index + text.length) + "</span>" + inputText.substring(index + text.length);
+		}
+		return inputText
+	}
+
 	getShortName(string) {
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()

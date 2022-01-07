@@ -109,7 +109,7 @@ export class MyRecommendationComponent implements OnInit {
 	LtsStatus = ''
 	getList(Status: any = null) {
 		this.title = this.title.trim()
-		if (Status) this.LtsStatus = Status
+		this.LtsStatus = Status == null ? '' : Status
 		let request = {
 			userId: this.storageService.getUserId(),
 			LtsStatus: this.LtsStatus == null ? '' : this.LtsStatus,
@@ -121,7 +121,13 @@ export class MyRecommendationComponent implements OnInit {
 		this.puRecommendationService.getMyRecommentdation(request).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.MyRecommendation.length > 0) {
-					this.listData = res.result.MyRecommendation
+					this.listData = res.result.MyRecommendation.map((item) => {
+						if (this.title) {
+							item.title = this.highlight(item.title, this.title)
+							item.content = this.highlight(item.content, this.title)
+						}
+						return item
+					})
 					this.totalRecords = res.result.TotalCount
 					this.padi()
 				} else {
@@ -141,32 +147,45 @@ export class MyRecommendationComponent implements OnInit {
 			}
 	}
 
+	highlight(inputText, text) {
+		var index = inputText.toUpperCase().indexOf(text.toUpperCase());
+		if (index >= 0) {
+			inputText = inputText.substring(0, index) + "<span class='highlight-key-search'>" + inputText.substring(index, index + text.length) + "</span>" + inputText.substring(index + text.length);
+		}
+		return inputText
+	}
+
 	filterMyRecommendation(status: any) {
 		this.pageIndex = 1
 		this.pageSize = 20
 		switch (status) {
 			case 1:
 				// chờ xl
+				this.getList(',1')
+				this.LtsStatus = ',1'
+				break
+			case 2:
+				// chờ xl
 				this.getList(',2')
 				this.LtsStatus = ',2'
 				break
-			case 2:
+			case 3:
 				// đã tiếp nhận
 				this.getList(',4')
 				this.LtsStatus = ',4'
 				break
-			case 3:
+			case 4:
 				// đã trả lời
 				this.getList(',5,7,8')
 				this.LtsStatus = ',5,7,8'
 				break
 
-			case 4:
+			case 5:
 				// đã trả lời
 				this.getList(',10')
 				this.LtsStatus = ',10'
 				break
-			case 5:
+			case 6:
 				// bị từ chối
 				this.getList(',3,6,9')
 				this.LtsStatus = ',3,6,9'

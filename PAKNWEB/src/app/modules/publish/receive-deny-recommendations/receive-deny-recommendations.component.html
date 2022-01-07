@@ -37,14 +37,15 @@
 				<div class="box">
 					<ng-container *ngFor="let item of listRecommendation;let i = index">
 						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
-							<div class="card-header pt-3 pb-0 align-items-center" style="padding: 0;">
+							<div class="card-header pt-3 pb-0 pl-2 align-items-center">
 								<p class="card-text mb-1">
-									<a class="h4 text-2line p-title-hover" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
-										{{item.title}}
+									<a class="h4 text-2line text-tranform-first p-title-hover"
+										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" innerHTML="{{item.title}}">
+										<!-- {{item.title}} -->
 									</a>
 								</p>
 							</div>
-							<div class="card-body pt-1 pb-3" style="padding: 0;">
+							<div class="card-body pt-1 pb-3 pl-2">
 								<div class="d-flex align-items-center justify-content-between">
 									<span style="display: inline-block;">
 										<i class="bi bi-alarm cl-gray mt-1 mr-2 p-item-title "></i>
@@ -55,8 +56,8 @@
 								</div>
 
 								<p class="card-text">
-									<a class="text-2line italic lh-20" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}"
-										[innerHTML]="item.content | Change">
+									<a class="text-2line italic lh-20 text-tranform-first"
+										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" [innerHTML]="item.content | Change">
 
 									</a>
 								</p>
@@ -68,7 +69,7 @@
 					</p>
 					<nav aria-label="navigation" class="pagination-xs mt-4 ps-relative">
 						<span class="justify-content-start align-items-center ps-absolute">
-							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh, kiến nghị</span>
+							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh, kiến nghị</span>
 						</span>
 						<ul class="pagination pagination-lg justify-content-end align-items-center">
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == 1 }">

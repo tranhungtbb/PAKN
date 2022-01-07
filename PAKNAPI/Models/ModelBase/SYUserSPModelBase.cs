@@ -29,12 +29,13 @@ namespace PAKNAPI.ModelBase
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
 
-		public async Task<List<SYUserCheckExists>> SYUserCheckExistsDAO(string Field, string Value, long? Id)
+		public async Task<List<SYUserCheckExists>> SYUserCheckExistsDAO(string Field, string Value, long? Id, bool? IsSystem)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
 			DP.Add("Id", Id);
+			DP.Add("IsSystem", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserCheckExists>("SY_User_CheckExists", DP)).ToList();
 		}
