@@ -45,8 +45,8 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
+				window.scroll(0, 0)
 				this.getData(params['id'])
-				// this.getNewsRelates(params['id'])
 				this.newsService.getListHomePage({}).subscribe(
 					(res) => {
 						if (res.success == RESPONSE_STATUS.success) {
@@ -62,7 +62,9 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 		})
 
 	}
-	ngAfterViewInit() { }
+	ngAfterViewInit() {
+
+	}
 	changeKeySearch(event) {
 		this.title = event.target.value
 	}

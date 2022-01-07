@@ -95,8 +95,9 @@ export class DashboardChatBotComponent implements OnInit {
 				this.fetchRooms()
 			})
 			this.connection.on('NotifyAdmin', (data: any) => {
-				//console.log('ngOnInit SignalR BroadcastMessage ', data)
-
+				console.log('ngOnInit SignalR NotifyAdmin ', data)
+				debugger
+				this.roomsShow.unshift(data)
 				this.playSoundWarning()
 			})
 		})

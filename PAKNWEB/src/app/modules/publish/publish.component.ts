@@ -52,6 +52,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	loading: boolean
 	myGuid: string
 	config: any = {}
+	room: any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -119,15 +120,15 @@ export class PublishComponent implements OnInit, OnChanges {
 			if (resCreate.success === 'OK') {
 				this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
 				this.roomId = resCreate.result.RoomId
+				this.room = {
+					Id: Number(resCreate.result.RoomId),
+					AnonymousId: Number(resCreate.result.AnonymousId),
+					Name: resCreate.result.RoomName,
+					Type: Number(resCreate.result.Type),
+					CreatedDate: new Date()
+				}
 				if (resCreate.result.IsCreateRoom === "True") {
-					const room = {
-						Id: Number(resCreate.result.RoomId),
-						AnonymousId: Number(resCreate.result.AnonymousId),
-						Name: resCreate.result.RoomName,
-						Type: Number(resCreate.result.Type),
-						CreatedDate: new Date()
-					}
-					this.connection.invoke('ReceiveRoomToGroup', room).then(res => {
+					this.connection.invoke('ReceiveRoomToGroup', this.room).then(res => {
 						console.log('ReceiveRoomToGroup : ' + res)
 					})
 						.catch(err => {
@@ -204,8 +205,7 @@ export class PublishComponent implements OnInit, OnChanges {
 			return
 		}
 		else if (message.typeSuggest && message.typeSuggest == "3") {
-			debugger
-			this.connection.invoke('NotifyAdmin', this.roomId)
+			this.connection.invoke('NotifyAdmin', this.room)
 			this.messages = [
 				...this.messages,
 				{

@@ -57,10 +57,15 @@ namespace PAKNAPI.Controllers
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD không được để trống" };
 					}
 
-					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", request.IdCard, 0);
+					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IdCard", request.IdCard, 0);
 					if (checkExists[0].Exists.Value)
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-					if (!string.IsNullOrEmpty(request.Email))
+					accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("UserName", request.IdCard, 0);
+					if (accCheckExist[0].Exists.Value) {
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+					}
+
+						if (!string.IsNullOrEmpty(request.Email))
 					{
 						checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", request.Email, 0);
 						if (checkExists[0].Exists.Value)

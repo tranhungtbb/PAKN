@@ -33,7 +33,7 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 	listData: any = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },
-		{ value: 3, text: 'Từ chối xử lý' },
+		{ value: 3, text: 'Từ chối tiếp nhận' },
 		{ value: 4, text: 'Đã tiếp nhận' },
 		{ value: 5, text: 'Chờ giải quyết' },
 		{ value: 6, text: 'Từ chối giải quyết' },

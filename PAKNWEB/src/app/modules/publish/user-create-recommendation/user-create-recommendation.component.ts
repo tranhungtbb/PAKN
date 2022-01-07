@@ -422,7 +422,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				} else {
 					this.recommendationService.recommendationUpdate(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-							this.toastr.success(COMMONS.ADD_SUCCESS)
+							this.toastr.success(COMMONS.UPDATE_SUCCESS)
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
 						} else {
 							this.toastr.error(response.message)
