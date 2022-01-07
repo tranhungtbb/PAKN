@@ -394,6 +394,9 @@ export class AppheaderComponent implements OnInit {
 			output.attr('src', this.userAvatar)
 		}
 		$('#modalEditUserInfo').modal('show')
+		window.setTimeout(() => {
+			document.body.className += " modal-open"
+		}, 200);
 	}
 
 	preView() {
