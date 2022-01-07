@@ -34,9 +34,15 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		private routers: Router,
 		private recommendationService: RecommendationService,
 		private _toas: ToastrService
-	) { }
+	) {
+		this.recommendationService.keySearchEvent.subscribe((key) => {
+			this.KeySearch = key
+			this.getList()
+		})
+	}
 
 	async ngOnInit() {
+		// this.routers.routeReuseStrategy.shouldReuseRoute = () => false;
 		await this.activatedRoute.params.subscribe((params) => {
 			let s = +params['field']
 			if (s) {

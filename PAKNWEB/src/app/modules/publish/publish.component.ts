@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
 import { MetaService } from 'src/app/services/tag-meta.service'
+import { RecommendationService } from 'src/app/services/recommendation.service'
 
 declare var $: any
 
@@ -31,7 +32,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
 		private systemConfig: SystemconfigService,
-		private metaService: MetaService
+		private metaService: MetaService,
+		private recomenservice: RecommendationService
 	) { }
 
 	activeUrl: string = ''
@@ -279,12 +281,11 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 	viewedCountLate: number = 0
 	updateNotifications() {
-		this.viewedCountLate = 0
-		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-			}
-			return
-		})
+		// this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 	}
+		// 	return
+		// })
 	}
 
 	ngOnChanges() {
@@ -321,6 +322,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		})
 	}
 	onClickNotification(id: number, type: number, typeSend: number) {
+		this.ViewedCount = this.ViewedCount - 1
 		this.updateIsReadNotification(id)
 		if (type == TYPE_NOTIFICATION.NEWS) {
 			this._router.navigate(['cong-bo/thong-bao-chinh-quyen/' + id])
@@ -352,7 +354,9 @@ export class PublishComponent implements OnInit, OnChanges {
 	searchRecommendation() {
 		this.keySearch = this.keySearch == null ? '' : this.keySearch.trim()
 		if (this.keySearch) {
+			this.recomenservice.keySearchEvent.emit(this.keySearch);
 			this._router.navigate(['/cong-bo/danh-sach-phan-anh-kien-nghi/0/', this.keySearch])
+			// ,
 		}
 	}
 	checkDeny(status: any) {

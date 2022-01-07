@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { EventEmitter, Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
 import { Observable, of } from 'rxjs'
@@ -13,6 +13,8 @@ import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class RecommendationService {
+
+	keySearchEvent: EventEmitter<any> = new EventEmitter();
 	private handleError<T>(operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			console.error(error) // log to console instead
