@@ -189,7 +189,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("UserId", userId);
             DP.Add("Satisfaction", satisfaction);
 
-            return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_Recommendation_SatisfactionInsert]", DP));
+            return (await _sQLCon.ExecuteListDapperAsync<int>("[MR_Recommendation_SatisfactionInsert]", DP)).FirstOrDefault();
         }
 
 

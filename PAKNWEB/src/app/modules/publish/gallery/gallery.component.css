@@ -1,3 +1,7 @@
 .border-bottom-blue {
 	border-bottom: 3px solid #2E73D5;
 }
+
+.bg-notification {
+	background-color: #FFF7EF;
+}

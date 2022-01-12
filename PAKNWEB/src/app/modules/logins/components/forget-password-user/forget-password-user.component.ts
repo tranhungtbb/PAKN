@@ -22,7 +22,7 @@ export class ForgetPasswordUserComponent implements OnInit {
 		private _router: Router,
 		private toastr: ToastrService,
 		private formBuilder: FormBuilder
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.forgetPasswordForm = this.formBuilder.group({
@@ -37,10 +37,12 @@ export class ForgetPasswordUserComponent implements OnInit {
 		this.authenService.forgetpassword(this.user).subscribe(
 			(data) => {
 				if (data.result > 0) {
-					this.toastr.info("Vui lòng đăng nhập với mật khẩu mới trong email của bạn" ,'',{timeOut:300000})
-					
-					this._router.navigate(['/dang-nhap'])
-				} else  {
+					this.toastr.info("Vui lòng đăng nhập với mật khẩu mới trong email của bạn")
+					setTimeout(() => {
+						this._router.navigate(['/dang-nhap'])
+					}, 3000);
+
+				} else {
 					this.toastr.error(data.message)
 				}
 			},

@@ -45,7 +45,7 @@
 										style="display: flex; margin-top: 5px; align-items: center;">
 										<a class="nav-link ai-icon bg-transparent py-0" (click)="updateNotifications()"
 											href="javascript:void(0)" role="button" data-toggle="dropdown">
-											<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
+											<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
 											<i class="bi bi-bell fa-2x"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
@@ -394,7 +394,7 @@
 											<ng-container *ngIf="message.answers.length == 1">
 												<ng-container *ngFor="let ans of message.answers">
 													<div *ngIf="ans.answer" class="msg_cotainer_answer">
-														{{ans.answer}}
+														<span [innerHTML]="ans.answer"></span>
 													</div>
 													<ng-container *ngFor="let tag of ans.subTags.data">
 														<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover "
@@ -408,7 +408,7 @@
 												<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
 													<ng-template let-ans pTemplate="item">
 														<div *ngIf="ans.answer" class="msg_cotainer_answer slide">
-															{{ans.answer}}
+															<span [innerHTML]="ans.answer"></span>
 														</div>
 														<ng-container *ngFor="let tag of ans.subTags.data">
 															<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover"

@@ -40,7 +40,10 @@ export class ForgetPasswordComponent implements OnInit {
 		this.authenService.forgetpassword(this.user).subscribe(
 			(data) => {
 				if (data.success === "OK") {
-					this._router.navigate(['/dang-nhap'])
+					this.toastr.info("Vui lòng đăng nhập với mật khẩu mới trong email của bạn")
+					setTimeout(() => {
+						this._router.navigate(['/dang-nhap'])
+					}, 3000);
 				} else if (data.status !== 2) {
 					this.toastr.error(data.message)
 				}

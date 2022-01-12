@@ -44,7 +44,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
+						<label class="mb-1"><span class="text-uppercase">tóm tắt <span class="cl-red">(*)</span></span></label>
 						<textarea class="form-control text-area-height" cols="10" formControlName="summary"
 							[(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
 						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))"

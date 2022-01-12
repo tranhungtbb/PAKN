@@ -2459,6 +2459,7 @@ namespace PAKNAPI.Controller
                             //notification.ReceiveId = sender.Id;
                             //await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                             notification.Content = sender.FullName + " vừa gửi một PAKN";
+                            notification.SendOrgId = 0;
                             foreach (var item in listUserReceiveResolve)
                             {
                                 notification.ReceiveId = item.Id;
@@ -2525,6 +2526,11 @@ namespace PAKNAPI.Controller
                                 await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                             }
                         }
+                        notification.ReceiveId = sender.Id;
+                        notification.ReceiveOrgId = null;
+                        notification.Title = "PAKN TIẾP NHẬN GIẢI QUYẾT";
+                        notification.Content = "PAKN số " + recommendation.Code + " của bạn đã được "+ unitReceive.Name + " tiếp nhận giải quyết";
+                        await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.APPROVE_WAIT: //8 Chờ phê duyệt

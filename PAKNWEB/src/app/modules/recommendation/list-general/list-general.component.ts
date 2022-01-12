@@ -395,6 +395,11 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 					if (response.result != null) {
 						this.unitForward = response.result.lstUnitForward
 						this.modelForward = new RecommendationForwardObject()
+						let unitForwardMain = this.unitForward.find(x => x.isMain == true)
+						if (unitForwardMain) {
+							this.modelForward.unitReceiveId = unitForwardMain.value
+						}
+
 						this.rebuilForm()
 						this.submitted = false
 						$('#modalForward').modal('show')

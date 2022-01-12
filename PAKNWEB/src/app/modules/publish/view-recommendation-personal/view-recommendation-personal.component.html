@@ -99,42 +99,6 @@
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
 
-									<!-- <span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
-										<span>
-
-											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-											</a>
-											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-
-										</span>
-									</span> -->
-
 									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 
 								</div>
@@ -163,13 +127,12 @@
 											style="float: right!important; padding: 0!important;">{{model.approvedDate |
 											date:'HH:mm'}} ngày
 											{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
-										<p *ngIf="[3].includes(model.status)" class="mb-0"
+										<p *ngIf="[3,6].includes(model.status)" class="mb-0"
 											style="float: right!important; padding: 0!important;">{{model.denyDate |
 											date:'HH:mm'}} ngày
 											{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
 									</div>
 								</div>
-
 
 							</div>
 
@@ -178,7 +141,7 @@
 							</ng-container>
 							<ng-container *ngIf="model.status > 5">
 								<p innerHTML="{{modelConclusion.content | Change}}" style="text-align: justify;"></p>
-								<div *ngFor="let file of filesModel" cursor="pointer">
+								<div *ngFor="let file of files" cursor="pointer">
 									<!-- file-att -->
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -217,43 +180,6 @@
 										<span class="small text-truncate">{{file.name}}</span>
 									</a>
 									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
-
-									<!-- <span style="margin-left:15px;" *ngFor="let file of filesModel" class="pointer">
-										<span>
-
-											<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-											</a>
-											<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333;">
-												<i class="bi bi-download"></i>
-
-											</a>
-											<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-												style="color: #333; width:auto;">
-												<i class="bi bi-download"></i>
-
-											</a>
-
-										</span>
-									</span> -->
-
 								</div>
 							</ng-container>
 						</div>
