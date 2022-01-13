@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 import { NgSelectModule } from '@ng-select/ng-select'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -104,6 +105,7 @@ import { HightLightRecommendationsComponent } from './hight-light-recommendation
 		EditorModule,
 		CarouselModule,
 		TreeTableModule,
+		MatCheckboxModule,
 		AgmCoreModule.forRoot({
 			apiKey: 'AIzaSyBriVbWgmHEE8CGaEJM6V47Bem3VoYCi0Q',
 			language: 'vi',

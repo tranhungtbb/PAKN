@@ -60,8 +60,11 @@ namespace PAKNAPI.Models.ModelBase
         public string ReasonDeny { get; set; }
         public DateTime? DenyDate { get; set; }
         public int TotalComment { get; set; }
+        public bool? IsPublicInfoUser { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
 
-        
+
 
         public PURecommendation(IAppSetting appSetting)
         {

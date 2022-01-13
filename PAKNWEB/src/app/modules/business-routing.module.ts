@@ -35,6 +35,7 @@ const routes: Routes = [
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
 			{ path: 'chat-bot', component: DashboardChatBotComponent },
+			{ path: 'chat-bot/:roomId', component: DashboardChatBotComponent },
 		],
 	},
 ]

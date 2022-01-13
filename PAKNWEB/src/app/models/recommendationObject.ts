@@ -43,6 +43,7 @@ export class RecommendationObject {
 	groupUnitId: number
 	unitReceive: number
 	unitChildId: number
+	isPublicInfoUser: boolean
 }
 export class RecommendationSearchObject {
 	constructor() {

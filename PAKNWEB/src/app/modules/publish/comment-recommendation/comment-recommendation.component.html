@@ -29,7 +29,7 @@
 					<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
 					<p class="ml-3 cursor my-0 h5 center mb-1" *ngIf="IsPagePublic" (click)="item.isShowChild =! item.isShowChild"
 						style="font-size: 12px;">
-						Phản hồi</p>
+						Phản hồi</p>
 				</div>
 				<app-comment-reply *ngIf="item.isShowChild" [RecommentId]="RecommentId" [ParentId]="item.id">
 				</app-comment-reply>
@@ -57,15 +57,14 @@
 
 				</ng-container>
 				<a href="javascript:void(0)" *ngIf="item.existChild && item.rowNumberChild > item.listChild?.length"
-					class="small" (click)="loadCommentChild(item)">Xem
-					thêm phản hồi</a>
+					class="small" (click)="loadCommentChild(item)">Xem thêm phản hồi</a>
 
 			</div>
 		</div>
 	</ng-container>
 
 	<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
-		<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 5 bình luận khác
+		<a href="javascript:void(0)" (click)="loadComment()">Xem thêm các bình luận khác
 			<span class="ml-2">
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right"
 					viewBox="0 0 16 16">

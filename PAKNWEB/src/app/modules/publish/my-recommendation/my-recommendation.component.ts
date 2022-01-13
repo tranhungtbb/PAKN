@@ -279,13 +279,13 @@ export class MyRecommendationComponent implements OnInit {
 		if (this.pageIndex > index) {
 			if (index > 0) {
 				this.pageIndex = index
-				this.getList()
+				this.getList(this.LtsStatus)
 			}
 			return
 		} else if (this.pageIndex < index) {
 			if (this.pagination.length >= index) {
 				this.pageIndex = index
-				this.getList()
+				this.getList(this.LtsStatus)
 			}
 			return
 		}

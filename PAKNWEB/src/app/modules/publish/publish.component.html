@@ -384,9 +384,9 @@
 								<ng-container *ngFor="let message of messages">
 									<div *ngIf="message.fromId != 0" class="d-flex justify-content-start mb-4">
 										<div class="img_cont_msg">
-											<img *ngIf="message.fromAvatarPath == ''" src="../../../assets/dist/images/Icon_app.png"
+											<img *ngIf="!message.fromAvatarPath" src="../../../assets/dist/images/Icon_app.png"
 												class="rounded-circle user_img_msg">
-											<img *ngIf="message.fromAvatarPath != ''" [src]="message.fromAvatarPath"
+											<img *ngIf="message.fromAvatarPath" [src]="message.fromAvatarPath"
 												class="rounded-circle user_img_msg">
 										</div>
 										<div class="msg_cotainer">
@@ -394,7 +394,7 @@
 											<ng-container *ngIf="message.answers.length == 1">
 												<ng-container *ngFor="let ans of message.answers">
 													<div *ngIf="ans.answer" class="msg_cotainer_answer">
-														<span [innerHTML]="ans.answer"></span>
+														<span [innerHTML]="ans.answer | Change"></span>
 													</div>
 													<ng-container *ngFor="let tag of ans.subTags.data">
 														<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover "
@@ -408,7 +408,7 @@
 												<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
 													<ng-template let-ans pTemplate="item">
 														<div *ngIf="ans.answer" class="msg_cotainer_answer slide">
-															<span [innerHTML]="ans.answer"></span>
+															<span [innerHTML]="ans.answer | Change"></span>
 														</div>
 														<ng-container *ngFor="let tag of ans.subTags.data">
 															<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover"

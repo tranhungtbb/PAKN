@@ -119,15 +119,21 @@ export class OrganizationComponent implements OnInit {
 			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
-		this.phoneHide = this.model.phone
-			.split('')
-			.map((item, index) => {
-				if (index > 3 && index < 7) {
-					return '*'
-				}
-				return item
-			})
-			.join('')
+		this.authenticationService.getTokenByEmail({ Email: this.model.orgEmail, Type: 1 }).subscribe((res) => {
+			if (res.success == 'OK') {
+				this.otp = res.result
+			}
+		})
+
+		// this.phoneHide = this.model.phone
+		// 	.split('')
+		// 	.map((item, index) => {
+		// 		if (index > 3 && index < 7) {
+		// 			return '*'
+		// 		}
+		// 		return item
+		// 	})
+		// 	.join('')
 		$('#modal-otp').modal('show')
 		setTimeout(() => {
 			$('#input_1').focus()
@@ -147,11 +153,6 @@ export class OrganizationComponent implements OnInit {
 		}
 	}
 	clearOTP = () => {
-		this.authenticationService.getTokenByEmail({ Email: this.model.orgEmail, Type: 1 }).subscribe((res) => {
-			if (res.success == 'OK') {
-				this.otp = res.result
-			}
-		})
 		this.otp_1 = null
 		this.otp_2 = null
 		this.otp_3 = null

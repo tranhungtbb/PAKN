@@ -3,6 +3,26 @@
 	<app-appmenu></app-appmenu>
 	<router-outlet>
 	</router-outlet>
-	<!-- <app-user-view-info modalid="user-info-0"></app-user-view-info>
-	<app-user-create-or-update modalid="user-create-or-update-0" isOrganizational='true' isUser='true'></app-user-create-or-update> -->
+
+	<div class="overlay-container" *ngIf="!isUrlChatBot">
+		<div class="toast-bottom-right toast-container">
+			<ng-container *ngFor="let item of roomsShow; let i = index">
+				<div class="toast-error toast ng-trigger ng-trigger-flyInOut show" style="background: #3faf45;" *ngIf="i < 3">
+					<button aria-label="Close" class="toast-close-button ng-tns-c8-2 ng-star-inserted"
+						(click)="updateStatus(item)">
+						<span class="ng-tns-c8-2" aria-hidden="true">×</span>
+					</button>
+					<div class="toast-title ng-star-inserted" aria-label="Bạn có một tin nhắn mới"
+						(click)="updateStatus(item, true)"> Bạn có một tin nhắn mới </div>
+					<div aria-live="polite" role="alertdialog" (click)="updateStatus(item, true)"
+						class="toast-message ng-star-inserted" aria-label="">
+						{{item.title}}
+					</div>
+					<p class="mb-0">{{item.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+				</div>
+			</ng-container>
+
+		</div>
+	</div>
+
 </div>

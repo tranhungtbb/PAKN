@@ -23,7 +23,7 @@
 			<div class="media-body">
 				<p *ngIf="item.typeObject == 1 && !IsPagePublic" class="mb-0 h5">{{item.fullName + " - " + item.unitName}}</p>
 				<p *ngIf="item.typeObject == 1 && IsPagePublic" class="mb-0 h5">{{item.unitName}}</p>
-				<p *ngIf="item.typeObject != 1 && IsPagePublic" class="mb-0 h5">{{item.fullName}}</p>
+				<p *ngIf="item.typeObject != 1" class=" mb-0 h5">{{item.fullName}}</p>
 
 				<div class="d-flex">
 					<p class="mt-1 mb-0">{{item.contents}}</p>

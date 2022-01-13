@@ -5,8 +5,10 @@
 			<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
 		</ol>
 		<div class="btn-group group-button-table" role="group">
-			<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> Quay lại</button>
-			<button type="button" class="btn btn-sm rounded text-white border-0 grd-xanhngoc px-5" (click)="onSave()">Lưu</button>
+			<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i
+					class="bi bi-arrow-left mr-2"></i> Quay lại</button>
+			<button type="button" class="btn btn-sm rounded text-white border-0 grd-xanhngoc px-5"
+				(click)="onSave()">Lưu</button>
 		</div>
 	</div>
 </div>
@@ -23,8 +25,10 @@
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Business.invalid)||(fOrgInfo.Business.invalid && (fOrgInfo.Business.dirty || fOrgInfo.Business.touched))"
+					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..."
+						class="form-control">
+					<div
+						*ngIf="(fOrgInfoSubmitted && fOrgInfo.Business.invalid)||(fOrgInfo.Business.invalid && (fOrgInfo.Business.dirty || fOrgInfo.Business.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.Business.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -36,9 +40,11 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control"
-						(change)="onCheckExist('BusinessRegistration',$event.target.value)">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
+					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text"
+						placeholder="Nhập..." class="form-control"
+						(change)="onCheckExist('BusinessRegistration',$event.target.value)" pattern="^(\w{1}[0-9]{9}|[0-9]{13})$">
+					<div
+						*ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.RegistrationNum.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -53,12 +59,14 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label class="mb-1">Điện thoại</label>
-					<input numbersOnly maxlength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="OrgPhone" type="text" placeholder="Nhập..."
-						class="form-control" (change)="onCheckExist('OrgPhone',$event.target.value)">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.OrgPhone.invalid)||(fOrgInfo.OrgPhone.invalid && (fOrgInfo.OrgPhone.dirty || fOrgInfo.OrgPhone.touched))"
+					<input numbersOnly maxlength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
+						formControlName="OrgPhone" type="text" placeholder="Nhập..." class="form-control"
+						(change)="onCheckExist('OrgPhone',$event.target.value)">
+					<div
+						*ngIf="(fOrgInfoSubmitted && fOrgInfo.OrgPhone.invalid)||(fOrgInfo.OrgPhone.invalid && (fOrgInfo.OrgPhone.dirty || fOrgInfo.OrgPhone.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.OrgPhone.errors.pattern">
 							<span class="help-block">Định dạng số điện thoại không hợp lệ</span>
@@ -133,7 +141,8 @@
 
 		<!-- địa chỉ trụ sở / văn phòng đại diện -->
 		<div class="col col-lg-8 border-right border-top p-4">
-			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Địa chỉ trụ sở / văn phòng đại diện</span></h4>
+			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Địa chỉ trụ sở / văn phòng đại diện</span>
+			</h4>
 			<app-org-form-address></app-org-form-address>
 
 		</div>

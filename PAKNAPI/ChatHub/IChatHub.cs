@@ -1,4 +1,5 @@
 ﻿using PAKNAPI.Chat.ResponseModel;
+using PAKNAPI.Models.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace PAKNAPI.Chat
     public interface IChatHub
     {
         Task NotifyAdmin(Room msg);
-        Task BroadcastMessage(Message msg);
+        Task OnNewMessage(BOTRoom msg);
         Task ReceiveMessageToGroup(Message msg);
         Task ReceiveRoomToGroup(Room room);
         Task ReceiveRoomToGroup(string room);

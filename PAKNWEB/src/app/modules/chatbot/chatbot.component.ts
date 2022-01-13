@@ -7,6 +7,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { UserService } from 'src/app/services/user.service'
 import { ToastrService } from 'ngx-toastr'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
 	selector: 'app-dashboard',
@@ -19,7 +20,6 @@ export class DashboardChatBotComponent implements OnInit {
 	messages: any = []
 	newMessage = ''
 	rooms: BotRoom[]
-	roomsShow: any[] = []
 	connection: signalR.HubConnection
 	pageIndex: number = 1
 	pageSize: number = 10
@@ -29,16 +29,26 @@ export class DashboardChatBotComponent implements OnInit {
 	model: any = {}
 	userAvatar: string
 	audio: any
+	roomsShow: any[] = []
 
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
-	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService, private toast: ToastrService) { }
-	ngOnInit() {
-		//console.log('ngOnInit 0')
-
+	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService, private toast: ToastrService, private activatedRoute: ActivatedRoute) { }
+	async ngOnInit() {
 		this.audio = new Audio()
 		this.audio.src = '../../../assets/img/ring.mp3'
 		this.audio.loop = true
+
+		await this.botService.getRoomForNotification({}).toPromise().then(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+
+				this.roomsShow = res.result.ListRoomIsShow
+			} else {
+				this.toast.error(res.result.message)
+			}
+		}).catch(err => {
+			this.toast.error(err)
+		})
 		this.userId = this.user.getUserId()
 		this.userService.getById({ id: this.userId }).subscribe((res) => {
 			this.model = res.result.SYUserGetByID[0]
@@ -85,30 +95,84 @@ export class DashboardChatBotComponent implements OnInit {
 			})
 
 			this.connection.on('ReceiveRoomToGroup', data => {
-				debugger
 				this.rooms.unshift(data)
 			})
 
-			this.connection.on('BroadcastMessage', (data: any) => {
-				//console.log('ngOnInit SignalR BroadcastMessage ', data)
-
-				this.fetchRooms()
+			// this.connection.on('BroadcastMessage', (data: any) => {
+			// 	//console.log('ngOnInit SignalR BroadcastMessage ', data)
+			// 	this.fetchRooms()
+			// })
+			this.connection.on('OnNewMessage', (room: any) => {
+				let roomCheck: any = this.rooms.find(x => x.id === room.id)
+				if (roomCheck) {
+					this.rooms.splice(this.rooms.indexOf(roomCheck), 1)
+				}
+				this.rooms.unshift(room)
 			})
+
+
 			this.connection.on('NotifyAdmin', (data: any) => {
 				console.log('ngOnInit SignalR NotifyAdmin ', data)
-				debugger
-				this.roomsShow.unshift(data)
+				if (!this.roomsShow.find(x => x.name === data.name)) {
+					this.roomsShow.unshift(data)
+				}
+				let room: any = this.rooms.find(x => x.name === data.name)
+				if (room) {
+					this.rooms.splice(this.rooms.indexOf(room), 1)
+					this.rooms.unshift(data)
+				} else {
+					this.botService.getRoomById({ Id: data.id }).subscribe(res => {
+						if (res.success == RESPONSE_STATUS.success) {
+							if (res.result) {
+								this.rooms.unshift(res.result)
+							}
+
+						} else {
+							this.toast.error(res.message)
+						}
+					})
+				}
 				this.playSoundWarning()
 			})
 		})
 		this.fetchRooms()
+
+
+		this.activatedRoute.params.subscribe((params) => {
+			if (params['roomId']) {
+				this.botService.getRoomById({ Id: params['roomId'] }).subscribe(res => {
+					if (res.success == RESPONSE_STATUS.success) {
+						let room = res.result
+						if (room) {
+							this.resetGetMessage(params['roomId'], room.name)
+						}
+
+					} else {
+						this.toast.error(res.message)
+					}
+				})
+			}
+		})
 	}
+
+	updateStatus(data: any, selectedRoom: boolean = false) {
+		let index = this.roomsShow.indexOf(data);
+		this.roomsShow.splice(index, 1)
+		this.botService.updateStatusRoom({ roomId: data.id }).subscribe()
+		if (selectedRoom) {
+			this.resetGetMessage(data.id, data.name)
+		}
+	}
+
+	// swapArr(index: number, data: any) {
+	// 	[this.rooms[0], this.rooms[index]] = [data, this.rooms[0]]
+	// }
 
 	playSoundWarning() {
 		try {
 			console.log('playSoundWarning ')
 			this.audio = new Audio()
-			this.audio.src = '../../../assets/img/ring.mp3'
+			this.audio.src = '../../assets/img/ring.mp3'
 			this.audio.load()
 			this.audio.play()
 		} catch (error) {
@@ -116,23 +180,22 @@ export class DashboardChatBotComponent implements OnInit {
 		}
 	}
 
-	fetchRooms = async () => {
-		try {
-			//console.log('fetchRooms 1')
-			this.botService.getRooms({}).subscribe((res) => {
-				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
-					if (res.result) {
-						console.log('fetchRooms ', res.result.Data)
-						this.rooms = res.result.Data
-						this.roomsShow = res.result.ListRoomIsShow
-					}
-				} else {
-					//this._toastr.error(res.message)
-				}
-			})
-		} catch (error) {
-			//console.log('handleConnect ', error)
+	fetchRooms = () => {
+		this.roomTitle = this.roomTitle == null ? '' : this.roomTitle.trim()
+		let obj = {
+			Title: this.roomTitle,
+			CreatedDate: this.createDate == null ? '' : this.createDate.toDateString()
 		}
+		console.log(obj)
+		this.botService.getRooms(obj).subscribe((res) => {
+			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
+				if (res.result) {
+					console.log('fetchRooms ', res.result.Data)
+					this.rooms = res.result.Data
+				}
+			} else {
+			}
+		})
 	}
 
 	resetGetMessage(roomId: number, roomName: string) {
@@ -156,6 +219,8 @@ export class DashboardChatBotComponent implements OnInit {
 
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result && res.result.length > 0) {
+
+						console.log('getMessage result : ' + res.result)
 						if (this.pageIndex == 1) {
 							this.messages = res.result.reverse()
 						} else {
@@ -216,6 +281,7 @@ export class DashboardChatBotComponent implements OnInit {
 			console.log('SignalR ngOnDestroy 0')
 			this.connection.off('ReceiveMessageToGroup')
 			this.connection.off('BroadcastMessage')
+			this.connection.off('ReceiveRoomToGroup')
 		}
 	}
 
@@ -239,6 +305,19 @@ export class DashboardChatBotComponent implements OnInit {
 		// 		this.getMessage(this.roomActive, this.roomNameSelected)
 		// 	}
 		// }
+	}
+
+	roomTitle: string
+	createDate: Date = null
+
+
+	dateValueChange(events) {
+		if (events) {
+			this.createDate = events
+		} else {
+			this.createDate = null
+		}
+		this.fetchRooms()
 	}
 
 	convertMessageToObjectList() {
@@ -269,11 +348,11 @@ export class DashboardChatBotComponent implements OnInit {
 							console.log('answers 1', result.Results)
 							try {
 								for (let ind = 0; ind < result.Results.length; ind++) {
-									const el = result.Results[ind]
+									let el = result.Results[ind]
 									if (el.SubTags !== '') {
 										const subTags = JSON.parse(el.SubTags)
 										console.log('answers 2', subTags)
-										answers.push({ answer: el.answer, subTags: subTags })
+										answers.push({ answer: el.Answer, subTags: subTags })
 									}
 								}
 							} catch (error) { }
@@ -295,15 +374,6 @@ export class DashboardChatBotComponent implements OnInit {
 			} catch (error) {
 				return { result: string, type: 'string' }
 			}
-		}
-	}
-
-	updateStatus(data: any, selectedRoom: boolean = false) {
-		let index = this.roomsShow.indexOf(data);
-		this.roomsShow.splice(index, 1)
-		this.botService.updateStatusRoom({ roomId: data.id }).subscribe()
-		if (selectedRoom) {
-			this.resetGetMessage(data.id, data.name)
 		}
 	}
 }

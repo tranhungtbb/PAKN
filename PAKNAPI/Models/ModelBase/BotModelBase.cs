@@ -66,19 +66,22 @@ namespace PAKNAPI.Models.ModelBase
 
 		public int? AnonymousId { get; set; }
 		public string Name { get; set; }
+		public string Title { get; set; }
 		public string FromAvatar { get; set; }
 		public string FromFullName { get; set; }
 		public int? Type { get; set; }
 		public DateTime? CreatedDate { get; set; }
 
-		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex)
+		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(string Title, DateTime? CreatedDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			//DP.Add("PageSize", PageSize);
-			//DP.Add("PageIndex", PageIndex);
-			
+			DP.Add("Title", Title);
+			DP.Add("CreatedDate", CreatedDate);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();
+
+            return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();
 		}
 	}
 
@@ -87,6 +90,7 @@ namespace PAKNAPI.Models.ModelBase
 		private SQLCon _sQLCon;
 		public long Id { get; set; }
 		public string Name { get; set; }
+		public string Title { get; set; }
 
 		public DateTime? CreatedDate { get; set; }
 
@@ -107,7 +111,7 @@ namespace PAKNAPI.Models.ModelBase
 	}
 
 
-		public class BOTRoom
+	public class BOTRoom
 	{
 		private SQLCon _sQLCon;
 
@@ -120,20 +124,25 @@ namespace PAKNAPI.Models.ModelBase
 		{
 		}
 
-		public BOTRoom(string Name,int AnonymousId, int Type) {
+		public BOTRoom(string Name, string Title, int AnonymousId, int Type) {
 			this.Name = Name;
+			this.Title = Title;
 			this.Type = Type;
 			this.AnonymousId = AnonymousId;
 		}
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public string Title { get; set; }
 		public int Type { get; set; }
+
+		public DateTime? CreatedDate { get; set; }
 
 		public int AnonymousId { get; set; }
 		public async Task<decimal?> BOTRoomInsertDAO(BOTRoom _bOTRoom)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _bOTRoom.Name);
+			DP.Add("Title", _bOTRoom.Title);
 			DP.Add("AnonymousId", _bOTRoom.AnonymousId);
 			DP.Add("Type", _bOTRoom.Type);
 

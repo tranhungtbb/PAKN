@@ -49,6 +49,10 @@ agm-map {
 	font-style : italic !important;
 	font-size: 0.95rem !important;
 }
+
+:host ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+	color: #5e72e4;
+}
 #contentRecommendation{
 	font-family: 'Helvetica Neue','Segoe UI',Helvetica,Verdana,sans-serif;
 	line-height: 1.35715;

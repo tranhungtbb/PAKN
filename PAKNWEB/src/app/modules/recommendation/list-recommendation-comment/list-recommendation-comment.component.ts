@@ -42,6 +42,7 @@ export class ListRecommendationCommentComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	id: number = 0
+	item: any
 
 	ngOnInit() {
 		this.getList()
@@ -112,14 +113,13 @@ export class ListRecommendationCommentComponent implements OnInit {
 	}
 	titleConfirm: string
 	preChangeStatus = (item: any) => {
-		this.id = item.id
+		this.item = item
 		this.titleConfirm = item.isPublish == true ? 'Anh/Chị có chắc chắn muốn thu hồi bình luận này?' : 'Anh/Chị có chắc chắn muốn công bố bình luận này?'
 		$('#modalConfirmChangeStatus').modal('show')
 	}
 
 	onChangeStatus = () => {
-		let obj: any = this.listData.find(x => x.data.id === this.id)
-		this._service.updateStatus({ Id: this.id, IsPublish: !obj.isPublish }).subscribe(res => {
+		this._service.updateStatus({ Id: this.item.id, IsPublish: !this.item.isPublish }).subscribe(res => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				$('#modalConfirmChangeStatus').modal('hide')

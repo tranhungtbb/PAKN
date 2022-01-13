@@ -84,8 +84,8 @@
 					<div *ngIf="newsRelates && newsRelates.length == 0">Chưa có thông báo liên quan nào</div>
 					<div class="box">
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item px-0" *ngFor="let item of newsRelates">
-								<div class=" media">
+							<li class="list-group-item px-0" *ngFor="let item of newsRelates; let i = index">
+								<div class="media" *ngIf="i < 5">
 									<div class="media-body">
 										<p class="h3 my-1">
 											<a class="text-2line title-item-article p-title-hover" style="font-weight: bold!important;"

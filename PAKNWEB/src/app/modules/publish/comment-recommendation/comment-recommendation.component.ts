@@ -78,7 +78,7 @@ export class CommentComponent implements OnInit {
 			}
 			this._toastr.success('Bình luận của bạn sẽ được chuyển đến quản trị viên để phê duyệt')
 			this.commentModel = new RecommnendationCommentObject()
-			this.getCommentPaged()
+			// this.getCommentPaged()
 		})
 	}
 

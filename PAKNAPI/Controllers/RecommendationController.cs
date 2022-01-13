@@ -1037,7 +1037,11 @@ namespace PAKNAPI.Controller
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = request._mRRecommendationForwardInsertIN.RecommendationId;
                 hisData.Type = 1;
-                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(request._mRRecommendationForwardInsertIN.UnitReceiveId)).FirstOrDefault().Name; ;
+                hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(request._mRRecommendationForwardInsertIN.UnitReceiveId)).FirstOrDefault().Name;
+                if (! String.IsNullOrEmpty(request._mRRecommendationForwardInsertIN.Content)) {
+                    hisData.Content += " <br/ > Với nội dung: " + request._mRRecommendationForwardInsertIN.Content;
+                }
+
                 hisData.Status = request.RecommendationStatus;
                 hisData.CreatedBy = request._mRRecommendationForwardInsertIN.UserSendId;
                 hisData.CreatedDate = DateTime.Now;
@@ -2551,7 +2555,7 @@ namespace PAKNAPI.Controller
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 
                         notification.Title = "PAKN ĐÃ BỊ TỪ CHỐI PHÊ DUYỆT";
-                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối kết quả giải quyết PAKN số" + recommendation.Code;
+                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối kết quả giải quyết PAKN số " + recommendation.Code;
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
@@ -2576,7 +2580,7 @@ namespace PAKNAPI.Controller
 
                         notification.Title = "PAKN ĐÃ GIẢI QUYẾT XONG";
                         notification.Content = unitReceive.Name + " đã giải quyết PAKN số " + recommendation.Code;
-
+                        lstUser = lstUser.Where(x => x.Id != notification.SenderId).ToList();
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;

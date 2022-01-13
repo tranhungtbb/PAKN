@@ -1517,6 +1517,11 @@ namespace PAKNAPI.ModelBase
 		public string Lng { get; set; }
 
 		public bool? IsFakeImage { get; set; }
+		public int? GroupUnitId { get; set; }
+		public int? UnitReceive { get; set; }
+		public int? UnitChildId { get; set; }
+		public bool? IsExpand { get; set; }
+		public bool? IsPublicInfoUser { get; set; }
 
 		public async Task<List<MRRecommendationGetByID>> MRRecommendationGetByIDDAO(int? Id)
 		{
@@ -1655,6 +1660,13 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Type", _mRRecommendationInsertIN.Type);
 			DP.Add("ReceptionType", _mRRecommendationInsertIN.ReceptionType);
 			DP.Add("IsFakeImage", _mRRecommendationInsertIN.IsFakeImage);
+
+			DP.Add("GroupUnitId", _mRRecommendationInsertIN.GroupUnitId);
+			DP.Add("UnitReceive", _mRRecommendationInsertIN.UnitReceive);
+			DP.Add("UnitChildId", _mRRecommendationInsertIN.UnitChildId);
+			DP.Add("IsExpand", _mRRecommendationInsertIN.IsExpand);
+            DP.Add("IsPublicInfoUser", _mRRecommendationInsertIN.IsPublicInfoUser);
+
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_RecommendationInsert", DP);
 		}
 	}
@@ -1699,6 +1711,12 @@ namespace PAKNAPI.ModelBase
 		public string Lng { get; set; }
 
 		public bool? IsFakeImage { get; set; }
+
+		public int? GroupUnitId { get; set; }
+		public int? UnitReceive { get; set; }
+		public int? UnitChildId { get; set; }
+		public bool? IsExpand { get; set; }
+		public bool? IsPublicInfoUser { get; set; }
 
 		public MRRecommendationInsertIN() { }
 
@@ -2060,6 +2078,11 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Type", _mRRecommendationUpdateIN.Type);
 			DP.Add("ReceptionType", _mRRecommendationUpdateIN.ReceptionType);
 			DP.Add("IsFakeImage", _mRRecommendationUpdateIN.IsFakeImage);
+			DP.Add("GroupUnitId", _mRRecommendationUpdateIN.GroupUnitId);
+			DP.Add("UnitReceive", _mRRecommendationUpdateIN.UnitReceive);
+			DP.Add("UnitChildId", _mRRecommendationUpdateIN.UnitChildId);
+			DP.Add("IsExpand", _mRRecommendationUpdateIN.IsExpand);
+			DP.Add("IsPublicInfoUser",_mRRecommendationUpdateIN.IsPublicInfoUser);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdate", DP));
 		}
@@ -2104,6 +2127,13 @@ namespace PAKNAPI.ModelBase
 		public string Lng { get; set; }
 
 		public bool? IsFakeImage { get; set; }
+
+		public int? GroupUnitId { get; set; }
+		public int? UnitReceive { get; set; }
+		public int? UnitChildId { get; set; }
+		public bool? IsExpand { get; set; }
+		public bool? IsPublicInfoUser { get; set; }
+
 	}
 
 	public class MRRecommendationUpdateReactionaryWord

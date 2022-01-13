@@ -1,149 +1,186 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
-	rel="stylesheet" />
+	rel="stylesheet" /> -->
 <div class="content-body">
-	<div class="content" role="main">
-		<div class="chatbox">
-			<div class="d-flex">
-				<div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
-					<div class="card-header chat-list-header text-center">
-						<div>
-							<h6 class="mb-1">Danh sách chat</h6>
+	<div class="container-fluid p-0">
+		<div class="">
+			<div class="">
+				<div class="card mb-0 shadow-none p-2">
+					<div class="d-flex">
+						<div class="px-2 align-center">
+							<div class="h5 mb-0">Tìm kiếm</div>
 						</div>
-					</div>
-					<div class="card-body contacts_body p-0">
-						<ul class="contacts">
-							<li *ngFor="let room of rooms" class="dz-chat-user" (click)="resetGetMessage(room.id,room.name)"
-								[ngClass]="{'room-selected' : room.id == roomActive}">
-								<div class="d-flex">
-									<div class="img_cont">
-										<i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
-									</div>
-									<div class="user_info">
-										<span [ngClass]="{'text-white' : room.id == roomActive}">{{ room.name }}</span>
-										<p>{{ room.createdDate | date:'dd/MM/yyyy' }}</p>
-									</div>
-									<span *ngIf="room.type == 1" class="square mr-1 bg-red"></span>
-								</div>
-							</li>
-						</ul>
+
+						<div class="form-group mb-0 px-2 align-center">
+							<input type="text" class="form-control form-control-sm" placeholder="Nhập tên phòng .."
+								[(ngModel)]="roomTitle" (keydown.enter)="fetchRooms()">
+						</div>
+						<div class="form-group mb-0 px-2 ps-relative">
+							<input class="form-control-sm form-control" type="text" bsDatepicker #nv="bsDatepicker"
+								[(ngModel)]="createDate" [bsConfig]="{
+								adaptivePosition: true,
+								dateInputFormat: 'DD/MM/YYYY',
+								containerClass: 'theme-dark-blue'
+							}" datetime="DD/MM/YYYY" placeholder="Chọn ngày" (bsValueChange)="dateValueChange($event)" />
+							<span class="input-group-addon" (click)="nv.toggle()" [attr.aria-expanded]="nv.isOpen">
+								<i class="fal fa-calendar"></i>
+							</span>
+						</div>
+						<!-- <div class="px-2 align-center">
+							<button class="btn btn-sm rounded border-0 text-white" style="background: #2E73D5;"
+								(click)="fetchRooms()"> Tìm
+								kiếm</button>
+						</div> -->
 					</div>
 				</div>
-				<div class="card chat dz-chat-history-box">
-					<div class="card-header chat-list-header text-center">
-						<div>
-							<h6 class="mb-1">Tin nhắn</h6>
+			</div>
+		</div>
+		<!-- (bsValueChange)="dateValueChange($event)" -->
+
+
+
+		<div class="content" role="main">
+			<div class="chatbox">
+				<div class="d-flex">
+					<div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
+						<div class="card-header chat-list-header text-center">
+							<div>
+								<h6 class="mb-1">Danh sách chat</h6>
+							</div>
 						</div>
-						<div class="dropdown">
-							<a href="#" data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24"
-									version="1.1">
-									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-										<rect x="0" y="0" width="24" height="24" />
-										<circle fill="#000000" cx="5" cy="12" r="2" />
-										<circle fill="#000000" cx="12" cy="12" r="2" />
-										<circle fill="#000000" cx="19" cy="12" r="2" />
-									</g>
-								</svg></a>
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li class="dropdown-item" (click)="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i> Bật
-									bot</li>
-								<li class="dropdown-item" (click)="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot
+						<div class="card-body contacts_body p-0">
+							<ul class="contacts">
+								<li *ngFor="let room of rooms" class="dz-chat-user" (click)="resetGetMessage(room.id,room.name)"
+									[ngClass]="{'room-selected' : room.id == roomActive}">
+									<div class="d-flex">
+										<div class="img_cont">
+											<i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
+										</div>
+										<div class="user_info" style="flex: 1 1 0;">
+											<span [ngClass]="{'text-white' : room.id == roomActive}">{{ room.title }}</span>
+											<p>{{ room.createdDate | date:'dd/MM/yyyy HH:mm' }}</p>
+										</div>
+										<div *ngIf="room.type == 2" class="square mr-1 bg-red"></div>
+									</div>
 								</li>
 							</ul>
 						</div>
 					</div>
-					<div #boxChat class="card-body msg_card_body" [scrollTop]="boxChat.scrollHeight"
-						(scroll)="onScrollBoxChat($event)">
-						<ng-container *ngFor="let message of messages">
-							<div *ngIf="message.fromUserId != userId">
-								<div class="mt-0">
-									{{message.fromFullName}}
-								</div>
-								<div class="d-flex justify-content-start mb-4">
-									<div class="img_cont_msg">
-										<img *ngIf="!message.fromAvatar" src="../../../assets/dist/images/Icon_app.png"
-											class="rounded-circle user_img_msg">
-										<img *ngIf="message.fromAvatar" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
-
+					<div class="card chat dz-chat-history-box">
+						<div class="card-header chat-list-header text-center">
+							<div>
+								<h6 class="mb-1">Tin nhắn</h6>
+							</div>
+							<div class="dropdown">
+								<a href="#" data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24"
+										version="1.1">
+										<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+											<rect x="0" y="0" width="24" height="24" />
+											<circle fill="#000000" cx="5" cy="12" r="2" />
+											<circle fill="#000000" cx="12" cy="12" r="2" />
+											<circle fill="#000000" cx="19" cy="12" r="2" />
+										</g>
+									</svg></a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li class="dropdown-item" (click)="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i>
+										Bật
+										bot</li>
+									<li class="dropdown-item" (click)="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div #boxChat class="card-body msg_card_body" [scrollTop]="boxChat.scrollHeight"
+							(scroll)="onScrollBoxChat($event)">
+							<ng-container *ngFor="let message of messages">
+								<div *ngIf="message.fromUserId != userId">
+									<div class="mt-0">
+										{{message.fromFullName}}
 									</div>
-									<div class="msg_cotainer">
+									<div class="d-flex justify-content-start mb-2">
+										<div class="img_cont_msg">
+											<img *ngIf="!message.fromAvatar" src="../../../assets/dist/images/Icon_app.png"
+												class="rounded-circle user_img_msg">
+											<img *ngIf="message.fromAvatar" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
 
-										{{message.messageContent}}
-										<ng-container *ngIf="message.answers.length == 1">
-											<ng-container *ngFor="let ans of message.answers">
-												<div *ngIf="ans.answer" class="msg_cotainer_answer">
-													{{ans.answer}}
-												</div>
-												<ng-container *ngFor="let tag of ans.subTags.data">
-													<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
-														{{tag.title}}
-													</div>
-												</ng-container>
-											</ng-container>
-										</ng-container>
-										<ng-container *ngIf="message.answers.length > 1">
-											<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
-												<ng-template let-ans pTemplate="item">
-													<div *ngIf="ans.answer" class="msg_cotainer_answer slide">
-														{{ans.answer}}
+										</div>
+										<div class="msg_cotainer" style="max-width: 80%;">
+
+											{{message.messageContent}}
+											<ng-container *ngIf="message.answers.length == 1">
+												<ng-container *ngFor="let ans of message.answers">
+													<div *ngIf="ans.answer" class="msg_cotainer_answer" [innerHTML]="ans.answer | Change">
+														<!-- {{ans.answer}} -->
 													</div>
 													<ng-container *ngFor="let tag of ans.subTags.data">
 														<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
 															{{tag.title}}
 														</div>
 													</ng-container>
-												</ng-template>
-											</p-carousel>
-										</ng-container>
-										<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+												</ng-container>
+											</ng-container>
+											<ng-container *ngIf="message.answers.length > 1">
+												<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
+													<ng-template let-ans pTemplate="item">
+														<div *ngIf="ans.answer" class="msg_cotainer_answer slide" [innerHTML]="ans.answer | Change">
+															<!-- {{ans.answer}} -->
+														</div>
+														<ng-container *ngFor="let tag of ans.subTags.data">
+															<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
+																{{tag.title}}
+															</div>
+														</ng-container>
+													</ng-template>
+												</p-carousel>
+											</ng-container>
+											<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div *ngIf="message.fromUserId == userId">
-								<div class="mt-0" style="text-align:right;">
-									{{message.fromFullName}}
-								</div>
-								<div class="d-flex justify-content-end mb-4">
-
-									<div class="msg_cotainer_send">
-										<!-- {{message.messageContent}} -->
-										{{message.messageContent}}
-										<ng-container *ngFor="let tag of message.SubTags">
-											<div *ngIf="tag.title" class="msg_cotainer_child">
-												<span class="item p-2">{{tag.title}}</span>
-											</div>
-											<a *ngIf="tag.link" routerLink="tag.link">
-												{{tag.link}}
-											</a>
-										</ng-container>
-										<span class="msg_time_send">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+								<div *ngIf="message.fromUserId == userId">
+									<div class="mt-0" style="text-align:right;">
+										{{message.fromFullName}}
 									</div>
-									<div class="img_cont_msg">
-										<img *ngIf="message.fromAvatar == ''|| message.fromAvatar == null "
-											src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-											class="rounded-circle user_img_msg">
-										<img *ngIf="message.fromAvatar != ''" [src]="message.fromAvatar"
-											class="rounded-circle user_img_msg">
+									<div class="d-flex justify-content-end mb-2">
+
+										<div class="msg_cotainer_send" style="max-width: 80%;">
+											<!-- {{message.messageContent}} -->
+											{{message.messageContent}}
+											<ng-container *ngFor="let tag of message.SubTags">
+												<div *ngIf="tag.title" class="msg_cotainer_child">
+													<span class="item p-2">{{tag.title}}</span>
+												</div>
+												<a *ngIf="tag.link" routerLink="tag.link">
+													{{tag.link}}
+												</a>
+											</ng-container>
+											<span class="msg_time_send">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+										</div>
+										<div class="img_cont_msg">
+											<img *ngIf="!message.fromAvatar" src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+												class="rounded-circle user_img_msg">
+											<img *ngIf="message.fromAvatar" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
+										</div>
 									</div>
 								</div>
+
+							</ng-container>
+						</div>
+						<div class="card-footer pr-1 p-3">
+							<div class="input-group br-textMessage p-1">
+								<textarea id="type_msg" class="form-control" placeholder="Nhập nội dung.." name="newMessage"
+									[(ngModel)]="newMessage" (keydown)="onKeyDown($event)"></textarea>
+								<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'type_msg'">
+									<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
+								</button>
+								<div class="input-group-append" type="button" (click)="sendMessage()">
+									<button type="button" class="btn cl-blue p-2"><i class="fa fa-location-arrow"></i></button>
+								</div>
+
+
 							</div>
-
-						</ng-container>
-					</div>
-					<div class="card-footer ">
-						<div class="input-group br-textMessage p-1">
-							<textarea id="type_msg" class="form-control" placeholder="Type your message..." name="newMessage"
-								[(ngModel)]="newMessage" (keydown)="onKeyDown($event)"></textarea>
-							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'type_msg'">
-								<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
-							</button>
-							<div class="input-group-append" type="button" (click)="sendMessage()">
-								<button type="button" class="btn btn-primary"><i class="fa fa-location-arrow"></i></button>
-							</div>
-
-
 						</div>
 					</div>
 				</div>
@@ -163,8 +200,9 @@
 					(click)="updateStatus(item, true)"> Bạn có một tin nhắn mới </div>
 				<div aria-live="polite" role="alertdialog" (click)="updateStatus(item, true)"
 					class="toast-message ng-star-inserted" aria-label="">
-					{{item.name}}
+					{{item.title}}
 				</div>
+				<p class="mb-0">{{item.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</p>
 			</div>
 		</ng-container>
 

@@ -14,17 +14,23 @@
 					<p class="card-text  mb-3" style="font-size: 20px;"><span style="font-weight: 300;">Kiến nghị về việc: </span>
 						{{model.title}}
 					</p>
-					<!-- <div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
+					<div *ngIf="!model.isPublicInfoUser"
+						class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
 						<div class="media align-items-center">
 							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
 								{{model.shortName}}
 							</div>
 							<div class="media-body">
-								<p class="my-0 h5">{{model.name}}</p>
+								<div class="d-flex">
+									<p class="my-0 h5 line-height-14">{{model.name}}</p>
+									<p *ngIf="model.phone" class="mb-0 ml-2 line-height-14">- {{ model.phone}}</p>
+								</div>
+
+								<p class="my-0 line-height-14">{{model.email}}</p>
 							</div>
 						</div>
 
-					</div> -->
+					</div>
 
 
 					<div class="media pb-3  box-message-publish" style="margin: 0!important;">

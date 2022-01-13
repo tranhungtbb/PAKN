@@ -87,46 +87,6 @@
 								Vui lòng nhập lại thông tin!</span>
 						</div>
 					</div>
-					<!-- <div class="col-12 col-lg-6 form-group">
-						<div class="label pl-0 mb-1">Lĩnh vực <span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" placeholder="Chọn..."
-							formControlName="field" notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.field">
-							<ng-template ng-option-tmp let-item="item">
-								<div title="{{item.text}}">{{item.text}}</div>
-							</ng-template>
-						</ng-select>
-						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))"
-							class="has-error">
-							<div *ngIf="f.field.errors.required">
-								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
-							</div>
-						</div>
-					</div> -->
-					<!-- <div class="col-12 col-lg-6 form-group">
-										<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
-										<ng-select class="form-control" [items]="lstUnit" bindLabel="text" bindValue="value"
-											notFoundText="Không tìm thấy dữ liệu" placeholder="Chọn..." formControlName="unitId"
-											[(ngModel)]="model.unitId">
-											<ng-template ng-option-tmp let-item="item">
-												<ul>
-													<li>
-														<p class="bg-hover mb-0" *ngIf="item.unitLevel == 1">
-															<strong>{{item.text}}</strong>
-														</p>
-														<p class="bg-hover mb-0" *ngIf="item.unitLevel != 1">{{item.text}}</p>
-														<p *ngIf="item.isMain" class="cl-red" style="font-style: italic;">
-															(Trường hợp không chọn được đơn vị xử lý)
-														</p>
-													</li>
-												</ul>
-											</ng-template>
-										</ng-select>
-										<div *ngIf="(submitted && f.unitId.invalid)" class="has-error">
-											<div *ngIf="f.unitId.errors.required">
-												<span class="help-block">Trường dữ liệu này không được để trống</span>
-											</div>
-										</div>
-									</div> -->
 
 					<div class="col-12 col-lg-6 form-group ng-select-test">
 						<div class="label pl-0 mb-1">cấp cơ quan tiếp nhận<span class="cl-red">(*)</span></div>
@@ -286,7 +246,15 @@
 
 					</div>
 				</div>
+
 				<form class="form-row mb-3 align-items-end justify-content-between" [formGroup]="form">
+					<div class="col-12 col-sm-12 mb-2">
+						<mat-checkbox [(ngModel)]="model.isPublicInfoUser" formControlName="isPublicInfoUser"
+							[labelPosition]="before" [color]="primary">
+							Hiển thị thông tin cá nhân khi công khai nội dung trả lời phản
+							ánh, kiến nghị
+						</mat-checkbox>
+					</div>
 					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
 						<label class="mb-1 label-authorize">MÃ SỐ XÁC THỰC <span class="cl-red">(*)</span></label>
 						<div

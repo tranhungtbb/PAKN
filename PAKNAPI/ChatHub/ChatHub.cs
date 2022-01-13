@@ -32,10 +32,10 @@ namespace SignalR.Hubs
             _appSetting = appSetting;
         }
 
-        public async Task BroadcastMessage(Message msg)
-        {
-            await Clients.All.BroadcastMessage(msg);
-        }
+        //public async Task BroadcastMessage(Message msg)
+        //{
+        //    await Clients.All.OnNewMessage(msg);
+        //}
 
         public async Task NotifyAdmin(Room room)
         {
@@ -120,8 +120,10 @@ namespace SignalR.Hubs
                     Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(), 
                     Type = MessageTypes.Conversation
                 };
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, resSenderUserId.Id, roomId, resSenderUserId.Name, resSenderUserId.AvatarUrl, dateSent);
+                await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, resSenderUserId.Id, roomId, resSenderUserId.Name, resSenderUserId.AvatarUrl, dateSent);
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
+                var room = await new BOTRoom(_appSetting).BOTRoomGetById(roomId);
+                await Clients.All.OnNewMessage(room);
             }
         }
 
@@ -157,7 +159,6 @@ namespace SignalR.Hubs
                     HiddenAnswer = string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer,
                     From = "Bot",
                     FromFullName = "Bot",
-
                     Results = results,
                     FromId = "Bot",
                     To = roomName,
@@ -165,7 +166,8 @@ namespace SignalR.Hubs
                     Type = MessageTypes.Conversation
                 };
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
-                var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id,"","", foo);
+                await Clients.All.OnNewMessage(room);
+                await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id,"Bot","", foo);
                 DateTime fooo = DateTime.Now;
                 double total = (fooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 1 " + total);
@@ -199,7 +201,7 @@ namespace SignalR.Hubs
                 return new UserChatModel()
                 {
                     Id = ress.Id,
-                    Name = "Người dân",
+                    Name = httpContext.Request.Query["fullName"].ToString(),
                     AvatarUrl = ""
                 };
             }

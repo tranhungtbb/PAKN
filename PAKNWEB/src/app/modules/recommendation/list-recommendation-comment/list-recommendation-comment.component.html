@@ -5,7 +5,6 @@
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
 					<li class="breadcrumb-item active"><a class="font-weight-bold">Bình luận Phản ánh, Kiến nghị</a></li>
-					<!-- <li class="breadcrumb-item active"><a class="font-weight-bold"> Chứa ảnh giả</a></li> -->
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 				</div>
@@ -15,10 +14,6 @@
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<!-- [showCurrentPageReport]="true" (onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true"
-							[paginator]="true"
-							[rowsPerPageOptions]="[20,30,50]" autoLayout="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" -->
 						<p-treeTable #table [value]="listData" (onNodeExpand)="onNodeExpand($event)" [paginator]="true"
 							[totalRecords]="totalRecords" [rows]="pageSize" [rowsPerPageOptions]="[20,30,50]" autoLayout="true"
 							(onLazyLoad)="onPageChange($event)" [lazy]="true"
@@ -33,7 +28,7 @@
 
 									<th style="width: 210px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>NGƯỜI TẠO</strong>
+											<strong>Người tạo</strong>
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.fullName"
 											maxlength="100" (keydown.enter)="dataStateChange()" />

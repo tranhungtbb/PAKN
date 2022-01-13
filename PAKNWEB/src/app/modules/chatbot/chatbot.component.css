@@ -203,9 +203,15 @@ img {
 	width: 100%;
 }
 
-.type_msg {
-	border-top: 1px solid #c4c4c4;
+#type_msg {
+	border: 1px solid #c4c4c4;
 	position: relative;
+	border-top-right-radius: 0.75rem;
+	border-bottom-right-radius: 0.75rem;
+}
+
+.card-footer{
+	padding: 0px;
 }
 
 .msg_send_btn {
@@ -242,6 +248,7 @@ img {
 	display: block;
 	position: relative;
 	right: 0;
+	z-index: 0;
 	padding: 15px;
 }
 
@@ -249,10 +256,14 @@ img {
 	width: 300px;
 	margin-right: 15px;
 	height: 100%;
+	border-radius: 7px;
+	border: 1px solid #eee;
 }
 
 .card.chat {
 	width: calc(100% - 300px);
+	border-radius: 7px;
+	border: 1px solid #eee;
 }
 
 .chatbox .contacts_body {
@@ -322,4 +333,29 @@ img {
 	margin: 5px 2px;
 	border-radius: 7px;
 	padding-right: 5px;
+}
+
+.chatbox .msg_cotainer{
+	padding: 7px 15px;
+	text-align: left;
+}
+.input-group-addon {
+	position: absolute;
+	opacity: 0.5;
+	right: 25px;
+	top: 8px;
+}
+.form-control-sm{
+	padding: 1rem 0.5rem;
+	font-size: 1rem;
+	border-radius: 0.6rem;
+	height: 34px;
+}
+.align-center{
+	display: flex;
+	align-items: center;
+}
+
+.msg_cotainer_send{
+	background-color: #e7e7e7;
 }

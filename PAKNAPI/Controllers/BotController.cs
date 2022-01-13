@@ -35,24 +35,22 @@ namespace PAKNAPI.Controllers
         {
             this._appSetting = appSetting;
             this._bugsnag = bugsnag;
-
         }
 
 
         [HttpGet]
         [Route("rooms")]
-        public async Task<ActionResult<object>> BOTRoomGetAllOnPageBase(int? PageSize, int? PageIndex)
+        public async Task<ActionResult<object>> BOTRoomGetAllOnPageBase(string Title,DateTime? CreatedDate, int? PageSize = 20, int? PageIndex = 1)
         {
             try
             {
-                List<BOTRoomGetAllOnPage> rsNENewsGetAllOnPage = await new BOTRoomGetAllOnPage(_appSetting).SYUserGetByRoleIdAllOnPageDAO(PageSize, PageIndex);
+                List<BOTRoomGetAllOnPage> rsNENewsGetAllOnPage = await new BOTRoomGetAllOnPage(_appSetting).SYUserGetByRoleIdAllOnPageDAO(Title, CreatedDate,PageSize, PageIndex);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"Data", rsNENewsGetAllOnPage},
-                        {"ListRoomIsShow", await new BOTRoomGetAllByStatus(_appSetting).BOTRoomGetAllByStatusDAO()},
-                        //{"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
-                        //{"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
-                        //{"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
+                        {"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
+                        {"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
                     };
 
                 return new ResultApi { Success = ResultCode.OK, Result = json };
@@ -63,6 +61,43 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        [HttpGet]
+        [Route("rooms-notification")]
+        public async Task<ActionResult<object>> BOTRoomForNotificationBase()
+        {
+            try
+            {
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"ListRoomIsShow", await new BOTRoomGetAllByStatus(_appSetting).BOTRoomGetAllByStatusDAO()},
+                    };
+
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Route("room-get-by-id")]
+        public async Task<ActionResult<object>> BOTRoomGetByIdBase(int Id)
+        {
+            try
+            {
+                return new ResultApi { Success = ResultCode.OK, Result = await new BOTRoom(_appSetting).BOTRoomGetById(Id) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        
 
         /// <summary>
         /// create room
@@ -79,6 +114,7 @@ namespace PAKNAPI.Controllers
 
                 // create user
                 var guid = roomBot.UserName;
+                string time = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds().ToString();
                 string roomName = "Room_" + guid;
                 BOTAnonymousUser res = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(guid);
                 if (res != null && res.Id > 0)
@@ -91,29 +127,31 @@ namespace PAKNAPI.Controllers
                         var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
                         if (room != null && room.Id > 0)
                         {
-                            IDictionary<string, string> json = new Dictionary<string, string>
+                            IDictionary<string, object> json = new Dictionary<string, object>
                             {
-                                {"AnonymousId",  id.ToString()},
+                                {"AnonymousId",  id},
                                 {"AnonymousName", guid},
-                                {"RoomId", room.Id.ToString()},
+                                {"RoomId", room.Id},
                                 {"RoomName", roomName},
-                                {"Type", room.Type.ToString()},
-                                {"IsCreateRoom", false.ToString()},
+                                {"RoomTitle" , room.Title},
+                                {"Type", room.Type},
+                                {"IsCreateRoom", false},
                             };
 
                             return new ResultApi { Success = ResultCode.OK, Result = json };
                         }
                         else
                         {
-                            var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, (int)BotStatus.Enable))).ToString());
-                            IDictionary<string, string> json = new Dictionary<string, string>
+                            var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, time, id, (int)BotStatus.Enable))).ToString());
+                            IDictionary<string, object> json = new Dictionary<string, object>
                             {
-                                {"AnonymousId",  id.ToString()},
+                                {"AnonymousId",  id},
                                 {"AnonymousName", guid},
-                                {"RoomId", roomId.ToString()},
+                                {"RoomId", roomId},
                                 {"RoomName", roomName},
-                                {"Type", ((int)BotStatus.Enable).ToString()},
-                                {"IsCreateRoom", true.ToString()},
+                                {"RoomTitle" , time},
+                                {"Type", (int)BotStatus.Enable},
+                                {"IsCreateRoom", true},
                             };
                             return new ResultApi { Success = ResultCode.OK, Result = json };
                         }
@@ -131,16 +169,17 @@ namespace PAKNAPI.Controllers
                     {
                         // create room
 
-                        var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, (int)BotStatus.Enable))).ToString());
+                        var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName,time, id, (int)BotStatus.Enable))).ToString());
                         
-                        IDictionary<string, string> json = new Dictionary<string, string>
+                        IDictionary<string, object> json = new Dictionary<string, object>
                         {
-                            {"AnonymousId",  id.ToString()},
+                            {"AnonymousId",  id},
                             {"AnonymousName", guid},
-                            {"RoomId", roomId.ToString()},
+                            {"RoomId", roomId},
                             {"RoomName", roomName},
-                            {"Type", ((int)BotStatus.Enable).ToString()},
-                            {"IsCreateRoom", true.ToString()},
+                            {"RoomTitle" , time},
+                            {"Type", (int)BotStatus.Enable},
+                            {"IsCreateRoom", true},
                         };
                         //_hubContext.Clients.All.BroadcastMessage(messageModel);
                         return new ResultApi { Success = ResultCode.OK, Result = json };

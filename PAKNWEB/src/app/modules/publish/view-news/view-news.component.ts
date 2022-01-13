@@ -46,6 +46,9 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				window.scroll(0, 0)
+				$('html, body')
+					.animate({ scrollTop: 0 })
+					.promise()
 				this.getData(params['id'])
 				this.newsService.getListHomePage({}).subscribe(
 					(res) => {

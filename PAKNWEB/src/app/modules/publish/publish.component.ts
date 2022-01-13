@@ -53,6 +53,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	messages: any[] = []
 	loading: boolean
 	myGuid: string
+	fullName: string
 	config: any = {}
 	room: any = {}
 	ngOnInit() {
@@ -99,6 +100,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	roomId: any
 	async handleInitConnectionToChatBot() {
 		this.myGuid = this.storageService.getClientUserId();
+		this.fullName = this.storageService.getFullName() == null ? 'Người dân' : this.storageService.getFullName()
 		if (!this.myGuid) {
 			this.myGuid = uuidv4();
 			this.storageService.setClientUserId(this.myGuid);
@@ -106,7 +108,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		console.log('onConnectChatBot ', this.myGuid);
 		if (!this.connection) {
 			this.connection = new signalR.HubConnectionBuilder()
-				.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${this.myGuid}`, {
+				.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${this.myGuid}&fullName=${this.fullName}`, {
 					skipNegotiation: true,
 					transport: signalR.HttpTransportType.WebSockets,
 				})
@@ -126,6 +128,7 @@ export class PublishComponent implements OnInit, OnChanges {
 					Id: Number(resCreate.result.RoomId),
 					AnonymousId: Number(resCreate.result.AnonymousId),
 					Name: resCreate.result.RoomName,
+					Title: resCreate.result.RoomTitle,
 					Type: Number(resCreate.result.Type),
 					CreatedDate: new Date()
 				}
@@ -192,6 +195,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 	}
 
+
 	redirectCreateRecommendation() {
 		this._router.navigate(['/cong-bo/them-moi-kien-nghi'])
 	}
@@ -207,7 +211,7 @@ export class PublishComponent implements OnInit, OnChanges {
 			return
 		}
 		else if (message.typeSuggest && message.typeSuggest == "3") {
-			this.connection.invoke('NotifyAdmin', this.room)
+			this.connection.invoke('NotifyAdmin', { ...this.room, 'CreatedDate': new Date() })
 			this.messages = [
 				...this.messages,
 				{
@@ -218,6 +222,10 @@ export class PublishComponent implements OnInit, OnChanges {
 					answers: []
 				},
 			]
+			setTimeout(() => {
+				var objDiv = document.getElementById('bodyMessage')
+				objDiv.scrollTop = objDiv.scrollHeight
+			}, 300)
 			return
 		}
 		this.loading = true
@@ -256,12 +264,11 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 	}
 
-	onDisconnectChatBot() {
-
-	}
-
 	onActivate(event) {
 		window.scroll(0, 0)
+		$('html, body')
+			.animate({ scrollTop: 0 })
+			.promise()
 	}
 
 	getListNotification(PageSize: any) {
@@ -375,7 +382,6 @@ export class PublishComponent implements OnInit, OnChanges {
 			if (message.classList.contains('show')) {
 				message.classList.remove('show')
 				message.style.display = 'none'
-				this.onDisconnectChatBot()
 			} else {
 				message.classList.add('show')
 				message.style.display = 'block'
