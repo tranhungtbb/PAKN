@@ -105,7 +105,7 @@ export class AppheaderComponent implements OnInit {
 		private notificationService: NotificationService,
 		private accountService: AccountService,
 		private _userServiceChat: UserServiceChatBox
-	) {}
+	) { }
 
 	formChangePassword: FormGroup
 	oldPassword: string
@@ -336,7 +336,7 @@ export class AppheaderComponent implements OnInit {
 		}
 	}
 
-	onUpdate() {}
+	onUpdate() { }
 
 	// profile
 
@@ -394,6 +394,9 @@ export class AppheaderComponent implements OnInit {
 			output.attr('src', this.userAvatar)
 		}
 		$('#modalEditUserInfo').modal('show')
+		window.setTimeout(() => {
+			document.body.className += " modal-open"
+		}, 200);
 	}
 
 	preView() {

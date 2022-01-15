@@ -11,7 +11,7 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 	providedIn: 'root',
 })
 export class SMSManagementService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	Insert(request: any): Observable<any> {
 		let headers = {
@@ -75,6 +75,9 @@ export class SMSManagementService {
 
 	GetListIndividualAndBusinessByAdmintrativeUnitId(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.GetListIndividualAndBusinessByAdmintrativeUnitId)
+	}
+	GetListIndividualBusinessDrop(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.GetListIndividualBusinessDrop)
 	}
 
 	// delete(query: any): Observable<any> {

@@ -5,8 +5,10 @@
 	<form [formGroup]="formData" class="form-row align-items-center" autocomplete="off">
 		<div class="col-12 col-lg-6 form-group">
 			<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
-			<input [svTrim] maxlength="50" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
+			<input [svTrim] maxlength="50" [(ngModel)]="model.fullName" formControlName="fullName" type="text"
+				placeholder="Nhập họ và tên.." class="form-control border-brown">
+			<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))"
+				class="has-error m-b-12">
 				<div *ngIf="f.fullName.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
@@ -30,35 +32,12 @@
 		</div> -->
 
 		<div class="col-12 col-lg-6 form-group">
-			<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-			<input onlyNumber="true" maxlength="10" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
-				<div *ngIf="f.phone.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
-				</div>
-				<div *ngIf="f.phone.errors.pattern">
-					<span class="help-block">Số điện thoại không đúng</span>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-lg-6 form-group">
-			<label class="mb-1">Email</label>
-			<input [svTrim] maxlength="50" [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
-				<div *ngIf="f.email.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
-				</div>
-				<div *ngIf="f.email.errors.email">
-					<span class="help-block">Email không hợp lệ</span>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-12 col-lg-6 form-group">
 			<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
-			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown"
-			pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$">
-			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
+			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text"
+				placeholder="Nhập số CMND / CCCD / Hộ chiếu .." class="form-control border-brown"
+				pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$">
+			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))"
+				class="has-error m-b-12">
 				<div *ngIf="f.idCard.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
@@ -68,17 +47,50 @@
 			</div>
 		</div>
 
+		<div class="col-12 col-lg-6 form-group">
+			<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
+			<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text"
+				placeholder="Nhập số điện thoại.." class="form-control border-brown">
+			<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))"
+				class="has-error m-b-12">
+				<div *ngIf="f.phone.errors.required">
+					<span class="help-block">Trường dữ liệu này không được để trống</span>
+				</div>
+				<div *ngIf="f.phone.errors.pattern">
+					<span class="help-block">Số điện thoại không đúng</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-lg-6 form-group">
+			<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+			<input [svTrim] maxlength="50" [(ngModel)]="model.email" formControlName="email" type="text"
+				placeholder="Nhập email.." class="form-control border-brown">
+			<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))"
+				class="has-error m-b-12">
+				<div *ngIf="f.email.errors.required">
+					<span class="help-block">Trường dữ liệu này không được để trống</span>
+				</div>
+				<div *ngIf="f.email.errors.email">
+					<span class="help-block">Email không hợp lệ</span>
+				</div>
+			</div>
+		</div>
+
+
+
 		<div class="col-12 col-lg-12 form-group">
 			<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-			<input [svTrim] maxlength="200" [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<input [svTrim] maxlength="200" [(ngModel)]="model.address" formControlName="address" type="text"
+				placeholder="Nhập địa chỉ cụ thể.." class="form-control border-brown">
 
-			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
+			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))"
+				class="has-error m-b-12">
 				<div *ngIf="f.address.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
-		
+
 
 		<!-- <div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
@@ -144,7 +156,7 @@
 			</div>
 		</div> -->
 
-		
+
 		<!-- <div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Nơi cấp</label>
 			<input [svTrim] maxlength="200" [(ngModel)]="model.issuedPlace" formControlName="issuedPlace" type="text" placeholder="Nhập..." class="form-control border-brown">
@@ -183,8 +195,10 @@
 
 	<div class="row mb-4">
 		<div class="col text-right clearfix">
-			<button type="button" class="btn text-white border-0 rounded-xl mt-3 grd-xanhngoc pull-right" (click)="onSave()">Cập nhật</button>
-			<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mr-3 pull-right" (click)="onReSet()">Đặt lại</button>
+			<button type="button" class="btn text-white border-0 rounded-xl mt-3 grd-xanhngoc pull-right"
+				(click)="onSave()">Cập nhật</button>
+			<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mr-3 pull-right"
+				(click)="onReSet()">Hủy</button>
 		</div>
 	</div>
 </div>

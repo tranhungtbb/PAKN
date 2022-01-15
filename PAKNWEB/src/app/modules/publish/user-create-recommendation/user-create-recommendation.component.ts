@@ -17,7 +17,6 @@ import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UnitService } from '../../../services/unit.service'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { LocationService } from 'src/app/services/location.service'
 
 declare var $: any
@@ -31,35 +30,27 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	form: FormGroup
 	model: RecommendationObject = new RecommendationObject()
 	lstUnit: any[] = []
-	lstField: any[] = []
-	lstBusiness: any[] = []
-	lstIndividual: any[] = []
-	lstObject: any[] = []
-	lstHashtag: any[] = []
-	lstHashtagSelected: any[] = []
-	hashtagId: number = null
+	lstGroupUnit: any[] = []
 	fileAccept = CONSTANTS.FILEACCEPT
 	files: any[] = []
 	lstXoaFile: any[] = []
 	submitted: boolean = false
-	modelHashTagAdd: HashtagObject = new HashtagObject()
 	dateNow: Date = new Date()
 	@ViewChild('file', { static: false }) public file: ElementRef
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	captchaImage: any = ''
 	captchaCode: string = null
 	resultsRecommendation: any = []
 	lstDictionariesWord: any = []
-
+	flagRecommend: boolean;
 	unitSelected: any = { name: null, id: null }
-	lstUnitTree: any[] = []
+	lstUnitChild: any[] = []
 	isLogin: any
-
+	flagInputContent: boolean = false;
 	// map
 	markers: any = {}
 	private geoCoder
 	zoom: number = 15
-
+	milliseconds = new Date().getTime();
 	constructor(
 		private unitService: UnitService,
 		private toastr: ToastrService,
@@ -73,13 +64,30 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		private notificationService: NotificationService,
 		private eRef: ElementRef,
 		private locationService: LocationService
-	) {}
 
-	ngOnInit() {
+	) { }
+
+	async ngOnInit() {
 		this.model = new RecommendationObject()
 		this.model.typeObject = this.storageService.getTypeObject()
 		this.reloadImage()
 		this.getDropdown()
+		this.builForm()
+
+		await this.recommendationService.recommendationGetDataForCreate({}).toPromise().then(
+			(response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					this.model.code = response.result.code
+					this.lstGroupUnit = response.result.lstGroupUnit
+				} else {
+					this.toastr.error(response.message)
+				}
+			},
+			(error) => {
+				console.log(error)
+			}
+		)
+
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.model.id = +params['id']
@@ -89,26 +97,39 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.getData()
 			} else {
 				this.model.typeObject = 1
-				this.setCurrentLocation()
 			}
-			this.builForm()
+
 		})
 		this.isLogin = this.storageService.getAccessToken()
+
+	}
+
+	ngAfterViewInit() {
+		this.setCurrentLocation()
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 
-	ngAfterViewInit(){
-		
-	}
-
-	private setCurrentLocation() {
+	setCurrentLocation() {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
+				this.model.lat = this.markers.lat
+				this.model.lng = this.markers.lng
+				setTimeout(() => {
+					this.getAddress(this.model.lat, this.model.lng).then((res) => {
+						this.model.address = String(res)
+					})
+				}, 200)
+
 			})
 		}
 	}
-
+	inputTitleFocus() {
+		this.flagInputContent = false;
+	}
+	onFocusContent() {
+		this.flagInputContent = true;
+	}
 	searchRecommendation() {
 		this.resultsRecommendation = []
 		if (this.model.title != '' && this.model.title.trim() != '') {
@@ -124,6 +145,13 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 							})
 						})
 					}
+					if (this.flagInputContent == true) {
+						this.flagRecommend = false;
+					}
+					else {
+						this.flagRecommend = true;
+					}
+					this.flagInputContent = false;
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -140,15 +168,27 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.recommendationService.recommendationGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
-				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
-				if(!this.model.lat || !this.model.lng){
+				if (!this.model.lat || !this.model.lng) {
 					this.setCurrentLocation()
-				}else{
+				} else {
 					this.markers.lat = Number(this.model.lat)
 					this.markers.lng = Number(this.model.lng)
 				}
-				this.getListUnitDefault()
+				let unitGroup = this.lstGroupUnit.find(x => x.id == this.model.groupUnitId)
+				if (unitGroup) {
+					this.isChooseUnit = unitGroup.isMain == null ? false : true
+					if (!unitGroup.isMain) {
+						this.getUnitByGroup(unitGroup.id)
+						this.unitByParent(this.model.unitReceive)
+					}
+					if (unitGroup.isAdministrative) {
+						this.isShowUnitChild = true
+					} else {
+						this.isShowUnitChild = false
+					}
+				}
+
 				this.hightLightText()
 			} else {
 				this.toastr.error(response.message)
@@ -158,26 +198,8 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				console.log(error)
 			}
 	}
-	getDropdown() {
+	getDropdown = () => {
 		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe(
-			(response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					this.lstField = response.result.lstField
-					this.lstHashtag = response.result.lstHashTag
-					this.lstBusiness = response.result.lstBusiness
-					this.lstIndividual = response.result.lstIndividual
-					this.lstObject = response.result.lstIndividual
-					this.model.code = response.result.code
-					// this.lstUnit = response.result.lstUnit
-				} else {
-					this.toastr.error(response.message)
-				}
-			},
-			(error) => {
-				console.log(error)
-			}
-		)
 		this._serviceCatalog.wordGetListSuggest(request).subscribe(
 			(response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -192,7 +214,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		)
 	}
 
-	getListUnit() {
+	getListUnitChild() {
 		this.lstUnit = []
 		this.model.unitId = null
 		let obj = {
@@ -210,32 +232,80 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		})
 	}
 
-	getListUnitDefault = () => {
-		let obj = {
-			FieldId: this.model.field == null ? '' : this.model.field,
-		}
-		this.unitService.getChildrenDropdownByField(obj).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.lstUnit = res.result
-			} else {
-				this.lstUnit = []
-			}
-		})
-	}
+	// getListUnitDefault = () => {
+	// 	let obj = {
+	// 		FieldId: this.model.field == null ? '' : this.model.field,
+	// 	}
+	// 	this.unitService.getChildrenDropdownByField(obj).subscribe((res) => {
+	// 		if (res.success == RESPONSE_STATUS.success) {
+	// 			this.lstUnit = res.result
+	// 		} else {
+	// 			this.lstUnit = []
+	// 		}
+	// 	})
+	// }
 
 	builForm() {
 		this.form = new FormGroup({
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
-			field: new FormControl(this.model.field, [Validators.required]),
-			unitId: new FormControl(this.model.unitId, [Validators.required]),
-			hashtag: new FormControl(this.hashtagId),
+			field: new FormControl(this.model.field),
+			unitId: new FormControl(this.model.unitId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
 			address: new FormControl(this.model.address, [Validators.required]),
+			groupUnitId: new FormControl(this.model.address, [Validators.required]),
+			isPublicInfoUser: new FormControl(this.model.isPublicInfoUser),
 		})
 	}
 	get f() {
 		return this.form.controls
+	}
+	isShowUnitChild: boolean = false
+	isChooseUnit: boolean = false
+	onChangeGroup(event) {
+		this.isChooseUnit = event.isMain == null ? false : true
+		this.model.unitReceive = null
+		this.model.unitChildId = null
+		if (!event.isMain) {
+			this.getUnitByGroup(event.id)
+		}
+		if (event.isAdministrative) {
+			this.isShowUnitChild = true
+		} else {
+			this.isShowUnitChild = false
+		}
+		this.lstUnit = []
+	}
+	getUnitByGroup(groupId: number) {
+		this.unitService.getByGroup({ GroupId: groupId }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstUnit = res.result
+			} else {
+				this.toastr.error(res.message)
+			}
+		})
+	}
+
+	unitByParent(idParent: number) {
+		this.unitService.getByParent({ ParentId: idParent }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstUnitChild = res.result
+			} else {
+				this.toastr.error(res.message)
+			}
+		})
+	}
+
+
+
+	getUnitByParent(event) {
+		this.model.unitChildId = null
+		if (event) {
+			this.unitByParent(event.id)
+		} else {
+			this.lstUnitChild = []
+		}
+
 	}
 
 	onUpload(event) {
@@ -248,7 +318,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
-						if(fileType.value === 4){
+						if (fileType.value === 4) {
 							item.filePathUrl = URL.createObjectURL(item)
 						}
 						this.files.push(item)
@@ -272,10 +342,23 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.lstXoaFile.push(file)
 		this.files.splice(index, 1)
 	}
-	isSuitableContent : boolean = true
+	isSuitableContent: boolean = true
 	onSave(status) {
 		this.isSuitableContent = true
 		this.submitted = true
+		if (this.isChooseUnit) {
+			this.model.unitId = this.model.groupUnitId
+		} else {
+			if (this.isShowUnitChild && this.model.unitChildId) {
+				this.model.unitId = this.model.unitChildId
+			} else {
+				if (!this.model.unitReceive) {
+					return
+				}
+				this.model.unitId = this.model.unitReceive
+			}
+		}
+
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {
@@ -285,7 +368,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			return
 		}
 		this.model.address = this.model.address == null ? '' : this.model.address.trim()
-		if(!this.checkContent()){
+		if (!this.checkContent()) {
 			this.isSuitableContent = false
 			return
 		}
@@ -293,7 +376,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			this.reloadImage()
 			return
 		}
-		
+
 		// nếu chưa đăng nhập cho lưu tạm
 		if (!this.isLogin || (this.isLogin && this.isLogin.trim() == '')) {
 			this.storageService.setRecommentdationObjectRemember(JSON.stringify(this.model))
@@ -318,12 +401,13 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 
 		const request = {
 			Data: this.model,
-			Hashtags: this.lstHashtagSelected,
+			Hashtags: [],
 			Files: this.files,
 			LstXoaFile: this.lstXoaFile,
 		}
 		var constdata = {
 			CaptchaCode: this.captchaCode,
+			MillisecondsCurrent: this.milliseconds
 		}
 
 		this.captchaService.send(constdata).subscribe((result) => {
@@ -331,7 +415,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				if (this.model.id == 0) {
 					this.recommendationService.recommendationInsert(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
 							this.toastr.success(COMMONS.ADD_SUCCESS)
 							localStorage.removeItem('recommentdationObjRemember')
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
@@ -346,7 +429,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				} else {
 					this.recommendationService.recommendationUpdate(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-							this.toastr.success(COMMONS.ADD_SUCCESS)
+							this.toastr.success(COMMONS.UPDATE_SUCCESS)
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
 						} else {
 							this.toastr.error(response.message)
@@ -365,7 +448,8 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
+		this.milliseconds = new Date().getTime();
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000 + '&&MillisecondsCurrent=' + this.milliseconds
 	}
 
 	reloadForm() {
@@ -381,7 +465,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			content: this.model.content,
 			field: this.model.field,
 			unitId: this.model.unitId,
-			hashtag: this.hashtagId,
 			captcha: this.captchaCode,
 		})
 		$('#contentRecommendation').html()
@@ -394,10 +477,10 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				content = content.replace(
 					nameWord,
 					'<span class="txthighlight wrapper" data-toggle="tooltip" data-placement="top" title="' +
-						this.lstDictionariesWord[index].description +
-						'">' +
-						this.lstDictionariesWord[index].name +
-						'</span>'
+					this.lstDictionariesWord[index].description +
+					'">' +
+					this.lstDictionariesWord[index].name +
+					'</span>'
 				)
 			}
 			$('#contentRecommendation').addClass('show')
@@ -405,13 +488,13 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			$('#contentRecommendation').html(content)
 		}
 		$('[data-toggle="tooltip"]').tooltip()
+		this.hideRecommendBox();
 	}
 
-	
-	checkContent(){
+
+	checkContent() {
 		for (let index = 0; index < this.lstDictionariesWord.length; index++) {
-			console.log('Model :' + this.model.content+ ',x :' + this.lstDictionariesWord[index].name +' result :'+this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()))
-			if (this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()) != -1){
+			if (this.model.content.toUpperCase().indexOf(this.lstDictionariesWord[index].name.toUpperCase()) != -1) {
 				return false
 			}
 		}
@@ -428,13 +511,22 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		$('#modalMaps').modal('show')
 	}
 
+	closeMap() {
+		$('#modalMaps').modal('hide')
+	}
+	getCurrentMark() {
+		$('#modalMaps').modal('show');
+		console.log('markers :' + this.markers)
+
+
+	}
 	async onSaveMaps() {
 		if (this.markers == null || this.markers.lat == null) {
 			return this.toastr.error('Vui lòng chọn vị trí')
 		} else {
 			this.model.lat = this.markers.lat
 			this.model.lng = this.markers.lng
-			await this.getAddress(this.model.lat, this.model.lng).then((res) => {
+			this.getAddress(this.model.lat, this.model.lng).then((res) => {
 				this.model.address = String(res)
 			})
 			$('#modalMaps').modal('hide')
@@ -464,8 +556,17 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.markers.lat = $event.coords.lat
 		this.markers.lng = $event.coords.lng
 	}
-	markerDragEnd(m: any, $event: MouseEvent) {
-		console.log('dragEnd', m, $event)
+	dragEnd(event): void {
+		this.markers = {}
+		this.markers.lat = event.coords.lat
+		this.markers.lng = event.coords.lng
+
+	}
+	closeModalMap() {
+		$('#modalMaps').modal('hide')
+	}
+	hideRecommendBox() {
+		this.flagRecommend = false;
 	}
 }
 

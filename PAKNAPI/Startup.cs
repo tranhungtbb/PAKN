@@ -209,8 +209,8 @@ namespace PAKNAPI
 			services.AddSignalR(options =>
 			{
 				options.EnableDetailedErrors = true;
-				options.KeepAliveInterval = TimeSpan.FromMinutes(1);
-				options.ClientTimeoutInterval = TimeSpan.FromMinutes(1);
+				options.KeepAliveInterval = TimeSpan.FromSeconds(15);
+				options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);
 			});
 		}
 
@@ -225,13 +225,19 @@ namespace PAKNAPI
 			{
 				app.UseHsts();
 			}
+			app.Use(async (context, next) =>
+			{
+				context.Response.Headers.Add("X-Frame-Options", "DENY");
+				await next();
+			});
 
 			app.UseMiddleware<CustomMiddleware>();
 
 			app.UseCors(
 				options => options.WithOrigins("http://localhost:8081", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:8080/")
 				.AllowAnyOrigin()
-				.AllowAnyMethod()
+				//.AllowAnyMethod()
+				.WithMethods("PUT", "DELETE", "GET", "POST")
 				.AllowAnyHeader()
 			);
 			app.UseOpenApi();
@@ -244,6 +250,12 @@ namespace PAKNAPI
 			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
 			app.UseDevExpressControls();
 			app.UseStaticFiles();
+
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Document")),
+				RequestPath = new PathString("/Upload/Document")
+			});
 			// end
 
 			app.UseRouting();

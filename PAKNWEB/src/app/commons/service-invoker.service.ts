@@ -25,13 +25,14 @@ export class ServiceInvokerService {
 	accountId: any
 	ipAddress: any
 
-	constructor(private http: HttpClient, public snackBar: MatSnackBar, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, public snackBar: MatSnackBar, private storeageService: UserInfoStorageService) { }
 
 	/* Get array */
 	get(element: any, url): Observable<any> {
 		element.IpAddress = this.storeageService.getIpAddress()
 		const httpPackage = {
 			params: element,
+			headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 		}
 
 		return this.http.get(url, httpPackage).pipe(catchError(this.handleError<any>()))
@@ -39,6 +40,7 @@ export class ServiceInvokerService {
 	getUrl(element: any, url): Observable<any> {
 		const httpPackage = {
 			params: element,
+			headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 		}
 
 		return this.http.get(url, httpPackage).pipe(catchError(this.handleError<any>()))
@@ -51,6 +53,7 @@ export class ServiceInvokerService {
 			logAction: headers.logAction,
 			logObject: headers.logObject,
 		})
+		tempheaders = tempheaders.append('content-type', 'application/json');
 		const httpPackage = {
 			params: element,
 			headers: tempheaders,
@@ -68,6 +71,7 @@ export class ServiceInvokerService {
 			logObject: headers.logObject,
 			isShowLoading: 'false',
 		})
+		tempheaders = tempheaders.append('content-type', 'application/json');
 		const httpPackage = {
 			params: element,
 			headers: tempheaders,
@@ -84,6 +88,7 @@ export class ServiceInvokerService {
 			logAction: headers.logAction,
 			logObject: headers.logObject,
 		})
+		tempheaders = tempheaders.append('content-type', 'application/json');
 
 		return this.http.get(url, { responseType: 'blob', params: element, headers: tempheaders }).pipe(tap(), catchError(this.handleError<Blob>()))
 	}
@@ -122,6 +127,7 @@ export class ServiceInvokerService {
 			logAction: headers.logAction,
 			logObject: headers.logObject,
 		})
+		tempheaders = tempheaders.append('content-type', 'application/json');
 		const httpPackage = {
 			params: element,
 			headers: tempheaders,
@@ -139,6 +145,7 @@ export class ServiceInvokerService {
 
 		const httpPackage = {
 			params: element,
+			headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 		}
 
 		return this.http.post(url, element, httpPackage).pipe(catchError(this.handleError<any>()))

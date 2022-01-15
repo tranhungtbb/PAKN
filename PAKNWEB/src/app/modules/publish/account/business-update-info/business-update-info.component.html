@@ -15,8 +15,10 @@
 								<p class="mb-1">Họ và Tên <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.representativeName}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.representativeName" formControlName="representativeName">
-									<div *ngIf="(submitted && f.representativeName.invalid)||(f.representativeName.invalid && (f.representativeName.dirty || f.representativeName.touched))"
+									<input type="text" class="form-control" [(ngModel)]="model.representativeName"
+										formControlName="representativeName">
+									<div
+										*ngIf="(submitted && f.representativeName.invalid)||(f.representativeName.invalid && (f.representativeName.dirty || f.representativeName.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="f.representativeName.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -41,11 +43,13 @@
 								</div>
 							</div> -->
 							<div class="col">
-								<p class="mb-1">Số điện thoại</p>
+								<p class="mb-1">Số điện thoại <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.phone}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.phone" formControlName="phone" placeholder="Nhập">
-									<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
+									<input type="text" class="form-control" [(ngModel)]="model.phone" formControlName="phone"
+										placeholder="Nhập">
+									<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.phone.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -60,8 +64,10 @@
 								<p class="mb-1">Email</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.email}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.email" formControlName="email" placeholder="Nhập">
-									<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
+									<input type="text" class="form-control" [(ngModel)]="model.email" formControlName="email"
+										placeholder="Nhập">
+									<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.email.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -71,7 +77,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<!-- <div class="col">
 								<p class="mb-1">Quốc tịch <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.nation}}</p>
@@ -158,8 +164,11 @@
 								<p class="mb-1">Địa chỉ cụ thể </p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.address}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.address" formControlName="address" placeholder="Nhập">
-									<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
+									<input type="text" class="form-control" [(ngModel)]="model.address" formControlName="address"
+										placeholder="Nhập">
+									<div
+										*ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.address.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -167,7 +176,7 @@
 								</div>
 							</div>
 						</div>
-							<!-- <div class="w-100 mb-3"></div>
+						<!-- <div class="w-100 mb-3"></div>
 							<div class="col-12">
 								<p class="mb-1" *ngIf="!editable">Giới tính: <span class="h4" *ngIf="!model.representativeGender">Nữ</span><span class="h4"
 										*ngIf="model.representativeGender">Nam</span>
@@ -188,8 +197,11 @@
 								<p class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.business}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.business" formControlName="business" placeholder="Nhập">
-									<div *ngIf="(submitted && f.business.invalid)||(f.business.invalid && (f.business.dirty || f.business.touched))" class="has-error m-b-12">
+									<input type="text" class="form-control" [(ngModel)]="model.business" formControlName="business"
+										placeholder="Nhập">
+									<div
+										*ngIf="(submitted && f.business.invalid)||(f.business.invalid && (f.business.dirty || f.business.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.business.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -200,16 +212,26 @@
 								<p class="mb-1">Số chứng nhận đăng ký kinh doanh <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.businessRegistration}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.businessRegistration" formControlName="businessRegistration">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.businessRegistration"
+										formControlName="businessRegistration">
+									<div
+										*ngIf="(submitted && f.businessRegistration.invalid)||(f.businessRegistration.invalid && (f.businessRegistration.dirty || f.businessRegistration.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.businessRegistration.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="col col-lg-6">
-								<p class="mb-1">Điện thoại <span class="cl-red">(*)</span></p>
+								<p class="mb-1">Điện thoại</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgPhone}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgPhone" formControlName="orgPhone" maxlength="10" numbersOnly
-										pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
-									<div *ngIf="(submitted && f.orgPhone.invalid)||(f.orgPhone.invalid && (f.orgPhone.dirty || f.orgPhone.touched))" class="has-error m-b-12">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgPhone"
+										formControlName="orgPhone" maxlength="10" numbersOnly pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
+									<div
+										*ngIf="(submitted && f.orgPhone.invalid)||(f.orgPhone.invalid && (f.orgPhone.dirty || f.orgPhone.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.orgPhone.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
@@ -307,23 +329,32 @@
 								</div>
 							</div> -->
 							<div class="col col-lg-8">
-								<p class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></p>
+								<p class="mb-1">Địa chỉ cụ thể</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgAddress}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" placeholder="Nhập" class="form-control" [(ngModel)]="model.orgAddress" formControlName="orgAddress">
+									<input type="text" placeholder="Nhập" class="form-control" [(ngModel)]="model.orgAddress"
+										formControlName="orgAddress">
 								</div>
-								<div *ngIf="(submitted && f.orgAddress.invalid)||(f.orgAddress.invalid && (f.orgAddress.dirty || f.orgAddress.touched))" class="has-error m-b-12">
+								<div
+									*ngIf="(submitted && f.orgAddress.invalid)||(f.orgAddress.invalid && (f.orgAddress.dirty || f.orgAddress.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.orgAddress.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
 								</div>
 							</div>
 							<div class="col col-lg-4">
-								<p class="mb-1">Email</p>
+								<p class="mb-1">Email <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgEmail}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgEmail" formControlName="orgEmail">
-									<div *ngIf="(submitted && f.orgEmail.invalid)||(f.orgEmail.invalid && (f.orgEmail.dirty || f.orgEmail.touched))" class="has-error m-b-12">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgEmail"
+										formControlName="orgEmail">
+									<div
+										*ngIf="(submitted && f.orgEmail.invalid)||(f.orgEmail.invalid && (f.orgEmail.dirty || f.orgEmail.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.orgEmail.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
 										<div *ngIf="f.orgEmail.errors.email">
 											<span class="help-block">Định dạng email không đúng</span>
 										</div>
@@ -333,9 +364,12 @@
 						</div>
 						<div class="row">
 							<div class="col text-right clearfix">
-								<button type="button" class="btn grd-blue text-white border-0 rounded-xl mt-3 pull-right" *ngIf="editable" (click)="onSave()">Cập nhật</button>
-								<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right mr-3" *ngIf="editable" (click)="onReset()">Đặt lại</button>
-								<a class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right" *ngIf="!editable" (click)="editable=true">Sửa thông tin</a>
+								<button type="button" class="btn grd-blue text-white border-0 rounded-xl mt-3 pull-right"
+									*ngIf="editable" (click)="onSave()">Cập nhật</button>
+								<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right mr-3"
+									*ngIf="editable" (click)="onReset()">Hủy</button>
+								<a class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right" *ngIf="!editable"
+									(click)="editable=true">Sửa thông tin</a>
 							</div>
 						</div>
 					</div>

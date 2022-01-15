@@ -26,7 +26,7 @@ export class ListApproveWaitComponent implements OnInit {
 		private _shareData: DataService,
 		private notificationService: NotificationService,
 		private _router: Router
-	) {}
+	) { }
 
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
@@ -49,7 +49,6 @@ export class ListApproveWaitComponent implements OnInit {
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
-	lstHistories: any = []
 	titleAccept: any = ''
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
@@ -173,7 +172,6 @@ export class ListApproveWaitComponent implements OnInit {
 		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 				this._toastr.success(COMMONS.APPROVED_SUCCESS)
 				this.getList()
 			} else {
@@ -198,7 +196,6 @@ export class ListApproveWaitComponent implements OnInit {
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()
@@ -212,22 +209,6 @@ export class ListApproveWaitComponent implements OnInit {
 		}
 	}
 
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
 
 	exportExcel() {
 		let request = {

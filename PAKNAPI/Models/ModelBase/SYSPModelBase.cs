@@ -134,6 +134,7 @@ namespace PAKNAPI.ModelBase
 		public string Content { get; set; }
 		public string? FilePath { get; set; }
 		public int? FileType { get; set; }
+		public int? Index { get; set; }
 
 		public string FileName { get; set; }
 		public async Task<List<SYSupportMenu>> SYSupportMenuGetByCategoryDAO(int? Category)
@@ -142,6 +143,13 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Category", Category);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYSupportMenu>("[SY_SupportMenuGetAllByCategory]", DP)).ToList();
+		}
+		public async Task<List<SYSupportMenu>> SYSupportMenuGetByTypeDAO(int? Type)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Type", Type);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSupportMenu>("[SY_SupportMenuGetAllByType]", DP)).ToList();
 		}
 
 		public async Task<int?> SYSupportMenuUpdateDAO(SYSupportMenu model)
@@ -157,6 +165,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FilePath", model.FilePath);
 			DP.Add("FileType", model.FileType);
 			DP.Add("FileName", model.FileName);
+			DP.Add("Index", model.Index);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuUpdate]", DP);
 		}
@@ -172,6 +181,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FilePath", model.FilePath);
 			DP.Add("FileType", model.FileType);
 			DP.Add("FileName", model.FileName);
+			DP.Add("Index", model.Index);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuInsert]", DP);
 		}
@@ -514,6 +524,12 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "MetaTitle không được để trống")]
+		public string MetaTitle { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "MetaDescription không được để trống")]
+		public string MetaDescription { get; set; }
+			
 		public string BannerUrl { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
@@ -541,6 +557,8 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", sy.Id);
+			DP.Add("MetaTitle", sy.MetaTitle);
+			DP.Add("MetaDescription", sy.MetaDescription);
 			DP.Add("BannerUrl", sy.BannerUrl);
 			DP.Add("Phone", sy.Phone);
 			DP.Add("Email", sy.Email);
@@ -1250,6 +1268,17 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLogGetAllOnPageAdmin", DP)).ToList();
 		}
+
+		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogExport(int? UserId, DateTime? CreateDate, byte? Status, string Description)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			DP.Add("CreateDate", CreateDate);
+			DP.Add("Status", Status);
+			DP.Add("Description", Description);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLog_Export", DP)).ToList();
+		}
 	}
 
 	public class SYTimeDelete
@@ -1610,6 +1639,14 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetNameById>("SY_UnitGetNameById", DP)).ToList();
+		}
+
+		public async Task<List<SYUnitGetNameById>> SYUnitGetNameByListIdDAO(string lstId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ListUnitId", lstId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetNameById>("SY_UnitGetNameByListId", DP)).ToList();
 		}
 	}
 

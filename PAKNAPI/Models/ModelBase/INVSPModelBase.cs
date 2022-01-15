@@ -38,6 +38,7 @@ namespace PAKNAPI.ModelBase
 	public class INVDropdownDataForCreate {
 		public int Id { get; set; }
 		public string Title { get; set; }
+		public string Phone { get; set; }
 		public string Address { get; set; }
 		public int Type { get; set; }
 	}

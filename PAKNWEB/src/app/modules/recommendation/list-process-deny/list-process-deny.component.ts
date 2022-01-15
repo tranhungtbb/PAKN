@@ -25,7 +25,7 @@ export class ListProcessDenyComponent implements OnInit {
 		private _shareData: DataService,
 		private _fb: FormBuilder,
 		private _router: Router
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
@@ -42,13 +42,12 @@ export class ListProcessDenyComponent implements OnInit {
 	]
 	lstUnit: any = []
 	lstField: any = []
-	listUnitChild : any = []
+	listUnitChild: any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
-	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -171,17 +170,17 @@ export class ListProcessDenyComponent implements OnInit {
 		})
 	}
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
-	preForward(id: number, isForwardUnitChild : boolean = false) {
+	preForward(id: number, isForwardUnitChild: boolean = false) {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.submitted = false
 		this.rebuilForm()
 		let obj = this.listData.find((x) => x.id == id)
-		debugger
+
 		if (isForwardUnitChild == true) {
 			this.lstUnitNotMain = this.listUnitChild
 			$('#modal-tc-pakn').modal('show')
-		}else{
+		} else {
 			this._service.recommendationGetDataForForward({}).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result != null) {
@@ -223,23 +222,6 @@ export class ListProcessDenyComponent implements OnInit {
 		}),
 			(err) => {
 				console.error(err)
-			}
-	}
-
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
 			}
 	}
 

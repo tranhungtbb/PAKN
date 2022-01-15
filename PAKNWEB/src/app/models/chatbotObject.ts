@@ -4,6 +4,7 @@ export class ChatbotObject {
 		this.id = 0
 		this.title = ''
 		this.question = ''
+		this.typeChat = 1
 		// this.answer = ''
 		this.categoryId = 0
 		this.isDeleted = false
@@ -13,14 +14,17 @@ export class ChatbotObject {
 	title: string
 	question: string
 	// answer: string
+	typeChat: number
 	categoryId: number
 	isActived: boolean
 	isDeleted: boolean
+	lstHashtags: any
 }
 
 export class BotRoom {
 	name: string
 	id: number
+	type: number
 }
 
 export class BotMessage {

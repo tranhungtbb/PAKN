@@ -10,9 +10,9 @@
 	],
 	"authors": [{
 		"name": "Matias Meno",
-		"email": "m@tias.me",
 		"homepage": "http://www.matiasmeno.com"
 	}],
+	
 	"license": "MIT",
 	"minimum-stability": "dev"
 }

@@ -105,3 +105,8 @@
 	/* Microsoft Edge */
 	color: #707c97;
 }
+
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
+

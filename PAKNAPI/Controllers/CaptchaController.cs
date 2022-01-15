@@ -37,20 +37,30 @@ namespace PAKNAPI.Controllers
 		/// mã capcha (ảnh)
 		/// </summary>
 		/// <param name="IpAddress"></param>
+		/// <param name="MillisecondsCurrent"></param>
 		/// <returns></returns>
 		[Route("get-captcha-image")]
 		[HttpGet]
 		//[Authorize("demo")]
-		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null)
+		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null, double MillisecondsCurrent = 0)
 		{
 			try
 			{
-				int width = 200;
-				int height = 60;
-				var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
+				int width = 120;
+				int height = 26;
+				int number1 = 0;
+				int number2 = 0;
+				Random random = new Random();
+				number1 = random.Next(10);
+				number2 = random.Next(10 - number1);
+				var captchaCode = $"{" " + number1.ToString()}+{number2.ToString()}=";
+				//var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
+
 				var result = new Captcha(_appSetting).GenerateCaptchaImage(width, height, captchaCode);
 				//await new Captcha(_appSetting).DeleteCaptchaByUserAgent(IpAddress, Request.Headers["User-Agent"].ToString());
-				await new Captcha(_appSetting).InsertCaptcha(result.CaptchaCode, IpAddress, Request.Headers["User-Agent"].ToString());
+				TimeSpan time = TimeSpan.FromMilliseconds(MillisecondsCurrent);
+				DateTime createdDAte = new DateTime(1970, 1, 1) + time;
+				await new Captcha(_appSetting).InsertCaptcha((number1 + number2).ToString(), IpAddress, Request.Headers["User-Agent"].ToString(), createdDAte);
 				Stream s = new MemoryStream(result.CaptchaByteData);
 				var r = new FileStreamResult(s, "image/png");
 				return r;
@@ -182,21 +192,24 @@ namespace PAKNAPI.Controllers
 		/// check isvalid capcha
 		/// </summary>
 		/// <param name="CaptchaCode"></param>
+		/// <param name="MillisecondsCurrent"></param>
 		/// <returns></returns>
 		[Route("validator-captcha")]
 		[HttpGet]
-		public async Task<ActionResult<object>> ValidatorCaptchaAsync(string CaptchaCode)
+		public async Task<ActionResult<object>> ValidatorCaptchaAsync(string CaptchaCode, double MillisecondsCurrent)
 		{
 			try
 			{
-				if (!new Captcha(_appSetting).ValidateCaptchaCode(CaptchaCode, captChaCode))
+				TimeSpan time = TimeSpan.FromMilliseconds(MillisecondsCurrent);
+				DateTime createdDAte = new DateTime(1970, 1, 1) + time;
+				if (!new Captcha(_appSetting).ValidateCaptchaCode(CaptchaCode, captChaCode, createdDAte))
 				{
-					await new Captcha(_appSetting).DeleteCaptcha("");
+					await new Captcha(_appSetting).DeleteCaptcha("", createdDAte);
 					return new ResultApi { Success = ResultCode.ORROR };
 				}
 				else
 				{
-					await new Captcha(_appSetting).DeleteCaptcha(CaptchaCode);
+					await new Captcha(_appSetting).DeleteCaptcha(CaptchaCode, createdDAte);
 					return new ResultApi { Success = ResultCode.OK };
 				}
 			}

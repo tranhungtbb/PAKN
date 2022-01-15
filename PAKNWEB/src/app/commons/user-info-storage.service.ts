@@ -11,9 +11,8 @@ export class UserInfoStorageService {
 	unitName: string
 	role: number
 
-	constructor() {}
+	constructor() { }
 	clear = () => {
-		debugger
 		var remember = this.getRecommentdationObjectRemember()
 		var satisfactionRecommendation = localStorage.getItem('satisfaction')
 		localStorage.clear()
@@ -34,6 +33,11 @@ export class UserInfoStorageService {
 	setUserId(id: string): void {
 		localStorage.setItem('userId', id)
 	}
+
+	setUnitLevel(id: number): void {
+		localStorage.setItem('unitLevel', String(id))
+	}
+
 
 	setAccessToken(token): void {
 		localStorage.setItem('accessToken', token)
@@ -90,6 +94,10 @@ export class UserInfoStorageService {
 		localStorage.setItem('isUnitMain', value)
 	}
 
+	setIsAprove(value): void {
+		localStorage.setItem('isApprove', value)
+	}
+
 	setTypeObject(value): void {
 		localStorage.setItem('typeObject', value)
 	}
@@ -121,11 +129,20 @@ export class UserInfoStorageService {
 		return localStorage.getItem('userId') as any
 	}
 
+	getUnitLevel(): number {
+		return localStorage.getItem('unitLevel') as any
+	}
+
+
+
 	getIsMain(): boolean {
 		return localStorage.getItem('isMain') === 'true'
 	}
 	getIsUnitMain(): boolean {
 		return localStorage.getItem('isUnitMain') === 'true'
+	}
+	getIsApprove(): boolean {
+		return localStorage.getItem('isApprove') === 'true'
 	}
 
 	getReturnUrl(): string {
@@ -195,5 +212,14 @@ export class UserInfoStorageService {
 		let r = this.getRole()
 		if (r == '0') return true
 		return false
+	}
+
+	setClientUserId(value): void {
+		localStorage.setItem('ClientUserId', value)
+	}
+
+	getClientUserId(): string {
+		return localStorage.getItem('ClientUserId')
+
 	}
 }

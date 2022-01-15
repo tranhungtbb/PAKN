@@ -10,7 +10,7 @@ declare var $: any
 	styleUrls: ['./call-history-list.component.css'],
 })
 export class CallHistoryListComponent implements OnInit {
-	constructor(private _CallHistoryService: CallHistoryService, private _toast: ToastrService) {}
+	constructor(private _CallHistoryService: CallHistoryService, private _toast: ToastrService) { }
 
 	callTypes = [
 		{ value: 0, text: 'Cuộc gọi đến' },
@@ -26,6 +26,7 @@ export class CallHistoryListComponent implements OnInit {
 		pageIndex: 1,
 		pageSize: 20,
 	}
+	type: number
 
 	totalCount = 0
 
@@ -35,7 +36,7 @@ export class CallHistoryListComponent implements OnInit {
 
 	getDataPageList() {
 		this.query.phone = this.query.phone == null ? '' : this.query.phone.trim()
-		this.query.type = this.query.type == null ? '' : this.query.type
+		this.query.type = this.type == null ? '' : this.type
 		let query = { ...this.query }
 
 		this._CallHistoryService.getPagedList(query).subscribe((res) => {

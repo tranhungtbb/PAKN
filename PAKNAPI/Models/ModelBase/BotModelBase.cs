@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using PAKNAPI.Common;
+using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,18 +66,47 @@ namespace PAKNAPI.Models.ModelBase
 
 		public int? AnonymousId { get; set; }
 		public string Name { get; set; }
-
+		public string Title { get; set; }
+		public string FromAvatar { get; set; }
+		public string FromFullName { get; set; }
 		public int? Type { get; set; }
 		public DateTime? CreatedDate { get; set; }
 
-		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex)
+		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(string Title, DateTime? CreatedDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			//DP.Add("PageSize", PageSize);
-			//DP.Add("PageIndex", PageIndex);
-			
+			DP.Add("Title", Title);
+			DP.Add("CreatedDate", CreatedDate);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();
+
+            return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class BOTRoomGetAllByStatus
+	{
+		private SQLCon _sQLCon;
+		public long Id { get; set; }
+		public string Name { get; set; }
+		public string Title { get; set; }
+
+		public DateTime? CreatedDate { get; set; }
+
+		public BOTRoomGetAllByStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BOTRoomGetAllByStatus()
+		{
+		}
+
+		public async Task<List<BOTRoomGetAllByStatus>> BOTRoomGetAllByStatusDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllByStatus>("BOT_RoomGetAllByStatus", DP)).ToList();
 		}
 	}
 
@@ -94,20 +124,25 @@ namespace PAKNAPI.Models.ModelBase
 		{
 		}
 
-		public BOTRoom(string Name,int AnonymousId, int Type) {
+		public BOTRoom(string Name, string Title, int AnonymousId, int Type) {
 			this.Name = Name;
+			this.Title = Title;
 			this.Type = Type;
 			this.AnonymousId = AnonymousId;
 		}
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public string Title { get; set; }
 		public int Type { get; set; }
+
+		public DateTime? CreatedDate { get; set; }
 
 		public int AnonymousId { get; set; }
 		public async Task<decimal?> BOTRoomInsertDAO(BOTRoom _bOTRoom)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _bOTRoom.Name);
+			DP.Add("Title", _bOTRoom.Title);
 			DP.Add("AnonymousId", _bOTRoom.AnonymousId);
 			DP.Add("Type", _bOTRoom.Type);
 
@@ -119,6 +154,14 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("Name", roomName);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomGetByName", DP)).FirstOrDefault();
+		}
+
+		public async Task<int?> BOTRoomUpdateStatus(long roomId, bool status)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RoomId", roomId);
+			DP.Add("Status", status);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_RoomUpdateStatus", DP));
 		}
 
 		public async Task<int> BOTRoomEnableBot(string roomName,int type)
@@ -202,6 +245,8 @@ namespace PAKNAPI.Models.ModelBase
 		public async Task<int> BOTMessageInsertDAO(string MessageContent,
 			 int FromUserId,
 			 int RoomId,
+			 string FromFullName,
+			 string FromAvatar,
 			  DateTime DateSend)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -209,7 +254,8 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("FromUserId", FromUserId);
 			DP.Add("MessageContent", MessageContent);
 			DP.Add("DateSend", DateSend);
-
+			DP.Add("FromFullName", FromFullName);
+			DP.Add("FromAvatar", FromAvatar);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_MessageInsert", DP));
 		}
 
@@ -237,6 +283,12 @@ namespace PAKNAPI.Models.ModelBase
 		}
 		public int Id { get; set; }
 		public string MessageContent { get; set; }
+
+		public string fromFullName { get; set; }
+
+		public string fromAvatar { get; set; }
+
+
 		public int RoomId { get; set; }
 		public int FromUserId { get; set; }
 		public DateTime DateSend { get; set; }
@@ -269,6 +321,9 @@ namespace PAKNAPI.Models.ModelBase
 		public string Title { get; set; }
 		public string Question { get; set; }
 		public int? IdSuggetLibrary { get; set; }
+		public byte TypeChat { get; set; }
+		public byte? TypeSuggest { get; set; }
+		public string LinkSuggest { get; set; }
 		public string Answers { get; set; }
 		public string TitleAnswers { get; set; }
 		public string QuestionAnswers { get; set; }
@@ -283,6 +338,48 @@ namespace PAKNAPI.Models.ModelBase
 		{
 			public string title { get; set; }
 			public string pakn { get; set; }
+		}
+
+		private List<BotLib> changeDataNew(List<BotGetLibrary> libraries)
+		{
+			List<BotLib> lstLib = new List<BotLib>();
+
+			foreach (BotGetLibrary item in libraries)
+			{
+				if (lstLib.Count == 0)
+				{
+					BotLib lib = new BotLib();
+					lib.id = item.Id;
+					lib.pattern = item.Title;
+					lib.template = new template();
+					lib.template.title = item.Question;
+					lib.template.pakn = SetJson(item.Id, libraries);
+					lstLib.Add(lib);
+				}
+				else
+				{
+					bool checkDuplicate = false;
+					foreach (BotLib itemLib in lstLib)
+					{
+						if (itemLib.id == item.Id)
+						{
+							checkDuplicate = true;
+							break;
+						}
+					}
+					if (!checkDuplicate)
+					{
+						BotLib lib = new BotLib();
+						lib.id = item.Id;
+						lib.pattern = item.Title;
+						lib.template = new template();
+						lib.template.title = item.Question;
+						lib.template.pakn = SetJson(item.Id, libraries);
+						lstLib.Add(lib);
+					}
+				}
+			}
+			return lstLib;
 		}
 
 		private string changeData(List<BotGetLibrary> libraries)
@@ -356,17 +453,17 @@ namespace PAKNAPI.Models.ModelBase
 			string result = "";
 			foreach (var item in getLibraries)
 			{
-				if (item.Id == idLib && item.IdSuggetLibrary != null)
+				if (item.Id == idLib)
 				{
 					if (result == "")
-						result += @"{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
+						result += @"{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @""", ""typeSuggest"":""" + item.TypeSuggest + @""", ""linkSuggest"":""" + item.LinkSuggest + @""", ""idSuggetLibrary"":""" + item.IdSuggetLibrary + @"""}";
 					else
-						result += @",{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @"""}";
+						result += @",{""title"":""" + item.Answers + @""",""image"":"""", ""hiddenAnswer"":""" + item.QuestionAnswers + @""", ""typeSuggest"":""" + item.TypeSuggest + @""", ""linkSuggest"":""" + item.LinkSuggest + @""", ""idSuggetLibrary"":""" + item.IdSuggetLibrary + @"""}";
 				}
 			}
 			if (result != "")
 			{
-				result = @"json{""type"":""carousel"",""data"":[" + result + "]}";
+				result = @"{""type"":""carousel"",""data"":[" + result + "]}";
 			}
 			return result;
 		}
@@ -394,6 +491,44 @@ namespace PAKNAPI.Models.ModelBase
             }
 
             return result;
+		}
+
+		public List<ResultBotNew> BotGetLibraryByInput(string input)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("InputString", input);
+			List<BotGetLibrary> libraries = (_sQLCon.ExecuteListDapper<BotGetLibrary>("SY_Chatbot_Library_GetByInput", DP)).ToList();
+			//
+			var result = changeDataNew(libraries);
+
+			List<ResultBotNew> rs = new List<ResultBotNew>();
+            foreach (var item in result)
+            {
+                ResultBotNew rb = new ResultBotNew();
+                rb.Answer = item.template.title;
+                rb.SubTags = item.template.pakn;
+				rs.Add(rb);
+            }
+            return rs;
+		}
+
+		public List<ResultBotNew> BotGetLibraryById(string idSuggestLibrary)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("IdSuggestLibrary", idSuggestLibrary);
+			List<BotGetLibrary> libraries = (_sQLCon.ExecuteListDapper<BotGetLibrary>("SY_Chatbot_Library_GetByIdSuggest", DP)).ToList();
+			//
+			var result = changeDataNew(libraries);
+
+			List<ResultBotNew> rs = new List<ResultBotNew>();
+            foreach (var item in result)
+            {
+                ResultBotNew rb = new ResultBotNew();
+                rb.Answer = item.template.title;
+                rb.SubTags = item.template.pakn;
+				rs.Add(rb);
+            }
+            return rs;
 		}
 	}
 }

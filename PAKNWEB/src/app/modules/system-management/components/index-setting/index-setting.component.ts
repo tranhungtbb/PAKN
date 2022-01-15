@@ -70,6 +70,8 @@ export class IndexSettingComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
+			metaTitle: [this.model.metaTitle, [Validators.required]],
+			metaDescription: [this.model.metaDescription, [Validators.required]],
 			phone: [this.model.phone, [Validators.required, Validators.pattern('[- +()0-9]+')]],
 			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, Validators.required],
@@ -85,7 +87,7 @@ export class IndexSettingComponent implements OnInit {
 	buildFormWebsite() {
 		this.formWebsite = this._fb.group({
 			nameWebsite: [this.modelWebsite.nameWebsite, Validators.required],
-			urlWebsite: [this.modelWebsite.urlWebsite, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
+			urlWebsite: [this.modelWebsite.urlWebsite, [Validators.required]],
 		})
 	}
 
@@ -100,7 +102,7 @@ export class IndexSettingComponent implements OnInit {
 		window.history.back()
 	}
 
-	onSave(isPreView : boolean = false) {
+	onSave(isPreView: boolean = false) {
 		this.submitted = true
 		this.model.phone = this.model.phone.trim()
 		this.model.email = this.model.email.trim()
@@ -121,12 +123,12 @@ export class IndexSettingComponent implements OnInit {
 		}
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				if(isPreView){
+				if (isPreView) {
 					window.open('/cong-bo/xem-truoc/trang-chu')
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				
+
 			} else {
 				this._toastr.error(res.message)
 			}

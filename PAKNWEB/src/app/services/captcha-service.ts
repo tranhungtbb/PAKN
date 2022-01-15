@@ -20,6 +20,7 @@ export class CaptchaService {
     return this.http.get(AppSettings.API_ADDRESS + Api.ValidateCaptcha, {
       params: {
         CaptchaCode: data.CaptchaCode,
+        MillisecondsCurrent: data.MillisecondsCurrent,
       }
     });
   }

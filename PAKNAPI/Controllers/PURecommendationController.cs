@@ -74,7 +74,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("get-list-recommentdation-home-page")]
-		public async Task<ActionResult<object>> PURecommendationHomePage()
+		public async Task<ActionResult<object>> PURecommendationHomePage(int? PageIndex = 1)
 		{
 			try
 			{
@@ -88,20 +88,16 @@ namespace PAKNAPI.ControllerBase
 					json = new Dictionary<string, object>
 					{
 						{"IsHomeDefault", true},
-						{"PURecommendation", rsPURecommendationOnPage},
+						{"PURecommendation", rsPURecommendationOnPage}
 					};
 					return new ResultApi { Success = ResultCode.OK, Result = json };
 				}
 
 				// list filed show home
-				List<CAFieldGetAllOnPage> lstFieldHome = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllShowHome();
+				List<CAFieldGetAllOnPage> lstFieldHome = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllShowHome(PageIndex);
 
 				List<RecommendationGroupByFieldResponse> result = new List<RecommendationGroupByFieldResponse>();
 
-				//foreach (var field in lstFieldHome) {
-				//	var lstRecommendation =  await new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id);
- 			//		result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
-				//}
 				lstFieldHome.ForEach((field) =>
 				{
 					var lstRecommendation = new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id).Result;
@@ -111,6 +107,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"IsHomeDefault", false},
 						{"PURecommendation", result},
+						{"TotalCount" , lstFieldHome != null && lstFieldHome.Count > 0 ? lstFieldHome[0].RowNumber : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -215,12 +212,20 @@ namespace PAKNAPI.ControllerBase
 				}
 
 				result.Model = await new PURecommendation(_appSetting).PURecommendationGetById(Id, Status, UserId);
+
 				// file đính kèm
 				result.lstFiles = await new MRRecommendationFilesGetByRecommendationId(_appSetting).MRRecommendationFilesGetByRecommendationIdDAO(Id);
 				foreach (var item in result.lstFiles)
 				{
 					item.FilePath = decrypt.EncryptData(item.FilePath);
 				}
+				var file = result.lstFiles.Where(x => x.FileType == 4).FirstOrDefault();
+				if (file != null)
+				{
+					result.Model.FilePath = file.FilePathUrl;
+				}
+				// 
+
 				// nội dung phản hồi
 				result.lstConclusion = (await new MRRecommendationConclusionGetByRecommendationId(_appSetting).MRRecommendationConclusionGetByRecommendationIdDAO(Id)).ToList().FirstOrDefault();
 				// file đính kèm nội dung phản hồi
@@ -365,6 +370,8 @@ namespace PAKNAPI.ControllerBase
 			try
 			{
 				var pURecommendations = await new PURecommendation(_appSetting).PURecommendationProcessing(KeySearch, FieldId, UnitId, PageSize, PageIndex);
+
+
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"RecommendationProcessing", pURecommendations},
@@ -385,12 +392,19 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("recommendations-hight-light")]
-		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick()
+		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
 		{
 			try
 			{
-				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(STATUS_RECOMMENDATION.FINISED);
-				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage };
+				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(KeySearch, FieldId, UnitId, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"PURecommendation", rsPURecommendationOnPage},
+						{"TotalCount", rsPURecommendationOnPage != null && rsPURecommendationOnPage.Count > 0 ? rsPURecommendationOnPage[0].RowNumber : 0},
+						{"PageIndex", rsPURecommendationOnPage != null && rsPURecommendationOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsPURecommendationOnPage != null && rsPURecommendationOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -484,11 +498,13 @@ namespace PAKNAPI.ControllerBase
 				statisticSatisfaction.ForEach(item => {
 					values.Add(item.Value); 
 				});
+				var StatisticExpire = await new PU_Statistic(_appSetting).StatisticExpireDAO();
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"RecommendationStatisticBySatisfaction", statisticSatisfaction},
-						{"Values", values }
+						{"Values", values },
+						{"Expire", StatisticExpire}
 					};
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };

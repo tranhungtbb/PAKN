@@ -37,9 +37,13 @@ export class RecommendationObject {
 	address: string
 	lng: string
 	lat: string
-	type : number
-	receptionType : number
-	isFakeImage : boolean
+	type: number
+	receptionType: number
+	isFakeImage: boolean
+	groupUnitId: number
+	unitReceive: number
+	unitChildId: number
+	isPublicInfoUser: boolean
 }
 export class RecommendationSearchObject {
 	constructor() {
@@ -123,8 +127,9 @@ export class RecommendationViewObject {
 	approvedDate: Date
 	phone: string
 	email: string
-	lat : string
-	lng : string
+	lat: string
+	lng: string
+	isForwardProcess: boolean
 }
 export class RecommendationConclusionObject {
 	id: number = 0
@@ -166,19 +171,21 @@ export class RecommnendationCommentObject {
 	recommendationId: number
 	fullName: string
 	isPublish: boolean
+	parentId: number
 }
 
 export class RecommnendationInfomationExchange {
 	constructor() {
 		this.contents = ''
 	}
-	id : number
+	id: number
 	contents: string
 	userId: number
 	recommendationId: number
 	fullName: string
-	createdDate : Date
+	createdDate: Date
 	isPublish: boolean
+	parentId: number
 }
 
 export class RecommendationSearchStatisticObject {

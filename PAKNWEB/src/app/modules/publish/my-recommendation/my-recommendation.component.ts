@@ -21,6 +21,7 @@ declare var $: any
 	styleUrls: ['./my-recommendation.component.css'],
 })
 export class MyRecommendationComponent implements OnInit {
+	modelUser: any = {}
 	userName: string = ''
 	phone: string = ''
 	title: string = ''
@@ -50,7 +51,7 @@ export class MyRecommendationComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private authenService: AuthenticationService,
 		private sharedataService: DataService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.userName = this.storageService.getFullName()
@@ -79,16 +80,24 @@ export class MyRecommendationComponent implements OnInit {
 	getSoDienThoai() {
 		this.userService.getById({ id: this.storageService.getUserId() }).subscribe((res) => {
 			if (res.success != 'OK') return
-			var modelUser = res.result.SYUserGetByID[0]
-			if (modelUser && modelUser.phone) {
-				this.phone = modelUser.phone
+			this.modelUser = res.result.SYUserGetByID[0]
+			if (this.modelUser && this.modelUser.phone) {
+				this.phone = this.modelUser.phone
 			}
 		})
+	}
+
+	preSignOut() {
+		$('#acceptSignOut').modal('show')
+	}
+	closeModal() {
+		$('#acceptSignOut').modal('hide')
 	}
 
 	mySignOut(): void {
 		this.authenService.logOut({}).subscribe((success) => {
 			if (success.success == RESPONSE_STATUS.success) {
+				$('#acceptSignOut').modal('hide')
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
 				this.storageService.clear()
@@ -100,7 +109,7 @@ export class MyRecommendationComponent implements OnInit {
 	LtsStatus = ''
 	getList(Status: any = null) {
 		this.title = this.title.trim()
-		if (Status) this.LtsStatus = Status
+		this.LtsStatus = Status == null ? '' : Status
 		let request = {
 			userId: this.storageService.getUserId(),
 			LtsStatus: this.LtsStatus == null ? '' : this.LtsStatus,
@@ -112,7 +121,13 @@ export class MyRecommendationComponent implements OnInit {
 		this.puRecommendationService.getMyRecommentdation(request).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.MyRecommendation.length > 0) {
-					this.listData = res.result.MyRecommendation
+					this.listData = res.result.MyRecommendation.map((item) => {
+						if (this.title) {
+							item.title = this.highlight(item.title, this.title)
+							item.content = this.highlight(item.content, this.title)
+						}
+						return item
+					})
 					this.totalRecords = res.result.TotalCount
 					this.padi()
 				} else {
@@ -132,26 +147,45 @@ export class MyRecommendationComponent implements OnInit {
 			}
 	}
 
+	highlight(inputText, text) {
+		var index = inputText.toUpperCase().indexOf(text.toUpperCase());
+		if (index >= 0) {
+			inputText = inputText.substring(0, index) + "<span class='highlight-key-search'>" + inputText.substring(index, index + text.length) + "</span>" + inputText.substring(index + text.length);
+		}
+		return inputText
+	}
+
 	filterMyRecommendation(status: any) {
 		this.pageIndex = 1
 		this.pageSize = 20
 		switch (status) {
 			case 1:
 				// chờ xl
+				this.getList(',1')
+				this.LtsStatus = ',1'
+				break
+			case 2:
+				// chờ xl
 				this.getList(',2')
 				this.LtsStatus = ',2'
 				break
-			case 2:
-				// đã tiếp nhận
-				this.getList(',4,5,7,8')
-				this.LtsStatus = ',4,5,7,8'
-				break
 			case 3:
+				// đã tiếp nhận
+				this.getList(',4')
+				this.LtsStatus = ',4'
+				break
+			case 4:
+				// đã trả lời
+				this.getList(',5,7,8')
+				this.LtsStatus = ',5,7,8'
+				break
+
+			case 5:
 				// đã trả lời
 				this.getList(',10')
 				this.LtsStatus = ',10'
 				break
-			case 4:
+			case 6:
 				// bị từ chối
 				this.getList(',3,6,9')
 				this.LtsStatus = ',3,6,9'
@@ -165,7 +199,7 @@ export class MyRecommendationComponent implements OnInit {
 	changeKeySearch(event) {
 		this.title = event.target.value
 	}
-	
+
 	redirectMyRecommendaton(status: any) {
 		this.filterMyRecommendation(status)
 	}
@@ -173,6 +207,16 @@ export class MyRecommendationComponent implements OnInit {
 	sendRecommandation() {
 		this.router.navigateByUrl('/cong-bo/them-moi-kien-nghi')
 	}
+
+	closeModalDelete() {
+		$('#modalConfirmDelete').modal('hide')
+	}
+
+	closeModalSend() {
+		$('#modalConfirmSend').modal('hide')
+	}
+
+
 
 	//delete recommandateion
 	preDelete(id: number) {
@@ -235,13 +279,13 @@ export class MyRecommendationComponent implements OnInit {
 		if (this.pageIndex > index) {
 			if (index > 0) {
 				this.pageIndex = index
-				this.getList()
+				this.getList(this.LtsStatus)
 			}
 			return
 		} else if (this.pageIndex < index) {
 			if (this.pagination.length >= index) {
 				this.pageIndex = index
-				this.getList()
+				this.getList(this.LtsStatus)
 			}
 			return
 		}

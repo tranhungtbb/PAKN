@@ -1,8 +1,11 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PAKNAPI.Common;
+using PAKNAPI.Job;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using System;
@@ -38,7 +41,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", request.Phone, 0);
+				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", request.Phone, 0, false);
 				if (accCheckExist[0].Exists.Value)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -54,10 +57,15 @@ namespace PAKNAPI.Controllers
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD không được để trống" };
 					}
 
-					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", request.IdCard, 0);
+					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IdCard", request.IdCard, 0);
 					if (checkExists[0].Exists.Value)
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-					if (!string.IsNullOrEmpty(request.Email))
+					accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("UserName", request.IdCard, 0, false);
+					if (accCheckExist[0].Exists.Value) {
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+					}
+
+						if (!string.IsNullOrEmpty(request.Email))
 					{
 						checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", request.Email, 0);
 						if (checkExists[0].Exists.Value)
@@ -105,30 +113,48 @@ namespace PAKNAPI.Controllers
 						}
 					}
 				}
+				//var otpCode = new Captcha(_appSetting).GenerateOTPCode();
+				//SYNotificationModel notification = new SYNotificationModel();
+				//notification.DataId = 0;
+				//notification.SenderId = 0;
+				//notification.SendOrgId = 0;
+				//notification.ReceiveId = 0;
+				//notification.ReceiveOrgId = 0;
+				//notification.SendDate = DateTime.Now;
+				//notification.Type = 0;
+				//notification.TypeSend = STATUS_RECOMMENDATION.FINISED;
+				//notification.IsViewed = true;
+				//notification.IsReaded = true;
+				//notification.Title = "Mã xác thực";
+				//notification.Content = "Mã xác thực của bạn là " + otpCode + " có hiệu lực trong 10 phút. Lưu ý: Không chia sẻ bất kỳ mã xác thực này với ai!";
+				//List<string> token = new List<string>();
+				//token.Add(request.Token);
+				//new SYNotification(_appSetting, _configuration).NotifiDocumentJob(token, notification);
+
+				//// insert code trong db
+				//OTP otp = new OTP(otpCode, Request.Headers["User-Agent"].ToString());
+				//await new SYOTP(_appSetting).InsertOTPDAO(otp);
+
 				var otpCode = new Captcha(_appSetting).GenerateOTPCode();
-				SYNotificationModel notification = new SYNotificationModel();
-				notification.DataId = 0;
-				notification.SenderId = 0;
-				notification.SendOrgId = 0;
-				notification.ReceiveId = 0;
-				notification.ReceiveOrgId = 0;
-				notification.SendDate = DateTime.Now;
-				notification.Type = 0;
-				notification.TypeSend = STATUS_RECOMMENDATION.FINISED;
-				notification.IsViewed = true;
-				notification.IsReaded = true;
-				notification.Title = "Mã xác thực";
-				notification.Content = "Mã xác thực của bạn là " + otpCode + " có hiệu lực trong 10 phút. Lưu ý: Không chia sẻ bất kỳ mã xác thực này với ai!";
-				List<string> token = new List<string>();
-				token.Add(request.Token);
-				new SYNotification(_appSetting, _configuration).NotifiDocumentJob(token, notification);
 
-				// insert code trong db
-				OTP otp = new OTP(otpCode, Request.Headers["User-Agent"].ToString());
-				await new SYOTP(_appSetting).InsertOTPDAO(otp);
+				var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
+				if (config.Count == 0)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = -1, Message = "Config email not exits" };
+				}
+				else
+				{
+                    OTP otp = new OTP(otpCode, Request.Headers["User-Agent"].ToString());
+                    await new SYOTP(_appSetting).InsertOTPDAO(otp);
+                    // gửi mail
+                    var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config[0].Content);
+					string content =
+						"<p style ='font-family:times new roman,times,serif'>Mã OTP xác thực của bạn là  {OTP}</p>";
+					content = content.Replace("{OTP}", otpCode.ToString());
 
-				return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK };
-
+					MailHelper.SendMail(configEmail, request.Type == 0 ? request.Email : request.OrgEmail, "Đăng ký tài khoản", content, null);
+					return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK };
+				}
 			}
 			catch (Exception ex)
 			{

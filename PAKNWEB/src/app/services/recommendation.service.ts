@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { EventEmitter, Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
 import { Observable, of } from 'rxjs'
@@ -13,13 +13,15 @@ import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class RecommendationService {
+
+	keySearchEvent: EventEmitter<any> = new EventEmitter();
 	private handleError<T>(operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			console.error(error) // log to console instead
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	recommendationGetDataForCreate(request: any): Observable<any> {
 		let headers = {
@@ -65,6 +67,16 @@ export class RecommendationService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListProcess, headers)
 	}
 
+	recommendationCombinationGet(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationCombination, headers)
+	}
+
+
+
 	recommendationGetListReactionaryWord(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
@@ -95,6 +107,15 @@ export class RecommendationService {
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetByIdView, headers)
 	}
+	recommendationCombineGetByIdView(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationCombineGetByIdView, headers)
+	}
+
+
 
 	recommendationGetByIdViewPublic(request: any): Observable<any> {
 		let headers = {
@@ -167,6 +188,14 @@ export class RecommendationService {
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationForward, headers)
 	}
 
+	recommendationCombineInsert(request: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.FORWARD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationCombine, headers)
+	}
+
 	recommendationProcess(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),
@@ -220,6 +249,7 @@ export class RecommendationService {
 		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
 		form.append('Hashtags', JSON.stringify(request.Hashtags))
 		form.append('RecommendationStatus', JSON.stringify(request.RecommendationStatus))
+		form.append('FileDelete', JSON.stringify(request.FilesDelete))
 
 		if (request.Files) {
 			request.Files.forEach((item) => {
@@ -231,6 +261,29 @@ export class RecommendationService {
 			reportProgress: true,
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationOnProcessConclusion, form, httpPackage)
+	}
+
+	recommendationProcessConclusionCombine(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.APPROVE_SEND),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+		})
+		const form = new FormData()
+		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
+		form.append('FileDelete', JSON.stringify(request.FilesDelete))
+
+		if (request.Files) {
+			request.Files.forEach((item) => {
+				form.append('QD', item)
+			})
+		}
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationOnProcessConclusionCombine, form, httpPackage)
 	}
 
 	recommendationDelete(request: any): Observable<any> {

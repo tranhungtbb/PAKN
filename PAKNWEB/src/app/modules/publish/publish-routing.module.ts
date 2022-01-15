@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { PublishComponent } from './publish.component'
-import { IndexComponent } from './index/index.component'
 import { IntroduceComponent } from './introduce/introduce.component'
 import { AdministrativeProceduresComponent } from './administrative-procedures/administrative-procedures.component'
 import { NewsComponent } from './news/news.component'
@@ -24,12 +23,14 @@ import { DetailRecommendationCttdtComponent } from './recommendations-sync/recom
 import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
 import { StatisticsComponent } from './statistics/statistics.component'
-import { Index2Component } from './index2/index2.component'
+import { IndexComponent } from './index/index.component'
 import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendations/receive-deny-recommendations.component'
 import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 import { ProcessingRecommendationsComponent } from './processing-recommendations/processing-recommendations.component'
+import { GovernmentNoticeComponent } from './government-notice/government-notice.component'
+import { HightLightRecommendationsComponent } from './hight-light-recommendations/hight-light-recommendations.component'
 
 const routes: Routes = [
 	{
@@ -38,15 +39,15 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				component: Index2Component,
+				component: IndexComponent,
 			},
 			{
 				path: 'trang-chu',
-				component: Index2Component,
+				component: IndexComponent,
 			},
 			{
 				path: 'xem-truoc/trang-chu',
-				component: Index2Component,
+				component: IndexComponent,
 			},
 			{
 				path: 'gioi-thieu',
@@ -69,11 +70,16 @@ const routes: Routes = [
 				component: NewsComponent,
 			},
 			{
+				path: 'danh-sach-thong-bao',
+				component: GovernmentNoticeComponent,
+			},
+
+			{
 				path: 'tin-tuc-su-kien/xem-truoc/:id',
 				component: ViewNewsComponent,
 			},
 			{
-				path: 'tin-tuc-su-kien/:id',
+				path: 'thong-bao-chinh-quyen/:id',
 				component: ViewNewsComponent,
 			},
 			{
@@ -115,6 +121,11 @@ const routes: Routes = [
 			{
 				path: 'phan-anh-kien-nghi-dang-xu-ly',
 				component: ProcessingRecommendationsComponent,
+			},
+
+			{
+				path: 'phan-anh-kien-nghi-tieu-bieu',
+				component: HightLightRecommendationsComponent,
 			},
 
 			{

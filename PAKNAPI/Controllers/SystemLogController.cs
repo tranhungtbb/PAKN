@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using Bugsnag;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Aspose;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -25,11 +26,13 @@ namespace PAKNAPI.ControllerBase
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
+		private IHostingEnvironment _hostingEnvironment;
 
-		public SystemLogController(IAppSetting appSetting, IClient bugsnag)
+		public SystemLogController(IAppSetting appSetting, IHostingEnvironment hostingEnvironment, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
+			_hostingEnvironment = hostingEnvironment;
 		}
 		/// <summary>
 		/// danh sách lịch sử hệ thống
@@ -122,7 +125,5 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
-
 	}
 }

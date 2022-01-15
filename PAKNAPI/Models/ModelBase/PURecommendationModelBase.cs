@@ -19,6 +19,12 @@ namespace PAKNAPI.Models.ModelBase
         public int RowNumber { get; set; }
         public int Status { get; set; }
         public bool? IsForwardProcess { get; set; }
+        public string UnitName { get; set; }
+
+        public string FieldName { get; set; }
+        public string Address { get; set; }
+        public string FilePath { get; set; }
+        public string FieldFilePath { get; set; }
     }
     public class PURecommendation
     {
@@ -45,7 +51,20 @@ namespace PAKNAPI.Models.ModelBase
         public string UnitName { get; set; }
 
         public string FieldName { get; set; }
+        public string Address { get; set; }
+        public string FilePath { get; set; }
+        public string FieldFilePath { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
+
+        public string ReasonDeny { get; set; }
+        public DateTime? DenyDate { get; set; }
         public int TotalComment { get; set; }
+        public bool? IsPublicInfoUser { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+
+
 
         public PURecommendation(IAppSetting appSetting)
         {
@@ -67,7 +86,20 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("PageSize", PageSize);
             DP.Add("PageIndex", PageIndex);
 
-            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
+            var recommendations = (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
+
+            recommendations.ForEach(item =>
+            {
+                DP = new DynamicParameters();
+                DP.Add("Id", item.Id);
+                var file = (_sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Result
+                .Where(x => x.FileType == 4).FirstOrDefault();
+                if (file != null)
+                {
+                    item.FilePath = file.FilePath;
+                }
+            });
+            return recommendations;
         }
         public async Task<List<PURecommendation>> PURecommendationReceiveDeny(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
         {
@@ -101,11 +133,15 @@ namespace PAKNAPI.Models.ModelBase
             return (await _sQLCon.ExecuteListDapperAsync<MyRecommendation>("My_RecommendationAllOnPage", DP)).ToList();
         }
 
-        public async Task<List<PURecommendation>> PURecommendationGetListOrderByCountClick(int? Status)
+        public async Task<List<PURecommendation>> PURecommendationGetListOrderByCountClick(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
         {
             DynamicParameters DP = new DynamicParameters();
 
-            DP.Add("Status", Status);
+            DP.Add("KeySearch", KeySearch);
+            DP.Add("FieldId", FieldId);
+            DP.Add("UnitId", UnitId);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetListOrderByCountClick", DP)).ToList();
         }
@@ -118,7 +154,19 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("PageSize", PageSize);
             DP.Add("PageIndex", PageIndex);
 
-            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("[PU_Recommendation_Processing]", DP)).ToList();
+            var recommendations = (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("[PU_Recommendation_Processing]", DP)).ToList();
+            recommendations.ForEach(item =>
+            {
+                DP = new DynamicParameters();
+                DP.Add("Id", item.Id);
+                var file = (_sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Result
+                .Where(x => x.FileType == 4).FirstOrDefault();
+                if (file != null)
+                {
+                    item.FilePath = file.FilePath;
+                }
+            });
+            return recommendations;
         }
 
         public async Task<PublishNotificationObject> PUNotificationGetDashboard()
@@ -144,7 +192,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("UserId", userId);
             DP.Add("Satisfaction", satisfaction);
 
-            return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_Recommendation_SatisfactionInsert]", DP));
+            return (await _sQLCon.ExecuteListDapperAsync<int>("[MR_Recommendation_SatisfactionInsert]", DP)).FirstOrDefault();
         }
 
 

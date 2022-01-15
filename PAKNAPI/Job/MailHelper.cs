@@ -53,7 +53,7 @@ namespace PAKNAPI.Job
 
                 return true;
             }
-            catch (SmtpException)
+            catch (SmtpException ex)
             {
                 return false;
             }

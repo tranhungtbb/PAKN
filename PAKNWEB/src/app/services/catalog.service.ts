@@ -18,7 +18,7 @@ export class CatalogService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	fieldGetList(request: any): Observable<any> {
 		let headers = {
@@ -54,7 +54,7 @@ export class CatalogService {
 		let formData = new FormData()
 		formData.append('data', JSON.stringify(request.model))
 		if (request.files) formData.append('image', request.files)
-	
+
 
 		return this.http.post(AppSettings.API_ADDRESS + Api.FieldInsert, formData, httpPackage)
 		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldInsert, headers)
@@ -72,7 +72,7 @@ export class CatalogService {
 		let formData = new FormData()
 		formData.append('data', JSON.stringify(request.model))
 		if (request.files) formData.append('image', request.files)
-		
+
 		return this.http.post(AppSettings.API_ADDRESS + Api.FieldUpdate, formData, httpPackage)
 		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdate, headers)
 	}
@@ -108,6 +108,14 @@ export class CatalogService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.HashtagInsert, headers)
+	}
+
+	hashtagChatbotInsert(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.HashtagChatbotInsert, headers)
 	}
 	//newstype
 	newsTypeGetList(request: any): Observable<any> {

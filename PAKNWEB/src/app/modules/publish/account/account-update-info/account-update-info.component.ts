@@ -144,7 +144,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 			//userName: [this.model.userName, [Validators.required]],
 			fullName: [this.model.fullName, [Validators.required]],
 			// dateOfBirth: [this.model.dateOfBirth, [Validators.required]],
-			email: [this.model.email, [Validators.email]],
+			email: [this.model.email, [Validators.required, Validators.email]],
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 			// nation: [this.model.nation, [Validators.required]],
 			// provinceId: [this.model.provinceId, []],

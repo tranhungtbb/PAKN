@@ -73,7 +73,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		this.child_OrgRepreForm.parent = this
 		this.child_OrgAddressForm.parent = this
 	}
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
 	getProvinceOrgRepre() {
 		this.diadanhService.getAllProvince().subscribe((res) => {
@@ -204,7 +204,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
 	}
 	onSave() {
-		debugger
+
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true

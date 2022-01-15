@@ -1,38 +1,34 @@
-<div class="content-nd mt-5 mb-5">
+<div class="content-nd margin-top-16 mb-5">
 	<div class="container">
 		<div class="row justify-content-between">
-			<div class="col-8 col-lg-8 col-md-8">
+			<div class="col-lg-8 col-md-8">
 				<div class="box">
 					<div class="tt-v1 mb-3 d-flex justify-content-between center">
-						<h4 class="text-uppercase">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
-						<button type="button" class="btn text-white border-0 no-grd-blue btn-index border-radius-4">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
-								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
-								<path
-									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-							</svg>
-							<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh kiến nghị</span>
-						</button>
+						<h4 *ngIf="!field" class="text-uppercase">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
+						<h4 *ngIf="field" class="text-uppercase">phản ánh kiến nghị không đủ điều kiện tiếp nhận: {{fieldName}}
+						</h4>
+
 					</div>
 					<div class="d-flex justify-content-between">
-						<div class="col-4 form-group p-0 pr-2">
-								<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4" [(ngModel)]="KeySearch" maxlength="100"
-									(keydown.enter)="dataStateChange()" />
+						<div class="col-4 form-group p-0 pr-2 pi-italic">
+							<input placeholder="Nhập tên phản ánh, kiến nghị.." class="form-control form-control border-radius-4"
+								[(ngModel)]="KeySearch" maxlength="100" (keydown.enter)="dataStateChange()" />
 						</div>
 						<div class="col-4 form-group px-2">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý..." class="form-control border-brown border-radius-4" [items]="lstUnit"
-								bindLabel="text" bindValue="value" [(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()"
-								[virtualScroll]="true">
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý.."
+								class="form-control border-brown border-radius-4" [items]="lstUnit" bindLabel="text" bindValue="value"
+								[(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 							</ng-select>
 						</div>
 						<div class="col-3 form-group px-2">
-							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..." class="form-control border-brown border-radius-4" [items]="lstField"
-									bindLabel="text" bindValue="value" [(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()"
-									[virtualScroll]="true">
-								</ng-select>
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực.."
+								class="form-control border-brown border-radius-4" [items]="lstField" bindLabel="text" bindValue="value"
+								[(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+							</ng-select>
 						</div>
 						<div class="col-1 form-group px-2">
-							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px" (click)="dataStateChange()">
+							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px"
+								(click)="dataStateChange()">
 								<i class="bi bi-search"></i>
 							</button>
 						</div>
@@ -41,48 +37,57 @@
 				<div class="box">
 					<ng-container *ngFor="let item of listRecommendation;let i = index">
 						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
-							<div class="card-header pt-3 pb-0 align-items-center">
+							<div class="card-header pt-3 pb-0 pl-2 align-items-center">
 								<p class="card-text mb-1">
-									<a class="h4 text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
-										{{item.title}}
+									<a class="h4 text-2line text-tranform-first p-title-hover"
+										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" innerHTML="{{item.title}}">
+										<!-- {{item.title}} -->
 									</a>
 								</p>
 							</div>
-							<div class="card-body pt-1 pb-3">
+							<div class="card-body pt-1 pb-3 pl-2">
 								<div class="d-flex align-items-center justify-content-between">
-									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
+									<span style="display: inline-block;">
+										<i class="bi bi-alarm cl-gray mt-1 mr-2 p-item-title "></i>
+										<span class="card-date mb-2 p-item-title">
+											{{ item.createdDate | date : 'dd/MM/yyyy HH:mm' }}
+										</span>
+									</span>
 								</div>
-								
+
 								<p class="card-text">
-									<a class="text-2line italic lh-20" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" [innerHTML]="item.content | Change">
-										
+									<a class="text-2line italic lh-20 text-tranform-first"
+										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" [innerHTML]="item.content | Change">
+
 									</a>
 								</p>
 							</div>
-					</div>
+						</div>
 					</ng-container>
 					<p class="text-center pt-2" *ngIf="!listRecommendation || listRecommendation.length == 0">
-						Không tìm thấy phản ánh kiến nghị nào
+						Không tìm thấy phản ánh, kiến nghị nào
 					</p>
-					<nav aria-label="navigation" class="mt-4 ps-relative">
+					<nav aria-label="navigation" class="pagination-xs mt-4 ps-relative">
 						<span class="justify-content-start align-items-center ps-absolute">
-							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh kiến nghị</span>
+							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh, kiến nghị</span>
 						</span>
 						<ul class="pagination pagination-lg justify-content-end align-items-center">
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == 1 }">
-								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"  tabindex="-1"
-									aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"
+									tabindex="-1" aria-disabled="true">&nbsp;&nbsp;<i
+										class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 							</li>
 							<li class="d-flex justify-content-center align-items-center">
-								<a *ngIf="PageIndex > 4" class="cursor">...</a>
-								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index ===PageIndex }">
-									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex" class="page-link"
-										>{{item.index}}</a>
+								<a *ngIf="PageIndex > 4" class="cursor">..</a>
+								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index"
+									[ngClass]="{ 'active': item.index ===PageIndex }">
+									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex"
+										class="page-link">{{item.index}}</a>
 								</p>
-								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">...</a>
+								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">..</a>
 							</li>
 							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == Total }">
-								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1" >
+								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1">
 									&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 								</a>
 							</li>
@@ -90,7 +95,7 @@
 					</nav>
 				</div>
 			</div>
-			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-md-4 col-lg-4 d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 				<app-gallery></app-gallery>
 			</div>

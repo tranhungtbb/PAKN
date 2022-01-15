@@ -11,12 +11,17 @@
 						Quay lại
 					</a>
 					<span *ngIf="model.id && model.id > 0">
-						<button *hasPermission="['3', 'B_IV_1']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" (click)="onSave(false)">{{action}}</button>
+						<button *hasPermission="['3', 'B_IV_1']"
+							class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4"
+							(click)="onSave(false)">{{action}}</button>
 					</span>
 					<span *ngIf="!model.id || model.id && model.id == 0">
-						<button *hasPermission="['3', 'B_IV_0']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" (click)="onSave(false)">{{action}}</button>
+						<button *hasPermission="['3', 'B_IV_0']"
+							class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4"
+							(click)="onSave(false)">{{action}}</button>
 					</span>
-					<button *hasPermission="['3', 'B_IV_4']" class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4" (click)="onSave(true)">Gửi</button>
+					<button *hasPermission="['3', 'B_IV_4']" class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4"
+						(click)="onSave(true)">Gửi</button>
 				</div>
 			</div>
 		</div>
@@ -26,8 +31,10 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
-							<input class="form-control" formControlName="title" autofocus [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
-							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+							<input class="form-control" formControlName="title" autofocus [(ngModel)]="model.title" maxlength="100"
+								placeholder="Nhập..." />
+							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+								class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
@@ -37,18 +44,19 @@
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<mat-form-field appearance="outline" style="width: 100%;">
-								<input matInput [ngxMatDatetimePicker]="startDate" numbersOnly
-									placeholder="Chọn ngày" formControlName="startDate" [(ngModel)]="model.startDate"
-								>
+								<input matInput [ngxMatDatetimePicker]="startDate" numbersOnly placeholder="Chọn ngày"
+									formControlName="startDate" [(ngModel)]="model.startDate">
 								<mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
 								<ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-									[stepHour]="stepHour" [stepMinute]="stepMinute"  [touchUi]="touchUi"
-									[color]="color" [enableMeridian]="enableMeridian">
+									[stepHour]="stepHour" [stepMinute]="stepMinute" [touchUi]="touchUi" [color]="color"
+									[enableMeridian]="enableMeridian">
 								</ngx-mat-datetime-picker>
 							</mat-form-field>
 
-							<div *ngIf="(submitted && f.startDate.invalid) || (f.startDate.invalid && (f.startDate.dirty || f.startDate.touched))" class="has-error">
-							
+							<div
+								*ngIf="(submitted && f.startDate.invalid) || (f.startDate.invalid && (f.startDate.dirty || f.startDate.touched))"
+								class="has-error">
+
 								<div *ngIf="f.startDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
@@ -61,18 +69,19 @@
 						</div>
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
-							
+
 							<mat-form-field appearance="outline" style="width: 100%;">
-									<input matInput [ngxMatDatetimePicker]="endDate" numbersOnly
-										placeholder="Chọn ngày" formControlName="endDate" [(ngModel)]="model.endDate"
-									>
+								<input matInput [ngxMatDatetimePicker]="endDate" numbersOnly placeholder="Chọn ngày"
+									formControlName="endDate" [(ngModel)]="model.endDate">
 								<mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
 								<ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-									[stepHour]="stepHour" [stepMinute]="stepMinute"  [touchUi]="touchUi"
-									[color]="color" [enableMeridian]="enableMeridian">
+									[stepHour]="stepHour" [stepMinute]="stepMinute" [touchUi]="touchUi" [color]="color"
+									[enableMeridian]="enableMeridian">
 								</ngx-mat-datetime-picker>
 							</mat-form-field>
-							<div *ngIf="(submitted && f.endDate.invalid) || (f.endDate.invalid && (f.endDate.dirty || f.endDate.touched))" class="has-error">
+							<div
+								*ngIf="(submitted && f.endDate.invalid) || (f.endDate.invalid && (f.endDate.dirty || f.endDate.touched))"
+								class="has-error">
 								<div *ngIf="f.endDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
@@ -88,7 +97,8 @@
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
 							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
-							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))" class="has-error m-b-12">
+							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))"
+								class="has-error m-b-12">
 								<div *ngIf="f.place.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
@@ -101,8 +111,11 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung <span class="text-danger">(*)</span></label>
-							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6" placeholder="Nhập..."></textarea>
-							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
+							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6"
+								placeholder="Nhập..."></textarea>
+							<div
+								*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
+								class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
@@ -112,7 +125,8 @@
 						<div class="col-12 attach-ct mt-3">
 							<p class="h5 text-uppercase mb-3">
 								<span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+										class="bi bi-paperclip" viewBox="0 0 16 16">
 										<path
 											d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 										</path>
@@ -123,8 +137,8 @@
 							<div class="attach-file row">
 								<div class="col-2 mb-2" *ngIf="statusCurent != 2">
 									<div class="alert alert-dark d-flex align-items-center h-80">
-										<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
-											accept="{{fileAccept}}" />
+										<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+											class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
 										<label for="file-5" (click)="file.click()" style="padding: 0px">
 											<figure style="background-color: transparent; padding-left: 10px;">
 												<i class="bi bi-file-earmark-arrow-up" style="font-size: 40px;"></i>
@@ -135,9 +149,10 @@
 								</div>
 								<ng-container *ngFor="let item of files">
 									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 1">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
-											<button *ngIf="statusCurent != 2" type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
-												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90"
+											style="margin-bottom: 0.3rem;">
+											<button *ngIf="statusCurent != 2" type="button" (click)="onRemoveFile(item)" class="close"
+												data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -147,9 +162,10 @@
 									</div>
 
 									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 3">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
-											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
-												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90"
+											style="margin-bottom: 0.3rem;">
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close"
+												data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 45px" alt="">
@@ -159,9 +175,10 @@
 									</div>
 
 									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 4">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
-											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i
-														class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90"
+											style="margin-bottom: 0.3rem;">
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close"
+												(click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
@@ -171,9 +188,10 @@
 									</div>
 
 									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 2">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
-											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
-												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90"
+											style="margin-bottom: 0.3rem;">
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close"
+												data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -182,9 +200,10 @@
 										</div>
 									</div>
 									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 6">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
-											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
-												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90"
+											style="margin-bottom: 0.3rem;">
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close"
+												data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
@@ -216,21 +235,23 @@
 									</div>
 									<div style="width: 35%; display: flex;" class="center">
 										<div class="form-check" style="margin: 5px;">
-											<input class="form-check-input" type="checkbox" [(ngModel)]="sendSMS" formControlName="sendSMS" id="sendSMS">
+											<input class="form-check-input" type="checkbox" [(ngModel)]="sendSMS" formControlName="sendSMS"
+												id="sendSMS">
 											<label class="form-check-label" for="sendSMS">
 												Gửi SMS
 											</label>
 										</div>
 										<div class="form-check" style="margin: 5px;">
-											<input class="form-check-input" type="checkbox" [(ngModel)]="sendEmail" formControlName="sendEmail" id="sendMail">
+											<input class="form-check-input" type="checkbox" [(ngModel)]="sendEmail"
+												formControlName="sendEmail" id="sendMail">
 											<label class="form-check-label" for="sendMail">
 												Gửi mail
 											</label>
 										</div>
 									</div>
 									<div class="action padding-item center">
-										<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white center"
-											(click)="onCreateUser()">
+										<button type="button" style="width: 40px; height: 40px;"
+											class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onCreateUser()">
 											<i class="bi bi-person-plus"></i>
 										</button>
 									</div>
@@ -241,7 +262,8 @@
 
 
 						<div class="list-user">
-							<div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">Chưa có thành phần tham dự</div>
+							<div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">
+								Chưa có thành phần tham dự</div>
 							<div class="col-sm-12 item-user" *ngFor="let item of listItemUserSelected">
 								<div class="info-user border-right padding-item d-flex pl-0">
 									<span *ngIf="item.avatar == ''" class="no-avatar-view" style="width: 40px; height: 40px;">
@@ -251,7 +273,8 @@
 												fill="#743F15" />
 										</svg>
 									</span>
-									<img *ngIf="item.avatar !=''" class="mr-1" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;" src="{{item.avatar}}"
+									<img *ngIf="item.avatar !=''" class="mr-1"
+										style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;" src="{{item.avatar}}"
 										alt="">
 									<div>
 										<div class="title">{{item.fullName}}</div>
@@ -264,21 +287,23 @@
 								</div>
 								<div class="type-send border-right padding-item">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" (click)="onUpdateUser(item.userId, true)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true"
+											(click)="onUpdateUser(item.userId, true)">
 										<label class="form-check-label">
 											Gửi SMS
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" (click)="onUpdateUser(item.userId, false)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true"
+											(click)="onUpdateUser(item.userId, false)">
 										<label class="form-check-label">
 											Gửi mail
 										</label>
 									</div>
 								</div>
 								<div class="action padding-item center" *ngIf="statusCurent != 2">
-									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;" class="btn btn-block border-0 px-3 center"
-										(click)="onRemoveUser(item)">
+									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"
+										class="btn btn-block border-0 px-3 center" (click)="onRemoveUser(item)">
 										<i class="bi bi-person-dash"></i>
 									</button>
 								</div>
@@ -293,26 +318,32 @@
 								<div class="col-11 d-flex p-0">
 									<div class="col-12 col-lg-6 form-group">
 										<label class="mb-1 department">Cá nhân</label>
-										<ng-select notFoundText="Không có dữ liệu" class="form-control" 
-											[items]="lstIndividual" placeholder="Chọn ..." 
-											bindLabel="title" bindValue="id" [virtualScroll]="true"
-											[(ngModel)]="individualId"  [ngModelOptions]="{standalone: true}"
-											[closeOnSelect]="true">
+										<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstIndividual"
+											placeholder="Chọn ..." bindLabel="title" bindValue="id" [virtualScroll]="true"
+											[(ngModel)]="individualId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+											<ng-template ng-option-tmp let-item="item">
+												<div title="{{item.title}} - {{item.phone}}"> {{item.title}}
+													<div> {{item.phone}}</div>
+												</div>
+											</ng-template>
 										</ng-select>
 									</div>
 									<div class="col-12 col-lg-6 form-group">
 										<label class="mb-1 department">Doanh nghiệp</label>
-										<ng-select notFoundText="Không có dữ liệu" class="form-control" 
-											[items]="lstBussiness" placeholder="Chọn ..." 
-											bindLabel="title" bindValue="id" [virtualScroll]="true"
-											[(ngModel)]="bussinessId"  [ngModelOptions]="{standalone: true}"
-											[closeOnSelect]="true">
+										<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstBussiness"
+											placeholder="Chọn ..." bindLabel="title" bindValue="id" [virtualScroll]="true"
+											[(ngModel)]="bussinessId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
+											<ng-template ng-option-tmp let-item="item">
+												<div title="{{item.title}} - {{item.phone}}"> {{item.title}}
+													<div> {{item.phone}}</div>
+												</div>
+											</ng-template>
 										</ng-select>
 									</div>
 								</div>
 								<div class="col-lg-1 action padding-item center">
-									<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white center"
-										(click)="onCreateBussiness()">
+									<button type="button" style="width: 40px; height: 40px;"
+										class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onCreateBussiness()">
 										<i class="bi bi-person-plus"></i>
 									</button>
 								</div>
@@ -321,7 +352,8 @@
 
 
 						<div class="list-user">
-							<div class="title-user-map center" style="text-transform: none;" *ngIf="lstIndividualBussiness.length ==0">Chưa chọn cá nhân doanh nghiệp</div>
+							<div class="title-user-map center" style="text-transform: none;"
+								*ngIf="lstIndividualBussiness.length ==0">Chưa chọn cá nhân doanh nghiệp</div>
 							<div class="col-sm-12 item-user" *ngFor="let item of lstIndividualBussiness">
 								<div class="info-user border-right padding-item d-flex pl-0" style="flex: 1 0;">
 									<div class="avatar-circle mr-2">
@@ -334,21 +366,23 @@
 								</div>
 								<div class="type-send border-right padding-item">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" [(ngModel)]="item.sendSMS"  [ngModelOptions]="{standalone: true}">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true"
+											[(ngModel)]="item.sendSMS" [ngModelOptions]="{standalone: true}">
 										<label class="form-check-label">
 											Gửi SMS
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" [(ngModel)]="item.sendEmail"  [ngModelOptions]="{standalone: true}">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true"
+											[(ngModel)]="item.sendEmail" [ngModelOptions]="{standalone: true}">
 										<label class="form-check-label">
 											Gửi mail
 										</label>
 									</div>
 								</div>
 								<div class="action padding-item center" *ngIf="statusCurent != 2">
-									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;" class="btn btn-block border-0 px-3 center"
-										(click)="onRemoveIndividualBussiness(item)">
+									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;"
+										class="btn btn-block border-0 px-3 center" (click)="onRemoveIndividualBussiness(item)">
 										<i class="bi bi-person-dash"></i>
 									</button>
 								</div>

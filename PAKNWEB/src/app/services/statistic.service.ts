@@ -59,4 +59,11 @@ export class StatisticService {
 	getStatisticRecommendationByTypeDetail(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByTypeDetail)
 	}
+	getStatisticRecommendationByReceptionTypeDetail(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByRecptionTypeDetail)
+	}
+
+	getStatisticRecommendationByResultDetail(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationResultDetail)
+	}
 }

@@ -33,3 +33,7 @@
 ul.category-article li a.active {
 	color: #2e73d5;
 }
+.p-item-title{
+	line-height: 1.4rem !important;
+	font-size: 14px !important;
+}

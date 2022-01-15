@@ -11,3 +11,7 @@
 	background-color: #E5E5E5 !important;
 	height: 100vh !important;
 }
+
+.p-lg-5{
+	padding: 2.5rem !important;
+}

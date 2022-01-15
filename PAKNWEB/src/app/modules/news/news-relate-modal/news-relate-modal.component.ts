@@ -13,7 +13,7 @@ declare var $: any
 	styleUrls: ['./news-relate-modal.component.css'],
 })
 export class NewsRelateModalComponent implements OnInit {
-	constructor(private newsService: NewsService, private catalogService: CatalogService, private sanitizer: DomSanitizer, private _toa: ToastrService) {}
+	constructor(private newsService: NewsService, private catalogService: CatalogService, private sanitizer: DomSanitizer, private _toa: ToastrService) { }
 
 	public newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent
 	listNewsCategories: any[] = []
@@ -25,6 +25,7 @@ export class NewsRelateModalComponent implements OnInit {
 		title: '',
 		newsType: '',
 	}
+	newsType: any = null
 	modalTitle: string = ''
 	totalCount: number = 0
 	pageCount: number = 0
@@ -69,7 +70,7 @@ export class NewsRelateModalComponent implements OnInit {
 	}
 	getListPaged() {
 		this.query.title = this.query.title == null ? '' : this.query.title.trim()
-		this.query.newsType = this.query.newsType == null ? '' : this.query.newsType
+		this.query.newsType = this.newsType == null ? '' : this.newsType
 		this.newsService
 			.getAllNewsRelatesForCreate({
 				NewId: this.parentNews,
@@ -117,7 +118,7 @@ export class NewsRelateModalComponent implements OnInit {
 
 	//mở modal, được gọi từ comp cha
 	openModal(newsRelate: any[], parentNews: number) {
-		debugger
+
 		this.parentNews = parentNews
 		this.newsRelate = newsRelate.concat(this.newsSelected)
 		this.newsRelate = this.newsRelate.filter((item, index) => this.newsRelate.indexOf(item) === index)

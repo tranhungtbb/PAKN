@@ -1,5 +1,7 @@
 export class IndexSettingObjet {
 	id: number
+	metaTitle: string
+	metaDescription: string
 	bannerUrl: string
 	phone: string
 	email: string

@@ -23,6 +23,7 @@ using PAKNAPI.Models.Invitation;
 using PAKNAPI.Models.EmailSMSModel;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using static PAKNAPI.Controllers.SendSmsController;
 
 namespace PAKNAPI.Controllers
 {
@@ -35,13 +36,15 @@ namespace PAKNAPI.Controllers
         private readonly IClient _bugsnag;
         private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
-		public SMSController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
+		public SMSController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
 			_httpContextAccessor = httpContextAccessor;
+			_configuration = configuration;
 		}
 		/// <summary>
 		/// xóa SMS
@@ -106,7 +109,9 @@ namespace PAKNAPI.Controllers
 				if (id > 0)
 				{
 					List<int> AdmintrativeUnitIds = new List<int>();
-
+					SendSmsController sendSmsController = new SendSmsController(_appSetting, _bugsnag, _configuration);
+					SendMessageRequest sendMessageRequest = new SendMessageRequest();
+					sendMessageRequest.message = $"{response.model.Title} {Environment.NewLine}{response.model.Content}{Environment.NewLine}{response.model.Signature}";
 					foreach (var item in response.IndividualBusinessInfo) {
 						if (AdmintrativeUnitIds.Count() == 0)
 						{
@@ -124,12 +129,34 @@ namespace PAKNAPI.Controllers
 							dn.SMSId = id;
 							dn.BusinessId = item.Id;
 							await new SMSDoanhNghiepInsert(_appSetting).SMSDoanhNghiepInsertDAO(dn);
+							if (response.model.Status == 2)
+							{
+								var userSend = await new BIBusiness(_appSetting).BIBusinessGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
+								if (userSend.Phone.StartsWith('0'))
+								{
+									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
+									sendMessageRequest.phoneTo = "+84" + sendMessageRequest.phoneTo;
+								}
+								await sendSmsController.OnSendSMS(sendMessageRequest);
+							}
 						}
 						else if(item.Category == 1){
 							SMSNguoiNhanInsertIN cn = new SMSNguoiNhanInsertIN();
 							cn.SMSId = id;
 							cn.Individual = item.Id;
 							await new SMSNguoiNhanInsert(_appSetting).SMSNguoiNhanInsertDAO(cn);
+							if (response.model.Status == 2)
+							{
+								var userSend = await new BIIndividual(_appSetting).BIIndividualGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
+								if (userSend.Phone.StartsWith('0'))
+								{
+									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
+									sendMessageRequest.phoneTo = "+84" + sendMessageRequest.phoneTo;
+								}
+								await sendSmsController.OnSendSMS(sendMessageRequest);
+							}
 						}
 					}
 					// insert map
@@ -236,7 +263,9 @@ namespace PAKNAPI.Controllers
 					await new SMSNguoiNhanDeleteBySMSId(_appSetting).SMSNguoiNhanDeleteBySMSIdDAO(nn);
 
 					List<int> AdmintrativeUnitIds = new List<int>();
-
+					SendSmsController sendSmsController = new SendSmsController(_appSetting, _bugsnag, _configuration);
+					SendMessageRequest sendMessageRequest = new SendMessageRequest();
+					sendMessageRequest.message = $"{response.model.Title} {Environment.NewLine}{response.model.Content}{Environment.NewLine}{response.model.Signature}";
 					foreach (var item in response.IndividualBusinessInfo)
 					{
 						if (AdmintrativeUnitIds.Count() == 0)
@@ -256,6 +285,17 @@ namespace PAKNAPI.Controllers
 							dn2.SMSId = id;
 							dn2.BusinessId = item.Id;
 							await new SMSDoanhNghiepInsert(_appSetting).SMSDoanhNghiepInsertDAO(dn2);
+							if (response.model.Status == 2)
+							{
+								var userSend = await new BIBusiness(_appSetting).BIBusinessGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
+								if (userSend.Phone.StartsWith('0'))
+								{
+									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
+									sendMessageRequest.phoneTo = "+84" + sendMessageRequest.phoneTo;
+								}
+								await sendSmsController.OnSendSMS(sendMessageRequest);
+							}
 						}
 						else if (item.Category == 1)
 						{
@@ -263,8 +303,21 @@ namespace PAKNAPI.Controllers
 							cn.SMSId = id;
 							cn.Individual = item.Id;
 							await new SMSNguoiNhanInsert(_appSetting).SMSNguoiNhanInsertDAO(cn);
+							if (response.model.Status == 2)
+							{
+								var userSend = await new BIIndividual(_appSetting).BIIndividualGetByID(item.Id);
+								sendMessageRequest.phoneTo = userSend.Phone;
+								if (userSend.Phone.StartsWith('0'))
+								{
+									sendMessageRequest.phoneTo = userSend.Phone.Remove(0, 1);
+									sendMessageRequest.phoneTo = "+84" + sendMessageRequest.phoneTo;
+								}
+								await sendSmsController.OnSendSMS(sendMessageRequest);
+							}
 						}
 					}
+
+					
 					// insert map
 
 					SMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN mapDelete = new SMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN();

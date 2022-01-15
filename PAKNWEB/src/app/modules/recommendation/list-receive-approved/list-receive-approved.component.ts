@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -27,7 +27,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 		private _shareData: DataService,
 		private notificationService: NotificationService,
 		private _router: Router
-	) {}
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
@@ -52,7 +52,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
 
 	lstUnitNotMain: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
@@ -153,29 +152,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 		}
 	}
 
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationDelete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				$('#modalConfirmDelete').modal('hide')
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
-	}
-
 	get f() {
 		return this.formForward.controls
 	}
@@ -195,10 +171,13 @@ export class ListReceiveApprovedComponent implements OnInit {
 			content: this.modelForward.content,
 		})
 	}
-	preForward(id: number) {
+	isForwardMultiUnit: boolean
+	preForward(item: any, isForwardMultiUnit: boolean = false) {
 		this.submitted = false
+		this.isForwardMultiUnit = isForwardMultiUnit
 		this.modelForward = new RecommendationForwardObject()
-		this.modelForward.recommendationId = id
+		this.modelForward.recommendationId = item.id
+		this.modelForward.id = item.processId
 		this.rebuilForm()
 		this._service.recommendationGetDataForForward({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -229,12 +208,70 @@ export class ListReceiveApprovedComponent implements OnInit {
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
-		this._service.recommendationForward(request, obj.title).subscribe((response) => {
+		if (!this.isForwardMultiUnit) {
+			this._service.recommendationForward(request, obj.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modal-tc-pakn').modal('hide')
+					this.getList()
+					this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		} else {
+			let requestCombine = {
+				RecommendationCombination: { ...this.modelForward, 'status': RECOMMENDATION_STATUS.PROCESS_WAIT },
+				RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+				ListUnit: this.modelForward.unitReceiveId,
+				ProcessId: this.modelForward.id
+			}
+			requestCombine.RecommendationCombination.unitReceiveId = null
+
+
+			this._service.recommendationCombineInsert(requestCombine, obj.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modal-tc-pakn').modal('hide')
+					this.getList()
+					this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		}
+	}
+
+	preProcessAccept(item: any) {
+		this.modelProcess = new RecommendationProcessObject()
+		this.modelProcess.recommendationId = item.id
+		this.modelProcess.id = item.processId
+		$('#modalAccept').modal('show')
+	}
+
+	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
+
+	onProcessAccept() {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this.modelProcess.reactionaryWord = false
+		this.modelProcess.status = PROCESS_STATUS_RECOMMENDATION.APPROVED
+		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true
+		}
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				$('#modal-tc-pakn').modal('hide')
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelForward.recommendationId }).subscribe((res) => {})
+				$('#modalAccept').modal('hide')
+				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
-				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -242,41 +279,6 @@ export class ListReceiveApprovedComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
-	}
-
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
-
-	exportExcel() {
-		let request = {
-			IsActived: this.isActived,
-		}
-
-		this._service.recommendationExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
 	}
 	onExport() {
 		let passingObj: any = {}

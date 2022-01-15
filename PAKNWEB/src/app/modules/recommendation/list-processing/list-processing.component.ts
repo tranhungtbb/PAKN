@@ -9,6 +9,7 @@ import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
+import { UnitService } from 'src/app/services/unit.service'
 declare var $: any
 
 @Component({
@@ -23,13 +24,16 @@ export class ListProcessingComponent implements OnInit {
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private _router: Router,
-		private _fb: FormBuilder
-	) {}
+		private _fb: FormBuilder,
+		private _unitService: UnitService
+	) { }
 	userLoginId: number = this.storeageService.getUserId()
 	unitId: number = this.storeageService.getUnitId()
 	isMain: boolean = this.storeageService.getIsMain()
+	isUnitMain: boolean = this.storeageService.getIsUnitMain()
 	listData = new Array<RecommendationObject>()
 	formForward: FormGroup
+	formCombine: FormGroup
 	dateNow: Date = new Date()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },
@@ -49,7 +53,6 @@ export class ListProcessingComponent implements OnInit {
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
-	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -58,6 +61,7 @@ export class ListProcessingComponent implements OnInit {
 		this.getDataForCreate()
 		this.getList()
 		this.buildForm()
+		this.buildCombineForm()
 	}
 
 	ngAfterViewInit() {
@@ -149,22 +153,7 @@ export class ListProcessingComponent implements OnInit {
 		}
 	}
 
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
+
 	modelForward: any = new RecommendationForwardObject()
 	lstUnitChild: any = []
 
@@ -181,6 +170,25 @@ export class ListProcessingComponent implements OnInit {
 
 	rebuilForm() {
 		this.formForward.reset({
+			unitReceiveId: this.modelForward.unitReceiveId,
+			expiredDate: this.modelForward.expiredDate,
+			content: this.modelForward.content,
+		})
+	}
+
+	buildCombineForm() {
+		this.formCombine = this._fb.group({
+			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+			expiredDate: [this.modelForward.expiredDate],
+			content: [this.modelForward.content],
+		})
+	}
+	get fCombine() {
+		return this.formCombine.controls
+	}
+
+	rebuilCombineForm() {
+		this.formCombine.reset({
 			unitReceiveId: this.modelForward.unitReceiveId,
 			expiredDate: this.modelForward.expiredDate,
 			content: this.modelForward.content,
@@ -206,10 +214,11 @@ export class ListProcessingComponent implements OnInit {
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
-			IsForwardUnitChild : true,
+			IsForwardUnitChild: true,
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
+		// chuyển tiếp đơn vị con
 		this._service.recommendationForward(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
@@ -222,6 +231,55 @@ export class ListProcessingComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
+	}
+
+	listUnitCombine: any = []
+	preProcessCombine(item: any) {
+		this.modelForward = new RecommendationForwardObject()
+		this.modelForward.recommendationId = item.id
+		this.modelForward.id = item.processId
+		this.submitted = false
+		this.rebuilCombineForm()
+
+		this._unitService.getDropdownForCombine({ RecommendationId: item.id }).subscribe(res => {
+			this.listUnitCombine = res.result
+			$('#modal-combine').modal('show')
+		}, err => {
+			console.log(err)
+		})
+
+
+	}
+
+	onProcessCombine() {
+		this.modelForward.content = this.modelForward.content.trim()
+		this.submitted = true
+		if (this.formCombine.invalid) {
+			return
+		}
+		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
+		this.modelForward.status = RECOMMENDATION_STATUS.PROCESS_WAIT
+
+		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
+		let requestCombine = {
+			RecommendationCombination: { ...this.modelForward, 'unitReceiveId': null },
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+			ListUnit: this.modelForward.unitReceiveId,
+			ProcessId: this.modelForward.id
+		}
+
+		this._service.recommendationCombineInsert(requestCombine, obj.title).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modal-combine').modal('hide')
+				this._toastr.success(COMMONS.FORWARD_SUCCESS)
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+
 	}
 
 	exportExcel() {

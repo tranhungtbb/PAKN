@@ -7,6 +7,7 @@ using PAKNAPI.Chat;
 using PAKNAPI.Chat.ResponseModel;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Chatbot;
 using PAKNAPI.Models.ModelBase;
 using System;
 using System.Collections.Generic;
@@ -19,19 +20,32 @@ namespace SignalR.Hubs
     {
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
         private readonly IAppSetting _appSetting;
-        private readonly IManageBots _bots;
+        //private readonly IManageBots _bots;
+
         public ChatHub(
-            IAppSetting appSetting,
-            IManageBots bots
+            IAppSetting appSetting
+        //IManageBots bots
+
         )
         {
-            _bots = bots;
+            //_bots = bots;
             _appSetting = appSetting;
         }
 
-        public async Task BroadcastMessage(Message msg)
+        //public async Task BroadcastMessage(Message msg)
+        //{
+        //    await Clients.All.OnNewMessage(msg);
+        //}
+
+        public async Task NotifyAdmin(Room room)
         {
-            await Clients.All.BroadcastMessage(msg);
+            //update status for room
+            await new BOTRoom(_appSetting).BOTRoomUpdateStatus(room.Id, true);
+            await Clients.All.NotifyAdmin(room);
+        }
+
+        public async Task ReceiveRoomToGroup(Room room) {
+            await Clients.All.ReceiveRoomToGroup(room);
         }
 
         public async Task JoinToRoom(string roomName)
@@ -41,13 +55,13 @@ namespace SignalR.Hubs
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
             if (room != null)
             {
-                int userId = await GetUserIdByUserName(httpContext);
-                int checkExist = await new BOTRoomUserLink(_appSetting).BOTCheckUserExistInRoom(userId, room.Id);
+                var resUserId = await GetUserIdByUserName(httpContext);
+                int checkExist = await new BOTRoomUserLink(_appSetting).BOTCheckUserExistInRoom(resUserId.Id, room.Id);
                 if (checkExist <= 0)
                 {
                     var botRoomUserLink = new BOTRoomUserLink();
                     botRoomUserLink.RoomId = room.Id;
-                    botRoomUserLink.UserId = userId;
+                    botRoomUserLink.UserId = resUserId.Id;
                     await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
                 }
 
@@ -63,6 +77,9 @@ namespace SignalR.Hubs
                 if (room != null)
                 {
                     BotStatus status = isEnableBot == true ? BotStatus.Enable : BotStatus.Disable;
+                    if (isEnableBot == true) {
+
+                    }
                     await new BOTRoom(_appSetting).BOTRoomEnableBot(roomName, (int)status);
                 }
             }
@@ -72,30 +89,45 @@ namespace SignalR.Hubs
             }
         }
 
-        public async Task SendToRoom(string roomName, string message)
+        public async Task AdminSendToRoom(string roomName, string message)
         {
-            if (!string.IsNullOrEmpty(message)) {
+            var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+            await new BOTRoom(_appSetting).BOTRoomUpdateStatus(room.Id, false);
+            if (room.Type == (int) BotStatus.Enable)
+            {
+                await new BOTRoom(_appSetting).BOTRoomEnableBot(roomName, (int)BotStatus.Disable);
+            }
+            await HandleMessageToRoom(room.Name,room.Id, message);
+        }
+
+        private async Task HandleMessageToRoom(string roomName,int roomId ,string message) {
+            if (!string.IsNullOrEmpty(message))
+            {
                 var httpContext = Context.GetHttpContext();
 
                 var senderUserName = GetUserName(httpContext);
-                var senderUserId = await GetUserIdByUserName(httpContext);
-                var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                var resSenderUserId = await GetUserIdByUserName(httpContext);
+                
                 DateTime dateSent = DateTime.Now;
                 Message messageModel = new Message()
                 {
                     Content = message,
                     From = senderUserName,
-                    FromId = senderUserId.ToString(),
+                    FromId = resSenderUserId.Id.ToString(),
+                    FromFullName = resSenderUserId.Name,
+                    FromAvatarPath = resSenderUserId.AvatarUrl,
                     To = roomName,
-                    Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(),
+                    Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(), 
                     Type = MessageTypes.Conversation
                 };
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUserId, room.Id, dateSent);
-                await Clients.Group(room.Name).ReceiveMessageToGroup(messageModel);
+                await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, resSenderUserId.Id, roomId, resSenderUserId.Name, resSenderUserId.AvatarUrl, dateSent);
+                await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
+                var room = await new BOTRoom(_appSetting).BOTRoomGetById(roomId);
+                await Clients.All.OnNewMessage(room);
             }
         }
 
-        public async Task AnonymousChatWithBot(string message,string hiddenAnswer = "")
+        public async Task AnonymousChatWithBot(string message, string idSuggestLibrary,string hiddenAnswer = "")
         {
             var httpContext = Context.GetHttpContext();
             var senderUserName = GetUserName(httpContext);
@@ -104,31 +136,54 @@ namespace SignalR.Hubs
             string roomName = "Room_" + senderUserName;
             BOTAnonymousUser senderUser = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-            await SendToRoom(roomName, message);
+            await HandleMessageToRoom(room.Name,room.Id, message);
             if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable)
             {
                 DateTime foo = DateTime.Now;
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
-                ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                //var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
+                //ResultBot res = _bots.Response(senderUserName, string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                List<ResultBotNew> results = new List<ResultBotNew>();
+                if (String.IsNullOrEmpty(idSuggestLibrary))
+                {
+                    results = ResultBot(string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer);
+                }
+                else
+                {
+                    results = new BotGetLibrary(_appSetting).BotGetLibraryById(idSuggestLibrary);
+                }                
                 DateTime foooo = DateTime.Now;
                 double totall = (foooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 0 " + totall);
                 Message messageModel = new Message()
                 {
                     HiddenAnswer = string.IsNullOrEmpty(hiddenAnswer) ? message : hiddenAnswer,
-                    Content = res.Answer,
                     From = "Bot",
-                    SubTags = (res.SubTags),
+                    FromFullName = "Bot",
+                    Results = results,
                     FromId = "Bot",
                     To = roomName,
                     Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString(),
                     Type = MessageTypes.Conversation
                 };
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
-                var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id, foo);
+                await Clients.All.OnNewMessage(room);
+                await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id,"Bot","", foo);
                 DateTime fooo = DateTime.Now;
                 double total = (fooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 1 " + total);
+            }
+        }
+
+        private List<ResultBotNew> ResultBot(string input)
+        {
+            try
+            {
+                var result = new BotGetLibrary(_appSetting).BotGetLibraryByInput(input);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new List<ResultBotNew>();
             }
         }
 
@@ -137,20 +192,37 @@ namespace SignalR.Hubs
             return !string.IsNullOrEmpty(httpContext.Request.Query["userName"]) ? httpContext.Request.Query["userName"] : httpContext.Request.Query["sysUserName"];
         }
 
-        private async Task<int> GetUserIdByUserName(HttpContext httpContext)
+        private async Task<UserChatModel> GetUserIdByUserName(HttpContext httpContext)
         {
             if (!string.IsNullOrEmpty(httpContext.Request.Query["userName"]))
             {
                 var senderUserName = httpContext.Request.Query["userName"];
                 BOTAnonymousUser ress = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
-                return ress.Id;
+                return new UserChatModel()
+                {
+                    Id = ress.Id,
+                    Name = httpContext.Request.Query["fullName"].ToString(),
+                    AvatarUrl = ""
+                };
             }
             else if (!string.IsNullOrEmpty(httpContext.Request.Query["sysUserName"]))
             {
+               
                 int sysUserId = int.Parse(httpContext.Request.Query["sysUserName"]);
-                return sysUserId;
+                var ress = await new SYUser(_appSetting).SYUserGetByID(sysUserId);
+                return new UserChatModel()
+                {
+                    Id = sysUserId,
+                    Name = ress.FullName,
+                    AvatarUrl = ress.Avatar
+                };
+                
             }
-            return -1;
+            return new UserChatModel()
+            {
+                Id = -1,
+                AvatarUrl = ""
+            };
         }
 
         public override async Task OnConnectedAsync()
@@ -176,29 +248,29 @@ namespace SignalR.Hubs
                 //}
                 //else
                 //{
-                //    List<Room> rooms = _roomRepository.GetRoomsByUserId(user.Id);
-                //    List<Task> joinGroupTasks = new List<Task>();
-                //    foreach (var item in rooms)
-                //    {
 
-                //        await (Groups.AddToGroupAsync(id, item.Name));
-                //    }
-                //    await Task.WhenAll(joinGroupTasks);
-                //}
-                //await (Groups.AddToGroupAsync(id, "roomAll"));
+                string roomName = "Room_" + userName;
+                BOTRoom room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                if (room!=null)
+                {
+                    await (Groups.AddToGroupAsync(id, roomName));
+                }
+               
+
                 var data = new { userName };
                 var respone = new { data, success = ResultCode.OK };
                 //wait Clients.Caller.SendAsync(EventType.GetProfileInfo, respone);
             }
             catch (Exception ex)
             {
+
             }
 
 
 
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
             var id = Context.ConnectionId;
             var httpContext = Context.GetHttpContext();
@@ -208,7 +280,17 @@ namespace SignalR.Hubs
             {
                 _ConnectionsMap.Remove(userName + "x_x" + id);
             }
-            _bots.RemoveBot(userName);
+            //_bots.RemoveBot(userName);
+
+            string roomName = "Room_" + userName;
+            BOTRoom room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+            if (room != null)
+            {
+                await(Groups.RemoveFromGroupAsync(id, roomName));
+            }
+
+
+
             //var user = _userRepository.GetByKey(nameof(User.userName), userName.ToString());
             //try
             //{
@@ -224,8 +306,10 @@ namespace SignalR.Hubs
             //{
 
             //}
-
-            return base.OnDisconnectedAsync(exception);
+            base.OnDisconnectedAsync(exception);
+            var data = new { userName };
+            var respone = new { data, success = ResultCode.OK };
+            //return 
         }
     }
 }

@@ -24,7 +24,7 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 	pagination = []
 	// arr
 	lstUnit: [] = []
-	lstField: [] = []
+	lstField: any[] = []
 
 	listRecommendation = new Array<PuRecommendation>()
 
@@ -34,10 +34,10 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 		private routers: Router,
 		private recommendationService: RecommendationService,
 		private _toas: ToastrService
-	) {}
+	) { }
 
 	async ngOnInit() {
-		this.getList()
+
 		this.recommendationService.recommendationGetDataForSearch({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -48,6 +48,7 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 					this.lstUnit = []
 					this._toas.error(res.message)
 				}
+				this.getList()
 			},
 			(err) => {
 				console.log(err)
@@ -62,6 +63,7 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 	dataStateChange = () => {
 		this.getList()
 	}
+	fieldName: string
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
@@ -72,13 +74,23 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}
+		if (this.field) {
+			this.fieldName = this.lstField.find(x => x.value == this.field).text
+		} else {
+			this.fieldName = null
+		}
 		this.service.getRecommendationReceiveDeny(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.RecommendationReceiveDeny.length > 0) {
 					this.listRecommendation = res.result.RecommendationReceiveDeny.map((item) => {
-						item.shortName = this.getShortName(item.name)
+						// item.shortName = this.getShortName(item.name)
+						if (this.KeySearch) {
+							item.title = this.highlight(item.title, this.KeySearch)
+							item.content = this.highlight(item.content, this.KeySearch)
+						}
 						return item
 					})
+
 					this.PageIndex = res.result.PageIndex
 					this.Total = res.result.TotalCount
 					this.padi()
@@ -94,6 +106,15 @@ export class ReceiveDenyRecommendationsComponent implements OnInit {
 			}
 		})
 	}
+
+	highlight(inputText, text) {
+		var index = inputText.toUpperCase().indexOf(text.toUpperCase());
+		if (index >= 0) {
+			inputText = inputText.substring(0, index) + "<span class='highlight-key-search'>" + inputText.substring(index, index + text.length) + "</span>" + inputText.substring(index + text.length);
+		}
+		return inputText
+	}
+
 	getShortName(string) {
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()

@@ -21,6 +21,8 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstGroupWord { get; set; }
         public List<DropdownObject> lstUnitChild { get; set; }
         public GeneralSetting generalSetting { get; set; }
+
+        public List<SYUnitDropdown> lstGroupUnit { get; set; }
     }
 
     public class RecommendationGetDataForForwardResponse
@@ -32,6 +34,7 @@ namespace PAKNAPI.Models.Recommendation
     public class RecommendationGetDataForProcessResponse
     {
         public List<DropdownObject> lstHashtag { get; set; }
+        public List<DropdownObject> lstField { get; set; }
         public List<DropdownObject> lstUsers { get; set; }
         public List<DropdownObject> lstGroupWord { get; set; }
         public List<DropdownObject> lstUsersProcess { get; set; }
@@ -41,6 +44,7 @@ namespace PAKNAPI.Models.Recommendation
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Mã captcha không được để trống")]
         public string Captcha { get; set; }
+        public double Milliseconds { get; set; }
     }
 
     public class RecommendationInsertRequest
@@ -76,9 +80,30 @@ namespace PAKNAPI.Models.Recommendation
         public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
         public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
         public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
-
         public List<MRRecommendationGetDenyContentsBase> denyContent { get; set; }
+
+        public List<MRRecommendationConclusionCombine> conclusionCombine { get; set; }
+
+        public bool IsUnitCombine { get; set; }
+
+        //public List<>
     }
+
+    public class MRRecommendationConclusionCombine {
+        public string UnitName { get; set; }
+
+        public int? Status { get; set; }
+        public string ConclusionCombineContent { get; set; }
+        public string ConclusionCombineContentDeny { get; set; }
+        public int? ConclusionCombineId { get; set; }
+        public DateTime? ProcessingDate { get; set; }
+
+        public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
+
+
+    }
+
+
 
     public class RecommendationForwardRequest
     {
@@ -88,6 +113,14 @@ namespace PAKNAPI.Models.Recommendation
         public bool IsList { get; set; }
 
         public bool? IsForwardUnitChild { get; set; }
+    }
+
+    public class RecommendationCombineRequest
+    {
+        public MRRecommendationCombinationInsert RecommendationCombination { get; set; }
+        public byte RecommendationStatus { get; set; }
+        public List<int> ListUnit { get; set; }
+        public int? ProcessId { get; set; }
     }
     public class RecommendationForwardProcess
     {
@@ -101,6 +134,8 @@ namespace PAKNAPI.Models.Recommendation
         public bool? IsForwardUnitChild { get; set; }
         public bool? IsFakeImage { get; set; }
         public bool? IsForwardMain { get; set; }
+
+        public int? Field { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {
@@ -108,6 +143,8 @@ namespace PAKNAPI.Models.Recommendation
         public IFormFileCollection Files { get; set; }
         public byte RecommendationStatus { get; set; }
         public List<DropdownObject> ListHashTag { get; set; }
+
+        public List<MRRecommendationConclusionFilesGetByConclusionId> FilesDelete { get; set; }
     }
 
     public class RecommendationSendProcess

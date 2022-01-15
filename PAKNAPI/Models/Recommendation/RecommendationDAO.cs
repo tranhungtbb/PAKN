@@ -32,7 +32,16 @@ namespace PAKNAPI.Models.Recommendation
 			data.Code = await _sQLCon.ExecuteScalarDapperAsync<string>("MR_Recommendation_GenCode_GetCode", DP);
 			DP.Add("Id", unitId);
 			data.lstUnitChild = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UnitGetChildDropdown]", DP)).ToList();
-
+			DP = new DynamicParameters();
+			SYUnitGetMainId unitMain = (await _sQLCon.ExecuteListDapperAsync<SYUnitGetMainId>("SY_UnitGetMainId", DP)).FirstOrDefault();
+			SYUnitDropdown unit = new SYUnitDropdown();
+			unit.Id = unitMain.Id;
+			unit.Name = unitMain.Name;
+			unit.IsMain = true;
+			data.lstGroupUnit = new List<SYUnitDropdown>();
+			data.lstGroupUnit.Add(unit);
+			data.lstGroupUnit.AddRange(GroupUnit.ListGroupUnit());
+			
 			DP = new DynamicParameters();
 			DP.Add("Type", TYPECONFIG.GENERAL);
 			var config = (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetByType", DP)).FirstOrDefault();
@@ -69,6 +78,7 @@ namespace PAKNAPI.Models.Recommendation
 			DynamicParameters DP = new DynamicParameters();
 			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagGetDropdown", DP)).ToList();
 			data.lstGroupWord = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_GroupWordGetListSuggest", DP)).ToList();
+			data.lstField = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_FieldGetDropdown", DP)).ToList();
 			DP.Add("UnitId", UnitId);
 			data.lstUsers = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UsersGetDropdownByUnitId", DP)).ToList();
 			data.lstUsersProcess = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UsersProcessDropdownByUnitId]", DP)).Where(x=>x.Value != userId).ToList();
@@ -95,6 +105,7 @@ namespace PAKNAPI.Models.Recommendation
 		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id,long userProcessId ,long unitProcessId)
 		{
 			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+			data.IsUnitCombine = false;
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 			DP.Add("UserprocessId", userProcessId);
@@ -131,6 +142,77 @@ namespace PAKNAPI.Models.Recommendation
 						item.FilePath = decrypt.EncryptData(item.FilePath);
 					}
 				}
+			}
+
+			if (data.Model.IsCombine == true) {
+				//dsfsdf
+				DP = new DynamicParameters();
+				DP.Add("RecommendationId", Id);
+				data.conclusionCombine = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionCombine>("SY_UnitGetByRecommnedationCombine", DP)).ToList();
+				// ConclusionProcessDate
+				foreach (var item in data.conclusionCombine) {
+					if (item.Status >= 8) {
+						// file
+						DP = new DynamicParameters();
+						DP.Add("Id", item.ConclusionCombineId);
+						item.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+						foreach (var file in item.filesConclusion)
+						{
+							file.FilePath = decrypt.EncryptData(file.FilePath);
+						}
+					}
+				}
+				
+			}
+			return data;
+		}
+
+		public async Task<RecommendationGetByIDViewResponse> RecommendationCombineGetByIDView(int? Id, long userProcessId, long unitProcessId)
+		{
+			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+			data.IsUnitCombine = true;
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			DP.Add("UserprocessId", userProcessId);
+			DP.Add("UnitProcessId", unitProcessId);
+			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("[MR_RecommendationCombineGetByIDView]", DP)).FirstOrDefault();
+
+			DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
+			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+			foreach (var item in data.lstFiles)
+			{
+				item.FilePath = decrypt.EncryptData(item.FilePath);
+			}
+
+			if (data.Model.Status == STATUS_RECOMMENDATION.APPROVE_DENY || data.Model.Status == STATUS_RECOMMENDATION.PROCESS_DENY || data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_DENY)
+			{
+				DynamicParameters DPdeny = new DynamicParameters();
+				DPdeny.Add("RecommendationId", Id);
+				DPdeny.Add("UnitId", unitProcessId);
+				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContentsCombine]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
+			}
+
+			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			{
+				DP.Add("@UnitProcess", unitProcessId);
+				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("[MR_Recommendation_ConclusionCombineGetByRecommendationId]", DP)).FirstOrDefault();
+				if (data.ModelConclusion != null)
+				{
+					DP = new DynamicParameters();
+					DP.Add("Id", data.ModelConclusion.Id);
+					if (data.ModelConclusion != null)
+					{
+						data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+						foreach (var item in data.filesConclusion)
+						{
+							item.FilePath = decrypt.EncryptData(item.FilePath);
+						}
+					}
+				}
+				
 			}
 			return data;
 		}

@@ -29,12 +29,13 @@ namespace PAKNAPI.ModelBase
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
 
-		public async Task<List<SYUserCheckExists>> SYUserCheckExistsDAO(string Field, string Value, long? Id)
+		public async Task<List<SYUserCheckExists>> SYUserCheckExistsDAO(string Field, string Value, long? Id, bool? IsSystem)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
 			DP.Add("Id", Id);
+			DP.Add("IsSystem", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserCheckExists>("SY_User_CheckExists", DP)).ToList();
 		}
@@ -278,7 +279,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
-		public string? PositionName { get; set; }
+		public string PositionName { get; set; }
 		public int TypeId { get; set; }
 		public string RoleIds { get; set; }
 		public string RolesNames { get; set; }
@@ -876,12 +877,14 @@ namespace PAKNAPI.ModelBase
 		public byte Type { get; set; }
 		public string PositionName { get; set; }
 		public int? UnitId { get; set; }
+		public int? UnitLevel { get; set; }
 		public string UnitName { get; set; }
 		public int TypeId { get; set; }
 		public bool? IsMain { get; set; }
 		public bool? IsAdmin { get; set; }
 		public int TypeObject { get; set; }
 		public bool? IsActived { get; set; }
+		public bool? IsApprove { get; set; }
 		public bool? IsUnitMain { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
@@ -890,6 +893,14 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserName", UserName);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_Login", DP)).ToList();
+		}
+
+		public async Task<List<SYUSRLogin>> SYUSRGetByEmailDAO(string Email)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Email", Email);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_GetByEmail", DP)).ToList();
 		}
 		public async Task<SYUSRLogin> GetInfoByRefreshToken(string refreshToken)
 		{

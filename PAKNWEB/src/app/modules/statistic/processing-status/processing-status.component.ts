@@ -19,7 +19,7 @@ export class ProcessingStatusComponent implements OnInit {
 		private _localService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService
-	) {}
+	) { }
 
 	listYear: any = []
 
@@ -34,12 +34,15 @@ export class ProcessingStatusComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
-	pageSize : number = 20
-	pageIndex : number = 1
+	fromDateSearch: Date
+	toDateSearch: Date
+	pageSize: number = 20
+	pageIndex: number = 1
 	listData: any = []
-	totalRecords : number = 0
+	totalRecords: number = 0
 
 	maxDateValue = new Date()
+	firstLoad = false
 	@ViewChild('myCanvas', { static: false }) canvas: any
 
 	ngOnInit() {
@@ -48,6 +51,7 @@ export class ProcessingStatusComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		this.firstLoad = true
 	}
 
 	initData() {
@@ -85,36 +89,38 @@ export class ProcessingStatusComponent implements OnInit {
 	changeQuarter() {
 		if (this.year != null) {
 			if (this.quarter == 1) {
-				this.fromDate = new Date(this.year, 0, 1)
+				this.fromDateSearch = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year, 3, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 2) {
-				this.fromDate = new Date(this.year, 3, 1)
+				this.fromDateSearch = new Date(this.year, 3, 1)
 				let tmp_date = new Date(this.year, 6, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 3) {
-				this.fromDate = new Date(this.year, 6, 1)
+				this.fromDateSearch = new Date(this.year, 6, 1)
 				let tmp_date = new Date(this.year, 9, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 4) {
-				this.fromDate = new Date(this.year, 9, 1)
+				this.fromDateSearch = new Date(this.year, 9, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else {
-				this.fromDate = new Date(this.year, 0, 1)
+				this.fromDateSearch = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			}
 		}
 		this.getList()
 	}
 
 	getList() {
+		if (!this.firstLoad)
+			return
 		let request = {
-			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
-			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
-			PageSize : this.pageSize,
-			PageIndex : this.pageIndex
+			FromDate: this.fromDateSearch == null ? '' : this.fromDateSearch.toDateString(),
+			ToDate: this.toDateSearch == null ? '' : this.toDateSearch.toDateString(),
+			PageSize: this.pageSize,
+			PageIndex: this.pageIndex
 		}
 		this._service.getProcessingStatus(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -145,20 +151,16 @@ export class ProcessingStatusComponent implements OnInit {
 
 	fromDateValueChange(value: any): void {
 		if (value) {
-			this.fromDate = value
-		} else {
-			this.fromDate = null
+			this.fromDateSearch = value
+			this.getList()
 		}
-		this.getList()
 	}
 
 	toDateValueChange(value: Date): void {
 		if (value) {
-			this.toDate = value
-		} else {
-			this.toDate = null
+			this.toDateSearch = value
+			this.getList()
 		}
-		this.getList()
 	}
 
 	parseDate = function (value: any) {

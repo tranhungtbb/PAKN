@@ -62,6 +62,24 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        [HttpGet]
+        [Route("get-by-type")]
+        public async Task<object> SYSupportGetByType(int? Type)
+        {
+            try
+            {
+
+                var result = await new SYSupportMenu(_appSetting).SYSupportMenuGetByTypeDAO(Type);
+                return new ResultApi { Success = ResultCode.OK, Result = result };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
         /// <summary>
         /// thêm mới tài liệu-video
         /// </summary>
@@ -181,17 +199,20 @@ namespace PAKNAPI.Controllers
             {
                 var result = (int)await new SYSupportMenu(_appSetting).SYSupportMenuDeleteDAO(model);
 
-                string folder = "Upload\\Suppport\\" + model.Id;
-
-
-                // xóa hết
-                string[] files = Directory.GetFiles(folder);
-                foreach (string file in files)
+                try
                 {
-                    System.IO.File.Delete(file);
+                    string folder = "Upload\\Suppport\\" + model.Id;
+                    // xóa hết
+                    string[] files = Directory.GetFiles(folder);
+                    foreach (string file in files)
+                    {
+                        System.IO.File.Delete(file);
+                    }
+                    Directory.Delete(folder);
                 }
-                Directory.Delete(folder);
+                catch (Exception e) {
 
+                }
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK, Result = result };
             }

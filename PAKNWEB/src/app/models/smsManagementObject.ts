@@ -22,14 +22,14 @@ export class smsManagementGetAllOnPageObject {
 	unitName: string
 	status: number
 	type: string
-	constructor() {}
+	constructor() { }
 }
 
 export class smsManagementMapObject {
 	id: number
 	category: boolean
 	name: boolean
-	administrativeUnitName: string
-	administrativeUnitId: number
-	constructor() {}
+	phone: string
+	adress: number
+	constructor() { }
 }

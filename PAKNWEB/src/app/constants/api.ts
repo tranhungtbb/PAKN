@@ -4,6 +4,7 @@ export class Api {
 	//Account
 	public static LOGIN = 'contact/login'
 	public static FORGETPASSWORD = 'contact/forget-password'
+	public static GetTokenByEmail = 'contact/get-token-by-email'
 	public static logOut = 'contact/log-out'
 
 	// kha nang ko dùng
@@ -17,12 +18,13 @@ export class Api {
 
 	// FileUpload/Download
 	public static DownloadApp = 'files/DownloadApp'
-	public static GetEncryptedPath = 'files/GetEncryptedPath'
+	public static GetEncryptedPath = 'files/download-file'
 	public static download = 'files/download-file'
 	public static DownloadFilebyId = 'files/DownloadFilebyId'
 	public static downloadFileSupport = 'files/download-file-support'
 	public static GetFile = 'files/get-file'
 	public static UploadImageNews = 'upload-files/upload-image-news'
+	public static UploadImageDocument = 'upload-files/upload-image-document'
 	public static getFileImage = 'files/get-file'
 	public static getFileSupport = 'files/GetFileSupport'
 
@@ -33,19 +35,25 @@ export class Api {
 	public static RecommendationGetDataForProcess = 'recommendation/get-data-for-process'
 	public static RecommendationGetList = 'recommendation/get-list-recommentdation-on-page'
 	public static RecommendationGetListProcess = 'recommendation/get-list-recommentdation-process-on-page'
+	public static RecommendationCombination = 'recommendation/get-list-recommentdation-combination-on-page'
+
 	public static RecommendationGetListReactionaryWord = 'recommendation/get-list-recommentdation-reactionary-word'
 	public static RecommendationGetListFakeImage = 'recommendation/get-list-recommentdation-fake-image'
 	public static RecommendationGetById = 'recommendation/get-by-id'
 	public static RecommendationGetByIdView = 'recommendation/get-detail-by-id'
+	public static RecommendationCombineGetByIdView = 'recommendation/get-detail-mr-combine-by-id'
+
 	public static RecommendationGetByIdViewPublic = 'recommendation/get-detail-public-by-id'
 
 	public static RecommendationGetHistories = 'recommendation/get-his-by-recommentdation'
 	public static RecommendationInsert = 'recommendation/insert'
 	public static RecommendationUpdate = 'recommendation/update'
 	public static RecommendationForward = 'recommendation/recommendation-forward'
+	public static RecommendationCombine = 'recommendation/recommendation-combine-insert'
 	public static RecommendationProcess = 'recommendation/recommendation-on-process'
 	public static RecommendationUpdateStatus = 'recommendation/recommendation-update-status'
 	public static RecommendationOnProcessConclusion = 'recommendation/recommendation-on-process-conclusion'
+	public static RecommendationOnProcessConclusionCombine = 'recommendation/recommendation-on-process-conclusion-combine'
 	public static RecommendationDelete = 'recommendation/delete'
 	public static RecommendationExport = 'recommendation/MRRecommendationExportBase' // cái này bỏ
 	public static RecommendationGetSuggestCreate = 'recommendation/recommendation-get-suggest-create'
@@ -61,6 +69,8 @@ export class Api {
 	public static MRRecommendationCommentDelete = 'recommendation/delete-comment'
 	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-comment'
 	public static MRRecommendationCommentGetOnPageBase = 'recommendation/	get-all-comment-on-page'
+	public static MRRecommendationCommentGetAllByParentId = 'recommendation/get-all-comment-by-parent'
+	public static MRRecommendationCommentGetPageByParent = 'recommendation/get-comment-by-parent-on-page'
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	// infomationChange
@@ -103,6 +113,9 @@ export class Api {
 	public static HashtagUpdate = 'hashtag/update'
 	public static HashtagDelete = 'hashtag/delete'
 
+	//HashtagChatbot
+	public static HashtagChatbotInsert = 'hashtagchatbot/insert'
+
 	//Unit
 	public static UnitGetPagedList = 'unit/get-list-unit-on-page'
 	public static UnitGetAll = 'unit/get-all'
@@ -121,6 +134,11 @@ export class Api {
 	public static UnitPermissionSMSInsert = 'unit/unit-permission-insert'
 	public static UnitNotPermissionSMSGetDrop = 'unit/get-unit-dropdown-not-permission'
 	public static UnitHasPermissionSMS = 'unit/unit-has-permission'
+	public static UnitGetByGroup = 'unit/unit-get-by-group'
+	public static UnitGetByParentId = 'unit/get-children-dropdown-by-parent'
+	public static UnitGetDropDownForCombine = 'unit/get-dropdown-for-combine'
+
+
 
 	//Position
 	public static PositionInsert = 'position/insert'
@@ -168,6 +186,7 @@ export class Api {
 	public static SystemLogin = 'system-log/get-list-system-log-on-page'
 	public static SystemLoginAdmin = 'system-log/get-list-system-log-admin-on-page'
 	public static SystemLogDelete = 'system-log/delete'
+	public static ExportExcel = 'system-log/export-excel'
 
 	//SY_Role
 	public static RoleGetAll = 'role/get-list-role-base'
@@ -283,6 +302,8 @@ export class Api {
 	// support
 
 	public static SYSupportGetAllByCategory = 'support/get-by-category'
+	public static SYSupportGetAllByType = 'support/get-by-type'
+
 	public static SYSupportInsert = 'support/insert'
 	public static SYSupportUpdate = 'support/update'
 	public static SYSupportDelete = 'support/delete'
@@ -350,6 +371,7 @@ export class Api {
 	public static ChatbotInsertData = 'chat-bot/insert-data'
 	public static ChatbotGetListHistory = 'chat-bot/list-his'
 	public static ChatbotGetAllActive = 'chat-bot/get-all-active'
+	public static ChatbotImportFile = 'chat-bot/import-data-chat-bot'
 
 	//systemConfig
 	public static SYConfigSystemGetAllOnPage = 'system-config/get-list-system-config-on-page'
@@ -385,6 +407,7 @@ export class Api {
 	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'business/get-list-individual-business-by-provice-id'
 	public static OrganizationCheckExists = 'business/check-exists'
 	public static BusinessImportFile = 'business/import-data-business?folder=BusinessIndividual'
+	public static GetListIndividualBusinessDrop = 'business/get-drop-list-individual-business'
 
 	//Statistic admin
 
@@ -399,6 +422,8 @@ export class Api {
 	public static StatisticRecommendationProcessingResultsByReceptionType = 'statistic/recommendation-processing-results-by-reception-type'
 	public static StatisticRecommendationProcessingResultsByType = 'statistic/recommendation-processing-results-by-type'
 	public static StatisticRecommendationByTypeDetail = 'statistic/recommendation-by-type-detail-on-page'
+	public static StatisticRecommendationByRecptionTypeDetail = 'statistic/recommendation-by-reception-type-detail-on-page'
+	public static StatisticRecommendationResultDetail = 'statistic/recommendation-by-result-detail-on-page'
 
 	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 	public static StatisticRecommendationProcessingResultsByUnitAndReception = 'statistic/recommendation-processing-results-by-unit-and-reception'
@@ -439,4 +464,7 @@ export class Api {
 	public static BotRooms = 'bot/rooms'
 	public static GetMessages = 'bot/get-message'
 	public static CreateRoom = 'bot/bot-create-room'
+	public static UpdateStatusRoom = 'bot/bot-update-room'
+	public static GetRoomForNotification = 'bot/rooms-notification'
+	public static GetRoomGetById = 'bot/room-get-by-id'
 }

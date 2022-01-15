@@ -1210,6 +1210,57 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UnitCount", DP));
 		}
+
+		public async Task<List<SYUnitDropdown>> SYUnitGetDropdownByParent(int ParentId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ParentId", ParentId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("CA_UnitGetChildDropdown", DP)).ToList();
+		}
+		public async Task<List<SYUnitDropdown>> SYUnitGetDropdownForCombine(int unitCurrentId, int? RecommendationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", unitCurrentId);
+			DP.Add("RecommendationId", RecommendationId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("[SY_UnitGetDropdownNotCombine]", DP)).ToList();
+		}
+		public async Task<List<SYUnitDropdown>> SYUnitDropdown(int GroupId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("GroupId", GroupId);
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("SY_UnitDropdown", DP)).ToList();
+		}
+
+		public async Task<List<SYUnitDropdown>> SYUnitGetByRecommnedationCombine(int RecommendationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("@RecommendationId", RecommendationId);
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitDropdown>("SY_UnitGetByRecommnedationCombine", DP)).ToList();
+		}
+
+		public async Task<int?> SYUnitCheckCombine(int? RecommendationId, int unitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", RecommendationId);
+			DP.Add("UnitId", unitId);
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_UnitCheckRecommnedationCombine", DP));
+		}
+
+
+	}
+
+	public class SYUnitDropdown{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public int? Level { get; set; }
+		public int? ParentId { get; set; }
+		public bool? IsMain { get; set; }
+
+		public bool? IsAdministrative { get; set; }
+
+
 	}
 
 	public class SYUserOnPage

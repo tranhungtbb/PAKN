@@ -1,5 +1,5 @@
 <div class="content-nd">
-	<div class="container pt-5">
+	<div class="container margin-top-16">
 		<div class="row justify-content-between">
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct">
 				<app-account-side-left></app-account-side-left>
@@ -69,17 +69,20 @@
 						<div class="w-100 mb-3"></div>
 						<div class="col col-lg-4">
 							<p class="mb-1">Trạng thái</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.isActived == true ? 'Hiệu lực' : 'Hết hiệu lực'}}</p>
+							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.isActived == true ? 'Hiệu lực' : 'Hết hiệu lực'}}
+							</p>
 						</div>
 						<div class="col col-lg-4">
 							<p class="mb-1">Giới tính </p>
-							<p class="4 mb-0 pb-3 border-bottom set-height"><span class="h4" *ngIf="!model.gender">Nữ</span><span class="h4" *ngIf="model.gender">Nam</span></p>
+							<p class="4 mb-0 pb-3 border-bottom set-height"><span class="h4" *ngIf="!model.gender">Nữ</span><span
+									class="h4" *ngIf="model.gender">Nam</span></p>
 						</div>
 					</div>
 
 					<div class="row" *ngIf="userType != 1">
 						<div class="col text-right clearfix">
-							<a type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mb-4 pull-right" [routerLink]="['../chinh-sua-thong-tin']">Sửa thông tin</a>
+							<a type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mb-4 pull-right"
+								[routerLink]="['../chinh-sua-thong-tin']">Sửa thông tin</a>
 						</div>
 					</div>
 				</div>

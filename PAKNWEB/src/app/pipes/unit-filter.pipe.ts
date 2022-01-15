@@ -18,7 +18,7 @@ export class ChangePipe implements PipeTransform {
 	transform(data: string, data2: string): any {
 		if (data) {
 			data.split('\n')
-			return data.split('\n').join('<br>')
+			return data.split('\n').join('<br >')
 		}
 		return ''
 	}

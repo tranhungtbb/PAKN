@@ -54,7 +54,7 @@ export class SystemConfigComponent implements OnInit {
 	}
 
 	redirectUpdate(id: number, type: number) {
-		debugger
+
 		switch (type) {
 			case TYPECONFIG.CONFIG_EMAIL:
 				this.router.navigate(['/quan-tri/he-thong/cau-hinh-email', id])

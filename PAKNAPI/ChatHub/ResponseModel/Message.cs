@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignalR.Hubs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,11 +25,13 @@ namespace PAKNAPI.Chat.ResponseModel
         public string Content { get; set; }
         public string Timestamp { get; set; }
         public string From { get; set; }
-
+        public List<ResultBotNew> Results { get; set; }
         public string FromId { get; set; }
         public string To { get; set; }
 
+        public string FromFullName { get; set; }
 
+        public string FromAvatarPath { get; set; }
         public List<string> SubTags { get; set; }
 
         public string Type { get; set; }

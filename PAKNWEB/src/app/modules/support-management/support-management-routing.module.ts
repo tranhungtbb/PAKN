@@ -5,6 +5,7 @@ import { RoleGuardService } from '../../guards/role-guard.service'
 import { SupportManagementComponent } from './support-management.component'
 import { SupportListDocumentComponent } from './support-list-document/support-list-document.component'
 import { SupportListVideoComponent } from './support-list-video/support-list-video.component'
+import { SupportListPublicComponent } from './support-list-public/support-list-public.component'
 
 const routes: Routes = [
 	{
@@ -23,6 +24,12 @@ const routes: Routes = [
 				canActivate: [RoleGuardService],
 				data: { role: 'G_II_3' },
 			},
+			{
+				path: 'nguoi-dan-doanh-nghiep',
+				component: SupportListPublicComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'G_II_3' },
+			},
 		],
 	},
 ]
@@ -31,4 +38,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class SupportManagementRoutingModule {}
+export class SupportManagementRoutingModule { }

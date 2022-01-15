@@ -17,7 +17,12 @@
 .f-6 {
 	flex: 6;
 }
-
+.p-title-hover:hover{
+	color:#f35f1b !important;
+}
+:host ::ng-deep ng-select.form-control>.ng-select-container .ng-placeholder{
+	font-style : italic;
+}
 .list-group-item {
 	border-bottom: 1px solid #d8d8d8;
 	padding: 0.75rem 1.25rem;

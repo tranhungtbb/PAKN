@@ -34,6 +34,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	lstGroupUnit: any = [
+		{ value: 1, text: 'Cơ quan chuyên môn thuộc tỉnh' },
+		{ value: 2, text: 'Ban ngành thuộc tỉnh Khánh Hòa' },
+		{ value: 3, text: 'Hạ tầng kỹ thuật' },
+		{ value: 4, text: 'Ủy ban nhân dân các huyện, thành phố' }
+	]
+
 	regex_phone = REGEX.PHONE_VN
 
 	treeUnit: any[]
@@ -91,8 +98,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		private _router: Router,
 		private roleService: RoleService,
 		private _userServiceChat: UserServiceChatBox,
-		private _storageService : UserInfoStorageService
-	) {}
+		private _storageService: UserInfoStorageService
+	) { }
 
 	ngOnInit() {
 		this.getAllUnitShortInfo()
@@ -103,11 +110,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			isActived: [this.modelUnit.isActived, [Validators.required]],
 			parentId: [this.modelUnit.parentId, Validators.required],
 			description: [this.modelUnit.description],
-			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
-			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			email: [this.modelUnit.email],
+			phone: [this.modelUnit.phone],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
 			field: [this.modelUnit.listField],
+			group: [this.modelUnit.group, [Validators.required]],
 		})
 
 		this.getDropListUnitPermission()
@@ -204,7 +212,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					//this.expandNode(activeTreeNode)
 				}
 			},
-			(err) => {}
+			(err) => { }
 		)
 	}
 
@@ -271,11 +279,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			isActived: [this.modelUnit.isActived, [Validators.required]],
 			parentId: [this.modelUnit.parentId, Validators.required],
 			description: [this.modelUnit.description],
-			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
-			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			email: [this.modelUnit.email],
+			phone: [this.modelUnit.phone],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
 			field: [this.modelUnit.listField],
+			group: [this.modelUnit.group, Validators.required]
 		})
 		this.checkExists = {
 			Phone: false,
@@ -301,9 +310,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			})
 		}
 		$('#modal-create-or-update').modal('show')
-		setTimeout(() => {
-			$('#unitId').focus()
-		}, 400)
+		// setTimeout(() => {
+		// 	$('#unitId').focus()
+		// }, 400)
 		this.modelUnit.unitLevel = level
 		if (parentId > 0) this.modelUnit.parentId = parentId
 	}
@@ -333,7 +342,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	onSaveUnit() {
 		this.unitFormSubmitted = true
 		this.modelUnit.name = this.modelUnit.name.trim()
-		this.modelUnit.email = this.modelUnit.email.trim()
+		this.modelUnit.email = this.modelUnit.email == null ? '' : this.modelUnit.email.trim()
 		this.modelUnit.address == null ? (this.modelUnit.address = '') : (this.modelUnit.address = this.modelUnit.address.trim())
 		this.modelUnit.description == null ? (this.modelUnit.description = '') : (this.modelUnit.description = this.modelUnit.description.trim())
 
@@ -343,7 +352,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		if (this.modelUnit.index < 0) {
 			return
 		}
-		if (this.checkExists['Phone'] || this.checkExists['Email']) return
 		this.modelUnit.listField = this.listFieldSelected.length == 0 ? null : this.listFieldSelected.join(',')
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {
@@ -542,83 +550,83 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	// unit permission sms
 
-	listUnitNotPermission : any  [] = []
-	listUnitPermission : any [] = []
-	listUnitAdd : any [] = []
-	isUnitMain : boolean = this._storageService.getIsUnitMain()
+	listUnitNotPermission: any[] = []
+	listUnitPermission: any[] = []
+	listUnitAdd: any[] = []
+	isUnitMain: boolean = this._storageService.getIsUnitMain()
 
-	totalCount : number = 0
+	totalCount: number = 0
 
-	unitListSearch : any ={
-		name : '',
-		email : '',
-		phone : '',
-		address : ''
+	unitListSearch: any = {
+		name: '',
+		email: '',
+		phone: '',
+		address: ''
 	}
 
-	onOpenModalListUnit = ()=>{
+	onOpenModalListUnit = () => {
 		this.listUnitAdd = []
 		this.getListUnitPermission()
 		$('#modalUnitsPermissionSMS').modal('show')
 		this.tableUnit.reset()
 	}
 
-	getDropListUnitPermission = () =>{
-		this.unitService.getDropUnitPermission({}).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
+	getDropListUnitPermission = () => {
+		this.unitService.getDropUnitPermission({}).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnitNotPermission = res.result
 			}
-			else{
+			else {
 				this._toastr.error(res.message)
 			}
-		},(err) =>{
+		}, (err) => {
 			console.log(err)
 		})
 	}
 
-	getListUnitPermission = () =>{
-		this.unitService.getAllUnitPermission({}).subscribe(res=>{
-			if(res.success == RESPONSE_STATUS.success){
+	getListUnitPermission = () => {
+		this.unitService.getAllUnitPermission({}).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnitPermission = res.result.CAUnitPermissionSMs
 				this.totalCount = res.result.TotalCount
 			}
-			else{
+			else {
 				this._toastr.error(res.message)
 			}
-		},(err) =>{
+		}, (err) => {
 			console.log(err)
 		})
 	}
 
-	onAddUnitPermission = () =>{
-		if(!this.listUnitAdd || this.listUnitAdd.length == 0){
+	onAddUnitPermission = () => {
+		if (!this.listUnitAdd || this.listUnitAdd.length == 0) {
 			this._toastr.error('Vui lòng chọn đơn vị')
 			return
 		}
-		this.unitService.insertUnitPermission({ ListUnit : this.listUnitAdd}).subscribe(res=>{
-			if(res.success == RESPONSE_STATUS.success){
+		this.unitService.insertUnitPermission({ ListUnit: this.listUnitAdd }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnitAdd = []
 				this.getListUnitPermission()
 				this.getDropListUnitPermission()
 				this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-			}else{
+			} else {
 				this._toastr.error(res.message)
 			}
-		}, (err) =>{
+		}, (err) => {
 			console.log(err)
 		})
 	}
 
-	onDeleteUnitPermission = (unitId : number) =>{
-		this.unitService.deleteUnitPermission({ UnitId : unitId}).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
+	onDeleteUnitPermission = (unitId: number) => {
+		this.unitService.deleteUnitPermission({ UnitId: unitId }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.getListUnitPermission()
 				this.getDropListUnitPermission()
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-			}else{
+			} else {
 				this._toastr.error(res.message)
 			}
-		},(err) =>{
+		}, (err) => {
 			console.log(err)
 		})
 	}

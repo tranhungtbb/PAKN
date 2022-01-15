@@ -19,7 +19,7 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 		private _localService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService
-	) {}
+	) { }
 
 	listYear: any = []
 
@@ -38,20 +38,23 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
-	totalRecords : number
-	listData : any [] = []
+	fromDateSearch: Date
+	toDateSearch: Date
+	totalRecords: number
+	listData: any[] = []
 	pageIndex: number = 1
 	pageSize: number = 10
-	type : number = 1 
+	type: number = 1
 
 	maxDateValue = new Date()
-
+	firstLoad = true
 	ngOnInit() {
 		this.initData()
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		this.firstLoad = true
 	}
 
 	initData() {
@@ -88,42 +91,44 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 	changeQuarter() {
 		if (this.year != null) {
 			if (this.quarter == 1) {
-				this.fromDate = new Date(this.year, 0, 1)
+				this.fromDateSearch = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year, 3, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 2) {
-				this.fromDate = new Date(this.year, 3, 1)
+				this.fromDateSearch = new Date(this.year, 3, 1)
 				let tmp_date = new Date(this.year, 6, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 3) {
-				this.fromDate = new Date(this.year, 6, 1)
+				this.fromDateSearch = new Date(this.year, 6, 1)
 				let tmp_date = new Date(this.year, 9, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else if (this.quarter == 4) {
-				this.fromDate = new Date(this.year, 9, 1)
+				this.fromDateSearch = new Date(this.year, 9, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			} else {
-				this.fromDate = new Date(this.year, 0, 1)
+				this.fromDateSearch = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
-				this.toDate = this.minusDays(tmp_date, 1)
+				this.toDateSearch = this.minusDays(tmp_date, 1)
 			}
 		}
 		this.getList()
 	}
 
 	getList() {
+		if (!this.firstLoad)
+			return
 		let request = {
-			Type : this.type,
-			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
-			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
+			Type: this.type,
+			FromDate: this.fromDateSearch == null ? '' : this.fromDateSearch.toDateString(),
+			ToDate: this.toDateSearch == null ? '' : this.toDateSearch.toDateString(),
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
 		this._service.getProcessingResultByReceptionType(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listData = response.result;
-				if(response.result && response.result.length > 0){
+				if (response.result && response.result.length > 0) {
 					this.totalRecords = response.result[0].rowNumber;
 				}
 			} else {
@@ -141,18 +146,14 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 
 	fromDateValueChange(value: any): void {
 		if (value) {
-			this.fromDate = value
-		} else {
-			this.fromDate = null
+			this.fromDateSearch = value
 		}
 		this.getList()
 	}
 
 	toDateValueChange(value: Date): void {
 		if (value) {
-			this.toDate = value
-		} else {
-			this.toDate = null
+			this.toDateSearch = value
 		}
 		this.getList()
 	}
@@ -181,18 +182,108 @@ export class ProcessingResultsByReceptionTypeComponent implements OnInit {
 		this.getList()
 	}
 
+	getFormattedDate(date) {
+		var year = date.getFullYear()
+		var month = (1 + date.getMonth()).toString()
+		month = month.length > 1 ? month : '0' + month
+		var day = date.getDate().toString()
+		day = day.length > 1 ? day : '0' + day
+		return month + '-' + day + '-' + year
+	}
+
+
+	viewDetail(id: any, receptionType: number = null) {
+		var url
+		if (this.type == 1) {
+			if (receptionType) {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/' +
+					this.type + '/' +
+					id, receptionType + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			} else {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/' +
+					this.type + '/' +
+					id + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			}
+		} else {
+			if (receptionType) {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/' +
+					this.type + '/' +
+					id + '/' + receptionType + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			} else {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/' +
+					this.type + '/' +
+					id + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			}
+		}
+		setTimeout(() => {
+			window.open(url, '_blank')
+		}, 100)
+	}
+	viewResultDetail(id: any, status: number, isOnTime: number = null) {
+		var url
+		if (this.type == 1) {
+			if (isOnTime) {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc/' +
+					this.type + '/' +
+					id + '/' + status + '/' + isOnTime + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			} else {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-linh-vuc/' +
+					this.type + '/' +
+					id + '/' + status + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			}
+		}
+		else {
+			if (isOnTime) {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi/' +
+					this.type + '/' +
+					id + '/' + status + '/' + isOnTime + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			} else {
+				url =
+					'/quan-tri/bao-cao/chi-tiet-ket-qua-xu-ly-don-vi/' +
+					this.type + '/' +
+					id + '/' + status + '/' +
+					this.getFormattedDate(this.fromDate) + '/' +
+					this.getFormattedDate(this.toDate)
+			}
+		}
+		setTimeout(() => {
+			window.open(url, '_blank')
+		}, 100)
+	}
+
 	onExport() {
 		let passingObj: any = {}
-		if(this.fromDate){
-			this.fromDate.setHours(0,0,0,0);
+		if (this.fromDate) {
+			this.fromDate.setHours(0, 0, 0, 0);
 		}
-		if(this.toDate){
-			this.toDate.setHours(0,0,0,0);
+		if (this.toDate) {
+			this.toDate.setHours(0, 0, 0, 0);
 		}
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = this.type == 1 ? 
+		this._shareData.sendReportUrl = this.type == 1 ?
 			'processing_results_by_feild_and_reception?' + JSON.stringify(passingObj)
 			: 'processing_results_by_unit_and_reception?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

@@ -3,10 +3,26 @@
 <category>
 		<pattern>*</pattern>
 		<template>
-					Bạn có muốn gặp tư vấn viên không
-					<pakn>json{"type":"chat","data":[{"id":"1"}]}</pakn>
+					Anh/chị cần <set name = "topic">hỗ trợ</set> gì?
 				</template>
 	</category>
+	<topic name = "hỗ trợ">
+     <category>
+		<pattern>*</pattern>
+		<template>
+					Rất tiếc tôi chưa trả lời được câu hỏi của bạn. Bạn có muốn gặp tư vấn viên không  <set name = "topic"></set>
+					<pakn>json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Sai","image":"","hiddenAnswer":"m45fe4a-d402-451c-b9ed-9c1a04247482"}]}</pakn>
+				</template>
+	</category>
+      
+   </topic>
+	<category>
+		<pattern>x245fe4a-d402-451c-b9ed-9c1a04247482</pattern>
+				<template>
+					Tư vấn đang kết nối với bạn
+					<pakn>json{"type":"chat","data":[{"id":"1"}]}</pakn>
+				</template>
+			</category>
 	<category>
 		<pattern>Tôi là *</pattern>
 		<template>
@@ -22,21 +38,51 @@
 			<pakn/>
 		</template>
 	</category>
+	
 	<category>
 		<pattern>Xin chào</pattern>
 
 		<template>
-			Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất.
-			Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
+		Xin chào anh/chị, mình là trợ lý ảo hỗ trợ giải đáp thông tin phản ánh, kiến nghị tỉnh Khánh Hòa. Anh/chị cần hỗ trợ về vấn đề gì ạ?
 			<pakn>
-				json{"type":"carousel","data":[{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Gửi phản ánh, kiến nghị","image":""}]}
+				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":"","hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Covid-19","image":"","link":""}]}
 			</pakn>
 		</template>
 	</category>
 
+<category>
+		<pattern>m45fe4a-d402-451c-b9ed-9c1a04247482</pattern>
 
+		<template>
+			Xin chào anh/chị, mình là trợ lý ảo hỗ trợ giải đáp thông tin phản ánh, kiến nghị tỉnh Khánh Hòa. Anh/chị cần hỗ trợ về vấn đề gì ạ?
+			<pakn>
+				json{"type":"carousel","data":[{"title":"Dịch vụ công trực tuyến","image":""},{"title":"Gửi phản ánh kiến nghị","image":"","link":""},{"title":"Gặp tư vấn viên","image":"","link":"","hiddenAnswer":"x245fe4a-d402-451c-b9ed-9c1a04247482"},{"title":"Covid-19","image":"","link":""}]}
+			</pakn>
+		</template>
+	</category>
 
 	<category>
+		<pattern>Client Đã gửi xong phản ánh kiến nghị</pattern>
+		<template>
+			Cảm ơn <set name = "topic">chúng tôi đã tiếp nhận phản ánh kiến nghị</set>
+		</template>
+	</category>
+
+	<category>
+		<pattern>gửi phản ánh *</pattern>
+		<template>
+			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
+			<pakn>json{"type":"form","data":[{"title":"","image":"","link":"https://pakn.ziz.vn:6160/cong-bo/them-moi-kien-nghi"}]}</pakn>
+		</template>
+	</category>
+	<category>
+		<pattern>Gửi phản ánh *</pattern>
+		<template>
+			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
+			<pakn>json{"type":"form","data":[{"title":"","image":"","link":"https://pakn.ziz.vn:6160/cong-bo/them-moi-kien-nghi"}]}</pakn>
+		</template>
+	</category>
+<category>
 		<pattern> Tra cứu thủ tục * </pattern>
 		<template>
 			Đường dẫn danh sách thủ tục hành chính
@@ -78,9 +124,18 @@
 	</category>
 
 
+<category>
+		<pattern>Dịch vụ công trực tuyến</pattern>
+		<template>
+			Đường dẫn danh sách thủ tục hành chính
+			<pakn>
+				json{"type":"carousel","data":[{"title":"Tra cứu tiến độ giải quyết hồ sơ","image":""},{"title":"Nộp hồ sơ thủ tục hành chính","image":""}]}
+			</pakn>
+		</template>
+	</category>
 
 	<category>
-		<pattern>  Tra cứu hồ sơ * </pattern>
+		<pattern>  Tra cứu tiến độ * </pattern>
 		<template>
 			Đường dẫn danh sách thủ tục hành chính
 			<pakn>
@@ -89,7 +144,7 @@
 		</template>
 	</category>
 	<category>
-		<pattern>  Tra cứu hồ sơ   </pattern>
+		<pattern>  Tra cứu tiến độ   </pattern>
 		<template>
 			Đường dẫn danh sách thủ tục hành chính
 			<pakn>
@@ -99,166 +154,39 @@
 	</category>
 
 	<category>
-		<pattern>* hồ sơ *</pattern>
-		<template>
-			Đường dẫn danh sách thủ tục hành chính
+		<pattern>* tiến độ *</pattern>
+		<template>Tra cứu hồ sơ giải quyết Thủ tục hành chính
 			<pakn>
 				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
 			</pakn>
 		</template>
 	</category>
-
-
-	<category>
-		<pattern>* hỗ trợ</pattern>
-				<template>
-					Bạn chưa nhận được tiền hỗ trợ covid phải không?
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Vui lòng nhập"},{"title":"Sai","image":"","hiddenAnswer":"Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2"}]}
-					</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>hỗ trợ *</pattern>
-		<template>
-			Bạn chưa nhận được tiền hỗ trợ covid phải không?
-			<pakn>
-				json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Vui lòng nhập"},{"title":"Sai","image":"","hiddenAnswer":"Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2"}]}
-			</pakn>
-		</template>
-	</category>
-
-	<category>
-		<pattern>* thất nghiệp</pattern>
-		<template>
-			Bạn chưa nhận được tiền hỗ trợ covid phải không?
-			<pakn>
-				json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Vui lòng nhập"},{"title":"Sai","image":"","hiddenAnswer":"Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2"}]}
-			</pakn>
-		</template>
-	</category>
-	<category>
-		<pattern>thất nghiệp *</pattern>
-		<template>
-			Bạn chưa nhận được tiền hỗ trợ covid phải không?
-			<pakn>
-				json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Vui lòng nhập"},{"title":"Sai","image":"","hiddenAnswer":"Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2"}]}
-			</pakn>
-		</template>
-	</category>
-
-	<category>
-		<pattern>Vui lòng nhập</pattern>
-				<template>
-				Vui lòng nhập đầy đủ thông tin họ tên, CMND/CCCD, số điện thoại?
-					<pakn>json{"type":"form","data":[{"id":"1"}]}</pakn>
-				</template>
-			</category>
-	<category>
-		
-		<pattern>* tiêm covid *</pattern>
-				<template>
-					Bạn chưa được tiêm vacxin covid 19?
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Vui lòng nhập"},{"title":"Sai","image":"","hiddenAnswer":"Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2"}]}
-					</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2</pattern>
-				<template>
-				Bạn đã tiêm vacxin covid 19 mũi 1 nhưng chưa được tiêm mũi 2
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Vui lòng nhập"},{"title":"Sai","image":"","hiddenAnswer":"Bạn gặp phản ứng khi tiêm covid 19"}]}
-					</pakn>
-				</template>
-			</category>
 	
-	<category>
-		
-		<pattern>Bạn gặp phản ứng khi tiêm covid 19</pattern>
-				<template>
-					Bạn gặp phản ứng khi tiêm covid 19
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Bạn có muốn gặp tư vấn viên không ?"},{"title":"Sai","image":"","hiddenAnswer":"Bạn có muốn gặp tư vấn viên không"}]}
-					</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>Bạn có muốn gặp tư vấn viên không</pattern>
-				<template>
-					Bạn có muốn gặp tư vấn viên không
-					<pakn>json{"type":"chat","data":[{"id":"1"}]}</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>* CCCD *</pattern>
-				<template>
-
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Bạn chưa nhận được căn cước công dân phải không ?"},{"title":"Sai","image":"","hiddenAnswer":"Thẻ chứng minh nhân dân hết hạn phải không"}]}
-					</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>* Căn cước công dân *</pattern>
-				<template>
-
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Bạn chưa nhận được căn cước công dân phải không ?"},{"title":"Sai","image":"","hiddenAnswer":"Thẻ chứng minh nhân dân hết hạn phải không"}]}
-					</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>* Chứng minh nhân dân *</pattern>
-				<template>
-
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Bạn chưa nhận được căn cước công dân phải không ?"},{"title":"Sai","image":"","hiddenAnswer":"Thẻ chứng minh nhân dân hết hạn phải không"}]}
-					</pakn>
-				</template>
-			</category>
-	<category>
-		<pattern>Thẻ chứng minh nhân dân hết hạn phải không</pattern>
-				<template>
-
-					<pakn>
-						json{"type":"carousel","data":[{"title":"Đúng","image":"", "hiddenAnswer":"Bạn có muốn gặp tư vấn viên không ?"},{"title":"Sai","image":"","hiddenAnswer":"Bạn có muốn gặp tư vấn viên không"}]}
-					</pakn>
-				</template>
-			</category>
-
-	<category>
-		<pattern> *kết quả pakn *  </pattern>
-		<template>Mời nhập mã số </template>
-	</category>
-
-	<category>
-		<pattern> *tra cứu kết quả *  </pattern>
-		<template>Mời nhập mã số </template>
-	</category>
-
-	<category>
-		<pattern>Gửi phản ánh, kiến nghị</pattern>
+<category>
+		<pattern> Nộp hồ sơ thủ tục * </pattern>
 		<template>
-			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
-			<pakn>json{"type":"form","data":[{"id":"1"}]}</pakn>
+			Đường dẫn 
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
+		</template>
+	</category>
+	<category>
+		<pattern> Nộp hồ sơ thủ tục   </pattern>
+		<template>
+			Đường dẫn 
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
 		</template>
 	</category>
 
 	<category>
-		<pattern>Client Đã gửi xong phản ánh kiến nghị</pattern>
-		<template>
-			Cảm ơn <set name = "topic">chúng tôi đã tiếp nhận phản ánh kiến nghị</set>
+		<pattern>* hồ sơ thủ tục *</pattern>
+		<template>Đường dẫn 
+			<pakn>
+				json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			</pakn>
 		</template>
 	</category>
-
-	<category>
-		<pattern>* Gửi phản ánh *</pattern>
-		<template>
-			Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
-			<pakn>json{"type":"form","data":[{"id":"1"}]}</pakn>
-		</template>
-	</category>
-
 </aiml>

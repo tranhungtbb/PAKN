@@ -12,7 +12,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { RESPONSE_STATUS, REGEX } from 'src/app/constants/CONSTANTS'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { AccountSideLeftComponent } from '../account-side-left/account-side-left.component'
-import { BussinessUpdateModel} from 'src/app/models/businessIndividualObject'
+import { BussinessUpdateModel } from 'src/app/models/businessIndividualObject'
 
 @Component({
 	selector: 'app-business-update-info',
@@ -81,7 +81,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			// orgWardsId: [this.model.orgWardsId, [Validators.required]],
 			orgAddress: [this.model.orgAddress],
 			orgPhone: [this.model.orgPhone],
-			orgEmail: [this.model.orgEmail],
+			orgEmail: [this.model.orgEmail, [Validators.required]],
 			business: [this.model.business, [Validators.required]],
 		})
 	}
@@ -97,7 +97,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
-			this.model._representativeBirthDay  = this.model.representativeBirthDay != null ? new Date(this.model.representativeBirthDay) : null
+			this.model._representativeBirthDay = this.model.representativeBirthDay != null ? new Date(this.model.representativeBirthDay) : null
 			this.model._dateOfIssue = this.model.dateOfIssue != null ? new Date(this.model.dateOfIssue) : null
 			// this.model.dateOfIssue = this.model.dateOfIssue == null ? null : new Date(this.model.dateOfIssue)
 			if (this.model.nation == 'Việt Nam') {
@@ -130,8 +130,8 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.model.nativePlace == null ? (this.model.nativePlace = '') : (this.model.nativePlace = this.model.nativePlace)
 		if (!this.model.orgEmail) this.model.orgEmail = ''
 		if (!this.model.email) this.model.email = ''
-		
-		
+
+
 		if (this.formUpdateAccountInfo.invalid) {
 			return
 		}
@@ -143,9 +143,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.model.wardsId = this.model.wardsId == null ? '' : this.model.wardsId;
 		this.model.provinceId = this.model.provinceId == null ? '' : this.model.provinceId;
 		this.model.districtId = this.model.districtId == null ? '' : this.model.districtId;
-		this.model.representativeBirthDay = this.model._representativeBirthDay == null ? '': this.model._representativeBirthDay.toDateString();
-		this.model.dateOfBirth = this.model._dateOfBirth == null ? '': this.model._dateOfBirth.toDateString();
-		this.model.dateOfIssue = this.model._dateOfIssue == null ? '': this.model._dateOfIssue.toDateString();
+		this.model.representativeBirthDay = this.model._representativeBirthDay == null ? '' : this.model._representativeBirthDay.toDateString();
+		this.model.dateOfBirth = this.model._dateOfBirth == null ? '' : this.model._dateOfBirth.toDateString();
+		this.model.dateOfIssue = this.model._dateOfIssue == null ? '' : this.model._dateOfIssue.toDateString();
 
 
 		this.accountService.updateInfoBusinessCurrent(this.model).subscribe((res) => {
@@ -155,10 +155,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			}
 			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
-			setTimeout(()=>{
+			setTimeout(() => {
 				window.location.href = '/cong-bo/tai-khoan/thong-tin';
-			},1000)
-		
+			}, 1000)
+
 		})
 	}
 

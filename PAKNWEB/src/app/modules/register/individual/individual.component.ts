@@ -12,6 +12,8 @@ import { DiadanhService } from 'src/app/services/diadanh.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { IndividualObject } from 'src/app/models/RegisterObject'
+import { UserService } from 'src/app/services/user.service'
+import { AuthenticationService } from 'src/app/services/authentication.service'
 
 declare var $: any
 @Component({
@@ -26,6 +28,7 @@ export class IndividualComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private registerService: RegisterService,
+		private authenticationService: AuthenticationService,
 		private diadanhService: DiadanhService
 	) {
 		defineLocale('vi', viLocale)
@@ -40,6 +43,7 @@ export class IndividualComponent implements OnInit {
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
+	otp: string = "";
 
 	listGender: any[] = [
 		{ value: true, text: 'Nam' },
@@ -64,6 +68,9 @@ export class IndividualComponent implements OnInit {
 			event.target.value = ''
 		}
 	}
+	closeModalOtp() {
+		$('#modal-otp').modal('hide');
+	}
 	backDefaultValue() {
 		this.isOtherNation = false
 		this.model.nation = null
@@ -85,7 +92,6 @@ export class IndividualComponent implements OnInit {
 		this.model.wardsId = null
 
 		if (this.model.nation == 'Việt Nam') {
-			debugger
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
@@ -137,28 +143,49 @@ export class IndividualComponent implements OnInit {
 	validateDateOfIssue: any = true
 
 	onReset() {
-		this.formLogin.reset()
-		this.formInfo.reset()
 
+		this.model = new IndividualObject()
+		this.formLogin.reset({
+			iDCard: this.model.iDCard,
+			password: this.model.password,
+			rePassword: this.model.rePassword
+		})
+		this.formInfo.reset({
+			fullName: this.model.fullName,
+			gender: this.model.gender,
+			dob: this.model.birthDay,
+			nation: this.model.nation,
+			province: this.model.provinceId,
+			district: this.model.districtId,
+			village: this.model.wardsId,
+
+			email: this.model.email,
+			address: this.model.address,
+			phone: this.model.phone,
+			placeIssue: this.model.issuedPlace,
+			dateIssue: this.model.dateOfIssue,
+		})
 		this.fLoginSubmitted = false
 		this.fInfoSubmitted = false
-		this.model = new IndividualObject()
+
 		this.model.gender = true
 		this.formInfo.get('gender').setValue(this.model.gender)
 	}
-	phoneHide : any = ''
-	otp_1 : any = ''
-	otp_2 : any = ''
-	otp_3 : any = ''
-	otp_4 : any = ''
-	otp_5 : any = ''
-	otp_6 : any = ''
-	onPreShowOtp(){
-		this.clearOTP()
+	phoneHide: any = ''
+	otp_1: any = ''
+	otp_2: any = ''
+	otp_3: any = ''
+	otp_4: any = ''
+	otp_5: any = ''
+	otp_6: any = ''
+	onPreShowOtp() {
+
+
+
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
-		if (!this.model.email) this.model.email = ''
+		this.model.email = this.model.email == null ? '' : this.model.email.trim()
 		if (this.model.nation == 'Nhập...') this.model.nation = ''
 		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
 			return
@@ -180,40 +207,52 @@ export class IndividualComponent implements OnInit {
 				return item
 			})
 			.join('')
+		this.clearOTP()
 		$('#modal-otp').modal('show')
 		setTimeout(() => {
-			$('#input_1').focus()	
+			$('#input_1').focus()
 		}, 400);
 	}
 
-	onChange =(event, index) =>{
-		debugger
-		if(event.target.value){
+	onChange = (event, index) => {
+		if (event.target.value) {
 			setTimeout(() => {
-				$('#input_' + String(index +1)).focus()	
+				$('#input_' + String(index + 1)).focus()
 			}, 1);
-		}else{
+		} else {
 			setTimeout(() => {
-				$('#input_' + String(index -1)).focus()	
+				$('#input_' + String(index - 1)).focus()
 			}, 1);
-			
+
 		}
 	}
-	clearOTP = () =>{
+	clearOTP = () => {
 		this.otp_1 = null
 		this.otp_2 = null
 		this.otp_3 = null
 		this.otp_4 = null
 		this.otp_5 = null
 		this.otp_6 = null
+		this.authenticationService.getTokenByEmail({ Email: this.model.email, Type: 1 }).subscribe((res) => {
+			if (res.success == 'OK') {
+				this.otp = res.result
+			}
+		})
 	}
 
 	onSave() {
-		if(!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6){
-			this.toast.error('Vui lòng nhập otp!')
-			return
-		}
-		$('#modal-otp').modal('hide')
+		// if (!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6) {
+		// 	this.toast.error('Vui lòng nhập otp!')
+		// 	return
+		// } else {
+		// 	var otpInput = "" + this.otp_1 + this.otp_2 + this.otp_3 + this.otp_4 + this.otp_5 + this.otp_6;
+		// 	if (otpInput != this.otp) {
+		// 		this.toast.error('Mã otp bạn nhập không chính xác!')
+		// 		return
+		// 	}
+		// }
+
+		// $('#modal-otp').modal('hide')
 
 		// req to server
 		this.registerService.registerIndividual(this.model).subscribe((res) => {
@@ -247,7 +286,7 @@ export class IndividualComponent implements OnInit {
 		this.formLogin = this.formBuilder.group(
 			{
 				iDCard: [this.model.iDCard, [Validators.required]],
-				password: [this.model.password, [Validators.required]], //, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
+				password: [this.model.password, [Validators.required]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
@@ -263,7 +302,7 @@ export class IndividualComponent implements OnInit {
 			district: [this.model.districtId],
 			village: [this.model.wardsId],
 
-			email: [this.model.email, [Validators.email]],
+			email: [this.model.email, [Validators.email, Validators.required]],
 			address: [this.model.address, [Validators.required]],
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
@@ -316,3 +355,5 @@ function MustMatch(controlName: string, matchingControlName: string) {
 		}
 	}
 }
+
+

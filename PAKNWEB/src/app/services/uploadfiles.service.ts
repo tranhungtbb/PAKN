@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material'
 	providedIn: 'root',
 })
 export class UploadFileService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStorage: UserInfoStorageService, public snackBar: MatSnackBar) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStorage: UserInfoStorageService, public snackBar: MatSnackBar) { }
 
 	uploadImageNews(request: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
@@ -34,7 +34,7 @@ export class UploadFileService {
 	}
 
 	getEncryptedPath(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.GetEncryptedPath)
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.GetEncryptedPath)
 	}
 	downloadApplication(data: any): Observable<Blob> {
 		return this.http.get(AppSettings.API_ADDRESS + Api.DownloadApp, { responseType: 'blob', params: data }).pipe(tap())
@@ -106,7 +106,7 @@ export class UploadFileService {
 		return this.http.get(AppSettings.API_ADDRESS + Api.getFileImage, { responseType: 'blob', params: data }).pipe(tap())
 	}
 
-	getInfoInputParamByFileId() {}
+	getInfoInputParamByFileId() { }
 	private log(message: string) {
 		this.snackBar.open(message, 'close', {
 			duration: 2000,

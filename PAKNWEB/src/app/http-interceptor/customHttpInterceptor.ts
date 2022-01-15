@@ -14,7 +14,7 @@ import { Api } from '../constants/api'
 export class CustomHttpInterceptor implements HttpInterceptor {
 	env = environment
 
-	constructor(public storeageService: UserInfoStorageService, private _router: Router, private toastr: ToastrService) {}
+	constructor(public storeageService: UserInfoStorageService, private _router: Router, private toastr: ToastrService) { }
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		let isShowLoading = request.headers.get('isShowLoading')
@@ -26,7 +26,15 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 			request.url != AppSettings.API_ADDRESS + Api.UserGetAllByIdQb &&
 			request.url != AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdownByField &&
 			request.url != AppSettings.API_ADDRESS + Api.StatisticsByUnitParentId &&
-			request.url != AppSettings.API_ADDRESS + Api.GetMessages
+			request.url != AppSettings.API_ADDRESS + Api.GetMessages &&
+			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetPageByParent &&
+			request.url != AppSettings.API_ADDRESS + Api.MRRecommendationCommentGetOnPage &&
+			request.url != AppSettings.API_ADDRESS + Api.UnitGetByGroup &&
+			request.url != AppSettings.API_ADDRESS + Api.UnitGetByParentId &&
+			request.url != AppSettings.API_ADDRESS + Api.CreateRoom &&
+			request.url != AppSettings.API_ADDRESS + Api.UpdateStatusRoom
+
+
 		) {
 			this.env.isContentLoading = true
 		}
@@ -44,6 +52,16 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					macAddress: macAddress,
 				}),
 			})
+			if (request.body instanceof FormData) {
+				// not
+			} else {
+				request = request.clone({
+					setHeaders: {
+						'content-type': 'application/json',
+					},
+				});
+			}
+
 		}
 
 		//console.log(request);

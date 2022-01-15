@@ -15,15 +15,15 @@ import { TreeTableModule } from 'primeng/treetable'
 export class StatisticsComponent implements OnInit {
 	// property
 	statistics: TreeNode[]
-	constructor(private _service: PuRecommendationService, private _toastr: ToastrService) {}
+	constructor(private _service: PuRecommendationService, private _toastr: ToastrService) { }
 
 	// chart
 
 	barChartOptions: ChartOptions = {
 		responsive: true,
 		title: {
-			display: true,
-			text: 'Biểu đồ tổng hợp số liệu',
+			display: false,
+			text: 'Biểu đồ tổng hợp số liệu',
 			fontSize: 16,
 			position: 'bottom',
 		},

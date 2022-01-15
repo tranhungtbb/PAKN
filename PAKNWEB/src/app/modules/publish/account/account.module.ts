@@ -18,4 +18,4 @@ import { GetLocalUnitNamePipe } from './get-unit-name.pipe'
 	imports: [CommonModule, AccountRoutingModule, FormsModule, ReactiveFormsModule, SharedModule, BsDatepickerModule.forRoot(), NgSelectModule],
 	exports: [GetLocalUnitNamePipe],
 })
-export class AccountModule {}
+export class AccountModule { }

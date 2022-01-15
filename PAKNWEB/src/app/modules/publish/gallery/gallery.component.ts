@@ -13,7 +13,7 @@ declare var $: any
 	styleUrls: ['./gallery.component.css'],
 })
 export class GalleryComponent implements OnInit {
-	constructor(private _router: Router, private sanitizer: DomSanitizer, private _lightbox: Lightbox, private indexSettingService: IndexSettingService) {}
+	constructor(private _router: Router, private sanitizer: DomSanitizer, private _lightbox: Lightbox, private indexSettingService: IndexSettingService) { }
 
 	ltsIndexSettingWebsite: any = []
 	_albums: Array<Album> = [
@@ -77,7 +77,7 @@ export class GalleryComponent implements OnInit {
 			}
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
 	open(index: number): void {
 		// open lightbox

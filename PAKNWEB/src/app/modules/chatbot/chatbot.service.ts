@@ -6,13 +6,12 @@ import { Api } from 'src/app/constants/api'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { HttpClient } from '@angular/common/http'
 import { Observable, of } from 'rxjs'
-import { tap, catchError } from 'rxjs/operators'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ChatBotService {
-	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) {}
+	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) { }
 
 	getRooms(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.BotRooms)
@@ -24,5 +23,14 @@ export class ChatBotService {
 
 	createRoom(body: any) {
 		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.CreateRoom)
+	}
+	updateStatusRoom(body: any) {
+		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.UpdateStatusRoom)
+	}
+	getRoomForNotification(body: any) {
+		return this.serviceInvoker.get(body, AppSettings.API_ADDRESS + Api.GetRoomForNotification)
+	}
+	getRoomById(body: any) {
+		return this.serviceInvoker.get(body, AppSettings.API_ADDRESS + Api.GetRoomGetById)
 	}
 }

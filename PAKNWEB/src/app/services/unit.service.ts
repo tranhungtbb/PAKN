@@ -13,7 +13,7 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class UnitService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) { }
 
 	getAllPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetPagedList)
@@ -89,6 +89,18 @@ export class UnitService {
 	}
 	hasPermissionSMS(data: any): Observable<any> {
 		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitHasPermissionSMS)
+	}
+
+	getByGroup(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitGetByGroup)
+	}
+
+	getByParent(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitGetByParentId)
+	}
+
+	getDropdownForCombine(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitGetDropDownForCombine)
 	}
 
 }

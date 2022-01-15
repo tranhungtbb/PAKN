@@ -11,10 +11,9 @@ import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { v4 as uuidv4 } from 'uuid'
 import { ChatBotService } from '../chatbot/chatbot.service'
-import { BotMessage } from 'src/app/models/chatbotObject'
-import { link } from 'fs'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
-import { SystemConfigObject } from 'src/app/models/SystemConfigObject'
+import { MetaService } from 'src/app/services/tag-meta.service'
+import { RecommendationService } from 'src/app/services/recommendation.service'
 
 declare var $: any
 
@@ -32,8 +31,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		private notificationService: NotificationService,
 		private indexSettingService: IndexSettingService,
 		private botService: ChatBotService,
-		private systemConfig : SystemconfigService
-	) {}
+		private systemConfig: SystemconfigService,
+		private metaService: MetaService,
+		private recomenservice: RecommendationService
+	) { }
 
 	activeUrl: string = ''
 	isHasToken: boolean = this.storageService.getIsHaveToken()
@@ -52,13 +53,15 @@ export class PublishComponent implements OnInit, OnChanges {
 	messages: any[] = []
 	loading: boolean
 	myGuid: string
-	config : any = {}
+	fullName: string
+	config: any = {}
+	room: any = {}
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
 			this.activeUrl = splitRouter[2]
 		}
-		// this.loadScript('assets/dist/js/owl.carousel.min.js')
+		this.loadScript('assets/dist/vendor/bootstrap/js/bootstrap.min.js')
 		// this.loadScript('assets/dist/js/sd-js.js')
 		if (this.isLogin) {
 			this.getListNotification(this.numberNotifications)
@@ -66,23 +69,22 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.indexSettingService.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.indexSettingObj = res.result.model
+				this.metaService.updateTitle(this.indexSettingObj.metaTitle)
+				this.metaService.updateDescription(this.indexSettingObj.metaDescription)
+			}
+		}, (error) => {
+			console.log(error)
+		})
+
+		this.systemConfig.syConfigGetByType({ Type: TYPECONFIG.APPLICATION }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.config = JSON.parse(res.result.SYConfigGetByType.content)
 			}
 		}),
 			(error) => {
 				console.log(error)
 				alert(error)
 			}
-
-			this.systemConfig.syConfigGetByType({Type : TYPECONFIG.APPLICATION}).subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.config = JSON.parse(res.result.SYConfigGetByType.content)
-					console.log(this.config)
-				}
-			}),
-				(error) => {
-					console.log(error)
-					alert(error)
-				}
 
 		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [
@@ -92,75 +94,143 @@ export class PublishComponent implements OnInit, OnChanges {
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'], text: 'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà' },
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
+
+		this.handleInitConnectionToChatBot();
+	}
+	roomId: any
+	async handleInitConnectionToChatBot() {
+		this.myGuid = this.storageService.getClientUserId();
+		this.fullName = this.storageService.getFullName() == null ? 'Người dân' : this.storageService.getFullName()
+		if (!this.myGuid) {
+			this.myGuid = uuidv4();
+			this.storageService.setClientUserId(this.myGuid);
+		}
+		console.log('onConnectChatBot ', this.myGuid);
+		if (!this.connection) {
+			this.connection = new signalR.HubConnectionBuilder()
+				.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${this.myGuid}&fullName=${this.fullName}`, {
+					skipNegotiation: true,
+					transport: signalR.HttpTransportType.WebSockets,
+				})
+				.withAutomaticReconnect()
+				.build()
+
+			const resConnect = await this.connection.start()
+			const resCreate = await this.botService
+				.createRoom({
+					userName: this.myGuid,
+				})
+				.toPromise()
+			if (resCreate.success === 'OK') {
+				this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
+				this.roomId = resCreate.result.RoomId
+				this.room = {
+					Id: Number(resCreate.result.RoomId),
+					AnonymousId: Number(resCreate.result.AnonymousId),
+					Name: resCreate.result.RoomName,
+					Title: resCreate.result.RoomTitle,
+					Type: Number(resCreate.result.Type),
+					CreatedDate: new Date()
+				}
+				if (resCreate.result.IsCreateRoom === "True") {
+					this.connection.invoke('ReceiveRoomToGroup', this.room).then(res => {
+						console.log('ReceiveRoomToGroup : ' + res)
+					})
+						.catch(err => {
+							console.log('ReceiveRoomToGroup : ' + err)
+						})
+				}
+
+				this.connection.on('ReceiveMessageToGroup', (data: any) => {
+					console.log('ReceiveMessageToGroup ', data, this.myGuid);
+					if (this.myGuid !== data.from) {
+						this.loading = false
+
+						let link = ''
+						let answers = []
+						let typeFrom;
+						console.log('ReceiveMessageToGroup 1', data.results);
+						if (data.results && data.results.length > 0) {
+							console.log('ReceiveMessageToGroup 2', data.results);
+							try {
+								for (let index = 0; index < data.results.length; index++) {
+									const element = data.results[index];
+									if (element.subTags !== '') {
+										const subTags = JSON.parse(element.subTags)
+										answers.push({ answer: this.urlify(element.answer), subTags: subTags });
+									}
+
+								}
+								console.log('answers ', answers);
+							} catch (error) {
+								console.log('answers ', error);
+							}
+						}
+
+						const newMessage = {
+							dateSent: data.timestamp,
+							title: data.content,
+							type: typeFrom,
+							answers: answers,
+							link: link,
+							fromUserName: data.from,
+							fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
+							fromFullName: data.fromFullName,
+							toUserName: data.to,
+						}
+						console.log('ReceiveMessageToGroup 3', newMessage);
+						if (this.messages) {
+							this.messages = [...this.messages, newMessage]
+						} else {
+							this.messages = [newMessage]
+						}
+						setTimeout(() => {
+							var objDiv = document.getElementById('bodyMessage')
+							objDiv.scrollTop = objDiv.scrollHeight
+						}, 300)
+					}
+				})
+
+			}
+		}
+	}
+
+
+	redirectCreateRecommendation() {
+		this._router.navigate(['/cong-bo/them-moi-kien-nghi'])
 	}
 
 	async onConnectChatBot() {
-		this.myGuid = uuidv4()
-		this.connection = new signalR.HubConnectionBuilder()
-			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${this.myGuid}`, {
-				skipNegotiation: true,
-				transport: signalR.HttpTransportType.WebSockets,
-			})
-			.withAutomaticReconnect()
-			.build()
-		this.connection.serverTimeoutInMilliseconds = 180000
-		this.connection.keepAliveIntervalInMilliseconds = 180000
-
-		const resConnect = await this.connection.start()
-		const resCreate = await this.botService
-			.createRoom({
-				userName: this.myGuid,
-			})
-			.toPromise()
-		//console.log('resCreate ', resCreate)
-		if (resCreate.success === 'OK') {
-			this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
-			this.connection.on('ReceiveMessageToGroup', (data: any) => {
-				if (this.myGuid !== data.from) {
-					this.loading = false
-					console.log('receiveMessage 0', this.messages, data)
-
-					let link = ''
-					let subTags
-					let typeFrom
-					if (data.subTags && data.subTags.length > 0) {
-						const par = JSON.parse(data.subTags)
-						typeFrom = par.type
-						if (par.type === 'carousel') {
-							subTags = par.data
-						}
-					}
-
-					const newMessage = {
-						dateSent: data.timestamp,
-						title: data.content,
-						type: typeFrom,
-						subTags: subTags,
-						link: link,
-						fromUserName: data.from,
-						toUserName: data.to,
-					}
-
-					if (this.messages) {
-						this.messages = [...this.messages, newMessage]
-					} else {
-						this.messages = [newMessage]
-					}
-					setTimeout(() => {
-						var objDiv = document.getElementById('bodyMessage')
-						objDiv.scrollTop = objDiv.scrollHeight
-					}, 300)
-				}
-			})
-			this.sendMessage({ title: 'Xin chào' }, false)
-		}
+		this.sendMessage({ title: '', idSuggetLibrary: '' }, false)
 	}
 
 	sendMessage(message: any, append: boolean = true) {
 		console.log('message ', message)
+		if (message.typeSuggest && message.typeSuggest == "2" || message.typeSuggest && message.typeSuggest == "4") {
+			window.open(message.linkSuggest, '_blank')
+			return
+		}
+		else if (message.typeSuggest && message.typeSuggest == "3") {
+			this.connection.invoke('NotifyAdmin', { ...this.room, 'CreatedDate': new Date() })
+			this.messages = [
+				...this.messages,
+				{
+					dateSent: '',
+					title: message.linkSuggest,
+					fromId: 19,
+					fromAvatarPath: '',
+					answers: []
+				},
+			]
+			setTimeout(() => {
+				var objDiv = document.getElementById('bodyMessage')
+				objDiv.scrollTop = objDiv.scrollHeight
+			}, 300)
+			return
+		}
 		this.loading = true
 		if (message.hiddenAnswer && message.hiddenAnswer !== '') {
-			this.connection.invoke('AnonymousChatWithBot', message.title, message.hiddenAnswer)
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.idSuggetLibrary ? message.idSuggetLibrary : '', message.hiddenAnswer)
 			if (append) {
 				this.messages = [
 					...this.messages,
@@ -176,7 +246,7 @@ export class PublishComponent implements OnInit, OnChanges {
 				}, 300)
 			}
 		} else {
-			this.connection.invoke('AnonymousChatWithBot', message.title, '')
+			this.connection.invoke('AnonymousChatWithBot', message.title, message.idSuggetLibrary ? message.idSuggetLibrary : '', '')
 			if (append) {
 				this.messages = [
 					...this.messages,
@@ -194,15 +264,11 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 	}
 
-	onDisconnectChatBot() {
-		if (this.connection) {
-			this.connection.off('ReceiveMessageToGroup')
-			this.connection.stop()
-		}
-	}
-
 	onActivate(event) {
 		window.scroll(0, 0)
+		$('html, body')
+			.animate({ scrollTop: 0 })
+			.promise()
 	}
 
 	getListNotification(PageSize: any) {
@@ -222,12 +288,11 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 	viewedCountLate: number = 0
 	updateNotifications() {
-		this.viewedCountLate = 0
-		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-			}
-			return
-		})
+		// this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 	}
+		// 	return
+		// })
 	}
 
 	ngOnChanges() {
@@ -264,9 +329,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		})
 	}
 	onClickNotification(id: number, type: number, typeSend: number) {
+		this.ViewedCount = this.ViewedCount - 1
 		this.updateIsReadNotification(id)
 		if (type == TYPE_NOTIFICATION.NEWS) {
-			this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
+			this._router.navigate(['cong-bo/thong-bao-chinh-quyen/' + id])
 		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) {
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
@@ -295,7 +361,9 @@ export class PublishComponent implements OnInit, OnChanges {
 	searchRecommendation() {
 		this.keySearch = this.keySearch == null ? '' : this.keySearch.trim()
 		if (this.keySearch) {
+			this.recomenservice.keySearchEvent.emit(this.keySearch);
 			this._router.navigate(['/cong-bo/danh-sach-phan-anh-kien-nghi/0/', this.keySearch])
+			// ,
 		}
 	}
 	checkDeny(status: any) {
@@ -305,18 +373,27 @@ export class PublishComponent implements OnInit, OnChanges {
 		return false
 	}
 
+	showChatBot: boolean = false
+
 	showHideMessage() {
+		this.showChatBot = !this.showChatBot
 		var message = document.getElementById('message')
 		if (message) {
 			if (message.classList.contains('show')) {
 				message.classList.remove('show')
 				message.style.display = 'none'
-				this.onDisconnectChatBot()
 			} else {
 				message.classList.add('show')
 				message.style.display = 'block'
 				this.onConnectChatBot()
 			}
+		}
+	}
+
+	ngOnDestroy() {
+		if (this.connection) {
+			this.connection.off('ReceiveMessageToGroup')
+			this.connection.stop()
 		}
 	}
 
@@ -348,5 +425,11 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	goToLink(url: string) {
 		window.open(url, '_blank')
+	}
+	urlify(text) {
+		var urlRegex = /(https?:\/\/[^\s]+)/g;
+		return text.replace(urlRegex, function (url) {
+			return '<a target="_blank" href="' + url + '">' + url + '</a>';
+		})
 	}
 }

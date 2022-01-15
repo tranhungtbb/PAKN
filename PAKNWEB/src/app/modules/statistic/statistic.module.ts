@@ -19,7 +19,9 @@ import { ProcessingStatusComponent } from './processing-status/processing-status
 import { ProcessingResultsComponent } from './processing-results/processing-results.component'
 import { ProcessingResultsByTypeComponent } from './processing-results-by-type/processing-results-by-type.component'
 import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
-import { RecommendationsByTypeDetailComponent } from './recommendations-by-type-detail/recommendations-by-type-detail.component'
+import { RecommendationsByTypeDetailComponent } from './processing-results-by-type-detail/processing-results-by-type-detail.component'
+import { RecommendationsByReceptionTypeDetailComponent } from './processing-results-by-reception-type-detail/processing-results-by-reception-type-detail.component'
+import { RecommendationsProcessingResultDetailComponent } from './processing-results-detail/processing-results-detail.component'
 
 @NgModule({
 	declarations: [
@@ -34,7 +36,9 @@ import { RecommendationsByTypeDetailComponent } from './recommendations-by-type-
 		ProcessingResultsComponent,
 		ProcessingResultsByTypeComponent,
 		ProcessingResultsByReceptionTypeComponent,
-		RecommendationsByTypeDetailComponent
+		RecommendationsByTypeDetailComponent,
+		RecommendationsByReceptionTypeDetailComponent,
+		RecommendationsProcessingResultDetailComponent
 	],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })

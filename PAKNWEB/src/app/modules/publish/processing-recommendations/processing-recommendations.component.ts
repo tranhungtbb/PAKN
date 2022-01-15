@@ -24,7 +24,7 @@ export class ProcessingRecommendationsComponent implements OnInit {
 	pagination = []
 	// arr
 	lstUnit: [] = []
-	lstField: [] = []
+	lstField: any[] = []
 
 	listRecommendation = new Array<PuRecommendation>()
 
@@ -37,7 +37,6 @@ export class ProcessingRecommendationsComponent implements OnInit {
 	) { }
 
 	async ngOnInit() {
-		this.getList()
 		this.recommendationService.recommendationGetDataForSearch({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -48,11 +47,13 @@ export class ProcessingRecommendationsComponent implements OnInit {
 					this.lstUnit = []
 					this._toas.error(res.message)
 				}
+				this.getList()
 			},
 			(err) => {
 				console.log(err)
 			}
 		)
+
 	}
 
 	redirect(id: any) {
@@ -62,6 +63,7 @@ export class ProcessingRecommendationsComponent implements OnInit {
 	dataStateChange = () => {
 		this.getList()
 	}
+	fieldName: string
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
@@ -72,11 +74,19 @@ export class ProcessingRecommendationsComponent implements OnInit {
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}
+		if (this.field) {
+			this.fieldName = this.lstField.find(x => x.value == this.field).text
+		} else {
+			this.fieldName = null
+		}
 		this.service.getListProcessing(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.RecommendationProcessing.length > 0) {
 					this.listRecommendation = res.result.RecommendationProcessing.map((item) => {
-						item.shortName = this.getShortName(item.name)
+						if (this.KeySearch) {
+							item.title = this.highlight(item.title, this.KeySearch)
+							item.content = this.highlight(item.content, this.KeySearch)
+						}
 						return item
 					})
 					this.PageIndex = res.result.PageIndex
@@ -93,6 +103,14 @@ export class ProcessingRecommendationsComponent implements OnInit {
 				this.Total = 0
 			}
 		})
+	}
+
+	highlight(inputText, text) {
+		var index = inputText.toUpperCase().indexOf(text.toUpperCase());
+		if (index >= 0) {
+			inputText = inputText.substring(0, index) + "<span class='highlight-key-search'>" + inputText.substring(index, index + text.length) + "</span>" + inputText.substring(index + text.length);
+		}
+		return inputText
 	}
 	getShortName(string) {
 		var names = string.split(' '),

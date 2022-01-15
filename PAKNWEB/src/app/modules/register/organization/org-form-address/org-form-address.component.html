@@ -37,26 +37,28 @@
 			</div>
 		</div>
 	</div> -->
-	<div class="col-12 form-group">
-		<label class="mb-1">Địa chỉ cụ thể </label>
-		<input [svTrim] [(ngModel)]="model.orgAddress" formControlName="orgAddress" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
-		
+	<div class="col-12 form-group pi-italic">
+		<label class="mb-1">Địa chỉ</label>
+		<input [(ngModel)]="model.orgAddress" formControlName="orgAddress" type="text"
+			placeholder="Nhập địa chỉ trụ sở/văn phòng đại diện.." class="form-control h-34px rounded-6px border-brown">
+
 	</div>
-	<div class="col form-group">
-		<label class="mb-1">Email </label>
-		<input [svTrim] [(ngModel)]="model.orgEmail" formControlName="orgEmail" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
-			(change)="onCheckExist('OrgEmail',$event.target.value)">
-		<!-- <div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
+	<div class="col form-group pi-italic">
+		<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+		<input [(ngModel)]="model.orgEmail" formControlName="orgEmail" type="text" placeholder="Nhập email.."
+			class="form-control h-34px rounded-6px border-brown" (change)="onCheckExist('orgEmail',$event.target.value)">
+		<div
+			*ngIf="(fOrgAddressSubmitted && fOrgAdr.orgEmail.invalid)||(fOrgAdr.orgEmail.invalid && (fOrgAdr.orgEmail.dirty || fOrgAdr.orgEmail.touched))"
 			class="has-error m-b-12">
-			<div *ngIf="fOrgAdr.OrgEmail.errors.required">
+			<div *ngIf="fOrgAdr.orgEmail.errors.required">
 				<span class="help-block">Trường dữ liệu này không được để trống</span>
 			</div>
-			<div *ngIf="fOrgAdr.OrgEmail.errors.email">
+			<div *ngIf="fOrgAdr.orgEmail.errors.email">
 				<span class="help-block">Định dạng email không hợp lệ</span>
 			</div>
-		</div> -->
-		<div *ngIf="checkExists['OrgEmail'] && fOrgAdr.orgEmail.valid" class="has-error m-b-12">
-			<div *ngIf="checkExists['OrgEmail']">
+		</div>
+		<div *ngIf="checkExists['orgEmail'] && fOrgAdr.orgEmail.valid" class="has-error m-b-12">
+			<div *ngIf="checkExists['orgEmail']">
 				<span class="help-block">Email đã tồn tại</span>
 			</div>
 		</div>

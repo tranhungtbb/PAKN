@@ -3,35 +3,54 @@
         ***********************************-->
 <div class="content-nd">
 	<div class="container">
-		<div class="row justify-content-between pt-5">
-			<div class="col-8 col-lg-8 col-md-8">
-				<ol class="breadcrumb px-0 bg-transparent">
+		<div class="row justify-content-between margin-top-16">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8" style="padding-right: 0!important;">
+				<ol class="breadcrumb px-0 bg-transparent" style="padding: 0!important; margin-bottom: 3px;">
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
-					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/phan-anh-kien-nghi']">Phản ánh, Kiến nghị</a></li>
-					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
-					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
+					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/danh-sach-phan-anh-kien-nghi']">Phản ánh, Kiến
+							nghị</a></li>
+					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, kiến nghị</li>
+					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, kiến nghị</li>
 				</ol>
 				<!-- <div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div> -->
-				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
-				<form class="form-row mb-3" [formGroup]="form">
+				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red" style="font-weight: bold;">Vui lòng đăng
+					nhập để gửi phản ánh kiến
+					nghị!</p>
+				<form class="form-row mb-3" [formGroup]="form" style="margin-bottom:3px!important">
 					<div class="col-12 form-group">
 						<div class="mb-1 d-flex">
-							<div class="label pl-0">Phản ánh, kiến nghị về việc</div>
-							<span class="cl-red">(*)</span>
+							<div class="label pl-0 center">Phản ánh, kiến nghị về việc</div>
+							<span class="cl-red center">(*)</span>
 							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'title'">
-								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
+								<!-- <i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i> -->
+								<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 							</button>
 						</div>
-						<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500" formControlName="title" (blur)="searchRecommendation()"
-							placeholder="Nhập..." />
-						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
-							<div *ngIf="f.title.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+						<div class="ps-relative pi-italic">
+							<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500"
+								formControlName="title" (focus)="inputTitleFocus()" (blur)="searchRecommendation()"
+								(onchange)="searchRecommendation()" placeholder="Nhập tiêu đề.." />
+
+							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+								class="has-error">
+								<div *ngIf="f.title.errors.required">
+									<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
+								</div>
 							</div>
 						</div>
+
+
 					</div>
-					<div class="col-12 form-group" *ngIf="resultsRecommendation.length>0">
-						<div class="email-list mini-scroll">
+					<div class="col-12 form-group" *ngIf="resultsRecommendation.length>0 && flagRecommend==true">
+						<div *ngIf="flagRecommend==true" class="input-group-customform pointer ps-absolute"
+							style="right: 27px; top: 8px; margin-right: 12px;" title="Đóng" (click)="hideRecommendBox()">
+							<i class="fa fa-times"></i>
+						</div>
+						<div class="email-list">
+							<!-- mini-scroll -->
+							<div>
+								<span style="font-weight: bold; font-size: 20;">Phản ánh kiến nghị cùng chủ đề</span>
+							</div>
 							<div class="message" *ngFor="let item of resultsRecommendation">
 								<div>
 									<a href="/cong-bo/phan-anh-kien-nghi/{{item.id}}" target="_blank" class="col-mail col-mail-2">
@@ -44,89 +63,123 @@
 					</div>
 					<div class="col-12 form-group">
 						<div class="mb-1 d-flex">
-							<div class="label pl-0">Nội dung</div>
-							<span class="cl-red">(*)</span>
-							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (click)="hightLightText()">
-								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
+							<div class="label pl-0 center">Nội dung</div>
+							<span class="cl-red center">(*)</span>
+							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (blur)="hightLightText()">
+								<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 							</button>
 						</div>
 						<div class="group-content-recommendation">
-							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
-								placeholder="Nhập nội dung..." (blur)="hightLightText()"></textarea>
+							<textarea id="inputContent" (focus)="onFocusContent()" class="form-control" [(ngModel)]="model.content"
+								formControlName="content" (blur)="hightLightText()" style="height: 158px; border-radius: 0.75rem;"
+								rows="6" placeholder="Nhập nội dung.."></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
-						<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error">
+						<div
+							*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
+							class="has-error">
 							<div *ngIf="f.content.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 						<div *ngIf="model.content && !isSuitableContent">
-							<span class="help-block">Nội dung phản ánh, kiến nghị chứa các từ ngữ bị cấm không thuộc thẩm quyền xử lý. Vui lòng nhập lại thông tin!</span>
+							<span class="help-block">Nội dung phản ánh, kiến nghị chứa các từ ngữ bị cấm không thuộc thẩm quyền xử lý.
+								Vui lòng nhập lại thông tin!</span>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 form-group">
-						<div class="label pl-0 mb-1">Lĩnh vực <span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" 
-							placeholder="Chọn..." formControlName="field" notFoundText="Không tìm thấy dữ liệu"
-							(change)="getListUnit()"
-							[(ngModel)]="model.field">
-							<ng-template ng-option-tmp let-item="item">
-								<div title="{{item.text}}">{{item.text}}</div>
-							</ng-template>
-						</ng-select>
-						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))" class="has-error">
-							<div *ngIf="f.field.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-lg-6 form-group">
-						<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
-						<ng-select class="form-control" [items]="lstUnit"
-							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
-							placeholder="Chọn..." formControlName="unitId" [(ngModel)]="model.unitId">
-							<ng-template ng-option-tmp let-item="item">
-								<ul>
-									<li>
-										<p class="bg-hover mb-0" *ngIf="item.unitLevel == 1">
-											<strong>{{item.text}}</strong>
-										</p>
-										<p class="bg-hover mb-0" *ngIf="item.unitLevel != 1">{{item.text}}</p>
-										<p *ngIf="item.isMain" class="cl-red" style="font-style: italic;">
-											(Trường hợp không chọn được đơn vị xử lý)
-										</p>
-									</li>
-								</ul>
-							</ng-template>
-						</ng-select>
-						<div *ngIf="(submitted && f.unitId.invalid)" class="has-error">
-							<div *ngIf="f.unitId.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-sm-12 form-group">
-						<div class="label pl-0 mb-1">ĐỊA ĐIỂM PHẢN ÁNH HIỆN TRƯỜNG <span class="cl-red">(*)</span></div>
-						<div class="ps-relative">
-							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300" formControlName="address"
-								placeholder="Nhập..." />
 
-							<div class="input-group-customform pointer ps-absolute" style="right: 15px; top: 8px;" 
-								title="Chọn vị trí" (click)="showMaps()">
-								<i class="fas fa-map-marker-alt"></i>
+					<div class="col-12 col-lg-6 form-group ng-select-test">
+						<div class="label pl-0 mb-1">cấp cơ quan tiếp nhận<span class="cl-red">(*)</span></div>
+						<ng-select class="form-control ng-select custom ng-input" [items]="lstGroupUnit" bindValue="id"
+							bindLabel="name" placeholder="Chọn cấp cơ quan tiếp nhận.." formControlName="groupUnitId"
+							notFoundText="Không tìm thấy dữ liệu" (change)="onChangeGroup($event)" [(ngModel)]="model.groupUnitId">
+							<ng-template ng-option-tmp let-item="item">
+								<div title="{{item.name}}">{{item.name}}</div>
+								<p *ngIf="item.isMain" class="cl-red mb-0" style="font-style: italic;">
+									(Trường hợp không chọn được đơn vị xử lý)
+								</p>
+							</ng-template>
+						</ng-select>
+						<div
+							*ngIf="(submitted && f.groupUnitId.invalid) || (f.groupUnitId.invalid && (f.groupUnitId.dirty || f.groupUnitId.touched))"
+							class="has-error">
+							<div *ngIf="f.groupUnitId.errors.required">
+								<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 							</div>
-							<div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error">
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-6 form-group" *ngIf="!isChooseUnit">
+						<div class="label pl-0 mb-1">cơ quan tiếp nhận <span *ngIf="!isChooseUnit" class="cl-red">(*)</span></div>
+						<ng-select class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name"
+							placeholder="Chọn cơ quan tiếp nhận.." notFoundText="Không tìm thấy dữ liệu"
+							[(ngModel)]="model.unitReceive" [ngModelOptions]="{standalone: true}" (change)="getUnitByParent($event)">
+							<ng-template ng-option-tmp let-item="item">
+								<div title="{{item.name}}">{{item.name}}</div>
+							</ng-template>
+						</ng-select>
+						<div *ngIf="(submitted && !model.unitReceive && !isChooseUnit)" class="has-error">
+							<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
+						</div>
+
+					</div>
+
+					<div class="col-12 col-lg-6 form-group" *ngIf="isShowUnitChild">
+						<div class="label pl-0 mb-1">đơn vị tiếp nhận</div>
+						<ng-select class="form-control" [items]="lstUnitChild" bindValue="id" bindLabel="name" placeholder="Chọn..."
+							notFoundText="Không tìm thấy dữ liệu" [(ngModel)]="model.unitChildId"
+							[ngModelOptions]="{standalone: true}">
+							<ng-template ng-option-tmp let-item="item">
+								<div title="{{item.text}}">{{item.name}}</div>
+							</ng-template>
+						</ng-select>
+					</div>
+
+					<div class="col-12 col-sm-12 form-group pi-italic">
+						<div class="label pl-0 mb-1"> ĐỊA ĐIỂM PHẢN ÁNH, KIẾN NGHỊ <span class="cl-red">(*)</span>
+						</div>
+						<div class="ps-relative">
+							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300"
+								formControlName="address" placeholder="Nhập địa chỉ cụ thể phản ánh, kiến nghị.." />
+
+
+
+							<div style="color:#5e72e4; display: inline-block; width: auto;">
+								Chọn vị trí :
+							</div>
+
+
+							<div style="color: #5e72e4; cursor:pointer;  display: inline-block;" class="ml-4"
+								(click)="setCurrentLocation()">
+								<i class="far fa-location"></i>
+								<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">
+									Vị trí hiện tại của tôi</p>
+							</div>
+
+
+							<div style="color: #5e72e4; cursor:pointer;  display: inline-block;" class="ml-4" (click)="showMaps()">
+								<i class="fas fa-map-marker-alt"></i>
+								<p class="ml-2" style="display: inline-block ;width: auto;font-style: italic;">
+									Chọn vị trí trên bản đồ</p>
+							</div>
+
+
+
+							<div
+								*ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
+								class="has-error">
 								<div *ngIf="f.address.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
+									<span class="help-block" style="font-weight: bold;">Trường dữ liệu này không được để trống</span>
 								</div>
 							</div>
 						</div>
 					</div>
 				</form>
 				<div class="box attach-ct">
-					<p class="h5 text-uppercase mb-3">
+					<p class="h5 text-uppercase" style="margin:0;">
 						<span>
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip"
+								viewBox="0 0 16 16">
 								<path
 									d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 								</path>
@@ -135,12 +188,12 @@
 						Tài liệu đính kèm
 					</p>
 					<div class="attach-file row">
-						<div class="col-auto mb-4">
-							<div class="alert alert-dark h-100 d-flex align-items-center" style="width: 170px">
-								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
-									accept="{{fileAccept}}" />
-								<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
-								<label for="file-5" (click)="file.click()">
+						<div class="col-auto mb-2">
+							<div class="alert alert-dark h-100 d-flex align-items-center"
+								style="width: 170px; margin: 0; padding: 0;">
+								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+									class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
+								<label for="file-5" (click)="file.click()" style="margin: 0; padding: 0;">
 									<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
 											<path
 												d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
@@ -149,103 +202,91 @@
 								</label>
 							</div>
 						</div>
-						<ng-container *ngFor="let item of files">
-							<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
-									</button>
-									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
-										<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
-										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-									</a>
-								</div>
-							</div>
-							<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
-									</button>
-									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
-										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
-										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-									</a>
-								</div>
-							</div>
-							<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
-									</button>
-									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
-										<img [src]="item.filePathUrl | sanitizerUrl" style="width: 85px; object-fit: cover;" alt="">
-										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-									</a>
-								</div>
-							</div>
-							<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
-									</button>
-									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
-										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
-										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-									</a>
-								</div>
-							</div>
-							<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
-									</button>
-									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
-										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
-										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-									</a>
-								</div>
-							</div>
-							<div class="col-auto mb-4" *ngIf="item.fileType == 7">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
-									</button>
-									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
-										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
-										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-									</a>
-								</div>
-							</div>
+						<div class="mb-4">
+							<div *ngFor="let file of files" class="mb-2 mr-3 pointer" style="display:  inline-block;">
+								<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 3" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 4" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 6" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+									title="Xem file" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 7" class="pointer" appViewFile [linkfile]="file.filePath"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
 
-						</ng-container>
+								<i (click)="onRemoveFile(file)" class="ml-2 mdi mdi-close"></i>
+							</div>
+						</div>
+
 					</div>
 				</div>
-				<form class="form-row mb-3 align-items-end" [formGroup]="form">
-					<div class="col-12 col-lg-4">
-						<label class="mb-1">Mã số xác thực</label>
-						<div class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha" [src]="captchaImage" />
-							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 24px"></i></button>
-						</div>
+
+				<form class="form-row mb-3 align-items-end justify-content-between" [formGroup]="form">
+					<div class="col-12 col-sm-12 mb-2">
+						<mat-checkbox [(ngModel)]="model.isPublicInfoUser" formControlName="isPublicInfoUser"
+							[labelPosition]="before" [color]="primary">
+							Hiển thị thông tin cá nhân khi công khai nội dung trả lời phản
+							ánh, kiến nghị
+						</mat-checkbox>
 					</div>
-					<div class="col-12 col-lg-4">
-						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
-						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" style="height: 56px;" formControlName="captcha" maxlength="5">
-						<div *ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))" class="has-error">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+						<label class="mb-1 label-authorize">MÃ SỐ XÁC THỰC <span class="cl-red">(*)</span></label>
+						<div
+							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow  pi-italic"
+							style="border: none !important; box-shadow: none !important;">
+							<img style="max-height: 56px; max-width: 60%;" id="img-captcha" [src]="captchaImage" />
+							<input type="text" class="form-control" numbersOnly [(ngModel)]="captchaCode"
+								style="height: 40px;width: 100px;" formControlName="captcha" maxlength="1" placeholder="Nhập..">
+							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+									style="font-size: 24px"></i></button>
+
+						</div>
+						<div
+							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"
+							class="has-error">
 							<div *ngIf="f.captcha.errors.required">
-								<span class="help-block">Vui lòng nhập mã captcha</span>
+								<span class="help-block" style="font-weight: bold;">Vui lòng nhập kết quả</span>
 							</div>
 						</div>
 					</div>
 
-					<div class="col-4 col-lg-4 d-flex justify-content-end align-items-center" style="margin-top: 22px;">
-						<!-- <button type="button" class="btn border mr-3" (click)="reloadForm()">
-							<i class="bi bi-arrow-repeat d-flex" style="font-size: 24px"></i>
-							<span class="ml-2">Nhập lại</span>
-						</button> -->
-						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3 px-5" (click)="onSave(1)">Lưu</button>
-
-						<button type="button" class="btn text-white border-0 grd-blue px-5" (click)="onSave(2)">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 d-flex justify-content-end align-items-center"
+						style="margin-top: 22px;">
+						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5 mr-3"
+							(click)="onSave(1)">Lưu</button>
+						<button type="button" class="btn text-white border-0 grd-blue px-5 pr-0" (click)="onSave(2)">
 							<span class="ml-2">Gửi</span>
 						</button>
 					</div>
 				</form>
 			</div>
-			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 d-lg-block sidebar-ct pl-3">
 				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 			</div>
 		</div>
@@ -257,23 +298,26 @@
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h3">Chọn vị trí</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				<button type="button" class="close" data-dismiss="modal" (click)="closeMap()"><span>&times;</span>
 				</button>
 			</div>
 			<div class="modal-body pb-0 pt-0">
 				<div class="row form-group">
 					<div class="col-md-12">
-						<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false"
-							(mapClick)="mapClicked($event)"> 
-							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"> 
+						<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false"
+							[zoomControl]="false" (mapClick)="mapClicked($event)">
+							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"
+								(dragEnd)="dragEnd($event)">
 							</agm-marker>
 						</agm-map>
 					</div>
-				</div> 
+				</div>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button class="btn btn-outline-secondary border px-5 mr-3" data-dismiss="modal" type="button">Hủy</button>
-				<button class="btn text-white grd-blue border-0 px-5 " type="button" (click)="onSaveMaps()">Xác nhận</button></div>
+				<button class="btn btn-outline-secondary border px-5 mr-3" (click)="closeMap()" data-dismiss="modal"
+					type="button">Hủy</button>
+				<button class="btn text-white grd-blue border-0 px-5 " type="button" (click)="onSaveMaps()">Xác nhận</button>
+			</div>
 
 		</div>
 	</div>

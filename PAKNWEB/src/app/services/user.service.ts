@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 // import { retry } from 'rxjs/operators';
 // import { request } from 'http';
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
+import { catchError, tap } from 'rxjs/operators'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class UserService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+	private handleError<T>(operation = 'operation', result?: T) {
+		return (error: any): Observable<T> => {
+
+			console.error(error); // log to console instead
+			return of(result as T);
+		};
+	}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) { }
 
 	getAllPagedList(query: any): Observable<any> {
 		let headers = {
@@ -269,5 +277,19 @@ export class UserService {
 	checkExists(req: any): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.UserCheckExists
 		return this.serviceInvoker.get(req, url)
+	}
+
+	exportExcelSystemLog(request): Observable<any> {
+		return this.http
+			.get(AppSettings.API_ADDRESS + Api.ExportExcel, {
+				responseType: "blob",
+				params: request,
+				headers: new HttpHeaders({
+					"Access-Control-Allow-Origin": "*",
+					Authorization: `Bearer ${this.localStronageService.getAccessToken()}`,
+					"Content-Type": "application/json",
+				}),
+			})
+			.pipe(tap(), catchError(this.handleError<Blob>()));
 	}
 }

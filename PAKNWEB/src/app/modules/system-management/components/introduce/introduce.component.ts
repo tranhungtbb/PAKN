@@ -161,7 +161,7 @@ export class IntroduceComponent implements OnInit {
 	redirect() {
 		window.history.back()
 	}
-	onSave(isPreview : boolean = false) {
+	onSave(isPreview: boolean = false) {
 		let obj = {
 			model: this.model,
 			fileBanner: this.BannerImg,
@@ -170,7 +170,7 @@ export class IntroduceComponent implements OnInit {
 		}
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				if(isPreview){
+				if (isPreview) {
 					window.open('/cong-bo/xem-truoc/gioi-thieu')
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -248,7 +248,7 @@ export class IntroduceComponent implements OnInit {
 	}
 
 	preUpdate(model: any) {
-		debugger
+
 		this.title = 'Chỉnh sửa đơn vị'
 		this.modelUnit = { ...model }
 		this.rebuilFormUnit()

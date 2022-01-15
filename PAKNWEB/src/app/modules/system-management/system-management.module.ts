@@ -42,7 +42,8 @@ import { SupportGalleryComponent } from './components/support-gallery/support-ga
 import { ApplicationSettingComponent } from './components/application-setting/application-setting.component'
 import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
 import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
-import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
+import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component';
+import { StatisticAccessComponent } from './components/statistic-access/statistic-access.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -92,6 +93,7 @@ import { PublishNotificationComponent } from './components/publish-notification/
 		SyncSettingComponent,
 		PublishNotificationComponent,
 		ApplicationSettingComponent,
+		StatisticAccessComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

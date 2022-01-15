@@ -13,7 +13,7 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class AuthenticationService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) { }
 
 	login(user: any): Observable<any> {
 		user.logAction = LOG_ACTION.login
@@ -35,6 +35,10 @@ export class AuthenticationService {
 
 	forgetpassword(user: any): Observable<any> {
 		return this.serviceInvoker.post(user, AppSettings.API_ADDRESS + Api.FORGETPASSWORD)
+	}
+
+	getTokenByEmail(user: any): Observable<any> {
+		return this.serviceInvoker.post(user, AppSettings.API_ADDRESS + Api.GetTokenByEmail)
 	}
 
 	chagepassword(user: any): Observable<any> {

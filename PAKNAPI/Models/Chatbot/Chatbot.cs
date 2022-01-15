@@ -98,11 +98,16 @@ namespace PAKNAPI.Models.Chatbot
 		public int CategoryId { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
+		public bool IsDefault { get; set; }
 
-		public async Task<List<ChatbotGetAllOnPage>> ChatbotGetAllOnPageDAO()
+		public async Task<List<ChatbotGetAllOnPage>> ChatbotGetAllOnPageDAO(int PageIndex, int PageSize, string Title, string Question, bool? IsActive)
 		{
 			DynamicParameters DP = new DynamicParameters();
-
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Title", Title);
+			DP.Add("Question", Question);
+			DP.Add("IsActive", IsActive);
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetAllOnPage>("ChatbotGetAllOnPage", DP)).ToList();
 		}
 	}
@@ -169,17 +174,32 @@ namespace PAKNAPI.Models.Chatbot
 		public string link { get; set; }
 		//public string Answer { get; set; }
 		public int CategoryId { get; set; }
+		public byte TypeChat { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<ChatbotGetByID>> ChatbotGetByIDDAO(int? Id)
+		public async Task<List<ChatbotGetByID>> ChatbotGetByIDDAO(long Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetByID>("ChatbotGetByID", DP)).ToList();
 		}
+
+		public async Task<List<ChatbotHashtag>> ChatbotHashtagGetByChatbotDAO(long ChatbotId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ChatbotId", ChatbotId);
+			return (await _sQLCon.ExecuteListDapperAsync<ChatbotHashtag>("SY_Chatbot_HashtagGetByChatbotId", DP)).ToList();
+		}
 	}
+	public class ChatbotHashtag
+    {
+		public long Id { get; set; }
+		public long ChatBotId { get; set; }
+		public long HashtagId { get; set; }
+		public string HashtagName { get; set; }
+    }
 	#endregion
 
 	#region ChatbotLibGetByID
@@ -199,6 +219,8 @@ namespace PAKNAPI.Models.Chatbot
 		public int IdSuggetLibrary { get; set; }
 		public string Answer { get; set; }
 		public string QuestionAnswers { get; set; }
+		public byte TypeSuggest { get; set; }
+		public string LinkSuggest { get; set; }
 
 		public async Task<List<ChatbotLibGetByID>> ChatbotLibGetByIDDAO(int? Id)
 		{
@@ -238,6 +260,11 @@ namespace PAKNAPI.Models.Chatbot
 		{
 			DynamicParameters DP = new DynamicParameters();
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetAllActive>("ChatbotGetAllActive", DP)).ToList();
+		}
+		public async Task<List<DropdownObject>> GetDropdownHashtag()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagChatbotGetDropdown", DP)).ToList();
 		}
 	}
 	#endregion
@@ -310,6 +337,7 @@ namespace PAKNAPI.Models.Chatbot
             //await ChatbotInsertFile(_chatbotInsertIN);
 			decimal id = (await InsertChatbotDAO(_chatbotInsertIN));
             await InsertChatbotLibDAO(_chatbotInsertIN.lstAnswer, id);
+            ChatbotHashtagInsert(_chatbotInsertIN.lstHashtags, (long)id);
             return 1;
         }
 
@@ -318,6 +346,7 @@ namespace PAKNAPI.Models.Chatbot
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Title", _chatbotInsertIN.Title.Trim());
 			DP.Add("Question", _chatbotInsertIN.Question.Trim());
+			DP.Add("TypeChat", _chatbotInsertIN.TypeChat);
 			//DP.Add("Answer", _chatbotInsertIN.Answer.Trim());
 			DP.Add("CategoryId", _chatbotInsertIN.CategoryId);
 			DP.Add("IsActived", _chatbotInsertIN.IsActived);
@@ -329,15 +358,36 @@ namespace PAKNAPI.Models.Chatbot
 
 		private async Task<int> InsertChatbotLibDAO(List<lstAnswer> lstAnswers, decimal id)
 		{
-            foreach (var item in lstAnswers)
-            {
-				DynamicParameters DP = new DynamicParameters();
-				DP.Add("IdBotLib", id);
-				DP.Add("Answers", item.Answer);
-				DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
-				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
+			if (lstAnswers != null) {
+				foreach (var item in lstAnswers)
+				{
+					DynamicParameters DP = new DynamicParameters();
+					DP.Add("IdBotLib", id);
+					DP.Add("Answers", item.Answer);
+					DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
+					DP.Add("TypeSuggest", item.TypeSuggest);
+					DP.Add("LinkSuggest", item.LinkSuggest);
+					await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
+				}
 			}
 			return 1;
+		}
+
+		public async void ChatbotHashtagInsert(List<ChatbotHashtag> lstData, long ChatBotId)
+		{
+			if (lstData != null)
+			{
+				DynamicParameters DP = new DynamicParameters();
+				foreach (var item in lstData)
+				{
+					DP = new DynamicParameters();
+					DP.Add("ChatBotId", ChatBotId);
+					DP.Add("HashtagId", item.HashtagId);
+					DP.Add("HashtagName", item.HashtagName);
+					await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_Hashtag_Insert", DP);
+				}
+			}	
+			
 		}
 
 		//public async Task<string> ChatbotInsertFile(ChatbotInsertIN _chatbotInsertIN)
@@ -457,10 +507,10 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotInsertIN
 	{
 		public string Id { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Câu hỏi không được để trống")]
 		public string Question { get; set; }
+		public byte TypeChat { get; set; }
 		//[Required(AllowEmptyStrings = false, ErrorMessage = "Câu trả lời không được để trống")]
 		//public string Answer { get; set; }
 
@@ -471,12 +521,15 @@ namespace PAKNAPI.Models.Chatbot
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public List<lstAnswer> lstAnswer { get; set; }
+		public List<ChatbotHashtag> lstHashtags { get; set; }
 	}
     public class lstAnswer
     {
         public string Answer { get; set; }
         public int? IdSuggetLibrary { get; set; }
         public string QuestionAnswers { get; set; }
+        public byte TypeSuggest { get; set; }
+        public string LinkSuggest { get; set; }
     }
 
     #endregion
@@ -524,17 +577,39 @@ namespace PAKNAPI.Models.Chatbot
 
 		public async Task<int> ChatbotUpdateDAO(ChatbotUpdateIN _chatbotUpdateIN)
 		{
-			//if (_chatbotUpdateIN.IsActived == true)
-   //         {
-			//	await UpdateFileQuestion(_chatbotUpdateIN);
-			//}
-			//else
-   //         {
-			//	await DeleteFileQuestion(_chatbotUpdateIN);
-			//}
+            //if (_chatbotUpdateIN.IsActived == true)
+            //         {
+            //	await UpdateFileQuestion(_chatbotUpdateIN);
+            //}
+            //else
+            //         {
+            //	await DeleteFileQuestion(_chatbotUpdateIN);
+            //}
+            await DelChatbotLibDAO((int)_chatbotUpdateIN.Id);
+            await InsertChatbotLibDAO(_chatbotUpdateIN.lstAnswer, (int)_chatbotUpdateIN.Id);
+			ChatbotHashtagDelete((long)_chatbotUpdateIN.Id);
+			ChatbotHashtagInsert(_chatbotUpdateIN.lstHashtags, (long)_chatbotUpdateIN.Id);
+			return await UpdateDAOQuestion(_chatbotUpdateIN);
+		}
 
-			await InsertChatbotLibDAO(_chatbotUpdateIN.lstAnswer, (int)_chatbotUpdateIN.Id);
-			return await UpdateDAOQuestion(_chatbotUpdateIN); 
+		public async void ChatbotHashtagInsert(List<ChatbotHashtag> lstData, long ChatBotId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			foreach (var item in lstData)
+			{
+				DP = new DynamicParameters();
+				DP.Add("ChatBotId", ChatBotId);
+				DP.Add("HashtagId", item.HashtagId);
+				DP.Add("HashtagName", item.HashtagName);
+				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_Hashtag_Insert", DP);
+			}
+		}
+
+		public async void ChatbotHashtagDelete(long ChatBotId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ChatBotId", ChatBotId);
+			await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_Hashtag_Delete", DP);
 		}
 
 		private async Task<int> UpdateDAOQuestion(ChatbotUpdateIN _chatbotUpdateIN)
@@ -544,14 +619,20 @@ namespace PAKNAPI.Models.Chatbot
             DP.Add("Question", _chatbotUpdateIN.Question.Trim());
             DP.Add("Title", _chatbotUpdateIN.Title.Trim());
 			//DP.Add("Answer", _chatbotUpdateIN.Answer.Trim());
+			DP.Add("TypeChat", _chatbotUpdateIN.TypeChat);
 			DP.Add("CategoryId", _chatbotUpdateIN.CategoryId);
 			DP.Add("IsActived", _chatbotUpdateIN.IsActived);
 			DP.Add("IsDeleted", _chatbotUpdateIN.IsDeleted);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("ChatbotUpdate", DP));
 		}
-
-		private async Task<int> InsertChatbotLibDAO(List<lstAnswer> lstAnswers, int id)
+        private async Task<int> DelChatbotLibDAO(int id)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("IdBotLib", id);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibAnswersDelBy", DP);
+        }
+        private async Task<int> InsertChatbotLibDAO(List<lstAnswer> lstAnswers, int id)
 		{
 			foreach (var item in lstAnswers)
 			{
@@ -559,6 +640,8 @@ namespace PAKNAPI.Models.Chatbot
 				DP.Add("IdBotLib", id);
 				DP.Add("Answers", item.Answer);
 				DP.Add("IdSuggetLibrary", item.IdSuggetLibrary);
+				DP.Add("TypeSuggest", item.TypeSuggest);
+				DP.Add("LinkSuggest", item.LinkSuggest);
 				await _sQLCon.ExecuteNonQueryDapperAsync("SY_Chatbot_LibraryAnswersInsert", DP);
 			}
 			return 1;
@@ -612,11 +695,11 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotUpdateIN
 	{
 		public int? Id { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Câu hỏi không được để trống")]
         public string Question { get; set; }
-  //      [Required(AllowEmptyStrings = false, ErrorMessage = "Câu trả lời không được để trống")]
+		public byte TypeChat { get; set; }
+		//      [Required(AllowEmptyStrings = false, ErrorMessage = "Câu trả lời không được để trống")]
 		//public string Answer { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại câu hỏi không được để trống")]
@@ -627,6 +710,7 @@ namespace PAKNAPI.Models.Chatbot
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public List<lstAnswer> lstAnswer { get; set; }
+		public List<ChatbotHashtag> lstHashtags { get; set; }
 	}
 	#endregion
 

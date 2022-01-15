@@ -61,6 +61,31 @@
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
+								<th style="width: 180px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'orderNumber'">
+										<strong>Thứ tự hiển thị<p-sortIcon [field]="'orderNumber'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" numbersOnly trim [(ngModel)]="orderNumber"
+										[ngSwitch]="'orderNumber'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'orderNumber', 'contains')"
+										placeholder="Nhập ..." />
+									<button *ngIf="orderNumber" class="btn bg-transparent btn-clear-input" (click)="orderNumber=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th style="width: 180px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'isShowHome'">
+										<strong>Hiện trang chủ <p-sortIcon [field]="'isShowHome'"></p-sortIcon></strong>
+									</p>
+									<div class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
+											placeholder="Hiện trang chủ ..." bindLabel="text" bindValue="value" [ngSwitch]="'isShowHome'"
+											(change)="table.filter($event?.value.toString(), 'isShowHome')" [closeOnSelect]="true">
+										</ng-select>
+									</div>
+								</th>
 								<th style="width: 170px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'isActived'">
@@ -88,6 +113,14 @@
 								</td>
 								<td>{{item.description}}</td>
 								<td>
+									{{item.orderNumber}}
+								</td>
+								<td>
+									<span *ngIf="item.isShowHome" type="button" class="badge rounded-pill bg-success">Hiển thị</span>
+									<span *ngIf="!item.isShowHome" type="button" class="badge rounded-pill badge-light">Không hiển
+										thị</span>
+								</td>
+								<td>
 									<p *ngIf="item.isActived == true" style="margin-bottom: 0px;">
 										<span type="button" *hasNotPermission="['3', 'C_IV_5']" class="badge rounded-pill bg-success">Hiệu
 											lực</span>
@@ -114,7 +147,7 @@
 						</ng-template>
 						<ng-template pTemplate="emptymessage">
 							<tr>
-								<td class="text-center" colspan="5">Không có dữ liệu</td>
+								<td class="text-center" colspan="7">Không có dữ liệu</td>
 							</tr>
 						</ng-template>
 					</p-table>
@@ -209,7 +242,7 @@
 										right: 4px; padding-top: 3px;" (click)="onRemoveImg()"></i>
 									<img *ngIf="model.filePath" class="br-15px" [src]="model.filePath | sanitizerUrl" alt="">
 									<img *ngIf="!model.filePath" class="br-15px" [src]="avatarUrl" alt="">
-									<div class="ps-absolute info-upload-avartar pointer" (click)="onChangeImage()"
+									<div class="ps-absolute info-upload-avartar pointer text-danger" (click)="onChangeImage()"
 										*ngIf="!model.filePath">Click vào đây để tải lên
 										ảnh của
 										bạn</div>

@@ -1,31 +1,56 @@
+<div class="card border p-3 bg-notification mb-3" *ngIf="isShowNotification">
+	<div class="tt-v1 justify-content-start">
+		<h4 class="title-notification mb-1 mr-2 text-uppercase text-center">thông báo</h4>
+	</div>
+	<div class="list-article">
+		<ul>
+			<ng-container *ngFor="let item of listNotification; let i = index">
+				<li *ngIf="i < 5" [ngClass]="{'border-bottom-none' : i == 4}">
+					<a routerLink="/cong-bo/thong-bao-chinh-quyen/{{item.id}}" class="p-title-hover" style="text-align:justify;">
+						{{shortTitle(item.title)}}
+					</a>
+				</li>
+			</ng-container>
+		</ul>
+	</div>
+	<div class="tt-v1 mb-0 d-flex justify-content-end">
+		<a class="read-more p-title-hover" title="Xem thêm" routerLink="/cong-bo/danh-sach-thong-bao"> Xem thêm
+		</a>
+	</div>
+</div>
 
-
-<!-- <div class="" *ngIf="!isLogin">
-	<a href="javascript:void(0)">
-		<img class="img-fluid card img-cover"
-			src="../../../../assets/dist/images/banner-index-1.png" alt="">
-	</a>
-	<a href="javascript:void(0)">
-		<img class="img-fluid card mt-3 img-cover"
-			src="../../../../assets/dist/images/banner-index-2.png" alt="">
-	</a>
-</div> -->
-	
-<div class="sb-tk-pakn mb-4 card-my-recommentdation" *ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
-	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
-		<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
-		<h4 class="counter cursor">{{totalRecommentdation}}</h4>
+<div class="sb-tk-pakn card-my-recommentdation" style="padding-top:0px;padding-bottom:1px"
+	*ngIf="isLogin && (typeObject == 2 || typeObject == 3) && recommendationStatistics">
+	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-center" (click)="redirectMyRecommendaton(0)">
+		<h4 class="text-uppercase">Phản ánh, kiến nghị của tôi</h4>
+		<!-- <h4 class="counter cursor" style="padding-right:14px !important;">{{totalRecommentdation}}</h4> -->
 	</div>
 	<div>
-		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
-			<div class="pf-4">
-				<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
+		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(0)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Tất cả</p>
 			</div>
 			<div class="circle bg-yellow center text-white cursor">
+				{{totalRecommentdation}}
+			</div>
+		</div>
+		<div class="border-left-xanh-nhat mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(1)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Đang soạn thảo</p>
+			</div>
+			<div class="circle bg-xanh-nhat center text-white cursor">
+				{{recommendationStatistics.creating}}
+			</div>
+		</div>
+		<div class="border-left-green mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(2)">
+			<div class="pf-4 pointer">
+				<p class="title-status-rm ml-3 mb-0">Chờ tiếp nhận</p>
+			</div>
+			<div class="circle bg-green center text-white cursor">
 				{{recommendationStatistics.receiveWait}}
 			</div>
 		</div>
-		<div class="border-left-blue2 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(2)">
+		<div class="border-left-blue2 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
 			</div>
@@ -33,15 +58,23 @@
 				{{recommendationStatistics.receiveApproved}}
 			</div>
 		</div>
-		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(3)">
+		<div class="border-left-blue3 mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
 			<div class="pf-4">
-				<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
+				<p class="title-status-rm ml-3 mb-0">Đang giải quyết</p>
+			</div>
+			<div class="circle bg-blue3 center text-white cursor">
+				{{recommendationStatistics.processing}}
+			</div>
+		</div>
+		<div class="border-left-blue mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(5)">
+			<div class="pf-4">
+				<p class="title-status-rm ml-3 mb-0">Đã giải quyết</p>
 			</div>
 			<div class="circle bg-blue center text-white cursor">
 				{{recommendationStatistics.finised}}
 			</div>
 		</div>
-		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(4)">
+		<div class="border-left-red mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(6)">
 			<div class="pf-4">
 				<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
 			</div>
@@ -51,74 +84,83 @@
 		</div>
 	</div>
 </div>
+<div class="sb-tk-pakn text-center card-my-chart px-3"
+	[ngClass]="{'margin-top-16' : (typeObject == 2 || typeObject == 3)}">
+	<div class="tt-v1  mb-3 justify-content-between text-center" style="padding-top: 16px;">
+		<h4 class="text-uppercase">Thống kê kết quả xử lý</h4>
+	</div>
+	<div class="tt-v1 mb-3 d-flex justify-content-between text-center statistic-chart">
+		<div class="center statistics-right">
+			<canvas baseChart height="150px" width="150px" [data]="pieChartData" [colors]="pieChartColors"
+				[labels]="pieChartLabels" [options]="chartOptions" [chartType]="chartType">
+			</canvas>
+		</div>
+		<div class="center" style="flex: 1 1 0;">
+			<div style="flex: 1 1 0;">
+				<div class="tt-v1 ml-2  d-flex">
+					<div class="d-flex center">
+						<span class="square mr-2 bg-blue-1"></span>
+						<p class="mb-0">Hồ sơ đã tiếp nhận</p>
+					</div>
+					<p class="center statistics-right">({{pieChartData[1] || 0}})</p>
+				</div>
+				<div class="tt-v1 ml-2  d-flex">
+					<div class="d-flex center">
+						<span class="square mr-2 bg-green2"></span>
+						<p class="mb-0">Hồ sơ đã giải quyết</p>
+					</div>
+					<p class="center statistics-right">({{pieChartData[0] || 0}})</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div class="sb-tk-pakn text-center card-my-chart pb-4" [ngClass]="{'mt-4' : typeObject == 2 || typeObject == 3}">
-	<div class="tt-v1 pt-4 pb-3 mb-3 justify-content-between text-center">
-		<h4 class="text-uppercase">Phản ánh kiến nghị toàn tỉnh</h4>
-	</div>
-	<div class="position-relative">
-		<canvas baseChart  height="55vh" width="75vw"
-			[data]="pieChartData"
-			[colors]="pieChartColors"
-			[labels]="pieChartLabels"
-			[options]="chartOptions"
-			[chartType]="chartType">
-		</canvas>
-		<div class="position-absolute" style="top: 150px; left: 165px;">
-			<div class="h1 number-chart number-chart-index pb-0 text-white">89%</div>
-			<p class="text-white">hồ sơ đúng hạn</p>
-		</div>
-	</div>
-	<div class="tt-v1 px-4 justify-content-between justify-content-between d-flex">
-		<div class="d-flex center">
-			<span class="square mr-3 bg-blue-1"></span>
-			<p class="mb-0">Hồ sơ đã tiếp nhận</p>
-		</div>
-		<b class="center">{{pieChartData ? pieChartData[1] : ''}}</b>
-	</div>
-	<div class="tt-v1 px-4 justify-content-between justify-content-between d-flex">
-		<div class="d-flex center">
-			<span class="square mr-3 bg-green"></span>
-			<p class="mb-0">Hồ sơ đã giải quyết</p>
-		</div>
-		<b class="center">{{pieChartData ? pieChartData[0] : ''}}</b>
-	</div>
 </div>
-
-<div class="sb-tk-pakn text-center card-my-chart pb-4 mt-4" *ngIf="isShowSatisfationChart">
-	<div class="tt-v1 pt-4 pb-3 mb-3 justify-content-between text-center">
+<!-- </div> -->
+<!-- <div class="col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 p-0"> -->
+<div class="sb-tk-pakn text-center card-my-chart px-3 margin-top-16" *ngIf="isShowSatisfationChart">
+	<div class="tt-v1  mb-3 justify-content-between text-center" style="padding-top: 16px;">
 		<h4 class="text-uppercase">thống kê mức độ hài lòng</h4>
 	</div>
-	<div class="position-relative">
-		<canvas baseChart height="55vh" width="75vw"
-			[data]="satisfactionChartData"
-			[colors]="satisfactionChartColors"
-			[labels]="satisfactionChartLabels"
-			[options]="chartOptions"
-			[chartType]="chartType">
-		</canvas>
-	</div>
-	<div class="tt-v1 px-4 justify-content-between justify-content-between d-flex">
-		<div class="d-flex center">
-			<span class="square mr-3 bg-red"></span>
-			<p class="mb-0">Không hài lòng</p>
+	<div class="tt-v1 mb-3 d-flex  text-center statistic-chart">
+		<div class="center">
+			<canvas baseChart height="150px" width="150px" [data]="satisfactionChartData" [colors]="satisfactionChartColors"
+				[labels]="satisfactionChartLabels" [options]="chartOptions" [chartType]="chartType">
+			</canvas>
 		</div>
-		<b class="center">{{satisfactionChartData ? satisfactionChartData[1] : ''}}</b>
-	</div>
-	<div class="tt-v1 px-4 justify-content-between justify-content-between d-flex">
-		<div class="d-flex center">
-			<span class="square mr-3 bg-blue-2"></span>
-			<p class="mb-0">Hài lòng</p>
+		<div style="flex: 1 1 0;" style="margin-top:20px!important;">
+			<div class="tt-v1 ml-2 d-flex">
+				<div class="d-flex center">
+					<span class="square mr-2 bg-blue-2"></span>
+					<p class="mb-0">Rất Hài lòng</p>
+				</div>
+				<p class="center statistics-right" style=" margin-bottom: 0;">(<span
+						style="color: red;margin-bottom: 0;">{{satisfactionChartData[0] || 0}}</span>)
+				</p>
+			</div>
+
+			<div class="tt-v1 ml-2  d-flex">
+				<div class="d-flex center">
+					<span class="square mr-2 bg-yellow"></span>
+					<p class="mb-0">Hài lòng</p>
+				</div>
+				<p class="center statistics-right" style=" margin-bottom: 0;">(<span
+						style="color: red;margin-bottom: 0;">{{satisfactionChartData[2] || 0}}</span>)
+				</p>
+			</div>
+			<!-- justify-content-between justify-content-between -->
+			<div class="tt-v1 ml-2 d-flex">
+				<div class="d-flex center">
+					<span class="square mr-2 bg-red"></span>
+					<p class="mb-0">Không hài lòng</p>
+				</div>
+				<p class="center statistics-right" style=" margin-bottom: 0;">(<span style="color: red;">{{
+						satisfactionChartData[1] || 0}}</span>)
+				</p>
+			</div>
 		</div>
-		<b class="center">{{satisfactionChartData ? satisfactionChartData[0] : ''}}</b>
 	</div>
-	<div class="tt-v1 px-4 justify-content-between justify-content-between d-flex">
-		<div class="d-flex center">
-			<span class="square mr-3 bg-yellow"></span>
-			<p class="mb-0">Chấp nhận</p>
-		</div>
-		<b class="center">{{satisfactionChartData ? satisfactionChartData[2] : ''}}</b>
-	</div>
+
 </div>
-
-
+<!-- </div> -->
+<!-- </div> -->

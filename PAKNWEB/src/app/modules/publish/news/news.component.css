@@ -5,12 +5,15 @@
 .bi-person-fill.cl-dark {
 	font-size: 24px;
 }
+
 .header-nd {
 	height: auto;
 }
+
 .bg-menu-blue {
 	background-color: #2e73d5;
 }
+
 .navbar-light .navbar-nav .nav-link {
 	padding: 15px 20px;
 	font-family: Inter;
@@ -24,9 +27,11 @@
 	cursor: pointer;
 	color: #fff;
 }
+
 .navbar-light .navbar-nav .nav-link:hover {
 	background-color: #155bbf;
 }
+
 .header-left .search_bar .search_icon {
 	height: 40px;
 	padding-right: 15px !important;
@@ -49,18 +54,21 @@
 	background-color: #777 !important;
 	border-radius: 3px;
 }
+
 .header-notification {
 	padding: 10px 5px 10px 0px;
 	background: #fafafa;
 	display: flex;
 	border-radius: 4px;
 }
+
 .red-bar {
 	background: linear-gradient(180deg, #ee5454 0%, #a61515 100%);
 	border-radius: 0px 4px 4px 0px;
 	width: 5px;
 	margin-right: 10px;
 }
+
 .title-notification {
 	width: 60%;
 }
@@ -74,6 +82,7 @@
 	width: 35%;
 	font-size: 14px;
 }
+
 .count-notification {
 	color: #ffff;
 	position: absolute;
@@ -98,34 +107,43 @@
 .read-more {
 	color: #222222;
 }
+
 .card-date {
 	font-size: 16px;
 	line-height: 19px;
 	color: #666666;
 }
+
 .italic {
 	font-style: italic;
 }
+
 .f-4 {
 	flex: 4;
 }
+
 .f-6 {
 	flex: 6;
 }
+
 .card-my-recommentdation {
 	padding: 15px;
 	background-color: #eff8ff;
 	border-radius: 12px;
 }
+
 .lh-20 {
 	line-height: 20px;
 }
+
 .bd-20 {
 	border-radius: 20px;
 }
+
 .bg-gray {
 	background-color: #f6f6f6;
 }
+
 .read-more {
 	color: #1673d8;
 	font-size: 22px;
@@ -146,13 +164,16 @@
 	color: #fff;
 	padding-right: 45px;
 }
+
 .search_icon i {
 	font-size: 20px;
 	color: #fff;
 }
+
 ::placeholder {
 	color: #fff;
-	opacity: 1; /* Firefox */
+	opacity: 1;
+	/* Firefox */
 }
 
 :-ms-input-placeholder {
@@ -237,10 +258,12 @@
 	line-height: 17px;
 	color: #666666;
 }
+
 .list-group-item {
 	border-bottom: 1px solid #d8d8d8;
 	padding: 0.75rem 1.25rem;
 }
+
 .pagination .page-item .page-link {
 	font-size: 14px;
 	line-height: 16px;
@@ -248,4 +271,8 @@
 
 ul.category-article li a.active {
 	color: #2e73d5;
+}
+
+ul.category-article li a {
+	white-space: nowrap;
 }

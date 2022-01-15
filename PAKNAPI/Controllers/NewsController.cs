@@ -210,9 +210,9 @@ namespace PAKNAPI.Controller
                 }
 
 				var fileAvatar = Request.Form.Files.Where(x=>x.Name == "avatar").ToList();
-				if (fileAvatar.Count == 0) {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ảnh đại diện bài viết không được để trống" };
-				}
+				//if (fileAvatar.Count == 0) {
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ảnh đại diện bài viết không được để trống" };
+				//}
 				
 
 				// insert avatar
@@ -223,14 +223,14 @@ namespace PAKNAPI.Controller
 				{
 					Directory.CreateDirectory(folderPath);
 				}
-				string filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+				string filePath = string.Empty;
 
 
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					fileAvatar[0].CopyTo(stream);
-				}
-				_nENewsInsertIN.ImagePath = filePath;
+				//using (var stream = new FileStream(filePath, FileMode.Create))
+				//{
+				//	fileAvatar[0].CopyTo(stream);
+				//}
+				//_nENewsInsertIN.ImagePath = filePath;
 
 				// insert news
 				int res = Int32.Parse((await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN)).ToString());
@@ -280,7 +280,7 @@ namespace PAKNAPI.Controller
 						await HISNewsInsert(his);
 					}
 					// thông báo
-					if (_nENewsInsertIN.IsNotification == true)
+					if (_nENewsInsertIN.IsNotification == true && _nENewsInsertIN.Status == 1)
 					{
 						await SYNotificationInsertTypeNews(res, _nENewsInsertIN.Title, true);
 					}
@@ -339,28 +339,29 @@ namespace PAKNAPI.Controller
 					});
 				}
 
-				var fileAvatar = Request.Form.Files.Where(x => x.Name == "avatar").ToList();
-				string folder = "Upload\\News\\Avatar";
-				var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
-				string filePath = string.Empty;
+                var fileAvatar = Request.Form.Files.Where(x => x.Name == "avatar").ToList();
+                string folder = "Upload\\News\\Avatar";
+                var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
+                string filePath = string.Empty;
 
-				// avatar
-				if (fileAvatar.Count() > 0) {
+                // avatar
+                if (fileAvatar.Count() > 0)
+                {
 
-					deletefile(_nENewsUpdateIN.ImagePath);
-					if (!Directory.Exists(folderPath))
-					{
-						Directory.CreateDirectory(folderPath);
-					}
-					filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
-					using (var stream = new FileStream(filePath, FileMode.Create))
-					{
-						fileAvatar[0].CopyTo(stream);
-					}
-					_nENewsUpdateIN.ImagePath = filePath;
-				}
+                    deletefile(_nENewsUpdateIN.ImagePath);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fileAvatar[0].CopyTo(stream);
+                    }
+                    _nENewsUpdateIN.ImagePath = filePath;
+                }
 
-				int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
+                int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
 
 				// delete file remove
 				List<NEFileAttach> filesDelete = JsonConvert.DeserializeObject<List<NEFileAttach>>(Request.Form["fileDelete"].ToString(), jss);
@@ -417,12 +418,12 @@ namespace PAKNAPI.Controller
 						his.Status = STATUS_HISNEWS.CANCEL;
 						await HISNewsInsert(his);
 					}
-					// thông báo
-					if (_nENewsUpdateIN.IsNotification == true)
-					{
-						await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
-					}
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                    // thông báo
+                    if (_nENewsUpdateIN.IsNotification == true && _nENewsUpdateIN.Status == 1)
+                    {
+                        await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
+                    }
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
 				}
 				else if (res == -1)
@@ -590,19 +591,19 @@ namespace PAKNAPI.Controller
 				switch (_hISNews.Status)
 				{
 					case STATUS_HISNEWS.CREATE:
-						_hISNews.Content = userName + " đã khởi tạo bài viết";
+						_hISNews.Content = userName + " đã khởi tạo thông báo";
 						break;
 					case STATUS_HISNEWS.UPDATE:
-						_hISNews.Content = userName + " đã cập nhập bài viết";
+						_hISNews.Content = userName + " đã cập nhập thông báo";
 						break;
 					case STATUS_HISNEWS.COMPILE:
-						_hISNews.Content = userName + " đang soạn thảo bài viết";
+						_hISNews.Content = userName + " đang soạn thảo thông báo";
 						break;
 					case STATUS_HISNEWS.PUBLIC:
-						_hISNews.Content = userName + " đã công bố bài viết";
+						_hISNews.Content = userName + " đã công bố thông báo";
 						break;
 					case STATUS_HISNEWS.CANCEL:
-						_hISNews.Content = userName + " đã hủy công bố bài viết";
+						_hISNews.Content = userName + " đã hủy công bố thông báo";
 						break;
 				}
 				await new HISNews(_appSetting).HISNewsInsert(_hISNews);
@@ -636,7 +637,7 @@ namespace PAKNAPI.Controller
 						model.DataId = Id;
 						model.SendDate = DateTime.Now;
 						model.Type = TYPENOTIFICATION.NEWS;
-						model.Title = isCreateNews == true ? senderName + " vừa đăng một bài viết mới" : senderName + " vừa cập nhập một bài viết";
+						model.Title = "THÔNG BÁO";
 						model.Content = Title;
 						model.IsViewed = true;
 						model.IsReaded = true;

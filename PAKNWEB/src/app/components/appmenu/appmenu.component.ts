@@ -15,22 +15,24 @@ import { StatisticService } from 'src/app/services/statistic.service'
 })
 export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
-	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService : UnitService, private _service : StatisticService) {}
-	isMainMenu: boolean = false
+	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService: UnitService, private _service: StatisticService) { }
+
 	isAdmin = this.userStorage.getIsAdmin()
-	hasPermissionSMS : boolean = false
-	statistic : any = {}
+	hasPermissionSMS: boolean = false
+	statistic: any = {}
+	isMainMenu: boolean = this.userStorage.getIsUnitMain()
+	isApprove = this.userStorage.getIsApprove()
+	unitLevel = this.userStorage.getUnitLevel()
+
 	ngOnInit() {
-		this.isMainMenu = this.userStorage.getIsUnitMain()
-		this.unitService.hasPermissionSMS({}).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
+		this.unitService.hasPermissionSMS({}).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.hasPermissionSMS = res.result
 			}
 		})
 		this._service.getStatisticRecommendationForMenu({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.statistic = response.result
-				console.log(this.statistic)
 			} else {
 			}
 		}),

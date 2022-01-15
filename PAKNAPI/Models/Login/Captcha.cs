@@ -57,11 +57,12 @@ namespace PAKNAPI.Models.Results
             return sb.ToString();
         }
 
-        public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context)
+        public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context, DateTime createdDate)
         {
             var isValid = false;
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", userInputCaptcha);
+            parameters.Add("@CreatedDate", createdDate);
             var result = _sQLCon.ExecuteListDapper<int>("SY_CaptChaValidator", parameters).FirstOrDefault();
             if (result > 0)
             {
@@ -70,7 +71,7 @@ namespace PAKNAPI.Models.Results
             return isValid;
         }
 
-        public async Task<int?> InsertCaptcha(string captcha, string ipAddress, string userAgent)
+        public async Task<int?> InsertCaptcha(string captcha, string ipAddress, string userAgent, DateTime createdDate)
         {
             try
             {
@@ -78,6 +79,7 @@ namespace PAKNAPI.Models.Results
                 parameters.Add("@Code", captcha);
                 parameters.Add("@IpAddress", ipAddress);
                 parameters.Add("@UserAgent", userAgent);
+                parameters.Add("@createdDate", createdDate);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaInsertData", parameters);
             }
             catch (Exception ex)
@@ -87,10 +89,11 @@ namespace PAKNAPI.Models.Results
 
         }
 
-        public async Task<int?> DeleteCaptcha(string captcha)
+        public async Task<int?> DeleteCaptcha(string captcha, DateTime createdDate)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", captcha);
+            parameters.Add("@CreatedDate", createdDate);
             return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDelete", parameters);
         }
 
@@ -110,14 +113,13 @@ namespace PAKNAPI.Models.Results
                 Random rand = new Random();
 
                 graph.Clear(GetRandomLightColor());
-
+                //graph.Clear(Color.FromArgb(0,0,0,0));
                 DrawCaptchaCode();
                 //DrawDisorderLine();
                 AdjustRippleEffect();
 
                 MemoryStream ms = new MemoryStream();
-
-                baseMap.Save(ms, ImageFormat.Png);
+                baseMap.Save(ms, ImageFormat.Gif);
 
                 return new CaptchaResult { CaptchaCode = captchaCode, CaptchaByteData = ms.ToArray(), Timestamp = DateTime.Now };
 
@@ -194,8 +196,8 @@ namespace PAKNAPI.Models.Results
                     {
                         for (int y = 0; y < nHeight; ++y)
                         {
-                            var xo = nWave * Math.Sin(2.0 * 3.1415 * y / 128.0);
-                            var yo = nWave * Math.Cos(2.0 * 3.1415 * x / 128.0);
+                            var xo = nWave * Math.Sin(1);
+                            var yo = nWave * Math.Cos(1);
 
                             var newX = x + xo;
                             var newY = y + yo;
@@ -260,7 +262,6 @@ namespace PAKNAPI.Models.Results
                             p += nOffset;
                         }
                     }
-
                     baseMap.UnlockBits(bitmapData);
                     bSrc.UnlockBits(bmSrc);
                     bSrc.Dispose();
@@ -337,7 +338,8 @@ namespace PAKNAPI.Models.Results
         public DateTime ExpireDate { get; set; }
         public bool IsUse { get; set; }
 
-        public OTP(string code, string userAgent) {
+        public OTP(string code, string userAgent)
+        {
             this.Code = code;
             this.UserAgent = userAgent;
             this.CreatedDate = DateTime.Now;

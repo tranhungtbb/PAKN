@@ -1,19 +1,12 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { OwlOptions } from 'ngx-owl-carousel-o'
-import { ChartType, ChartOptions } from 'chart.js'
-import { Color, MultiDataSet, Label } from 'ng2-charts'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
-import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
-import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { IndexSettingService } from 'src/app/services/index-setting.service'
-import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
-import { SystemconfigService } from 'src/app/services/systemconfig.service'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
@@ -27,18 +20,19 @@ export class IndexComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: PuRecommendationService,
 		private _router: Router,
-		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
-		private indexSettingService: IndexSettingService,
-		private _syService: SystemconfigService,
 		private _toa: ToastrService,
 		private storageService: UserInfoStorageService
-	) {}
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
+	) { }
 	isLogin: boolean = this.storageService.getIsHaveToken()
-	ReflectionsRecommendations: Array<PuRecommendation>
-	news: any[]
-	firstNews: any
+	ReflectionsRecommendations: any = []
+	recommendationsReceiveDeny: Array<PuRecommendation>
+	recommendationsHighLight: Array<PuRecommendation>
+	recommendationsProcessing: Array<PuRecommendation>
+	unitDissatisfactionRate: any[] = []
+	lateProcessingUnit: any[] = []
+	isPreview: boolean = false
+	listNotification: any[]
 	Administrations: any[]
 	isGrid: boolean = false
 	isHomeMain: boolean = false
@@ -68,45 +62,26 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		nav: true,
 	}
 
-	// chart
-	doughnutChartLabels: Label[] = ['Hồ sơ đã giải quyết', 'Hồ sơ đã tiếp nhận']
-	doughnutChartData: MultiDataSet = [[950, 350]]
-	doughnutChartType: ChartType = 'doughnut'
-	doughnutChartColors: Color[] = [
-		{
-			backgroundColor: ['#58A55C', '#73BCFF'],
-		},
-	]
-	doughnutChartOptions: ChartOptions = {
-		responsive: true,
-		legend: {
-			position: 'bottom',
-		},
-		cutoutPercentage: 75,
+	ngOnInit() {
+		this.isPreview = this._router.url.includes('xem-truoc') ? true : false
+		this.getListRecommendationByFiled()
+		this.getData()
 	}
+	pageIndex: number = 0
+	totalCount: number = 0
 
-	indexSettingObj = new IndexSettingObjet()
-	async ngOnInit() {
-		await this.getData()
-		this.indexSettingService.GetInfo({}).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.indexSettingObj = res.result.model
-				}
-			},
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
-		)
-	}
-	getData() {
-		this._service.getHomePage({}).subscribe(
+	getListRecommendationByFiled() {
+		this.pageIndex = this.pageIndex + 1
+		this._service.getHomePage({ PageIndex: this.pageIndex }).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					if (res.result) {
 						this.isHomeMain = res.result.IsHomeDefault
-						this.ReflectionsRecommendations = [...res.result.PURecommendation]
+						this.ReflectionsRecommendations =
+							!this.ReflectionsRecommendations || this.ReflectionsRecommendations.length == 0 ? [...res.result.PURecommendation] : this.ReflectionsRecommendations.concat([...res.result.PURecommendation])
+						if (!this.isHomeMain) {
+							this.totalCount = res.result.TotalCount
+						}
 					}
 				} else {
 					this.ReflectionsRecommendations = []
@@ -117,30 +92,100 @@ export class IndexComponent implements OnInit, AfterViewInit {
 				console.log(err)
 			}
 		)
-		//list news
-		this._newsService.getListHomePage({}).subscribe((res) => {
-			if (res.success != RESPONSE_STATUS.success) {
-				return
-			}
-			if (res.result.length > 0) {
-				this.firstNews = res.result[0]
-				res.result.shift()
-				this.news = res.result
-			}
-			return
-		})
-		// list thủ tục hành chính
-		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.DAMAdministrationGetListTop) {
-					this.Administrations = res.result.DAMAdministrationGetListTop
-				}
-			}
-			return
-		})
 	}
 
-	ngAfterViewInit() {}
+	getData() {
+
+
+		this._service
+			.getRecommendationReceiveDeny({
+				PageSize: 6,
+				PageIndex: 1,
+			})
+			.subscribe(
+				(res) => {
+					if (res.success == RESPONSE_STATUS.success) {
+						if (res.result.RecommendationReceiveDeny) {
+							this.recommendationsReceiveDeny = res.result.RecommendationReceiveDeny
+						}
+					} else {
+						this._toa.error(res.message)
+					}
+				},
+				(err) => {
+					console.log(err)
+				}
+			)
+		this._service.getListHightLight({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationsHighLight = res.result.PURecommendation
+			}
+		})
+
+		this._service.getListProcessing({
+			PageSize: 6,
+			PageIndex: 1,
+		}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationsProcessing = res.result.RecommendationProcessing
+			}
+		})
+
+		// this._service.notificationGetDashboard({}).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 		this.dataNotification = res.result
+		// 	}
+		// })
+		let obj = {
+			KeySearch: '',
+			PageSize: 4,
+			PageIndex: 1,
+		}
+		this._service.getUnitDissatisfactionRatePagedList(obj).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.listUnit.length > 0) {
+						this.unitDissatisfactionRate = res.result.listUnit
+					} else {
+						this.unitDissatisfactionRate = []
+					}
+				} else {
+					this._toa.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+
+		this._service.getLateProcessingUnitPagedList(obj).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.listUnit.length > 0) {
+						this.lateProcessingUnit = res.result.listUnit
+					} else {
+						this.lateProcessingUnit = []
+					}
+				} else {
+					this._toa.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+		// list thủ tục hành chính
+		// this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 		if (res.result.DAMAdministrationGetListTop) {
+		// 			this.Administrations = res.result.DAMAdministrationGetListTop
+		// 		}
+		// 	}
+		// 	return
+		// })
+	}
+
+	ngAfterViewInit() { }
 
 	getShortName(string) {
 		if (!string) {
@@ -160,5 +205,14 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
 	redirectDetailNews(id: any) {
 		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
+
+	shortTitle(title: string) {
+		const arr = title.split(' ')
+		if (arr.length > 16) {
+			return arr.slice(0, 15).join(' ') + '...'
+		} else {
+			return title
+		}
 	}
 }

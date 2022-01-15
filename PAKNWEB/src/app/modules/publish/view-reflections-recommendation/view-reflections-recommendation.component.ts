@@ -3,17 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
-import { ViewChild } from '@angular/core'
-import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { RecommnendationCommentObject } from 'src/app/models/recommendationObject'
-import { AppSettings } from 'src/app/constants/app-setting'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-
-declare var require: any
-const FileSaver = require('file-saver')
 
 @Component({
 	selector: 'app-view-reflections-recommendations',
@@ -28,25 +20,20 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	public lstConclusionFiles: any
 	public satisfactions: Array<satisfaction>
 	checkSatisfaction: boolean
-	pageSizeComment: any = 4
-	IsAllComment: boolean = false
 	isLogin: boolean = this.storeageService.getIsHaveToken()
-	typeObject : number = this.storeageService.getTypeObject()
-	APIADDRESS: any
+	typeObject: number = this.storeageService.getTypeObject()
 	constructor(
 		private service: PuRecommendationService,
 		private activatedRoute: ActivatedRoute,
 		public router: Router,
 		private _toastr: ToastrService,
-		private commentService: RecommendationCommentService,
 		private storeageService: UserInfoStorageService,
 		private fileService: UploadFileService
 	) {
 		this.checkSatisfaction = false
-		this.listCommentsPaged = []
-		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 	}
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
+
+
 	ngOnInit() {
 		this.getRecommendationById()
 	}
@@ -56,13 +43,12 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			this.id = +params['id']
 			if (this.id != 0) {
 				//update count click
-				this.getCommentPaged()
 				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
-							if(this.model.contentConclusion){
-								this.model.contentConclusion = this.model.contentConclusion.split(':').splice(1,this.model.contentConclusion.split(':').length -1)
+							if (this.model.contentConclusion) {
+								this.model.contentConclusion = this.model.contentConclusion.split(':').splice(1, this.model.contentConclusion.split(':').length - 1)
 							}
 							if (this.model.quantityType && this.model.quantityType != 0) {
 								this.checkSatisfaction = true
@@ -88,154 +74,52 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		}
 		return initials
 	}
-	// setSatisfaction() {
-	// 	var data = localStorage.getItem('satisfaction')
-	// 	if (data == null || data == undefined) {
-	// 		this.satisfactions = []
-	// 		localStorage.setItem('satisfaction', JSON.stringify(this.satisfactions))
-	// 		return
-	// 	} else {
-	// 		this.satisfactions = JSON.parse(data)
-	// 		if (this.satisfactions instanceof Array) {
-	// 			this.satisfactions.forEach((item) => {
-	// 				if (item.recommendationID == this.id) {
-	// 					this.satisfactionCurrent = item.satisfaction
-	// 					this.checkSatisfaction = true
-	// 				}
-	// 			})
-	// 		}
-	// 	}
-	// }
 
 	changeSatisfaction(status: any) {
 		if (this.isLogin) {
 			// chưa like hoặc dislike lần nào
 			// if (this.checkSatisfaction == false) {
-				// call api
-				this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
-					if (res.success == RESPONSE_STATUS.success) {
-						this._toastr.success('Đánh giá thành công!')
-						// this.checkSatisfaction = true
-						if(this.model.quantityType){
-							switch (this.model.quantityType) {
-								case 1:
-									this.model.quantityLike = this.model.quantityLike - 1
-									break
-								case 2:
-									this.model.quantityDislike = this.model.quantityDislike - 1
-									break
-								case 3:
-									this.model.quantityAccept = this.model.quantityAccept - 1
-									break
-							}
-						}
-						
-						this.model.quantityType = status
-						switch (status) {
+			// call api
+			this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this._toastr.success('Đánh giá thành công!')
+					// this.checkSatisfaction = true
+					if (this.model.quantityType) {
+						switch (this.model.quantityType) {
 							case 1:
-								this.model.quantityLike = this.model.quantityLike + 1
+								this.model.quantityLike = this.model.quantityLike - 1
 								break
 							case 2:
-								this.model.quantityDislike = this.model.quantityDislike + 1
+								this.model.quantityDislike = this.model.quantityDislike - 1
 								break
 							case 3:
-								this.model.quantityAccept = this.model.quantityAccept + 1
+								this.model.quantityAccept = this.model.quantityAccept - 1
 								break
 						}
-					} else {
-						this._toastr.error('Đánh giá thất bại!')
 					}
-				})
-			// } 
-			// else {
-			// 	this.checkSatisfaction = true
-			// 	this._toastr.error('Bạn đã đánh giá Phản ánh, kiến nghị này!')
-			// 	return
-			// }
+
+					this.model.quantityType = status
+					switch (status) {
+						case 1:
+							this.model.quantityLike = this.model.quantityLike + 1
+							break
+						case 2:
+							this.model.quantityDislike = this.model.quantityDislike + 1
+							break
+						case 3:
+							this.model.quantityAccept = this.model.quantityAccept + 1
+							break
+					}
+				} else {
+					this._toastr.error('Bạn đã đánh giá Phản ánh, Kiến nghị này!')
+				}
+			})
 		} else {
 			this._toastr.info('Vui lòng đăng nhập để đánh giá Phản ánh, Kiến nghị!')
 			return
 		}
 	}
 
-	//comment
-	commentModel: RecommnendationCommentObject = new RecommnendationCommentObject()
-	commentQuery: any = {
-		pageSize: this.pageSizeComment,
-		pageIndex: 1,
-		recommendationId: 0,
-		isPublish: false,
-	}
-	listCommentsPaged: any[] = []
-	// commentFirst = new RecommnendationCommentObject()
-	total_Comments = 0
-
-	onSendComment() {
-		if (this.isLogin == false) {
-			this._toastr.error('Vui lòng đăng nhập để gửi bình luận')
-			return
-		}
-		this.commentModel.recommendationId = this.model.id
-		this.commentModel.contents = this.commentModel.contents == null ? '' : this.commentModel.contents.trim()
-		this.commentModel.isPublish = false
-		if (this.commentModel.contents == null || this.commentModel.contents == '') {
-			this._toastr.error('Không bỏ trống nội dung bình luận')
-			return
-		}
-
-		this.commentService.insert(this.commentModel).subscribe((res) => {
-			if (res.success != RESPONSE_STATUS.success) {
-				this._toastr.error(res.message)
-				return
-			}
-			this._toastr.success('Gửi bình luận thành công')
-			this.commentModel = new RecommnendationCommentObject()
-			this.getCommentPaged()
-		})
-	}
-
-	getCommentPaged() {
-		this.commentQuery.pageSize = this.pageSizeComment
-		this.commentQuery.recommendationId = this.id
-		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.MRCommnentGetAllOnPage.length > 0) {
-					this.total_Comments = res.result.TotalCount
-					this.listCommentsPaged = res.result.MRCommnentGetAllOnPage
-					if (this.listCommentsPaged.length == res.result.TotalCount) {
-						this.IsAllComment = true
-					}
-				} else {
-					this.listCommentsPaged = []
-					this.IsAllComment = true
-				}
-			}
-		})
-	}
-	loadComment() {
-		this.pageSizeComment += 10
-		this.getCommentPaged()
-	}
-	changeStatusComment = (comment) => {
-		let obj = {
-			Id: comment.id,
-			IsPublish: !comment.isPublish,
-		}
-		this.commentService.updateStatus(obj).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					comment.isPublish = !comment.isPublish
-					this._toastr.success(comment.isPublish == true ? 'Công bố bình luận thành công' : 'Thu hồi bình luận thành công')
-					
-				} else {
-					this._toastr.error(res.message)
-				}
-			},
-			(err) => {
-				console.log(err)
-			}
-		)
-	}
 	DownloadFile(file: any) {
 		var request = {
 			Path: file.filePath,

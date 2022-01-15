@@ -1,16 +1,16 @@
 import { EventEmitter, Injectable, OnInit } from '@angular/core'
 import { Subject } from 'rxjs'
-import { CanActivate, Router} from '@angular/router'
+import { CanActivate, Router } from '@angular/router'
 import { QBHelper } from '../helper/qbHelper'
 import { QBconfig } from '../QBconfig'
 import { LoginModel } from '../user/login/loginModel'
 import { UserService } from 'src/app/services/user.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import {RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 declare var QB: any
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserServiceChatBox implements CanActivate {
   public errorSubject = new Subject<any>();
@@ -18,24 +18,24 @@ export class UserServiceChatBox implements CanActivate {
   public user: any;
   public _usersCache = [];
   usersCacheEvent: EventEmitter<any> = new EventEmitter();
-	public loginModel = new LoginModel()
+  public loginModel = new LoginModel()
 
   // params = {
-	// 	login: this.login(this.loginModel),
-	// 	password: "someSecret",
-	// 	full_name: "QuickBlox Test"
-	// };
+  // 	login: this.login(this.loginModel),
+  // 	password: "someSecret",
+  // 	full_name: "QuickBlox Test"
+  // };
 
-  constructor(private qbHelper: QBHelper, private router: Router, private userService : UserService, private stogateService: UserInfoStorageService,) {
+  constructor(private qbHelper: QBHelper, private router: Router, private userService: UserService, private stogateService: UserInfoStorageService,) {
     //this.LoginQL();
   }
   // ngOnInit(){}
 
-	// public LoginQL() {			
-	// 	this.createUser(this.params);
+  // public LoginQL() {			
+  // 	this.createUser(this.params);
   //   this.login(this.loginModel);
 
-	// }	
+  // }	
 
   canActivate(): boolean {
     const self = this;
@@ -47,7 +47,7 @@ export class UserServiceChatBox implements CanActivate {
       self.login({
         userLogin: this.user.login,
         userName: this.user.full_name,
-        id : self.stogateService.getUserId()
+        id: self.stogateService.getUserId()
       }).then(() => {
         this.router.navigate(['quan-tri/chatbox']);
       });
@@ -69,15 +69,13 @@ export class UserServiceChatBox implements CanActivate {
     this.usersCacheEvent.emit(this._usersCache);
     return this._usersCache[id];
   }
-  
-  public createUserCB(user)
-  {
-    if(QB.users.create(user))
-    {
+
+  public createUserCB(user) {
+    if (QB.users.create(user)) {
       console.log('User Creation successfull ');
     };
   }
-  
+
   // create User
   public createUser(user): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -111,24 +109,24 @@ export class UserServiceChatBox implements CanActivate {
   }
 
   // delete user
-  
 
-  deleteUser(user : any): Promise<any> {
+
+  deleteUser(user: any): Promise<any> {
     return new Promise((resolve, reject) => {
       QB.init(QBconfig.credentials.appId, QBconfig.credentials.authKey, QBconfig.credentials.authSecret, QBconfig.credentials.accountKey, QBconfig.appConfig);
       this.qbHelper.qbCreateConnection(user)
         .then((loginRes) => {
-          QB.users.delete(loginRes.id, function(err, result) {
-            if(err){
+          QB.users.delete(loginRes.id, function (err, result) {
+            if (err) {
               reject(err);
-            }else{
+            } else {
               resolve(result)
             }
           });
         })
         .catch((loginErr) => {
-          
-      });
+
+        });
     });
   }
 
@@ -171,11 +169,11 @@ export class UserServiceChatBox implements CanActivate {
   public getUserListForChat(args): Promise<any> {
     const self = this;
     return new Promise(function (resolve, reject) {
-      self.userService.getAllPagedListForChat(args).subscribe(res =>{
-        if(res.success ==  RESPONSE_STATUS.success){
+      self.userService.getAllPagedListForChat(args).subscribe(res => {
+        if (res.success == RESPONSE_STATUS.success) {
           resolve(res)
         }
-        else{
+        else {
           reject(res.message)
         }
       })
@@ -185,11 +183,11 @@ export class UserServiceChatBox implements CanActivate {
   public getUserListForDelete(args): Promise<any> {
     const self = this;
     return new Promise(function (resolve, reject) {
-      self.userService.getAllByListIdQb(args).subscribe(res =>{
-        if(res.success ==  RESPONSE_STATUS.success){
+      self.userService.getAllByListIdQb(args).subscribe(res => {
+        if (res.success == RESPONSE_STATUS.success) {
           resolve(res)
         }
-        else{
+        else {
           reject(res.message)
         }
       })
@@ -211,7 +209,7 @@ export class UserServiceChatBox implements CanActivate {
         login: loginPayload.userLogin,
         password: 'quickblox',
         full_name: loginPayload.userName,
-        custom_data : JSON.stringify(loginPayload.id)
+        custom_data: JSON.stringify(loginPayload.id)
       };
       const loginSuccess = (loginRes) => {
         console.log('login Response :', loginRes);
@@ -219,9 +217,9 @@ export class UserServiceChatBox implements CanActivate {
         console.log('chat connection :', loginRes.id, user.password);
         // Establish chat connection
         this.qbHelper.qbChatConnection(loginRes.id, user.password).then(chatRes => {
-            this.successSubject.next(true);
-            resolve(1);
-          },
+          this.successSubject.next(true);
+          resolve(1);
+        },
           chatErr => {
             console.log('chat connection Error :', chatErr);
           });
@@ -240,7 +238,7 @@ export class UserServiceChatBox implements CanActivate {
                 reject(createErr);
               } else {
                 console.log('User Creation successfull ');
-                self.userService.updateBQId({Id : loginPayload.id, IdQB : createRes.id}).subscribe(res=>{})
+                self.userService.updateBQId({ Id: loginPayload.id, IdQB: createRes.id }).subscribe(res => { })
                 loginSuccess(createRes)
                 resolve(createRes);
               }
@@ -250,38 +248,38 @@ export class UserServiceChatBox implements CanActivate {
     });
   }
 
-  
 
- createUserForApp(user, files = null, isLogin : boolean = false){
-  const self = this;
+
+  async createUserForApp(user, files = null, isLogin: boolean = false) {
+    const self = this;
     return new Promise((resolve, reject) => {
       QB.init(QBconfig.credentials.appId, QBconfig.credentials.authKey, QBconfig.credentials.authSecret, QBconfig.credentials.accountKey, QBconfig.appConfig);
       this.qbHelper.qbCreateConnection(user)
         .then((loginRes) => {
           delete user['password']
-          if(files){
-            QB.content.createAndUpload(files, function(error, result) {
+          if (files) {
+            QB.content.createAndUpload(files, function (error, result) {
+              if (error) {
+              } else {
+                user.blob_id = result.id
+                QB.users.update(loginRes.id, user, function (error, users) {
+                  if (error) {
+                    reject(error)
+                  } else {
+                    self.userService.updateBQId({ Id: JSON.parse(user.custom_data).id, IdQB: users.id }).subscribe(res => { })
+                    resolve(users)
+                  }
+                });
+              }
+            });
+          }
+          else {
+            if (!isLogin) {
+              QB.users.update(loginRes.id, user, function (error, users) {
                 if (error) {
-                } else {
-                  user.blob_id = result.id
-                  QB.users.update(loginRes.id, user, function(error, users) {
-                    if(error){
-                      reject(error)
-                    }else{
-                      self.userService.updateBQId({Id : JSON.parse(user.custom_data).id, IdQB : users.id}).subscribe(res=>{})
-                      resolve(users)
-                    }
-                  });
-                }
-              });
-            }
-          else{
-            if(!isLogin){
-              QB.users.update(loginRes.id, user, function(error, users) {
-                if(error){
                   reject(error)
-                }else{
-                  self.userService.updateBQId({Id : JSON.parse(user.custom_data).id, IdQB : users.id}).subscribe(res=>{})
+                } else {
+                  self.userService.updateBQId({ Id: JSON.parse(user.custom_data).id, IdQB: users.id }).subscribe(res => { })
                   resolve(users)
                 }
               });
@@ -297,7 +295,7 @@ export class UserServiceChatBox implements CanActivate {
                 reject(createErr);
               } else {
                 console.log('User Creation successfull ');
-                self.userService.updateBQId({Id : JSON.parse(user.custom_data).id, IdQB : createRes.id}).subscribe(res=>{})
+                self.userService.updateBQId({ Id: JSON.parse(user.custom_data).id, IdQB: createRes.id }).subscribe(res => { })
                 resolve(createRes);
               }
             });
@@ -317,5 +315,5 @@ export class UserServiceChatBox implements CanActivate {
         }
       })[0];
     }
-  } 
+  }
 }

@@ -31,7 +31,14 @@ import { RemindComponent } from './remind/remind.component'
 
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 import { ListRecommendationCommentComponent } from './list-recommendation-comment/list-recommendation-comment.component'
-// import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
+import { CommentModule } from '../publish/comment-recommendation/comment.module'
+import { InfomationExchangeModule } from './infomation-exchange/infomation-exchange.module'
+import { ListForwardComponent } from './list-forward/list-forward.component'
+import { ListProcessDenyMainComponent } from './list-process-deny-main/list-process-deny-main.component'
+import { ListCombinationComponent } from './list-combination/list-combination.component'
+import { ViewCombineRecommendationComponent } from './view-combine-recommendation/view-combine-recommendation.component'
+import { HistoryRecommendationComponent } from './history-recommendation/history-recommendation.component'
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -40,6 +47,8 @@ import { ListRecommendationCommentComponent } from './list-recommendation-commen
 		MatCheckboxModule,
 		FormsModule,
 		SharedModule,
+		CommentModule,
+		InfomationExchangeModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
 		TreeModule,
@@ -70,7 +79,9 @@ import { ListRecommendationCommentComponent } from './list-recommendation-commen
 		RemindComponent,
 		ListReactionaryWordComponent,
 		ListFakeImageComponent,
-		ListRecommendationCommentComponent
+		ListRecommendationCommentComponent,
+		ListForwardComponent, ListProcessDenyMainComponent, ListCombinationComponent, ViewCombineRecommendationComponent,
+		HistoryRecommendationComponent
 	],
 })
-export class RecommendationModule {}
+export class RecommendationModule { }

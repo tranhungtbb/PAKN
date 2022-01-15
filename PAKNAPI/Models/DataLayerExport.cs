@@ -155,4 +155,13 @@ namespace PAKNAPI.Models
         public long? UnitProcessId { get; set; }
         public string UserProcessName { get; set; }
     }
+
+    public class ExportSystemLog
+    {
+        public string TitleReport { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public long? UserId { get; set; }
+        public string Content { get; set; }
+        public int? Status { get; set; }
+    }
 }

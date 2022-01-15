@@ -15,6 +15,7 @@ import { RegisterService } from 'src/app/services/register.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { OrganizationObject } from 'src/app/models/RegisterObject'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { AuthenticationService } from 'src/app/services/authentication.service'
 
 declare var $: any
 
@@ -34,7 +35,8 @@ export class OrganizationComponent implements OnInit {
 		private toast: ToastrService,
 		private formBuilder: FormBuilder,
 		private registerService: RegisterService,
-		private router: Router
+		private router: Router,
+		private authenticationService: AuthenticationService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -55,12 +57,18 @@ export class OrganizationComponent implements OnInit {
 	}
 
 	serverMsg = {}
-
+	closeModalOtp() {
+		$('#modal-otp').modal('hide');
+	}
 	onReset() {
+		this.model = new OrganizationObject()
+		this.model._RepresentativeBirthDay = ''
+		this.model._DateOfIssue = ''
+		this.model.representativeGender = true
+		this.child_OrgRepreForm.resetObject()
 		this.formLogin.reset()
 		this.formOrgInfo.reset()
 		this.child_OrgRepreForm.formInfo.reset()
-		this.child_OrgRepreForm.resetObject()
 		this.child_OrgAddressForm.formOrgAddress.reset()
 		this.child_OrgRepreForm.formInfo.get('Gender').setValue(true)
 
@@ -68,27 +76,34 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgRepreForm.fInfoSubmitted = false
 		this.fOrgInfoSubmitted = false
 		this.child_OrgAddressForm.fOrgAddressSubmitted = false
-		this.model = new OrganizationObject()
-		this.model._RepresentativeBirthDay = ''
-		this.model._DateOfIssue = ''
-		this.model.representativeGender = true
+
 	}
 
-	phoneHide : any = ''
-	otp_1 : any = ''
-	otp_2 : any = ''
-	otp_3 : any = ''
-	otp_4 : any = ''
-	otp_5 : any = ''
-	otp_6 : any = ''
-	
-	onPreShowOtp(){
+	phoneHide: any = ''
+	otp_1: any = ''
+	otp_2: any = ''
+	otp_3: any = ''
+	otp_4: any = ''
+	otp_5: any = ''
+	otp_6: any = ''
+	otp: string = "";
+
+	onPreShowOtp() {
+
 		this.clearOTP()
 		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
+		this.model.representativeName = this.model.representativeName == null ? '' : this.model.representativeName.trim()
+		this.model.phone = this.model.phone == null ? '' : this.model.phone.trim()
+		this.model.address = this.model.address == null ? '' : this.model.address.trim()
+		this.model.email = this.model.email == null ? '' : this.model.email.trim()
 
+		this.model.business = this.model.business == null ? '' : this.model.business.trim()
+		this.model.orgAddress = this.model.orgAddress == null ? '' : this.model.orgAddress.trim()
+		this.model.orgPhone = this.model.orgPhone == null ? '' : this.model.orgPhone.trim()
+		this.model.orgEmail = this.model.orgEmail == null ? '' : this.model.orgEmail.trim()
 		if (
 			this.checkExists['Phone'] ||
 			this.checkExists['BusinessRegistration'] ||
@@ -104,34 +119,40 @@ export class OrganizationComponent implements OnInit {
 			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
-		this.phoneHide = this.model.phone
-			.split('')
-			.map((item, index) => {
-				if (index > 3 && index < 7) {
-					return '*'
-				}
-				return item
-			})
-			.join('')
+		this.authenticationService.getTokenByEmail({ Email: this.model.orgEmail, Type: 1 }).subscribe((res) => {
+			if (res.success == 'OK') {
+				this.otp = res.result
+			}
+		})
+
+		// this.phoneHide = this.model.phone
+		// 	.split('')
+		// 	.map((item, index) => {
+		// 		if (index > 3 && index < 7) {
+		// 			return '*'
+		// 		}
+		// 		return item
+		// 	})
+		// 	.join('')
 		$('#modal-otp').modal('show')
 		setTimeout(() => {
-			$('#input_1').focus()	
+			$('#input_1').focus()
 		}, 400);
 	}
 
-	onChange =(event, index) =>{
-		if(event.target.value){
+	onChange = (event, index) => {
+		if (event.target.value) {
 			setTimeout(() => {
-				$('#input_' + String(index +1)).focus()	
+				$('#input_' + String(index + 1)).focus()
 			}, 1);
-		}else{
+		} else {
 			setTimeout(() => {
-				$('#input_' + String(index -1)).focus()	
+				$('#input_' + String(index - 1)).focus()
 			}, 1);
-			
+
 		}
 	}
-	clearOTP = () =>{
+	clearOTP = () => {
 		this.otp_1 = null
 		this.otp_2 = null
 		this.otp_3 = null
@@ -141,10 +162,15 @@ export class OrganizationComponent implements OnInit {
 	}
 
 	onSave() {
-		debugger
-		if(!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6){
+		if (!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6) {
 			this.toast.error('Vui lòng nhập otp!')
 			return
+		} else {
+			var otpInput = "" + this.otp_1 + this.otp_2 + this.otp_3 + this.otp_4 + this.otp_5 + this.otp_6;
+			if (otpInput != this.otp) {
+				this.toast.error('Mã otp bạn nhập không chính xác!')
+				return
+			}
 		}
 		$('#modal-otp').modal('hide')
 
@@ -187,7 +213,7 @@ export class OrganizationComponent implements OnInit {
 		this.formLogin = this.formBuilder.group(
 			{
 				businessRegistration: [this.model.businessRegistration, [Validators.required]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
+				password: [this.model.password, [Validators.required]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }

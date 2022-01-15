@@ -18,7 +18,7 @@ export class NummerOfWarningSettingComponent implements OnInit {
 	submitted: boolean = false
 
 	form: FormGroup
-	constructor(private _service: SystemconfigService, private _router: Router, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute: ActivatedRoute) {}
+	constructor(private _service: SystemconfigService, private _router: Router, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe((params) => {
@@ -77,7 +77,7 @@ export class NummerOfWarningSettingComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		debugger
+
 		this.model.content = JSON.stringify(this.generalSetting)
 		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {

@@ -4,4 +4,5 @@ export class ForgetPasswordUserObject {
 
 export class ForgetPasswordObject {
 	phone: string
+	email: string
 }

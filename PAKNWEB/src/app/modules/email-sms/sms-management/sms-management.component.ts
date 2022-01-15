@@ -250,7 +250,7 @@ export class SMSManagementComponent implements OnInit {
 
 	// sendDateChange(data) {
 	// 	this.hisCreateDate = data
-	// 	debugger
+	// 	
 	// 	this.getHistory(this.SMSId)
 	// }
 

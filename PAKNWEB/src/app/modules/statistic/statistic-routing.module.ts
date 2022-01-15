@@ -11,7 +11,9 @@ import { ProcessingStatusComponent } from './processing-status/processing-status
 import { ProcessingResultsComponent } from './processing-results/processing-results.component'
 import { ProcessingResultsByTypeComponent } from './processing-results-by-type/processing-results-by-type.component'
 import { ProcessingResultsByReceptionTypeComponent } from './processing-results-by-reception-type/processing-results-by-reception-type.component'
-import { RecommendationsByTypeDetailComponent } from './recommendations-by-type-detail/recommendations-by-type-detail.component'
+import { RecommendationsByTypeDetailComponent } from './processing-results-by-type-detail/processing-results-by-type-detail.component'
+import { RecommendationsByReceptionTypeDetailComponent } from './processing-results-by-reception-type-detail/processing-results-by-reception-type-detail.component'
+import { RecommendationsProcessingResultDetailComponent } from './processing-results-detail/processing-results-detail.component'
 
 const routes: Routes = [
 	{
@@ -87,11 +89,82 @@ const routes: Routes = [
 		data: { role: 'D_III_0' },
 	},
 	{
-		path: 'chi-tiet-ket-qua-xu-ly-theo-loai-pakn/:type/:fieldId/:unitId/:RecommendationType/:fromDate/:toDate',
+		path: 'chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-linh-vuc/:type/:fieldId/:RecommendationType/:fromDate/:toDate',
 		component: RecommendationsByTypeDetailComponent,
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-linh-vuc/:type/:fieldId/:fromDate/:toDate',
+		component: RecommendationsByTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-don-vi/:type/:unitId/:RecommendationType/:fromDate/:toDate',
+		component: RecommendationsByTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-loai-pakn-va-don-vi/:type/:unitId/:fromDate/:toDate',
+		component: RecommendationsByTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/:type/:fieldId/:ReceptionType/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-linh-vuc/:type/:fieldId/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/:type/:unitId/:ReceptionType/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-theo-pttn-va-don-vi/:type/:unitId/:fromDate/:toDate',
+		component: RecommendationsByReceptionTypeDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-linh-vuc/:type/:fieldId/:status/:isOnTime/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-linh-vuc/:type/:fieldId/:status/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-don-vi/:type/:unitId/:status/:isOnTime/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'chi-tiet-ket-qua-xu-ly-don-vi/:type/:unitId/:status/:fromDate/:toDate',
+		component: RecommendationsProcessingResultDetailComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+
+
 	{
 		path: 'ket-qua-xu-ly-theo-pttn',
 		component: ProcessingResultsByReceptionTypeComponent,

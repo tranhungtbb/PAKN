@@ -19,7 +19,7 @@ p.active {
 .breadcrumb-item a {
 	color: #222222;
 }
-form .label {
+form .label , label.label-authorize{
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 20px;
@@ -35,4 +35,29 @@ form .label {
 }
 agm-map {
 	height: 70vh;
+}
+.btn-voice:active {
+	outline: none;
+	border: none;
+}
+	
+.btn-voice:focus {
+	outline:none;
+  box-shadow: none;
+}
+:host ::ng-deep ng-select.form-control>.ng-select-container .ng-placeholder{
+	font-style : italic !important;
+	font-size: 0.95rem !important;
+}
+
+:host ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+	color: #5e72e4;
+}
+#contentRecommendation{
+	font-family: 'Helvetica Neue','Segoe UI',Helvetica,Verdana,sans-serif;
+	line-height: 1.35715;
+	padding: 6px 12px;
+	font-size: 1rem;
+	font-weight: 400; 
+	color: black;
 }
