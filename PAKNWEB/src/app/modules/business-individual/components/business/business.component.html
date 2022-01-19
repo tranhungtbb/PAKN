@@ -7,39 +7,26 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<iframe src="" id="sampleFilesBusiness" hidden></iframe>
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onDownFileExcel()">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
+				<button type="button" class="btn btn-sm rounded border-0 mr-3 text-dark background-while"
+					(click)="onDownFileExcel()">
+
 					File mẫu
 				</button>
 
 				<input type="file" #file [hidden]="true" id="excel-file" (change)="onExcelfileChange($event)">
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onChangeFileExcel()" *hasPermission="['3', 'A_XVII_4']">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
+				<button type="button" class="btn btn-sm rounded border-0 mr-3 text-dark background-while"
+					(click)="onChangeFileExcel()" *hasPermission="['3', 'A_XVII_4']">
+
 					Nhập excel
 				</button>
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()" *hasPermission="['3', 'A_XVII_7']">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
+				<button type="button" class="btn btn-sm rounded border-0 mr-3 text-dark background-while" (click)="onExport()"
+					*hasPermission="['3', 'A_XVII_7']">
+
 					Xuất excel
 				</button>
-				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" *hasPermission="['3', 'A_XVII_0']" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0']">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-					</svg>
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" *hasPermission="['3', 'A_XVII_0']"
+					[routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0']">
+
 					Thêm mới
 				</button>
 			</div>
@@ -50,8 +37,9 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+						[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+						[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -64,48 +52,53 @@
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Doanh nghiệp</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.representativeName" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập ..." />
-										<button *ngIf="dataSearch.representativeName" class="btn bg-transparent btn-clear-input" (click)="dataSearch.representativeName=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.representativeName"
+										maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+									<button *ngIf="dataSearch.representativeName" class="btn bg-transparent btn-clear-input"
+										(click)="dataSearch.representativeName=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Địa chỉ trụ sở</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập ..." />
-										<button *ngIf="dataSearch.address" class="btn bg-transparent btn-clear-input" (click)="dataSearch.address=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+									<button *ngIf="dataSearch.address" class="btn bg-transparent btn-clear-input"
+										(click)="dataSearch.address=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
-								<th style="width: 150px">
+								<th style="width: 140px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Số điện thoại</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập ..." />
-										<button *ngIf="dataSearch.phone" class="btn bg-transparent btn-clear-input" (click)="dataSearch.phone=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+									<button *ngIf="dataSearch.phone" class="btn bg-transparent btn-clear-input"
+										(click)="dataSearch.phone=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
-								<th style="width: 250px">
+								<th style="width: 240px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập ..." />
-										<button *ngIf="dataSearch.email" class="btn bg-transparent btn-clear-input" (click)="dataSearch.email=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+									<button *ngIf="dataSearch.email" class="btn bg-transparent btn-clear-input"
+										(click)="dataSearch.email=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
-								<th style="width: 160px">
+								<th style="width: 140px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 									</p>
-									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+									<div style="width: 140px" class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
+											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
 									</div>
@@ -122,8 +115,10 @@
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
 									<strong>
-										<a *hasNotPermission="['3', 'A_XVII_9']" class="ellipsis text-dark highlight" type="button" title="Xem chi tiết">{{item.business}}</a>
-										<a *hasPermission="['3', 'A_XVII_9']" (click)="preView(item.id)" class="ellipsis text-dark highlight" type="button" title="Xem chi tiết">{{item.business}}</a>
+										<a *hasNotPermission="['3', 'A_XVII_9']" class="ellipsis text-dark highlight" type="button"
+											title="Xem chi tiết">{{item.business}}</a>
+										<a *hasPermission="['3', 'A_XVII_9']" (click)="preView(item.id)"
+											class="ellipsis text-dark highlight" type="button" title="Xem chi tiết">{{item.business}}</a>
 									</strong>
 								</td>
 								<td>{{item.orgAddress}}</td>
@@ -131,20 +126,26 @@
 								<td>{{item.email}}</td>
 								<td>
 									<p *ngIf="item.status == 0" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor">Hết hiệu lực</span>
-										<span *hasPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
+										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor">Hết hiệu
+											lực</span>
+										<span *hasPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor"
+											(click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
 									</p>
 									<p *ngIf="item.status == 1" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill bg-success cursor">Hiệu lực</span>
-										<span *hasPermission="['3', 'A_XVII_8']" class="badge rounded-pill bg-success cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
+										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill bg-success cursor">Hiệu
+											lực</span>
+										<span *hasPermission="['3', 'A_XVII_8']" class="badge rounded-pill bg-success cursor"
+											(click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
 									</p>
 								</td>
 								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_XVII_1']" type="button" title="Cập nhật" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/', item.id]" class="btn-icon grd-brown text-brown mr-2"><i
-												class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_XVII_2']" type="button" (click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white" data-toggle="modal"
-											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+										<a *hasPermission="['3', 'A_XVII_1']" type="button" title="Cập nhật"
+											[routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/', item.id]"
+											class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_XVII_2']" type="button"
+											(click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white"
+											data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -179,7 +180,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="acceptConfirm()">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>

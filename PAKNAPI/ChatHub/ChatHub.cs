@@ -41,6 +41,7 @@ namespace SignalR.Hubs
         {
             //update status for room
             await new BOTRoom(_appSetting).BOTRoomUpdateStatus(room.Id, true);
+            room.CreatedDate = DateTime.Now;
             await Clients.All.NotifyAdmin(room);
         }
 
@@ -118,7 +119,8 @@ namespace SignalR.Hubs
                     FromAvatarPath = resSenderUserId.AvatarUrl,
                     To = roomName,
                     Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(), 
-                    Type = MessageTypes.Conversation
+                    Type = MessageTypes.Conversation,
+                    DateSend = dateSent
                 };
                 await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, resSenderUserId.Id, roomId, resSenderUserId.Name, resSenderUserId.AvatarUrl, dateSent);
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
@@ -163,7 +165,8 @@ namespace SignalR.Hubs
                     FromId = "Bot",
                     To = roomName,
                     Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString(),
-                    Type = MessageTypes.Conversation
+                    Type = MessageTypes.Conversation,
+                    DateSend =  foooo
                 };
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
                 await Clients.All.OnNewMessage(room);

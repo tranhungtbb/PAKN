@@ -124,7 +124,7 @@ export class ViewRecommendationComponent implements OnInit {
 					this.markers.lat = Number(this.model.lat)
 					this.markers.lng = Number(this.model.lng)
 				}
-				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
+				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING || this.model.isApproveDeny) {
 					this.modelConclusion = response.result.modelConclusion
 					this.files = response.result.filesConclusion
 				} else {
@@ -511,7 +511,7 @@ export class ViewRecommendationComponent implements OnInit {
 			$('#modalAccept').modal('show')
 		}
 	}
-	async onProcessAccept() {
+	onProcessAccept() {
 		if (this.model.status == 8 && this.model.userActive == this.userLoginId) {
 			if (this.modelConclusion.content == '' || this.modelConclusion.content.trim() == '') {
 				this.toastr.error('Vui lòng nhập nội dung')
@@ -527,37 +527,34 @@ export class ViewRecommendationComponent implements OnInit {
 					FilesDelete: this.filesDelete
 				}
 				if (this.isUnitCombine) {
-					await this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).toPromise().then((response) => {
+					this.recommendationService.recommendationProcessConclusionCombine(requestConclusion).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
-
+							$('#modalAccept').modal('hide')
+							this.getData()
 						} else {
 							this.toastr.error(response.message)
 							$('#modalAccept').modal('hide')
 							return
 						}
-					}).catch((err) => {
-						console.log(err)
-						$('#modalAccept').modal('hide')
-						return
 					})
 				}
 				else {
-					await this.recommendationService.recommendationProcessConclusion(requestConclusion).toPromise().then((response) => {
+					this.recommendationService.recommendationProcessConclusion(requestConclusion).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
+							$('#modalAccept').modal('hide')
+							this.getData()
 						} else {
 							this.toastr.error(response.message)
 							$('#modalAccept').modal('hide')
 							return
 						}
-					}).catch((err) => {
-						console.log(err)
-						$('#modalAccept').modal('hide')
-						return
 					})
 				}
 			}
+		} else {
+			this.onProcessAcceptStatus()
 		}
-		this.onProcessAcceptStatus()
+		// 
 	}
 
 	onProcessAcceptStatus(idProcess: number = null) {

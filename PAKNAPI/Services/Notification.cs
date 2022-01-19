@@ -57,9 +57,9 @@ namespace PAKNAPI.Services
                         {
                             notification.ReceiveId = item.Id;
                             notification.ReceiveOrgId = item.UnitId ?? 0;
-                            notification.Title = "PAKN ĐƯỢC YÊU CẦU PHỐI HỢP/THAM MƯU";
+                            notification.Title = "PAKN ĐƯỢC YÊU CẦU PHỐI HỢP/THAM MƯU";
                             notification.SendOrgId = 0;
-                            notification.Content = "PAKN số " + mr.Code + " từ " + unitMain + " được yêu cầu phối hợp giải quyết";
+                            notification.Content = "PAKN số " + mr.Code + " từ " + unitMain + " được yêu cầu phối hợp giải quyết";
                             // insert notification
                             tasks.Add(new SYNotification(_appSetting, _configuration).InsertNotification(notification));
                         }
@@ -106,15 +106,15 @@ namespace PAKNAPI.Services
                     {
 
                         case STATUS_RECOMMENDATION.PROCESS_DENY:
-                            notification.Title = "PAKN BỊ TỪ CHỐI PHỐI HỢP/THAM MƯU GIẢI QUYẾT";
-                            notification.Content = "PAKN số " + mr.Code + " đã bị đơn vị " + unitNameReceive + " từ chối giải quyết";
+                            notification.Title = "PAKN BỊ TỪ CHỐI PHỐI HỢP/THAM MƯU GIẢI QUYẾT";
+                            notification.Content = "PAKN số " + mr.Code + " đã bị đơn vị " + unitNameReceive + " từ chối giải quyết";
                             break;
                         case STATUS_RECOMMENDATION.PROCESSING:
-                            notification.Title = "PAKN PHỐI HỢP/THAM MƯU ĐÃ ĐƯỢC TIẾP NHẬN GIẢI QUYẾT";
-                            notification.Content = "PAKN số " + mr.Code + " đã được đơn vị " + unitNameReceive + " tiếp nhận giải quyết";
+                            notification.Title = "PAKN PHỐI HỢP/THAM MƯU ĐÃ ĐƯỢC TIẾP NHẬN GIẢI QUYẾT";
+                            notification.Content = "PAKN số " + mr.Code + " đã được đơn vị " + unitNameReceive + " tiếp nhận giải quyết";
                             break;
                         case STATUS_RECOMMENDATION.FINISED:
-                            notification.Title = "PAKN ĐÃ ĐƯỢC PHỐI HỢP/THAM MƯU";
+                            notification.Title = "PAKN ĐÃ ĐƯỢC PHỐI HỢP/THAM MƯU";
                             notification.Content = "PAKN số " + mr.Code + " đã được đơn vị " + unitNameReceive + " giải quyết";
                             break;
                     }

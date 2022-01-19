@@ -141,3 +141,11 @@
 .hide {
 	display: none;
 }
+
+#modalEditUserInfo::-webkit-scrollbar {
+	display: none;
+}
+#modalEditUserInfo{
+	overflow-y: scroll;
+}
+	

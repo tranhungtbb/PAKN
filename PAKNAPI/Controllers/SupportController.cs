@@ -139,7 +139,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize("ThePolicy")]
-        [Route("update")]
+        [Route("update"), DisableRequestSizeLimit]
         public async Task<object> SYIntroduceUpdate() {
             try
             {

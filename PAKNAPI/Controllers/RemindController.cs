@@ -150,7 +150,6 @@ namespace PAKNAPI.Controllers
                     
                 }
                 else {
-                    var s = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                     result = await new RMRemind(_appSetting).RMRemindGetListDashBoard(new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext));
                 }
 

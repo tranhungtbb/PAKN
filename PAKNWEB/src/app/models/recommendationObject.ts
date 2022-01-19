@@ -130,6 +130,7 @@ export class RecommendationViewObject {
 	lat: string
 	lng: string
 	isForwardProcess: boolean
+	isApproveDeny: boolean
 }
 export class RecommendationConclusionObject {
 	id: number = 0

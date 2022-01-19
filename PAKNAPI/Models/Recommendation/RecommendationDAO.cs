@@ -102,7 +102,7 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
-		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id,long userProcessId ,long unitProcessId)
+		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id, long userProcessId, long unitProcessId)
 		{
 			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
 			data.IsUnitCombine = false;
@@ -124,12 +124,12 @@ namespace PAKNAPI.Models.Recommendation
 
 			if (data.Model.Status == STATUS_RECOMMENDATION.APPROVE_DENY || data.Model.Status == STATUS_RECOMMENDATION.PROCESS_DENY || data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_DENY)
 			{
-				DynamicParameters  DPdeny = new DynamicParameters();
+				DynamicParameters DPdeny = new DynamicParameters();
 				DPdeny.Add("RecommendationId", Id);
-				data.denyContent =(await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x=>x.Status).Take(1).ToList();
+				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
 			}
 
-			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING || data.Model.IsApproveDeny == true)
 			{
 				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("MR_Recommendation_ConclusionGetByRecommendationId", DP)).FirstOrDefault();
 				DP = new DynamicParameters();

@@ -148,7 +148,7 @@
 										</span>
 
 
-										<a class="read-more p-title-hover center" *ngIf="mr.recommendation.totalComment"
+										<a class="read-more center" *ngIf="mr.recommendation.totalComment"
 											routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"> <i
 												class="bi bi-chat-right-fill mr-1 cl-blue"></i> {{mr.recommendation.totalComment}}
 										</a>
@@ -178,7 +178,7 @@
 							<ul>
 								<li *ngFor="let item of unitDissatisfactionRate">
 									<div class="tt-v1 d-flex">
-										<p class="mb-0 p-title-hover">{{item.unitName}}
+										<p class="mb-0">{{item.unitName}}
 											<span style=" margin-bottom: 0; color: red;">
 												({{item.percent}}%)
 											</span>
@@ -206,7 +206,7 @@
 							<ul>
 								<li *ngFor="let item of lateProcessingUnit">
 									<div class="tt-v1 d-flex">
-										<p class="mb-0 p-title-hover text-align-justify" style="display: inline;">{{item.unitName}}<span
+										<p class="mb-0 text-align-justify" style="display: inline;">{{item.unitName}}<span
 												class="statisic ml-1" style="color: red; margin-bottom: 0!important;">({{item.quantity}})</span>
 										</p>
 									</div>

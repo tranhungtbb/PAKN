@@ -11,62 +11,32 @@
 							class="font-weight-bold">Phản ánh, Kiến nghị</a></li>
 				</ol>
 				<div class="box">
-					<p class="card-text h3 mb-3"><span style="font-weight: 300;">Kiến nghị về việc: </span>
-						{{model.title}}
-					</p>
-					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
-						<div class="media align-items-center">
-							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-								{{model.shortName}}
-							</div>
-							<div class="media-body">
-								<p class="my-0 h5">{{model.name}}</p>
-							</div>
-
-						</div>
-						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date:'dd/MM/yyyy'}}</span>
+					<div class="title-mr font-weight-bold">
+						Nội dung kiến nghị:
 					</div>
-					<div class="m-3">
+					<p class="h4 font-weight-bold mt-3 text-tranform-first" style="font-size: 14px;">{{model.title}}</p>
+					<!-- <div class="m-3">
 						<div class="pr-5">
 							<span class="my-0 h5">Đơn vị tiếp nhận:</span> {{model.unitName}}
 						</div>
 						<div class="mt-2" *ngIf="model.fieldName">
 							<span class="my-0 h5">Lĩnh vực:</span> {{model.fieldName}}
 						</div>
-					</div>
+					</div> -->
 
-					<div class="media pb-4 mb-4 box-message-publish" style="margin: 0!important; padding: 0!important;">
-						<div class="mr-3">
-							<div *ngIf="model.fieldFilePath==null">
-								<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-									class="bi bi-chat-right-text" viewBox="0 0 16 16">
-									<path
-										d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
-									<path
-										d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-								</svg>
-							</div>
-							<div *ngIf="model.fieldFilePath!=null">
-								<img [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
-									208deg) brightness(99%) contrast(85%);">
-							</div>
-						</div>
-
+					<div class="media pb-4 mb-4 box-message-publish m-0 p-0">
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">Nội dung phản ánh, kiến nghị:</p>
-							<p innerHTML="{{model.content | Change}}" style="text-align: justify;"></p>
+							<p class="mb-0 text-tranform-first" innerHTML="{{model.content | Change}}" style="text-align: justify;">
+							</p>
 
 							<span class="text-left">
-								<small class="small" *ngIf="filesModel && filesModel.length > 0">Tài liệu đính kèm</small><br>
-								<div *ngFor="let file of filesModel" cursor="pointer">
-									<!-- file-att -->
+								<p *ngIf="filesModel && filesModel.length > 0" class="mb-2 font-weight-bold">Tài liệu đính kèm:</p>
+								<div *ngFor="let file of filesModel" class="pointer item-file mb-2">
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
 											alt="">
 										<span class="small text-truncate">{{file.name}}</span>
-										<!-- {{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}} -->
 									</a>
 									<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
@@ -103,46 +73,38 @@
 
 								</div>
 							</span>
+							<div class="tt-v1 d-flex justify-content-end">
+								<p class="date-approve">Ngày gửi: {{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</p>
+							</div>
 						</div>
 					</div>
 					<div class="media mt-1 box-message-publish" *ngIf="[3,6,10].includes(model.status)">
-						<div class="mr-3" style="width:40px;">
-							<!-- <img *ngIf="[10].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40" style="filter: invert(45%) sepia(98%) saturate(5218%) hue-rotate(
-								208deg) brightness(99%) contrast(85%)">
-							<img *ngIf="[3].includes(model.status)" [src]="model.fieldFilePath" width="40" height="40"
-								style="filter : invert(48%) sepia(65%) saturate(1406%) hue-rotate(-35deg) brightness(91%) contrast(125%)"> -->
-						</div>
 						<div class="media-body">
-							<div class="tt-v1">
-								<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold ">{{model.unitName}}
-									trả lời:
-								</p>
-								<div class="row">
-									<div class="col col-8 col-lg-8 col-md-8 col-xl-8">
-										<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold ">
-											{{model.processUnitName}}:</p>
-									</div>
-									<div class="col col-4 col-lg-4 col-md-4 col-xl-4" style="float: right;">
-										<p *ngIf="[10].includes(model.status)" class="mb-0"
-											style="float: right!important; padding: 0!important;">{{model.approvedDate |
-											date:'HH:mm'}} ngày
-											{{model.approvedDate | date : 'dd/MM/yyyy'}}</p>
-										<p *ngIf="[3,6].includes(model.status)" class="mb-0"
-											style="float: right!important; padding: 0!important;">{{model.denyDate |
-											date:'HH:mm'}} ngày
-											{{model.denyDate | date : 'dd/MM/yyyy'}}</p>
-									</div>
-								</div>
-
+							<div class="title-mr font-weight-bold">
+								Nội dung trả lời:
 							</div>
 
+							<div class="mt-3">
+								<div class="mt-2">
+									<p class="mt-0 mb-2 line-height-1 font-weight-bold">Cơ quan trả lời: {{model.processUnitName != null ?
+										model.processUnitName
+										: 'Cơ quan chức năng'}}</p>
+								</div>
+								<div *ngIf="model.fieldName">
+									<p class="my-0 line-height-1 font-weight-bold"> Lĩnh vực: {{model.fieldName}}</p>
+								</div>
+							</div>
+							<p class="mt-3 mb-2 font-weight-bold text-center">Trả lời phản ánh</p>
+
 							<ng-container *ngIf="[3,6].includes(model.status)">
-								<p innerHTML="{{model.reasonDeny | Change}}" style="text-align: justify;"></p>
+								<p class="mb-0 text-tranform-first" innerHTML="{{model.reasonDeny | Change}}"
+									style="text-align: justify;"></p>
 							</ng-container>
 							<ng-container *ngIf="model.status > 5">
-								<p innerHTML="{{modelConclusion.content | Change}}" style="text-align: justify;"></p>
-								<div *ngFor="let file of files" cursor="pointer">
-									<!-- file-att -->
+								<p class="mb-0 text-tranform-first" innerHTML="{{modelConclusion.content | Change}}"
+									style="text-align: justify;"></p>
+								<p *ngIf="files && files.length > 0" class="mb-2 font-weight-bold">Tài liệu đính kèm:</p>
+								<div *ngFor="let file of files" class="pointer item-file mb-2">
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"
 										[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
@@ -182,6 +144,15 @@
 									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 								</div>
 							</ng-container>
+
+							<div class="tt-v1 d-flex justify-content-end">
+								<p *ngIf="[10].includes(model.status)" class="mb-0 date-approve">Ngày trả lời: {{model.approvedDate |
+									date : 'HH:mm dd/MM/yyyy'}}
+								</p>
+								<p *ngIf="[3,6].includes(model.status)" class="mb-0 date-approve">Ngày trả lời: {{model.denyDate | date
+									:
+									'HH:mm dd/MM/yyyy'}}</p>
+							</div>
 						</div>
 					</div>
 				</div>

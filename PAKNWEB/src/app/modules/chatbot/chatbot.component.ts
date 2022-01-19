@@ -25,11 +25,14 @@ export class DashboardChatBotComponent implements OnInit {
 	pageSize: number = 10
 	totalMessage: number = 0
 	roomActive: number = 0
+	botEnable: boolean = true
 	userId: number
 	model: any = {}
 	userAvatar: string
 	audio: any
 	roomsShow: any[] = []
+
+	currentDate: any = new Date()
 
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
@@ -86,7 +89,7 @@ export class DashboardChatBotComponent implements OnInit {
 					}
 
 					console.log('answers 4', answers)
-					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, answers }]
+					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, answers, dateSend: data.dateSend }]
 
 					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
@@ -106,12 +109,15 @@ export class DashboardChatBotComponent implements OnInit {
 				let roomCheck: any = this.rooms.find(x => x.id === room.id)
 				if (roomCheck) {
 					this.rooms.splice(this.rooms.indexOf(roomCheck), 1)
+					this.rooms.unshift({ ...room, 'type': roomCheck.type })
+				} else {
+					this.rooms.unshift(room)
 				}
-				this.rooms.unshift(room)
 			})
 
 
 			this.connection.on('NotifyAdmin', (data: any) => {
+				data = { ...data, 'type': 2 }
 				console.log('ngOnInit SignalR NotifyAdmin ', data)
 				if (!this.roomsShow.find(x => x.name === data.name)) {
 					this.roomsShow.unshift(data)
@@ -124,7 +130,7 @@ export class DashboardChatBotComponent implements OnInit {
 					this.botService.getRoomById({ Id: data.id }).subscribe(res => {
 						if (res.success == RESPONSE_STATUS.success) {
 							if (res.result) {
-								this.rooms.unshift(res.result)
+								this.rooms.unshift({ ...res.result, 'type': 2 })
 							}
 
 						} else {
@@ -144,7 +150,7 @@ export class DashboardChatBotComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						let room = res.result
 						if (room) {
-							this.resetGetMessage(params['roomId'], room.name)
+							this.resetGetMessage(params['roomId'], room.name, room.type)
 						}
 
 					} else {
@@ -160,7 +166,7 @@ export class DashboardChatBotComponent implements OnInit {
 		this.roomsShow.splice(index, 1)
 		this.botService.updateStatusRoom({ roomId: data.id }).subscribe()
 		if (selectedRoom) {
-			this.resetGetMessage(data.id, data.name)
+			this.resetGetMessage(data.id, data.name, data.type)
 		}
 	}
 
@@ -198,8 +204,9 @@ export class DashboardChatBotComponent implements OnInit {
 		})
 	}
 
-	resetGetMessage(roomId: number, roomName: string) {
+	resetGetMessage(roomId: number, roomName: string, type: number) {
 		this.roomActive = roomId
+		this.botEnable = type == 1 ? true : false
 		this.pageIndex = 1
 		this.roomNameSelected = roomName
 		this.getMessage(roomId, roomName)
@@ -233,7 +240,11 @@ export class DashboardChatBotComponent implements OnInit {
 						this.convertMessageToObjectList()
 						this.scrollToBottom()
 					}
+					else {
+						this.messages = []
+					}
 				} else {
+					this.messages = []
 				}
 			})
 		} catch (error) {
@@ -285,17 +296,10 @@ export class DashboardChatBotComponent implements OnInit {
 		}
 	}
 
-	changeRoomStatus(status: boolean) {
-		console.log('changeRoomStatus ', this.roomNameSelected, status)
-		this.connection.invoke('EnableBot', this.roomNameSelected, status)
-	}
-
-	enabledBot() {
-		this.changeRoomStatus(true)
-	}
-
-	disabedBot() {
-		this.changeRoomStatus(false)
+	changeRoomStatus() {
+		this.botEnable = !this.botEnable
+		console.log('changeRoomStatus ', this.roomNameSelected, this.botEnable)
+		this.connection.invoke('EnableBot', this.roomNameSelected, this.botEnable)
 	}
 
 	onScrollBoxChat(event: any) {

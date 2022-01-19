@@ -18,7 +18,7 @@
 						</div>
 						<div class="form-group mb-0 px-2 ps-relative">
 							<input class="form-control-sm form-control" type="text" bsDatepicker #nv="bsDatepicker"
-								[(ngModel)]="createDate" [bsConfig]="{
+								[maxDate]="currentDate" [(ngModel)]="createDate" [bsConfig]="{
 								adaptivePosition: true,
 								dateInputFormat: 'DD/MM/YYYY',
 								containerClass: 'theme-dark-blue'
@@ -51,7 +51,8 @@
 						</div>
 						<div class="card-body contacts_body p-0">
 							<ul class="contacts">
-								<li *ngFor="let room of rooms" class="dz-chat-user" (click)="resetGetMessage(room.id,room.name)"
+								<li *ngFor="let room of rooms" class="dz-chat-user"
+									(click)="resetGetMessage(room.id,room.name,room.type)"
 									[ngClass]="{'room-selected' : room.id == roomActive}">
 									<div class="d-flex">
 										<div class="img_cont">
@@ -72,25 +73,12 @@
 							<div>
 								<h6 class="mb-1">Tin nhắn</h6>
 							</div>
-							<div class="dropdown">
-								<a href="#" data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
-										xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24"
-										version="1.1">
-										<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-											<rect x="0" y="0" width="24" height="24" />
-											<circle fill="#000000" cx="5" cy="12" r="2" />
-											<circle fill="#000000" cx="12" cy="12" r="2" />
-											<circle fill="#000000" cx="19" cy="12" r="2" />
-										</g>
-									</svg></a>
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li class="dropdown-item" (click)="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i>
-										Bật
-										bot</li>
-									<li class="dropdown-item" (click)="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot
-									</li>
-								</ul>
-							</div>
+
+							<mat-slide-toggle class="example-margin" [checked]="botEnable" color="primary"
+								(change)="changeRoomStatus()">
+								Bật bot
+							</mat-slide-toggle>
+
 						</div>
 						<div #boxChat class="card-body msg_card_body" [scrollTop]="boxChat.scrollHeight"
 							(scroll)="onScrollBoxChat($event)">

@@ -7,6 +7,7 @@ import { NotificationComponent } from './notification/notification.component'
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
 import { DashboardChatBoxComponent } from './chatbox/dashboard/dashboard.component'
 import { DashboardChatBotComponent } from './chatbot/chatbot.component'
+import { RoleGuardService } from '../guards/role-guard.service'
 
 const routes: Routes = [
 	{
@@ -34,8 +35,18 @@ const routes: Routes = [
 			{ path: 'dong-bo-du-lieu', loadChildren: 'src/app/modules/recommendation-sync/recommendation-sync.module#RecommendationSyncModule' },
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
-			{ path: 'chat-bot', component: DashboardChatBotComponent },
-			{ path: 'chat-bot/:roomId', component: DashboardChatBotComponent },
+			{
+				path: 'chat-bot',
+				component: DashboardChatBotComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XI_6' }
+			},
+			{
+				path: 'chat-bot/:roomId',
+				component: DashboardChatBotComponent, canActivate: [RoleGuardService],
+				data: { role: 'A_XI_6' }
+			},
+
 		],
 	},
 ]
@@ -44,4 +55,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class BusinessRoutingModule {}
+export class BusinessRoutingModule { }

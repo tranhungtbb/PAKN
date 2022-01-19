@@ -40,13 +40,12 @@
 											</div>
 										</div>
 										<div class="col-12 form-group pi-italic position-relative">
-											<label class="mb-1 text-uppercase">Nhập mã xác thực <span class="cl-red">(*)</span></label>
 											<div class="bg-white d-flex justify-content-between align-items-center rounded-8px h-50px">
 												<img class="ml-2 mr-3" id="img-captcha" [src]="captchaImage" />
 
-												<input type="text" numbersOnly formControlName="captcha" [(ngModel)]="captchaCode" maxlength="1"
-													style="font-size: 20px; height: 38px;" (change)="captchaCode=captchaCode.trim()"
-													placeholder="Nhập.." class="form-control rounded-8px px-4 border-brown bg-white mr-1"
+												<input type="text" id="captcha" numbersOnly formControlName="captcha" [(ngModel)]="captchaCode"
+													maxlength="1" style="height: 38px;" (change)="captchaCode=captchaCode.trim()"
+													placeholder="Nhập mã xác thực.." class="form-control rounded-8px border-brown bg-white mr-1"
 													value="">
 												<button type="button" (click)="reloadImage()" class="btn p-1 rounded-10px ml-4 "
 													style="right: 17px; width: 40px;">

@@ -286,7 +286,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
 			Business: [this.model.Business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
-			RegistrationNum: [this.model.BusinessRegistration, [Validators.maxLength(20)]], //Số ĐKKD
+			RegistrationNum: [this.model.BusinessRegistration, [Validators.required, Validators.maxLength(13)]], //Số ĐKKD
 			OrgPhone: [this.model.OrgPhone, []], // số điện thoại doanh ng
 			// DateIssue: [this.model.DateOfIssue, []], //Ngày cấp/thành lập
 			// Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế

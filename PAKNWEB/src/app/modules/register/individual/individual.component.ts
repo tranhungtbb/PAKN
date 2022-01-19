@@ -265,6 +265,7 @@ export class IndividualComponent implements OnInit {
 				this.toast.error(msg)
 				return
 			}
+			$('#modal-otp').modal('hide')
 			this.toast.success('Đăng ký tài khoản thành công')
 			this.router.navigate(['/dang-nhap'])
 		})

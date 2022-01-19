@@ -19,6 +19,7 @@ import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview'
 import { ChartModule } from 'primeng/chart'
 import { CarouselModule } from 'primeng/carousel';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
@@ -61,6 +62,7 @@ import { DashboardChatBotComponent } from './chatbot/chatbot.component'
 		DropdownModule,
 		ChartModule,
 		CarouselModule,
+		MatSlideToggleModule
 	],
 	declarations: [
 		BusinessComponent,

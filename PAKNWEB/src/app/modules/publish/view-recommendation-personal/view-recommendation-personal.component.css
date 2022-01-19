@@ -4,3 +4,31 @@
 .breadcrumb-item a {
 	color: #222;
 }
+
+
+.border-bottom{
+	border-bottom: 1px solid #f1f1f1;
+	border-radius: 0px;
+}
+
+.title-mr{
+	background: rgba(214, 214, 214, 0.8);
+	border-radius: 8px;
+	padding: 8px 20px;
+	display: inline-block;
+}
+.line-height-1{
+	line-height: 1rem !important;
+}
+
+.item-file{
+	border-radius: 8px;
+	border: 1px solid #E5E5E5;
+	padding: 5px 15px;
+	display: table;
+}
+.date-approve{
+	font-size: 14px;
+	color: #707C97;
+	font-style: italic;
+}

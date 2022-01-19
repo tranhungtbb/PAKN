@@ -212,8 +212,8 @@
 								<p class="mb-1">Số chứng nhận đăng ký kinh doanh <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.businessRegistration}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.businessRegistration"
-										formControlName="businessRegistration">
+									<input type="text" class="form-control" disabled placeholder="Nhập"
+										[(ngModel)]="model.businessRegistration" formControlName="businessRegistration">
 									<div
 										*ngIf="(submitted && f.businessRegistration.invalid)||(f.businessRegistration.invalid && (f.businessRegistration.dirty || f.businessRegistration.touched))"
 										class="has-error m-b-12">

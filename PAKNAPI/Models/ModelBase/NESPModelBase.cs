@@ -276,7 +276,7 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public string ImagePath { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu thông báo không được để trống")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu thông báo không được để trống")]
         [Range(0, int.MaxValue, ErrorMessage = "Kiểu thông báo không đúng định dạng")]
         public int? NewsType { get; set; }
 		public int? ViewCount { get; set; }
@@ -355,7 +355,7 @@ namespace PAKNAPI.ModelBase
 		//[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn ảnh không được để trống")]
 		public string ImagePath { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu thông báo không được để trống")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu thông báo không được để trống")]
         [Range(0, int.MaxValue, ErrorMessage = "Kiểu thông báo không đúng định dạng")]
         public int? NewsType { get; set; }
 		public int? ViewCount { get; set; }

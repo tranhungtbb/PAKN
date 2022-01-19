@@ -1338,22 +1338,42 @@ namespace PAKNAPI.Controller
                 }
 
                 //await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request.DataConclusion.RecommendationId, STEP_RECOMMENDATION.APPROVE);
-                MRRecommendationForwardInsertIN dataForward = new MRRecommendationForwardInsertIN();
-                dataForward.RecommendationId = request.DataConclusion.RecommendationId;
-                dataForward.UserSendId = UserId;
-                dataForward.UnitSendId = UnitId;
-                dataForward.ReceiveId = request.DataConclusion.ReceiverId;
-                dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
-                dataForward.Step = STEP_RECOMMENDATION.APPROVE;
-                dataForward.SendDate = DateTime.Now;
-                dataForward.IsViewed = false;
-                dataForward.ProcessingDate = DateTime.Now;
-                await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(dataForward);
+                var forwards= await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(request.DataConclusion.RecommendationId);
+                var userApprove = forwards.Where(x => x.Step == STEP_RECOMMENDATION.APPROVE && x.Status == PROCESS_STATUS_RECOMMENDATION.WAIT).FirstOrDefault();
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
-                _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request.DataConclusion.RecommendationId;
+
+                bool isUserApprove = false;
+                if (userApprove != null && userApprove.ReceiveId == new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext))
+                {
+                    // update MRForward
+                    isUserApprove = true;
+                    _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.FINISED;
+                    await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardUpdateStatusApproveDAO(request.DataConclusion.RecommendationId);
+
+                }
+                else {
+                    // insert
+                    MRRecommendationForwardInsertIN dataForward = new MRRecommendationForwardInsertIN();
+                    dataForward.RecommendationId = request.DataConclusion.RecommendationId;
+                    dataForward.UserSendId = UserId;
+                    dataForward.UnitSendId = UnitId;
+                    dataForward.ReceiveId = request.DataConclusion.ReceiverId;
+                    dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                    dataForward.Step = STEP_RECOMMENDATION.APPROVE;
+                    dataForward.SendDate = DateTime.Now;
+                    dataForward.IsViewed = false;
+                    dataForward.ProcessingDate = DateTime.Now;
+                    await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(dataForward);
+
+                    _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
+                }
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
+
+
+
 
 
                 MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
@@ -1372,12 +1392,14 @@ namespace PAKNAPI.Controller
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = request.DataConclusion.RecommendationId;
                 hisData.Type = 1;
-                hisData.Content = "Đến: " + (await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(request.DataConclusion.ReceiverId)).FirstOrDefault().FullName;
-                hisData.Status = request.RecommendationStatus;
+                hisData.Content = isUserApprove == true ? "" : "Đến: " + (await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(request.DataConclusion.ReceiverId)).FirstOrDefault().FullName;
+                hisData.Status = isUserApprove == true ? (byte)STATUS_RECOMMENDATION.FINISED : request.RecommendationStatus;
                 hisData.CreatedBy = UserId;
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 await SYNotificationInsertTypeRecommendation (request.DataConclusion.RecommendationId);
+
+
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK , Result = IdConclusion };
             }
@@ -2117,8 +2139,8 @@ namespace PAKNAPI.Controller
                         notification.IsViewed = true;
                         notification.IsReaded = true;
                         notification.ReceiveOrgId = lstRMForward.UnitSendId;
-                        notification.Title = "TRAO ĐỔI PHẢN ÁNH KIẾN NGHỊ";
-                        notification.Content = model.FullName + " vừa thêm trao đổi của PAKN số " + recommendation.Code;
+                        notification.Title = "TRAO ĐỔI PHẢN ÁNH KIẾN NGHỊ";
+                        notification.Content = model.FullName + " vừa thêm trao đổi của PAKN số " + recommendation.Code;
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
@@ -2153,6 +2175,7 @@ namespace PAKNAPI.Controller
                     {
                         {"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},
                         {"TotalCount", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? rsMRCommnentGetAllOnPage[0].RowNumber : 0},
+                        
                         {"PageIndex", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageIndex : 0},
                         {"PageSize", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageSize : 0},
                     };
@@ -2204,6 +2227,7 @@ namespace PAKNAPI.Controller
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},
+                        {"Total", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? rsMRCommnentGetAllOnPage[0].Total : 0},
                         {"TotalCount", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? rsMRCommnentGetAllOnPage[0].RowNumber : 0},
                         {"PageIndex", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageIndex : 0},
                         {"PageSize", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageSize : 0},
@@ -2551,23 +2575,22 @@ namespace PAKNAPI.Controller
                         break;
                     case STATUS_RECOMMENDATION.APPROVE_DENY: //9 Từ chối phê duyệt
 
-                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3 && x.Status == 3).UnitSendId;
+                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).UnitSendId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 
                         notification.Title = "PAKN ĐÃ BỊ TỪ CHỐI PHÊ DUYỆT";
                         notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối kết quả giải quyết PAKN số " + recommendation.Code;
-                        foreach (var item in lstUser)
-                        {
-                            notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId??0;
-                            // insert notification
-                            await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
-                        }
-                        // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
-
-                        notification.ReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).ReceiveId;
-                        notification.ReceiveOrgId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                        //foreach (var item in lstUser)
+                        //{
+                        //    notification.ReceiveId = item.Id;
+                        //    notification.ReceiveOrgId = item.UnitId??0;
+                        //    // insert notification
+                        //    await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                        //}
+                        notification.ReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3 && x.Status == 3).UserSendId;
+                        notification.ReceiveOrgId = unitReceiveId;
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                        // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
 
                         //người gửi PAKN
                         //notification.ReceiveId = sender.Id;
@@ -2577,17 +2600,19 @@ namespace PAKNAPI.Controller
 
                         break;
                     case STATUS_RECOMMENDATION.FINISED: //10 Đã giải quyết
+                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).UnitSendId;
+                        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 
                         notification.Title = "PAKN ĐÃ GIẢI QUYẾT XONG";
                         notification.Content = unitReceive.Name + " đã giải quyết PAKN số " + recommendation.Code;
-                        lstUser = lstUser.Where(x => x.Id != notification.SenderId).ToList();
-                        foreach (var item in lstUser)
-                        {
-                            notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId??0;
-                            // insert notification
-                            await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
-                        }
+                        //lstUser = lstUser.Where(x => x.Id != notification.SenderId).ToList();
+                        //foreach (var item in lstUser)
+                        //{
+                        //    notification.ReceiveId = item.Id;
+                        //    notification.ReceiveOrgId = item.UnitId??0;
+                        //    // insert notification
+                        //    await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                        //}
                         
 
 

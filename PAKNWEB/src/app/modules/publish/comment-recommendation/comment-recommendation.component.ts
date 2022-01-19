@@ -43,6 +43,7 @@ export class CommentComponent implements OnInit {
 	}
 	listCommentsPaged: any[] = []
 	total_Comments = 0
+	total_CommentCombineChild = 0
 	pageIndexComment: number = 1
 	IsAllComment: boolean = false
 
@@ -89,6 +90,7 @@ export class CommentComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.MRCommnentGetAllOnPage.length > 0) {
 					this.total_Comments = res.result.TotalCount
+					this.total_CommentCombineChild = res.result.Total
 					this.listCommentsPaged = this.listCommentsPaged != null ? this.listCommentsPaged.concat(res.result.MRCommnentGetAllOnPage) : res.result.MRCommnentGetAllOnPage
 					if (this.listCommentsPaged.length == res.result.TotalCount) {
 						this.IsAllComment = true

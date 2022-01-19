@@ -424,7 +424,7 @@ namespace PAKNAPI.Controller
                         await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
                     }
                     new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
+					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhật thành công" };
 				}
 				else if (res == -1)
 				{
@@ -433,8 +433,8 @@ namespace PAKNAPI.Controller
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Cập nhập thất bại", new Exception());
-					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Cập nhập thất bại" };
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Cập nhật thất bại", new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Cập nhật thất bại" };
 				}
 			}
 			catch (Exception ex)
@@ -594,7 +594,7 @@ namespace PAKNAPI.Controller
 						_hISNews.Content = userName + " đã khởi tạo thông báo";
 						break;
 					case STATUS_HISNEWS.UPDATE:
-						_hISNews.Content = userName + " đã cập nhập thông báo";
+						_hISNews.Content = userName + " đã cập nhật thông báo";
 						break;
 					case STATUS_HISNEWS.COMPILE:
 						_hISNews.Content = userName + " đang soạn thảo thông báo";

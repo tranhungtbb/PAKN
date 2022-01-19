@@ -121,13 +121,13 @@ namespace PAKNAPI.Common
             if (string.IsNullOrEmpty(baseRequest.logAction)) {
                 messageError = "LogAction is Empty";
             }
-            if (string.IsNullOrEmpty(baseRequest.logObject)) {
-                messageError = "LogObject is Empty";
-            }
-            if (string.IsNullOrEmpty(baseRequest.logTitle))
-            {
-                messageError = "LogTitle is Empty";
-            }
+            //if (string.IsNullOrEmpty(baseRequest.logObject)) {
+            //    messageError = "LogObject is Empty";
+            //}
+            //if (string.IsNullOrEmpty(baseRequest.logTitle))
+            //{
+            //    messageError = "LogTitle is Empty";
+            //}
 
             logHelper.InsertSystemLogging(new Logs
             {

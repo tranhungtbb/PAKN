@@ -1555,7 +1555,7 @@ namespace PAKNAPI.Controllers
 
 				if (accInfo == null || !accInfo.Any())
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Không tồn tại doanh nghiệp" };
 				}
 				//if (businessModel.RepresentativeBirthDay != null && businessModel.RepresentativeBirthDay >= DateTime.Now)
 				//{

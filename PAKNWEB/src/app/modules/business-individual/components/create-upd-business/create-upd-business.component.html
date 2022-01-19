@@ -40,9 +40,10 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text"
+					<input [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text"
 						placeholder="Nhập..." class="form-control"
-						(change)="onCheckExist('BusinessRegistration',$event.target.value)" pattern="^(\w{1}[0-9]{9}|[0-9]{13})$">
+						(change)="onCheckExist('BusinessRegistration',$event.target.value)"
+						pattern="^(\w{1}[0-9]{9}|[0-9]{10}|[0-9]{13})$" maxlength="13">
 					<div
 						*ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
 						class="has-error m-b-12">
@@ -50,7 +51,10 @@
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
 						<div *ngIf="fOrgInfo.RegistrationNum.errors.maxlength">
-							<span class="help-block">Chỉ nhập tối đa 20 ký tự</span>
+							<span class="help-block">Chỉ nhập tối đa 13 ký tự</span>
+						</div>
+						<div *ngIf="fOrgInfo.RegistrationNum.errors.pattern">
+							<span class="help-block">Số ĐKKD không hợp lệ!</span>
 						</div>
 					</div>
 					<div *ngIf="checkExists['BusinessRegistration'] && fOrgInfo.RegistrationNum.valid" class="has-error m-b-12">

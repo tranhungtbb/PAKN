@@ -27,7 +27,7 @@
 							<i class="bi bi-chat-left"></i>
 						</a>
 					</li>
-					<li class="nav-item dropdown notification_dropdown">
+					<li *hasPermission="['3', 'A_XI_6']" class="nav-item dropdown notification_dropdown">
 						<a class="nav-link text-dark ai-icon bg-transparent" routerLink="/quan-tri/chat-bot" title="Chatbot">
 							<i class="fal fa-headset"></i>
 						</a>
@@ -169,7 +169,7 @@
 											Tìm kiếm
 										</a>
 										<a (click)="onExport()" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-											<i class="bi bi-file-earmark-excel mr-1"></i>
+
 											Xuất excel
 										</a>
 									</div>
@@ -319,7 +319,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0 bg-ligth-gold">
-				<p class="modal-title h3">Chỉnh sửa thông tin</p>
+				<p class="modal-title h3">Chỉnh sửa thông tin</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>

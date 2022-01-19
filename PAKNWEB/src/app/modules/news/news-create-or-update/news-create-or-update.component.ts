@@ -72,9 +72,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
-			summary: [this.model.summary, [Validators.required]],
+			summary: [this.model.summary],
 			contents: [this.model.contents, [Validators.required]],
-			newsType: [this.model.newsType, [Validators.required]],
+			newsType: [this.model.newsType],
 			postType: [this.model.postType],
 			imagePath: [this.model.imagePath],
 			pushNotify: [this.model.isNotification],

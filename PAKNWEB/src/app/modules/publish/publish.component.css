@@ -466,7 +466,7 @@ div.bubble.reply {
 	background: red;
 	border-radius: 100%;
 	text-align: center;
-	padding: 2px;
+	padding: 1px;
 	z-index: 1;
 }
 

@@ -54,8 +54,10 @@ export class CreateRecommendationComponent implements OnInit {
 		private notificationService: NotificationService,
 		private storeageService: UserInfoStorageService
 	) { }
-	ngOnInit() {
+	async ngOnInit() {
 		this.model = new RecommendationObject()
+		this.builForm()
+		await this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
 
@@ -77,21 +79,9 @@ export class CreateRecommendationComponent implements OnInit {
 			} else {
 				this.model.typeObject = 2
 			}
-			this.builForm()
 		})
 
-		this.getDropdown()
-		this.recommendationService.recommendationGetDataForCreate({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnit = response.result.lstUnit
-				}
-			} else {
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
+
 	}
 
 	onCreateHashtag(e) {
@@ -156,7 +146,8 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
-				if (this.model.typeObject == 1) {
+				debugger
+				if (this.model.typeObject == 2) {
 					this.titleObject = 'Cá nhân'
 					this.lstObject = this.lstIndividual
 				} else {
@@ -177,7 +168,7 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 	getDropdown() {
 		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe((response) => {
+		this.recommendationService.recommendationGetDataForCreate(request).toPromise().then((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
@@ -187,6 +178,7 @@ export class CreateRecommendationComponent implements OnInit {
 					this.lstIndividual = response.result.lstIndividual
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
+					this.lstUnit = response.result.lstUnit
 					//
 					if (this.model.id == 0) {
 						// nếu thêm mới và data local stogate vẫn có thì lấy ra

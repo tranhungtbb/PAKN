@@ -36,6 +36,8 @@ export class BusinessComponent implements OnInit, AfterViewInit, OnDestroy {
 	audio: any
 	roomsShow: any = []
 
+	checkPermissionChatbot: boolean = false
+
 	constructor(
 		private localeService: BsLocaleService,
 		public userInfoService: UserInfoStorageService,
@@ -44,7 +46,7 @@ export class BusinessComponent implements OnInit, AfterViewInit, OnDestroy {
 		private metaService: MetaService,
 		private indexSetting: IndexSettingService,
 		private botService: ChatBotService,
-		private toas: ToastrService
+		private toas: ToastrService,
 	) {
 		this._router.events
 			.pipe(filter((event) => event instanceof NavigationEnd))
@@ -67,13 +69,19 @@ export class BusinessComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 					environment.olderbacklink = e[0].url
 				}
-				this.checkUrlChatBot()
-				this.getRooms()
+				if (this.checkPermissionChatbot) {
+					this.checkUrlChatBot()
+					this.getRooms()
+				}
 			})
 	}
 
 
 	async ngOnInit() {
+		let arrPermission = this.userInfoService.getPermissions().split(',')
+		if (arrPermission.includes('A_XI_6')) {
+			this.checkPermissionChatbot = true;
+		}
 		this.checkUrlChatBot()
 		this.localeService.use('vi')
 		this.userInfoService.setReturnUrl('')
@@ -86,30 +94,34 @@ export class BusinessComponent implements OnInit, AfterViewInit, OnDestroy {
 		})
 
 		/// 
-		this.audio = new Audio()
-		this.audio.src = '../../../assets/img/ring.mp3'
-		this.audio.loop = true
 
-		await this.getRooms()
+		if (this.checkPermissionChatbot) {
+			this.audio = new Audio()
+			this.audio.src = '../../../assets/img/ring.mp3'
+			this.audio.loop = true
 
-		this.connection = new signalR.HubConnectionBuilder()
-			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${this.userId}`, {
-				skipNegotiation: true,
-				transport: signalR.HttpTransportType.WebSockets,
+
+			await this.getRooms()
+
+			this.connection = new signalR.HubConnectionBuilder()
+				.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${this.userId}`, {
+					skipNegotiation: true,
+					transport: signalR.HttpTransportType.WebSockets,
+				})
+				.configureLogging(signalR.LogLevel.Information)
+				.withAutomaticReconnect()
+				.build()
+			this.connection.start().then(() => {
+				this.connection.on('NotifyAdmin', (data: any) => {
+					console.log('ngOnInit SignalR NotifyAdmin ', data)
+					let room = this.roomsShow.find(x => x.name === data.name)
+					if (!room) {
+						this.roomsShow.unshift(data)
+					}
+					this.playSoundWarning()
+				})
 			})
-			.configureLogging(signalR.LogLevel.Information)
-			.withAutomaticReconnect()
-			.build()
-		this.connection.start().then(() => {
-			this.connection.on('NotifyAdmin', (data: any) => {
-				console.log('ngOnInit SignalR NotifyAdmin ', data)
-				let room = this.roomsShow.find(x => x.name === data.name)
-				if (!room) {
-					this.roomsShow.unshift(data)
-				}
-				this.playSoundWarning()
-			})
-		})
+		}
 	}
 
 	getRooms = async () => {

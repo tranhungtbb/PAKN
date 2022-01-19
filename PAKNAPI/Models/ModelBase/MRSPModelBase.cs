@@ -179,6 +179,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int? RowNumber { get; set; }
+		public int? Total { get; set; }
 		public long ID { get; set; }
 		public long Index { get; set; }
 		public long? UserId { get; set; }
@@ -807,6 +808,14 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RecommendationId", RecommendationId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationForwardUpdateStatusForwardDAO]", DP));
+		}
+
+		public async Task<int> MRRecommendationForwardUpdateStatusApproveDAO(long? RecommendationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", RecommendationId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationForwardUpdateStatusApproveDAO]", DP));
 		}
 		public async Task<int> MRRecommendationForwardUpdateStatusCombineDAO(int Id ,long? RecommendationId, int Step, int Status, DateTime ProcessingDate)
 		{
@@ -1583,6 +1592,13 @@ namespace PAKNAPI.ModelBase
 		public string Lng { get; set; }
 		public string Address { get; set; }
 		public bool? IsCombine { get; set; }
+		public bool? IsApproveDeny { get; set; }
+
+		public int? GroupUnitId { get; set; }
+		public int? UnitReceive { get; set; }
+		public int? UnitChildId { get; set; }
+		public bool? IsExpand { get; set; }
+		public bool? IsPublicInfoUser { get; set; }
 
 		//public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
 		//{

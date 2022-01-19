@@ -243,7 +243,8 @@ img {
 
 .chatbox {
 	top: 0px;
-	height: calc(100vh - 70px);
+	/* height: calc(100vh - 70px); */
+	height: 100%;
 	width: 100%;
 	display: block;
 	position: relative;
@@ -267,12 +268,12 @@ img {
 }
 
 .chatbox .contacts_body {
-	height: calc(100vh - 155px);
+	height: calc(100vh - 240px);
 	overflow: auto;
 }
 
 .chatbox .msg_card_body {
-	height: calc(100vh - 228px);
+	height: calc(100vh - 340px);
 	overflow: auto;
 }
 
@@ -358,4 +359,12 @@ img {
 
 .msg_cotainer_send{
 	background-color: #e7e7e7;
+	text-align: justify;
+}
+
+::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
+	background-color: #2f4cdd;
+}
+::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
+	background-color: rgb(75 115 227 / 54%);
 }

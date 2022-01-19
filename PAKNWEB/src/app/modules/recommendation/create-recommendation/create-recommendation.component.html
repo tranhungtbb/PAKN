@@ -27,11 +27,11 @@
 						<strong class="h4 mr-5">Đối tượng:</strong>
 						<label class="radio-inline mr-5">
 							<input type="radio" name="optradio" (click)="changeTypeObject(2)" id="individual"
-								[checked]="isIndividual"> Cá nhân
+								[checked]="model.typeObject == 2"> Cá nhân
 						</label>
 						<label class="radio-inline">
 							<input type="radio" name="optradio" (click)="changeTypeObject(3)" id="bussiness"
-								[checked]="!isIndividual"> Doanh nghiệp
+								[checked]="model.typeObject == 3"> Doanh nghiệp
 						</label>
 						<!-- [(ngModel)]="model.typeObject" -->
 					</div>

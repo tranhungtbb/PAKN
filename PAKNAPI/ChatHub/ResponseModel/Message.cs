@@ -35,5 +35,6 @@ namespace PAKNAPI.Chat.ResponseModel
         public List<string> SubTags { get; set; }
 
         public string Type { get; set; }
+        public DateTime? DateSend { get; set; }
     }
 }
