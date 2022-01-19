@@ -103,4 +103,4 @@ Images= (select count(1) from FakeImages),
 Attrs= (select count(1) from FakeAttrs),
 ImageAttrs= (select count(1) from FakeImageAttrs)
 
-exec FakeImage_DataMining 1
+exec FakeImage_DataMining 0

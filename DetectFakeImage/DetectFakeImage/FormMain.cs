@@ -148,15 +148,18 @@ namespace FakeImageDetection
                         valueLength = vi.valueLength,
                         valueText = vi.valueText,
                         valueType = (int)vi.valueType
-                    } );
+                    });
                 }
 
-                var time = new DateTime(); 
+                var time = new DateTime();
                 var isFake = dao.IsFake(la, ref outResults, maxLevel);
                 timing = new DateTime().Subtract(time).TotalMilliseconds;
                 if (isFake)
                 {
-                    sb.AppendLine($"<span style='color:#800000'><b>Fake image by {string.Join(", ", outResults.ConvertAll(x => $"{x.attrId}= '{x.valueText}'"))} fakeCount={outResults.Last().fakeCount}</b>");
+                    if (outResults.Count > 0)
+                        sb.AppendLine($"<span style='color:#800000'><b>Fake image by {string.Join(", ", outResults.ConvertAll(x => $"{x.attrId}= '{x.valueText}'"))} fakeCount={outResults.Last().fakeCount}</b>");
+                    else
+                        sb.AppendLine($"<span style='color:#800000'><b>Fake image</b>");
                     this.lbFake.Text = (int.Parse(this.lbFake.Text) + 1).ToString();
                 }
                 else
