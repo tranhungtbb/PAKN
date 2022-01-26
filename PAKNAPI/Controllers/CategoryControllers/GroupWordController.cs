@@ -16,12 +16,14 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/group-word")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Nhóm từ ngữ", Description = "Danh mục Nhóm từ ngữ")]
 	public class GroupWordController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

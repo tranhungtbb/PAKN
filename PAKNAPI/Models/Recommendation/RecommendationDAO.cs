@@ -112,6 +112,32 @@ namespace PAKNAPI.Models.Recommendation
 			DP.Add("UnitProcessId", unitProcessId);
 			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("[MR_RecommendationGetByIDView]", DP)).FirstOrDefault();
 
+			// mr same location
+			if ((data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_WAIT || data.Model.Status == STATUS_RECOMMENDATION.PROCESS_WAIT) && !String.IsNullOrEmpty(data.Model.Lat) && !String.IsNullOrEmpty(data.Model.Lng)) {
+				// config time and meter
+				DP = new DynamicParameters();
+				DP.Add("Type", TYPECONFIG.SAMELOCATION);
+				var config = (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetByType", DP)).FirstOrDefault();
+				if (config != null && !String.IsNullOrEmpty(config.Content)) {
+					var configLocation = JsonConvert.DeserializeObject<ConfigSameLocation>(config.Content);
+
+					DP = new DynamicParameters();
+					DP.Add("RecommendationId", data.Model.Id);
+					DP.Add("SendDate", data.Model.SendDate);
+					DP.Add("Lat", data.Model.Lat);
+					DP.Add("Lng", data.Model.Lng);
+					DP.Add("Radius", configLocation.Radius); // meter
+					DP.Add("Time", configLocation.Time); // hour
+					data.listRecommendationSameLocation = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationSameLocationGetAll>("[MR_Recommendation_SameLocationGetAll]", DP)).ToList();
+				}
+			}
+
+			if (data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_FINISED) {
+				DP = new DynamicParameters();
+				DP.Add("RecommendationId", data.Model.Id);
+				data.listRecommendationSameLocation = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationSameLocationGetAll>("[MR_Recommendation_SameLocationGetByRecommendationId]", DP)).ToList();
+			}
+
 			DP = new DynamicParameters();
 			DP.Add("Id", Id);
 			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
@@ -129,7 +155,7 @@ namespace PAKNAPI.Models.Recommendation
 				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
 			}
 
-			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING || data.Model.IsApproveDeny == true)
+			if ((data.Model.Status > STATUS_RECOMMENDATION.PROCESSING && data.Model.Status != STATUS_RECOMMENDATION.RECEIVE_FINISED) || data.Model.IsApproveDeny == true)
 			{
 				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("MR_Recommendation_ConclusionGetByRecommendationId", DP)).FirstOrDefault();
 				DP = new DynamicParameters();
@@ -195,7 +221,7 @@ namespace PAKNAPI.Models.Recommendation
 				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContentsCombine]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
 			}
 
-			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING && data.Model.Status != STATUS_RECOMMENDATION.RECEIVE_FINISED)
 			{
 				DP.Add("@UnitProcess", unitProcessId);
 				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("[MR_Recommendation_ConclusionCombineGetByRecommendationId]", DP)).FirstOrDefault();
@@ -241,7 +267,7 @@ namespace PAKNAPI.Models.Recommendation
 				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
 			}
 
-			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING && data.Model.Status != STATUS_RECOMMENDATION.RECEIVE_FINISED)
 			{
 				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("MR_Recommendation_ConclusionGetByRecommendationId", DP)).FirstOrDefault();
 				DP = new DynamicParameters();

@@ -16,12 +16,14 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/hashtag")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Nhãn dữ liệu", Description = "Danh mục nhãn dữ liệu")]
 	public class HashtagController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

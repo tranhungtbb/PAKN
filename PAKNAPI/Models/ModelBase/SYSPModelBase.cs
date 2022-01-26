@@ -368,6 +368,11 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class ConfigSameLocation {
+		public int Time { get; set; }
+		public int Radius { get; set; }
+	}
+
 
 	public class SYIntroduceUnit
 	{

@@ -77,6 +77,9 @@ export class SystemConfigComponent implements OnInit {
 			case TYPECONFIG.SYNC_CONFIG:
 				this.router.navigate(['/quan-tri/he-thong/cau-hinh-dong-bo', id])
 				break
+			case TYPECONFIG.SAME_LOCATION:
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-radius', id])
+				break
 			default:
 				break
 		}

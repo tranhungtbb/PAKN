@@ -84,6 +84,8 @@ namespace PAKNAPI.Models.Recommendation
 
         public List<MRRecommendationConclusionCombine> conclusionCombine { get; set; }
 
+        public List<MRRecommendationSameLocationGetAll> listRecommendationSameLocation { get; set; }
+
         public bool IsUnitCombine { get; set; }
 
         //public List<>
@@ -136,6 +138,7 @@ namespace PAKNAPI.Models.Recommendation
         public bool? IsForwardMain { get; set; }
 
         public int? Field { get; set; }
+        public List<int> LstRecommendaionSelected { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {

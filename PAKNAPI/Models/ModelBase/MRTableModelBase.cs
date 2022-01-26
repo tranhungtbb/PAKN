@@ -271,6 +271,16 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("MR_RecommendationCount", DP));
 		}
+
+		public async Task<string> MRRecommendationGetCodeByListId(string lstId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("@LstRecommendationId", lstId);
+
+			return (await _sQLCon.ExecuteScalarDapperAsync<string>("PU_Recommendation_GetCodeByLstId", DP));
+		}
+
+		
 	}
 
 	public class MRRecommendationConclusionOnPage

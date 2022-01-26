@@ -168,5 +168,33 @@ namespace PAKNAPI.Services
                 return false;
             }
         }
+
+
+        public async Task<bool> NotificationInsertForReceiveFinisd(string MRCode, long? RecommendationId, long? ReceiveId, List<int> MRSame)
+        {
+            try
+            {
+                string sCode = await new MRRecommendation(_appSetting).MRRecommendationGetCodeByListId(string.Join(",", MRSame));
+                SYNotificationModel notification = new SYNotificationModel();
+                notification.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(_context);
+                notification.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(_context);
+                notification.DataId = (int)RecommendationId;
+                notification.SendDate = DateTime.Now;
+                notification.Type = TYPENOTIFICATION.RECOMMENDATION;
+                notification.TypeSend = STATUS_RECOMMENDATION.RECEIVE_FINISED;
+                notification.IsViewed = true;
+                notification.IsReaded = true;
+                notification.Title = "PAKN BỊ TRÙNG";
+                notification.Content = "PAKN số " + MRCode + " của bạn đã trùng với PAKN có mã " + sCode;
+                notification.ReceiveId = ReceiveId; // nguoi phe duyet
+                notification.ReceiveOrgId = 0;
+                await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

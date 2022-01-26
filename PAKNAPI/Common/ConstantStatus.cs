@@ -22,6 +22,8 @@ namespace PAKNAPI.Common
 		public const int PROCESS_DENY_MAIN = 12; // tu choi giai quyet trung tam
 		public const int COMBINE = 13; // tu ueu cau phoi hop
 
+		public const int RECEIVE_FINISED = 14;
+
 	}
 	public static class STEP_RECOMMENDATION
 	{
@@ -69,6 +71,7 @@ namespace PAKNAPI.Common
 		public const int CONFIG_SWITCHBOARD = 3;
 		public const int GENERAL = 4;
 		public const int VIEWHOME = 5;
+		public const int SAMELOCATION = 8;
 	}
 
 	public class STATUS_HISNEWS

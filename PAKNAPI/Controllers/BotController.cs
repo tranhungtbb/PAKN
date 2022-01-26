@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using NSwag.Annotations;
 using PAKNAPI.Chat;
 using PAKNAPI.Chat.ResponseModel;
 using PAKNAPI.Common;
@@ -23,6 +24,7 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [OpenApiTag("Bot", Description = "Bot")]
     public class BotController : BaseApiController
     {
 

@@ -1,6 +1,7 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
 using System;
@@ -16,7 +17,8 @@ namespace PAKNAPI.Controllers
     [Route("api/sendsms")]
     [ApiController]
     [ValidateModel]
-    public class SendSmsController : BaseApiController
+	[OpenApiTag("Gửi sms Twilio", Description = "Gửi sms Twilio")]
+	public class SendSmsController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

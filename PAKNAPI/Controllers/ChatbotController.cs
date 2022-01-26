@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Chatbot;
 using SignalR.Hubs;
@@ -17,6 +18,7 @@ namespace PAKNAPI.Controllers.ChatbotController
     [Route("api/chat-bot")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Chat bot", Description = "Chat bot")]
     public class ChatbotController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

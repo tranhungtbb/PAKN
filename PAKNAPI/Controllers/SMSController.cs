@@ -24,12 +24,14 @@ using PAKNAPI.Models.EmailSMSModel;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using static PAKNAPI.Controllers.SendSmsController;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/sms")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("sms", Description = "quản lý tin nhắn")]
 	public class SMSController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

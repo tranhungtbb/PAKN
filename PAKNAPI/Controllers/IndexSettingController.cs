@@ -19,12 +19,14 @@ using PAKNAPI.Models.Remind;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/index-setting")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Cài đặt trang chủ", Description = "Cài đặt trang chủ")]
 
     public class IndexSettingController : BaseApiController
     {

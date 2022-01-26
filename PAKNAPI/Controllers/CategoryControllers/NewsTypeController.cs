@@ -16,12 +16,14 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/news-type")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Loại thông báo", Description = "Danh mục loại thông báo")]
 	public class NewsTypeController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

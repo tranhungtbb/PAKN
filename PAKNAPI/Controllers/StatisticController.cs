@@ -22,13 +22,15 @@ using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.Invitation;
 using PAKNAPI.Models.EmailSMSModel;
 using PAKNAPI.Models.Statistic;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/statistic")]
     [ApiController]
-   
-    public class StatisticController : BaseApiController
+	[OpenApiTag("Thống kê", Description = "Thống kê")]
+
+	public class StatisticController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

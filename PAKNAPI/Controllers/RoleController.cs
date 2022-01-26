@@ -17,12 +17,14 @@ using PAKNAPI.Models.Login;
 using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
 	[Route("api/role")]
 	[ApiController]
 	[ValidateModel]
+	[OpenApiTag("Vai trò", Description = "quản lý vai trò")]
 	public class RoleController : BaseApiController
 	{
 		private readonly IFileService _fileService;

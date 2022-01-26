@@ -18,11 +18,14 @@ using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using NSwag.Annotations;
+
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/field")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Lĩnh vực", Description = "Danh mục lĩnh vực")]
 	public class FieldController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.Job;
 using PAKNAPI.ModelBase;
@@ -17,7 +18,8 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OTPController : BaseApiController
+	[OpenApiTag("Otp", Description = "otp")]
+	public class OTPController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;

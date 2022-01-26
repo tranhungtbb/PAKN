@@ -16,11 +16,13 @@ using Newtonsoft.Json;
 using Bugsnag;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Statistic;
+using NSwag.Annotations;
 
 namespace PAKNAPI.ControllerBase
 {
 	[Route("api/pu-recommendation")]
 	[ApiController]
+	[OpenApiTag("Api trang công bố", Description = "Api trang công bố")]
 	public class PURecommendationController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

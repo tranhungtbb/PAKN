@@ -19,12 +19,14 @@ using PAKNAPI.Models.Remind;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/introduce")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Trang giới thiệu", Description = "Trang giới thiệu")]
     public class IntroduceController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

@@ -44,6 +44,7 @@ import { IndexTypeSettingComponent } from './components/index-type-setting/index
 import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
 import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component';
 import { StatisticAccessComponent } from './components/statistic-access/statistic-access.component'
+import { ConfigRadiusComponent } from './components/config-radius/config-radius.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -94,7 +95,8 @@ import { StatisticAccessComponent } from './components/statistic-access/statisti
 		PublishNotificationComponent,
 		ApplicationSettingComponent,
 		StatisticAccessComponent,
+		ConfigRadiusComponent
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })
-export class SystemManagementModule {}
+export class SystemManagementModule { }

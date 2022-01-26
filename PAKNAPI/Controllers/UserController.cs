@@ -27,12 +27,14 @@ using System.Text;
 using PAKNAPI.Job;
 using Newtonsoft.Json;
 using System.Threading;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
 	[Route("api/user")]
 	[ApiController]
 	[ValidateModel]
+	[OpenApiTag("User", Description = "user")]
 	public class UserController : BaseApiController
 	{
 		private readonly IFileService _fileService;

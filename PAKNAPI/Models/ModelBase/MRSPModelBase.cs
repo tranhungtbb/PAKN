@@ -1443,6 +1443,25 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationSameLocationGetAll {
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public string Lng { get; set; }
+		public string Lat { get; set; }
+		public string SendDate { get; set; }
+		public bool? Checked { get; set; }
+
+		public MRRecommendationSameLocationGetAll() {
+		}
+	}
+
 	public class MRRecommendationGetByHashtagAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -2203,6 +2222,16 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
 		}
+
+		public async Task<int> MRRecommendationUpdateStatusBySendDAO(MRRecommendationUpdateStatusBySendIN _mRRecommendationUpdateStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+			DP.Add("SendDate", _mRRecommendationUpdateStatusIN.SendDate);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatusBySend", DP));
+		}
+
 		public async Task<int> MRRecommendationUpdateStatusByForwardDAO(MRRecommendationUpdateStatusByForwardIN _mRRecommendationUpdateStatusIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -2235,6 +2264,14 @@ namespace PAKNAPI.ModelBase
 			this.IsFakeImage = false;
 		}
 	}
+
+	public class MRRecommendationUpdateStatusBySendIN
+	{
+		public int? Id { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+	}
+
 	public class MRRecommendationUpdateStatusByForwardIN
 	{
 		public int? Id { get; set; }
@@ -2326,5 +2363,46 @@ namespace PAKNAPI.ModelBase
 		public string Content { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? ProcessingDate { get; set; }
+	}
+
+
+	public class MRRecommendationSame
+	{
+		private SQLCon _sQLCon;
+
+		public long RecommendationId { get; set; }
+		public long RecommendationSameId { get; set; }
+		public long? UserId { get; set; }
+
+		public MRRecommendationSame(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationSame(long recommendationId, long recommendationSameId, int userId)
+		{
+			this.RecommendationId = recommendationId;
+			this.RecommendationSameId = recommendationSameId;
+			this.UserId = userId;
+		}
+
+		public MRRecommendationSame() { }
+
+		public async Task<int> MRRecommendationSameInsertDAO(MRRecommendationSame model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", model.RecommendationId);
+			DP.Add("RecommendationSameId", model.RecommendationSameId);
+			DP.Add("UserId", model.UserId);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_SameInsert", DP));
+		}
+
+		public async Task<List<int>> MRRecommendationSameGetUserByRecommendationIdDAO(int? RecommendationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationSameId", RecommendationId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<int>("MR_Recommendation_SameGetUserByRecommendationSameId", DP)).ToList();
+		}
 	}
 }

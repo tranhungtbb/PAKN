@@ -20,12 +20,14 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
 using Microsoft.AspNetCore.Http;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/Support")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Tài liệu hướng dẫn", Description = "Tài liệu hướng dẫn")]
 
     public class SupportController : BaseApiController
     {

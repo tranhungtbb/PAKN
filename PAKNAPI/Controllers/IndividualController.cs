@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.BusinessIndividual;
@@ -20,6 +21,7 @@ namespace PAKNAPI.Controllers
     [Route("api/individual")]
 	[ApiController]
 	[ValidateModel]
+	[OpenApiTag("Cá nhân", Description = "Cá nhân")]
 	public class IndividualController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

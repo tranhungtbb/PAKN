@@ -19,12 +19,14 @@ using PAKNAPI.Models.Remind;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/system-config")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Cấu hình hệ thống", Description = "Cấu hình hệ thống")]
 
 	public class SystemConfigController : BaseApiController
     {

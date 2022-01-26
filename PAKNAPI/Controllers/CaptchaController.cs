@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.ModelBase;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 namespace PAKNAPI.Controllers
 {
 	[Route("api/captcha")]
+	[OpenApiTag("Captcha", Description = "Captcha")]
 	public class CaptchaController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

@@ -22,6 +22,7 @@ import { ApplicationSettingComponent } from './components/application-setting/ap
 import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
 import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
 import { StatisticAccessComponent } from './components/statistic-access/statistic-access.component'
+import { ConfigRadiusComponent } from './components/config-radius/config-radius.component'
 
 const routes: Routes = [
 	{
@@ -82,6 +83,12 @@ const routes: Routes = [
 			{
 				path: 'cau-hinh-switchboard/:id',
 				component: SwitchboardSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' },
+			},
+			{
+				path: 'cau-hinh-radius/:id',
+				component: ConfigRadiusComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'A_I_0' },
 			},

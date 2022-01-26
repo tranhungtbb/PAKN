@@ -23,12 +23,14 @@ using PAKNAPI.Models.Invitation;
 using PAKNAPI.Job;
 using System.Threading;
 using static PAKNAPI.Controllers.SendSmsController;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/invitation")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Thư mời", Description = "Thư mời")]
     public class InvitationController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

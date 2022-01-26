@@ -24,12 +24,14 @@ using System.Threading;
 using static PAKNAPI.Common.FakeImageDetection;
 using System.Text;
 using PAKNAPI.Services;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controller
 {
     [Route("api/recommendation")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Phản ánh kiến nghị", Description = "Phản ánh kiến nghị")]
     public class RecommendationController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
@@ -372,6 +374,7 @@ namespace PAKNAPI.Controller
                 request.Data.CreatedDate = DateTime.Now;
                 request.Data.CreateByType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 request.Data.IsForwardChild = false;
+                request.Data.SendDate = DateTime.Now;
                 MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
                 if (rsMRRecommendationCheckExistedCode.Total > 0)
                 {
@@ -778,6 +781,7 @@ namespace PAKNAPI.Controller
                 request.Files = Request.Form.Files;
                 request.Data.UpdatedBy = request.UserId;
                 request.Data.UpdatedDate = DateTime.Now;
+                request.Data.SendDate = DateTime.Now;
                 var oldRecommendation = await new RecommendationDAO(_appSetting).RecommendationGetByID(request.Data.Id);
                 
 
@@ -1126,6 +1130,42 @@ namespace PAKNAPI.Controller
                 long UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 int UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
 
+                // check pakn có trùng vị trí hay không
+                MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+
+                if (request.LstRecommendaionSelected != null && request.LstRecommendaionSelected.Count > 0 &&
+                    (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_APPROVED || request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESSING)) {
+
+                    var mr = await new MRRecommendation(_appSetting).MRRecommendationGetByID(request._mRRecommendationForwardProcessIN.RecommendationId);
+                    // save vào table MR_Same
+                    MRRecommendationSame same = new MRRecommendationSame();
+                    same.RecommendationId = (long)request._mRRecommendationForwardProcessIN.RecommendationId;
+                    same.UserId = mr.SendId;
+                    for (int i = 0; i < request.LstRecommendaionSelected.Count; i++) {
+                        same.RecommendationSameId = request.LstRecommendaionSelected[i];
+                        await new MRRecommendationSame(_appSetting).MRRecommendationSameInsertDAO(same);
+                    }
+
+
+                    // update lại Status pakn 14
+                    request._mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
+                    request._mRRecommendationForwardProcessIN.UserId = UserSendId;
+                    await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(request._mRRecommendationForwardProcessIN);
+
+                    _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                    _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.RECEIVE_FINISED;
+                    _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
+                    _mRRecommendationUpdateStatusIN.IsFakeImage = false;
+                    _mRRecommendationUpdateStatusIN.Field = request.Field;
+                    await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
+                    // thông báo cho người gửi pakn : pakn của bạn đã bị trùng
+
+                    await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForReceiveFinisd(mr.Code, request._mRRecommendationForwardProcessIN.RecommendationId, mr.SendId, request.LstRecommendaionSelected);
+
+                    return new ResultApi { Success = ResultCode.OK };
+                }
+
                 // check don vi xem co phai duoc gui den tham muu hay khong
                 var check = await new SYUnit(_appSetting).SYUnitCheckCombine(request._mRRecommendationForwardProcessIN.RecommendationId, UnitSendId);
                 if (check > 0) {
@@ -1173,7 +1213,7 @@ namespace PAKNAPI.Controller
                     await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN);
                 }
 
-                MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
                 _mRRecommendationUpdateStatusIN.IsFakeImage = _mRRecommendationUpdateStatusIN.IsFakeImage == null ? false : request.IsFakeImage;
@@ -1448,8 +1488,8 @@ namespace PAKNAPI.Controller
                 rRecommendationCombinationUpdate.RecommendationId = request.DataConclusion.RecommendationId;
                 rRecommendationCombinationUpdate.UnitReceiveId = UnitId;
                 rRecommendationCombinationUpdate.ReceiveId = request.DataConclusion.ReceiverId;
-                //rRecommendationCombinationUpdate.DenyId = ;
-                rRecommendationCombinationUpdate.Status = STATUS_RECOMMENDATION.APPROVE_WAIT;
+                rRecommendationCombinationUpdate.Status = rRecommendationCombinationUpdate.ReceiveId != UserId ? 
+                    (byte) STATUS_RECOMMENDATION.APPROVE_WAIT : (byte)STATUS_RECOMMENDATION.FINISED;
                 rRecommendationCombinationUpdate.ReasonDeny = string.Empty;
                 rRecommendationCombinationUpdate.ProcessingDate = DateTime.Now;
 
@@ -1478,12 +1518,13 @@ namespace PAKNAPI.Controller
                         await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(file);
                     }
                 }
-                if (rRecommendationCombinationUpdate.ReceiveId != UserId) {
-                    await new Notification(_appSetting, HttpContext,_configuration).NotificationInsertForCombineApprove(request.DataConclusion.RecommendationId, rRecommendationCombinationUpdate.ReceiveId);
+                if (rRecommendationCombinationUpdate.ReceiveId != UserId)
+                {
+                    await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForCombineApprove(request.DataConclusion.RecommendationId, rRecommendationCombinationUpdate.ReceiveId);
                 }
-                
-
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                else {
+                    await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForCombineProcess(request.DataConclusion.RecommendationId, STATUS_RECOMMENDATION.FINISED);
+                }
                 return new ResultApi { Success = ResultCode.OK , Result = IdConclusion };
             }
             catch (Exception ex)
@@ -1548,10 +1589,11 @@ namespace PAKNAPI.Controller
                     hisData.Status = request.status;
                     await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 
-                MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                MRRecommendationUpdateStatusBySendIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusBySendIN();
                 _mRRecommendationUpdateStatusIN.Status = request.status;
                 _mRRecommendationUpdateStatusIN.Id = request.id;
-                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+                _mRRecommendationUpdateStatusIN.SendDate = DateTime.Now;
+                await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusBySendDAO(_mRRecommendationUpdateStatusIN);
                 await SYNotificationInsertTypeRecommendation(request.id);
                 return new ResultApi { Success = ResultCode.OK };
             }
@@ -2386,7 +2428,7 @@ namespace PAKNAPI.Controller
 
                 // lấy thông tin đơn vị người đăng nhập
                 SYUserGetByID userInfo = (await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext))).FirstOrDefault();
-
+                List<int> sendIdSameMR = await new MRRecommendationSame(_appSetting).MRRecommendationSameGetUserByRecommendationIdDAO(recommendationId);
                 // obj thông báo
                 SYNotificationModel notification = new SYNotificationModel();
                 notification.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
@@ -2410,7 +2452,7 @@ namespace PAKNAPI.Controller
                         {
 
                             notification.ReceiveId = item.Id;
-                            notification.ReceiveOrgId = item.UnitId??0;
+                            notification.ReceiveOrgId = item.UnitId ?? 0;
                             notification.Title = "PAKN CHỜ XỬ LÝ";
                             notification.SendOrgId = 0;
                             notification.Content =
@@ -2443,6 +2485,14 @@ namespace PAKNAPI.Controller
                         notification.Title = "PAKN BỊ TỪ CHỐI";
                         notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã bị từ chối tiếp nhận";
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                        if (sendIdSameMR != null) {
+                            foreach (var item in sendIdSameMR)
+                            {
+                                notification.ReceiveId = item;
+                                await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                            }
+                        }
+                        
 
                         break;
                     case STATUS_RECOMMENDATION.RECEIVE_APPROVED: //4 Đã tiếp nhận
@@ -2555,10 +2605,19 @@ namespace PAKNAPI.Controller
                             }
                         }
                         notification.ReceiveId = sender.Id;
-                        notification.ReceiveOrgId = null;
+                        notification.ReceiveOrgId = 0;
                         notification.Title = "PAKN TIẾP NHẬN GIẢI QUYẾT";
                         notification.Content = "PAKN số " + recommendation.Code + " của bạn đã được "+ unitReceive.Name + " tiếp nhận giải quyết";
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+
+                        if (sendIdSameMR != null)
+                        {
+                            foreach (var item in sendIdSameMR)
+                            {
+                                notification.ReceiveId = item;
+                                await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                            }
+                        }
 
                         break;
                     case STATUS_RECOMMENDATION.APPROVE_WAIT: //8 Chờ phê duyệt
@@ -2641,6 +2700,15 @@ namespace PAKNAPI.Controller
                         notification.ReceiveId = sender.Id;
                         notification.ReceiveOrgId = 0;
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+
+                        if (sendIdSameMR != null)
+                        {
+                            foreach (var item in sendIdSameMR)
+                            {
+                                notification.ReceiveId = item;
+                                await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                            }
+                        }
                         break;
                 }
                 return true;

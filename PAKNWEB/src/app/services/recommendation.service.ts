@@ -286,6 +286,14 @@ export class RecommendationService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationOnProcessConclusionCombine, form, httpPackage)
 	}
 
+	recommendationAcceptSameLocaion(request: any, title: string): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.RECEIVE_APPROVED),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationAcceptSameLocation, headers)
+	}
+
 	recommendationDelete(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),

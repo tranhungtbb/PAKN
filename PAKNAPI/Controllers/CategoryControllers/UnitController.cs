@@ -17,12 +17,14 @@ using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Statistic;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/unit")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Đơn vị", Description = "Danh mục đơn vị")]
 	public class UnitController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

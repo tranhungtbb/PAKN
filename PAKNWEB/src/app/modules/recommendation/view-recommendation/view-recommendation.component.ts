@@ -111,6 +111,7 @@ export class ViewRecommendationComponent implements OnInit {
 	conclusionCombine: any = []
 	isUnitCombine: boolean = false
 	unitName = this.storeageService.getUnitName()
+	recommendationSameLocation: any = []
 	getData() {
 		let request = {
 			Id: this.model.id,
@@ -124,7 +125,7 @@ export class ViewRecommendationComponent implements OnInit {
 					this.markers.lat = Number(this.model.lat)
 					this.markers.lng = Number(this.model.lng)
 				}
-				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING || this.model.isApproveDeny) {
+				if ((this.model.status > RECOMMENDATION_STATUS.PROCESSING && this.model.status != RECOMMENDATION_STATUS.RECEIVE_FINISED) || this.model.isApproveDeny) {
 					this.modelConclusion = response.result.modelConclusion
 					this.files = response.result.filesConclusion
 				} else {
@@ -142,6 +143,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.remindComponent.getListRemind()
 				this.sugestText()
 				this.enableEdit = this.model.status == 1 && this.model.createdBy == this.storeageService.getUserId()
+				this.recommendationSameLocation = response.result.listRecommendationSameLocation
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -558,6 +560,11 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	onProcessAcceptStatus(idProcess: number = null) {
+		let lstRecommendaionSelected = this.recommendationSameLocation
+			.filter(x => x.checked == true)
+			.map(item => {
+				return item.id
+			});
 		if (idProcess) {
 			this.modelProcess.id = idProcess
 		}
@@ -567,6 +574,7 @@ export class ViewRecommendationComponent implements OnInit {
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
+			LstRecommendaionSelected: lstRecommendaionSelected
 		}
 		this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -587,6 +595,11 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	onProcessAcceptWithField() {
+		let lstRecommendaionSelected = this.recommendationSameLocation
+			.filter(x => x.checked == true)
+			.map(item => {
+				return item.id
+			});
 		this.submitted = true
 		if (!this.formAccept.valid) {
 			return
@@ -596,7 +609,8 @@ export class ViewRecommendationComponent implements OnInit {
 			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
-			Field: this.fieldSelected
+			Field: this.fieldSelected,
+			LstRecommendaionSelected: lstRecommendaionSelected
 		}
 		this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {

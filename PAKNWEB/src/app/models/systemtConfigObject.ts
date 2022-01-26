@@ -74,6 +74,13 @@ export class ConfigApplication {
 	urlAndroid: string
 }
 
+export class ConfigRadius {
+	constructor() {
+	}
+	radius: number
+	time: number
+}
+
 export class ConfigSync {
 	cskhLinkApi: string = ''
 	cskhMethod: number = null

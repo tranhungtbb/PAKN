@@ -16,12 +16,14 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/word")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Từ ngữ cấm", Description = "Danh mục từ ngữ cấm")]
 	public class WordController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

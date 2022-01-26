@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.User;
 using PAKNAPI.Models.ModelBase;
 using Bugsnag;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controller
 {
@@ -28,6 +29,7 @@ namespace PAKNAPI.Controller
     /// </summary>
     [Route("api/administration-formalities")]
     [ApiController]
+    [OpenApiTag("Thủ tục hành chính", Description = "Thủ tục hành chính")]
     public class AdministrationFormalitiesController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

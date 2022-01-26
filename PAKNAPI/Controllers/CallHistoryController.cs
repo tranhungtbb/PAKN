@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
@@ -14,6 +15,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
 	[Route("api/call-history")]
 	[ApiController]
+	[OpenApiTag("Lịch sử hệ thống", Description = "Lịch sử hệ thống")]
 	public class CallHistoryController : BaseApiController
     {
 		private readonly IAppSetting _appSetting;

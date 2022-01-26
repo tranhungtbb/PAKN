@@ -27,11 +27,13 @@ using Bugsnag;
 using PAKNAPI.Models.SyncData;
 using System.Threading;
 using PAKNAPI.Models.AdministrativeSync;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/sync-data")]
     [ApiController]
+    [OpenApiTag("Đồng bộ", Description = "Đồng bộ")]
     public class SyncDataController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

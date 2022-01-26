@@ -16,12 +16,14 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/hashtagchatbot")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Nhãn dữ liệu chat bot")]
 	public class HashtagChatbotController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

@@ -134,6 +134,7 @@ export class RECOMMENDATION_STATUS {
 
 	public static FORWARD = 11 //đã chuyển
 	public static PROCESS_DENY_MAIN = 12 // từ chối giải quyết trung tâm
+	public static RECEIVE_FINISED = 14 // tiếp nhận với pakn trùng địa điểm
 }
 
 export class STEP_RECOMMENDATION {
@@ -249,6 +250,7 @@ export class TYPECONFIG {
 	public static TYPE_INDEX = 5
 	public static APPLICATION = 7
 	public static SYNC_CONFIG = 6
+	public static SAME_LOCATION = 8
 }
 
 export class REGEX {

@@ -13,12 +13,14 @@ using Bugsnag;
 using PAKNAPI.Models.ModelBase;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/files")]
     [ApiController]
-   
+    [OpenApiTag("File", Description = "File")]
+
     public class FilesController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

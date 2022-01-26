@@ -21,12 +21,14 @@ using static PAKNAPI.Model.RefreshTokens;
 using System.Security.Cryptography;
 using System.Linq;
 using PAKNAPI.Services;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
 	[Route("api/contact")]
 	[ApiController]
 	[ValidateModel]
+	[OpenApiTag("Login", Description = "Login")]
 	public class ContactController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

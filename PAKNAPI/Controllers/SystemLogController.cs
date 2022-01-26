@@ -17,11 +17,13 @@ using Bugsnag;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Aspose;
+using NSwag.Annotations;
 
 namespace PAKNAPI.ControllerBase
 {
 	[Route("api/system-log")]
 	[ApiController]
+	[OpenApiTag("Lịch sử hệ thống", Description = "Lịch sử hệ thống")]
 	public class SystemLogController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

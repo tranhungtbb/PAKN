@@ -16,12 +16,14 @@ using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/position")]
     [ApiController]
 	[ValidateModel]
+	[OpenApiTag("Chức vụ", Description = "Danh mục chức vụ")]
 	public class PositionController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;

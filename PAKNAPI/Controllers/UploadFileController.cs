@@ -14,12 +14,14 @@ using System.Drawing.Imaging;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Services.FileUpload;
 using PAKNAPI.Models.Results;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
 
     [Route("api/upload-files")]
     [ApiController]
+    [OpenApiTag("Upload file", Description = "upload file")]
     public class UploadFileController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

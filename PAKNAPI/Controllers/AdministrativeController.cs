@@ -23,6 +23,7 @@ namespace PAKNAPI
 	/// </summary>
 	[Route("api/administrative")]
 	[ApiController]
+	[OpenApiTag("Đơn vị hành chính", Description = "Đơn vị hành chính")]
 	public class AdministrativeController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

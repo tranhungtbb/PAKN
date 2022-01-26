@@ -51,6 +51,7 @@ export class Api {
 	public static RecommendationForward = 'recommendation/recommendation-forward'
 	public static RecommendationCombine = 'recommendation/recommendation-combine-insert'
 	public static RecommendationProcess = 'recommendation/recommendation-on-process'
+	public static RecommendationAcceptSameLocation = 'recommendation/recommendation-accept-same-location'
 	public static RecommendationUpdateStatus = 'recommendation/recommendation-update-status'
 	public static RecommendationOnProcessConclusion = 'recommendation/recommendation-on-process-conclusion'
 	public static RecommendationOnProcessConclusionCombine = 'recommendation/recommendation-on-process-conclusion-combine'

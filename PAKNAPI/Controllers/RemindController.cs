@@ -19,12 +19,14 @@ using PAKNAPI.Models.Remind;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/remind")]
     [ApiController]
-   
+    [OpenApiTag("Nhắc nhở", Description = "Nhắc nhở")]
+
     public class RemindController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

@@ -36,6 +36,10 @@ using System;
 using PAKNAPI.Chat;
 using SignalR.Hubs;
 using PAKNAPI.Job;
+using NSwag.Generation.Processors.Security;
+using NSwag;
+using NSwag.AspNetCore;
+using System.Reflection;
 
 namespace PAKNAPI
 {
@@ -146,11 +150,24 @@ namespace PAKNAPI
 					policy.Requirements.Add(new ThePolicyRequirement());
 				});
 			});
+            //services.AddSwaggerDocument();
+            services.AddSwaggerDocument(config =>
+            {
+				config.AddSecurity("apikey", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+				{
+					Type = OpenApiSecuritySchemeType.ApiKey,
+					Name = "Authorization",
+					Description = "Copy 'Bearer ' + valid JWT token into field",
+					In = OpenApiSecurityApiKeyLocation.Header
+				});
 
-			services.AddSwaggerDocument();
+				config.OperationProcessors.Add(
+					new AspNetCoreOperationSecurityScopeProcessor("apikey"));
 
-			// If using IIS:
-			services.Configure<IISServerOptions>(options =>
+			});
+
+            // If using IIS:
+            services.Configure<IISServerOptions>(options =>
 			{
 				options.AllowSynchronousIO = true;
 			});

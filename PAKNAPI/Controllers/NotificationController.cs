@@ -20,11 +20,13 @@ using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.ModelBase;
 using Microsoft.Extensions.Configuration;
 using Bugsnag;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/notification")]
     [ApiController]
+    [OpenApiTag("Thông báo", Description = "Thông báo")]
 
     public class NotificationController : BaseApiController
     {

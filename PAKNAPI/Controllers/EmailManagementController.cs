@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NSwag.Annotations;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.ModelBase;
@@ -21,6 +22,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/email-management")]
     [ApiController]
     [ValidateModel]
+    [OpenApiTag("Email", Description = "Email")]
     public class EmailManagementController : BaseApiController
     {
         private readonly IAppSetting _appSetting;

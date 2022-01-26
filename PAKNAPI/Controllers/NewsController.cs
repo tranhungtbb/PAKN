@@ -20,12 +20,14 @@ using PAKNAPI.Models.ModelBase;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controller
 {
 	[Route("api/news")]
 	[ApiController]
 	[ValidateModel]
+	[OpenApiTag("Thông báo chính quyền", Description = "Thông báo chính quyền")]
 	public class NewsController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;

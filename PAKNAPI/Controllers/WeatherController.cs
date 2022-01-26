@@ -10,11 +10,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using NSwag.Annotations;
 
 namespace PAKNAPI.Controllers
 {
     [Route("api/weather")]
     [ApiController]
+    [OpenApiTag("Thời tiết", Description = "Thời tiết")]
     public class WeatherController : BaseApiController
     {
         static readonly HttpClient client = new HttpClient();
