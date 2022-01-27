@@ -2069,11 +2069,37 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                var type = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
-                if (type == 1) {
+                if (new LogHelper(_appSetting).GetTypeFromRequest(HttpContext) == 1) {
                     return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản cán bộ không được bình luận" };
                 }
                 _mRCommnentInsertIN.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+
+                var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_COMMENT)).FirstOrDefault();
+                if (config != null && config.Content != null)
+                {
+                    int type = Int32.Parse(config.Content);
+                    if (type == TYPECONFIGCOMMENT.PRIVATE) {
+                        var mr = await new MRRecommendation(_appSetting).MRRecommendationGetByID((int)_mRCommnentInsertIN.RecommendationId);
+                        if (mr.SendId != _mRCommnentInsertIN.UserId)
+                        {
+                            return new ResultApi { Success = ResultCode.ORROR, Message = "Bạn không được phép bình luận phản ánh kiến nghị này" };
+                        }
+                        else {
+                            goto insert;
+                        }
+                    }
+                    else
+                    {
+                        goto insert;
+                    }
+                }
+                else {
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Không thể bình luận phản ánh kiến nghị của người khác" };
+                }
+
+
+                insert:
+
                 _mRCommnentInsertIN.FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 
                 var result = await new MRCommentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN);

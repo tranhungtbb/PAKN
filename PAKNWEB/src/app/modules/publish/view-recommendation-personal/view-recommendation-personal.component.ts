@@ -56,6 +56,8 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 		})
 	}
 
+	similarRecommendation: any
+
 	getData() {
 		let request = {
 			Id: this.model.id,
@@ -71,6 +73,9 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 				}
 				if ([3, 6, 9].includes(this.model.status)) {
 					this.denyContent = response.result.denyContent[0]
+				}
+				if (this.model.status == 14) {
+					this.similarRecommendation = { ...response.result.similarRecommendation }
 				}
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.filesModel = response.result.lstFiles

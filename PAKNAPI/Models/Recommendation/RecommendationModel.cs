@@ -91,6 +91,28 @@ namespace PAKNAPI.Models.Recommendation
         //public List<>
     }
 
+
+    public class RecommendationGetByIDPublicResponse
+    {
+        public MRRecommendationGetByIDView Model { get; set; }
+        public MRRecommendationConclusionGetByRecommendationId ModelConclusion { get; set; }
+        public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
+        public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
+        public List<MRRecommendationGetDenyContentsBase> denyContent { get; set; }
+
+        public List<MRRecommendationConclusionCombine> conclusionCombine { get; set; }
+
+        public SimilarRecommendation similarRecommendation { get; set; }
+
+    }
+
+    public class SimilarRecommendation {
+        public int? Id { get; set; }
+        public string Title { get; set; }
+        public string Code { get; set; }
+    }
+
+
     public class MRRecommendationConclusionCombine {
         public string UnitName { get; set; }
 

@@ -15,7 +15,7 @@ declare var $: any
 	styleUrls: ['./word-library.component.css'],
 })
 export class WordLibraryComponent implements OnInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
 
 	listData = new Array<WordObject>()
 	listGroup: any = []
@@ -28,6 +28,7 @@ export class WordLibraryComponent implements OnInit {
 	submitted: boolean = false
 	title: string = ''
 	name: string = ''
+	index: number
 	description: string = ''
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
@@ -58,6 +59,7 @@ export class WordLibraryComponent implements OnInit {
 			name: [this.model.name, Validators.required],
 			groupId: [this.model.groupId, Validators.required],
 			description: [this.model.description],
+			index: [this.model.index],
 			isActived: [this.model.isActived, Validators.required],
 		})
 	}
@@ -67,6 +69,7 @@ export class WordLibraryComponent implements OnInit {
 			name: this.model.name,
 			groupId: this.model.groupId,
 			isActived: this.model.isActived,
+			index: this.model.index,
 			description: this.model.description,
 		})
 	}
@@ -122,7 +125,7 @@ export class WordLibraryComponent implements OnInit {
 		this.submitted = true
 		this.model.name = this.model.name == null ? '' : this.model.name.trim()
 		this.model.description = this.model.description == null ? '' : this.model.description.trim()
-		
+
 		if (this.form.invalid) {
 			return
 		}

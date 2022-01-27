@@ -7,6 +7,7 @@ import { SystemManagementRoutingModule } from './system-management-routing.modul
 import { SystemManagemenetComponent } from './system-managemenet.component'
 import { SharedModule } from '../../shared/shared.module'
 import { AngularDualListBoxModule } from 'angular-dual-listbox'
+import { MatRadioModule } from '@angular/material/radio'
 import { SystemLogComponent } from './components/system-log/system-log.component'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { ContextMenuModule } from 'primeng/contextmenu'
@@ -45,6 +46,7 @@ import { SyncSettingComponent } from './components/sync-setting/sync-setting.com
 import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component';
 import { StatisticAccessComponent } from './components/statistic-access/statistic-access.component'
 import { ConfigRadiusComponent } from './components/config-radius/config-radius.component'
+import { ConfigCommentComponent } from './components/config-comment/config-comment.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -66,6 +68,7 @@ import { ConfigRadiusComponent } from './components/config-radius/config-radius.
 		CKEditorModule,
 		MatDialogModule,
 		BusinessModule,
+		MatRadioModule,
 		LazyLoadImageModule.forRoot({
 			preset: scrollPreset,
 		}),
@@ -95,7 +98,8 @@ import { ConfigRadiusComponent } from './components/config-radius/config-radius.
 		PublishNotificationComponent,
 		ApplicationSettingComponent,
 		StatisticAccessComponent,
-		ConfigRadiusComponent
+		ConfigRadiusComponent,
+		ConfigCommentComponent
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

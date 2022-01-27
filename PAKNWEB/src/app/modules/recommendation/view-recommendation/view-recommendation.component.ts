@@ -560,11 +560,11 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	onProcessAcceptStatus(idProcess: number = null) {
-		let lstRecommendaionSelected = this.recommendationSameLocation
-			.filter(x => x.checked == true)
-			.map(item => {
-				return item.id
-			});
+		let lstRecommendaionSelected = this.recommendationSameLocation == null ? [] :
+			this.recommendationSameLocation.filter(x => x.checked == true)
+				.map(item => {
+					return item.id
+				});
 		if (idProcess) {
 			this.modelProcess.id = idProcess
 		}
@@ -626,6 +626,18 @@ export class ViewRecommendationComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
+	}
+
+	onChangeMRSame(event, id: number) {
+		this.recommendationSameLocation = this.recommendationSameLocation.map(item => {
+			if (item.id == id) {
+				item.checked = event.checked
+			} else {
+				item.checked = false
+			}
+			return item;
+		})
+
 	}
 
 	onProcessDeny() {

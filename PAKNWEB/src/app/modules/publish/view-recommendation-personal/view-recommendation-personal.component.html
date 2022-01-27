@@ -78,7 +78,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="media mt-1 box-message-publish" *ngIf="[3,6,10].includes(model.status)">
+					<div class="media mt-1 box-message-publish" *ngIf="[3,6,10,14].includes(model.status)">
 						<div class="media-body">
 							<div class="title-mr font-weight-bold">
 								Nội dung trả lời:
@@ -100,7 +100,7 @@
 								<p class="mb-0 text-tranform-first" innerHTML="{{model.reasonDeny | Change}}"
 									style="text-align: justify;"></p>
 							</ng-container>
-							<ng-container *ngIf="model.status > 5">
+							<ng-container *ngIf="model.status > 5 && model.status != 14">
 								<p class="mb-0 text-tranform-first" innerHTML="{{modelConclusion.content | Change}}"
 									style="text-align: justify;"></p>
 								<p *ngIf="files && files.length > 0" class="mb-2 font-weight-bold">Tài liệu đính kèm:</p>
@@ -143,6 +143,13 @@
 									</a>
 									<i (click)="DownloadFile(file)" class="ml-2 bi bi-download"></i>
 								</div>
+							</ng-container>
+
+							<ng-container *ngIf="model.status == 14 && similarRecommendation">
+								<p>Nội dung trả lời phản ánh, kiến nghị của anh/chị tương tự nội dung trả lời phản ánh, kiến nghị số
+									{{similarRecommendation.code}}. <a target="_blank"
+										routerLink="/cong-bo/chi-tiet-kien-nghi/{{similarRecommendation.id}}">Xem tại
+										đây</a></p>
 							</ng-container>
 
 							<div class="tt-v1 d-flex justify-content-end">

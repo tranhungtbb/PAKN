@@ -243,21 +243,27 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
-		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id)
+		public async Task<RecommendationGetByIDPublicResponse> RecommendationGetByIDView(int? Id)
 		{
-			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+			RecommendationGetByIDPublicResponse data = new RecommendationGetByIDPublicResponse();
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("[MR_RecommendationGetByIDViewPublic]", DP)).FirstOrDefault();
 
 			DP = new DynamicParameters();
 			DP.Add("Id", Id);
-			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+			//data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
 			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
 			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 			foreach (var item in data.lstFiles)
 			{
 				item.FilePath = decrypt.EncryptData(item.FilePath);
+			}
+
+			if (data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_FINISED) {
+				DP = new DynamicParameters();
+				DP.Add("RecommendationId", data.Model.Id);
+				data.similarRecommendation = (await _sQLCon.ExecuteListDapperAsync<SimilarRecommendation>("[MR_Recommendation_SameLocationGetByRecommendationId]", DP)).FirstOrDefault();
 			}
 
 			if (data.Model.Status == STATUS_RECOMMENDATION.APPROVE_DENY || data.Model.Status == STATUS_RECOMMENDATION.PROCESS_DENY || data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_DENY)

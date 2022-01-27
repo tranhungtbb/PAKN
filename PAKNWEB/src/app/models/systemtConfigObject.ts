@@ -81,6 +81,12 @@ export class ConfigRadius {
 	time: number
 }
 
+export class ConfigComment {
+	constructor() {
+	}
+	status: number
+}
+
 export class ConfigSync {
 	cskhLinkApi: string = ''
 	cskhMethod: number = null

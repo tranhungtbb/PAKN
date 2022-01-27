@@ -251,6 +251,7 @@ export class TYPECONFIG {
 	public static APPLICATION = 7
 	public static SYNC_CONFIG = 6
 	public static SAME_LOCATION = 8
+	public static CONFIG_COMMENT = 9
 }
 
 export class REGEX {

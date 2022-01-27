@@ -83,7 +83,7 @@
 									<span *ngIf="item.type == 1" class="badge rounded-pill badge-success">Cấu hình email</span>
 									<span *ngIf="item.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
 									<span *ngIf="item.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
-									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
+									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình file</span>
 									<span *ngIf="item.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị
 										trang chủ</span>
 
@@ -92,6 +92,9 @@
 									<span *ngIf="item.type == 6" class="badge rounded-pill badge-warning">Cấu hình đồng bộ</span>
 									<span *ngIf="item.type == 8" class="badge rounded-pill badge-outline-green2">Cấu hình
 										radius và time</span>
+
+									<span *ngIf="item.type == 9" class="badge rounded-pill badge-outline-success">Cấu hình bình
+										luận</span>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
@@ -137,12 +140,18 @@
 							<span *ngIf="model.type == 1" class="badge rounded-pill badge-success">Cấu hình email</span>
 							<span *ngIf="model.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
 							<span *ngIf="model.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
-							<span *ngIf="model.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
+							<span *ngIf="model.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình file</span>
 							<span *ngIf="model.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị trang
 								chủ</span>
 
 							<span *ngIf="model.type == 7" class="badge rounded-pill badge-outline-blue ng-star-inserted">Cấu hình
 								hiển thị ứng dụng</span>
+
+							<span *ngIf="model.type == 6" class="badge rounded-pill badge-warning">Cấu hình đồng bộ</span>
+							<span *ngIf="model.type == 8" class="badge rounded-pill badge-outline-green2">Cấu hình
+								radius và time</span>
+
+							<span *ngIf="model.type == 9" class="badge rounded-pill badge-outline-success">Cấu hình bình luận</span>
 						</div>
 						<div class="col-sm-12">
 							<strong class="control-label lb600">Mô tả</strong>

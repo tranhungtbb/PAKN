@@ -494,7 +494,8 @@
 					<ul class="list-group list-group-flush bg-gray">
 						<li class="list-group-item list-item-custome border-bottom d-flex"
 							*ngFor="let item of recommendationSameLocation; let i = index">
-							<mat-checkbox *ngIf="model.status != 14" class="mt-2" [(ngModel)]="item.checked"></mat-checkbox>
+							<mat-checkbox *ngIf="model.status != 14" class="mt-2" (change)="onChangeMRSame($event,item.id)"
+								[(ngModel)]="item.checked"></mat-checkbox>
 							<p class="ml-2 mb-0 text-3line cursor" [ngClass]="{'ml-2' : model.status != 14 }"
 								routerLink="/quan-tri/kien-nghi/chi-tiet/{{item.id}}">
 								{{item.title}}</p>

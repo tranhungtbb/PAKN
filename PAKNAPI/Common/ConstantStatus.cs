@@ -72,6 +72,13 @@ namespace PAKNAPI.Common
 		public const int GENERAL = 4;
 		public const int VIEWHOME = 5;
 		public const int SAMELOCATION = 8;
+		public const int CONFIG_COMMENT = 9;
+	}
+
+	public static class TYPECONFIGCOMMENT
+	{
+		public const int PRIVATE = 1;
+		public const int PUBLIC = 2;
 	}
 
 	public class STATUS_HISNEWS

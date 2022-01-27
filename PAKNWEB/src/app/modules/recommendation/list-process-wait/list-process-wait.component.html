@@ -148,8 +148,7 @@
 										<div class="d-flex justify-content-end">
 											<a class="btn-icon grd-brown2 text-white mr-2"
 												*ngIf="item.unitReceiveId == unitLoginId && item.isForwardProcess"
-												(click)="preProcess(item,item.processId,4,item.isForwardProcess)"
-												title="Gửi lại trung tâm tiếp nhận">
+												(click)="preProcess(item,item.processId,4,item.isForwardProcess)" title="Chuyển đơn vị khác">
 												<i class="bi bi-arrow-left-square"></i>
 											</a>
 											<a class="btn-icon grd-xanhngoc2 text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"

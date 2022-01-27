@@ -23,6 +23,7 @@ import { SyncSettingComponent } from './components/sync-setting/sync-setting.com
 import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
 import { StatisticAccessComponent } from './components/statistic-access/statistic-access.component'
 import { ConfigRadiusComponent } from './components/config-radius/config-radius.component'
+import { ConfigCommentComponent } from './components/config-comment/config-comment.component'
 
 const routes: Routes = [
 	{
@@ -92,6 +93,16 @@ const routes: Routes = [
 				canActivate: [RoleGuardService],
 				data: { role: 'A_I_0' },
 			},
+
+			{
+				path: 'cau-hinh-binh-luan/:id',
+				component: ConfigCommentComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' },
+			},
+
+
+
 			{
 				path: 'cau-hinh-trang-gioi-thieu',
 				component: IntroduceComponent,

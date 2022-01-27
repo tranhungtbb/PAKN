@@ -1785,6 +1785,7 @@ namespace PAKNAPI.ModelBase
 		public string GroupName { get; set; }
 
 		public int GroupId { get; set; }
+		public int? Index { get; set; }
 		public string Description { get; set; }
 
 		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO()
@@ -1822,6 +1823,7 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
+		public int? Index { get; set; }
 
 		public async Task<List<CAWordGetByID>> CAWordGetByIDDAO(int? Id)
 		{
@@ -1853,6 +1855,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _cAWordInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAWordInsertIN.Description);
+			DP.Add("Index", _cAWordInsertIN.Index);
 
 			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_WordInsert", DP)); // ExecuteScalarDapperAsync // ExecuteNonQueryDapperAsync
 		}
@@ -1872,6 +1875,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+		public int? Index { get; set; }
 	}
 
 	public class CAWordUpdate
@@ -1896,6 +1900,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _cAWordUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAWordUpdateIN.IsDeleted);
 			DP.Add("Description", _cAWordUpdateIN.Description);
+			DP.Add("Index", _cAWordUpdateIN.Index);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordUpdate", DP));
 		}
@@ -1917,6 +1922,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+		public int? Index { get; set; }
 	}
 	public class CA_WordGetListSuggest
 	{
