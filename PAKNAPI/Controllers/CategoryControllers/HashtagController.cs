@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/hashtag")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Nhãn dữ liệu", Description = "Danh mục nhãn dữ liệu")]
+	[OpenApiTag("Nhãn dữ liệu", Description = "Danh mục nhãn dữ liệu - Authorize")]
 	public class HashtagController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -36,13 +36,8 @@ namespace PAKNAPI.Controllers.ControllerBase
         }
 
 		/// <summary>
-		/// xóa hashtag
+		/// danh sách hashtag - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="QuantityUser"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -68,7 +63,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// danh sách hashtag - all
+		/// danh sách hashtag
 		/// </summary>
 		/// <returns></returns>
 
@@ -90,7 +85,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// chi tiết hashtag
+		/// chi tiết hashtag - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -118,7 +113,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới hashtag
+		/// thêm mới hashtag - Authorize
 		/// </summary>
 		/// <param name="_cAHashtag"></param>
 		/// <returns></returns>
@@ -143,7 +138,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// update hashtag
+		/// update hashtag - Authorize
 		/// </summary>
 		/// <param name="_cAHashtag"></param>
 		/// <returns></returns>
@@ -177,7 +172,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// xóa hashtag
+		/// xóa hashtag - Authorize
 		/// </summary>
 		/// <param name="_cAHashtag"></param>
 		/// <returns></returns>

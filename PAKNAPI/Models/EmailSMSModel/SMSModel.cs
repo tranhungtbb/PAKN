@@ -7,12 +7,36 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Models.EmailSMSModel
 {
+    /// <example>
+    /// {
+    ///"model": {
+    ///    "title": "demo thêm mới sms",
+    ///    "content": "nội dung sms",
+    ///    "signature": "sign",
+    ///    "status": 1,
+    ///    "type": "1"
+    ///},
+    ///"IndividualBusinessInfo": [
+    ///    {
+    ///        "Id": 130420,
+    ///        "Category": 1
+    ///    },
+    ///    {
+    ///    "Id": 170436,
+    ///            "Category": 1
+    ///        }
+    ///    ]
+    ///}
+	/// </example>
+    
+
     public class SMSInsertModel
     {
         public SMSQuanLyTinNhanInsertIN model { get; set; }
 
         public List<IndividualBusinessInfo> IndividualBusinessInfo { get; set; }
     }
+ 
 
     public class SMSUpdateModel
     {
@@ -20,6 +44,29 @@ namespace PAKNAPI.Models.EmailSMSModel
 
         public List<SMSGetListIndividualBusinessBySMSId> IndividualBusinessInfo { get; set; }
     }
+
+    /// <example>
+    /// {
+    ///"model": {
+    ///    "id": 12,
+    ///    "title": "demo sms",
+    ///    "content": "nội dung sms",
+    ///    "signature": "sign",
+    ///    "status": 1,
+    ///    "type": "1"
+    ///},
+    ///"IndividualBusinessInfo": [
+    ///    {
+    ///        "Id": 130420,
+    ///        "Category": 1
+    ///    },
+    ///    {
+    ///    "Id": 170436,
+    ///            "Category": 1
+    ///        }
+    ///    ]
+    ///}
+    /// </example>
 
     public class SMSUpdateRequestModel
     {

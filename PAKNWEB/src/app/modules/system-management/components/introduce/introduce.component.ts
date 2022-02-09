@@ -4,11 +4,14 @@ import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
+import * as ClassicEditor from '../../../../../assets/dist/ckeditor5'
 
 import { IntroduceService } from 'src/app/services/introduce.service'
 import { IntroduceObjet, IntroduceFunction, IntroduceUnit } from 'src/app/models/IntroductObject'
-import { error } from 'jquery'
 import { COMMONS } from 'src/app/commons/commons'
+import { Api } from 'src/app/constants/api'
+import { HttpClient } from '@angular/common/http'
+import { UploadDocumentAdapter } from 'src/app/services/UploadDocumentAdapter'
 declare var $: any
 @Component({
 	selector: 'app-introduce',
@@ -16,7 +19,7 @@ declare var $: any
 	styleUrls: ['./introduce.component.css'],
 })
 export class IntroduceComponent implements OnInit {
-	constructor(private _service: IntroduceService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router) {
+	constructor(private _service: IntroduceService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router, private http: HttpClient) {
 		this.lstIntroduceFunction = []
 		for (var i = 0; i < 6; i++) {
 			this.lstIntroduceFunction.push(new IntroduceFunction())
@@ -47,6 +50,15 @@ export class IntroduceComponent implements OnInit {
 	formUnit: FormGroup
 	// chid
 	@ViewChild('table', { static: false }) table: any
+
+	// ckediter
+
+	public Editor = ClassicEditor
+	public ckConfig = {
+		simpleUpload: {
+			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageIntroduce,
+		}
+	}
 
 	ngOnInit() {
 		// get model
@@ -343,6 +355,16 @@ export class IntroduceComponent implements OnInit {
 		output.attr('src', URL.createObjectURL(file))
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
+		}
+	}
+
+	public onReady(editor) {
+		if (editor.model.schema.isRegistered('image')) {
+			editor.model.schema.extend('image', { allowAttributes: 'blockIndent' });
+		}
+		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
+		editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+			return new UploadDocumentAdapter(loader, this.http, AppSettings.API_ADDRESS + Api.UploadImageIntroduce)
 		}
 	}
 }

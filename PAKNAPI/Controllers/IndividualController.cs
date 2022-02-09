@@ -33,7 +33,7 @@ namespace PAKNAPI.Controllers
 			_hostingEnvironment = hostingEnvironment;
 		}
 		/// <summary>
-		/// import cá nhân với excel
+		/// import cá nhân với excel - Authorize
 		/// </summary>
 		/// <param name="folder"></param>
 		/// <returns></returns>
@@ -267,7 +267,7 @@ namespace PAKNAPI.Controllers
 			}			
 		}
 		/// <summary>
-		/// danh sách người dân
+		/// danh sách người dân - Authorize
 		/// </summary>
 		/// <param name="PageSize"></param>
 		/// <param name="PageIndex"></param>
@@ -279,7 +279,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="SortDir"></param>
 		/// <param name="SortField"></param>
 		/// <returns></returns>
-		
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-individual-on-page")]
@@ -307,7 +307,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// xóa người dân
+		/// xóa người dân - Authorize
 		/// </summary>
 		/// <param name="_bi_IndivialDeleteIN"></param>
 		/// <returns></returns>
@@ -333,7 +333,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập trạng thái người dân
+		/// cập nhập trạng thái người dân - Authorize
 		/// </summary>
 		/// <param name="_bI_IndivialChageStatusIN"></param>
 		/// <returns></returns>
@@ -359,7 +359,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// thêm mới người dân
+		/// thêm mới người dân - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
@@ -454,7 +454,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập người dân
+		/// cập nhập người dân - Authorize
 		/// </summary>
 		/// <param name="_bI_InvididualUpdateIN"></param>
 		/// <returns></returns>
@@ -505,7 +505,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiết người dân
+		/// chi tiết người dân - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>

@@ -75,7 +75,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// cập nhập cấu hình trang giới thiệu
+        /// cập nhập cấu hình trang giới thiệu - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -169,7 +169,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// danh sách đơn vị trang giới thiệu
+        /// danh sách đơn vị trang giới thiệu - Authorize
         /// </summary>
         /// <param name="IntroduceId"></param>
         /// <param name="PageSize"></param>
@@ -200,7 +200,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// chi tiết đơn vị trang giới thiệu
+        /// chi tiết đơn vị trang giới thiệu - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -224,7 +224,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// thêm mới đơn vị trang giới thiệu
+        /// thêm mới đơn vị trang giới thiệu - Authorize
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -256,7 +256,7 @@ namespace PAKNAPI.Controllers
 
 
         /// <summary>
-        /// cập nhập đơn vị trang giới thiệu
+        /// cập nhập đơn vị trang giới thiệu - Authorize
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

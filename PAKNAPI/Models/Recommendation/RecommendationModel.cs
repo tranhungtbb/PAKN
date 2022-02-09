@@ -139,6 +139,34 @@ namespace PAKNAPI.Models.Recommendation
         public bool? IsForwardUnitChild { get; set; }
     }
 
+
+    /// <example>
+    ///{
+    ///     RecommendationCombination : {
+	///		"id": 518922,
+	///		"recommendationId": 616277,
+	///		"userSendId": null,
+	///		"unitSendId": null,
+	///		"receiveId": null,
+	///		"unitReceiveId": null,
+	///		"status": 5,
+	///		"step": 2,
+	///		"content": "ghi chú",
+	///		"reasonDeny": "",
+	///		"sendDate": null,
+	///	    "expiredDate": "2022-02-18T10:15:05.000Z",
+	///		 "processingDate": null,
+	///		 "isViewed": false
+	///     },
+    ///     "RecommendationStatus": 7,
+    ///      "ListUnit": [
+    ///        1,
+    ///        1106,
+    ///        1052
+    ///      ],
+    ///      "ProcessId": 518922
+    ///}
+    /// </example>
     public class RecommendationCombineRequest
     {
         public MRRecommendationCombinationInsert RecommendationCombination { get; set; }
@@ -171,6 +199,10 @@ namespace PAKNAPI.Models.Recommendation
 
         public List<MRRecommendationConclusionFilesGetByConclusionId> FilesDelete { get; set; }
     }
+
+    /// <example>
+	/// { "Id": 1, "status" : 5}
+	/// </example>
 
     public class RecommendationSendProcess
     {

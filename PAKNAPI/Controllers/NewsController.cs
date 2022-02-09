@@ -45,7 +45,7 @@ namespace PAKNAPI.Controller
 			_hostEnvironment = hostEnvironment;
 		}
 		/// <summary>
-		/// danh sách tin tức
+		/// danh sách tin tức - Authorize
 		/// </summary>
 		/// <param name="NewsIds"></param>
 		/// <param name="PageSize"></param>
@@ -77,7 +77,16 @@ namespace PAKNAPI.Controller
 			}
 		}
 
-
+		/// <summary>
+		/// danh sách thông báo chính quyền liên quan cho màn thêm mới
+		/// </summary>
+		/// <param name="NewId"></param>
+		/// <param name="LstNewsId"></param>
+		/// <param name="Title"></param>
+		/// <param name="NewsType"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("get-list-news-relates-forcreate-by-id")]
 		public async Task<ActionResult<object>> NENewsRelatesGetAllOnPageBase(int? NewId, string LstNewsId, string Title, int? NewsType, int? PageSize, int? PageIndex)
@@ -124,7 +133,7 @@ namespace PAKNAPI.Controller
 			}
 		}
 		/// <summary>
-		/// chi tiết  tin tức 
+		/// chi tiết  tin tức  - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -155,7 +164,7 @@ namespace PAKNAPI.Controller
 		}
 
 		/// <summary>
-		/// xóa  tin tức 
+		/// xóa  tin tức - Authorize
 		/// </summary>
 		/// <param name="_nENewsDeleteIN"></param>
 		/// <returns></returns>
@@ -182,7 +191,7 @@ namespace PAKNAPI.Controller
 			}
 		}
 		/// <summary>
-		/// thêm mới  tin tức 
+		/// thêm mới  tin tức - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -311,7 +320,7 @@ namespace PAKNAPI.Controller
 			}
 		}
 		/// <summary>
-		///  cập nhập  tin tức 
+		///  cập nhập  tin tức - Authorize
 		/// </summary>
 		/// <returns></returns>
 

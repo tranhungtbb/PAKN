@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers
 
 
         /// <summary>
-        /// chi tiết thông báo
+        /// chi tiết thông báo - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -72,7 +72,7 @@ namespace PAKNAPI.Controllers
 
 
         /// <summary>
-        /// danh sách thông báo
+        /// danh sách thông báo - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -108,7 +108,7 @@ namespace PAKNAPI.Controllers
 
         #region SYNotificationUpdateIsViewed
         /// <summary>
-        /// cập nhập trạng thái đã xem
+        /// cập nhập trạng thái đã xem - Authorize
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -135,7 +135,7 @@ namespace PAKNAPI.Controllers
         }
         #endregion
         /// <summary>
-        /// cập nhập trạng thái đã đọc
+        /// cập nhập trạng thái đã đọc - Authorize
         /// </summary>
         /// <param name="ObjectId"></param>
         /// <returns></returns>
@@ -162,7 +162,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// xóa  thông báo
+        /// xóa  thông báo - Authorize
         /// </summary>
         /// <param name="_syNotification"></param>
         /// <returns></returns>
@@ -170,7 +170,7 @@ namespace PAKNAPI.Controllers
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("delete")]
-        public async Task<ActionResult<object>> SYNotificationDelete(SYNotificationModel _syNotification)
+        public async Task<ActionResult<object>> SYNotificationDelete(SYNotificationDeleteIN _syNotification)
         {
             try
             {
@@ -197,6 +197,12 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// update-token-fire-base (cho app) - Authorize
+        /// </summary>
+        /// <param name "request"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("update-token-fire-base")]
@@ -216,6 +222,11 @@ namespace PAKNAPI.Controllers
             }
         }
 
+
+        /// <summary>
+        /// thống kê tb cho app - Authorize
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("notification-statistic-unread")]
@@ -232,6 +243,10 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// danh sách thông báo - all - Authorize
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("publish-get-all")]
@@ -252,6 +267,13 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("publish-get-by-id")]
@@ -271,77 +293,77 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-        [HttpPost]
-        [Authorize("ThePolicy")]
-        [Route("publish-insert")]
-        public async Task<ActionResult<object>> PublishNotificationInsertBase()
-        {
-            try
-            {
-                var jss = new JsonSerializerSettings
-                {
-                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
-                    DateParseHandling = DateParseHandling.DateTimeOffset,
-                };
-                PublishNotificationObject data = JsonConvert.DeserializeObject<PublishNotificationObject>(Request.Form["Data"].ToString(), jss);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 
-                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationInsertDAO(data) };
-            }
-            catch (Exception ex)
-            {
-                _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+        //[HttpPost]
+        //[Authorize("ThePolicy")]
+        //[Route("publish-insert")]
+        //public async Task<ActionResult<object>> PublishNotificationInsertBase()
+        //{
+        //    try
+        //    {
+        //        var jss = new JsonSerializerSettings
+        //        {
+        //            DateFormatHandling = DateFormatHandling.IsoDateFormat,
+        //            DateTimeZoneHandling = DateTimeZoneHandling.Local,
+        //            DateParseHandling = DateParseHandling.DateTimeOffset,
+        //        };
+        //        PublishNotificationObject data = JsonConvert.DeserializeObject<PublishNotificationObject>(Request.Form["Data"].ToString(), jss);
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
-        [HttpPost]
-        [Authorize("ThePolicy")]
-        [Route("publish-update")]
-        public async Task<ActionResult<object>> PublishNotificationUpdateBase()
-        {
-            try
-            {
-                var jss = new JsonSerializerSettings
-                {
-                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
-                    DateParseHandling = DateParseHandling.DateTimeOffset,
-                };
-                PublishNotificationObject data = JsonConvert.DeserializeObject<PublishNotificationObject>(Request.Form["Data"].ToString(), jss);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+        //        return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationInsertDAO(data) };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _bugsnag.Notify(ex);
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
-                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationUpdateDAO(data) };
-            }
-            catch (Exception ex)
-            {
-                _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
+        //[HttpPost]
+        //[Authorize("ThePolicy")]
+        //[Route("publish-update")]
+        //public async Task<ActionResult<object>> PublishNotificationUpdateBase()
+        //{
+        //    try
+        //    {
+        //        var jss = new JsonSerializerSettings
+        //        {
+        //            DateFormatHandling = DateFormatHandling.IsoDateFormat,
+        //            DateTimeZoneHandling = DateTimeZoneHandling.Local,
+        //            DateParseHandling = DateParseHandling.DateTimeOffset,
+        //        };
+        //        PublishNotificationObject data = JsonConvert.DeserializeObject<PublishNotificationObject>(Request.Form["Data"].ToString(), jss);
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
+        //        return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationUpdateDAO(data) };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _bugsnag.Notify(ex);
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
-        [HttpPost]
-        [Authorize("ThePolicy")]
-        [Route("publish-delete")]
-        public async Task<ActionResult<object>> PublishNotificationDeleteBase(PublishNotificationDeleteObject data)
-        {
-            try
-            {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
+        //[HttpPost]
+        //[Authorize("ThePolicy")]
+        //[Route("publish-delete")]
+        //public async Task<ActionResult<object>> PublishNotificationDeleteBase(SYNotificationDeleteIN data)
+        //{
+        //    try
+        //    {
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 
-                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationDeleteDAO(data) };
-            }
-            catch (Exception ex)
-            {
-                _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+        //        return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationDeleteDAO(data) };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _bugsnag.Notify(ex);
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
     }
 }

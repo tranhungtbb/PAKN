@@ -25,7 +25,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/field")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Lĩnh vực", Description = "Danh mục lĩnh vực")]
+	[OpenApiTag("Lĩnh vực", Description = "Danh mục lĩnh vực - Authorize")]
 	public class FieldController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -40,7 +40,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		}
 		/// <summary>
-		/// xóa lĩnh vực
+		/// xóa lĩnh vực - Authorize
 		/// </summary>
 		/// <param name="_cAFieldDeleteIN"></param>
 		/// <returns></returns>
@@ -65,7 +65,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// dánh sách lĩnh vực
+		/// dánh sách lĩnh vực - Authorize
 		/// </summary>
 
 		[HttpGet]
@@ -91,6 +91,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// dánh sách lĩnh vực 
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("get-all-list-field-icon-on-page")]
@@ -115,7 +119,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// chi tiết lĩnh vực
+		/// chi tiết lĩnh vực - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -144,7 +148,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// :D
+		/// get drop-down
 		/// </summary>
 		/// <returns></returns>
 
@@ -170,7 +174,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới lĩnh vực
+		/// thêm mới lĩnh vực - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -224,7 +228,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// cap nhap linh vuc
+		/// cap nhap linh vuc - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -275,7 +279,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// Cập nhật trạng thái - Authorize
+		/// </summary>
+		/// <param name="cAFieldUpdateIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("update-status")]
@@ -296,7 +304,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// dropdown lĩnh vực knct
+		/// dropdown lĩnh vực knct - Authorize
 		/// </summary>
 		/// <returns></returns>
 

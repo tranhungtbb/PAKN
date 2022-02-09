@@ -2,6 +2,9 @@
 
 namespace PAKNAPI.Models.Results
 {
+	/// <example>
+	/// { "Message": "", "Success" = "OK", "Result"=1 }
+	/// </example>
 	public class ResultApi
 	{
 		#region Properties

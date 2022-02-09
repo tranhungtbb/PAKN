@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/hashtagchatbot")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Nhãn dữ liệu chat bot")]
+	[OpenApiTag("Nhãn dữ liệu chat bot - Authorize")]
 	public class HashtagChatbotController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -36,13 +36,8 @@ namespace PAKNAPI.Controllers.ControllerBase
         }
 
 		/// <summary>
-		/// xóa hashtag
+		/// danh sách hashtag - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="QuantityUser"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -68,7 +63,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// danh sách hashtag - all
+		/// danh sách hashtag
 		/// </summary>
 		/// <returns></returns>
 
@@ -90,7 +85,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// chi tiết hashtag
+		/// chi tiết hashtag - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -118,7 +113,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới hashtag
+		/// thêm mới hashtag chatbot - Authorize
 		/// </summary>
 		/// <param name="_CAHashtagChatbot"></param>
 		/// <returns></returns>
@@ -143,27 +138,24 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// update hashtag
+		/// update hashtag - Authorize
 		/// </summary>
 		/// <param name="_CAHashtagChatbot"></param>
 		/// <returns></returns>
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("update")]
-		public async Task<ActionResult<object>> CAHashtagChatbotUpdate(CAHashtagChatbot _CAHashtagChatbot)
+		public async Task<ActionResult<object>> CAHashtagChatbotUpdate(CAHashtagChatbotUpdateIN _CAHashtagChatbot)
 		{
 			try
 			{
 				int count = await new CAHashtagChatbot(_appSetting).CAHashtagChatbotUpdate(_CAHashtagChatbot);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,"Tiêu đề bị trùng" , new Exception());
-
 					return new ResultApi { Success = ResultCode.ORROR, Result = count, Message = ResultMessage.ORROR };
 				}
 			}

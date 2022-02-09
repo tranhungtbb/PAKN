@@ -160,6 +160,14 @@
 							</div>
 						</div>
 						<div class="w-100"></div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Địa điểm phản ánh kiến nghị </label>
+							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="500"
+								formControlName="address" placeholder="Nhập..." />
+
+						</div>
+
+						<div class="w-100"></div>
 						<div class="col form-group">
 							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Nhãn dữ liệu</label>
 							<ng-select placeholder="Chọn..." class="form-control" [items]="lstHashtag" bindValue="value"

@@ -11,7 +11,7 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 	providedIn: 'root',
 })
 export class IntroduceService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
 
 	Update(request: any): Observable<any> {
 		let tempheaders = new HttpHeaders({

@@ -47,7 +47,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
         }
         /// <summary>
-        /// cập nhập Email
+        /// cập nhập Email - Authorize
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
@@ -162,8 +162,6 @@ namespace PAKNAPI.Controllers.ControllerBase
                 {
                     {"Data", model},
                 };
-                ///insert his
-                ///
                 hisModel.ObjectId = model.Id;
                 await insertHis(hisModel, userId);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
@@ -180,7 +178,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         }
 
         /// <summary>
-        /// chi tiết Email
+        /// chi tiết Email - Authorize
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -243,7 +241,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             }
         }
         /// <summary>
-        ///  danh sách email
+        ///  danh sách email - Authorize
         /// </summary>
         /// <param name="title"></param>
         /// <param name="unit"></param>
@@ -288,7 +286,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         }
 
         /// <summary>
-        /// xóa Email
+        /// xóa Email - Authorize
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -328,7 +326,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         }
 
         /// <summary>
-        /// gửi Email
+        /// gửi Email - Authorize
         /// </summary>
         /// <param name="id"></param>
         /// <param name="userId"></param>
@@ -373,7 +371,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             }
         }
         /// <summary>
-        /// danh sách lịch sử Email
+        /// danh sách lịch sử Email - Authorize
         /// </summary>
         /// <param name="objectId"></param>
         /// <param name="content"></param>

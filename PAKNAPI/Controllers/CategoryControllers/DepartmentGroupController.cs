@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/department-group")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Nhóm sở ngành", Description = "Danh mục nhóm sở ngành")]
+	[OpenApiTag("Nhóm sở ngành", Description = "Danh mục nhóm sở ngành - Authorize")]
 	public class DepartmentGroupController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -35,13 +35,14 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 		/// <summary>
-		/// xóa nhóm sở ngành
+		/// xóa nhóm sở ngành - Authorize
 		/// </summary>
 		/// <param name="_cADepartmentGroupDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("delete")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
 		{
 			try
@@ -58,37 +59,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		//[HttpPost]
-		//[Authorize("ThePolicy")]
-		//[Route("CAWordDeleteBase")]
-		//public async Task<ActionResult<object>> CAWordDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
-		//{
-		//	try
-		//	{
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-
-		//		return new ResultApi { Success = ResultCode.OK, Result = await new CADepartmentGroupDelete(_appSetting).CAWordDeleteDAO(_cADepartmentGroupDeleteIN) };
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
-
-		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-		//	}
-		//}
+		
 		/// <summary>
-		/// danh sách nhóm sở ngành
+		/// danh sách nhóm sở ngành - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-department-group-on-page")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupGetAllOnPageBase()
 		{
 			try
@@ -110,7 +89,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// chi tiết nhóm sở ngành
+		/// chi tiết nhóm sở ngành - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -118,6 +97,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupGetByIDBase(int? Id)
 		{
 			try
@@ -138,7 +118,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới nhóm sở ngành
+		/// thêm mới nhóm sở ngành - Authorize
 		/// </summary>
 		/// <param name="_cADepartmentGroupInsertIN"></param>
 		/// <returns></returns>
@@ -146,6 +126,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("insert")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupInsertBase(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
 		{
 			try
@@ -169,7 +150,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// cập nhập nhóm sở ngành
+		/// cập nhập nhóm sở ngành - Authorize
 		/// </summary>
 		/// <param name="_cADepartmentGroupUpdateIN"></param>
 		/// <returns></returns>
@@ -177,6 +158,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("update")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupUpdateBase(CADepartmentGroupUpdateIN _cADepartmentGroupUpdateIN)
 		{
 			try

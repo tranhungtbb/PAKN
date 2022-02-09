@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/word")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Từ ngữ cấm", Description = "Danh mục từ ngữ cấm")]
+	[OpenApiTag("Từ ngữ cấm", Description = "Danh mục từ ngữ cấm - Authorize")]
 	public class WordController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -35,7 +35,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 		/// <summary>
-		/// danh sách từ ngữ
+		/// danh sách từ ngữ - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -62,7 +62,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// danh sách từ ngữ theo nhóm từ
+		/// danh sách từ ngữ theo nhóm từ -Authorize
 		/// </summary>
 		/// <param name="GroupId"></param>
 		/// <returns></returns>
@@ -91,7 +91,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// chi tiết từ ngữ
+		/// chi tiết từ ngữ - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -119,7 +119,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới từ ngữ
+		/// thêm mới từ ngữ - Authorize
 		/// </summary>
 		/// <param name="_cAWordInsertIN"></param>
 		/// <returns></returns>

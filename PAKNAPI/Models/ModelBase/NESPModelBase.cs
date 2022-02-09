@@ -35,6 +35,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class NENewsDeleteIN
 	{
 		public int? Id { get; set; }

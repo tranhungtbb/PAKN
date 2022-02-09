@@ -283,6 +283,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class INVInvitationDeleteIN
 	{
 		public int? Id { get; set; }

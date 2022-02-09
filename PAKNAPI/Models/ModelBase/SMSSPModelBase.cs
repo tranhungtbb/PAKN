@@ -174,6 +174,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class SMSQuanLyTinNhanDeleteIN
 	{
 		public int? Id { get; set; }

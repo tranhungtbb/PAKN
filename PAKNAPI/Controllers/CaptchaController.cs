@@ -43,7 +43,6 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[Route("get-captcha-image")]
 		[HttpGet]
-		//[Authorize("demo")]
 		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null, double MillisecondsCurrent = 0)
 		{
 			try

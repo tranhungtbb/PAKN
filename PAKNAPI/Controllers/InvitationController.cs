@@ -47,6 +47,11 @@ namespace PAKNAPI.Controllers
 
         }
 
+        /// <summary>
+        /// get thông tin cho màn thêm mới, chỉnh sửa - Authorize
+        /// </summary>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-data-for-create")]
@@ -70,7 +75,7 @@ namespace PAKNAPI.Controllers
 
 
         /// <summary>
-        /// xóa thư mời
+        /// xóa thư mời - Authorize
         /// </summary>
         /// <param name="_iNVInvitationDeleteIN"></param>
         /// <returns></returns>
@@ -108,7 +113,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// danh sách người dùng đã xem thư mời
+        /// danh sách người dùng đã xem thư mời - Authorize
         /// </summary>
         /// <param name="InvitationId"></param>
         /// <param name="UserName"></param>
@@ -144,7 +149,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// danh sách thư mời
+        /// danh sách thư mời - Authorize
         /// </summary>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
@@ -181,7 +186,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// thêm mới thư mời
+        /// thêm mới thư mời - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -384,7 +389,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// chi tiết thư mời
+        /// chi tiết thư mời - Authorize
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -431,7 +436,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// chi tiết thư mời (để update)
+        /// chi tiết thư mời (để update) - Authorize
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -461,7 +466,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// cập nhập thư mời
+        /// cập nhập thư mời - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -699,7 +704,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// lịch sử thư mời
+        /// lịch sử thư mời - Authorize
         /// </summary>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>

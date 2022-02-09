@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers
             _hostingEnvironment = hostEnvironment;
         }
 		/// <summary>
-		/// danh sách cấu hình hệ thống
+		/// danh sách cấu hình hệ thống - Authorize
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -69,7 +69,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// chi tiết cấu hình hệ thống
+		/// chi tiết cấu hình hệ thống - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -128,7 +128,7 @@ namespace PAKNAPI.Controllers
 
 
 		/// <summary>
-		/// cập nhập cấu hình hệ thống
+		/// cập nhập cấu hình hệ thống - Authorize
 		/// </summary>
 		/// <param name="_sYConfigUpdateIN"></param>
 		/// <returns></returns>
@@ -152,7 +152,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// xóa cấu hình thời gian
+		/// xóa cấu hình thời gian - Authorize
 		/// </summary>
 		/// <param name="_sYTimeDeleteIN"></param>
 		/// <returns></returns>
@@ -177,7 +177,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách cấu hình thời gian
+		/// danh sách cấu hình thời gian - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -204,7 +204,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiết cấu hình thời gian
+		/// chi tiết cấu hình thời gian - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -259,7 +259,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thêm mới cấu hình thời gian
+		/// thêm mới cấu hình thời gian - Authorize
 		/// </summary>
 		/// <param name="_sYTimeInsertIN"></param>
 		/// <returns></returns>
@@ -284,7 +284,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// cập nhập cấu hình thời gian
+		/// cập nhập cấu hình thời gian - Authorize
 		/// </summary>
 		/// <param name="_sYTimeUpdateIN"></param>
 		/// <returns></returns>

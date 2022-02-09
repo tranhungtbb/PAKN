@@ -112,6 +112,15 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
+	/// <example>
+	///{
+	///   "contents": "trao đổi",
+	///   "recommendationId": 614282,
+	///   "isPublish": false
+	///}
+	/// </example>
+
+
 	public class MRInfomationExchange
 	{
 		private SQLCon _sQLCon;
@@ -130,13 +139,17 @@ namespace PAKNAPI.ModelBase
 		public string FullName { get; set; }
 		public string UnitName { get; set; }
 		public int? TypeObject { get; set; }
-			
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
 		public string Contents { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Id phản ánh kiến nghị không được để trống")]
 		public long? RecommendationId { get; set; }
 		public DateTime? CreatedDate { get; set; }
 
 		public long? RowNumber { get; set; }
 
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsPublish { get; set; }
 
 		public async Task<List<MRInfomationExchange>> MRInfomationExchangeGetAllOnPage(long? RecommendationId, bool? IsPublish, int? PageIndex, int? PageSize)
@@ -269,6 +282,13 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// {
+    ///		"contents": "Tôi chưa đồng ý với pakn trên",
+    ///		"isPublish": false,
+    ///		"recommendationId": 610196
+	///	}
+	/// </example>
 	public class MRCommentInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
@@ -308,6 +328,10 @@ namespace PAKNAPI.ModelBase
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("MR_Commnent_UpdateStatus", DP);
 		}
 	}
+
+	/// <example>
+	/// { "Id": 1, "IsPublish" : true}
+	/// </example>
 	public class MRCommentUpdateIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã bình luận không được để trống")]
@@ -337,6 +361,10 @@ namespace PAKNAPI.ModelBase
 			return await _sQLCon.ExecuteNonQueryDapperAsync("MR_Commnent_Delete", DP);
 		}
 	}
+
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class MRCommentDeleteIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã bình luận không được để trống")]
@@ -1191,10 +1219,23 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	///{
+	/// "RecommendationId" : 615324,
+	///	"HashtagId": 99,
+	///}
+	/// </example>
 	public class MRRecommendationHashtagDelete
 	{
 		private SQLCon _sQLCon;
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã PAKN không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Mã PAKN không đúng định dạng")]
 		public int? RecommendationId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã hashtag không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Mã hashtag không đúng định dạng")]
 		public int? HashtagId { get; set; }
 
 		public MRRecommendationHashtagDelete(IAppSetting appSetting)
@@ -1216,10 +1257,25 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	/// "RecommendationId" : 615324,
+	///	"HashtagName": "BHYT",
+	///	"HashtagId": 99,
+	///}
+	/// </example>
+
 	public class MRRecommendationHashtagInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã PAKN không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Mã PAKN không đúng định dạng")]
 		public int? RecommendationId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã hashtag không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Mã hashtag không đúng định dạng")]
 		public int? HashtagId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên hashtag không được để trống")]
 		public string HashtagName { get; set; }
 	}
 
@@ -1244,6 +1300,10 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationDelete", DP));
 		}
 	}
+
+	/// <example>
+	/// { "Id": 1202}
+	/// </example>
 
 	public class MRRecommendationDeleteIN
 	{
@@ -2339,6 +2399,26 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	///{
+	///		"id": 518922,
+	///		"recommendationId": 616277,
+	///		"userSendId": null,
+	///		"unitSendId": null,
+	///		 "receiveId": null,
+	///		 "unitReceiveId": null,
+	///		  "status": 5,
+	///		  "step": 2,
+	///		  "content": "ghi chú",
+	///		  "reasonDeny": "",
+	///		  "sendDate": null,
+	///		 "expiredDate": "2022-02-18T10:15:05.000Z",
+	///		 "processingDate": null,
+	///		 "isViewed": false
+	///}
+	/// </example>
+	
 	public class MRRecommendationCombinationInsert
 	{
 		public byte? Status { get; set; }

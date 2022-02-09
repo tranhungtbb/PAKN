@@ -274,5 +274,43 @@ namespace PAKNAPI.Controllers
             }
         }
 
+
+        [HttpPost]
+        [Route("upload-image-introduce")]
+        public ActionResult<object> UploadImageIntroduce()
+        {
+            try
+            {
+                string NameFile = "", filePath = "", FullPath = "";
+                var FilesUpload = Request.Form.Files;
+                string folder = Path.Combine("Upload\\Introduce\\", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString(), DateTime.Now.Minute.ToString());
+                string folderPath = Path.Combine(_webHostEnvironment.ContentRootPath, folder);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                foreach (var item in FilesUpload)
+                {
+                    NameFile = Path.GetFileName(item.FileName).Replace("+", "");
+                    filePath = Path.Combine(folderPath, NameFile);
+                    FullPath = Path.Combine(folder, NameFile);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        item.CopyTo(stream);
+                    }
+                }
+                IDictionary<string, object> json = new Dictionary<string, object>
+                {
+                    {"fullPaths", FullPath},
+                };
+                return new ResultApi { Success = ResultCode.OK, Result = new { data = json } };
+            }
+            catch (Exception ex)
+            {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
     }
 }

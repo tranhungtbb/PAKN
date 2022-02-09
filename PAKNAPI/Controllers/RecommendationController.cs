@@ -100,7 +100,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// get data for chuyển tiếp pakn
+        /// get data for chuyển tiếp pakn - Authorize
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -121,7 +121,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// get data for process
+        /// get data for process - Authorize
         /// </summary>
         /// <param name="UnitId"></param>
         /// <returns></returns>
@@ -144,7 +144,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// chi tiết pakn
+        /// chi tiết pakn - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -167,7 +167,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// chi tiết pakn màn view chi tiết
+        /// chi tiết pakn màn view chi tiết - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -204,8 +204,12 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-      
 
+        /// <summary>
+        /// chi tiết pakn cho phản ánh kiến nghị của tôi - Authorize
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-detail-public-by-id")]
@@ -223,7 +227,13 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-        
+
+
+        /// <summary>
+        /// api check ảnh giả cho app - Authorize
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize("ThePolicy")]
@@ -307,7 +317,7 @@ namespace PAKNAPI.Controller
 
 
         /// <summary>
-        /// thêm mới pakn
+        /// thêm mới pakn - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -712,7 +722,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// cập nhập pakn
+        /// cập nhập pakn - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -995,7 +1005,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// chuyển tiếp pakn
+        /// chuyển tiếp pakn - Authorize
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -1062,7 +1072,11 @@ namespace PAKNAPI.Controller
             }
         }
 
-
+        /// <summary>
+        /// chuyển tiếp phối hợp giải quyết nhiều đơn vị - Authorize
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("recommendation-combine-insert")]
@@ -1117,8 +1131,12 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-        
 
+        /// <summary>
+        /// xử lý phản ánh kiến nghị - Authorize
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize("ThePolicy")]
@@ -1315,7 +1333,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// giải quyết pakn
+        /// giải quyết pakn - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -1452,6 +1470,11 @@ namespace PAKNAPI.Controller
         }
 
 
+        /// <summary>
+        /// giải quyết phản ánh kiến nghị cho đơn vị được phối hợp - Authorize
+        /// </summary>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("recommendation-on-process-conclusion-combine")]
@@ -1537,7 +1560,7 @@ namespace PAKNAPI.Controller
 
 
         /// <summary>
-        /// cập nhập trạng thái pakn
+        /// cập nhập trạng thái pakn - cho người dân tại màn danh sách pakn của tôi - Authorize
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -1605,7 +1628,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// danh sách pakn chứa ảnh giả
+        /// danh sách pakn chứa ảnh giả - Authorize
         /// </summary>
         /// <param name="Code"></param>
         /// <param name="SendName"></param>
@@ -1645,7 +1668,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// danh sách pakn
+        /// danh sách pakn - Authorize
         /// </summary>
         /// <param name="Code"></param>
         /// <param name="SendName"></param>
@@ -1686,7 +1709,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// danh sach pakn ket hop xu ly
+        /// danh sach pakn ket hop xu ly - Authorize
         /// </summary>
         /// <param name="Code"></param>
         /// <param name="SendName"></param>
@@ -1726,7 +1749,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// danh sách pakn chứa từ cấm
+        /// danh sách pakn chứa từ cấm - Authorize
         /// </summary>
         /// <param name="Code"></param>
         /// <param name="SendName"></param>
@@ -1768,7 +1791,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// lịch sử pakn
+        /// lịch sử pakn - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -1797,7 +1820,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// xóa pakn
+        /// xóa pakn - Authorize
         /// </summary>
         /// <param name="_mRRecommendationDeleteIN"></param>
         /// <returns></returns>
@@ -1852,7 +1875,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// danh sách pakn gợi ý theo hastag
+        /// danh sách pakn gợi ý theo hastag - Authorize
         /// </summary>
         /// <param name="ListIdHashtag"></param>
         /// <param name="PageSize"></param>
@@ -1940,7 +1963,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// danh sách pakn theo hashtag
+        /// danh sách pakn theo hashtag - Authorize
         /// </summary>
         /// <param name="Code"></param>
         /// <param name="SendName"></param>
@@ -1977,7 +2000,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// lí do từ chối pakn
+        /// lí do từ chối pakn - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -2005,7 +2028,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// thêm mới hashtag cho pakn
+        /// thêm mới hashtag cho pakn - Authorize
         /// </summary>
         /// <param name="_mRRecommendationHashtagInsertIN"></param>
         /// <returns></returns>
@@ -2030,7 +2053,7 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// xóa hashtag cho pakn
+        /// xóa hashtag cho pakn - Authorize
         /// </summary>
         /// <param name="_mRRecommendationHashtagDeleteIN"></param>
         /// <returns></returns>
@@ -2121,7 +2144,7 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
-        /// danh sách trao đổi theo pakn
+        /// danh sách trao đổi theo pakn - Authorize
         /// </summary>
         /// <param name="RecommendationId"></param>
         /// <param name="PageIndex"></param>
@@ -2158,7 +2181,7 @@ namespace PAKNAPI.Controller
 
 
         /// <summary>
-        /// thêm trao đổi theo pakn
+        /// thêm trao đổi theo pakn - Authorize
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -2174,6 +2197,7 @@ namespace PAKNAPI.Controller
                 model.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 model.FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
                 var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                model.TypeObject = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 model.CreatedDate = DateTime.Now;
 
                 var result = await new MRInfomationExchange(_appSetting).MRInfomationExchangeInsertDAO(model);
@@ -2229,7 +2253,18 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-        
+
+        /// <summary>
+        /// danh sách bình luận quản trị - Authorize
+        /// </summary>
+        /// <param name="FullName"></param>
+        /// <param name="Contents"></param>
+        /// <param name="RecommendationTitle"></param>
+        /// <param name="IsPublish"></param>
+        /// <param name="CreatedDate"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]
@@ -2256,6 +2291,12 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// get danh sách bình luận theo bình luận cấp cha (quản trị) - Authorize
+        /// </summary>
+        /// <param name="ParentId"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]
@@ -2310,8 +2351,14 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// danh sách bình luận theo cấp cha trang công bố
+        /// </summary>
+        /// <param name="ParentId"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
+
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-comment-by-parent-on-page")]
         public async Task<ActionResult<object>> MRCommentGetByParentOnPage(int? ParentId, int? PageIndex)
         {
@@ -2332,7 +2379,7 @@ namespace PAKNAPI.Controller
 
 
         /// <summary>
-        /// Thay doi trang thai binh luan
+        /// Thay doi trang thai binh luan - Authorize
         /// </summary>
         /// <param name="_mRCommnentUpdateIN"></param>
         /// <returns></returns>
@@ -2360,6 +2407,11 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// xóa bình luận - Authorize
+        /// </summary>
+        /// <param name="mRCommentDelete"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("delete-comment")]
@@ -2378,11 +2430,11 @@ namespace PAKNAPI.Controller
             }
         }
 
-       
+
 
 
         /// <summary>
-        /// tk pakn 7 ngày qua
+        /// tk pakn 7 ngày qua - Authorize
         /// </summary>
         /// <param name="UnitProcessId"></param>
         /// <param name="UserProcessId"></param>
@@ -2483,7 +2535,7 @@ namespace PAKNAPI.Controller
                             notification.SendOrgId = 0;
                             notification.Content =
                                 recommendation.SendId != item.Id ?
-                                sender.FullName + " vừa gửi một PAKN" : "Bạn vừa tạo một PAKN";
+                                sender.FullName + " vừa gửi một PAKN" : "Anh/Chị vừa tạo một PAKN";
                             // insert notification
                             await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                         }
@@ -2509,7 +2561,7 @@ namespace PAKNAPI.Controller
 
                         notification.ReceiveId = sender.Id;
                         notification.Title = "PAKN BỊ TỪ CHỐI";
-                        notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã bị từ chối tiếp nhận";
+                        notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của anh/chị đã bị từ chối tiếp nhận";
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
                         if (sendIdSameMR != null) {
                             foreach (var item in sendIdSameMR)

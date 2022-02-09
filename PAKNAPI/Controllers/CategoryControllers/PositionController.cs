@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/position")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Chức vụ", Description = "Danh mục chức vụ")]
+	[OpenApiTag("Chức vụ", Description = "Danh mục chức vụ - Authorize")]
 	public class PositionController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -35,7 +35,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 		/// <summary>
-		/// xóa chức vụ
+		/// xóa chức vụ - Authorize
 		/// </summary>
 		/// <param name="_cAPositionDeleteIN"></param>
 		/// <returns></returns>
@@ -61,7 +61,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// danh sách chức vụ
+		/// danh sách chức vụ - Authorize
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -87,7 +87,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// chi tiết
+		/// chi tiết - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -136,12 +136,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 		//	}
 		//}
+
 		/// <summary>
-		/// thêm mới chức vụ
+		/// thêm mới chức vụ - Authorize
 		/// </summary>
 		/// <param name="_cAPositionInsertIN"></param>
 		/// <returns></returns>
-
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("insert")]
@@ -168,7 +168,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 
 		/// <summary>
-		/// cập nhập chức vụ
+		/// cập nhập chức vụ - Authorize
 		/// </summary>
 		/// <param name="_cAPositionUpdateIN"></param>
 		/// <returns></returns>

@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/news-type")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Loại thông báo", Description = "Danh mục loại thông báo")]
+	[OpenApiTag("Loại thông báo", Description = "Danh mục loại thông báo - Authorize")]
 	public class NewsTypeController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -35,7 +35,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 		/// <summary>
-		/// xóa kiểu bài viết
+		/// xóa kiểu bài viết - Authorize
 		/// </summary>
 		/// <param name="_cANewsTypeDeleteIN"></param>
 		/// <returns></returns>
@@ -84,7 +84,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// danh sách kiểu bài viết
+		/// danh sách kiểu bài viết -Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -112,7 +112,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// chi tiết kiểu bài viết
+		/// chi tiết kiểu bài viết - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -140,7 +140,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới
+		/// thêm mới - Authorize
 		/// </summary>
 		/// <param name="_cANewsTypeInsertIN"></param>
 		/// <returns></returns>
@@ -164,7 +164,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// cập nhập
+		/// cập nhập - Authorize
 		/// </summary>
 		/// <param name="_cANewsTypeUpdateIN"></param>
 		/// <returns></returns>

@@ -610,6 +610,14 @@ namespace PAKNAPI.ModelBase
 		public int? RowNumber; // int, null
 	}
 
+	/// <example>
+	/// {
+	///		"Id": 1,
+	///		"Name": "demo name",
+	///		"IsActived" : true
+	/// }
+	/// </example>
+
 	public class CAHashtag
 	{
 		private SQLCon _sQLCon;
@@ -697,6 +705,10 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class HashtagDelete
 	{
 		public int? id { get; set; }

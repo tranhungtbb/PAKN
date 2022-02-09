@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// danh sách tài liệu-video
+        /// danh sách tài liệu-video - Authorize
         /// </summary>
         /// <param name="Category"></param>
         /// <returns></returns>
@@ -65,6 +65,11 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// danh sách hướng dẫn theo loại / tài liệu hoặc video
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("get-by-type")]
         public async Task<object> SYSupportGetByType(int? Type)
@@ -83,7 +88,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// thêm mới tài liệu-video
+        /// thêm mới tài liệu-video - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -135,7 +140,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// cập nhập tài liệu-video
+        /// cập nhập tài liệu-video - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -187,7 +192,7 @@ namespace PAKNAPI.Controllers
             }
         }
         /// <summary>
-        /// xóa tài liệu-video
+        /// xóa tài liệu-video - Authorize
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -253,7 +258,7 @@ namespace PAKNAPI.Controllers
 
 
         /// <summary>
-        /// thêm thư viện ảnh
+        /// thêm thư viện ảnh - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -303,7 +308,7 @@ namespace PAKNAPI.Controllers
 
 
         /// <summary>
-        /// 
+        /// xóa thư viện ảnh - Authorize
         /// </summary>
         /// <param name="syGalleryDelete"></param>
         /// <returns></returns>
@@ -328,8 +333,11 @@ namespace PAKNAPI.Controllers
         }
 
 
-        
 
+        /// <summary>
+        /// danh sách thư viện ảnh - Authorize
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("gallery-get-all")]

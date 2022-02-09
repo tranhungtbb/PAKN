@@ -1,4 +1,5 @@
 ﻿using Bugsnag;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -39,9 +40,18 @@ namespace PAKNAPI.Controllers
             this._bugsnag = bugsnag;
         }
 
+        /// <summary>
+        /// danh sách room chat - Authorize
+        /// </summary>
+        /// <param name="Title"></param>
+        /// <param name="CreatedDate"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("rooms")]
+        [Authorize("ThePolicy")]
         public async Task<ActionResult<object>> BOTRoomGetAllOnPageBase(string Title,DateTime? CreatedDate, int? PageSize = 20, int? PageIndex = 1)
         {
             try
@@ -64,8 +74,14 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// danh sách room có user muốn gặp quản trị - Authorize
+        /// </summary>
+        /// <returns></returns>
+
         [HttpGet]
         [Route("rooms-notification")]
+        [Authorize("ThePolicy")]
         public async Task<ActionResult<object>> BOTRoomForNotificationBase()
         {
             try
@@ -84,6 +100,11 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// chi tiết room
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("room-get-by-id")]
         public async Task<ActionResult<object>> BOTRoomGetByIdBase(int Id)
@@ -203,6 +224,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Route("bot-update-room")]
+        [Authorize("ThePolicy")]
         public async Task<object> ChatbotGetByRoomIdDAO(long roomId)
         {
             try
@@ -216,6 +238,13 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// danh sách tin nhắn của room
+        /// </summary>
+        /// <param name="RoomId"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="PageSize"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("get-message")]
         public async Task<object> ChatbotGetByRoomIdDAO(int RoomId, int PageIndex, int PageSize)

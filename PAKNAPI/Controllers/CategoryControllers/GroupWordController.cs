@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/group-word")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Nhóm từ ngữ", Description = "Danh mục Nhóm từ ngữ")]
+	[OpenApiTag("Nhóm từ ngữ", Description = "Danh mục Nhóm từ ngữ - Authorize")]
 	public class GroupWordController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -35,7 +35,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 		/// <summary>
-		/// xóa nhóm thư viện từ
+		/// xóa nhóm thư viện từ - Authorize
 		/// </summary>
 		/// <param name="_cAGroupWordDeleteIN"></param>
 		/// <returns></returns>
@@ -59,7 +59,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// danh sách nhóm thư viện từ
+		/// danh sách nhóm thư viện từ - Authorize
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -86,7 +86,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// chi tiết nhóm thư viện từ
+		/// chi tiết nhóm thư viện từ - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -114,6 +114,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// danh  sách suggest cho màn thêm mới pakn
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -138,7 +142,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thêm mới nhóm thư viện từ
+		/// thêm mới nhóm thư viện từ - Authorize
 		/// </summary>
 		/// <param name="_cAGroupWordInsertIN"></param>
 		/// <returns></returns>
@@ -169,7 +173,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// cập nhập nhóm thư viện từ
+		/// cập nhập nhóm thư viện từ - Authorize
 		/// </summary>
 		/// <param name="_cAGroupWordUpdateIN"></param>
 		/// <returns></returns>

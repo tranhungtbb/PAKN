@@ -42,7 +42,7 @@ namespace PAKNAPI.Controllers
 
         #region RM_RemindInsert
         /// <summary>
-        /// thêm mới nhắc nhỏ
+        /// thêm mới nhắc nhỏ - Authorize
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -121,7 +121,7 @@ namespace PAKNAPI.Controllers
         #region danh sách nhắc việc trong detail PAKN mà cơ quan mình nhận được hoặc mình là người gửi
 
         /// <summary>
-        /// danh sách nhắc nhỏ
+        /// danh sách nhắc nhở - Authorize
         /// </summary>
         /// <param name="RecommendationId"></param>
         /// <returns></returns>

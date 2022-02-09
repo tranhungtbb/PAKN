@@ -63,6 +63,12 @@ namespace PAKNAPI.Controllers
 			return await new LoginService(_appSetting, _config, _context).AuthenticateAsync(loginIN);
 		}
 
+		/// <summary>
+		/// RefreshToken
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+
 		[AllowAnonymous]
 		[HttpPost]
 		[Route("refresh-token")]
@@ -73,7 +79,11 @@ namespace PAKNAPI.Controllers
 
 
 
-
+		/// <summary>
+		/// RevokeToken - thu hồi token
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost]
 		[Route("revoke-token")]
@@ -85,14 +95,13 @@ namespace PAKNAPI.Controllers
 
 
 		/// <summary>
-		/// đăng xuất
+		/// đăng xuất - Authorize
 		/// </summary>
-		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
 		[Route("log-out")]
-		[Authorize]
-		public ActionResult<object> LogOut(EditUserRequest request)
+		[Authorize("ThePolicy")]
+		public ActionResult<object> LogOut()
 		{
             try
 			{
@@ -208,6 +217,12 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = "An error occurred" };
 			}
 		}
+
+		/// <summary>
+		/// get otp forget password
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Route("get-token-by-email")]

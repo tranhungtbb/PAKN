@@ -240,7 +240,7 @@ export class CreateRecommendationComponent implements OnInit {
 
 	builForm() {
 		this.form = new FormGroup({
-			// code: new FormControl(this.model.code, [Validators.required]),
+			address: new FormControl(this.model.address),
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
 			field: new FormControl(this.model.field, [Validators.required]),

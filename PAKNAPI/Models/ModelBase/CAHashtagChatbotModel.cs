@@ -57,6 +57,14 @@ namespace PAKNAPI.Models.ModelBase
 		}
 	}
 
+
+
+	/// <example>
+	/// {
+	///		"Name": "demo name",
+	///		"IsActived" : true
+	/// }
+	/// </example>
 	public class CAHashtagChatbotInsertIN
 	{
 		public string Name { get; set; }
@@ -87,6 +95,13 @@ namespace PAKNAPI.Models.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { 
+	///		"Id": 2067,
+	///		"Name": "demo name",
+	///		"IsActived" : true
+	/// }
+	/// </example>
 	public class CAHashtagChatbotUpdateIN
 	{
 		public long? Id { get; set; }
@@ -176,7 +191,7 @@ namespace PAKNAPI.Models.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagChatbot>("CA_HashtagGetAll", DP)).ToList();
 		}
 
-		public async Task<int> CAHashtagChatbotUpdate(CAHashtagChatbot _CAHashtagChatbot)
+		public async Task<int> CAHashtagChatbotUpdate(CAHashtagChatbotUpdateIN _CAHashtagChatbot)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _CAHashtagChatbot.Id);
@@ -209,7 +224,11 @@ namespace PAKNAPI.Models.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagChatbotDelete", DP));
 		}
 	}
-
+	/// <example>
+	/// { 
+	///		"Id": 2067
+	/// }
+	/// </example>
 	public class HashtagChatbotDelete
 	{
 		public int? id { get; set; }

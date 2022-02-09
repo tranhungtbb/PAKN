@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using PAKNAPI.App_Helper;
 using PAKNAPI.Common;
+using PAKNAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -170,7 +171,7 @@ namespace PAKNAPI.Models.ModelBase
 
 		// delete
 
-		public async Task<int> SYNotificationDelete(SYNotificationModel _syNotification)
+		public async Task<int> SYNotificationDelete(SYNotificationDeleteIN _syNotification)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _syNotification.Id);
@@ -293,6 +294,14 @@ namespace PAKNAPI.Models.ModelBase
 			}
 		}
 	}
+
+	/// <example>
+	/// { 
+	/// "Token": "di36S0gCRyygoVO-XeBYaM:APA91bF9oQzi2PLID4_pdSTSThhZqCCaMrQGPwd1PQ875CEynJQz_eQvxBSV4cbJwQ24wAuQf
+	/// WZsPIOJLDDLe5YOf4akN9LMKDh7R2HpaKvHR68dmM1Hh9myoNh56MIm5g7WgKe5XhT6",
+	///	"Remove" : false
+	///	}
+	/// </example>
 	public class UpdateTokenFireBaseRequest
 	{
 		[Required]
@@ -348,10 +357,6 @@ namespace PAKNAPI.Models.ModelBase
 		public int? CreatedBy { get; set; }
 		public int? RowNumber { get; set; }
 	}
-	public class PublishNotificationDeleteObject
-	{
-		public int Id { get; set; }
-	}
 
 	public class PublishNotification
 	{
@@ -399,7 +404,7 @@ namespace PAKNAPI.Models.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<int?>("SY_PublishNotificationUpdate", DP)).FirstOrDefault();
 		}
 
-		public async Task<int?> PublishNotificationDeleteDAO(PublishNotificationDeleteObject data)
+		public async Task<int?> PublishNotificationDeleteDAO(SYNotificationDeleteIN data)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", data.Id);

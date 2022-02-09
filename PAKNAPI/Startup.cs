@@ -164,6 +164,11 @@ namespace PAKNAPI
 				config.OperationProcessors.Add(
 					new AspNetCoreOperationSecurityScopeProcessor("apikey"));
 
+				config.AllowReferencesWithProperties = true;
+
+				config.OperationProcessors.Add(new AddRequiredHeaderParameter());
+
+
 			});
 
             // If using IIS:

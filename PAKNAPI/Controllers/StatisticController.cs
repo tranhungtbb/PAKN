@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers
             _hostingEnvironment = hostEnvironment;
         }
 		/// <summary>
-		/// tk pakn theo đơn vị
+		/// tk pakn theo đơn vị - Authorize
 		/// </summary>
 		/// <param name="LtsUnitId"></param>
 		/// <param name="FromDate"></param>
@@ -77,7 +77,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiết pakn theo đơn vị
+		/// chi tiết pakn theo đơn vị - Authorize
 		/// </summary>
 		/// <param name="UnitId"></param>
 		/// <param name="Code"></param>
@@ -121,7 +121,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// tk pakn theo từ ngữ 
+		/// tk pakn theo từ ngữ - Authorize
 		/// </summary>
 		/// <param name="LtsUnitId"></param>
 		/// <param name="FromDate"></param>
@@ -154,7 +154,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiết pakn theo nhóm từ ngữ
+		/// chi tiết pakn theo nhóm từ ngữ - Authorize
 		/// </summary>
 		/// <param name="Code"></param>
 		/// <param name="SendName"></param>
@@ -194,7 +194,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// tk pakn theo lĩnh vực
+		/// tk pakn theo lĩnh vực - Authorize
 		/// </summary>
 		/// <param name="LtsUnitId"></param>
 		/// <param name="FromDate"></param>
@@ -229,7 +229,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách pakn theo lĩnh vực
+		/// danh sách pakn theo lĩnh vực - Authorize
 		/// </summary>
 		/// <param name="FiledId"></param>
 		/// <param name="Code"></param>
@@ -377,7 +377,14 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("recommendation-processing-status")]
@@ -404,6 +411,13 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("recommendation-processing-results")]
@@ -423,6 +437,16 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="Type"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]

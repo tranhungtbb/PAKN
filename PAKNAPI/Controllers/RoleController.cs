@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// get data for create
+		/// get data for create - Authorize
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -63,7 +63,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiết vai trò
+		/// chi tiết vai trò - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -93,7 +93,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// xóa vai trò
+		/// xóa vai trò - Authorize
 		/// </summary>
 		/// <param name="_sYRoleDeleteIN"></param>
 		/// <returns></returns>
@@ -118,7 +118,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách người dùng theo vai trò
+		/// insert permission cho vai trò - Authorize
 		/// </summary>
 		/// <param name="_sYPermissionGroupUserInsertByListIN"></param>
 		/// <returns></returns>
@@ -142,7 +142,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách vao trò (all)
+		/// danh sách vao trò (all) - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -169,7 +169,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách vai trò (on page)
+		/// danh sách vai trò (on page) - Authorize
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
@@ -196,7 +196,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thêm mới vai trò
+		/// chi tiết vai trò - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -224,7 +224,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// cập nhập vai trò
+		/// cập nhập vai trò - Authorize
 		/// </summary>
 		/// <param name="_sYRoleUpdateIN"></param>
 		/// <returns></returns>
@@ -249,7 +249,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thêm mới vai trò
+		/// thêm mới vai trò - Authorize
 		/// </summary>
 		/// <param name="_sYRoleInsertIN"></param>
 		/// <returns></returns>

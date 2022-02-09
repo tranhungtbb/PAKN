@@ -12,7 +12,7 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 	providedIn: 'root',
 })
 export class RoleService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) { }
 
 	getAll(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAll)

@@ -34,6 +34,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class CADepartmentDeleteIN
 	{
 		public int? Id { get; set; }
@@ -134,6 +137,10 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 2067}
+	/// </example>
+
 	public class CADepartmentGroupDeleteIN
 	{
 		public int? Id { get; set; }
@@ -219,6 +226,14 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	///	"description": "Dess",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///	"Name": "Demo nhom so nganh",
+	///}
+	/// </example>
 	public class CADepartmentGroupInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên nhóm sở ngành không được để trống")]
@@ -255,6 +270,16 @@ namespace PAKNAPI.ModelBase
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentGroupUpdate", DP);
 		}
 	}
+
+	/// <example>
+	///{
+	///	"id" : 1,
+	///	"description": "Dess",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///	"Name": "Demo nhom so nganh",
+	///}
+	/// </example>
 
 	public class CADepartmentGroupUpdateIN
 	{
@@ -300,6 +325,22 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	///	"address": "",
+	///	"code": "",
+	///	"departmentGroupId": 2066,
+	///	"description": "",
+	///	"email": "tran@gmail.com",
+	///	"fax": "",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///	"name": "Sở kế hoạch",
+	///	"orderNumber": null,
+	///	"phone": "0981233123"
+	///}
+	/// </example>
+
 	public class CADepartmentInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên sở ngành không được để trống")]
@@ -324,6 +365,7 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	
 	public class CADepartmentUpdate
 	{
 		private SQLCon _sQLCon;
@@ -354,6 +396,23 @@ namespace PAKNAPI.ModelBase
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentUpdate", DP);
 		}
 	}
+
+	/// <example>
+	///{
+	///	"address": "",
+	///	"code": "",
+	///	"departmentGroupId": 2066,
+	///	"description": "",
+	///	"email": "tran@gmail.com",
+	///	"fax": "",
+	///	"id": 1,
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///	"name": "Sở kế hoạch",
+	///	"orderNumber": null,
+	///	"phone": "0981233123"
+	///}
+	/// </example>
 
 	public class CADepartmentUpdateIN
 	{
@@ -403,6 +462,10 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDelete", DP));
 		}
 	}
+
+	/// <example>
+	/// { "Id": 2067}
+	/// </example>
 
 	public class CAFieldDeleteIN
 	{
@@ -649,6 +712,19 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	///	"id" : 12,
+	///	"Name": "Demo linh vuc",
+	///	"description": "Dess",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///	"FilePath": null
+	///	"IsShowHome": true,
+	///	"OrderNumber": 1,
+	///}
+	/// </example>
+
 	public class CAFieldUpdateIN
 	{
 		public int? Id { get; set; }
@@ -688,6 +764,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 2067}
+	/// </example>
 	public class CAGroupWordDeleteIN
 	{
 		public int? Id { get; set; }
@@ -799,6 +878,15 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	///{
+	///	"Name": "Demo nhom so nganh",
+	///	"description": "Dess",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///}
+	/// </example>
 	public class CAGroupWordInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên nhóm thư viện từ ngữ không được để trống")]
@@ -837,6 +925,16 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	///{
+	///	"id" : 1,
+	///	"Name": "Demo tên",
+	///	"description": "Dess",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///}
+	/// </example>
 	public class CAGroupWordUpdateIN
 	{
 		public int? Id { get; set; }
@@ -1017,7 +1115,9 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_NewsTypeDelete", DP));
 		}
 	}
-
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class CANewsTypeDeleteIN
 	{
 		public int? Id { get; set; }
@@ -1110,6 +1210,15 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// {
+	///		"Name": "demo name",
+	///		"IsActived" : true,
+	///		"IsDeleted" : false,
+	///		"Description" : "des",
+	/// }
+	/// </example>
+
 	public class CANewsTypeInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên loại tin tức không được để trống")]
@@ -1148,6 +1257,16 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// {
+	///		"Id": 1,
+	///		"Name": "demo name",
+	///		"IsActived" : true,
+	///		"IsDeleted" : false,
+	///		"Description" : "des",
+	/// }
+	/// </example>
 	public class CANewsTypeUpdateIN
 	{
 		public int? Id { get; set; }
@@ -1183,7 +1302,10 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionDelete", DP));
 		}
 	}
-
+	
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class CAPositionDeleteIN
 	{
 		public int? Id { get; set; }
@@ -1294,6 +1416,15 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// {
+	///		"Name": "demo name",
+	///		"IsActived" : true,
+	///		"IsDeleted" : false,
+	///		"Description" : "des",
+	/// }
+	/// </example>
 	public class CAPositionInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên chức vụ không được để trống")]
@@ -1331,6 +1462,16 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// {
+	///		"Id": 1,
+	///		"Name": "demo name",
+	///		"IsActived" : true,
+	///		"IsDeleted" : false,
+	///		"Description" : "des",
+	/// }
+	/// </example>
 	public class CAPositionUpdateIN
 	{
 		public int? Id { get; set; }
@@ -1366,6 +1507,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class CAUnitDeleteIN
 	{
 		public int? Id { get; set; }
@@ -1507,11 +1651,19 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// { "UnitId": 1}
+	/// </example>
 	public class CAUnitPermissionDelete {
 		public int? UnitId { get; set; }
 	}
+
+
+	
 	public class CAUnitPermissionInsert
 	{
+		/// <example>[1, 1116, 3137]</example>
 		public List<int?> ListUnit { get; set; }
 	}
 
@@ -1618,6 +1770,25 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	///{
+	///	"Name": "Demo tên",
+	///	"UnitLevel": "0",
+	///	"ParentId": null,
+	///	"description": "",
+	///	"email": "tran@gmail.com",
+	///	"Phone": null,
+	///	"address": "Hà nội",
+	///	"IsActived": true,
+	///	"isDeleted": false,
+	///	"IsMain": false,
+	///	"Index": 0,
+	///	"IsPermission": true,
+	///	"Group" : 1
+	///}
+	/// </example>
+
 	public class CAUnitInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên đơn vị không được để trống")]
@@ -1691,6 +1862,25 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	///{
+	/// "id" : 1,
+	///	"Name": "Trung tâm CNTT và Dịch vụ hành chính công trực tuyến",
+	///	"UnitLevel": "0",
+	///	"ParentId": null,
+	///	"description": "",
+	///	"email": "tran@gmail.com",
+	///	"Phone": null,
+	///	"address": "Hà nội",
+	///	"IsActived": true,
+	///	"isDeleted": false,
+	///	"IsMain": false,
+	///	"Index": 0,
+	///	"IsPermission": true,
+	///	"Group" : 1
+	///}
+	/// </example>
 	public class CAUnitUpdateIN
 	{
 		public int? Id { get; set; }
@@ -1861,6 +2051,17 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	///	"Name": "Demo name",
+	///	"GroupId": 1,
+	///	"Index": 0,
+	///	"description": "description",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///}
+	/// </example>
+
 	public class CAWordInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm từ ngữ không được để trống")]
@@ -1906,6 +2107,17 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	/// "Id" : 1,
+	///	"Name": "Demo name",
+	///	"GroupId": 1,
+	///	"Index": 0,
+	///	"description": "description",
+	///	"isActived": true,
+	///	"isDeleted": false,
+	///}
+	/// </example>
 	public class CAWordUpdateIN
 	{
 		public int? Id { get; set; }

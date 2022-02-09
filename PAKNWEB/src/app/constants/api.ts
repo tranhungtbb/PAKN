@@ -25,6 +25,7 @@ export class Api {
 	public static GetFile = 'files/get-file'
 	public static UploadImageNews = 'upload-files/upload-image-news'
 	public static UploadImageDocument = 'upload-files/upload-image-document'
+	public static UploadImageIntroduce = 'upload-files/upload-image-introduce'
 	public static getFileImage = 'files/get-file'
 	public static getFileSupport = 'files/GetFileSupport'
 

@@ -123,3 +123,23 @@
 	flex-grow: 0;
 	margin: 6px 0px;
 }
+
+
+:host ::ng-deep figure.image img,
+:host ::ng-deep figure.image_resized img {
+	width: 100% !important;
+	object-fit: cover;
+}
+
+:host ::ng-deep figure{
+	text-align: center;
+}
+:host ::ng-deep figure.image.image_resized {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fs-16px{
+	font-size: 16px !important;
+}

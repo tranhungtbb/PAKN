@@ -23,7 +23,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [Route("api/department")]
     [ApiController]
 	[ValidateModel]
-	[OpenApiTag("Sở ngành", Description = "Danh mục sở ngành")]
+	[OpenApiTag("Sở ngành", Description = "Danh mục sở ngành - Authorize")]
 	public class DepartmentController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -36,13 +36,15 @@ namespace PAKNAPI.Controllers.ControllerBase
         }
 
 		/// <summary>
-		/// xóa sở ngành
+		/// xóa sở ngành - Authorize
 		/// </summary>
 		/// <param name="_cADepartmentDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("delete")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
+
 		public async Task<ActionResult<object>> CADepartmentDeleteBase(CADepartmentDeleteIN _cADepartmentDeleteIN)
 		{
 			try
@@ -60,22 +62,13 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// danh sách sở ngành
+		/// danh sách sở ngành - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
-		/// <param name="DepartmentGroupId"></param>
-		/// <param name="Phone"></param>
-		/// <param name="Email"></param>
-		/// <param name="Address"></param>
-		/// <param name="Fax"></param>
 		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		[Route("get-list-department-on-page")]
 		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase()
 		{
@@ -97,7 +90,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		///  chi tiết sở ngành
+		///  chi tiết sở ngành - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -105,6 +98,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGetByIDBase(int? Id)
 		{
 			try
@@ -126,7 +120,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// thêm mới sở ngành
+		/// thêm mới sở ngành - Authorize
 		/// </summary>
 		/// <param name="_cADepartmentInsertIN"></param>
 		/// <returns></returns>
@@ -134,6 +128,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("insert")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentInsertBase(CADepartmentInsertIN _cADepartmentInsertIN)
 		{
 			try
@@ -152,7 +147,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// cập nhập sở ngành
+		/// cập nhập sở ngành - Authorize
 		/// </summary>
 		/// <param name="_cADepartmentUpdateIN"></param>
 		/// <returns></returns>
@@ -160,6 +155,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("update")]
+		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentUpdateBase(CADepartmentUpdateIN _cADepartmentUpdateIN)
 		{
 			try

@@ -62,3 +62,7 @@ label {
 	width: 40%;
 	height: 40%;
 }
+
+:host ::ng-deep .ck-editor__editable_inline {
+	min-height: 400px;
+}

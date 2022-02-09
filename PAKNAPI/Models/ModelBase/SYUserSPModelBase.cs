@@ -78,6 +78,20 @@ namespace PAKNAPI.ModelBase
 		public long? RoleId { get; set; }
 	}
 
+
+	/// <example>
+	/// {
+	///   "_sYUserRoleMaps": [
+	///		{
+	///           "UserId": 60670,
+	///           "RoleId": 2029
+	///		}
+	///   ],
+	///   "isCreated": true
+	///}
+	/// </example>
+	
+
 	public class SYUserRoleMapInsertObject {
 		public List<SYUserRoleMapInsertIN> _sYUserRoleMaps { get; set; }
 		public bool? isCreated { get; set; }
@@ -166,6 +180,10 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserDelete", DP));
 		}
 	}
+
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 
 	public class SYUserDeleteIN
 	{
@@ -504,6 +522,33 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+
+	/// <example>
+	/// {
+	///		"id": 140968,
+	///		"fullName": "Đình Hùng",
+	///		"userName": "tranhung110398123 @gmail.com",
+	///		"isActived": true,
+	///		"isDeleted": false,
+	///		"gender": true,
+	///		"type": 1,
+	///		"email": "tranhung110398123 @gmail.com",
+	///		"phone": 0329920061,
+	///		"unitId": 6180,
+	///		"countLock": 0,
+	///		"lockEndOut": null,
+	///		"avatar": null,
+	///		"address": "addd",
+	///		"positionId": 66,
+	///		"typeId": 1,
+	///		"roleIds": 2048,
+	///		"permissionIds": "279,280,282,283,284,286,281,285",
+	///}
+	/// </example>
+
+
+
 	public class SYUserInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại người dùng không được để trống")]
@@ -572,6 +617,12 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// {
+	///		"UserId": 120888,
+	///		"RoleId": 2
+	///	}
+	/// </example>
 	public class SYUserRoleMapDeleteIN
 	{
 		public long? UserId { get; set; }
@@ -656,6 +707,29 @@ namespace PAKNAPI.ModelBase
 
 	}
 
+
+	/// <example>
+	/// {
+	///		"id": 140968,
+	///		"fullName": "Đình Hùng",
+	///		"userName": "tranhung110398123 @gmail.com",
+	///		"isActived": true,
+	///		"isDeleted": false,
+	///		"gender": true,
+	///		"type": 1,
+	///		"email": "tranhung110398123 @gmail.com",
+	///		"phone": 0329920061,
+	///		"unitId": 6180,
+	///		"countLock": 0,
+	///		"lockEndOut": null,
+	///		"avatar": null,
+	///		"address": "addd",
+	///		"positionId": 66,
+	///		"typeId": 1,
+	///		"roleIds": 2048,
+	///		"permissionIds": "279,280,282,283,284,286,281,285",
+	///}
+	/// </example>
 	public class SYUserUpdateIN
 	{
 		public long? Id { get; set; }
@@ -704,6 +778,8 @@ namespace PAKNAPI.ModelBase
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Vai trò không được để trống")]
 		public string RoleIds { get; set; }
+
+		///<example>"279,280,282,283,284,286,281,285"</example>
 		public string PermissionIds { get; set; }
 	}
 

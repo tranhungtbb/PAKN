@@ -15,6 +15,9 @@ namespace PAKNAPI.Models.Chatbot
 {
 	public class CreateRoomBot
 	{
+		/// <example>
+		/// 1739e899-9d33-42f5-a8f5-e54bc4d931c2
+		/// </example>
 		public string UserName { get; set; }
 	}
 

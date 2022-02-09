@@ -41,7 +41,6 @@ namespace PAKNAPI.Controllers
             _hostingEnvironment = hostEnvironment;
         }
 
-        //'SYIntroduce/IntroduceGetInfo'
         /// <summary>
         /// thông tin cấu hình trang chủ
         /// </summary>
@@ -76,7 +75,7 @@ namespace PAKNAPI.Controllers
         }
 
         /// <summary>
-        /// cập nhập cấu hình trang chủ
+        /// cập nhập cấu hình trang chủ - Authorize
         /// </summary>
         /// <returns></returns>
         [HttpPost]

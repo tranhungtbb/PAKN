@@ -8,6 +8,22 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Models
 {
+
+    /// <example>
+    ///{
+    ///     "id" : 210988,
+    ///     "userName": "123123123",
+    ///     "fullName": "HungTĐ",
+    ///     "email": "tran@gmail.com",
+    ///     "phone": "0988234234",
+    ///     "address": "Hoàng Quốc Việt",
+    ///     "idCard": "123123123",
+    ///     "gender": true,
+    ///}
+    /// </example>
+
+
+
     public class AccountInfoModel
     {
         public string UserName { get; set; }
@@ -47,7 +63,31 @@ namespace PAKNAPI.Models
         public bool? Gender { get; set; }
     }
 
-    public class BusinessAccountInfoModel
+    /// <example>
+    /// {
+    ///     "id": 120165,
+    ///     "representativeName": "Hùng TĐ",
+    ///     "isActived": true,
+    ///     "isDeleted": false,
+    ///     "orgPhone": "",
+    ///     "orgEmail": "trand@gmail.com",
+    ///     "representativeBirthDay": "",
+    ///     "createdBy": 0,
+    ///     "updatedBy": 0,
+    ///     "status": 1,
+    ///     "representativeGender": true,
+    ///     "businessRegistration": "1230128123",
+    ///     "address": "",
+    ///     "email": "",
+    ///     "phone": "0983242342",
+    ///     "nation": "Việt Nam",
+    ///     "business": "Công ty b",
+    ///     "fullName": "Công ty b",
+    ///}
+    /// </example>
+
+
+public class BusinessAccountInfoModel
     {
         public BusinessAccountInfoModel() { }
         public BusinessAccountInfoModel(BIBusinessGetByUserId entity)

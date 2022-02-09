@@ -58,7 +58,10 @@ namespace PAKNAPI.Controllers
 			_hostingEnvironment = IWebHostEnvironment;
 		}
 
-
+		/// <summary>
+		/// get data cho màn thêm mới - Authorize
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-data-for-create")]
@@ -76,7 +79,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thêm mới người dùng
+		/// thêm mới người dùng - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <param name="files"></param>
@@ -183,7 +186,7 @@ namespace PAKNAPI.Controllers
 
 
 		/// <summary>
-		/// cập nhập người dùng
+		/// cập nhập người dùng - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <param name="files"></param>
@@ -234,7 +237,7 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 		/// <summary>
-		/// cập nhập profile
+		/// cập nhập profile - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <param name="files"></param>
@@ -284,7 +287,7 @@ namespace PAKNAPI.Controllers
 
 
 		/// <summary>
-		/// thêm mới nv quản trị
+		/// thêm mới nv quản trị - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <param name="files"></param>
@@ -397,7 +400,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập nv quản trị
+		/// cập nhập nv quản trị - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <param name="files"></param>
@@ -443,7 +446,7 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 		/// <summary>
-		/// xóa người dùng
+		/// xóa người dùng - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
@@ -491,30 +494,10 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
-		//[HttpGet]
-		//[Route("GetAvatar/{id}")]
-		//[Authorize("ThePolicy")]
-		//public async Task<byte[]> GetAvatar(int id)
-		//{
-		//	var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
-		//	if (string.IsNullOrEmpty(modelOld[0].Avatar?.Trim())) return null;
-		//	var data = await _fileService.GetBinary(modelOld[0].Avatar);
-
-		//	return data;
-		//}
 
 		/// <summary>
-		/// danh sách người dùng
+		/// danh sách người dùng - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="UserName"></param>
-		/// <param name="FullName"></param>
-		/// <param name="Phone"></param>
-		/// <param name="IsActived"></param>
-		/// <param name="UnitId"></param>
-		/// <param name="TypeId"></param>
-		/// <param name="PositionId"></param>
 		/// <returns></returns>
 
 		[HttpGet]
@@ -541,7 +524,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// list user chat
+		/// list user chat - Authorize
 		/// </summary>
 		/// <param name="PageIndex"></param>
 		/// <param name="UserName"></param>
@@ -575,7 +558,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// danh sách người dùng theo lst idQB
+		/// danh sách người dùng theo lst idQB - Authorize
 		/// </summary>
 		/// <param name="lstId"></param>
 		/// <returns></returns>
@@ -613,6 +596,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// update id quick block for user - Authorize
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <param name="IdQB"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("update-qb")]
@@ -633,18 +622,9 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// danh sách quản trị
+		/// danh sách quản trị - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="UserName"></param>
-		/// <param name="FullName"></param>
-		/// <param name="Phone"></param>
-		/// <param name="IsActived"></param>
 		/// <param name="UnitId"></param>
-		/// <param name="TypeId"></param>
-		/// <param name="SortDir"></param>
-		/// <param name="SortField"></param>
 		/// <returns></returns>
 
 		[HttpGet]
@@ -672,7 +652,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập trạng thái người dùng
+		/// cập nhập trạng thái người dùng - Authorize
 		/// </summary>
 		/// <param name="_sYUserChangeStatusIN"></param>
 		/// <returns></returns>
@@ -697,7 +677,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// check tồn tại người dùng
+		/// check tồn tại người dùng - Authorize
 		/// </summary>
 		/// <param name="Field"></param>
 		/// <param name="Value"></param>
@@ -726,7 +706,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách người dùng theo vai trò - all
+		/// danh sách người dùng theo vai trò - Authorize
 		/// </summary>
 		/// <param name="RoleId"></param>
 		/// <returns></returns>
@@ -754,7 +734,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// :D
+		/// get-drop-down - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -781,7 +761,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách người dùng theo vai trò
+		/// danh sách người dùng theo vai trò - Authorize
 		/// </summary>
 		/// <param name="PageSize"></param>
 		/// <param name="PageIndex"></param>
@@ -813,7 +793,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiết người dùng
+		/// chi tiết người dùng - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -841,14 +821,8 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách người dùng( quản trị)
+		/// danh sách người dùng(nhân viên quản trị) - Authorize
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="UserName"></param>
-		/// <param name="FullName"></param>
-		/// <param name="Phone"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 
 		[HttpGet]
@@ -875,7 +849,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thông tin người dùng
+		/// thông tin người dùng - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -905,7 +879,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// người dùng theo đơn vị
+		/// người dùng theo đơn vị - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -972,7 +946,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// người dùng thuộc hệ thống
+		/// người dùng thuộc hệ thống - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -1000,7 +974,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// xóa người dùng theo vai trò
+		/// xóa người dùng theo vai trò - Authorize
 		/// </summary>
 		/// <param name="_sYUserRoleMapDeleteIN"></param>
 		/// <returns></returns>
@@ -1026,7 +1000,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// danh sách người dùng ko thuộc vai trò
+		/// danh sách người dùng ko thuộc vai trò - Authorize
 		/// </summary>
 		/// <param name="RoleId"></param>
 		/// <returns></returns>
@@ -1264,7 +1238,7 @@ namespace PAKNAPI.Controllers
 		//}
 
 		/// <summary>
-		/// thông tin người dùng
+		/// thông tin người dùng - Authorize
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
@@ -1349,7 +1323,7 @@ namespace PAKNAPI.Controllers
 
 
 		/// <summary>
-		/// thay mk người dùng
+		/// thay mk người dùng - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
@@ -1407,10 +1381,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		
+
 
 		/// <summary>
-		/// thay mk người dùng bởi quản trị
+		/// thay mk người dùng bởi quản trị - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
@@ -1469,7 +1443,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập người dùng - công bố
+		/// cập nhập người dân - công bố - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
@@ -1545,6 +1519,11 @@ namespace PAKNAPI.Controllers
 			}
         }
 
+		/// <summary>
+		/// up date thông tin doanh nghiệp - công bố - Authorize
+		/// </summary>
+		/// <param name="businessModel"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Route("update-current-info-business")]

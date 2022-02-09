@@ -148,7 +148,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// :D
+		/// get dữ liệu cho màn thêm mới - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -174,8 +174,9 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
 		/// <summary>
-		/// chi tiết đơn vị
+		/// chi tiết đơn vị - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -204,7 +205,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// thêm mới đơn vị
+		/// thêm mới đơn vị - Authorize
 		/// </summary>
 		/// <param name="_cAUnitInsertIN"></param>
 		/// <returns></returns>
@@ -229,7 +230,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// cập nhập đơn vị
+		/// cập nhập đơn vị - Authorize
 		/// </summary>
 		/// <param name="_cAUnitUpdateIN"></param>
 		/// <returns></returns>
@@ -254,7 +255,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// xóa đơn vị
+		/// xóa đơn vị - Authorize
 		/// </summary>
 		/// <param name="_cAUnitDeleteIN"></param>
 		/// <returns></returns>
@@ -279,7 +280,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// thay trạng thái đơn vị
+		/// thay trạng thái đơn vị - Authorize
 		/// </summary>
 		/// <param name="_sYUnitChageStatusIN"></param>
 		/// <returns></returns>
@@ -305,7 +306,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		/// <summary>
-		/// check tồn tại
+		/// check tồn tại - Authorize
 		/// </summary>
 		/// <param name="Field"></param>
 		/// <param name="Value"></param>
@@ -334,7 +335,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// :D
+		/// get đơn vị cấp con - Authorize
 		/// </summary>
 		/// <returns></returns>
 
@@ -359,6 +360,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// get đơn vị cấp con
+		/// </summary>
+		/// <param name="ParentId"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("get-children-dropdown-by-parent")]
 		public async Task<ActionResult<object>> SY_UnitGetChildrenDropdown(int ParentId)
@@ -377,6 +383,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// danh sách đơn vị cho popup gửi phối hợp nhiều đơn vị
+		/// </summary>
+		/// <param name="RecommendationId"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("get-dropdown-for-combine")]
@@ -397,6 +409,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// danh sách đơn vị theo groupId
+		/// </summary>
+		/// <param name="GroupId"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Route("unit-get-by-group")]
 		public async Task<ActionResult<object>> SY_UnitGetDropdown(int GroupId)
@@ -416,7 +434,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
-
+		/// <summary>
+		/// danh sách đơn vị có permission sms - Authorize
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -442,6 +463,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// insert đơn vị - permission sms - Authorize
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("unit-permission-insert")]
@@ -467,7 +493,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 
-
+		/// <summary>
+		/// delete đơn vị - permission sms - Authorize
+		/// </summary>
+		/// <param name="_cAUnitDeleteIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("unit-permission-delete")]
@@ -489,7 +519,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 	
-
+		/// <summary>
+		/// get dropdown đơn vị chưa có cấp quyền sms
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -510,6 +543,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// check đơn vị hiện tại có quyền gửi sms hay ko - Authorize
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("unit-has-permission")]

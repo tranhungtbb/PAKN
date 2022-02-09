@@ -87,7 +87,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thêm mới SMS
+		/// thêm mới SMS - Authorize
 		/// </summary>
 		/// <param name="response"></param>
 		/// <returns></returns>
@@ -199,7 +199,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// thông tin SMS - để cập nhập
+		/// thông tin SMS - để cập nhập - Authorize
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
@@ -226,7 +226,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// cập nhập SMS
+		/// cập nhập SMS - Authorize
 		/// </summary>
 		/// <param name="response"></param>
 		/// <returns></returns>
@@ -357,7 +357,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập trạng thái
+		/// cập nhập trạng thái gửi sms - Authorize
 		/// </summary>
 		/// <param name="idMSMS"></param>
 		/// <returns></returns>
@@ -438,7 +438,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// chi tiếu SMS
+		/// chi tiết SMS - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -473,7 +473,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách SMS
+		/// danh sách SMS - Authorize
 		/// </summary>
 		/// <param name="PageSize"></param>
 		/// <param name="PageIndex"></param>
@@ -510,7 +510,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// danh sách lịch sử SMS
+		/// danh sách lịch sử SMS - Authorize
 		/// </summary>
 		/// <param name="PageSize"></param>
 		/// <param name="PageIndex"></param>

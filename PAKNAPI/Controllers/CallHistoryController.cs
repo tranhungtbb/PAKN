@@ -28,7 +28,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			_bugsnag = bugsnag;
 		}
 		/// <summary>
-		/// danh sách lịch sử hê thống
+		/// danh sách lịch sử hê thống - Authorize
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="phone"></param>
@@ -58,7 +58,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		/// <summary>
-		/// xóa lịch sử hê thống
+		/// xóa lịch sử hê thống - Authorize
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>

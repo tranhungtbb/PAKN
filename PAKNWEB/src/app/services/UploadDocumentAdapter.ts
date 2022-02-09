@@ -10,11 +10,11 @@ export class UploadDocumentAdapter {
 	public xhr: XMLHttpRequest
 	public token: string
 
-	constructor(loader, private http: HttpClient) {
+	constructor(loader, private http: HttpClient, url: string) {
 		this.loader = loader
 
 		// change "environment.BASE_URL" key and API path
-		this.url = AppSettings.API_ADDRESS + Api.UploadImageDocument
+		this.url = url
 		this.token = localStorage.getItem('accessToken')
 	}
 

@@ -33,7 +33,7 @@ namespace PAKNAPI.Controllers.ChatbotController
             //_bots = bots;
         }
         /// <summary>
-        /// xóa câu hỏi chatbot
+        /// xóa câu hỏi chatbot - Authorize
         /// </summary>
         /// <param name="_ChatbotDeleteIN"></param>
         /// <returns></returns>
@@ -57,13 +57,13 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
-        /// danh sách câu hỏi chatbot
+        /// danh sách câu hỏi chatbot - Authorize
         /// </summary>
-        /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="Title"></param>
         /// <param name="Question"></param>
-        /// <param name="Answer"></param>
-        /// <param name="IsActived"></param>
+        /// <param name="IsActive"></param>
         /// <returns></returns>
 
         [HttpGet]
@@ -90,7 +90,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
-        /// danh sách lịch sử chatbot
+        /// danh sách lịch sử chatbot - Authorize
         /// </summary>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
@@ -125,7 +125,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
-        /// danh sách câu hỏi active
+        /// danh sách câu hỏi active - Authorize
         /// </summary>
         /// <returns></returns>
 
@@ -154,7 +154,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
-        /// chi tiết câu hỏi chatbot
+        /// chi tiết câu hỏi chatbot - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -184,7 +184,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         /// <summary>
-        /// chi tiết câu trả lời chatbot
+        /// chi tiết câu trả lời chatbot - Authorize
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -214,7 +214,6 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <summary>
         /// thêm mới câu hỏi chatbot
         /// </summary>
-        /// <param name="_chatbotInsertIN"></param>
         /// <returns></returns>
 
         [HttpPost]
@@ -247,7 +246,6 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <summary>
         /// cập nhập câu hỏi chatbot
         /// </summary>
-        /// <param name="ChatbotUpdateIN"></param>
         /// <returns></returns>
 
         [HttpPost]
@@ -296,6 +294,11 @@ namespace PAKNAPI.Controllers.ChatbotController
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// import data form file - Authorize
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Route("import-data-chat-bot")]

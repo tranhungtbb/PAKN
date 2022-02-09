@@ -78,6 +78,9 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	public class BI_BusinessDeleteIN
 	{
+		/// <example>
+		/// 1
+		/// </example>
 		public long? Id { get; set; }
 	}
 
@@ -107,6 +110,11 @@ namespace PAKNAPI.Models.BusinessIndividual
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessChageStatus", DP));
 		}
 	}
+
+
+	/// <example>
+	/// { "Id": 1230, "Status" : 1}
+	/// </example>
 
 	public class BI_BusinessChageStatusIN
 	{
@@ -172,6 +180,30 @@ namespace PAKNAPI.Models.BusinessIndividual
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BusinessInsert", DP));
 		}
 	}
+
+
+	/// <example>
+	///{
+	///		"Address": "Hà nội",
+	///		"Business": "Công ty b",
+	///		"BusinessRegistration": "1234567890",
+	///		"DateOfIssue": null,
+	///		"DecisionOfEstablishing": "",
+	///		"Email": "",
+	///		"IsDeleted": false,
+	///		"Nation": "Việt Nam",
+	///		"OrgAddress": "Hà nội",
+	///		"OrgEmail": "hungtd@thanglonginc.com",
+	///		"OrgPhone": "0923423423",
+	///		"RepresentativeGender": true,
+	///		"RepresentativeName": "Trần Đình Hùng",
+	///		"Status": 1,
+	///		"isActived": true,
+	///		"phone": "0982343242",
+	///}
+	/// </example>
+
+	
 
 	public class BI_BusinessInsertIN
 	{
@@ -253,6 +285,28 @@ namespace PAKNAPI.Models.BusinessIndividual
 	}
 	#endregion
 
+
+	/// <example>
+	///{
+	///		"id" : 100167,
+	///		"Address": "Hà nội",
+	///		"Business": "Công ty b",
+	///		"BusinessRegistration": "1234567890",
+	///		"DateOfIssue": null,
+	///		"DecisionOfEstablishing": "",
+	///		"Email": "",
+	///		"IsDeleted": false,
+	///		"Nation": "Việt Nam",
+	///		"OrgAddress": "Hà nội",
+	///		"OrgEmail": "hungtd@thanglonginc.com",
+	///		"OrgPhone": "0923423423",
+	///		"RepresentativeGender": true,
+	///		"RepresentativeName": "Trần Đình Hùng",
+	///		"Status": 1,
+	///		"isActived": true,
+	///		"phone": "0982343242",
+	///}
+	/// </example>
 	public class BI_BusinessUpdateInfoIN
 	{
 		public long? Id { get; set; }

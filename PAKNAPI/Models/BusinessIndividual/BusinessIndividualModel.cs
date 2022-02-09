@@ -72,6 +72,10 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 
+
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class BI_IndivialDeleteIN
 	{
 		public int? Id { get; set; }
@@ -103,6 +107,11 @@ namespace PAKNAPI.Models.BusinessIndividual
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualChageStatus", DP));
 		}
 	}
+
+
+	/// <example>
+	/// { "Id": 1, "Status" : 0}
+	/// </example>
 
 	public class BI_IndivialChageStatusIN
 	{
@@ -190,6 +199,21 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 
+
+	/// <example>
+	///{
+	///		"fullName": "Trần Văn Hùng",
+	///		"isActived": true,
+	///		"isDeleted": false,
+	///		"status": 1,
+	///		"address": "Uhbjuuii",
+	///		"email": "dfgygg@gmail.com",
+	///		"phone": "0972934128",
+	///		"idCard": "035091004",
+	///		"nation": "Việt Nam",
+	///		"gender": false,
+	///}
+	/// </example>
 	public class BIIndividualInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên cá nhân không được để trống")]
@@ -279,6 +303,23 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 
+
+	/// <example>
+	///{
+	///		"id": 170436,
+	///		"fullName": "Trần Văn Hùng",
+	///		"isActived": true,
+	///		"isDeleted": false,
+	///		"status": 1,
+	///		"address": "Uhbjuuii",
+	///		"email": "dfgygg@gmail.com",
+	///		"phone": "0972934128",
+	///		"idCard": "035091004",
+	///		"nation": "Việt Nam",
+	///		"gender": false,
+	///		"userId": "30388"
+	///}
+	/// </example>
 	public class BI_InvididualUpdateIN
 	{
 		public long Id { get; set; }

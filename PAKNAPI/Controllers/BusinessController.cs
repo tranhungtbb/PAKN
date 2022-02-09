@@ -30,13 +30,15 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IClient _bugsnag;
-		public BusinessController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting)
+
+		public BusinessController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
+			_bugsnag = bugsnag;
 		}
 		/// <summary>
-		/// impport excel
+		/// impport excel - Authorize
 		/// </summary>
 		/// <param name="folder"></param>
 		/// <returns></returns>
@@ -316,8 +318,10 @@ namespace PAKNAPI.Controllers
 				System.IO.File.Delete(fileNamePath);
 			}
 		}
+
+
 		/// <summary>
-		/// danh sách doanh nghiệp
+		/// danh sách doanh nghiệp - Authorize
 		/// </summary>
 		/// <param name="PageSize"></param>
 		/// <param name="PageIndex"></param>
@@ -357,7 +361,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// xóa doanh nghiệp
+		/// xóa doanh nghiệp - Authorize
 		/// </summary>
 		/// <param name="_bI_BusinessDeleteIN"></param>
 		/// <returns></returns>
@@ -383,7 +387,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// cập nhập trạng thái doanh nghiệp
+		/// cập nhập trạng thái doanh nghiệp = Authorize
 		/// </summary>
 		/// <param name="_bI_BusinessChageStatusIN"></param>
 		/// <returns></returns>
@@ -409,7 +413,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// thêm mới doanh nghiệp
+		/// thêm mới doanh nghiệp - Authorize
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
@@ -486,7 +490,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// chi tiết doanh nghiệp
+		/// chi tiết doanh nghiệp - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>
@@ -579,7 +583,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 		/// <summary>
-		/// danh sách cá nhân doanh nghiệp theo đơn vị hành chính
+		/// danh sách cá nhân doanh nghiệp theo đơn vị hành chính - Authorize
 		/// </summary>
 		/// <param name="LtsAdministrativeId"></param>
 		/// <param name="Type"></param>
@@ -609,7 +613,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		/// <summary>
-		/// get-drop-list-individual-business
+		/// get-drop-list-individual-business - Authorize
 		/// </summary>
 		/// <param name="SmsId"></param>
 		/// <param name="Type"></param>

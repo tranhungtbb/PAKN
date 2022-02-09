@@ -269,7 +269,7 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 		}
 		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
 		editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-			return new UploadDocumentAdapter(loader, this.http)
+			return new UploadDocumentAdapter(loader, this.http, AppSettings.API_ADDRESS + Api.UploadImageDocument)
 		}
 	}
 }

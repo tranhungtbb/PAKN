@@ -19,8 +19,7 @@
 							{{ currentDate |  date : 'HH:mm'}} ngày {{ currentDate |  date : 'dd/MM/yyyy'}}
 						</div> -->
 						<div class="content-intro">
-							<p class="content-intro-p">
-								{{model.summary}}
+							<p class="mb-0 fs-16px" [innerHtml]="model?.summary | safeHtml">
 							</p>
 						</div>
 
@@ -28,16 +27,15 @@
 							Cơ cấu tổ chức
 						</div>
 						<div class="content-intro">
-							<p>
-								{{model.descriptionUnit}}
+							<p class="fs-16px" [innerHtml]="model?.descriptionUnit | safeHtml">
 							</p>
 						</div>
 						<div class="table-responsive">
 							<table class="table table-tthc table-bordered table-striped rounded overflow-hidden mb-4">
 								<tbody>
 									<tr *ngFor="let item of ltsIntroductUnit">
-										<th scope="row">{{item.title}}</th>
-										<td>
+										<th scope="row" class="fs-16px">{{item.title}}</th>
+										<td class="fs-16px">
 											{{item.description}}
 											<br>{{item.infomation}}
 										</td>
@@ -58,7 +56,7 @@
 							</div>
 							<div class="contentFunction">
 								<h2>Chức năng hệ thống</h2>
-								<p>{{model.descriptionFunction}}</p>
+								<p class="fs-16px">{{model.descriptionFunction}}</p>
 							</div>
 
 						</div>

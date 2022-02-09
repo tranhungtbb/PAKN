@@ -28,16 +28,14 @@ namespace PAKNAPI.ControllerBase
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
-		private IHostingEnvironment _hostingEnvironment;
 
-		public SystemLogController(IAppSetting appSetting, IHostingEnvironment hostingEnvironment, IClient bugsnag)
+		public SystemLogController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
-			_hostingEnvironment = hostingEnvironment;
 		}
 		/// <summary>
-		/// danh sách lịch sử hệ thống
+		/// danh sách lịch sử hệ thống - Authorize
 		/// </summary>
 		/// <param name="UserId"></param>
 		/// <param name="PageSize"></param>
@@ -70,7 +68,7 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 		/// <summary>
-		/// lịch sử cá nhân
+		/// lịch sử cá nhân - Authorize
 		/// </summary>
 		/// <param name="UserId"></param>
 		/// <param name="PageSize"></param>
@@ -104,7 +102,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		/// <summary>
-		/// xóa lịch sử hệ thống
+		/// xóa lịch sử hệ thống - Authorize
 		/// </summary>
 		/// <param name="Id"></param>
 		/// <returns></returns>

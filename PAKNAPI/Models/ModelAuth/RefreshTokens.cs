@@ -55,6 +55,18 @@ namespace PAKNAPI.Model
 
 			return (await _sQLCon.ExecuteListDapperAsync<RefreshToken>("SY_RefreshToken_GetByToken", DP)).FirstOrDefault();
 		}
+
+		/// <example>
+		/// { 
+		///		"AccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMwMzg4IiwiVX
+		///		Nlck5hbWUiOiJ0dF9jaHV5ZW52aWVuQGdtYWlsLmNvbSIsIkZ1bGxOYW1lIjoiVHJ1bmcgdMOibS
+		///		IsIlR5cGUiOiIxIiwiVW5pdElkIjoiNTAiLCJFbWFpbCI6InR0X2NodXllbnZpZW5AZ21haWwuY2
+		///		9tIiwianRpIjoiNTY2MDY2NzEtN2RkOC00NDIyLTg0YmQtOWE2Mzk4ZmI5ODBjIiwibmJmIjoxNj
+		///		Q0MzExNDI4LCJleHAiOjE2NDUxNzU0MjgsImlhdCI6MTY0NDMxMTQyOCwiaXNzIjoiVGVzdC5jb2
+		///		0iLCJhdWQiOiJUZXN0LmNvbSJ9.m9stQWrIBfU_7iK7gHUpad_hC7O6VU6UJcNyJXakcgg",
+		///		"RefreshToken" : "QDX6/o3fmf77dWW1MvY7MX64ghTuBQh7fmFQlaizD6w5FXBv8i805DfXiC246baH7E1ls+tZFdrqi6DTakKZtw=="
+		/// }
+		/// </example>
 		public class RefreshTokenRequest
 		{
 			[Required]

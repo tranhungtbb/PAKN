@@ -65,6 +65,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1, "IsActived" : true}
+	/// </example>
 	public class SYUnitChageStatusIN
 	{
 		public long? Id { get; set; }
@@ -197,6 +200,9 @@ namespace PAKNAPI.ModelBase
 
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class SYSupportMenuDelete {
 		public int Id { get; set; }
 	}
@@ -310,6 +316,17 @@ namespace PAKNAPI.ModelBase
 
 	}
 
+	/// <example>
+	/// {
+	///	"id": 1014,
+	///	"title": "Cấu hình bán kính và thời gian",
+	///	"description": "Cấu hình bán kính và thời gian gửi phản ánh kiến nghị",
+	///	"content": "{\"radius\":\"100\",\"time\":\"99\"}",
+	///	"type": 8,
+	///	"rowNumber": 0
+	///}
+	/// </example>
+
 	public class SYConfig
 	{
 		private SQLCon _sQLCon;
@@ -324,9 +341,15 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
 		public string Description { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
 		public string Content { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại cấu hình không được để trống")]
 		public int? Type { get; set; }
 
 		public int RowNumber { get; set; }
@@ -372,6 +395,17 @@ namespace PAKNAPI.ModelBase
 		public int Time { get; set; }
 		public int Radius { get; set; }
 	}
+
+	/// <example>
+	/// {
+	///		"id": 2,
+	///		"title": "Văn phòng UBND Tỉnh Khánh Hòa",
+	///		"description": "des",
+	///		"infomation": "Nhà A1 Khu Liên cơ số 01 đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa",
+	///		"index": 0,
+	///		"introduceId": 2
+	///}
+	/// </example>
 
 
 	public class SYIntroduceUnit
@@ -466,6 +500,9 @@ namespace PAKNAPI.ModelBase
 
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class SYIntroduceUnitDelete {
 		public int Id { get; set; }
 	}
@@ -904,6 +941,16 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// {
+	///   "lstid": "102,103,104,105,106,107,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,
+	///   124,125,126,127,128,129,130,131,132,133,134,135,137,138,205,206,207,208,209,210,211,244,245,246,247,
+	///   249,251,252,277,278,279,280,281,282,283,284,285,286,322,323",
+	///   "GroupUserId": 2029,
+	///}
+	/// </example>
+
 	public class SYPermissionGroupUserInsertByListIN
 	{
 		public string lstid { get; set; }
@@ -932,6 +979,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 712}
+	/// </example>
 	public class SYRoleDeleteIN
 	{
 		public int? Id { get; set; }
@@ -1046,6 +1096,15 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	///{
+	///   "orderNumber": 7,
+	///   "name": "Biên Soạn",
+	///   "isActived": true,
+	///   "isDeleted": false,
+	///   "description": "Soạn va tải lên tin tức sự kiện\nSoạn và gửi đi thư mời\nSoạn và gửi đi SMS/Email"
+	///}
+	/// </example>
 	public class SYRoleInsertIN
 	{
 		public int? OrderNumber { get; set; }
@@ -1084,6 +1143,19 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+
+
+	/// <example>
+	///{
+	///   "id": 2029,
+	///   "orderNumber": 7,
+	///   "name": "Biên Soạn",
+	///   "isActived": true,
+	///   "isDeleted": false,
+	///   "description": "Soạn va tải lên tin tức sự kiện\nSoạn và gửi đi thư mời\nSoạn và gửi đi SMS/Email"
+	///}
+	/// </example>
 	public class SYRoleUpdateIN
 	{
 		public int? Id { get; set; }
@@ -1308,6 +1380,10 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// { "Id": 11}
+	/// </example>
 	public class SYTimeDeleteIN
 	{
 		public int? Id { get; set; }
@@ -1417,6 +1493,16 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	
+	/// <example>
+	/// {
+	///		"name": "Giải phóng Miền Nam 30/4",
+	///		"isActived": false,
+	///		"time": "2025-04-29T17:00:00.000Z",
+	///		"description": "Giải phóng Miền Nam"
+	///	}
+	/// </example>
+
 	public class SYTimeInsertIN
 	{
 
@@ -1459,6 +1545,16 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	/// <example>
+	/// {
+	///		"id": 8,
+	///		"name": "Giải phóng Miền Nam 30/4",
+	///		"isActived": false,
+	///		"time": "2025-04-29T17:00:00.000Z",
+	///		"description": "Giải phóng Miền Nam"
+	///	}
+	/// </example>
 	public class SYTimeUpdateIN
 	{
 		public int? Id { get; set; }
@@ -1850,6 +1946,9 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	/// <example>
+	/// { "Id": 1}
+	/// </example>
 	public class SYNotificationDeleteIN
 	{
 		public int? Id { get; set; }
