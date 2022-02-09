@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Common\ESConnection.cs" />
+    <Compile Remove="Models\Login\RegisterModel.cs" />
     <Compile Remove="Models\UserExtended.cs" />
   </ItemGroup>
   <ItemGroup>

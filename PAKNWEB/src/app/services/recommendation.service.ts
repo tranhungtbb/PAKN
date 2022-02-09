@@ -15,6 +15,7 @@ import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 export class RecommendationService {
 
 	keySearchEvent: EventEmitter<any> = new EventEmitter();
+	onReloadMenu: EventEmitter<any> = new EventEmitter();
 	private handleError<T>(operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			console.error(error) // log to console instead
@@ -64,6 +65,11 @@ export class RecommendationService {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
 			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
+
+		// emit tại đây
+
+		this.onReloadMenu.emit()
+
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListProcess, headers)
 	}
 

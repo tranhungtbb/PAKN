@@ -86,7 +86,6 @@
 									</mat-checkbox>
 								</div>
 								<div class="d-flex">
-
 									<p-multiSelect [options]="listData" class="form-control" formControlName="userId" [(ngModel)]="userId"
 										optionLabel="name" [virtualScroll]="true" optionValue="id">
 										<ng-template let-userSelected pTemplate="selectedItems">
@@ -103,9 +102,6 @@
 												class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
 												cá nhân, doanh nghiệp đã chọn</span>
 										</ng-template>
-
-
-
 									</p-multiSelect>
 									<button type="button" class="btn btn-sm grd-xanhngoc text-white rounded border-0 ml-3 px-4"
 										(click)="onCreateUser()">

@@ -11,6 +11,7 @@ import { ContextMenuModule } from 'primeng/contextmenu'
 import { MatCheckboxModule } from '@angular/material'
 import { TreeTableModule } from 'primeng/treetable'
 import { AgmCoreModule } from '@agm/core'
+import { FilterImagePipe } from 'src/app/pipes/filter-image.pipe'
 
 import { RecommendationRoutingModule } from './recommendation-routing.module'
 import { RecommendationComponent } from './recommendation.component'
@@ -38,6 +39,7 @@ import { ListProcessDenyMainComponent } from './list-process-deny-main/list-proc
 import { ListCombinationComponent } from './list-combination/list-combination.component'
 import { ViewCombineRecommendationComponent } from './view-combine-recommendation/view-combine-recommendation.component'
 import { HistoryRecommendationComponent } from './history-recommendation/history-recommendation.component'
+
 
 @NgModule({
 	imports: [
@@ -81,7 +83,8 @@ import { HistoryRecommendationComponent } from './history-recommendation/history
 		ListFakeImageComponent,
 		ListRecommendationCommentComponent,
 		ListForwardComponent, ListProcessDenyMainComponent, ListCombinationComponent, ViewCombineRecommendationComponent,
-		HistoryRecommendationComponent
+		HistoryRecommendationComponent,
+		FilterImagePipe
 	],
 })
 export class RecommendationModule { }

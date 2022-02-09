@@ -42,7 +42,6 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		// this.routers.routeReuseStrategy.shouldReuseRoute = () => false;
 		await this.activatedRoute.params.subscribe((params) => {
 			let s = +params['field']
 			if (s) {

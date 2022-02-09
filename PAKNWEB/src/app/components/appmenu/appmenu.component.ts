@@ -7,6 +7,7 @@ declare var $: any
 import { Router } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { StatisticService } from 'src/app/services/statistic.service'
+import { RecommendationService } from 'src/app/services/recommendation.service'
 
 @Component({
 	selector: 'app-appmenu',
@@ -15,7 +16,11 @@ import { StatisticService } from 'src/app/services/statistic.service'
 })
 export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
-	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService: UnitService, private _service: StatisticService) { }
+	constructor(private userStorage: UserInfoStorageService, private recommendationService: RecommendationService, private _router: Router, private unitService: UnitService, private _service: StatisticService) {
+		this.recommendationService.onReloadMenu.subscribe(() => {
+			this.statisticRecommendationForMenu()
+		})
+	}
 
 	isAdmin = this.userStorage.getIsAdmin()
 	hasPermissionSMS: boolean = false
@@ -30,6 +35,10 @@ export class AppmenuComponent implements OnInit, AfterViewInit {
 				this.hasPermissionSMS = res.result
 			}
 		})
+		this.statisticRecommendationForMenu()
+	}
+
+	statisticRecommendationForMenu() {
 		this._service.getStatisticRecommendationForMenu({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.statistic = response.result
@@ -40,8 +49,8 @@ export class AppmenuComponent implements OnInit, AfterViewInit {
 				console.log(error)
 				alert(error)
 			}
-
 	}
+
 	ngAfterViewInit() {
 		this.loadScriptMenus('assets/dist/js/custom.min.js')
 		this.loadScriptMenus('assets/dist/js/deznav-init.js')

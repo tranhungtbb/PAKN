@@ -52,8 +52,8 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 
 	lstIndividual: Array<InvitationMapObject>
 	lstBussiness: Array<InvitationMapObject>
-	bussinessId: any
-	individualId: any
+	bussinessId: any[] = []
+	individualId: any[] = []
 	lstIndividualBussiness: any[] = []
 	@ViewChild('file', { static: false }) public file: ElementRef
 
@@ -125,8 +125,14 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.items = []
 		this.invitationService.GetDataForCreate({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.lstIndividual = res.result.listIndividual
-				this.lstBussiness = res.result.listBusiness
+				this.lstIndividual = res.result.listIndividual.map(item => {
+					item.title = item.title + ' - ' + item.phone
+					return item
+				})
+				this.lstBussiness = res.result.listBusiness.map(item => {
+					item.title = item.title + ' - ' + item.phone
+					return item
+				})
 			}
 		})
 	}
@@ -158,6 +164,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 							this.model.endDate = new Date(this.model.endDate)
 							this.files = res.result.invFileAttach
 							this.statusCurent = this.model.status
+
 							for (const iterator of res.result.invitationUserMap) {
 								if (iterator.type == USER_TYPE.SYSTEM) {
 									// hệ thống
@@ -180,7 +187,12 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 									}
 								} else {
 									let itemBI = iterator.type == USER_TYPE.INDIVIDUAL ? this.lstIndividual.find((x) => x.id == iterator.userId) : this.lstBussiness.find((x) => x.id == iterator.userId)
+
 									if (itemBI) {
+										debugger
+										iterator.type == USER_TYPE.INDIVIDUAL ?
+											this.individualId.push(itemBI) : this.bussinessId.push(itemBI)
+
 										this.lstIndividualBussiness.push({ ...itemBI, sendEmail: iterator.sendEmail, sendSMS: iterator.sendSMS })
 									}
 								}
@@ -366,28 +378,21 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			this._toastr.error('Vui lòng chọn cá nhân doanh nghiệp')
 			return
 		}
+		this.lstIndividualBussiness = []
 		if (this.individualId) {
-			let checkIndividual = this.lstIndividualBussiness.find((x) => x.id == this.individualId && x.type == USER_TYPE.INDIVIDUAL)
-			if (!checkIndividual) {
-				let individual = this.lstIndividual.find((x) => x.id == this.individualId)
-				if (individual) {
-					let obj = { ...individual, sendEmail: this.sendEmail, sendSMS: this.sendSMS }
-					this.lstIndividualBussiness.push(obj)
-				}
-			}
+			this.individualId.forEach(item => {
+				let obj = { ...item, sendEmail: this.sendEmail, sendSMS: this.sendSMS }
+				this.lstIndividualBussiness.push(obj)
+			})
 		}
 		if (this.bussinessId) {
-			let checkBussiness = this.lstIndividualBussiness.find((x) => x.id == this.bussinessId && x.type == USER_TYPE.BUSSINESS)
-			if (!checkBussiness) {
-				let bussiness = this.lstBussiness.find((x) => x.id == this.bussinessId)
-				if (bussiness) {
-					let obj = { ...bussiness, sendEmail: this.sendEmail, sendSMS: this.sendSMS }
-					this.lstIndividualBussiness.push(obj)
-				}
-			}
+			this.bussinessId.forEach(item => {
+				let obj = { ...item, sendEmail: this.sendEmail, sendSMS: this.sendSMS }
+				this.lstIndividualBussiness.push(obj)
+			})
 		}
-		this.bussinessId = null
-		this.individualId = null
+		// this.bussinessId = []
+		// this.individualId = []
 	}
 
 	onCreateUser() {

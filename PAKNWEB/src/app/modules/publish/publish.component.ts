@@ -363,7 +363,6 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (this.keySearch) {
 			this.recomenservice.keySearchEvent.emit(this.keySearch);
 			this._router.navigate(['/cong-bo/danh-sach-phan-anh-kien-nghi/0/', this.keySearch])
-			// ,
 		}
 	}
 	checkDeny(status: any) {

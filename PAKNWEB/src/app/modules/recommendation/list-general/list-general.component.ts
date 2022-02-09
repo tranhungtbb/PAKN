@@ -32,7 +32,7 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 	isMain: boolean = this.storeageService.getIsMain()
 	listData: any = new Array<RecommendationObject>()
 	listStatus: any = [
-		{ value: 2, text: 'Chờ xử lý' },
+		{ value: 2, text: 'Chờ tiếp nhận' },
 		{ value: 3, text: 'Từ chối tiếp nhận' },
 		{ value: 4, text: 'Đã tiếp nhận' },
 		{ value: 5, text: 'Chờ giải quyết' },

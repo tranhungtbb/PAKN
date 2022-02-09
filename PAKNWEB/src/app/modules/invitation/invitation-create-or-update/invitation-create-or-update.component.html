@@ -315,35 +315,58 @@
 					<div class="row form-group pr-2">
 						<div class="col-sm-12 pr-2 pl-2">
 							<div class="search-user d-flex">
-								<div class="col-11 d-flex p-0">
-									<div class="col-12 col-lg-6 form-group">
+								<div style="flex: 1 1 0;">
+									<div>
 										<label class="mb-1 department">Cá nhân</label>
-										<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstIndividual"
-											placeholder="Chọn ..." bindLabel="title" bindValue="id" [virtualScroll]="true"
-											[(ngModel)]="individualId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-											<ng-template ng-option-tmp let-item="item">
-												<div title="{{item.title}} - {{item.phone}}"> {{item.title}}
-													<div> {{item.phone}}</div>
-												</div>
+										<p-multiSelect [options]="lstIndividual" class="form-control" [(ngModel)]="individualId"
+											[ngModelOptions]="{standalone: true}" optionLabel="title" [virtualScroll]="true" [filter]="true">
+											<ng-template let-userSelected pTemplate="selectedItems">
+												<ng-container *ngIf="userSelected && userSelected.length < 2">
+													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+														<span>{{val.title}}</span>
+													</div>
+												</ng-container>
+
+												<span *ngIf="!userSelected || userSelected.length === 0"
+													class="ui-multiselected-empty-token  ui-corner-all">Chọn cá nhân..</span>
+												<span *ngIf="userSelected && userSelected.length > 1"
+													class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+													cá nhân đã chọn</span>
 											</ng-template>
-										</ng-select>
+
+
+										</p-multiSelect>
 									</div>
-									<div class="col-12 col-lg-6 form-group">
-										<label class="mb-1 department">Doanh nghiệp</label>
-										<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstBussiness"
-											placeholder="Chọn ..." bindLabel="title" bindValue="id" [virtualScroll]="true"
-											[(ngModel)]="bussinessId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
-											<ng-template ng-option-tmp let-item="item">
-												<div title="{{item.title}} - {{item.phone}}"> {{item.title}}
-													<div> {{item.phone}}</div>
-												</div>
+									<div>
+										<label class="mb-1 department">Doanh nghiệp</label>
+										<p-multiSelect [options]="lstBussiness" class="form-control" [(ngModel)]="bussinessId"
+											[ngModelOptions]="{standalone: true}" optionLabel="title" [virtualScroll]="true" [filter]="true">
+											<ng-template let-userSelected pTemplate="selectedItems">
+												<ng-container *ngIf="userSelected && userSelected.length < 2">
+													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+														<span>{{val.title}}</span>
+													</div>
+												</ng-container>
+
+												<span *ngIf="!userSelected || userSelected.length === 0"
+													class="ui-multiselected-empty-token  ui-corner-all">Chọn doanh nghiệp..</span>
+												<span *ngIf="userSelected && userSelected.length > 1"
+													class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+													doanh nghiệp đã chọn</span>
 											</ng-template>
-										</ng-select>
+										</p-multiSelect>
 									</div>
+
 								</div>
-								<div class="col-lg-1 action padding-item center">
+								<div class="center">
+									<!-- <button type="button" class="btn btn-sm grd-xanhngoc text-white rounded border-0 ml-3 px-4"
+										(click)="onCreateBussiness()">
+										Thêm
+									</button> -->
+
 									<button type="button" style="width: 40px; height: 40px;"
-										class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onCreateBussiness()">
+										class="btn btn-sm grd-blue btn-block border-0 px-3 text-white center ml-3"
+										(click)="onCreateBussiness()">
 										<i class="bi bi-person-plus"></i>
 									</button>
 								</div>
