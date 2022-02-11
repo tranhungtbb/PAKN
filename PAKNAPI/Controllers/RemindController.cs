@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert")]
         public async Task<object> RMRemindInsert() {
             try {
@@ -126,7 +126,7 @@ namespace PAKNAPI.Controllers
         /// <param name="RecommendationId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-remind-list")]
         // receive org ID
         public async Task<object> RMRemindGetAll(int? RecommendationId) {

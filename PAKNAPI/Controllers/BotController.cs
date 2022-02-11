@@ -51,7 +51,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Route("rooms")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         public async Task<ActionResult<object>> BOTRoomGetAllOnPageBase(string Title,DateTime? CreatedDate, int? PageSize = 20, int? PageIndex = 1)
         {
             try
@@ -81,7 +81,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Route("rooms-notification")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         public async Task<ActionResult<object>> BOTRoomForNotificationBase()
         {
             try
@@ -224,7 +224,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Route("bot-update-room")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         public async Task<object> ChatbotGetByRoomIdDAO(long roomId)
         {
             try

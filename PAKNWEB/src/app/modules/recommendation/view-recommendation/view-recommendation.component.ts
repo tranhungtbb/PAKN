@@ -595,7 +595,7 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	onProcessAcceptWithField() {
-		let lstRecommendaionSelected = this.recommendationSameLocation
+		let lstRecommendaionSelected = this.recommendationSameLocation == null ? [] : this.recommendationSameLocation
 			.filter(x => x.checked == true)
 			.map(item => {
 				return item.id

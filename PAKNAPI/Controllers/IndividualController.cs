@@ -27,10 +27,12 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IClient _bugsnag;
-		public IndividualController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting)
+		private readonly Microsoft.Extensions.Configuration.IConfiguration _config;
+		public IndividualController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, Microsoft.Extensions.Configuration.IConfiguration config)
 		{
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
+			_config = config;
 		}
 		/// <summary>
 		/// import cá nhân với excel - Authorize
@@ -39,7 +41,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("import-data-individual")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<ActionResult<object>> ImportDataInvididual(string folder = null)
 		{
 			var file = Request.Form.Files[0];
@@ -281,7 +283,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-individual-on-page")]
 		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
@@ -313,7 +315,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> IndivialDelete(BI_IndivialDeleteIN _bi_IndivialDeleteIN)
 		{
@@ -339,7 +341,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> IndivialChangeStatus(BI_IndivialChageStatusIN _bI_IndivialChageStatusIN)
 		{
@@ -365,7 +367,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<object> InvididualRegister([FromBody] Models.BusinessIndividual.BIIndividualInsertIN model)
 		{
@@ -408,8 +410,7 @@ namespace PAKNAPI.Controllers
 				}
 
 				//add login info
-				string defaultPwd = "abc123";
-				var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+				var pwd = GeneratePwdModelBase.generatePassword(_config["PasswordDefault"]);
 				var account = new SYUserInsertIN
 				{
 					Password = pwd.Password,
@@ -460,7 +461,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
 		{
@@ -510,7 +511,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="Id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> InvididualGetByID(long? Id)
 		{
@@ -532,7 +533,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		//[HttpGet]
-		//[Authorize("ThePolicy")]
+		//[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		//[Route("IndividualCheckExistsBase")]
 		//public async Task<ActionResult<object>> BIInvididualCheckExistsBase(string Field, string Value, long? Id)
 		//{

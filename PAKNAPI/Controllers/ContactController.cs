@@ -36,7 +36,6 @@ namespace PAKNAPI.Controllers
 
 		private static string textRamdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private static string numberRamdom = "1234567890";
-		private static string specialCharacters = "!@#$%^&*";
 
 		private IConfiguration _config;
 		private readonly Bugsnag.IClient _bugsnag;
@@ -136,7 +135,7 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Không tồn tại email" };
 				}
 				else {
-					int length = 3;
+					int length = 5;
 					StringBuilder res = new StringBuilder();
 					Random rnd = new Random();
 					while (0 < length--)
@@ -147,11 +146,6 @@ namespace PAKNAPI.Controllers
 					while (0 < length--)
 					{
 						res.Append(numberRamdom[rnd.Next(numberRamdom.Length)]);
-					}
-					length = 2;
-					while (0 < length--)
-					{
-						res.Append(specialCharacters[rnd.Next(specialCharacters.Length)]);
 					}
 
 					// lưu db

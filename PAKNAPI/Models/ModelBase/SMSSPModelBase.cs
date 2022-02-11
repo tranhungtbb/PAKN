@@ -85,7 +85,7 @@ namespace PAKNAPI.ModelBase
 		public int Category { get; set; }
 		public string Name { get; set; }
 		public string Phone { get; set; }
-		public string? Address { get; set; }
+		public string Address { get; set; }
 
 		public async Task<List<SMSGetListIndividualBusinessBySMSId>> SMSGetListIndividualBusinessBySMSIdDAO(int? SMSId)
 		{

@@ -126,7 +126,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-unit-on-page")]
 		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain, string SortDir, string SortField)
 		{
@@ -153,7 +153,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-data-for-create")]
 		public async Task<ActionResult<object>> UnitGetDataForCreateBase()
 		{
@@ -182,7 +182,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAUnitGetByIDBase(int? Id)
 		{
@@ -211,7 +211,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAUnitInsertBase(CAUnitInsertIN _cAUnitInsertIN)
 		{
@@ -236,7 +236,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAUnitUpdateBase(CAUnitUpdateIN _cAUnitUpdateIN)
 		{
@@ -261,7 +261,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAUnitDeleteBase(CAUnitDeleteIN _cAUnitDeleteIN)
 		{
@@ -286,7 +286,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> SYUnitChageStatusBase(SYUnitChageStatusIN _sYUnitChageStatusIN)
 		{
@@ -313,7 +313,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="Id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("check-exists")]
 		public async Task<ActionResult<object>> SYUnitCheckExistsBase(string Field, string Value, long? Id)
 		{
@@ -340,7 +340,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-children-dropdown")]
 		public async Task<ActionResult<object>> SY_UnitGetChildrenDropdown()
 		{
@@ -440,7 +440,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-unit-permission-on-page")]
 		public async Task<ActionResult<object>> CAUnitPermissionGetAllOnPageBase()
 		{
@@ -469,7 +469,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("unit-permission-insert")]
 		public async Task<ActionResult<object>> CAUnitPermissionInsertBase(CAUnitPermissionInsert model)
 		{
@@ -499,7 +499,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAUnitDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("unit-permission-delete")]
 		public async Task<ActionResult<object>> CAUnitPermissionDeleteBase(CAUnitPermissionDelete _cAUnitDeleteIN)
 		{
@@ -525,7 +525,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-unit-dropdown-not-permission")]
 		public async Task<ActionResult<object>> CAUnitNotPermissionGetDropdownBase()
 		{
@@ -548,7 +548,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("unit-has-permission")]
 		public async Task<ActionResult<object>> CAUnitCheckPermission()
 		{

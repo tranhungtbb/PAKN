@@ -40,7 +40,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-hashtag-on-page")]
 		public async Task<ActionResult<object>> CAHashtagChatbotGetAllOnPage()
 		{
@@ -68,7 +68,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-all")]
 		public async Task<ActionResult<object>> CAHashtagChatbotGetAll()
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAHashtagChatbotGetByIDBase(int? Id)
 		{
@@ -119,7 +119,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAHashtagChatbotInsert(CAHashtagChatbotInsertIN _CAHashtagChatbot)
 		{
@@ -143,7 +143,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_CAHashtagChatbot"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAHashtagChatbotUpdate(CAHashtagChatbotUpdateIN _CAHashtagChatbot)
 		{
@@ -175,7 +175,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAHashtagChatbotDelete(HashtagChatbotDelete _CAHashtagChatbot)
 		{

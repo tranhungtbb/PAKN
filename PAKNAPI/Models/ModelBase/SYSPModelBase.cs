@@ -292,6 +292,8 @@ namespace PAKNAPI.ModelBase
 
 		public DateTime? UpdateDate { get; set; }
 
+		public bool? IsActiveBanner { get; set; }
+
 		public async Task<List<SYIntroduce>> SYIntroduceGetInfoDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -309,6 +311,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("DescriptionFunction", syIntroduce.DescriptionFunction);
 			DP.Add("BannerUrl", syIntroduce.BannerUrl);
 			DP.Add("UpdateDate", syIntroduce.UpdateDate);
+			DP.Add("IsActiveBanner", syIntroduce.IsActiveBanner);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUpdate", DP);
 		}

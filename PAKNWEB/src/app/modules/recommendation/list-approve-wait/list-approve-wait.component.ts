@@ -173,7 +173,7 @@ export class ListApproveWaitComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this._toastr.success(COMMONS.APPROVED_SUCCESS)
-				this.getList()
+				this._router.navigate(['/quan-tri/kien-nghi/chi-tiet/', obj.id])
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -198,7 +198,7 @@ export class ListApproveWaitComponent implements OnInit {
 					$('#modalReject').modal('hide')
 
 					this._toastr.success(COMMONS.DENY_SUCCESS)
-					this.getList()
+					this._router.navigate(['/quan-tri/kien-nghi/chi-tiet/', obj.id])
 				} else {
 					this._toastr.error(response.message)
 				}

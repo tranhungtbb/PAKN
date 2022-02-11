@@ -116,31 +116,38 @@ namespace PAKNAPI.Common
 		public static List<SYUnitDropdown> ListGroupUnit()
 		{
 			var list = new List<SYUnitDropdown>
-									   {
-										   new SYUnitDropdown
-											   {
-												   Id = 1,
-												   Name = "Cơ quan chuyên môn thuộc tỉnh"
-											   },
-										   new SYUnitDropdown
-											   {
-												   Id = 2,
-												   Name = "Ban ngành thuộc tỉnh Khánh Hòa"
-											   },
-										   new SYUnitDropdown
-											  {
-												   Id = 3,
-												   Name = "Hạ tầng kỹ thuật"
-											   },
-										   new SYUnitDropdown
-											  {
-												   Id = 4,
-												   Name = "Ủy ban nhân dân các huyện, thành phố",
-												   IsAdministrative = true
-											   },
-									   };
+				{
+					new SYUnitDropdown
+						{
+							Id = 3,
+							Name = "Đơn vị quản lý hạ tầng kỹ thuật"
+						},
+					new SYUnitDropdown
+						{
+							Id = 1,
+							Name = "Cơ quan chuyên môn thuộc tỉnh"
+						},
+					new SYUnitDropdown
+						{
+							Id = 2,
+							Name = "Ban ngành thuộc tỉnh Khánh Hòa"
+						},
+										   
+					new SYUnitDropdown
+						{
+							Id = 4,
+							Name = "UBND các huyện, thị xã, thành phố",
+							IsAdministrative = true
+						},
+				};
 
 			return list;
 		}
+	}
+
+	public class RoleSystem
+	{
+		public const string ADMIN = "1"; // admin
+		public const string OTHER = "2,3"; // nguoidan, doanh nghiep
 	}
 }

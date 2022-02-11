@@ -50,7 +50,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="ToDate"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-unit")]
 		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
@@ -92,7 +92,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-unit-detail")]
 		public async Task<ActionResult<object>> RecommendationsByUnitDetailGetAllOnPageBase(int UnitId,string Code,string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -129,7 +129,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-group-word")]
 		public async Task<ActionResult<object>> STT_RecommendationByGroupWordGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
@@ -169,7 +169,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-group-word-detail")]
 		public async Task<ActionResult<object>> RecommendationByGroupWordDetail(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -202,7 +202,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-field")]
 		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
@@ -244,7 +244,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-field-detail")]
 		public async Task<ActionResult<object>> RecommendationsByFieldDetailGetAllOnPageBase(int FiledId, string Code, string CreateName, string Title, string LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -386,7 +386,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-processing-status")]
 		public async Task<ActionResult<object>> RecommendationProcessStatus(DateTime? FromDate , DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -419,7 +419,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-processing-results")]
 		public async Task<ActionResult<object>> RecommendationProcessResults(DateTime? FromDate, DateTime? ToDate)
 		{
@@ -449,7 +449,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-processing-results-by-reception-type")]
 		public async Task<ActionResult<object>> RecommendationProcessResultsByReceptionType(int? Type ,DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -472,7 +472,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-processing-results-by-type")]
 		public async Task<ActionResult<object>> RecommendationProcessResultsByType(int? Type, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -496,7 +496,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-type-detail-on-page")]
 		public async Task<ActionResult<object>> RecommendationsByFieldAndTypeDetail(int Type, int? FieldId, int? UnitId, int? RecommendationType, string Code,string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -540,7 +540,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-reception-type-detail-on-page")]
 		public async Task<ActionResult<object>> RecommendationsByReceptionTypeDetail(int Type, int? FieldId, int? UnitId, int? ReceptionType, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -583,7 +583,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-by-result-detail-on-page")]
 		public async Task<ActionResult<object>> RecommendationsByResultDetail(int Type, int? FieldId, int? UnitId, int? Status,bool? IsOnTime, string Code, string Name, string Title, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -626,7 +626,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("recommendation-for-menu")]
 		public async Task<ActionResult<object>> STT_RecommendationForMenuGetAllOnPageBase()
 		{

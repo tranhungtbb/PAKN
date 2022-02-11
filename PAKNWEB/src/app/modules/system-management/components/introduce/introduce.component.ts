@@ -92,6 +92,7 @@ export class IntroduceComponent implements OnInit {
 			summary: [this.model.summary, Validators.required],
 			descriptionUnit: [this.model.descriptionUnit, Validators.required],
 			descriptionFunction: [this.model.descriptionFunction, Validators.required],
+			isActiveBanner: [this.model.isActiveBanner],
 			////
 			titleFunc0: [this.lstIntroduceFunction[0].title, Validators.required],
 			contentFunc0: [this.lstIntroduceFunction[0].content, Validators.required],

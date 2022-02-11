@@ -45,7 +45,7 @@ namespace PAKNAPI.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-system-config-on-page")]
 		public async Task<ActionResult<object>> SYConfigGetAllOnPageBase()
 		{
@@ -75,7 +75,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> SYConfigGetByIDBase(int? Id)
 		{
@@ -133,7 +133,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="_sYConfigUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> SYConfigUpdateBase(SYConfig _sYConfigUpdateIN)
 		{
@@ -158,7 +158,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("sys-time-delete")]
 		public async Task<ActionResult<object>> SYTimeDeleteBase(SYTimeDeleteIN _sYTimeDeleteIN)
 		{
@@ -182,7 +182,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-sys-time-on-page")]
 		public async Task<ActionResult<object>> SYTimeGetAllOnPageBase()
 		{
@@ -210,7 +210,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("sys-time-get-by-id")]
 		public async Task<ActionResult<object>> SYTimeGetByIDBase(int? Id)
 		{
@@ -237,7 +237,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("sys-time-data-active")]
 		public async Task<ActionResult<object>> SYTimeGetDateActiveBase()
 		{
@@ -265,7 +265,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("sys-time-insert")]
 		public async Task<ActionResult<object>> SYTimeInsertBase(SYTimeInsertIN _sYTimeInsertIN)
 		{
@@ -289,7 +289,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="_sYTimeUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("sys-time-update")]
 		public async Task<ActionResult<object>> SYTimeUpdateBase(SYTimeUpdateIN _sYTimeUpdateIN)
 		{

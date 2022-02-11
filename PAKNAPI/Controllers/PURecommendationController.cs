@@ -134,6 +134,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("get-list-my-recommentdation-on-page")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.OTHER)]
 		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId, string LtsStatus, string Title, int PageSize, int PageIndex)
 		{
 			try
@@ -167,6 +168,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("recommendation-statistics-get-by-user-id")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.OTHER)]
 		public async Task<ActionResult<object>> PURecommendationStatisticsGetByUserIdBase()
 		{
 			try

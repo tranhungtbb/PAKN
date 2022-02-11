@@ -53,7 +53,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update"), DisableRequestSizeLimit]
         public async Task<ActionResult<object>> Update([FromQuery] string userId)
         {
@@ -184,7 +184,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> GetById(long id)
         {
@@ -253,7 +253,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-email-on-page")]
         public async Task<ActionResult<object>> GetPagedList(
             string title,
@@ -291,7 +291,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete")]
         public async Task<ActionResult<object>> Delete(long id)
         {
@@ -332,7 +332,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("send-email")]
         public async Task<ActionResult<object>> SendEmail(long id, [FromQuery] string userId)
         {
@@ -382,7 +382,7 @@ namespace PAKNAPI.Controllers.ControllerBase
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("list-his")]
         public async Task<ActionResult<object>> GetHisPagedList(
             int objectId,

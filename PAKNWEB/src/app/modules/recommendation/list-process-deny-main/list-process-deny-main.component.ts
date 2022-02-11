@@ -204,7 +204,8 @@ export class ListProcessDenyMainComponent implements OnInit {
 		this._service.recommendationForward(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
-				this.getList()
+				// this.getList()
+				this._router.navigate(['/quan-tri/kien-nghi/chi-tiet/', obj.id])
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 			} else {
 				this._toastr.error(response.message)

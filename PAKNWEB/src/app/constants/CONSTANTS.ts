@@ -200,6 +200,19 @@ export class USER_TYPE {
 	public static BUSSINESS = 3 // Doanh nghiệp
 }
 
+export const MY_FORMATS = {
+	parse: {
+		dateInput: 'YYYY-MM-DD HH:mm:ss'
+	},
+	display: {
+		dateInput: 'YYYY-MM-DD HH:mm:ss',
+		monthYearLabel: 'MMM YYYY',
+		dateA11yLabel: 'LL',
+		monthYearA11yLabel: 'MMMM YYYY',
+	}
+};
+
+
 export const FILETYPE = [
 	{ text: 'application/msword', value: 1 },
 	{ text: 'text/plain', value: 1 },

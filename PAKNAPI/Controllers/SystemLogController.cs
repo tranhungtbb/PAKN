@@ -46,7 +46,7 @@ namespace PAKNAPI.ControllerBase
 		/// <param name="Status"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-system-log-on-page")]
 		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageBase(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate, string Content, int? Status)
 		{
@@ -79,7 +79,7 @@ namespace PAKNAPI.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-system-log-admin-on-page")]
 		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageAdminBase(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
 		{
@@ -108,7 +108,7 @@ namespace PAKNAPI.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> SYSystemLogDeleteBase(int? Id)
 		{

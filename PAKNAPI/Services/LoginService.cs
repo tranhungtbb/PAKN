@@ -277,6 +277,7 @@ namespace PAKNAPI.Services
                     new Claim("Type", user.Type.ToString()),
                     new Claim("UnitId", user.UnitId.ToString()),
                     new Claim("Email", user.Email??""),
+                    new Claim(ClaimTypes.Role, user.Type.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.Now.AddDays(10),

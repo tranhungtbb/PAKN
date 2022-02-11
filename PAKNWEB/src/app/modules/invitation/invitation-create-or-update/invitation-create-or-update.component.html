@@ -319,7 +319,8 @@
 									<div>
 										<label class="mb-1 department">Cá nhân</label>
 										<p-multiSelect [options]="lstIndividual" class="form-control" [(ngModel)]="individualId"
-											[ngModelOptions]="{standalone: true}" optionLabel="title" [virtualScroll]="true" [filter]="true">
+											emptyFilterMessage="Không có dữ liệu" [ngModelOptions]="{standalone: true}" optionLabel="title"
+											[virtualScroll]="true" [filter]="true">
 											<ng-template let-userSelected pTemplate="selectedItems">
 												<ng-container *ngIf="userSelected && userSelected.length < 2">
 													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
@@ -340,7 +341,8 @@
 									<div>
 										<label class="mb-1 department">Doanh nghiệp</label>
 										<p-multiSelect [options]="lstBussiness" class="form-control" [(ngModel)]="bussinessId"
-											[ngModelOptions]="{standalone: true}" optionLabel="title" [virtualScroll]="true" [filter]="true">
+											emptyFilterMessage="Không có dữ liệu" [ngModelOptions]="{standalone: true}" optionLabel="title"
+											[virtualScroll]="true" [filter]="true">
 											<ng-template let-userSelected pTemplate="selectedItems">
 												<ng-container *ngIf="userSelected && userSelected.length < 2">
 													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">

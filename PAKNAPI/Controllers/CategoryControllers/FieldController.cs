@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAFieldDeleteBase(CAFieldDeleteIN _cAFieldDeleteIN)
 		{
@@ -69,7 +69,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// </summary>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-field-on-page")]
 		public async Task<ActionResult<object>> CAFieldGetAllOnPageBase()
 		{
@@ -125,7 +125,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAFieldGetByIDBase(int? Id)
 		{
@@ -179,7 +179,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAFieldInsertBase()
 		{
@@ -233,7 +233,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAFieldUpdateBase()
 		{
@@ -285,7 +285,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="cAFieldUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update-status")]
 		public async Task<ActionResult<object>> CAFieldUpdateStatusBase(CAFieldUpdateIN cAFieldUpdateIN)
 		{
@@ -309,7 +309,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("field-knct-get-dropdown")]
         public async Task<ActionResult<object>> CAFieldKNCTGetDropdownBase()
         {

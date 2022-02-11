@@ -13,7 +13,7 @@ import { InvitationComponent } from './invitation.component'
 import { InvitationCreateOrUpdateComponent } from './invitation-create-or-update/invitation-create-or-update.component'
 import { InvitationDetailComponent } from './invitation-detail/invitation-detail.component'
 
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker'
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule, NgxMatDateFormats, NGX_MAT_DATE_FORMATS, NgxMatDateAdapter } from '@angular-material-components/datetime-picker'
 
 import { MatButtonModule } from '@angular/material/button'
 import { MatCheckboxModule } from '@angular/material/checkbox'
@@ -22,8 +22,9 @@ import { MatInputModule } from '@angular/material/input'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatSelectModule } from '@angular/material/select'
 
-import { MomentDateModule } from '@angular/material-moment-adapter'
-import { MAT_DATE_FORMATS } from '@angular/material/core'
+import { DateAdapter, MatFormFieldModule, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { MomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
+
 
 @NgModule({
 	declarations: [InvitationComponent, InvitationCreateOrUpdateComponent, InvitationDetailComponent],
@@ -44,11 +45,12 @@ import { MAT_DATE_FORMATS } from '@angular/material/core'
 		MatButtonModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
-		MatInputModule,
 		MatRadioModule,
 		MatSelectModule,
+		MatNativeDateModule,
+		MatFormFieldModule,
 		MomentDateModule,
+		MatInputModule,
 	],
-	// providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
 })
-export class InvitationModule {}
+export class InvitationModule { }

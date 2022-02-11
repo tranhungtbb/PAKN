@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        //[Authorize("ThePolicy")]
+        //[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-info")]
         public async Task<object> SYIndexSettingGetInfo() {
             try {
@@ -79,7 +79,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update")]
         public async Task<object> IndexSettingUpdate() {
             try
@@ -195,7 +195,7 @@ namespace PAKNAPI.Controllers
         /// 
 
         //[HttpGet]
-        //[Authorize("ThePolicy")]
+        //[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         //[Route("get-list-index-website")]
         //public async Task<object> SYIndexWebsiteGetAll()
         //{
@@ -214,7 +214,7 @@ namespace PAKNAPI.Controllers
 
 
         //[HttpPost]
-        //[Authorize("ThePolicy")]
+        //[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         //[Route("index-website-insert")]
         //public async Task<object> SYIndexWebsiteInsert(SYIndexWebsite model)
         //{

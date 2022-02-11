@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAPositionDeleteBase(CAPositionDeleteIN _cAPositionDeleteIN)
 		{
@@ -65,7 +65,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-position-on-page")]
 		public async Task<ActionResult<object>> CAPositionGetAllOnPageBase()
 		{
@@ -92,7 +92,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="Id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAPositionGetByIDBase(int? Id)
 		{
@@ -115,7 +115,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		//[HttpGet]
-		//[Authorize("ThePolicy")]
+		//[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		//[Route("CAPositionGetDropdownBase")]
 		//public async Task<ActionResult<object>> CAPositionGetDropdownBase()
 		//{
@@ -143,7 +143,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAPositionInsertIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAPositionInsertBase(CAPositionInsertIN _cAPositionInsertIN)
 		{
@@ -173,7 +173,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAPositionUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAPositionUpdateBase(CAPositionUpdateIN _cAPositionUpdateIN)
 		{

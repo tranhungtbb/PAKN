@@ -139,7 +139,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
 		{
@@ -170,7 +170,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
 		{
@@ -196,7 +196,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> NENewsInsertBase()
 		{
@@ -325,7 +325,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> NENewsUpdateBase()
 		{
@@ -465,7 +465,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("change-status-news")]
 		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId, int? Status)
 		{
@@ -676,7 +676,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-his-on-page")]
 		public async Task<ActionResult<object>> HISNewsGetByNewsId(int NewsId)
 		{

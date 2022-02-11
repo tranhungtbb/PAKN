@@ -2,7 +2,7 @@
             Content body start
         ***********************************-->
 <div class="content-nd">
-	<div class="banner">
+	<div class="banner" *ngIf="model?.isActiveBanner">
 		<img [src]="model.bannerUrl">
 	</div>
 	<div>
@@ -10,7 +10,7 @@
 			<div class="row justify-content-between">
 				<p class="col-12 h4 cl-red mb-2" *ngIf="isPreview">(Xem trước)</p>
 				<div class="col main-ct pr-3 pr-lg-5">
-					<div class="box">
+					<div class="box margin-top-16" [ngClass]="{'margin-top-16' : !model.isActiveBanner}">
 						<div class="title title-introduce">
 							{{model.title}}
 						</div>

@@ -53,7 +53,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-data-for-create")]
         public async Task<ActionResult<object>> GetDataForCreate()
         {
@@ -81,7 +81,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete")]
         public async Task<ActionResult<object>> INVInvitationDeleteBase(INVInvitationDeleteIN _iNVInvitationDeleteIN)
         {
@@ -123,7 +123,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-user-readed-invitation-on-page")]
         public async Task<ActionResult<object>> SYUserReadedInvitationGetAllOnPage(int InvitationId, string UserName, DateTime? WatchedDate, int? PageSize, int? PageIndex)
         {
@@ -160,7 +160,7 @@ namespace PAKNAPI.Controllers
         /// <param name="Status"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-invitation-on-page")]
         public async Task<ActionResult<object>> INVInvitationGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
         {
@@ -191,7 +191,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert")]
         public async Task<object> INVInvitationInsert()
         {
@@ -395,7 +395,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-detail")]
         public async Task<object> INVInvitationDetail(int id)
         {
@@ -443,7 +443,7 @@ namespace PAKNAPI.Controllers
 
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update")]
         public async Task<object> INVInvitationUpdate(int id)
         {
@@ -471,7 +471,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update")]
         public async Task<object> INVInvitationUpdate()
         {
@@ -570,97 +570,95 @@ namespace PAKNAPI.Controllers
                     Dictionary<string, string> lstUserSend = new Dictionary<string, string>();
                     Dictionary<string, string> lstUserSendSMS = new Dictionary<string, string>();
                     // insert map user
-                    if (true)
+                  
+                    string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+                    foreach (var item in invInvitation.InvitationUserMap)
                     {
-                        string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
-                        foreach (var item in invInvitation.InvitationUserMap)
+                        INVInvitationUserMapInsertIN ins = new INVInvitationUserMapInsertIN();
+                        ins.InvitationId = invInvitation.Model.Id;
+                        ins.SendSMS = item.SendSMS;
+                        ins.SendEmail = item.SendEmail;
+                        ins.UserId = item.UserId;
+                        ins.Watched = item.Watched;
+                        ins.Type = item.Type;
+                        await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(ins);
+
+                        // tạo thông báo
+                        if (invInvitation.Model.Status == 2)
+                        { // gửi
+                            var model = new SYNotificationModel();
+                            model.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                            model.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                            model.ReceiveId = (int)item.UserId;
+                            //model.ReceiveOrgId = user.UnitId;
+                            model.DataId = id;
+                            model.SendDate = DateTime.Now;
+                            model.Type = TYPENOTIFICATION.INVITATION;
+                            model.Title = "Bạn vừa nhận được một thư mời từ " + senderName;
+                            model.Content = invInvitation.Model.Title;
+                            model.IsViewed = true;
+                            model.IsReaded = true;
+                            // insert vào db-
+                            await new SYNotification(_appSetting, _configuration).InsertNotification(model);
+
+                            if (item.SendEmail == true)
+                            {
+                                var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
+                                if (userSend != null && userSend.IsActived == true) { lstUserSend.Add(userSend.FullName, userSend.Email); }
+                            }
+
+                            if (item.SendSMS == true)
+                            {
+                                var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
+                                if (userSend != null && userSend.IsActived == true) { lstUserSendSMS.Add(userSend.FullName, userSend.Phone); }
+                            }
+                        }
+                        // send email nếu có
+                    }
+                    // send mail
+                    if (lstUserSend.Count() > 0)
+                    {
+                        Thread t = new Thread(async () =>
                         {
-                            INVInvitationUserMapInsertIN ins = new INVInvitationUserMapInsertIN();
-                            ins.InvitationId = invInvitation.Model.Id;
-                            ins.SendSMS = item.SendSMS;
-                            ins.SendEmail = item.SendEmail;
-                            ins.UserId = item.UserId;
-                            ins.Watched = item.Watched;
-                            ins.Type = item.Type;
-                            await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(ins);
-
-                            // tạo thông báo
-                            if (invInvitation.Model.Status == 2)
-                            { // gửi
-                                var model = new SYNotificationModel();
-                                model.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                                model.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                                model.ReceiveId = (int)item.UserId;
-                                //model.ReceiveOrgId = user.UnitId;
-                                model.DataId = id;
-                                model.SendDate = DateTime.Now;
-                                model.Type = TYPENOTIFICATION.INVITATION;
-                                model.Title = "Bạn vừa nhận được một thư mời từ " + senderName;
-                                model.Content = invInvitation.Model.Title;
-                                model.IsViewed = true;
-                                model.IsReaded = true;
-                                // insert vào db-
-                                await new SYNotification(_appSetting, _configuration).InsertNotification(model);
-
-                                if (item.SendEmail == true)
+                            var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL)).FirstOrDefault();
+                            if (config != null)
+                            {
+                                var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config.Content);
+                                string content = "<p><span style='font-family:times new roman,times,serif;'><strong>Kính gửi: </strong>&nbsp;{FullName},<br />" +
+                                        "Thư mời họp <br />" +
+                                        "<strong> Thời gian bắt đầu </strong > : {StartDate}<br />" +
+                                        "<strong> Thời gian kết thúc </strong > : {EndDate}<br />" +
+                                        "<strong> Địa điểm </strong > : {Place}<br />" +
+                                        "<strong> Nội dung </strong > :<br />" +
+                                        "{Content}</span></p>";
+                                content = content.Replace("{StartDate}", invInvitation.Model.StartDate.ToString("dd/MM/yyyy HH:ss"));
+                                content = content.Replace("{EndDate}", invInvitation.Model.EndDate.ToString("dd/MM/yyyy HH:ss"));
+                                content = content.Replace("{Place}", invInvitation.Model.Place);
+                                content = content.Replace("{Content}", invInvitation.Model.Content);
+                                foreach (var item in lstUserSend)
                                 {
-                                    var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
-                                    if (userSend != null && userSend.IsActived == true) { lstUserSend.Add(userSend.FullName, userSend.Email); }
-                                }
-
-                                if (item.SendSMS == true)
-                                {
-                                    var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
-                                    if (userSend != null && userSend.IsActived == true) { lstUserSendSMS.Add(userSend.FullName, userSend.Phone); }
+                                    string itemContent = content.Replace("{FullName}", item.Key);
+                                    itemContent = itemContent.Replace("\n", "<br />");
+                                    MailHelper.SendMail(configEmail, item.Value, invInvitation.Model.Title, itemContent, null);
                                 }
                             }
-                            // send email nếu có
-                        }
-                        // send mail
-                        if (lstUserSend.Count() > 0)
+                        });
+                        t.Start();
+                    }
+                    if (lstUserSendSMS.Count() > 0)
+                    {
+                        SendSmsController sendSmsController = new SendSmsController(_appSetting, _bugsnag, _configuration);
+                        SendMessageRequest sendMessageRequest = new SendMessageRequest();
+                        sendMessageRequest.message = $"{invInvitation.Model.Title} {Environment.NewLine}Thời gian: {invInvitation.Model.StartDate.ToString("HH:mm dd/MM/yyyy")} - {invInvitation.Model.EndDate.ToString("HH:mm dd/MM/yyyy")} {Environment.NewLine}Địa điểm: {invInvitation.Model.Place}";
+                        foreach (var item in lstUserSendSMS)
                         {
-                            Thread t = new Thread(async () =>
+                            sendMessageRequest.phoneTo = item.Value;
+                            if (item.Value.StartsWith('0'))
                             {
-                                var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL)).FirstOrDefault();
-                                if (config != null)
-                                {
-                                    var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config.Content);
-                                    string content = "<p><span style='font-family:times new roman,times,serif;'><strong>Kính gửi: </strong>&nbsp;{FullName},<br />" +
-                                            "Thư mời họp <br />" +
-                                            "<strong> Thời gian bắt đầu </strong > : {StartDate}<br />" +
-                                            "<strong> Thời gian kết thúc </strong > : {EndDate}<br />" +
-                                            "<strong> Địa điểm </strong > : {Place}<br />" +
-                                            "<strong> Nội dung </strong > :<br />" +
-                                            "{Content}</span></p>";
-                                    content = content.Replace("{StartDate}", invInvitation.Model.StartDate.ToString("dd/MM/yyyy HH:ss"));
-                                    content = content.Replace("{EndDate}", invInvitation.Model.EndDate.ToString("dd/MM/yyyy HH:ss"));
-                                    content = content.Replace("{Place}", invInvitation.Model.Place);
-                                    content = content.Replace("{Content}", invInvitation.Model.Content);
-                                    foreach (var item in lstUserSend)
-                                    {
-                                        string itemContent = content.Replace("{FullName}", item.Key);
-                                        itemContent = itemContent.Replace("\n", "<br />");
-                                        MailHelper.SendMail(configEmail, item.Value, invInvitation.Model.Title, itemContent, null);
-                                    }
-                                }
-                            });
-                            t.Start();
-                        }
-                        if (lstUserSendSMS.Count() > 0)
-                        {
-                            SendSmsController sendSmsController = new SendSmsController(_appSetting, _bugsnag, _configuration);
-                            SendMessageRequest sendMessageRequest = new SendMessageRequest();
-                            sendMessageRequest.message = $"{invInvitation.Model.Title} {Environment.NewLine}Thời gian: {invInvitation.Model.StartDate.ToString("HH:mm dd/MM/yyyy")} - {invInvitation.Model.EndDate.ToString("HH:mm dd/MM/yyyy")} {Environment.NewLine}Địa điểm: {invInvitation.Model.Place}";
-                            foreach (var item in lstUserSendSMS)
-                            {
-                                sendMessageRequest.phoneTo = item.Value;
-                                if (item.Value.StartsWith('0'))
-                                {
-                                    sendMessageRequest.phoneTo = item.Value.Remove(0,1);
-                                    sendMessageRequest.phoneTo = "+84" + sendMessageRequest.phoneTo;
-                                }
-                                await sendSmsController.OnSendSMS(sendMessageRequest);
+                                sendMessageRequest.phoneTo = item.Value.Remove(0,1);
+                                sendMessageRequest.phoneTo = "+84" + sendMessageRequest.phoneTo;
                             }
+                            await sendSmsController.OnSendSMS(sendMessageRequest);
                         }
                     }
 
@@ -716,7 +714,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-his")]
         public async Task<ActionResult<object>> HISInvitationGetByInvitationIdOnPageBase(int? PageSize, int? PageIndex, int? ObjectId, string Content, string UserName, DateTime? CreateDate, int? Status)
         {

@@ -103,7 +103,7 @@
 									<div class="row mx-0 my-2">
 										<div class="col-3 p-1 ps-relative" *ngFor="let file of filesModel | filterImage"
 											style="max-height: 200px; width: 100%;">
-											<a appViewFile [linkfile]="file.filePath">
+											<a appViewFile [linkfile]="file.filePath" [namefile]="file.name">
 												<img class="img-cover pointer" src="{{file.filePathUrl}}" title="{{file.name}}">
 											</a>
 										</div>
@@ -430,7 +430,7 @@
 										<div class="row mx-0 my-2">
 											<div class="col-3 p-1 ps-relative" *ngFor="let file of files | filterImage"
 												style="max-height: 200px; width: 100%;">
-												<a appViewFile [linkfile]="file.filePath">
+												<a appViewFile [linkfile]="file.filePath" [namefile]="file.name">
 													<img class="img-cover pointer" src="{{file.filePathUrl}}" title="{{file.name}}">
 												</a>
 											</div>
@@ -732,6 +732,13 @@
 				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
 				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny"
 					maxlength="500"></textarea>
+				<ng-container *ngIf="model.status == 2 || (model.status == 5 && isForwardProcess == true)">
+					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
+						<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.isFakeImage"
+							id="checkbox_fake_image">
+						<label class="custom-control-label" for="checkbox_fake_image">Chứa ảnh giả</label>
+					</div>
+				</ng-container>
 			</div>
 			<div class="modal-footer justify-content-center border-top-0">
 				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>

@@ -87,7 +87,8 @@
 								</div>
 								<div class="d-flex">
 									<p-multiSelect [options]="listData" class="form-control" formControlName="userId" [(ngModel)]="userId"
-										optionLabel="name" [virtualScroll]="true" optionValue="id">
+										emptyFilterMessage="Không có dữ liệu" [filter]="true" optionLabel="name" [virtualScroll]="true"
+										optionValue="id">
 										<ng-template let-userSelected pTemplate="selectedItems">
 											<ng-container *ngIf="userSelected && userSelected.length < 2">
 												<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">

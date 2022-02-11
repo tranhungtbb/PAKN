@@ -46,7 +46,6 @@ namespace PAKNAPI.Controllers
 
 		private static string textRamdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private static string numberRamdom = "1234567890";
-		private static string specialCharacters = "!@#$%^&*";
 		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
 			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config, IWebHostEnvironment IWebHostEnvironment)
 		{
@@ -63,7 +62,7 @@ namespace PAKNAPI.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-data-for-create")]
 		public async Task<ActionResult<object>> UsersGetDataForCreate()
 		{
@@ -86,7 +85,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("create")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> Create([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -102,7 +101,7 @@ namespace PAKNAPI.Controllers
 					model.Avatar = null;
 				}
 
-				int length = 3;
+				int length = 5;
 				StringBuilder res = new StringBuilder();
 				Random rnd = new Random();
 				while (0 < length--)
@@ -113,11 +112,6 @@ namespace PAKNAPI.Controllers
 				while (0 < length--)
 				{
 					res.Append(numberRamdom[rnd.Next(numberRamdom.Length)]);
-				}
-				length = 2;
-				while (0 < length--)
-				{
-					res.Append(specialCharacters[rnd.Next(specialCharacters.Length)]);
 				}
 
 				// lưu db
@@ -193,7 +187,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("update")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> Update([FromForm] SYUserUpdateIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -244,7 +238,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("update-profile")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> Update([FromForm] SYUserUpdateProfile model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -294,7 +288,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("user-system-create")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> UserSystemCreate([FromForm] SYUserSystemInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -311,7 +305,7 @@ namespace PAKNAPI.Controllers
 					model.Avatar = null;
 				}
 
-				int length = 3;
+				int length = 5;
 				StringBuilder res = new StringBuilder();
 				Random rnd = new Random();
 				while (0 < length--)
@@ -322,11 +316,6 @@ namespace PAKNAPI.Controllers
 				while (0 < length--)
 				{
 					res.Append(numberRamdom[rnd.Next(numberRamdom.Length)]);
-				}
-				length = 2;
-				while (0 < length--)
-				{
-					res.Append(specialCharacters[rnd.Next(specialCharacters.Length)]);
 				}
 
 				// lưu db
@@ -408,7 +397,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("user-system-update")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> UserSystemUpdate([FromForm] SYUserSystemUpdateIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -453,7 +442,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("delete")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> Delete(SYUserDeleteIN model)
 		{
 			try
@@ -501,7 +490,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-on-page")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageList()
 		{
@@ -532,7 +521,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-for-chat")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageListForChat(int? PageIndex, string UserName, string TextSearch)
 		{
@@ -563,7 +552,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="lstId"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-by-lst-id-qb")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageListByListIdQb(string lstId, string textSearch)
 		{
@@ -603,7 +592,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="IdQB"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update-qb")]
 		public async Task<ActionResult<object>> SYUserUpdateQB(int? Id, int? IdQB)
 		{
@@ -628,7 +617,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-on-page-by-unit-id")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? UnitId)
 		{
@@ -658,7 +647,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> SYUserChangeStatusBase(SYUserChangeStatusIN _sYUserChangeStatusIN)
 		{
@@ -684,7 +673,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="Id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy")]
 		[Route("check-exists")]
 		public async Task<ActionResult<object>> SYUserCheckExistsBase(string Field, string Value, long? Id)
 		{
@@ -712,7 +701,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-on-page-base-by-role-id")]
 		public async Task<ActionResult<object>> SYUserGetAllByRoleIdBase(int? RoleId)
 		{
@@ -739,7 +728,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy")]
 		[Route("get-drop-down")]
 		public async Task<ActionResult<object>> SYUsersGetDropdownBase()
 		{
@@ -768,7 +757,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="RoleId"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-on-page-by-role-id")]
 		public async Task<ActionResult<object>> SYUserGetByRoleIdAllOnPageBase(int? PageSize, int? PageIndex, int? RoleId)
 		{
@@ -799,7 +788,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{
@@ -826,7 +815,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-user-system-on-page")]
 		public async Task<ActionResult<object>> SYUserSystemGetAllOnPageList()
 		{
@@ -855,7 +844,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-info")]
 		public async Task<ActionResult<object>> UserGetByID(long? Id)
 		{
@@ -884,7 +873,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-user-order-by-unit")]
 		public async Task<ActionResult<object>> SYUserGetAllOrderByUnit()
 		{
@@ -951,7 +940,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-user-is-system")]
 		public async Task<ActionResult<object>> SYUserGetIsSystemBase()
 		{
@@ -980,7 +969,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("user-role-map-delete")]
 		public async Task<ActionResult<object>> SYUserRoleMapDeleteBase(SYUserRoleMapDeleteIN _sYUserRoleMapDeleteIN)
 		{
@@ -1006,7 +995,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("user-not-role")]
 		public async Task<ActionResult<object>> SYUserGetIsNotRole(int? RoleId)
 		{
@@ -1245,7 +1234,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Route("user-get-info")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy")]
 		public async Task<object> UserGetInfo(long? id)
 		{
 			try
@@ -1329,7 +1318,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("user-change-password")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.OTHER)]
 		public async Task<object> UserChagePwd([FromForm] ChangePwdModel model)
 		{
 			try
@@ -1390,7 +1379,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("user-change-password-in-manage")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<object> UserChangePwdInManage(ChangePwdInManage model)
 		{
 			try
@@ -1450,7 +1439,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Route("update-current-info-individual")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.OTHER)]
 		public async Task<object> UpdateCurrentInfo( AccountInfoModel model)
         {
             try
@@ -1527,7 +1516,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Route("update-current-info-business")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.OTHER)]
 		public async Task<object> UpdateCurrentInfoBusiness(BusinessAccountInfoModel businessModel)
 		{
 			try

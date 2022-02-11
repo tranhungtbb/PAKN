@@ -145,7 +145,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result) {
 							this.model = { ...res.result.model }
-							this.userId = this.listItemUserSelected = [...res.result.individualBusinessInfo]
+							this.listItemUserSelected = [...res.result.individualBusinessInfo]
 
 							this.onLoadListIndividualAndBusiness()
 						}
@@ -197,6 +197,15 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		this.smsService.GetListIndividualBusinessDrop(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listData = res.result
+				this.listItemUserSelected.forEach(item => {
+					let find = this.listData.find(x => x.id == item.id && x.category == item.category)
+					if (find) {
+						this.userId.push(find)
+					}
+				})
+
+				// this.userId = 
+
 			} else {
 				this.listData = []
 			}

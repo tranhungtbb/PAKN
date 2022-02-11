@@ -30,12 +30,14 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IClient _bugsnag;
+		private readonly Microsoft.Extensions.Configuration.IConfiguration _config;
 
-		public BusinessController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
+		public BusinessController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag, Microsoft.Extensions.Configuration.IConfiguration config)
 		{
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
 			_bugsnag = bugsnag;
+			_config = config;
 		}
 		/// <summary>
 		/// impport excel - Authorize
@@ -44,7 +46,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("import-data-business")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<ActionResult<object>> ImportDataBusiness(string folder = null)
 		{
 			var file = Request.Form.Files[0];
@@ -335,7 +337,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-business-on-page")]
 		public async Task<ActionResult<object>> BusinessGetAllOnPage(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, byte? Status, string SortDir, string SortField)
 		{
@@ -367,7 +369,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> BusinessDelete(BI_BusinessDeleteIN _bI_BusinessDeleteIN)
 		{
@@ -393,7 +395,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> BusinessChageStatus(BI_BusinessChageStatusIN _bI_BusinessChageStatusIN)
 		{
@@ -419,7 +421,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<object> BusinessRegister([FromBody] BI_BusinessInsertIN model)
 		{
@@ -444,9 +446,7 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", model.BusinessRegistration, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
 				
-				//add login info
-				string defaultPwd = "abc123";
-				var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+				var pwd = GeneratePwdModelBase.generatePassword(_config["PasswordDefault"]);
 				var account = new SYUserInsertIN
 				{
 					Password = pwd.Password,
@@ -496,7 +496,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> BusinessGetByID(long? Id)
 		{
@@ -524,7 +524,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> BusinessUpdate([FromBody] BI_BusinessUpdateInfoIN model)
 		{
@@ -590,7 +590,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-individual-business-by-provice-id")]
 		public async Task<ActionResult<object>> BIIndividualOrBusinessGetDropListByProviceIdBase(string LtsAdministrativeId, int? Type)
 		{
@@ -619,7 +619,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="Type"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-drop-list-individual-business")]
 		public async Task<ActionResult<object>> BIIndividualBusinessGetDrop(int? SmsId, int? Type)
 		{

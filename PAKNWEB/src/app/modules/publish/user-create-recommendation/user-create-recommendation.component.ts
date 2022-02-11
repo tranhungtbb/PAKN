@@ -105,7 +105,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		this.setCurrentLocation()
+		// this.setCurrentLocation()
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 

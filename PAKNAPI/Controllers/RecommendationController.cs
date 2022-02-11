@@ -104,7 +104,7 @@ namespace PAKNAPI.Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-data-for-forward")]
         public async Task<ActionResult<object>> RecommendationGetDataForForward()
         {
@@ -127,7 +127,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-data-for-process")]
         public async Task<ActionResult<object>> RecommendationGetDataForProcess(int? UnitId)
         {
@@ -149,7 +149,7 @@ namespace PAKNAPI.Controller
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByID(int? Id)
         {
@@ -173,7 +173,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-detail-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByIDView(int? Id)
         {
@@ -211,7 +211,7 @@ namespace PAKNAPI.Controller
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy")]
         [Route("get-detail-public-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByIDViewPublic(int? Id)
         {
@@ -236,7 +236,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("check-recommendation")]
 
         public async Task<ActionResult<object>> RecommendationCheckFakeImage([FromForm] RecommendationCheckCaptcha model)
@@ -322,7 +322,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy")]
         [Route("insert")]
         public async Task<ActionResult<object>> RecommendationInsert()
         {
@@ -727,7 +727,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy")]
         [Route("update")]
         public async Task<ActionResult<object>> RecommendationUpdate()
         {
@@ -1011,7 +1011,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-forward")]
         public async Task<ActionResult<object>> RecommendationForward(RecommendationForwardRequest request)
         {
@@ -1078,7 +1078,7 @@ namespace PAKNAPI.Controller
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-combine-insert")]
         public async Task<ActionResult<object>> RecommendationCombine(RecommendationCombineRequest request)
         {
@@ -1139,7 +1139,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-on-process")]
         public async Task<ActionResult<object>> MRRecommendationOnProcess(RecommendationForwardProcess request)
         {
@@ -1338,7 +1338,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-on-process-conclusion")]
         public async Task<ActionResult<object>> RecommendationOnProcessConclusion()
         {
@@ -1476,7 +1476,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-on-process-conclusion-combine")]
         public async Task<ActionResult<object>> RecommendationOnUpdateProcessConclusion()
         {
@@ -1566,7 +1566,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.OTHER)]
         [Route("recommendation-update-status")]
         public async Task<ActionResult<object>> RecommendationUpdateStatus(RecommendationSendProcess request)
         {
@@ -1640,7 +1640,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-recommentdation-fake-image")]
         public async Task<ActionResult<object>> MRRecommendationFakeImage(string Code, string SendName, string Content, int? UnitId, int? Field, int? PageSize, int? PageIndex)
         {
@@ -1683,7 +1683,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-recommentdation-process-on-page")]
         public async Task<ActionResult<object>> MRRecommendationGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
         {
@@ -1722,7 +1722,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-recommentdation-combination-on-page")]
         public async Task<ActionResult<object>> MRRecommendationCombinationGetAllBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
         {
@@ -1763,7 +1763,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-recommentdation-reactionary-word")]
         public async Task<ActionResult<object>> MRRecommendationGetAllReactionaryWordBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status,int? GroupWord, int? PageSize, int? PageIndex)
         {
@@ -1797,7 +1797,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-his-by-recommentdation")]
         public async Task<ActionResult<object>> HISRecommendationGetByObjectIdBase(int? Id)
         {
@@ -1826,7 +1826,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete")]
         public async Task<ActionResult<object>> MRRecommendationDeleteBase(MRRecommendationDeleteIN _mRRecommendationDeleteIN)
         {
@@ -1883,7 +1883,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-get-suggest-reply")]
         public async Task<ActionResult<object>> MRRecommendationGetSuggestReplyBase(string ListIdHashtag, int? PageSize, int? PageIndex)
         {
@@ -1941,7 +1941,7 @@ namespace PAKNAPI.Controller
         /// <param name="SendDateTo"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-get-send-user-data-graph")]
         public async Task<ActionResult<object>> MRRecommendationGetSendUserDataGraphBase(long? SendId, DateTime? SendDateFrom, DateTime? SendDateTo)
         {
@@ -1977,7 +1977,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-recommendation-by-hashtag-on-page")]
         public async Task<ActionResult<object>> MRRecommendationGetByHashtagAllOnPageBase(string Code, string SendName, string Title, string Content, int? Status, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
         {
@@ -2006,7 +2006,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation-get-deny-contents")]
         public async Task<ActionResult<object>> MRRecommendationGetDenyContentsBase(int? Id)
         {
@@ -2034,7 +2034,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert-hashtag-for-recommentdation")]
         public async Task<ActionResult<object>> MRInsertHashtagForRecommentdation(MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN)
         {
@@ -2059,7 +2059,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete-hashtag-for-recommentdation")]
         public async Task<ActionResult<object>> MRDeleteHashtagForRecommentdation(MRRecommendationHashtagDelete _mRRecommendationHashtagDeleteIN)
         {
@@ -2154,7 +2154,7 @@ namespace PAKNAPI.Controller
 
         [HttpGet]
         [Route("get-all-infomation-exchange")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy")]
         public async Task<ActionResult<object>> MRInfomationExchangeGetAllOnPageBase(long? RecommendationId,bool? IsPublish, int? PageIndex, int? PageSize)
         {
             try
@@ -2189,7 +2189,7 @@ namespace PAKNAPI.Controller
 
         [HttpPost]
         [Route("insert-infomation-exchange")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy")]
         public async Task<ActionResult<object>> MRInfomationExchangeInsertBase(MRInfomationExchange model)
         {
             try
@@ -2267,7 +2267,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-all-comment-on-page")]
         public async Task<ActionResult<object>> MRCommentGetAllOnPageBase(string FullName, string Contents , string RecommendationTitle, bool? IsPublish, DateTime? CreatedDate, int? PageSize, int? PageIndex)
         {
@@ -2299,7 +2299,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-all-comment-by-parent")]
         public async Task<ActionResult<object>> MRCommentGetByParent(int? ParentId)
         {
@@ -2385,7 +2385,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
         [HttpPost]
         [Route("update-status-comment")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         public async Task<ActionResult<object>> MRCommentUpdateStatusBase(MRCommentUpdateIN _mRCommnentUpdateIN)
         {
             try
@@ -2413,7 +2413,7 @@ namespace PAKNAPI.Controller
         /// <param name="mRCommentDelete"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete-comment")]
         public async Task<ActionResult<object>> MRCommentDeleteBase(MRCommentDeleteIN mRCommentDelete)
         {
@@ -2441,7 +2441,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("recommendation7daygraph")]
         public async Task<ActionResult<object>> MRRecommendation7dayGraph(int? UnitProcessId,long? UserProcessId)
         {

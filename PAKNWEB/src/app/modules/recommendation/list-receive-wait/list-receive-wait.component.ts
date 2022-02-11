@@ -220,7 +220,8 @@ export class ListReceiveWaitComponent implements OnInit, AfterViewInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
-				this.getList()
+				// this.getList()
+				this._router.navigate(['/quan-tri/kien-nghi/chi-tiet/', obj.id])
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -247,7 +248,8 @@ export class ListReceiveWaitComponent implements OnInit, AfterViewInit {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)
-					this.getList()
+					// this.getList()
+					this._router.navigate(['/quan-tri/kien-nghi/chi-tiet/', obj.id])
 				} else {
 					this._toastr.error(response.message)
 				}

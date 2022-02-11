@@ -38,7 +38,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Route("get-list-call-history-on-page")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<ActionResult<object>> SYCallHistoryGetPagedList(int? type, string phone, int pageIndex = 1, int pageSize =20)
 		{
 			try
@@ -65,7 +65,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Route("delete")]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		public async Task<ActionResult<object>> Delete(long id)
 		{
 			try

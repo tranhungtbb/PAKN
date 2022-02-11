@@ -8,7 +8,7 @@ import { TreeviewItem, TreeviewConfig } from 'ngx-treeview'
 import { TreeviewI18n } from 'ngx-treeview'
 
 import { Router, ActivatedRoute } from '@angular/router'
-import { CONSTANTS, FILETYPE, USER_TYPE, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, USER_TYPE, RESPONSE_STATUS, MY_FORMATS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { InvitationService } from 'src/app/services/invitation.service'
 import { InvitationObject, InvitationUserMapObject, InvitationMapObject } from 'src/app/models/invitationObject'
@@ -16,7 +16,9 @@ import { UserService } from 'src/app/services/user.service'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { DefaultTreeviewI18n } from 'src/app/shared/default-treeview-i18n'
 import * as moment from 'moment'
-import { ThemePalette } from '@angular/material/core'
+import { DateAdapter, MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core'
+import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker'
+
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -25,7 +27,10 @@ defineLocale('vi', viLocale)
 	selector: 'app-invitation-create-or-update',
 	templateUrl: './invitation-create-or-update.component.html',
 	styleUrls: ['./invitation-create-or-update.component.css'],
-	providers: [{ provide: TreeviewI18n, useClass: DefaultTreeviewI18n }],
+	providers: [
+		{ provide: TreeviewI18n, useClass: DefaultTreeviewI18n },
+		{ provide: NGX_MAT_DATE_FORMATS, useValue: MY_FORMATS }
+	],
 })
 export class InvitationCreateOrUpdateComponent implements OnInit {
 	model: InvitationObject = new InvitationObject()
@@ -101,7 +106,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		private userService: UserService,
 		private activatedRoute: ActivatedRoute,
 		private fileService: UploadFileService,
-		private BsLocaleService: BsLocaleService
+		private BsLocaleService: BsLocaleService,
 	) {
 		this.listItemUserSelected = []
 		this.files = []

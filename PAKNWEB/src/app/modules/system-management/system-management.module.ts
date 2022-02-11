@@ -17,6 +17,7 @@ import { TreeModule } from 'primeng/tree'
 import { CalendarModule } from 'primeng/calendar'
 import { LazyLoadImageModule, scrollPreset } from 'ng-lazyload-image'
 import { TooltipModule } from 'primeng/tooltip'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatDialogModule } from '@angular/material/dialog'
@@ -69,6 +70,7 @@ import { ConfigCommentComponent } from './components/config-comment/config-comme
 		MatDialogModule,
 		BusinessModule,
 		MatRadioModule,
+		MatSlideToggleModule,
 		LazyLoadImageModule.forRoot({
 			preset: scrollPreset,
 		}),

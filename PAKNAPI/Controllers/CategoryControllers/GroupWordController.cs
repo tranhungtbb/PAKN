@@ -40,7 +40,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAGroupWordDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAGroupWordDeleteBase(CAGroupWordDeleteIN _cAGroupWordDeleteIN)
 		{
@@ -63,7 +63,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-group-word-on-page")]
 		public async Task<ActionResult<object>> CAGroupWordGetAllOnPageBase()
 		{
@@ -92,7 +92,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAGroupWordGetByIDBase(int? Id)
 		{
@@ -120,7 +120,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-suggest")]
 		public async Task<ActionResult<object>> CAGroupWordGetListSuggestBase()
 		{
@@ -147,7 +147,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAGroupWordInsertIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAGroupWordInsertBase(CAGroupWordInsertIN _cAGroupWordInsertIN)
 		{
@@ -178,7 +178,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAGroupWordUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAGroupWordUpdateBase(CAGroupWordUpdateIN _cAGroupWordUpdateIN)
 		{

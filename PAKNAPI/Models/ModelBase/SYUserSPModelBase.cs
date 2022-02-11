@@ -35,7 +35,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
 			DP.Add("Id", Id);
-			DP.Add("IsSystem", Id);
+			DP.Add("IsSystem", IsSystem);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserCheckExists>("SY_User_CheckExists", DP)).ToList();
 		}

@@ -50,7 +50,7 @@ namespace PAKNAPI.Controller
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        //[Authorize("ThePolicy")]
+        //[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> AdministrationFormalitiesGetByID(int? Id)
         {
@@ -72,7 +72,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert")]
         public async Task<ActionResult<object>> AdministrationFormalitiesInsert()
         {
@@ -204,7 +204,7 @@ namespace PAKNAPI.Controller
         /// </summary>
         /// <returns></returns>
         [HttpPost,DisableRequestSizeLimit]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update")]
         public async Task<ActionResult<object>> AdministrationFormalitiesUpdate()
         {
@@ -520,7 +520,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-administration-formalities-forward-on-page")]
         public async Task<ActionResult<object>> DAMAdministrationForwardGetListOnPageBase(string Code, string Name, string Organization, int? FieldId, int? UnitForward, int? Status, int PageSize, int PageIndex)
         {
@@ -583,7 +583,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete")]
         public async Task<ActionResult<object>> DAMAdministrationDeleteBase(DAMAdministrationDeleteIN _dAMAdministrationDeleteIN)
         {
@@ -609,7 +609,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update-status")]
         public async Task<ActionResult<object>> DAMAdministrationUpdateShow(DAMAdministrationUpdateShowIN _dAMAdministrationUpdateShowIN)
         {
@@ -637,7 +637,7 @@ namespace PAKNAPI.Controller
 
         [HttpGet]
         [Route("administration-forward")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         public async Task<ActionResult<object>> DAMAdministrationForward(string LstUnitId, int AdministrationId, string Content)
         {
             try

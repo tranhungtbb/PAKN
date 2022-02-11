@@ -39,7 +39,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete")]
         public async Task<ActionResult<object>> ChatbotDeleteBase(ChatbotDeleteIN _ChatbotDeleteIN)
         {
@@ -67,7 +67,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-list-chat-bot-on-page")]
         public async Task<ActionResult<object>> ChatbotGetAllOnPageBase(int PageIndex, int PageSize, string Title, string Question, bool? IsActive)
         {
@@ -101,7 +101,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("list-his")]
         public async Task<ActionResult<object>> HistoryChatbotGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Question, string Answer, DateTime? CreatedDate)
         {
@@ -130,7 +130,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-all-active")]
         public async Task<ActionResult<object>> ChatbotGetAllActvieBase()
         {
@@ -160,7 +160,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> ChatbotGetByIDBase(long Id)
         {
@@ -190,7 +190,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("answer-get-by-libid")]
         public async Task<ActionResult<object>> ChatbotLibGetByIDBase(int? Id)
         {
@@ -217,7 +217,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert-question")]
         public async Task<object> ChatbotInsertQuestion()
         {
@@ -249,7 +249,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update")]
         public async Task<ActionResult<object>> ChatbotUpdateBase()
         {
@@ -276,7 +276,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert-data")]
         public async Task<object> ChatbotInsertData(ChatbotDataInsertIN _chatbotDataInsertIN)
         {
@@ -302,7 +302,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpPost]
         [Route("import-data-chat-bot")]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         public async Task<ActionResult<object>> ImportData()
         {
             var file = Request.Form.Files[0];

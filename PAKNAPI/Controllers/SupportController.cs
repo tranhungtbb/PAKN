@@ -49,7 +49,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("get-by-category")]
         public async Task<object> SYSupportGetAll(int? Category) {
             try {
@@ -93,7 +93,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("insert")]
         public async Task<object> SYSupportInsert()
         {
@@ -145,7 +145,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("update"), DisableRequestSizeLimit]
         public async Task<object> SYIntroduceUpdate() {
             try
@@ -198,7 +198,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("delete")]
         public async Task<object> SYSupportDelete(SYSupportMenuDelete model)
         {
@@ -263,7 +263,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("gallery-insert")]
         public async Task<object> SYGalleryInsert()
         {
@@ -313,7 +313,7 @@ namespace PAKNAPI.Controllers
         /// <param name="syGalleryDelete"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("gallery-delete")]
         public async Task<object> SYGalleryDelete(SYGalleryDelete syGalleryDelete)
         {
@@ -339,7 +339,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
         [Route("gallery-get-all")]
         public async Task<object> SYGalleryGetList()
         {

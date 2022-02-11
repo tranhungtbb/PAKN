@@ -55,7 +55,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("delete")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanDeleteBase(SMSQuanLyTinNhanDeleteIN _sMSQuanLyTinNhanDeleteIN)
 		{
@@ -93,7 +93,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("insert")]
 		public async Task<object> SMSInsert(SMSInsertModel response)
 		{
@@ -205,7 +205,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<object> SMSUpdate(int id)
 		{
@@ -231,7 +231,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="response"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update")]
 		public async Task<object> SMSUpdate(SMSUpdateRequestModel response)
 		{
@@ -362,7 +362,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="idMSMS"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("update-status")]
 		public async Task<object> SMSUpdateStatusTypeSend(int idMSMS)
 		{
@@ -445,7 +445,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetByIdBase(int? Id)
 		{
@@ -484,7 +484,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("get-list-sms-on-page")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, int? UnitId, string Type, byte? Status)
 		{
@@ -522,7 +522,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("list-his")]
 		public async Task<ActionResult<object>> HISSMSGetBySMSIdOnPageBase(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, DateTime? CreateDate, int? Status)
 		{

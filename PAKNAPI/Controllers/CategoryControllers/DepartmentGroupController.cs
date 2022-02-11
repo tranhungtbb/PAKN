@@ -24,6 +24,7 @@ namespace PAKNAPI.Controllers.ControllerBase
     [ApiController]
 	[ValidateModel]
 	[OpenApiTag("Nhóm sở ngành", Description = "Danh mục nhóm sở ngành - Authorize")]
+	[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 	public class DepartmentGroupController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
@@ -40,7 +41,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cADepartmentGroupDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("delete")]
 		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
@@ -65,7 +65,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-list-department-group-on-page")]
 		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupGetAllOnPageBase()
@@ -95,7 +94,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupGetByIDBase(int? Id)
@@ -124,7 +122,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("insert")]
 		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupInsertBase(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
@@ -156,7 +153,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("update")]
 		[ProducesResponseType(typeof(ResultApi), 200)]
 		public async Task<ActionResult<object>> CADepartmentGroupUpdateBase(CADepartmentGroupUpdateIN _cADepartmentGroupUpdateIN)
