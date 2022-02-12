@@ -156,6 +156,11 @@ namespace PAKNAPI.Common
             return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value;
         }
 
+        public string GetJwtIdFromRequest(HttpContext httpContext)
+        {
+            return httpContext.User.Claims.FirstOrDefault(c => c.Type == "jti")?.Value;
+        }
+
         public long GetUserIdFromRequest(HttpContext httpContext)
         {
             return long.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value);

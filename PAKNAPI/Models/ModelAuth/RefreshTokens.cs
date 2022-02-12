@@ -55,6 +55,13 @@ namespace PAKNAPI.Model
 
 			return (await _sQLCon.ExecuteListDapperAsync<RefreshToken>("SY_RefreshToken_GetByToken", DP)).FirstOrDefault();
 		}
+		public async Task<RefreshToken> GetByJwtToken(string jwtId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("JwtId", jwtId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<RefreshToken>("[SY_RefreshToken_GetByJwtId]", DP)).FirstOrDefault();
+		}
 
 		/// <example>
 		/// { 

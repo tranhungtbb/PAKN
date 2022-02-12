@@ -25,6 +25,7 @@ using static PAKNAPI.Common.FakeImageDetection;
 using System.Text;
 using PAKNAPI.Services;
 using NSwag.Annotations;
+using PAKNAPI.Job;
 
 namespace PAKNAPI.Controller
 {
@@ -236,7 +237,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
+        [Authorize(Policy = "ThePolicy")]
         [Route("check-recommendation")]
 
         public async Task<ActionResult<object>> RecommendationCheckFakeImage([FromForm] RecommendationCheckCaptcha model)
@@ -1152,14 +1153,16 @@ namespace PAKNAPI.Controller
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
 
                 if (request.LstRecommendaionSelected != null && request.LstRecommendaionSelected.Count > 0 &&
-                    (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_APPROVED || request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESSING)) {
+                    (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_APPROVED || request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESSING))
+                {
 
                     var mr = await new MRRecommendation(_appSetting).MRRecommendationGetByID(request._mRRecommendationForwardProcessIN.RecommendationId);
                     // save vào table MR_Same
                     MRRecommendationSame same = new MRRecommendationSame();
                     same.RecommendationId = (long)request._mRRecommendationForwardProcessIN.RecommendationId;
                     same.UserId = mr.SendId;
-                    for (int i = 0; i < request.LstRecommendaionSelected.Count; i++) {
+                    for (int i = 0; i < request.LstRecommendaionSelected.Count; i++)
+                    {
                         same.RecommendationSameId = request.LstRecommendaionSelected[i];
                         await new MRRecommendationSame(_appSetting).MRRecommendationSameInsertDAO(same);
                     }
@@ -1186,7 +1189,8 @@ namespace PAKNAPI.Controller
 
                 // check don vi xem co phai duoc gui den tham muu hay khong
                 var check = await new SYUnit(_appSetting).SYUnitCheckCombine(request._mRRecommendationForwardProcessIN.RecommendationId, UnitSendId);
-                if (check > 0) {
+                if (check > 0)
+                {
 
                     var rRecommendationCombinationUpdate = new MRRecommendationCombinationUpdate();
                     rRecommendationCombinationUpdate.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
@@ -1195,13 +1199,14 @@ namespace PAKNAPI.Controller
                     rRecommendationCombinationUpdate.Status = request.RecommendationStatus;
                     rRecommendationCombinationUpdate.ReasonDeny = request._mRRecommendationForwardProcessIN.ReasonDeny;
                     rRecommendationCombinationUpdate.ProcessingDate = DateTime.Now;
-                    if (request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY) {
+                    if (request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY)
+                    {
                         rRecommendationCombinationUpdate.DenyId = UserSendId;
                     }
                     await new MRRecommendationCombination(_appSetting).MRRecommendationCombinationUpdateDAO(rRecommendationCombinationUpdate);
 
                     // insert notification
-                    await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForCombineProcess(request._mRRecommendationForwardProcessIN.RecommendationId,request.RecommendationStatus);
+                    await new Notification(_appSetting, HttpContext, _configuration).NotificationInsertForCombineProcess(request._mRRecommendationForwardProcessIN.RecommendationId, request.RecommendationStatus);
 
                     return new ResultApi { Success = ResultCode.OK };
                 }
@@ -1212,12 +1217,13 @@ namespace PAKNAPI.Controller
                 {
                     await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardUpdateStatusForwardDAO(request._mRRecommendationForwardProcessIN.RecommendationId);
                 }
-                if (request.RecommendationStatus == STATUS_RECOMMENDATION.FINISED) {
+                if (request.RecommendationStatus == STATUS_RECOMMENDATION.FINISED)
+                {
                     request._mRRecommendationForwardProcessIN.UnitReceiveId = UnitSendId;
                 }
                 await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(request._mRRecommendationForwardProcessIN);
                 // được chuyển tiếp từ đơn vị cấp trên
-                
+
                 if (request.ReactionaryWord == true)
                 {
                     MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN = new MRRecommendationUpdateReactionaryWordIN();
@@ -1258,7 +1264,8 @@ namespace PAKNAPI.Controller
                 _dataForward.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
                 _dataForward.UserSendId = UserSendId;
                 _dataForward.SendDate = DateTime.Now;
-                if (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_DENY && request.IsForwardMain == true) {
+                if (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_DENY && request.IsForwardMain == true)
+                {
 
                     SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                     _dataForward.UnitSendId = UnitSendId;
@@ -1272,12 +1279,12 @@ namespace PAKNAPI.Controller
                     await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
                 }
 
-                if(request.IsForwardProcess == true 
-                    && request._mRRecommendationForwardProcessIN.Status == PROCESS_STATUS_RECOMMENDATION.FORWARD 
+                if (request.IsForwardProcess == true
+                    && request._mRRecommendationForwardProcessIN.Status == PROCESS_STATUS_RECOMMENDATION.FORWARD
                     && request._mRRecommendationForwardProcessIN.Step == STEP_RECOMMENDATION.FORWARD)
                 {
                     var unit = (await new CAUnitGetByID(_appSetting).CAUnitGetByIDDAO(request._mRRecommendationForwardProcessIN.UnitReceiveId)).FirstOrDefault();
-                    
+
                     _dataForward.UnitReceiveId = request._mRRecommendationForwardProcessIN.UnitReceiveId;
                     if (unit.IsMain)
                     {
@@ -1286,7 +1293,8 @@ namespace PAKNAPI.Controller
                         _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
                         _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
                     }
-                    else {
+                    else
+                    {
                         // chờ giải quyết với đơn vị khác
                         _dataForward.Step = STEP_RECOMMENDATION.PROCESS;
                         _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
@@ -1313,7 +1321,7 @@ namespace PAKNAPI.Controller
                   && request._mRRecommendationForwardProcessIN.ReasonDeny != "")
                 {
                     var unit = await new SYUnit(_appSetting).SYUnitGetByID(_dataForward.UnitReceiveId);
-                    hisData.Content = "Đến:" + unit.Name + " <br/ > "+
+                    hisData.Content = "Đến:" + unit.Name + " <br/ > " +
                         "Với nội dung: " + request._mRRecommendationForwardProcessIN.ReasonDeny;
                 }
                 hisData.Status = request.RecommendationStatus;
@@ -1321,6 +1329,41 @@ namespace PAKNAPI.Controller
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 await SYNotificationInsertTypeRecommendation(request._mRRecommendationForwardProcessIN.RecommendationId);
+
+
+                // coppy ảnh giả vào 1 thư mục
+
+                if (_mRRecommendationUpdateStatusIN.IsFakeImage == true) {
+                    
+                    string path = "Upload\\Recommendation\\" + request._mRRecommendationForwardProcessIN.RecommendationId;
+                    string destFile = String.Empty;
+
+                    if (System.IO.Directory.Exists(path))
+                    {
+                        string[] files = System.IO.Directory.GetFiles(path)
+                            .Where(fn => Path.GetExtension(fn) == ".png" ||
+                                Path.GetExtension(fn) == ".jpg" ||
+                                Path.GetExtension(fn) == ".jpeg" ||
+                                Path.GetExtension(fn) == ".gif")
+                            .ToArray();
+                        string folder = "Upload\\Recommendation\\FakeImage\\" + request._mRRecommendationForwardProcessIN.RecommendationId;
+                        if (files.Length > 0) {
+                            string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                            if (!Directory.Exists(folderPath))
+                            {
+                                Directory.CreateDirectory(folderPath);
+                            }
+                        }
+                        // Copy the files and overwrite destination files if they already exist.
+                        foreach (string s in files)
+                        {
+                            // Use static Path methods to extract only the file name from the path.
+                            string fileName = System.IO.Path.GetFileName(s);
+                            destFile = System.IO.Path.Combine(folder, fileName);
+                            System.IO.File.Copy(s, destFile, true);
+                        }
+                    }
+                }
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
@@ -2206,14 +2249,13 @@ namespace PAKNAPI.Controller
                 {
                     return new ResultApi { Success = ResultCode.ORROR, Message = "Thêm trao đổi thất bại" };
                 }
+                var recommendation = (await new RecommendationDAO(_appSetting).RecommendationGetByID((int)model.RecommendationId)).Model;
 
                 if (new LogHelper(_appSetting).GetTypeFromRequest(HttpContext) != 1)
                 {
-                    var recommendation = new RecommendationDAO(_appSetting).RecommendationGetByID((int) model.RecommendationId).Result.Model;
-
                     RecommendationForward lstRMForward =
                         (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId((int)model.RecommendationId))
-                        .FirstOrDefault(x => x.Step == STEP_RECOMMENDATION.APPROVE && x.Status == PROCESS_STATUS_RECOMMENDATION.APPROVED);
+                        .FirstOrDefault(x => x.Step == STEP_RECOMMENDATION.APPROVE);
 
                     if (lstRMForward != null)
                     {
@@ -2240,6 +2282,24 @@ namespace PAKNAPI.Controller
                         }
                         Task.WaitAll(tasks.ToArray());
                     }
+                }
+                else
+                {
+                    // send Email
+
+                    var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL)).FirstOrDefault();
+                    if (config != null)
+                    {
+                        var user = await new SYUser(_appSetting).SYUserGetByID(recommendation.SendId);
+                        if (!String.IsNullOrEmpty(user.Email)) {
+                            var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config.Content);
+                            string content = "<p> Cơ quan chức năng vừa thêm trao đổi với phản ánh kiến nghị của bạn! <br>" +
+                            "<a href =\"https://tuongtac.khanhhoa.gov.vn/cong-bo/chi-tiet-kien-nghi/{id}\">Xem tại đây</a></p>";
+                            content = content.Replace("{id}", recommendation.Id.ToString());
+                            MailHelper.SendMail(configEmail, user.Email, "Trao đổi phản ánh kiến nghị " + recommendation.Title, content);
+                        }
+                    }
+
                 }
 
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);

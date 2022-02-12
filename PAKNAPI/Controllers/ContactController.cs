@@ -100,12 +100,21 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Route("log-out")]
 		[Authorize("ThePolicy")]
-		public ActionResult<object> LogOut()
+		public async Task<object> LogOut()
 		{
-            try
+			try
 			{
 				// chỗ này nên get token rồi lấy ra tokenId, rồi cho expire refresh token
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+
+				// get jwtId from clame
+				var refreshToken = await new RefreshTokens(_appSetting).GetByJwtToken(new LogHelper(_appSetting).GetJwtIdFromRequest(HttpContext));
+				if (refreshToken != null) {
+					refreshToken.Revoked = DateTime.UtcNow;
+					refreshToken.IsUse = true;
+					await new RefreshTokens(_appSetting).Update(refreshToken);
+				}
+				
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 				return new ResultApi { Success = ResultCode.OK };
 			}
             catch (Exception ex)

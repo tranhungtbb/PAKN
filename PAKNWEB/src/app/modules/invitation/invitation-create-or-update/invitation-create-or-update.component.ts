@@ -16,8 +16,10 @@ import { UserService } from 'src/app/services/user.service'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { DefaultTreeviewI18n } from 'src/app/shared/default-treeview-i18n'
 import * as moment from 'moment'
-import { DateAdapter, MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core'
-import { NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker'
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core'
+import { NgxMatDateAdapter, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker'
+import { CustomNgxDatetimeAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from 'src/app/shared/CustomNgxDatetimeAdapter'
+import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter'
 
 
 declare var $: any
@@ -29,6 +31,10 @@ defineLocale('vi', viLocale)
 	styleUrls: ['./invitation-create-or-update.component.css'],
 	providers: [
 		{ provide: TreeviewI18n, useClass: DefaultTreeviewI18n },
+		{
+			provide: NgxMatDateAdapter,
+			useClass: CustomNgxDatetimeAdapter
+		},
 		{ provide: NGX_MAT_DATE_FORMATS, useValue: MY_FORMATS }
 	],
 })

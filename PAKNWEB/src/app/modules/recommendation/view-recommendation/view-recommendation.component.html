@@ -95,7 +95,8 @@
 					</div>
 					<div class="media my-2 box-message-publish">
 						<div class="media-body">
-							<p class="mb-0" style="text-align:justify; text-justify:inter-word" [innerHTML]="model.content | Change">
+							<p class="mb-0" style="text-align:justify; text-justify:inter-word"
+								[innerHTML]="model.content | Change | safeHtml">
 							</p>
 							<p *ngIf="filesModel.length && filesModel.length > 0">
 								<span class="text-left">

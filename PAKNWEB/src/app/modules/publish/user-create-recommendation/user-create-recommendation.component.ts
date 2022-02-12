@@ -18,6 +18,7 @@ import { CaptchaService } from 'src/app/services/captcha-service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UnitService } from '../../../services/unit.service'
 import { LocationService } from 'src/app/services/location.service'
+import { DomSanitizer } from '@angular/platform-browser'
 
 declare var $: any
 
@@ -63,7 +64,8 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationService,
 		private eRef: ElementRef,
-		private locationService: LocationService
+		private locationService: LocationService,
+		private sanitizer: DomSanitizer
 
 	) { }
 
@@ -103,6 +105,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		this.isLogin = this.storageService.getAccessToken()
 
 	}
+
 
 	ngAfterViewInit() {
 		// this.setCurrentLocation()
@@ -485,7 +488,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 			}
 			$('#contentRecommendation').addClass('show')
 			document.getElementById('contentRecommendation').style.height = document.getElementById('inputContent').style.height
-			$('#contentRecommendation').html(content)
+			$('#contentRecommendation').text(content)
 		}
 		$('[data-toggle="tooltip"]').tooltip()
 		this.hideRecommendBox();

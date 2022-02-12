@@ -7,10 +7,72 @@
 			<div class="col-12 col-ms-12">
 				<div class="box">
 					<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
-						<h4 class="statistic-title">Tổng hợp số liệu</h4>
+						<h4 class="statistic-title">Thống kê tình trạng, kết quả xử lý phản ánh, kiến nghị theo cơ quan, đơn vị</h4>
 					</div>
 					<div class="card mb-0 shadow-none">
 						<div class="table-responsive">
+							<!-- <p-treeTable #dataTable [value]="statistics" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
+								tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header">
+									<tr>
+										<th rowspan="3" class="text-center middle" style="width: 80px;">STT</th>
+										<th rowspan="3" colspan="4" class="text-center middle">Cơ quan/ Đơn vị xử lý</th>
+										<th rowspan="3" colspan="1" class="text-center middle">Tổng số</th>
+										<th style="height: 3rem;" rowspan="1" colspan="6" class="text-center middle">Kết quả xử lý PAKN</th>
+										<th rowspan="2" colspan="3" class="text-center middle">Người dân đánh giá</th>
+									</tr>
+									<tr>
+										<th rowspan="1" colspan="3" class="text-center middle">Đã xử lý</th>
+										<th rowspan="1" colspan="3" class="text-center middle">Đang xử lý</th>
+									</tr>
+									<tr style="height: 4rem;">
+										<th rowspan="1" colspan="1" class="text-center middle">Tổng số</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Đúng hạn</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Quá hạn</th>
+
+										<th rowspan="1" colspan="1" class="text-center middle">Tổng số</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Đúng hạn</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Quá hạn</th>
+
+										<th rowspan="1" colspan="1" class="text-center middle">Rất hài lòng</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Hài lòng</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Không hài lòng</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-rowIndex="rowIndex">
+									<tr>
+										<td class="text-center">{{ rowData.index }}</td>
+										<td rowspan="1" colspan="4" class="text-left">
+											<p-treeTableToggler *ngIf="rowData.existChild" [rowNode]="rowNode"></p-treeTableToggler>
+											<span *ngIf="!rowData.existChild && rowData.unitLevel != 1"
+												[style.marginLeft.px]="rowData.unitLevel * 20"
+												style="margin-left:  'rowData.unitLevel' px;"></span>
+											<span class="mb-0">{{ rowData.unitName }}</span>
+										</td>
+										<td class="text-center">{{ rowData.totalResult }}</td>
+										<td class="text-center blue">{{ rowData.totalResult }}</td>
+										<td class="text-center green">{{ rowData.receiveApproved }}</td>
+										<td class="text-center red">{{ rowData.finised }}</td>
+
+										<td class="text-center blue">{{ rowData.totalResult }}</td>
+										<td class="text-center green">{{ rowData.processing }}</td>
+										<td class="text-center red">{{ rowData.expired }}</td>
+
+										<td class="text-center green">{{ rowData.satisfaction }}</td>
+										<td class="text-center blue">{{ rowData.accept }}</td>
+										<td class="text-center red">{{ rowData.unSatisfaction }}</td>
+									</tr>
+								</ng-template>
+
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td [attr.colspan]="10">
+											Không có dữ liệu hiển thị
+										</td>
+									</tr>
+								</ng-template>
+							</p-treeTable> -->
+
 							<p-treeTable #dataTable [value]="statistics" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
 								tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 								<ng-template pTemplate="header">
@@ -37,7 +99,8 @@
 										<td class="text-center">{{ rowData.index }}</td>
 										<td rowspan="1" colspan="4" class="text-left">
 											<p-treeTableToggler *ngIf="rowData.existChild" [rowNode]="rowNode"></p-treeTableToggler>
-											<span *ngIf="!rowData.existChild" [style.marginLeft.px]="rowData.unitLevel * 20"
+											<span *ngIf="!rowData.existChild && rowData.unitLevel != 1"
+												[style.marginLeft.px]="rowData.unitLevel * 20"
 												style="margin-left:  'rowData.unitLevel' px;"></span>
 											<span class="mb-0">{{ rowData.unitName }}</span>
 										</td>
@@ -61,6 +124,7 @@
 									</tr>
 								</ng-template>
 							</p-treeTable>
+
 						</div>
 					</div>
 				</div>

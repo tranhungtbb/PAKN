@@ -1489,12 +1489,13 @@ namespace PAKNAPI.Controllers
 
 				var rs = await new BIInvididualUpdateInfo(_appSetting).BIInvididualUpdateInfoDAO(_model);
 
-				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
+				await new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
 				{
 					Id = accInfo[0].Id,
 					FullName = model.FullName,
 					Address =model.Address,
 					UserName = model.IdCard,
+					Email = model.Email
 				});
 
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
@@ -1583,14 +1584,16 @@ namespace PAKNAPI.Controllers
 					Business = businessModel.Business
 				};
 
-				var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
+				await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
 				//update account
 
-				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
+				await new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
 				{
 					Id = accInfo[0].Id,
 					FullName = businessModel.Business,
 					Address = accInfo[0].Address,
+					Email = businessModel.OrgEmail,
+					UserName = businessModel.BusinessRegistration
 				});
 
 

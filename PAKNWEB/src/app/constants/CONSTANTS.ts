@@ -1,3 +1,5 @@
+import { NgxMatDateFormats } from '@angular-material-components/datetime-picker'
+
 export class CONSTANTS {
 	public static FILEACCEPT = '.pdf, .png, .jpg, .jpeg, .doc, .docx, .xls, .xlsx, .zip, .rar, .mp4, .mov'
 	public static FILEACCEPT_FORM_ADMINISTRATION = '.pdf, .doc, .docx, .xls, .xlsx'
@@ -200,12 +202,12 @@ export class USER_TYPE {
 	public static BUSSINESS = 3 // Doanh nghiệp
 }
 
-export const MY_FORMATS = {
+export const MY_FORMATS: NgxMatDateFormats = {
 	parse: {
-		dateInput: 'YYYY-MM-DD HH:mm:ss'
+		dateInput: 'l, LTS'
 	},
 	display: {
-		dateInput: 'YYYY-MM-DD HH:mm:ss',
+		dateInput: 'DD/MM/YYYY HH:mm',
 		monthYearLabel: 'MMM YYYY',
 		dateA11yLabel: 'LL',
 		monthYearA11yLabel: 'MMMM YYYY',

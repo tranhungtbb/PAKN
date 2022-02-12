@@ -148,6 +148,6 @@ namespace PAKNAPI.Common
 	public class RoleSystem
 	{
 		public const string ADMIN = "1"; // admin
-		public const string OTHER = "2,3"; // nguoidan, doanh nghiep
+		public const string OTHER = "1,2,3"; // nguoidan, doanh nghiep
 	}
 }

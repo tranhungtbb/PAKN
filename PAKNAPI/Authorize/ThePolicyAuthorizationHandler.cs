@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 using PAKNAPI.Common;
+using PAKNAPI.Model;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.Results;
 using System;
@@ -39,16 +40,16 @@ namespace PAKNAPI.Authorize
 			//check IsAuthorized
 			var IsAuthenticated = context.User.Identity.IsAuthenticated;
 
-			string APIName = _contextAccessor.HttpContext.Request.Path;
+			//string APIName = _contextAccessor.HttpContext.Request.Path;
 			Claim userId = context.User.Claims.FirstOrDefault(claim => claim.Type == "Id");
 			var filterContext = context.Resource as AuthorizationFilterContext;
 			var response = filterContext?.HttpContext.Response;
 
-			bool permission = false;
+			//bool permission = false;
 			if (userId != null)
 			{
 				//Insert to API table, only using for dev enviroment
-				SYAPIInsertIN _sYAPIInsertIN = new SYAPIInsertIN { Name = APIName, Authorize = true };
+				//SYAPIInsertIN _sYAPIInsertIN = new SYAPIInsertIN { Name = APIName, Authorize = true };
 				//await new SYAPIInsert(_appSetting).SYAPIInsertDAO(_sYAPIInsertIN);
 
 				//Check permission
@@ -65,12 +66,13 @@ namespace PAKNAPI.Authorize
 					{
 						if (unit.Result != null && !unit.Result.IsActived) {
 							_contextAccessor.HttpContext.Response.StatusCode = 401;
+							_contextAccessor.HttpContext.Response.ContentType = "application/json; charset=utf-8";
 							_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
 							return Task.CompletedTask;
 						}
-                    }
+					}
 				}
-				
+
 
 				// check user isActived
 
@@ -78,21 +80,35 @@ namespace PAKNAPI.Authorize
 				if (user.Result.Count() == 0)
 				{
 					_contextAccessor.HttpContext.Response.StatusCode = 401;
+					_contextAccessor.HttpContext.Response.ContentType = "application/json; charset=utf-8";
 					_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
 					return Task.CompletedTask;
 				}
 				else {
 					if (user.Result[0].IsActived == false) {
 						_contextAccessor.HttpContext.Response.StatusCode = 401;
+						_contextAccessor.HttpContext.Response.ContentType = "application/json; charset=utf-8";
 						_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
 						return Task.CompletedTask;
 					}
 				}
 
+				LogHelper logHelper = new LogHelper(_appSetting);
+
+				// check đã logout
+
+				var s = new RefreshTokens(_appSetting).GetByJwtToken(context.User.Claims.FirstOrDefault(claim => claim.Type == "jti").Value);
+				if (s.Result.IsRevoked) {
+					// token đã thu hồi
+					_contextAccessor.HttpContext.Response.StatusCode = 401;
+					_contextAccessor.HttpContext.Response.ContentType = "application/json; charset=utf-8";
+					_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+					return Task.CompletedTask;
+				}
+
 				// check thiết bị
 
-				LogHelper logHelper = new LogHelper(_appSetting);
-				BaseRequest baseRequest = logHelper.ReadHeaderFromRequest(_contextAccessor.HttpContext.Request);
+				
 				SYUserUserAgent query = new SYUserUserAgent(Convert.ToInt32(userId.Value), _contextAccessor.HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1]);
 				var check = (new SYUserUserAgent(_appSetting).SYUserUserAgentGetDAO(query)).Result.FirstOrDefault();
 
@@ -103,6 +119,7 @@ namespace PAKNAPI.Authorize
 					}
 					else {
 						_contextAccessor.HttpContext.Response.StatusCode = 401;
+						_contextAccessor.HttpContext.Response.ContentType = "application/json; charset=utf-8";
 						_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
 						return Task.CompletedTask;
 					}

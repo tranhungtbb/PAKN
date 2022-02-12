@@ -887,6 +887,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FullName", _sYUserUpdateInfoIN.FullName);
 			DP.Add("Address", _sYUserUpdateInfoIN.Address);
 			DP.Add("UserName", _sYUserUpdateInfoIN.UserName);
+			DP.Add("Email", _sYUserUpdateInfoIN.Email);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdateInfo", DP));
 		}
@@ -898,6 +899,7 @@ namespace PAKNAPI.ModelBase
 		public string FullName { get; set; }
 		public string Address { get; set; }
 		public string UserName { get; set; }
+		public string Email { get; set; }
 	}
 
 	public class SYUSRGetPermissionByUserId
