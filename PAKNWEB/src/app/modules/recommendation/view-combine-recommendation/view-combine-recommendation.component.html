@@ -359,40 +359,6 @@
 							</ng-container>
 						</div>
 					</div>
-					<!-- <div>
-						<div>
-							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi với người dân
-								({{totalInfomationExchange}})</p>
-						</div>
-						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
-							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..."
-								[(ngModel)]="infoExchangeModel.contents"></textarea>
-							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onInsertInfomationExchange()">
-								Gửi </button>
-						</div>
-						<div *ngFor="let item of listInfomationExchange" class="border-bottom mb-3">
-							<header class="clearfix">
-								<div class="cmt-avatar pull-left avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-									{{getShortName(item.fullName)}}
-								</div>
-								<div class="col-md-9">
-									<p class="h5">{{item.fullName}}</p>
-									<time style="font-size: 10pt;">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</time>
-								</div>
-							</header>
-							<div class="cmt-contents">
-								<p>
-									{{item.contents}}
-								</p>
-							</div>
-						</div>
-						<div *ngIf="listInfomationExchange && (totalInfomationExchange > listInfomationExchange.length)">
-							<p class="text-black"><a href="javascript:void(0);"
-									(click)="onInsertInfomationExchange(infomationExchangeQuery.pageIndex + 1)">Xem thêm trao đổi khác <i
-										class="bi bi-arrow-right"></i></a></p>
-						</div>
-					</div> -->
-					<!-- <app-infomation-exchange [RecommentId]="model.id" [IsPagePublic]="false"></app-infomation-exchange> -->
 					<ng-container *ngIf="model && model.status == 10">
 						<app-comment-recommendation [RecommentId]="model.id" [IsPagePublic]="false"></app-comment-recommendation>
 					</ng-container>
@@ -577,7 +543,7 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
-				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny"
+				<textarea class="form-control" rows="4" placeholder="Nhập lý do.." [(ngModel)]="modelProcess.reasonDeny"
 					maxlength="500"></textarea>
 				<div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="model.status == 2">
 					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord"

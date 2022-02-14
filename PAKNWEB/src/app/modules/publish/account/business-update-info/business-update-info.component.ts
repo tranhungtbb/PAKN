@@ -111,14 +111,14 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		})
 	}
 	resetNationField(event: any) {
-		if (event.target.value == 'Nhập...') event.target.value = ''
+		if (event.target.value == 'Nhập..') event.target.value = ''
 	}
 	submitted = false
 	onSave() {
 		this.submitted = true
 		// let fDob: any = document.querySelector('#_dateOfBirth')
 		// let fDateIssue: any = document.querySelector('#_dateOfIssue')
-		// if (this.model.nation == 'Nhập...') {
+		// if (this.model.nation == 'Nhập..') {
 		// 	this.model.nation = ''
 		// }
 		// this.model.dateOfBirth = fDob.value

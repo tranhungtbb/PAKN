@@ -35,7 +35,7 @@
 
 								</p>
 								<span *hasPermission="['3', 'A_XIII_2']">
-									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker"
+									<input class="form-control form-control-sm" placeholder="Nhập.." bsDatepicker #n="bsDatepicker"
 										maxlength="10" id="createDate" [(ngModel)]="dataSearch.createDate"
 										(bsValueChange)="onChangeCreateDate($event)" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
@@ -50,7 +50,7 @@
 
 								</p>
 								<div *hasPermission="['3', 'A_XIII_2']" class="dropdown bootstrap-select form-control form-control-sm">
-									<ng-select notFoundText="Không có dữ liệu" class="" [items]="listUser" placeholder="Người tạo ..."
+									<ng-select notFoundText="Không có dữ liệu" class="" [items]="listUser" placeholder="Người tạo .."
 										bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.userId" [closeOnSelect]="true"
 										(change)="dataStateChange()" [virtualScroll]="true">
 									</ng-select>
@@ -61,7 +61,7 @@
 									<strong>Nội dung</strong>
 
 								</p>
-								<input *hasPermission="['3', 'A_XIII_2']" placeholder="Nhập..." class="form-control form-control-sm"
+								<input *hasPermission="['3', 'A_XIII_2']" placeholder="Nhập.." class="form-control form-control-sm"
 									[(ngModel)]="dataSearch.description" maxlength="100" (keydown.enter)="dataStateChange()" />
 								<button *ngIf="dataSearch.description" class="btn bg-transparent btn-clear-input"
 									(click)="dataSearch.description=''">
@@ -75,7 +75,7 @@
 
 								</p>
 								<div *hasPermission="['3', 'A_XIII_2']" class="dropdown bootstrap-select form-control form-control-sm">
-									<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái ..."
+									<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
 										bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status" [closeOnSelect]="true"
 										(change)="dataStateChange()">
 									</ng-select>

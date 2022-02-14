@@ -4,11 +4,13 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>Đồng bộ dữ liệu</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách Cổng thông tin DV HCC trực tuyến</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách Cổng thông tin DV HCC trực tuyến</a>
+					</li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-				
-					<button *hasPermission="['3', 'I_IV_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="asyncData()" title="Đồng bộ">
+
+					<button *hasPermission="['3', 'I_IV_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white"
+						(click)="asyncData()" title="Đồng bộ">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
 				</div>
@@ -19,8 +21,10 @@
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
 
-						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="query.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+							[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}"
+							[rows]="query.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]"
+							[responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -32,31 +36,33 @@
 									<th style="width: 200px; max-width: 250px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Người gửi</strong>
-											
+
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100" (keydown.enter)="dataStateChange()"
-											placeholder="Nhập..." />
-											<button *ngIf="query.questioner" class="btn bg-transparent btn-clear-input" (click)="query.questioner=''">
-												<i class="fa fa-times"></i>
-											</button>
+										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100"
+											(keydown.enter)="dataStateChange()" placeholder="Nhập.." />
+										<button *ngIf="query.questioner" class="btn bg-transparent btn-clear-input"
+											(click)="query.questioner=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
-											
+
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100" (keydown.enter)="dataStateChange()"
-											  placeholder="Nhập..." />
-												<button *ngIf="query.question" class="btn bg-transparent btn-clear-input" (click)="query.question=''">
-													<i class="fa fa-times"></i>
-												</button>
+										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100"
+											(keydown.enter)="dataStateChange()" placeholder="Nhập.." />
+										<button *ngIf="query.question" class="btn bg-transparent btn-clear-input"
+											(click)="query.question=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 
 									<th style="width: 200px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Ngày tạo</strong>
-											
+
 										</p>
 									</th>
 									<!-- <th style="width: 168px !important;" class="text-center"><strong>THAO TÁC</strong></th> -->
@@ -67,7 +73,8 @@
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong class="highlight" style="cursor: pointer;">
-											<a *hasPermission="['3', 'I_IV_1']" class="ellipsis" (click)="getDetail(item)">{{item.questioner}}</a>
+											<a *hasPermission="['3', 'I_IV_1']" class="ellipsis"
+												(click)="getDetail(item)">{{item.questioner}}</a>
 											<a *hasNotPermission="['3', 'I_IV_1']" class="ellipsis">{{item.questioner}}</a>
 										</strong>
 									</td>
@@ -75,7 +82,7 @@
 										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.question}}</p>
 									</td>
 									<td>{{item.createdDate}}</td>
-									
+
 									<!-- <td style="text-align: center;"></td> -->
 								</tr>
 							</ng-template>
@@ -127,7 +134,8 @@
 							</div>
 							<div class="media pb-4 border-bottom mb-4">
 								<div class="mr-3">
-									<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+									<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+										class="bi bi-chat-right-text" viewBox="0 0 16 16">
 										<path
 											d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
 										<path
@@ -141,7 +149,8 @@
 							</div>
 							<div class="media pb-4 mb-4">
 								<div class="mr-3">
-									<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc155" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+									<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#2bc155"
+										class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
 										<path
 											d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 									</svg>

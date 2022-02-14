@@ -7,8 +7,9 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách Hệ thống PAKN của Chính phủ</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-				
-					<button *hasPermission="['3', 'I_III_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="getDataSync()" title="Đồng bộ">
+
+					<button *hasPermission="['3', 'I_III_2']" type="button"
+						class="btn grd-blue btn-sm rounded border-0 text-white" (click)="getDataSync()" title="Đồng bộ">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
 				</div>
@@ -19,8 +20,10 @@
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
 
-						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="query.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+							[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}"
+							[rows]="query.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]"
+							[responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -32,37 +35,39 @@
 									<th style="width: 200px; max-width: 250px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Người gửi</strong>
-											
+
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100" (keydown.enter)="dataStateChange()"
-											placeholder="Nhập..." />
-											<button *ngIf="query.questioner" class="btn bg-transparent btn-clear-input" (click)="query.questioner=''">
-												<i class="fa fa-times"></i>
-											</button>
+										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100"
+											(keydown.enter)="dataStateChange()" placeholder="Nhập.." />
+										<button *ngIf="query.questioner" class="btn bg-transparent btn-clear-input"
+											(click)="query.questioner=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
-											
+
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100" (keydown.enter)="dataStateChange()"
-											  placeholder="Nhập..." />
-											<button *ngIf="query.question" class="btn bg-transparent btn-clear-input" (click)="query.question=''">
-												<i class="fa fa-times"></i>
-											</button>
+										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100"
+											(keydown.enter)="dataStateChange()" placeholder="Nhập.." />
+										<button *ngIf="query.question" class="btn bg-transparent btn-clear-input"
+											(click)="query.question=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 									<th style="width: 150px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											
+
 										</p>
 									</th>
 
 									<th style="width: 200px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Ngày tạo</strong>
-											
+
 										</p>
 									</th>
 									<!-- <th style="width: 168px !important;" class="text-center"><strong>THAO TÁC</strong></th> -->
@@ -73,7 +78,9 @@
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong class="highlight" style="cursor: pointer;">
-											<a *hasPermission="['3', 'I_III_1']" class="ellipsis" [routerLink]="['/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu/',item.objectId]" innerHTML="{{item.questioner}}"></a>
+											<a *hasPermission="['3', 'I_III_1']" class="ellipsis"
+												[routerLink]="['/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu/',item.objectId]"
+												innerHTML="{{item.questioner}}"></a>
 											<a *hasNotPermission="['3', 'I_III_1']" class="ellipsis" innerHTML="{{item.questioner}}"></a>
 										</strong>
 									</td>

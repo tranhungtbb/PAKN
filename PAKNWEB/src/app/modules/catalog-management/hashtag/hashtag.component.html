@@ -41,7 +41,7 @@
 									</p>
 									<input class="form-control form-control-sm" [ngSwitch]="'name'" trim [(ngModel)]="title"
 										maxlength="100" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
-										placeholder="Nhập tên..." />
+										placeholder="Nhập tên.." />
 									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -56,7 +56,7 @@
 									<input class="form-control form-control-sm" maxlength="100" numbersOnly [(ngModel)]="quantity" trim
 										[ngSwitch]="'quantityUser'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'quantityUser', 'contains')"
-										placeholder="Nhập số lượng..." />
+										placeholder="Nhập số lượng.." />
 									<button *ngIf="quantity" class="btn bg-transparent btn-clear-input" (click)="quantity=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -69,7 +69,7 @@
 
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" [items]="listStatus" placeholder="Trạng thái ..."
+										<ng-select notFoundText="Không có dữ liệu" [items]="listStatus" placeholder="Trạng thái .."
 											bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
 											(change)="table.filter($event?.value.toString(), 'isActived')" [closeOnSelect]="true">
 										</ng-select>
@@ -149,7 +149,7 @@
 								<label class="control-label">Tên nhãn dữ liệu<span class="text-danger">(*)</span></label>
 
 								<input id="target" class="form-control" formControlName="name" [(ngModel)]="hashtag.name"
-									maxlength="100" placeholder="Nhập tên Hashtag..." />
+									maxlength="100" placeholder="Nhập tên Hashtag.." />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
@@ -258,7 +258,7 @@
 
 								</p>
 								<input class="form-control form-control-sm" [(ngModel)]="mrrCode" maxlength="100"
-									(keydown.enter)="dataStateChange2()" placeholder="Nhập mã..." />
+									(keydown.enter)="dataStateChange2()" placeholder="Nhập mã.." />
 							</th>
 
 							<th style="width: 20%;">
@@ -267,7 +267,7 @@
 
 								</p>
 								<input class="form-control form-control-sm" [(ngModel)]="mrrSendName" maxlength="100"
-									(keydown.enter)="dataStateChange2()" placeholder="Nhập tên..." />
+									(keydown.enter)="dataStateChange2()" placeholder="Nhập tên.." />
 							</th>
 
 							<th style="width: 25%;">
@@ -276,7 +276,7 @@
 
 								</p>
 								<input class="form-control form-control-sm" [(ngModel)]="mrrTitle" maxlength="100"
-									(keydown.enter)="dataStateChange2()" placeholder="Nhập tiêu đề..." />
+									(keydown.enter)="dataStateChange2()" placeholder="Nhập tiêu đề.." />
 							</th>
 
 							<th style="width: 30%;">
@@ -285,7 +285,7 @@
 
 								</p>
 								<input class="form-control form-control-sm" [(ngModel)]="mrrContent" maxlength="100"
-									(keydown.enter)="dataStateChange2()" placeholder="Nhập nội dung..." />
+									(keydown.enter)="dataStateChange2()" placeholder="Nhập nội dung.." />
 							</th>
 
 
@@ -296,7 +296,7 @@
 								</p>
 								<div class="dropdown bootstrap-select form-control form-control-sm">
 									<ng-select notFoundText="Không có dữ liệu" class="" [items]="listMrrStatus"
-										placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="mrrStatus"
+										placeholder="Trạng thái .." bindLabel="text" bindValue="value" [(ngModel)]="mrrStatus"
 										[closeOnSelect]="true" (change)="dataStateChange2()">
 									</ng-select>
 								</div>

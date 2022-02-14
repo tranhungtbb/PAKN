@@ -27,7 +27,7 @@ export class ChatbotComponent implements OnInit {
 		private notificationService: NotificationService,
 		private chatBotService: ChatbotService,
 		private indexSettingService: IndexSettingService
-	) {}
+	) { }
 
 	currentFullnName: string = this.storageService.getFullName()
 
@@ -37,11 +37,11 @@ export class ChatbotComponent implements OnInit {
 		{
 			who: this.botname,
 			isReply: true,
-			message: 'Vui lòng nhập câu hỏi...',
+			message: 'Vui lòng nhập câu hỏi..',
 		},
 	]
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	/*================ CHAT BOT ===============*/
 	toggleChatForm() {

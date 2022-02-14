@@ -1,54 +1,59 @@
 <div class="content__title j-content__title j-dialog">
   <button class="open_sidebar j-open_sidebar"></button>
-  <h1 class="dialog__title j-dialog__title">  
-  <input *ngIf="editab" type="text" class="border-0 rounded" [(ngModel)]="txtNameGroup" (keydown.enter)="LoadNameGroup()" />
-  <span *ngIf="!editab" (click)="editab=true" >{{txtNameGroup}}</span>
+  <h1 class="dialog__title j-dialog__title">
+    <input *ngIf="editab" type="text" class="border-0 rounded" [(ngModel)]="txtNameGroup"
+      (keydown.enter)="LoadNameGroup()" />
+    <span *ngIf="!editab" (click)="editab=true">{{txtNameGroup}}</span>
 
   </h1>
-  <div class="action_links" *ngIf="dialog && dialog.type !== CONSTANTS.DIALOG_TYPES.PUBLICCHAT" >
-      <button class="bg-thead bg-w border-0 btn-icon mr-2 add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()" title="Thêm người dùng vào nhóm">
-        <i class="bi bi-person-plus"></i>
-      </button>
-      <!-- <button  class="bg-thead bg-w border-0 btn-icon mr-2" >
+  <div class="action_links" *ngIf="dialog && dialog.type !== CONSTANTS.DIALOG_TYPES.PUBLICCHAT">
+    <button class="bg-thead bg-w border-0 btn-icon mr-2 add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()"
+      title="Thêm người dùng vào nhóm">
+      <i class="bi bi-person-plus"></i>
+    </button>
+    <!-- <button  class="bg-thead bg-w border-0 btn-icon mr-2" >
         <i class="bi bi-telephone"></i>
       </button>   -->
-      <button class="bg-thead bg-w border-0 btn-icon mr-2" title="Xóa người dùng trong nhóm" (click)="showDeleteDialog()">
-        <i class="bi bi-person-dash"></i>
-      </button>
-      <button class="bg-thead bg-w border-0 btn-icon mr-2 quit_fom_dialog_link" title="Rời nhóm" (click)="quitFromTheDialog()">
-        <i class="bi bi-box-arrow-right"></i>
-      </button>
-      <button *ngIf="userService.user.id === dialog.user_id" class="bg-thead bg-w border-0 btn-icon mr-2" title="Xóa nhóm" (click)="deleteDialog()">
-        <i class="bi bi-trash"></i>
-      </button>
-      
+    <button class="bg-thead bg-w border-0 btn-icon mr-2" title="Xóa người dùng trong nhóm" (click)="showDeleteDialog()">
+      <i class="bi bi-person-dash"></i>
+    </button>
+    <button class="bg-thead bg-w border-0 btn-icon mr-2 quit_fom_dialog_link" title="Rời nhóm"
+      (click)="quitFromTheDialog()">
+      <i class="bi bi-box-arrow-right"></i>
+    </button>
+    <button *ngIf="userService.user.id === dialog.user_id" class="bg-thead bg-w border-0 btn-icon mr-2" title="Xóa nhóm"
+      (click)="deleteDialog()">
+      <i class="bi bi-trash"></i>
+    </button>
+
   </div>
 </div>
 <div class="notifications j-notifications hidden"></div>
 
 <div class="content__inner j-content__inner">
-  <div class="messages j-messages" (scroll)="loadMoreMessages($event)" >
+  <div class="messages j-messages" (scroll)="loadMoreMessages($event)">
     <ng-container *ngFor="let data of messages">
       <!-- <div class="message__wrap" >
         <div class="center">
           {{data[0]}} date : dd/MM/yyyy HH:mm
         </div>
       </div> -->
-      <app-message *ngFor="let message of data[1];" [message]="message" [dialog]="dialog" [dialog_name]="txtNameGroup" class="message__wrap" id="{{message._id}}" >
+      <app-message *ngFor="let message of data[1];" [message]="message" [dialog]="dialog" [dialog_name]="txtNameGroup"
+        class="message__wrap" id="{{message._id}}">
       </app-message>
     </ng-container>
   </div>
   <form (ngSubmit)="onSubmit()" autocomplete="off" class="send_message" name="send_message" style="
   display: flex;">
-    <label class="attach_btn" for="attach_btn">      
-      <i  class="bi bi-plus-circle-fill m-2 mt-3"  title="Đính kèm"></i>      
-       <input accept="image/*,.zip" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)" name="attach_file" type="file"/>
+    <label class="attach_btn" for="attach_btn">
+      <i class="bi bi-plus-circle-fill m-2 mt-3" title="Đính kèm"></i>
+      <input accept="image/*,.zip" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)"
+        name="attach_file" type="file" />
     </label>
-    <textarea #field autocapitalize="off" (keydown)="onKeydown($event)"
-              (keyup.shift)="shiftDown = false"
-              autocomplete="off" autocorrect="off" autofocus
-              class="message_feald" [(ngModel)]="messageField" name="message_feald" placeholder="Nhập Tin Nhắn..."></textarea>
-              <i class="bi bi-emoji-smile mt-4"></i>
+    <textarea #field autocapitalize="off" (keydown)="onKeydown($event)" (keyup.shift)="shiftDown = false"
+      autocomplete="off" autocorrect="off" autofocus class="message_feald" [(ngModel)]="messageField"
+      name="message_feald" placeholder="Nhập Tin Nhắn.."></textarea>
+    <i class="bi bi-emoji-smile mt-4"></i>
     <div class="message__actions">
       <div class="attachments_preview j-attachments_preview">
         <ng-container *ngFor="let data of attachments">
@@ -57,14 +62,13 @@
           </div>
         </ng-container>
       </div>
-      
+
       <!-- <button class="send_btn">send</button> -->
-      
-      
-      <button  class="btn-icon mr-2 grd-blue text-white border-0" >
-        <i  class="bi bi-cursor-fill" title="Gửi"></i>
+
+
+      <button class="btn-icon mr-2 grd-blue text-white border-0">
+        <i class="bi bi-cursor-fill" title="Gửi"></i>
       </button>
     </div>
   </form>
 </div>
-

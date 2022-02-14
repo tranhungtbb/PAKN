@@ -42,7 +42,7 @@
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="name"
 										[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
-										placeholder="Nhập tên..." />
+										placeholder="Nhập tên.." />
 									<button *ngIf="name" class="btn bg-transparent btn-clear-input" (click)="name=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -56,7 +56,7 @@
 									<input type="text" class="form-control form-control-sm" trim [(ngModel)]="description"
 										[ngSwitch]="'description'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
-										placeholder="Nhập mô tả...">
+										placeholder="Nhập mô tả..">
 									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -69,7 +69,7 @@
 									<input class="form-control form-control-sm" maxlength="100" numbersOnly trim [(ngModel)]="orderNumber"
 										[ngSwitch]="'orderNumber'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'orderNumber', 'contains')"
-										placeholder="Nhập ..." />
+										placeholder="Nhập .." />
 									<button *ngIf="orderNumber" class="btn bg-transparent btn-clear-input" (click)="orderNumber=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -81,7 +81,7 @@
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-											placeholder="Hiện trang chủ ..." bindLabel="text" bindValue="value" [ngSwitch]="'isShowHome'"
+											placeholder="Hiện trang chủ .." bindLabel="text" bindValue="value" [ngSwitch]="'isShowHome'"
 											(change)="table.filter($event?.value.toString(), 'isShowHome')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
@@ -93,8 +93,8 @@
 
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
+											bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
 											(change)="table.filter($event?.value.toString(), 'isActived')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
@@ -172,7 +172,7 @@
 							<div class="col-sm-4">
 								<label class="control-label">Tên lĩnh vực <span class="text-danger">(*)</span></label>
 								<input class="form-control" id="target" formControlName="name" [(ngModel)]="model.name" maxlength="100"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
@@ -182,7 +182,7 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Số thứ tự </label>
-								<input type="text" numbersOnly placeholder="Nhập..." class="form-control" formControlName="orderNumber"
+								<input type="text" numbersOnly placeholder="Nhập.." class="form-control" formControlName="orderNumber"
 									[(ngModel)]="model.orderNumber" maxlength="3" />
 								<div
 									*ngIf="(submitted && f.orderNumber.invalid) || (f.orderNumber.invalid && (f.orderNumber.dirty || f.orderNumber.touched))"
@@ -228,7 +228,7 @@
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả</label>
 								<textarea class="form-control" formControlName="description" type="text" rows="5"
-									[(ngModel)]="model.description" maxlength="255" placeholder="Nhập..."></textarea>
+									[(ngModel)]="model.description" maxlength="255" placeholder="Nhập.."></textarea>
 							</div>
 						</div>
 						<div class="row form-group">

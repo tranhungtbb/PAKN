@@ -28,7 +28,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
-									<input autofocus placeholder="Nhập..." svTrim class="form-control" formControlName="title"
+									<input autofocus placeholder="Nhập.." svTrim class="form-control" formControlName="title"
 										[(ngModel)]="model.title" maxlength="100" />
 									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 										class="has-error m-b-12">
@@ -41,7 +41,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Mô tả <span class="text-danger">(*)</span></label>
-									<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="description" rows="4"
+									<textarea placeholder="Nhập.." svTrim class="form-control" formControlName="description" rows="4"
 										[(ngModel)]="model.description" maxlength="200"></textarea>
 									<div
 										*ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
@@ -55,7 +55,7 @@
 							<div class="row form-group">
 								<div class="col-sm-6">
 									<label class="control-label">Số lượng file <span class="text-danger">(*)</span></label>
-									<input type="text" numbersOnly placeholder="Nhập..." svTrim class="form-control"
+									<input type="text" numbersOnly placeholder="Nhập.." svTrim class="form-control"
 										formControlName="fileQuantity" [(ngModel)]="generalSetting.fileQuantity" maxlength="2" />
 									<div
 										*ngIf="(submitted && f.fileQuantity.invalid) || (f.fileQuantity.invalid && (f.fileQuantity.dirty || f.fileQuantity.touched))"
@@ -67,7 +67,7 @@
 								</div>
 								<div class="col-sm-6">
 									<label class="control-label">Dung lượng file (KB) <span class="text-danger">(*)</span></label>
-									<input type="text" numbersOnly placeholder="Nhập..." svTrim class="form-control"
+									<input type="text" numbersOnly placeholder="Nhập.." svTrim class="form-control"
 										formControlName="fileSize" [(ngModel)]="generalSetting.fileSize" />
 									<div
 										*ngIf="(submitted && f.fileSize.invalid) || (f.fileSize.invalid && (f.fileSize.dirty || f.fileSize.touched))"

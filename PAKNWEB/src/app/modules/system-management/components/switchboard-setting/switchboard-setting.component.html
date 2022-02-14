@@ -5,7 +5,7 @@
 			<li class="breadcrumb-item active"><a class="font-weight-bold"> Cấu hình tổng đài</a></li>
 		</ol>
 		<div class="btn-group group-button-table" role="group">
-				<a class="btn btn-sm rounded bg-white text-dark border mr-3" (click)="redirectHis()">
+			<a class="btn btn-sm rounded bg-white text-dark border mr-3" (click)="redirectHis()">
 				<i class="bi bi-arrow-left"></i>&nbsp;
 				Quay lại
 			</a>
@@ -28,8 +28,10 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
-									<input autofocus placeholder="Nhập..." svTrim class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" />
-									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+									<input autofocus placeholder="Nhập.." svTrim class="form-control" formControlName="title"
+										[(ngModel)]="model.title" maxlength="100" />
+									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.title.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -39,8 +41,11 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Mô tả <span class="text-danger">(*)</span></label>
-									<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="description" rows="4" [(ngModel)]="model.description" maxlength="200"></textarea>
-									<div *ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))" class="has-error m-b-12">
+									<textarea placeholder="Nhập.." svTrim class="form-control" formControlName="description" rows="4"
+										[(ngModel)]="model.description" maxlength="200"></textarea>
+									<div
+										*ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.description.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -50,8 +55,10 @@
 							<div class="row form-group">
 								<div class="col-sm-6">
 									<label class="control-label">Đường dẫn <span class="text-danger">(*)</span></label>
-									<input placeholder="Nhập..." svTrim class="form-control" formControlName="link" [(ngModel)]="configSwitchboard.link" maxlength="100" />
-									<div *ngIf="(submitted && f.link.invalid) || (f.link.invalid && (f.link.dirty || f.link.touched))" class="has-error m-b-12">
+									<input placeholder="Nhập.." svTrim class="form-control" formControlName="link"
+										[(ngModel)]="configSwitchboard.link" maxlength="100" />
+									<div *ngIf="(submitted && f.link.invalid) || (f.link.invalid && (f.link.dirty || f.link.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.link.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -62,16 +69,18 @@
 								</div>
 								<div class="col-sm-6">
 									<label class="control-label">Config <span class="text-danger">(*)</span></label>
-									<input type="text" placeholder="Nhập..." svTrim class="form-control" formControlName="config"
+									<input type="text" placeholder="Nhập.." svTrim class="form-control" formControlName="config"
 										[(ngModel)]="configSwitchboard.config" maxlength="100" />
-									<div *ngIf="(submitted && f.config.invalid) || (f.config.invalid && (f.config.dirty || f.config.touched))" class="has-error m-b-12">
+									<div
+										*ngIf="(submitted && f.config.invalid) || (f.config.invalid && (f.config.dirty || f.config.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.config.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
 									</div>
 								</div>
 							</div>
-						
+
 						</div>
 					</div>
 				</div>

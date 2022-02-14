@@ -894,7 +894,7 @@ namespace PAKNAPI.Controllers
 					DropListTreeView huyen = new DropListTreeView();
 					foreach (var district in lstUnit.Where(x => x.ParentId == province.Value && x.UnitLevel == 2).ToList()) {
 						huyen = new DropListTreeView(district.Text, district.Value, new List<DropListTreeView>());
-						List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value);
+						List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value, null);
 						foreach (var userDistrict in usersDistrict)
 						{
 							huyen.children.Add(new DropListTreeView(userDistrict.FullName, userDistrict.Id));
@@ -904,7 +904,7 @@ namespace PAKNAPI.Controllers
 						foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
 						{
 							xa = new DropListTreeView(commune.Text, commune.Value, new List<DropListTreeView>());
-							List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
+							List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value, null);
 							foreach (var userCommune in usersCommune)
 							{
 								xa.children.Add(new DropListTreeView(userCommune.FullName, userCommune.Id));

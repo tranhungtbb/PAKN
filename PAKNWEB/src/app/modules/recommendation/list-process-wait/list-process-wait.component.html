@@ -51,7 +51,7 @@
 											<strong>Mã số</strong>
 
 										</p>
-										<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch.code"
+										<input class="form-control form-control-sm" placeholder="Nhập.." [(ngModel)]="dataSearch.code"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.code=''">
@@ -63,7 +63,7 @@
 											<strong>Tên CN/DN</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.name"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.name=''">
@@ -75,7 +75,7 @@
 											<strong>Tiêu đề</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.content"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.content=''">
@@ -88,7 +88,7 @@
 
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value"
+											<ng-select placeholder="Chọn.." class="" [items]="lstUnit" bindLabel="text" bindValue="value"
 												notFoundText="Không có dữ liệu" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
 												(change)="dataStateChange()">
 											</ng-select>
@@ -100,7 +100,7 @@
 
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value"
+											<ng-select placeholder="Chọn.." class="" [items]="lstField" bindLabel="text" bindValue="value"
 												notFoundText="Không có dữ liệu" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
 												(change)="dataStateChange()">
 											</ng-select>
@@ -234,7 +234,7 @@
 							<div class="col-12 form-group">
 								<label class="mb-1">Nội dung</label>
 								<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
-									placeholder="Nhập nội dung..." maxlength="500"></textarea>
+									placeholder="Nhập nội dung.." maxlength="500"></textarea>
 							</div>
 						</div>
 					</form>
@@ -259,7 +259,7 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
-				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do..."
+				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do.."
 					[(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 
 			</div>
@@ -286,9 +286,8 @@
 				<form class="form-horizontal" [formGroup]="formAccept" #formDir="ngForm">
 					<div class="mt-3 mb-3">
 						<label class="mb-1">Chọn lĩnh vực <span class="cl-red">(*)</span></label>
-						<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn..." formControlName="field"
-							class="form-control" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="fieldSelected"
-							[closeOnSelect]="true">
+						<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn.." formControlName="field" class="form-control"
+							[items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="fieldSelected" [closeOnSelect]="true">
 						</ng-select>
 						<div
 							*ngIf="(submitted && fAccept.field.invalid) || (fAccept.field.invalid && (fAccept.field.dirty || fAccept.field.touched))"

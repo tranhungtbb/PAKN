@@ -131,7 +131,7 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 	}
 	onResetNationValue(event: any) {
 		console.log(event)
-		if (event.target.value == 'Nhập...') {
+		if (event.target.value == 'Nhập..') {
 			event.target.value = ''
 		}
 	}

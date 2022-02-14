@@ -28,8 +28,10 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
-									<input id="target" placeholder="Nhập..." svTrim class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" />
-									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+									<input id="target" placeholder="Nhập.." svTrim class="form-control" formControlName="title"
+										[(ngModel)]="model.title" maxlength="100" />
+									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.title.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -39,8 +41,11 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Mô tả <span class="text-danger">(*)</span></label>
-									<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="description" rows="4" [(ngModel)]="model.description" maxlength="200"></textarea>
-									<div *ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))" class="has-error m-b-12">
+									<textarea placeholder="Nhập.." svTrim class="form-control" formControlName="description" rows="4"
+										[(ngModel)]="model.description" maxlength="200"></textarea>
+									<div
+										*ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.description.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -50,9 +55,10 @@
 							<div class="row form-group">
 								<div class="col-sm-6">
 									<label class="control-label">Link Webservice <span class="text-danger">(*)</span></label>
-									<input id="linkwebservice" placeholder="Nhập..." svTrim class="form-control" formControlName="linkwebservice" [(ngModel)]="configSMS.linkwebservice"
-										maxlength="100" />
-									<div *ngIf="(submitted && f.linkwebservice.invalid) || (f.linkwebservice.invalid && (f.linkwebservice.dirty || f.linkwebservice.touched))"
+									<input id="linkwebservice" placeholder="Nhập.." svTrim class="form-control"
+										formControlName="linkwebservice" [(ngModel)]="configSMS.linkwebservice" maxlength="100" />
+									<div
+										*ngIf="(submitted && f.linkwebservice.invalid) || (f.linkwebservice.invalid && (f.linkwebservice.dirty || f.linkwebservice.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="f.linkwebservice.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -61,8 +67,10 @@
 								</div>
 								<div class="col-sm-6">
 									<label class="control-label">User <span class="text-danger">(*)</span></label>
-									<input id="user" placeholder="Nhập..." svTrim class="form-control" formControlName="user" [(ngModel)]="configSMS.user" maxlength="100" />
-									<div *ngIf="(submitted && f.user.invalid) || (f.user.invalid && (f.user.dirty || f.user.touched))" class="has-error m-b-12">
+									<input id="user" placeholder="Nhập.." svTrim class="form-control" formControlName="user"
+										[(ngModel)]="configSMS.user" maxlength="100" />
+									<div *ngIf="(submitted && f.user.invalid) || (f.user.invalid && (f.user.dirty || f.user.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.user.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -73,9 +81,11 @@
 							<div class="row form-group">
 								<div class="col-sm-6">
 									<label class="control-label">Password <span class="text-danger">(*)</span></label>
-									<input autocomplete="new-password" type="Password" id="sysPass" placeholder="Nhập..." svTrim class="form-control" formControlName="password"
-										[(ngModel)]="configSMS.password" maxlength="100" />
-									<div *ngIf="(submitted && f.password.invalid) || (f.password.invalid && (f.password.dirty || f.password.touched))" class="has-error m-b-12">
+									<input autocomplete="new-password" type="Password" id="sysPass" placeholder="Nhập.." svTrim
+										class="form-control" formControlName="password" [(ngModel)]="configSMS.password" maxlength="100" />
+									<div
+										*ngIf="(submitted && f.password.invalid) || (f.password.invalid && (f.password.dirty || f.password.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.password.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -83,8 +93,10 @@
 								</div>
 								<div class="col-sm-6">
 									<label class="control-label">Code <span class="text-danger">(*)</span></label>
-									<input id="code" placeholder="Nhập..." svTrim class="form-control" formControlName="code" [(ngModel)]="configSMS.code" maxlength="100" />
-									<div *ngIf="(submitted && f.code.invalid) || (f.code.invalid && (f.code.dirty || f.code.touched))" class="has-error m-b-12">
+									<input id="code" placeholder="Nhập.." svTrim class="form-control" formControlName="code"
+										[(ngModel)]="configSMS.code" maxlength="100" />
+									<div *ngIf="(submitted && f.code.invalid) || (f.code.invalid && (f.code.dirty || f.code.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.code.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -94,9 +106,11 @@
 							<div class="row form-group">
 								<div class="col-sm-6">
 									<label class="control-label">ServiceID <span class="text-danger">(*)</span></label>
-									<input id="ServiceID" placeholder="Nhập..." svTrim class="form-control" formControlName="serviceID" [(ngModel)]="configSMS.serviceID"
-										maxlength="100" />
-									<div *ngIf="(submitted && f.serviceID.invalid) || (f.serviceID.invalid && (f.serviceID.dirty || f.serviceID.touched))" class="has-error m-b-12">
+									<input id="ServiceID" placeholder="Nhập.." svTrim class="form-control" formControlName="serviceID"
+										[(ngModel)]="configSMS.serviceID" maxlength="100" />
+									<div
+										*ngIf="(submitted && f.serviceID.invalid) || (f.serviceID.invalid && (f.serviceID.dirty || f.serviceID.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.serviceID.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -104,9 +118,10 @@
 								</div>
 								<div class="col-sm-6">
 									<label class="control-label">CommandCode <span class="text-danger">(*)</span></label>
-									<input id="CommandCode" placeholder="Nhập..." svTrim class="form-control" formControlName="commandCode" [(ngModel)]="configSMS.commandCode"
-										maxlength="100" />
-									<div *ngIf="(submitted && f.commandCode.invalid) || (f.commandCode.invalid && (f.commandCode.dirty || f.commandCode.touched))"
+									<input id="CommandCode" placeholder="Nhập.." svTrim class="form-control" formControlName="commandCode"
+										[(ngModel)]="configSMS.commandCode" maxlength="100" />
+									<div
+										*ngIf="(submitted && f.commandCode.invalid) || (f.commandCode.invalid && (f.commandCode.dirty || f.commandCode.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="f.commandCode.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -117,10 +132,12 @@
 							<div class="row form-group">
 								<div class="col-sm-6">
 									<label class="control-label">ContentType <span class="text-danger">(*)</span></label>
-									<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="contentType"
-										[(ngModel)]="configSMS.contentType" style="font-weight: 600;">
+									<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn.."
+										bindLabel="text" formControlName="contentType" [(ngModel)]="configSMS.contentType"
+										style="font-weight: 600;">
 									</ng-select>
-									<div *ngIf="(submitted && f.contentType.invalid) || (f.contentType.invalid && (f.contentType.dirty || f.contentType.touched))"
+									<div
+										*ngIf="(submitted && f.contentType.invalid) || (f.contentType.invalid && (f.contentType.dirty || f.contentType.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="f.contentType.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>

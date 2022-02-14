@@ -32,7 +32,7 @@
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
 							<input class="form-control" formControlName="title" autofocus [(ngModel)]="model.title" maxlength="100"
-								placeholder="Nhập..." />
+								placeholder="Nhập.." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
@@ -96,7 +96,7 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
-							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
+							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập.." />
 							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="f.place.errors">
@@ -106,13 +106,13 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Ghi chú</label>
-							<input class="form-control" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
+							<input class="form-control" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập.." />
 
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung <span class="text-danger">(*)</span></label>
 							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6"
-								placeholder="Nhập..."></textarea>
+								placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
 								class="has-error m-b-12">

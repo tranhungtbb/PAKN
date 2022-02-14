@@ -201,7 +201,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			}
 	}
 	resetNationField() {
-		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
+		if (this.model.Nation == 'Nhập..') this.model.Nation = ''
 	}
 	onSave() {
 

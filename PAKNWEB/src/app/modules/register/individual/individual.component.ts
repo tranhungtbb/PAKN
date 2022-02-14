@@ -64,7 +64,7 @@ export class IndividualComponent implements OnInit {
 	//event
 	onResetNationValue(event: any) {
 		console.log(event)
-		if (event.target.value == 'Nhập...') {
+		if (event.target.value == 'Nhập..') {
 			event.target.value = ''
 		}
 	}
@@ -102,7 +102,7 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
-				this.model.nation = 'Nhập...'
+				this.model.nation = 'Nhập..'
 				this.formInfo.controls['province'].setValue(0)
 				this.formInfo.controls['district'].setValue(0)
 				this.formInfo.controls['village'].setValue(0)
@@ -186,7 +186,7 @@ export class IndividualComponent implements OnInit {
 		this.fInfoSubmitted = true
 
 		this.model.email = this.model.email == null ? '' : this.model.email.trim()
-		if (this.model.nation == 'Nhập...') this.model.nation = ''
+		if (this.model.nation == 'Nhập..') this.model.nation = ''
 		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
 			return
 		}

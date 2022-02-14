@@ -134,7 +134,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	ngAfterViewInit() {
 		this.childCreateOrUpdateUser.parentUnit = this
 
-		$('#tree-unit input.ui-tree-filter').attr('placeholder', 'Nhập...')
+		$('#tree-unit input.ui-tree-filter').attr('placeholder', 'Nhập..')
 		$('#modal-create-or-update').on('hide.bs.modal', () => {
 			this.modelUnit = new UnitObject()
 			this.createUnitFrom.reset()

@@ -448,6 +448,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public short? FileType { get; set; }
 		public string FilePath { get; set; }
+		public string FilePathUrl { get; set; }
 
 		public async Task<List<MRRecommendationConclusionFilesGetByConclusionId>> MRRecommendationConclusionFilesGetByConclusionIdDAO(int? Id)
 		{

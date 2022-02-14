@@ -23,7 +23,7 @@
 				<div class="row form-group">
 					<div class="col-sm-12">
 						<label class="control-label">Meta title <span class="text-danger">(*)</span></label>
-						<input placeholder="Nhập nội dung ..." svTrim class="form-control" formControlName="metaTitle"
+						<input placeholder="Nhập nội dung .." svTrim class="form-control" formControlName="metaTitle"
 							[(ngModel)]="model.metaTitle" maxlength="200" />
 						<div
 							*ngIf="(submitted && f.metaTitle.invalid) || (f.metaTitle.invalid && (f.metaTitle.dirty || f.metaTitle.touched))"
@@ -35,7 +35,7 @@
 					</div>
 					<div class="col-sm-12">
 						<label class="control-label">Meta description <span class="text-danger">(*)</span></label>
-						<textarea placeholder="Nhập nội dung ..." svTrim class="form-control" rows="4"
+						<textarea placeholder="Nhập nội dung .." svTrim class="form-control" rows="4"
 							formControlName="metaDescription" [(ngModel)]="model.metaDescription" maxlength="350"></textarea>
 						<div
 							*ngIf="(submitted && f.metaDescription.invalid) || (f.metaDescription.invalid && (f.metaDescription.dirty || f.metaDescription.touched))"
@@ -81,7 +81,7 @@
 								</div>
 
 								<textarea class="form-control" formControlName="description" [(ngModel)]="model.description"
-									maxlength="600" rows="3" placeholder="Nhập..."></textarea>
+									maxlength="600" rows="3" placeholder="Nhập.."></textarea>
 								<div
 									*ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
 									class="has-error m-b-12">
@@ -98,7 +98,7 @@
 										</div>
 										<div style="width: 90%;">
 											<input class="form-control" formControlName="phone" [(ngModel)]="model.phone" maxlength="100"
-												placeholder="Nhập..." />
+												placeholder="Nhập.." />
 											<div
 												*ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))"
 												class="has-error m-b-12">
@@ -118,7 +118,7 @@
 										</div>
 										<div style="width: 90%;">
 											<input class="form-control" formControlName="email" [(ngModel)]="model.email" maxlength="100"
-												placeholder="Nhập..." />
+												placeholder="Nhập.." />
 											<div
 												*ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))"
 												class="has-error m-b-12">
@@ -137,7 +137,7 @@
 										</div>
 										<div style="width: 90%;">
 											<textarea class="form-control" formControlName="address" [(ngModel)]="model.address"
-												maxlength="250" rows="3" placeholder="Nhập..."></textarea>
+												maxlength="250" rows="3" placeholder="Nhập.."></textarea>
 											<div
 												*ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
 												class="has-error m-b-12">
@@ -154,7 +154,7 @@
 
 					<div class="col-sm-12 padding-col" style="background: #E9F2FD;">
 						<input class="form-control" formControlName="license" [(ngModel)]="model.license" maxlength="500"
-							placeholder="Nhập..." style="width: 96%;margin: 15px 15px;" />
+							placeholder="Nhập.." style="width: 96%;margin: 15px 15px;" />
 						<div
 							*ngIf="(submitted && f.license.invalid) || (f.license.invalid && (f.license.dirty || f.license.touched))"
 							class="has-error m-b-12">
@@ -192,7 +192,7 @@
 				<label class="control-label department">Liên kết website</label>
 				<form *hasPermission="['3', 'A_XIX_3']" [formGroup]="formWebsite">
 					<input class="form-control" formControlName="nameWebsite" [(ngModel)]="modelWebsite.nameWebsite"
-						maxlength="100" placeholder="Tên website..." style="margin-top: 10px;" />
+						maxlength="100" placeholder="Tên website.." style="margin-top: 10px;" />
 					<div
 						*ngIf="(submittedWebsite && fWebsite.nameWebsite.invalid) || (fWebsite.nameWebsite.invalid && (fWebsite.nameWebsite.dirty || fWebsite.nameWebsite.touched))"
 						class="has-error m-b-12">
@@ -202,7 +202,7 @@
 					</div>
 
 					<input class="form-control" formControlName="urlWebsite" [(ngModel)]="modelWebsite.urlWebsite" maxlength="100"
-						placeholder="Đường dẫn website..." style="margin-top: 10px;" />
+						placeholder="Đường dẫn website.." style="margin-top: 10px;" />
 					<div
 						*ngIf="(submittedWebsite && fWebsite.urlWebsite.invalid) || (fWebsite.urlWebsite.invalid && (fWebsite.urlWebsite.dirty || fWebsite.urlWebsite.touched))"
 						class="has-error m-b-12">

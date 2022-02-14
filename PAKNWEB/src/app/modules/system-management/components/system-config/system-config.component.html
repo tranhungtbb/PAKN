@@ -33,7 +33,7 @@
 									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="title" trim
 										[ngSwitch]="'title'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')"
-										placeholder="Nhập tên..." />
+										placeholder="Nhập tên.." />
 									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -46,7 +46,7 @@
 									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="description" trim
 										[ngSwitch]="'description'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
-										placeholder="Nhập mô tả..." />
+										placeholder="Nhập mô tả.." />
 									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -57,7 +57,7 @@
 										<strong>Loại cấu hình <p-sortIcon [field]="'type'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" [items]="listType" placeholder="Loại cấu hình ..."
+										<ng-select notFoundText="Không có dữ liệu" [items]="listType" placeholder="Loại cấu hình .."
 											bindLabel="text" bindValue="value" [ngSwitch]="'type'"
 											(change)="table.filter($event?.value.toString(), 'type')" [closeOnSelect]="true">
 										</ng-select>

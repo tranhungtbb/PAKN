@@ -2,7 +2,8 @@
             Chatbot start
   ***********************************-->
 <div>
-	<button id="btn-chat" class="btn btn-primary btn-show-toggle-chatbot grd-xanhngoc" (click)="toggleChatForm()">Chat</button>
+	<button id="btn-chat" class="btn btn-primary btn-show-toggle-chatbot grd-xanhngoc"
+		(click)="toggleChatForm()">Chat</button>
 </div>
 <section id="form-chat" class="avenue-messenger togger-show-chatbot">
 	<div class="menu">
@@ -15,7 +16,7 @@
 	</div>
 	<div class="chat">
 		<div class="chat-title">
-			<h1>...</h1>
+			<h1>..</h1>
 		</div>
 		<div class="messages">
 			<div class="messages-content" id="messages-content">
@@ -29,8 +30,10 @@
 			</div>
 		</div>
 		<div class="message-box">
-			<textarea name="message" class="message-input" [(ngModel)]="message" placeholder="Hãy viết gì đó..." (keydown.enter)="send()"></textarea>
-			<input style="display:none;" type="file" name="chatbotMsgAttachment" id="chatbotMsgAttachment" #chatbotMsgAttachment>
+			<textarea name="message" class="message-input" [(ngModel)]="message" placeholder="Hãy viết gì đó.."
+				(keydown.enter)="send()"></textarea>
+			<input style="display:none;" type="file" name="chatbotMsgAttachment" id="chatbotMsgAttachment"
+				#chatbotMsgAttachment>
 			<button type="submit" class="message-submit" onclick="$('#chatbotMsgAttachment').click()">
 				<i class="bi bi-paperclip"></i>
 			</button>

@@ -47,21 +47,21 @@
 											<strong>Mã số</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.code"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 210px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tên CN/DN</strong>
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.sendName"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.sendName"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.title"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.title"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 
@@ -71,7 +71,7 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select notFoundText="Không có dữ liệu" class="" [items]="lstRecommendationType"
-												placeholder="Chọn ..." bindLabel="text" bindValue="value" [(ngModel)]="recommendationType"
+												placeholder="Chọn .." bindLabel="text" bindValue="value" [(ngModel)]="recommendationType"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -82,11 +82,11 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select *ngIf="dataSearch.type == 1" notFoundText="Không có dữ liệu" class="" [items]="lstUnit"
-												placeholder="Đơn vị tiếp nhận ..." bindLabel="text" bindValue="value" [(ngModel)]="unitId"
+												placeholder="Đơn vị tiếp nhận .." bindLabel="text" bindValue="value" [(ngModel)]="unitId"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 											<ng-select *ngIf="dataSearch.type != 1" notFoundText="Không có dữ liệu" class=""
-												[items]="lstField" placeholder="Lĩnh vực ..." bindLabel="text" bindValue="value"
+												[items]="lstField" placeholder="Lĩnh vực .." bindLabel="text" bindValue="value"
 												[(ngModel)]="fieldId" [closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>

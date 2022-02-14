@@ -7,16 +7,16 @@
 <div class="notifications j-notifications hidden"></div>
 <div class="content__inner j-content__inner">
   <div class="group_chat__filter __web-inspector-hide-shortcut__">
-    <input [(ngModel)]="textSearch" (keydown.enter)="getUserList()" type="text" autocomplete="off"
-           autocorrect="off" placeholder="Tìm kiếm...">
+    <input [(ngModel)]="textSearch" (keydown.enter)="getUserList()" type="text" autocomplete="off" autocorrect="off"
+      placeholder="Tìm kiếm..">
   </div>
   <p class="group__chat__description">Chọn người dùng để xóa:</p>
   <div class="group_chat__user_list j-group_chat__user_list">
     <div (click)="toggleSelectItem(user.idQB)" *ngFor="let user of users"
-         [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.idQB) >= 0 }" class="user__item"
-         id="{{ user.idQB }}">
+      [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.idQB) >= 0 }" class="user__item"
+      id="{{ user.idQB }}">
       <span class="user__avatar avatar-circle mr-2 avatar-custom">{{getShortName(user.fullName)}} </span>
-      
+
       <div class="user__details">
         <p class="user__name">{{ user.fullName }}</p>
         <p class="user__last_seen">{{ user.unitName }}</p>
@@ -24,12 +24,11 @@
     </div>
   </div>
   <form action="" (ngSubmit)="onSubmit()" class="dialog_form m-dialog_form_create j-create_dialog_form"
-        name="create_dialog">
+    name="create_dialog">
     <button type="button" (click)="goBack()" class="btn m-update_dialog_btn_cancel j-update_dialog_btn_cancel"
-            name="update_dialog_cancel">Cancel
+      name="update_dialog_cancel">Cancel
     </button>
-    <button class="btn m-create_dialog_btn j-create_dialog_btn" name="create_dialog_submit"
-            type="submit">Xóa người dùng
+    <button class="btn m-create_dialog_btn j-create_dialog_btn" name="create_dialog_submit" type="submit">Xóa người dùng
     </button>
   </form>
 </div>

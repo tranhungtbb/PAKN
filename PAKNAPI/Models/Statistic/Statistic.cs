@@ -576,6 +576,7 @@ namespace PAKNAPI.Models.Statistic
 		public int ApproveDeny { get; set; } // 9
 		public int Finised { get; set; }
 		public int TotalComment { get; set; }
+		public int FakeImage { get; set; }
 		public int Combine { get; set; }
 
 

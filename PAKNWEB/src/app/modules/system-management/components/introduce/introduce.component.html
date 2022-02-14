@@ -53,7 +53,7 @@
 					<div class="col-sm-12 padding-col">
 						<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
 						<input autofocus class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="250"
-							placeholder="Nhập..." />
+							placeholder="Nhập.." />
 						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="f.title.errors.required">
@@ -168,7 +168,7 @@
 					<div class="col-sm-12 padding-col">
 						<label class="control-label department">Mô tả chức năng hệ thống<span class="text-danger">(*)</span></label>
 						<textarea class="form-control" [(ngModel)]="model.descriptionFunction" formControlName="descriptionFunction"
-							rows="6" placeholder="Nhập..."></textarea>
+							rows="6" placeholder="Nhập.."></textarea>
 						<div
 							*ngIf="(submitted && f.descriptionFunction.invalid) || (f.descriptionFunction.invalid && (f.descriptionFunction.dirty || f.descriptionFunction.touched))"
 							class="has-error m-b-12">
@@ -193,7 +193,7 @@
 						<div class="content-intro-x">
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc0"
-									[(ngModel)]="lstIntroduceFunction[0].title" maxlength="100" placeholder="Nhập..." />
+									[(ngModel)]="lstIntroduceFunction[0].title" maxlength="100" placeholder="Nhập.." />
 								<div
 									*ngIf="(submitted && f.titleFunc0.invalid) || (f.titleFunc0.invalid && (f.titleFunc0.dirty || f.titleFunc0.touched))"
 									class="has-error m-b-12">
@@ -203,7 +203,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[0].content"
-								formControlName="contentFunc0" maxlength="700" rows="4" placeholder="Nhập..."></textarea>
+								formControlName="contentFunc0" maxlength="700" rows="4" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.contentFunc0.invalid) || (f.contentFunc0.invalid && (f.contentFunc0.dirty || f.contentFunc0.touched))"
 								class="has-error m-b-12">
@@ -227,7 +227,7 @@
 						<div class="content-intro-x">
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc1"
-									[(ngModel)]="lstIntroduceFunction[1].title" maxlength="100" placeholder="Nhập..." />
+									[(ngModel)]="lstIntroduceFunction[1].title" maxlength="100" placeholder="Nhập.." />
 								<div
 									*ngIf="(submitted && f.titleFunc1.invalid) || (f.titleFunc1.invalid && (f.titleFunc1.dirty || f.titleFunc1.touched))"
 									class="has-error m-b-12">
@@ -237,7 +237,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[1].content"
-								formControlName="contentFunc1" maxlength="500" rows="4" placeholder="Nhập..."></textarea>
+								formControlName="contentFunc1" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.contentFunc1.invalid) || (f.contentFunc1.invalid && (f.contentFunc1.dirty || f.contentFunc1.touched))"
 								class="has-error m-b-12">
@@ -262,7 +262,7 @@
 						<div class="content-intro-x">
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc2"
-									[(ngModel)]="lstIntroduceFunction[2].title" maxlength="100" placeholder="Nhập..." />
+									[(ngModel)]="lstIntroduceFunction[2].title" maxlength="100" placeholder="Nhập.." />
 								<div
 									*ngIf="(submitted && f.titleFunc2.invalid) || (f.titleFunc2.invalid && (f.titleFunc2.dirty || f.titleFunc2.touched))"
 									class="has-error m-b-12">
@@ -272,7 +272,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[2].content"
-								formControlName="contentFunc2" maxlength="500" rows="4" placeholder="Nhập..."></textarea>
+								formControlName="contentFunc2" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.contentFunc2.invalid) || (f.contentFunc2.invalid && (f.contentFunc2.dirty || f.contentFunc2.touched))"
 								class="has-error m-b-12">
@@ -296,7 +296,7 @@
 						<div class="content-intro-x">
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc3"
-									[(ngModel)]="lstIntroduceFunction[3].title" maxlength="100" placeholder="Nhập..." />
+									[(ngModel)]="lstIntroduceFunction[3].title" maxlength="100" placeholder="Nhập.." />
 								<div
 									*ngIf="(submitted && f.titleFunc3.invalid) || (f.titleFunc3.invalid && (f.titleFunc3.dirty || f.titleFunc3.touched))"
 									class="has-error m-b-12">
@@ -306,7 +306,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[3].content"
-								formControlName="contentFunc3" maxlength="500" rows="4" placeholder="Nhập..."></textarea>
+								formControlName="contentFunc3" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.contentFunc3.invalid) || (f.contentFunc3.invalid && (f.contentFunc3.dirty || f.contentFunc3.touched))"
 								class="has-error m-b-12">
@@ -331,7 +331,7 @@
 						<div class="content-intro-x">
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc4"
-									[(ngModel)]="lstIntroduceFunction[4].title" maxlength="100" placeholder="Nhập..." />
+									[(ngModel)]="lstIntroduceFunction[4].title" maxlength="100" placeholder="Nhập.." />
 								<div
 									*ngIf="(submitted && f.titleFunc4.invalid) || (f.titleFunc4.invalid && (f.titleFunc4.dirty || f.titleFunc4.touched))"
 									class="has-error m-b-12">
@@ -341,7 +341,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[4].content"
-								formControlName="contentFunc4" maxlength="500" rows="4" placeholder="Nhập..."></textarea>
+								formControlName="contentFunc4" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.contentFunc4.invalid) || (f.contentFunc4.invalid && (f.contentFunc4.dirty || f.contentFunc4.touched))"
 								class="has-error m-b-12">
@@ -365,7 +365,7 @@
 						<div class="content-intro-x">
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc5"
-									[(ngModel)]="lstIntroduceFunction[5].title" maxlength="100" placeholder="Nhập..." />
+									[(ngModel)]="lstIntroduceFunction[5].title" maxlength="100" placeholder="Nhập.." />
 								<div
 									*ngIf="(submitted && f.titleFunc5.invalid) || (f.titleFunc5.invalid && (f.titleFunc5.dirty || f.titleFunc5.touched))"
 									class="has-error m-b-12">
@@ -375,7 +375,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[5].content"
-								formControlName="contentFunc5" maxlength="500" rows="4" placeholder="Nhập..."></textarea>
+								formControlName="contentFunc5" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.contentFunc5.invalid) || (f.contentFunc5.invalid && (f.contentFunc5.dirty || f.contentFunc5.touched))"
 								class="has-error m-b-12">
@@ -409,7 +409,7 @@
 							<div class="col-sm-8">
 								<label class="control-label">Tên đơn vị<span class="text-danger">(*)</span></label>
 								<input class="form-control" formControlName="title" [(ngModel)]="modelUnit.title" maxlength="200"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<div
 									*ngIf="(submittedUnit && fUnit.title.invalid) || (fUnit.title.invalid && (fUnit.title.dirty || fUnit.title.touched))"
 									class="has-error m-b-12">
@@ -421,7 +421,7 @@
 							<div class="col-sm-4">
 								<label class="control-label">Thứ tự hiển thị <span class="text-danger">(*)</span></label>
 								<input class="form-control" type="number" formControlName="index" [(ngModel)]="modelUnit.index"
-									maxlength="100" placeholder="Nhập..." />
+									maxlength="100" placeholder="Nhập.." />
 
 							</div>
 						</div>
@@ -429,7 +429,7 @@
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả<span class="text-danger">(*)</span></label>
 								<textarea class="form-control" formControlName="description" type="text" rows="4"
-									[(ngModel)]="modelUnit.description" maxlength="300" placeholder="Nhập..."></textarea>
+									[(ngModel)]="modelUnit.description" maxlength="300" placeholder="Nhập.."></textarea>
 								<div
 									*ngIf="(submittedUnit && fUnit.description.invalid) || (fUnit.description.invalid && (fUnit.description.dirty || fUnit.description.touched))"
 									class="has-error m-b-12">
@@ -444,7 +444,7 @@
 							<div class="col-sm-12">
 								<label class="control-label">Thông tin liên hệ<span class="text-danger">(*)</span></label>
 								<textarea class="form-control" formControlName="infomation" type="text" rows="4"
-									[(ngModel)]="modelUnit.infomation" maxlength="400" placeholder="Nhập..."></textarea>
+									[(ngModel)]="modelUnit.infomation" maxlength="400" placeholder="Nhập.."></textarea>
 								<div
 									*ngIf="(submittedUnit && fUnit.infomation.invalid) || (fUnit.infomation.invalid && (fUnit.infomation.dirty || fUnit.infomation.touched))"
 									class="has-error m-b-12">

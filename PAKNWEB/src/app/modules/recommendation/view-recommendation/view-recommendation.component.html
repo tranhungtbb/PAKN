@@ -273,7 +273,7 @@
 
 							<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10"
-									placeholder="Nhập nội dung..."></textarea>
+									placeholder="Nhập nội dung.."></textarea>
 								<div class="row">
 									<div class="col-12 attach-ct mt-3">
 										<p class="h5 text-uppercase mb-3">
@@ -383,7 +383,7 @@
 										<label class="mb-1 mt-3">NGƯỜI PHÊ DUYỆT <span class="cl-red">(*)</span></label>
 									</div>
 									<div class="col-12 col-lg-5 form-group">
-										<ng-select class="form-control" [items]="lstUsers" placeholder="Nhập..." bindValue="value"
+										<ng-select class="form-control" [items]="lstUsers" placeholder="Nhập.." bindValue="value"
 											bindLabel="text" [(ngModel)]="modelConclusion.receiverId">
 											<ng-template ng-option-tmp let-item="item">
 												<div title="{{item.text}}">{{item.text}}</div>
@@ -644,7 +644,7 @@
 						<div class="col-12 form-group">
 							<label class="mb-1">Nội dung</label>
 							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
-								placeholder="Nhập nội dung..." maxlength="500"></textarea>
+								placeholder="Nhập nội dung.." maxlength="500"></textarea>
 						</div>
 					</div>
 				</form>
@@ -695,9 +695,8 @@
 				<form class="form-horizontal" [formGroup]="formAccept" #formDir="ngForm">
 					<div class="mt-3 mb-3">
 						<label class="mb-1">Chọn lĩnh vực <span class="cl-red">(*)</span></label>
-						<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn..." formControlName="field"
-							class="form-control" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="fieldSelected"
-							[closeOnSelect]="true">
+						<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn.." formControlName="field" class="form-control"
+							[items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="fieldSelected" [closeOnSelect]="true">
 						</ng-select>
 						<div
 							*ngIf="(submitted && fAccept.field.invalid) || (fAccept.field.invalid && (fAccept.field.dirty || fAccept.field.touched))"
@@ -731,7 +730,7 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
-				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny"
+				<textarea class="form-control" rows="4" placeholder="Nhập lý do.." [(ngModel)]="modelProcess.reasonDeny"
 					maxlength="500"></textarea>
 				<ng-container *ngIf="model.status == 2 || (model.status == 5 && isForwardProcess == true)">
 					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">

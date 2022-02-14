@@ -46,7 +46,7 @@
 									</span>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select notFoundText="Không có dữ liệu" [(ngModel)]="newsType" (change)="filterChange()"
-											style="width:170px;" placeholder="Chọn..." [items]="listNewsCategories">
+											style="width:170px;" placeholder="Chọn.." [items]="listNewsCategories">
 											<ng-option *ngFor="let nt of listNewsCategories" [value]="nt.id">
 												{{nt.name}}
 											</ng-option>
@@ -90,13 +90,13 @@
 								href="javascript:void(0)" tabindex="-1" aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i></a>
 						</li>
 						<li class="d-flex justify-content-center align-items-center">
-							<a *ngIf="query.pageIndex > 4">...</a>
+							<a *ngIf="query.pageIndex > 4">..</a>
 							<p class="mb-0 page-item" style="font-size: 1.2rem;" *ngFor="let item of pagination; let i = index"
 								[ngClass]="{ 'active': item.index === query.pageIndex }">
 								<a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex"
 									class="page-link" href="javascript:void(0)">{{item.index}}</a>
 							</p>
-							<a *ngIf="query.pageIndex < pagination.length -4">...</a>
+							<a *ngIf="query.pageIndex < pagination.length -4">..</a>
 						</li>
 						<li class="page-item" [ngClass]="{ 'disabled': query.pageIndex === totalCount }">
 							<a (click)="changePagination(query.pageIndex + 1)" class="page-link text-uppercase rounded-pill"

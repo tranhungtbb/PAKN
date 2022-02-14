@@ -127,7 +127,7 @@
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
 									<div class="input-group">
-										<input class="form-control form-control-sm border-input" placeholder="Nhập..."
+										<input class="form-control form-control-sm border-input" placeholder="Nhập.."
 											[maxDate]="dataSearch.toDate" bsDatepicker #fd="bsDatepicker" maxlength="10" id="fromDate"
 											formControlName="fromDate" [(ngModel)]="dataSearch.fromDate"
 											(bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
@@ -141,7 +141,7 @@
 									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
 									<div class="input-group">
 										<input class="form-control form-control-sm border-input" [minDate]="dataSearch.fromDate"
-											placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
+											placeholder="Nhập.." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
 											[(ngModel)]="dataSearch.toDate" formControlName="toDate" (bsValueChange)="onChangeToDate($event)"
 											appBsDatepickerInvalid
 											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
@@ -153,11 +153,11 @@
 								<div class="col-12 col-sm-3 col-lg-3 form-group">
 									<label class="mb-1 text-uppercase"><strong>Nội dung</strong></label>
 									<input class="form-control" [(ngModel)]="dataSearch.content" maxlength="100" formControlName="content"
-										(keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+										(keydown.enter)="dataStateChange()" placeholder="Nhập.." />
 								</div>
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Trạng thái</strong></label>
-									<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái..." bindLabel="text"
+									<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái.." bindLabel="text"
 										bindValue="value" [(ngModel)]="dataSearch.status" formControlName="status"
 										(change)="dataStateChange()">
 									</ng-select>
@@ -247,7 +247,7 @@
 								<label class="control-label">Mật khẩu cũ <span class="text-danger">(*)</span></label>
 								<input class="form-control border-input" style="position: relative;"
 									[type]="isShowPassword ? 'text' : 'password'" formControlName="oldPassword" [(ngModel)]="oldPassword"
-									maxlength="40" placeholder="Nhập..." />
+									maxlength="40" placeholder="Nhập.." />
 								<i class="custom-show-pass"
 									[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
 									(click)="showPassword()"></i>
@@ -263,7 +263,7 @@
 								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
 								<input class="form-control border-input" style="position: relative;"
 									[type]="isShowPasswordNew ? 'text' : 'password'" formControlName="newPassword"
-									[(ngModel)]="newPassword" maxlength="40" placeholder="Nhập..."
+									[(ngModel)]="newPassword" maxlength="40" placeholder="Nhập.."
 									pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" />
 								<i class="custom-show-pass"
 									[ngClass]="{ 'bi bi-eye': isShowPasswordNew, 'bi bi-eye-slash': !isShowPasswordNew}"
@@ -283,7 +283,7 @@
 								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
 								<input class="form-control border-input" formControlName="rePassword"
 									[type]="isShowRePasswordNew ? 'text' : 'password'" [(ngModel)]="rePassword" maxlength="40"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<i class="custom-show-pass"
 									[ngClass]="{ 'bi bi-eye': isShowRePasswordNew, 'bi bi-eye-slash': !isShowRePasswordNew}"
 									(click)="showRePasswordNew()"></i>
@@ -353,7 +353,7 @@
 								<div class="col-12 col-lg-8 form-group">
 									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
 									<input disabled svTrim formControlName="email" [(ngModel)]="model.email" type="text"
-										class="form-control" placeholder="Nhập..." maxlength="100"
+										class="form-control" placeholder="Nhập.." maxlength="100"
 										(change)="onCheckExist('Email',$event.target.value)">
 									<div
 										*ngIf="(submitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
@@ -374,7 +374,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
 									<input svTrim formControlName="fullName" [(ngModel)]="model.fullName" type="text" class="form-control"
-										placeholder="Nhập..." maxlength="100">
+										placeholder="Nhập.." maxlength="100">
 									<div
 										*ngIf="(submitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
 										class="has-error m-b-12">
@@ -386,7 +386,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
 									<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="model.phone"
-										type="text" class="form-control" placeholder="Nhập..."
+										type="text" class="form-control" placeholder="Nhập.."
 										(change)="onCheckExist('Phone',$event.target.value)">
 									<div
 										*ngIf="(submitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))"
@@ -409,7 +409,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
 									<!--  -->
-									<ng-select class="form-control" placeholder="Chọn..." [items]="listSexs" bindLabel="text"
+									<ng-select class="form-control" placeholder="Chọn.." [items]="listSexs" bindLabel="text"
 										bindValue="value" [(ngModel)]="model.gender" formControlName="gender" [closeOnSelect]="true"
 										[searchable]="false">
 									</ng-select>
@@ -426,7 +426,7 @@
 									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
 									<!-- <input *ngIf="!isAdmin && model.id > 0 && model.isActived" disabled type="text" class="form-control" value="Hiệu lực">
 									<input *ngIf="!isAdmin && model.id > 0 && !model.isActived" disabled type="text" class="form-control" value="Hết hiệu lực"> -->
-									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..."
+									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn.."
 										[items]="listStatusUser" bindLabel="text" bindValue="value" formControlName="isActived"
 										[(ngModel)]="model.isActived" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
@@ -441,7 +441,7 @@
 								<div class="col-12 form-group">
 									<label class="mb-1">Địa chỉ</label>
 									<textarea class="form-control" formControlName="address" [(ngModel)]="model.address" rows="4"
-										placeholder="Nhập..." maxlength="300"></textarea>
+										placeholder="Nhập.." maxlength="300"></textarea>
 								</div>
 							</div>
 						</form>

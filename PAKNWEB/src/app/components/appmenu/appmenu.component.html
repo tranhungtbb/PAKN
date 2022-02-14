@@ -59,7 +59,8 @@
 										class="text-danger">({{statistic.finised}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_XI_0']"><a routerLinkActive="mm-active"
-									routerLink="/quan-tri/kien-nghi/chua-anh-gia">PAKN chứa ảnh giả</a></li>
+									routerLink="/quan-tri/kien-nghi/chua-anh-gia">PAKN chứa ảnh giả
+									<span *ngIf="statistic" class="text-danger">({{statistic.fakeImage}})</span></a></li>
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/binh-luan-pakn">Bình luận PAKN<span *ngIf="statistic"
 										class="text-danger">({{statistic.totalComment}})</span></a></li>

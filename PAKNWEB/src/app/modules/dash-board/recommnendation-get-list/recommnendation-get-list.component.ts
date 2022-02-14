@@ -18,20 +18,34 @@ export class RecommnendationGetListComponent implements OnInit {
 	dataSearch: any = {}
 	totalRecords: number = 0
 	isMain: boolean = true
+	isApprove: boolean = false
 	title: any
+	status: number
 	ngOnInit() {
 		this.isMain = this.storeageService.getIsMain()
+		this.isApprove = this.storeageService.getIsApprove()
+		this.status = this.isMain == true ? 2 : this.isApprove != true ? 5 : 8
 		this.getList()
-		if (this.isMain == true) {
-			this.title = 'Danh sách phản ánh, kiến nghị chờ xử lý'
-		} else {
-			this.title = 'Danh sách phản ánh, kiến nghị chưa giải quyết'
+
+		switch (this.status) {
+			case 2:
+				this.title = 'Danh sách phản ánh, kiến nghị chờ xử lý'
+				break
+			case 5:
+				this.title = 'Danh sách phản ánh, kiến nghị chưa giải quyết'
+				break
+			case 8:
+				this.title = 'Danh sách phản ánh, kiến nghị chờ phê duyệt'
+				break
+			default:
+				this.title = 'Danh sách phản ánh, kiến nghị chờ xử lý'
 		}
 	}
 
+
 	getList() {
 		let request = {
-			Status: this.isMain == true ? 2 : 5,
+			Status: this.status,
 			PageIndex: 1,
 			PageSize: 4,
 			UnitProcessId: this.storeageService.getUnitId(),

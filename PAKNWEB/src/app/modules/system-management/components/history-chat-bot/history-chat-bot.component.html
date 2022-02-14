@@ -12,8 +12,9 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+						[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+						[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -26,38 +27,39 @@
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="fullName" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập tên..." />
-										<button *ngIf="fullName" class="btn bg-transparent btn-clear-input" (click)="fullName=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="fullName" maxlength="100"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập tên.." />
+									<button *ngIf="fullName" class="btn bg-transparent btn-clear-input" (click)="fullName=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th style="width: 350px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Câu hỏi</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="question" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập câu hỏi..." />
-										<button *ngIf="question" class="btn bg-transparent btn-clear-input" (click)="question=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="question" maxlength="100"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập câu hỏi.." />
+									<button *ngIf="question" class="btn bg-transparent btn-clear-input" (click)="question=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trả lời</strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="answer" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="Nhập câu trả lời..." />
-										<button *ngIf="answer" class="btn bg-transparent btn-clear-input" (click)="answer=''">
-											<i class="fa fa-times"></i>
-										</button>
+									<input class="form-control form-control-sm" [(ngModel)]="answer" maxlength="100"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập câu trả lời.." />
+									<button *ngIf="answer" class="btn bg-transparent btn-clear-input" (click)="answer=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Ngày tạo</strong>
 									</p>
-									<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="createdDate" (keydown.enter)="dataStateChange()" bsDatepicker
-										#n="bsDatepicker" maxlength="10" appBsDatepickerInvalid id="createDate"
+									<input class="form-control form-control-sm" placeholder="Nhập.." [(ngModel)]="createdDate"
+										(keydown.enter)="dataStateChange()" bsDatepicker #n="bsDatepicker" maxlength="10"
+										appBsDatepickerInvalid id="createDate"
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -69,10 +71,12 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.fullName}}</a></strong>
+									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button"
+											title="Xem chi tiết">{{item.fullName}}</a></strong>
 								</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a></strong>
+									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button"
+											title="Xem chi tiết">{{item.question}}</a></strong>
 								</td>
 								<td>{{item.answer}}</td>
 								<td>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</td>

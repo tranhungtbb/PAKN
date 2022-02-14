@@ -16,7 +16,7 @@
 			</p>
 			<div class="center">
 				<input class="form-control form-control-sm" style="width: 90%;" [(ngModel)]="titleSearch"
-					(blur)="onFilterTree()" (keydown.enter)="onFilterTree()" placeholder="Nhập...">
+					(blur)="onFilterTree()" (keydown.enter)="onFilterTree()" placeholder="Nhập..">
 
 			</div>
 			<p-tree id="tree-unit" [value]="treeUnit" [filter]="false" emptyMessage="Không tìm thấy đơn vị nào.">
@@ -123,7 +123,7 @@
 												[pSortableColumn]="'userName'">
 												<strong class="no-wrap">Tên đăng nhập <p-sortIcon [field]="'userName'"></p-sortIcon></strong>
 											</p>
-											<input placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											<input placeholder="Nhập .." type="text" class="form-control form-control-sm"
 												[(ngModel)]="userName" trim [ngSwitch]="'userName'"
 												(keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')">
 											<button *ngIf="userName" class="btn bg-transparent btn-clear-input" (click)="userName=''">
@@ -135,7 +135,7 @@
 												[pSortableColumn]="'fullName'">
 												<strong class="no-wrap">Tên người dùng <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
 											</p>
-											<input placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											<input placeholder="Nhập .." type="text" class="form-control form-control-sm"
 												[(ngModel)]="fullName" trim [ngSwitch]="'fullName'"
 												(keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')">
 											<button *ngIf="fullName" class="btn bg-transparent btn-clear-input" (click)="fullName=''">
@@ -147,7 +147,7 @@
 												[pSortableColumn]="'phone'">
 												<strong class="no-wrap">Số điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 											</p>
-											<input placeholder="Nhập ..." type="text" class="form-control form-control-sm" numbersOnly
+											<input placeholder="Nhập .." type="text" class="form-control form-control-sm" numbersOnly
 												[ngSwitch]="'phone'" [(ngModel)]="phone"
 												(keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')">
 											<button *ngIf="phone" class="btn bg-transparent btn-clear-input" (click)="phone=''">
@@ -162,7 +162,7 @@
 											<div class="dropdown bootstrap-select form-control form-control-sm">
 												<ng-select notFoundText="Không có dữ liệu" [closeOnSelect]="true" [searchable]="false"
 													[items]="listStatus" bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
-													(change)="table.filter($event?.value.toString(), 'isActived')" placeholder="Chọn...">
+													(change)="table.filter($event?.value.toString(), 'isActived')" placeholder="Chọn..">
 												</ng-select>
 											</div>
 
@@ -248,7 +248,7 @@
 						<div class="col-12 col-lg-12 form-group">
 							<label class="mb-1">Nhóm đơn vị<span class="cl-red">(*)</span></label>
 							<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstGroupUnit"
-								placeholder="Chọn..." bindLabel="text" bindValue="value" virtualScroll="true" formControlName="group"
+								placeholder="Chọn.." bindLabel="text" bindValue="value" virtualScroll="true" formControlName="group"
 								[(ngModel)]="modelUnit.group" [closeOnSelect]="true">
 							</ng-select>
 
@@ -265,7 +265,7 @@
 							[ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
 							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
 							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control"
-								placeholder="Nhập..." id="unitId" maxlength="500">
+								placeholder="Nhập.." id="unitId" maxlength="500">
 							<div
 								*ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))"
 								class="has-error m-b-12">
@@ -280,7 +280,7 @@
 							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
 							<ng-select notFoundText="Không có dữ liệu" formControlName="parentId" [(ngModel)]="modelUnit.parentId"
 								class="
-							form-control" placeholder="Chọn...">
+							form-control" placeholder="Chọn..">
 								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">
 									{{item.name}}</ng-option>
 							</ng-select>
@@ -295,9 +295,8 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
 							<ng-select notFoundText="Không có dữ liệu" class="form-control" style="font-weight: bold;"
-								[items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value"
-								formControlName="isActived" [(ngModel)]="modelUnit.isActived" [closeOnSelect]="true"
-								[searchable]="false">
+								[items]="listStatus" placeholder="Chọn.." bindLabel="text" bindValue="value" formControlName="isActived"
+								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false">
 							</ng-select>
 							<div
 								*ngIf="(unitFormSubmitted && fUnit.isActived.invalid)||(fUnit.isActived.invalid && (fUnit.isActived.dirty || fUnit.isActived.touched))"
@@ -310,7 +309,7 @@
 						<div class="col-12 col-lg-5 form-group">
 							<label class="mb-1">Email</label>
 							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control"
-								placeholder="Nhập..." (change)="onCheckExist('Email',$event.target.value)" maxlength="256">
+								placeholder="Nhập.." (change)="onCheckExist('Email',$event.target.value)" maxlength="256">
 							<div
 								*ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))"
 								class="has-error m-b-12">
@@ -330,7 +329,7 @@
 						<div class="col-12 col-lg-3 form-group">
 							<label class="mb-1">Thứ tự hiển thị</label>
 							<input formControlName="index" [(ngModel)]="modelUnit.index" min="0" numbersOnly type="number"
-								class="form-control" placeholder="Nhập...">
+								class="form-control" placeholder="Nhập..">
 							<div *ngIf="unitFormSubmitted && modelUnit.index < 0" class="has-error m-b-12">
 								<div>
 									<span class="help-block">Số thứ tự hiển thị không được nhỏ hơn 0</span>
@@ -340,7 +339,7 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại </label>
 							<input onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUnit.phone" type="text"
-								class="form-control" placeholder="Nhập..." pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
+								class="form-control" placeholder="Nhập.." pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
 								(change)="onCheckExist('Phone',$event.target.value)">
 							<div
 								*ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))"
@@ -366,12 +365,12 @@
 						<div class="col-12 col-lg-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
 							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control"
-								placeholder="Nhập..." maxlength="500">
+								placeholder="Nhập.." maxlength="500">
 						</div>
 						<!-- <div class="col-12 col-lg-12 form-group">
 							<label class="mb-1">Lĩnh vực</label>
 							<ng-select notFoundText="Không có dữ liệu"  class="form-control"
-								[items]="lstField" placeholder="Chọn..." bindLabel="text" bindValue="value"
+								[items]="lstField" placeholder="Chọn.." bindLabel="text" bindValue="value"
 								multiple="true" virtualScroll ="true" hideSelected = "true"
 								formControlName="field" style="height: auto;"
 								[(ngModel)]="listFieldSelected" [closeOnSelect]="true" [searchable]="false">
@@ -381,7 +380,7 @@
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
 							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4"
-								placeholder="Nhập..." maxlength="500"></textarea>
+								placeholder="Nhập.." maxlength="500"></textarea>
 						</div>
 					</div>
 				</form>
@@ -461,7 +460,7 @@
 								<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.name"
 									[ngSwitch]="'name'"
 									(keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'name', 'contains')"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<button *ngIf="unitListSearch.name" class="btn bg-transparent btn-clear-input"
 									(click)="unitListSearch.name=''">
 									<i class="fa fa-times"></i>
@@ -475,7 +474,7 @@
 								<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.email"
 									[ngSwitch]="'email'"
 									(keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'email', 'contains')"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<button *ngIf="unitListSearch.email" class="btn bg-transparent btn-clear-input"
 									(click)="unitListSearch.email=''">
 									<i class="fa fa-times"></i>
@@ -489,7 +488,7 @@
 								<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.phone"
 									[ngSwitch]="'phone'"
 									(keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'phone', 'contains')"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<button *ngIf="unitListSearch.phone" class="btn bg-transparent btn-clear-input"
 									(click)="unitListSearch.phone=''">
 									<i class="fa fa-times"></i>
@@ -503,7 +502,7 @@
 								<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.address"
 									[ngSwitch]="'address'"
 									(keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'address', 'contains')"
-									placeholder="Nhập..." />
+									placeholder="Nhập.." />
 								<button *ngIf="unitListSearch.address" class="btn bg-transparent btn-clear-input"
 									(click)="unitListSearch.address=''">
 									<i class="fa fa-times"></i>

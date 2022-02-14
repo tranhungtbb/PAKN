@@ -28,7 +28,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
-									<input id="target" placeholder="Nhập..." svTrim class="form-control" formControlName="title"
+									<input id="target" placeholder="Nhập.." svTrim class="form-control" formControlName="title"
 										[(ngModel)]="model.title" maxlength="100" />
 									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 										class="has-error m-b-12">
@@ -41,7 +41,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Mô tả <span class="text-danger">(*)</span></label>
-									<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="description" rows="4"
+									<textarea placeholder="Nhập.." svTrim class="form-control" formControlName="description" rows="4"
 										[(ngModel)]="model.description" maxlength="200"></textarea>
 									<div
 										*ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
@@ -55,7 +55,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Đường dẫn IOS <span class="text-danger">(*)</span></label>
-									<input placeholder="Nhập..." svTrim class="form-control" formControlName="urlIOS"
+									<input placeholder="Nhập.." svTrim class="form-control" formControlName="urlIOS"
 										[(ngModel)]="configApplication.urlIOS" maxlength="100" />
 									<div
 										*ngIf="(submitted && f.urlIOS.invalid) || (f.urlIOS.invalid && (f.urlIOS.dirty || f.urlIOS.touched))"
@@ -72,7 +72,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Đường dẫn Android <span class="text-danger">(*)</span></label>
-									<input type="text" placeholder="Nhập..." svTrim class="form-control" formControlName="urlAndroid"
+									<input type="text" placeholder="Nhập.." svTrim class="form-control" formControlName="urlAndroid"
 										[(ngModel)]="configApplication.urlAndroid" maxlength="200" />
 									<div
 										*ngIf="(submitted && f.urlAndroid.invalid) || (f.urlAndroid.invalid && (f.urlAndroid.dirty || f.urlAndroid.touched))"

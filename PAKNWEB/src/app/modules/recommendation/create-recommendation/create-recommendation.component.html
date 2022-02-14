@@ -48,7 +48,7 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">{{titleObject}} <span class="cl-red">(*)</span></label>
-							<ng-select placeholder="Chọn..." class="form-control" [items]="lstObject" bindValue="value"
+							<ng-select placeholder="Chọn.." class="form-control" [items]="lstObject" bindValue="value"
 								bindLabel="text" (change)="changeObject()" notFoundText="Không có dữ liệu" formControlName="sendId"
 								[(ngModel)]="model.sendId">
 								<ng-template ng-option-tmp let-item="item">
@@ -90,7 +90,7 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
-							<ng-select placeholder="Chọn..." class="form-control" notFoundText="Không có dữ liệu" [items]="lstField"
+							<ng-select placeholder="Chọn.." class="form-control" notFoundText="Không có dữ liệu" [items]="lstField"
 								bindValue="value" bindLabel="text" formControlName="field" [(ngModel)]="model.field">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
@@ -129,7 +129,7 @@
 						<div class="col-12 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
 							<ng-select formControlName="unitId" class="form-control" notFoundText="Không có dữ liệu"
-								[(ngModel)]="model.unitId" [closeOnSelect]="true" [searchable]="true" placeholder="Chọn...">
+								[(ngModel)]="model.unitId" [closeOnSelect]="true" [searchable]="true" placeholder="Chọn..">
 								<div *ngFor="let item of lstUnit">
 									<ng-option [value]="item.value">
 										{{item.text}}
@@ -148,7 +148,7 @@
 							<label class="mb-1">Phương thức tiếp nhận <span class="cl-red">(*)</span></label>
 							<ng-select [items]="receptionType" formControlName="receptionType" class="form-control"
 								notFoundText="Không có dữ liệu" [(ngModel)]="model.receptionType" [closeOnSelect]="true"
-								[searchable]="true" placeholder="Chọn..." bindValue="value" bindLabel="text">
+								[searchable]="true" placeholder="Chọn.." bindValue="value" bindLabel="text">
 
 							</ng-select>
 							<div
@@ -163,14 +163,14 @@
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa điểm phản ánh kiến nghị </label>
 							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="500"
-								formControlName="address" placeholder="Nhập..." />
+								formControlName="address" placeholder="Nhập.." />
 
 						</div>
 
 						<div class="w-100"></div>
 						<div class="col form-group">
 							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Nhãn dữ liệu</label>
-							<ng-select placeholder="Chọn..." class="form-control" [items]="lstHashtag" bindValue="value"
+							<ng-select placeholder="Chọn.." class="form-control" [items]="lstHashtag" bindValue="value"
 								bindLabel="text" formControlName="hashtag" notFoundText="Không có dữ liệu"
 								(keydown.enter)="onCreateHashtag($event)" [(ngModel)]="hashtagId" [virtualScroll]="true">
 								<ng-template ng-option-tmp let-item="item">
@@ -203,7 +203,7 @@
 					<div class="form-group">
 						<label class="mb-1">Phản ánh, kiến nghị về việc <span class="cl-red">(*)</span></label>
 						<input class="form-control " type="text" autofocus [(ngModel)]="model.title" maxlength="500"
-							formControlName="title" placeholder="Nhập..." />
+							formControlName="title" placeholder="Nhập.." />
 						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 							class="has-error">
 							<div *ngIf="f.title.errors.required">
@@ -214,7 +214,7 @@
 					<div class="form-group">
 						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
 						<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="10"
-							placeholder="Nhập nội dung..."></textarea>
+							placeholder="Nhập nội dung.."></textarea>
 						<div
 							*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
 							class="has-error">

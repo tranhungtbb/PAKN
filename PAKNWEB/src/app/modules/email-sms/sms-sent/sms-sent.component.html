@@ -8,9 +8,12 @@
 				</ol>
 				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="redirectCreate()" *hasPermission="['3', 'B_II_8']">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="redirectCreate()"
+						*hasPermission="['3', 'B_II_8']">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+							viewBox="0 0 16 16">
+							<path
+								d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
 						Soạn SMS
 					</button>
@@ -22,8 +25,9 @@
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
 
-						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+							[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+							[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -35,10 +39,10 @@
 									<th style="min-width: 250px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nội dung</strong>
-											
+
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
-											placeholder="Nhập tên..." />
+										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100"
+											(keydown.enter)="dataStateChange()" placeholder="Nhập tên.." />
 										<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title =''">
 											<i class="fa fa-times"></i>
 										</button>
@@ -46,10 +50,10 @@
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị nhận</strong>
-											
+
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="unitId" [closeOnSelect]="true"
+											<ng-select placeholder="Chọn đơn vị .." [(ngModel)]="unitId" [closeOnSelect]="true"
 												(change)="dataStateChange()">
 												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
 													{{nt.name}}
@@ -61,18 +65,18 @@
 									<th style="width: 200px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đối tượng nhận</strong>
-											
+
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
-											<ng-select class="" [items]="listCategory" placeholder="Đối tượng" bindLabel="text" bindValue="value" [(ngModel)]="type"
-												(change)="dataStateChange()">
+											<ng-select class="" [items]="listCategory" placeholder="Đối tượng" bindLabel="text"
+												bindValue="value" [(ngModel)]="type" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
 									<th style="width: 180px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											
+
 										</p>
 									</th>
 									<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
@@ -82,8 +86,10 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong *hasNotPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
-										<strong *hasPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Xem chi tiết">{{item.title}}</a></strong>
+										<strong *hasNotPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis"
+												title="Xem chi tiết">{{item.title}}</a></strong>
+										<strong *hasPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis"
+												(click)=" getSMSModelById(item.id)" title="Xem chi tiết">{{item.title}}</a></strong>
 										<span class="content-sms">{{item.content}}</span>
 									</td>
 									<td>
@@ -93,12 +99,14 @@
 									</td>
 									<td>{{item.type}}</td>
 									<td>
-										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
+										<span type="button" *ngIf="item.status == 1"
+											class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
 										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *hasPermission="['3', 'B_II_6']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a *hasPermission="['3', 'B_II_6']" class="btn-icon" style="cursor: pointer;"
+												(click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>
@@ -132,7 +140,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>
@@ -147,8 +156,9 @@
 				</button>
 			</div>
 			<div class="modal-body pt-3 pb-3">
-				<p-table #table2 [value]="listHis" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true" [showCurrentPageReport]="true"
-					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
+				<p-table #table2 [value]="listHis" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true"
+					[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize"
+					[totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
 					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 					<ng-template pTemplate="header" class="bg-thead">
 						<tr>
@@ -161,29 +171,30 @@
 							<th style="width: 40%;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Nội dung</strong>
-									
+
 								</p>
-								<input class="form-control form-control-sm" [(ngModel)]="hisContent" maxlength="100" (keydown.enter)="dataStateChange2()"
-									placeholder="Nhập nội dung..." />
+								<input class="form-control form-control-sm" [(ngModel)]="hisContent" maxlength="100"
+									(keydown.enter)="dataStateChange2()" placeholder="Nhập nội dung.." />
 							</th>
 
 							<th style="width: 20%;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Người tạo</strong>
-									
+
 								</p>
-								<input class="form-control form-control-sm" [(ngModel)]="hisUserCreate" maxlength="100" (keydown.enter)="dataStateChange2()"
-									placeholder="Nhập tên..." />
+								<input class="form-control form-control-sm" [(ngModel)]="hisUserCreate" maxlength="100"
+									(keydown.enter)="dataStateChange2()" placeholder="Nhập tên.." />
 							</th>
 
 							<th style="width: 15%;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Ngày tạo</strong>
-									
+
 								</p>
 								<div class="dropdown bootstrap-select form-control form-control-sm">
-									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
-										appBsDatepickerInvalid (bsValueChange)="sendDateChange($event)"
+									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker"
+										maxlength="10" [(ngModel)]="hisCreateDate" appBsDatepickerInvalid
+										(bsValueChange)="sendDateChange($event)"
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -195,11 +206,11 @@
 							<th style="width: 180px;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Trạng thái</strong>
-									
+
 								</p>
 								<div class="dropdown bootstrap-select form-control form-control-sm">
-									<ng-select class="" [items]="listHisStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="hisStatus"
-										[closeOnSelect]="true" (change)="dataStateChange2()">
+									<ng-select class="" [items]="listHisStatus" placeholder="Trạng thái .." bindLabel="text"
+										bindValue="value" [(ngModel)]="hisStatus" [closeOnSelect]="true" (change)="dataStateChange2()">
 									</ng-select>
 								</div>
 							</th>
@@ -220,9 +231,10 @@
 							</td>
 							<td>
 								<span type="button" *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
-								<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập
+									nhập</span>
 								<span type="button" *ngIf="item.status == 2" class="badge rounded-pill bg-blue-light">Đã gửi</span>
-								
+
 							</td>
 						</tr>
 					</ng-template>

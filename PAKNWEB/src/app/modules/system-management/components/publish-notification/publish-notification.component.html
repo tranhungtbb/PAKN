@@ -7,8 +7,10 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+						viewBox="0 0 16 16">
+						<path
+							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
 					Thêm mới
 				</button>
@@ -20,8 +22,9 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]"
-						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						[rowsPerPageOptions]="[20,30,50]" currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20"
+						[totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -31,34 +34,42 @@
 									</p>
 								</th>
 								<th style="width: 220px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'title'">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'title'">
 										<strong>Tiêu đề <p-sortIcon [field]="'title'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="title" [ngSwitch]="'title'"
-										(keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')" placeholder="Nhập..." />
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="title"
+										[ngSwitch]="'title'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')"
+										placeholder="Nhập.." />
 									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'content'">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'content'">
 										<strong>Nội dung <p-sortIcon [field]="'content'"></p-sortIcon></strong>
 
 									</p>
-									<input type="text" class="form-control form-control-sm" trim [(ngModel)]="content" [ngSwitch]="'content'"
-										(keydown.enter)="table.filter($event?.target.value.trim(), 'content', 'contains')" placeholder="Nhập...">
+									<input type="text" class="form-control form-control-sm" trim [(ngModel)]="content"
+										[ngSwitch]="'content'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'content', 'contains')"
+										placeholder="Nhập..">
 									<button *ngIf="content" class="btn bg-transparent btn-clear-input" (click)="content=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="width: 170px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'status'">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'status'">
 										<strong>Trạng thái <p-sortIcon [field]="'status'"></p-sortIcon></strong>
 
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-											[ngSwitch]="'status'" (change)="table.filter($event?.value.toString(), 'status')" [closeOnSelect]="true">
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
+											bindLabel="text" bindValue="value" [ngSwitch]="'status'"
+											(change)="table.filter($event?.value.toString(), 'status')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>
@@ -69,7 +80,8 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong class="highlight"><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
+									<strong class="highlight"><a (click)="preView(item)" class="ellipsis"
+											title="Xem chi tiết">{{item.title}}</a></strong>
 								</td>
 								<td>{{item.content}}</td>
 								<td>
@@ -82,10 +94,11 @@
 								</td>
 								<td style="text-align: center;">
 									<div class="hover-active d-flex justify-content-end">
-										<a *hasPermission="['3', 'C_IV_1']" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i
+										<a *hasPermission="['3', 'C_IV_1']" (click)="preUpdate(item)"
+											class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i
 												class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'C_IV_2']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal"
-											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+										<a *hasPermission="['3', 'C_IV_2']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white"
+											data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -116,8 +129,10 @@
 						<div class="row form-group">
 							<div class="col-sm-8">
 								<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
-								<input class="form-control" id="target" formControlName="title" [(ngModel)]="model.title" maxlength="150" placeholder="Nhập..." />
-								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+								<input class="form-control" id="target" formControlName="title" [(ngModel)]="model.title"
+									maxlength="150" placeholder="Nhập.." />
+								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.title.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -125,10 +140,13 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái"
-									bindLabel="text" formControlName="status" [(ngModel)]="model.status" style="font-weight: 600;">
+								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value"
+									placeholder="Chọn trạng thái" bindLabel="text" formControlName="status" [(ngModel)]="model.status"
+									style="font-weight: 600;">
 								</ng-select>
-								<div *ngIf="(submitted && f.status.invalid) || (f.status.invalid && (f.status.dirty || f.status.touched))" class="has-error m-b-12">
+								<div
+									*ngIf="(submitted && f.status.invalid) || (f.status.invalid && (f.status.dirty || f.status.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.status.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -138,13 +156,14 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Nội dung</label>
-								<textarea class="form-control" formControlName="content" type="text" rows="10" [(ngModel)]="model.content" maxlength="2000"
-									placeholder="Nhập..."></textarea>
+								<textarea class="form-control" formControlName="content" type="text" rows="10"
+									[(ngModel)]="model.content" maxlength="2000" placeholder="Nhập.."></textarea>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer border-top-0">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
 					</div>
 				</div>
@@ -185,8 +204,10 @@
 								<label class="control-label lb600">Trạng thái</label>
 							</div>
 							<div class="col-sm-4" style="text-align: right;">
-								<span style="padding: 7px;" *ngIf="model.status == 2" class="badge rounded-pill bg-success">Công bố</span>
-								<span style="padding: 7px;" *ngIf="model.status == 1" class="badge rounded-pill badge-light">Đang soạn thảo</span>
+								<span style="padding: 7px;" *ngIf="model.status == 2" class="badge rounded-pill bg-success">Công
+									bố</span>
+								<span style="padding: 7px;" *ngIf="model.status == 1" class="badge rounded-pill badge-light">Đang soạn
+									thảo</span>
 							</div>
 						</div>
 					</div>
@@ -218,7 +239,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>

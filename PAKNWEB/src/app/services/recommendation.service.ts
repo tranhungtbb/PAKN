@@ -107,6 +107,7 @@ export class RecommendationService {
 	}
 
 	recommendationGetByIdView(request: any): Observable<any> {
+		this.onReloadMenu.emit()
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
 			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),

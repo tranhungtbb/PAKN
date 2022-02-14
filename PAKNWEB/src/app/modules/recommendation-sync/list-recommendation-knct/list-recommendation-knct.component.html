@@ -7,7 +7,8 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách Kiến nghị cử tri</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button *hasPermission="['3', 'I_II_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="requestSync()" title="Đồng bộ">
+					<button *hasPermission="['3', 'I_II_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white"
+						(click)="requestSync()" title="Đồng bộ">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
 				</div>
@@ -18,65 +19,70 @@
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
 
-						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+							[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+							[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
 									<th style="width: 50px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>STT</strong>
-											
+
 										</p>
 									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nội dung</strong>
-											
+
 										</p>
-										<input placeholder="Nhập nội dung..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
-											<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input" (click)="dataSearch.content=''">
-												<i class="fa fa-times"></i>
-											</button>
+										<input placeholder="Nhập nội dung.." class="form-control form-control-sm"
+											[(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input"
+											(click)="dataSearch.content=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 									<th style="min-width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị tiếp nhận</strong>
 										</p>
-										<input placeholder="Nhập tên..." class="form-control form-control-sm" [(ngModel)]="dataSearch.unit" maxlength="100"
-												(keydown.enter)="dataStateChange()" />
-										<button *ngIf="dataSearch.unit" class="btn bg-transparent btn-clear-input" (click)="dataSearch.unit=''">
+										<input placeholder="Nhập tên.." class="form-control form-control-sm" [(ngModel)]="dataSearch.unit"
+											maxlength="100" (keydown.enter)="dataStateChange()" />
+										<button *ngIf="dataSearch.unit" class="btn bg-transparent btn-clear-input"
+											(click)="dataSearch.unit=''">
 											<i class="fa fa-times"></i>
 										</button>
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>lĩnh vực</strong>
-											
+
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
 
-											<ng-select placeholder="Chọn lĩnh vực" class="" [items]="lstFields" bindLabel="text" bindValue="value"
-												[(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()">
+											<ng-select placeholder="Chọn lĩnh vực" class="" [items]="lstFields" bindLabel="text"
+												bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
+												(change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
 									<th style="width: 250px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nơi có CTKN</strong>
-											
+
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.place" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
-											<button *ngIf="dataSearch.place" class="btn bg-transparent btn-clear-input" (click)="dataSearch.place=''">
-												<i class="fa fa-times"></i>
-											</button>
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.place"
+											maxlength="100" (keydown.enter)="dataStateChange()" />
+										<button *ngIf="dataSearch.place" class="btn bg-transparent btn-clear-input"
+											(click)="dataSearch.place=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											
+
 										</p>
 										<!-- <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select placeholder="Trạng thái" class="" [items]="listStatus" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
@@ -89,14 +95,18 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<a *hasNotPermission="['3', 'I_II_1']" class="text-2line mb-0" title="Xem chi tiết">{{item.content}}</a>
-										<a *hasPermission="['3', 'I_II_1']" class="text-2line mb-0" [routerLink]="['/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri/',item.electorId]" title="Xem chi tiết">{{item.content}}</a>
+										<a *hasNotPermission="['3', 'I_II_1']" class="text-2line mb-0"
+											title="Xem chi tiết">{{item.content}}</a>
+										<a *hasPermission="['3', 'I_II_1']" class="text-2line mb-0"
+											[routerLink]="['/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri/',item.electorId]"
+											title="Xem chi tiết">{{item.content}}</a>
 									</td>
 									<td>{{item.unitPreside}}</td>
 									<td>{{item.fieldName}}</td>
 									<td>{{item.recommendationPlace}}</td>
 									<td>
-										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Chưa giải quyết</span>
+										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Chưa giải
+											quyết</span>
 										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
 										<span *ngIf="item.status == 3" class="badge rounded-pill badge-success">Đã giải quyết</span>
 									</td>

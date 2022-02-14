@@ -49,7 +49,7 @@
 										<strong>Câu hỏi</strong>
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="dataSearch.title"
-										[(ngModel)]="title" (keydown.enter)="dataStateChange()" placeholder="Nhập câu hỏi..." />
+										[(ngModel)]="title" (keydown.enter)="dataStateChange()" placeholder="Nhập câu hỏi.." />
 									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -59,7 +59,7 @@
 										<strong>Câu trả lời</strong>
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="dataSearch.question"
-										[(ngModel)]="question" (keydown.enter)="dataStateChange()" placeholder="Nhập câu trả lời..." />
+										[(ngModel)]="question" (keydown.enter)="dataStateChange()" placeholder="Nhập câu trả lời.." />
 									<button *ngIf="question" class="btn bg-transparent btn-clear-input" (click)="question=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -70,7 +70,7 @@
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-											[(ngModel)]="dataSearch.isActived" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+											[(ngModel)]="dataSearch.isActived" placeholder="Trạng thái .." bindLabel="text" bindValue="value"
 											[closeOnSelect]="true" [ngSwitch]="'isActived'" (change)="dataStateChange()">
 										</ng-select>
 									</div>
@@ -91,11 +91,11 @@
 								<td>
 									<strong>
 										<a *hasNotPermission="['3', 'A_XI_4']" class="ellipsis text-dark" type="button"
-											title="Xem chi tiết">{{item.question.length > 120? item.question.slice(0,115) + "..." :
+											title="Xem chi tiết">{{item.question.length > 120? item.question.slice(0,115) + ".." :
 											item.question
 											}}</a>
 										<a *hasPermission="['3', 'A_XI_4']" (click)="preView(item)" class="ellipsis text-dark" type="button"
-											title="Xem chi tiết">{{item.question.length > 120? item.question.slice(0,115) + "..." :
+											title="Xem chi tiết">{{item.question.length > 120? item.question.slice(0,115) + ".." :
 											item.question
 											}}</a>
 									</strong>
@@ -155,7 +155,7 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Câu hỏi</label>
-								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="title"
+								<input id="target" placeholder="Nhập câu hỏi.." svTrim class="form-control" formControlName="title"
 									[(ngModel)]="model.title" />
 								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 									class="has-error m-b-12">
@@ -168,7 +168,7 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Câu trả lời <span class="text-danger">(*)</span></label>
-								<textarea id="target" rows="6" placeholder="Nhập câu trả lời..." class="form-control"
+								<textarea id="target" rows="6" placeholder="Nhập câu trả lời.." class="form-control"
 									formControlName="question" [(ngModel)]="model.question" (mouseup)="mouseUpevent($event)"></textarea>
 								<div
 									*ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))"
@@ -255,13 +255,13 @@
 								<div class="search-user row d-flex">
 									<div class="col-12 col-lg-5 form-group">
 										<label class="mb-1 department">Lựa chọn</label>
-										<input id="target" placeholder="Nhập lựa chọn..." svTrim class="form-control"
+										<input id="target" placeholder="Nhập lựa chọn.." svTrim class="form-control"
 											[(ngModel)]="textAnswer" [ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-2 col-lg-2 form-group">
 										<label class="mb-1 department">Loại trả lời</label>
 										<ng-select notFoundText="Không có dữ liệu" [clearable]="false" class="form-control"
-											[items]="listTypeAnswer" placeholder="Chọn ..." bindLabel="text" bindValue="value"
+											[items]="listTypeAnswer" placeholder="Chọn .." bindLabel="text" bindValue="value"
 											[virtualScroll]="true" [(ngModel)]="typeSuggest" [ngModelOptions]="{standalone: true}"
 											[closeOnSelect]="true">
 										</ng-select>
@@ -269,23 +269,23 @@
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 1">
 										<label class="mb-1 department">Gợi ý câu trả lời cho lựa chọn</label>
 										<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="lstQuestion"
-											placeholder="Chọn ..." bindLabel="question" bindValue="id" [virtualScroll]="true"
+											placeholder="Chọn .." bindLabel="question" bindValue="id" [virtualScroll]="true"
 											[(ngModel)]="questionId" [ngModelOptions]="{standalone: true}" [closeOnSelect]="true">
 										</ng-select>
 									</div>
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 2">
 										<label class="mb-1 department">Url link</label>
-										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+										<input id="target" placeholder="Nhập .." svTrim class="form-control" [(ngModel)]="linkSuggest"
 											[ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 4">
 										<label class="mb-1 department">Url link</label>
-										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+										<input id="target" placeholder="Nhập .." svTrim class="form-control" [(ngModel)]="linkSuggest"
 											[ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-12 col-lg-4 form-group" *ngIf="typeSuggest == 3">
 										<label class="mb-1 department">Lời chào mặc định</label>
-										<input id="target" placeholder="Nhập ..." svTrim class="form-control" [(ngModel)]="linkSuggest"
+										<input id="target" placeholder="Nhập .." svTrim class="form-control" [(ngModel)]="linkSuggest"
 											[ngModelOptions]="{standalone: true}" />
 									</div>
 									<div class="col-lg-1 action padding-item center">

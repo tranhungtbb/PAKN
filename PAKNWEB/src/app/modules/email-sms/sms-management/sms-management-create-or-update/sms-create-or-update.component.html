@@ -30,7 +30,7 @@
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
 							<input class="form-control" autofocus formControlName="title" [(ngModel)]="model.title" maxlength="50"
-								placeholder="Nhập..." />
+								placeholder="Nhập.." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
@@ -42,7 +42,7 @@
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung<span class="text-danger">(*)</span></label>
 							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" maxlength="500"
-								rows="7" placeholder="Nhập..."></textarea>
+								rows="7" placeholder="Nhập.."></textarea>
 							<div
 								*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
 								class="has-error m-b-12">
@@ -55,7 +55,7 @@
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Chữ ký<span class="text-danger">(*)</span></label>
 							<input class="form-control" [(ngModel)]="model.signature" formControlName="signature"
-								placeholder="Nhập..." />
+								placeholder="Nhập.." />
 							<div
 								*ngIf="(submitted && f.signature.invalid) || (f.signature.invalid && (f.signature.dirty || f.signature.touched))"
 								class="has-error m-b-12">
@@ -98,7 +98,7 @@
 
 											<span *ngIf="!userSelected || userSelected.length === 0"
 												class="ui-multiselected-empty-token  ui-corner-all">Chọn cá nhân, doanh
-												nghiệp...</span>
+												nghiệp..</span>
 											<span *ngIf="userSelected && userSelected.length > 1"
 												class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
 												cá nhân, doanh nghiệp đã chọn</span>

@@ -13,7 +13,7 @@ declare var $: any
 	styleUrls: ['./org-repre-form.component.css'],
 })
 export class OrgRepreFormComponent implements OnInit, AfterViewInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) { }
 
 	dateNow: Date = new Date()
 	formInfo: FormGroup
@@ -51,7 +51,7 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		// this.model.OrgWardsId = null
 	}
 	resetNationField() {
-		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
+		if (this.model.Nation == 'Nhập..') this.model.Nation = ''
 	}
 	onChangeNation() {
 		this.listProvince = []
@@ -133,7 +133,7 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 	}
 
 	onResetNationValue(event: any) {
-		if (event.target.value == 'Nhập...') {
+		if (event.target.value == 'Nhập..') {
 			event.target.value = ''
 		}
 	}

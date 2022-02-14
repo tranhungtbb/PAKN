@@ -1,5 +1,6 @@
 <div class="content-body">
-	<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">
+	<div class="breadcrumb title-module px-0 bg-transparent"
+		style="text-transform: uppercase; font-size: 18px;font-weight: 600;">
 		<span class="text-uppercase">Tài liệu hướng dẫn sử dụng</span>
 	</div>
 
@@ -7,7 +8,8 @@
 	<div class="container-fluid p-0">
 		<div class="row ml-0">
 			<div class="col-auto treeView px-0" style="position: relative;">
-				<button type="button" title="Thêm tài liệu" class="btn grd-blue border-0 p-2 btn-sm text-white" style="position: absolute; top: 8px; right: 15px" (click)="preCreate()" *hasPermission="['3', 'G_I_0']">
+				<button type="button" title="Thêm tài liệu" class="btn grd-blue border-0 p-2 btn-sm text-white"
+					style="position: absolute; top: 8px; right: 15px" (click)="preCreate()" *hasPermission="['3', 'G_I_0']">
 					<i class="pi pi-plus"></i>
 				</button>
 				<p-tree id="tree-unit" [value]="treeSp" [filter]="false" emptyMessage="Không tìm mục nào">
@@ -15,10 +17,12 @@
 						<a class="cursor-hand" [ngClass]="{'text-color-blue':(objSupport.id && objSupport.id == node.id)}">
 							<strong (click)="treeViewActive(node.id)">{{node.name}}</strong>
 							<span *hasPermission="['3', 'G_I_1']" title="Cập nhập tài liệu">
-								<i class="bi bi-arrow-repeat margin-icon" *ngIf="ltsUpdateMenu.includes(node.id)" (click)="preUpdate(node.id)"></i>
+								<i class="bi bi-arrow-repeat margin-icon" *ngIf="ltsUpdateMenu.includes(node.id)"
+									(click)="preUpdate(node.id)"></i>
 							</span>
 							<span *hasPermission="['3', 'G_I_2']" title="Xóa tài liệu">
-								<i class="bi bi-x-circle margin-icon" *ngIf="ltsDeleteMenu.includes(node.id)" (click)="preDelete(node.id)"></i>
+								<i class="bi bi-x-circle margin-icon" *ngIf="ltsDeleteMenu.includes(node.id)"
+									(click)="preDelete(node.id)"></i>
 							</span>
 						</a>
 					</ng-template>
@@ -46,8 +50,9 @@
 								<div class="col-sm-12">
 									<label> Tên chuyên mục <span class="cl-red">(*)</span></label>
 									<input id="target" class="form-control" svTrim type="text" formControlName="title"
-										[(ngModel)]="model.title" placeholder="Nhập ...">
-									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+										[(ngModel)]="model.title" placeholder="Nhập ..">
+									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+										class="has-error m-b-12">
 										<div *ngIf="f.title.errors.required">
 											<span class="help-block">Trường dữ liệu này không để trống</span>
 										</div>
@@ -56,7 +61,8 @@
 								<div class="col-12 attach-ct mt-3">
 									<p class="h5 text-uppercase mb-3">
 										<span>
-											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+												class="bi bi-paperclip" viewBox="0 0 16 16">
 												<path
 													d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 												</path>
@@ -67,8 +73,8 @@
 									<div class="attach-file row">
 										<div class="col-3 mb-2">
 											<div class="alert alert-dark d-flex align-items-center h-80" style="padding: 0px;">
-												<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
-													accept="{{fileAccept}}" />
+												<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+													class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
 												<label for="file-5" (click)="file.click()">
 													<figure style="background-color: transparent;">
 														<i class="bi bi-file-earmark-arrow-up" style="font-size: 40px;"></i>
@@ -80,8 +86,8 @@
 										<ng-container *ngFor="let item of files">
 											<div class="col-3 mb-2" *ngIf="item.fileType == 1">
 												<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-																class="mdi mdi-close"></i></span>
+													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+														aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 													</button>
 													<a href="#" class="d-block text-center">
 														<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -92,8 +98,8 @@
 
 											<div class="col-3 mb-2" *ngIf="item.fileType == 3">
 												<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-																class="mdi mdi-close"></i></span>
+													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+														aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 													</button>
 													<a href="#" class="d-block text-center">
 														<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 45px" alt="">
@@ -104,8 +110,8 @@
 
 											<div class="col-3 mb-2" *ngIf="item.fileType == 4">
 												<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-													<button type="button" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i
-																class="mdi mdi-close"></i></span>
+													<button type="button" (click)="onRemoveFile(item)" class="close"
+														(click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 													</button>
 													<a href="#" class="d-block text-center box-fileinput">
 														<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
@@ -116,8 +122,8 @@
 
 											<div class="col-3 mb-2" *ngIf="item.fileType == 2">
 												<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-																class="mdi mdi-close"></i></span>
+													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+														aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 													</button>
 													<a href="#" class="d-block text-center">
 														<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -127,8 +133,8 @@
 											</div>
 											<div class="col-3 mb-2" *ngIf="item.fileType == 6">
 												<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-																class="mdi mdi-close"></i></span>
+													<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+														aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 													</button>
 													<a href="#" class="d-block text-center">
 														<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
@@ -142,7 +148,8 @@
 							</div>
 						</div>
 						<div class="modal-footer border-top-0" style="padding-top: 0px;">
-							<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+							<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+								data-dismiss="modal">Hủy</button>
 							<button type="button" class="btn btn-danger border-0 px-4 grd-blue" (click)="onSave()">Xác nhận</button>
 						</div>
 					</div>
@@ -175,24 +182,24 @@
 	</div>
 </div> -->
 
-<div class="modal fade" id="modal-confirm">
-	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
-		<div class="modal-content rounded">
-			<div class="modal-header border-bottom-0">
-				<p class="modal-title h3">Xác nhận</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body pb-3 pt-3">
-				<span>
-					Anh/Chị có chắc chắn muốn xóa tài liệu hướng dẫn sử dụng này?
-				</span>
-			</div>
-			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+	<div class="modal fade" id="modal-confirm">
+		<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+			<div class="modal-content rounded">
+				<div class="modal-header border-bottom-0">
+					<p class="modal-title h3">Xác nhận</p>
+					<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pb-3 pt-3">
+					<span>
+						Anh/Chị có chắc chắn muốn xóa tài liệu hướng dẫn sử dụng này?
+					</span>
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+					<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete()">Xác
+						nhận</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-

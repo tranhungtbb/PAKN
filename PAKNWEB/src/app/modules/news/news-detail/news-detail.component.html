@@ -22,13 +22,13 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tiêu đề </span> <span class="cl-red">(*)</span></label>
 						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm"
-							placeholder="Nhập..." readonly>
+							placeholder="Nhập.." readonly>
 
 					</div>
 					<!-- <div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
 						<textarea class="form-control text-area-height" cols="10" formControlName="summary"
-							[(ngModel)]="model.summary" placeholder="Nhập..." readonly></textarea>
+							[(ngModel)]="model.summary" placeholder="Nhập.." readonly></textarea>
 
 					</div> -->
 					<!-- <div class="col-12 col-lg-12 form-group mb-6">
@@ -89,42 +89,42 @@
 										(click)="DownloadFile(file)" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;margin-right: 17px;"
 											alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
 									<a *ngIf="file.fileType == 2" class="d-flex flex-1" download href="javascript:void(0)"
 										(click)="DownloadFile(file)" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;margin-right: 17px;"
 											alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
 									<a *ngIf="file.fileType == 3" class="d-flex flex-1" download href="javascript:void(0)"
 										(click)="DownloadFile(file)" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;margin-right: 17px;"
 											alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
 									<a *ngIf="file.fileType == 4" class="d-flex flex-1" download href="javascript:void(0)"
 										(click)="DownloadFile(file)" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;margin-right: 17px;"
 											alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
 									<a *ngIf="file.fileType == 6" class="d-flex flex-1" download href="javascript:void(0)"
 										(click)="DownloadFile(file)" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-powerpoint.svg"
 											style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
 									<a *ngIf="file.fileType == 7" class="d-flex flex-1" download href="javascript:void(0)"
 										(click)="DownloadFile(file)" style="color: #333;">
 										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
 											style="width: 30px;margin-right: 17px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." :
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
 								</p>

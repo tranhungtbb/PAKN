@@ -4,12 +4,15 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<!-- <li class="breadcrumb-item"><a>Thư mời</a></li> -->
-					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh, Kiến nghị theo đơn vị</a></li>
+					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh, Kiến nghị theo đơn vị</a>
+					</li>
 				</ol>
 				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()" *hasPermission="['3', 'D_I_2']">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()"
+						*hasPermission="['3', 'D_I_2']">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 							<path
 								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
 							<path
@@ -23,8 +26,8 @@
 		<div class="row">
 			<div class="form-serach">
 				<div class="col-md-4">
-					<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="unitName" [virtualScroll]="true" optionValue="unitId"
-						(onChange)="getList()">
+					<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="unitName"
+						[virtualScroll]="true" optionValue="unitId" (onChange)="getList()">
 						<ng-template let-userSelected pTemplate="selectedItems">
 							<ng-container *ngIf="userSelected && userSelected.length < 2">
 								<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
@@ -32,8 +35,10 @@
 								</div>
 							</ng-container>
 
-							<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token  ui-corner-all">Chọn đơn vị...</span>
-							<span *ngIf="userSelected && userSelected.length > 1" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+							<span *ngIf="!userSelected || userSelected.length === 0"
+								class="ui-multiselected-empty-token  ui-corner-all">Chọn đơn vị..</span>
+							<span *ngIf="userSelected && userSelected.length > 1"
+								class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
 								đơn vị đã được chọn</span>
 						</ng-template>
 						<ng-template let-user pTemplate="item">
@@ -45,15 +50,15 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
-								<ng-select notFoundText="Không có dữ liệu"  [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="year" [clearable]="false"
-									(change)="changeYear()">
+								<ng-select notFoundText="Không có dữ liệu" [items]="listYear" placeholder="Năm .." bindLabel="text"
+									bindValue="value" [(ngModel)]="year" [clearable]="false" (change)="changeYear()">
 								</ng-select>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
-								<ng-select notFoundText="Không có dữ liệu"  [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="timeline"
-									(change)="dataStateChange()">
+								<ng-select notFoundText="Không có dữ liệu" [items]="lstTimeline" placeholder="Chọn mốc thời gian .."
+									bindLabel="text" bindValue="value" [(ngModel)]="timeline" (change)="dataStateChange()">
 								</ng-select>
 							</div>
 						</div>
@@ -63,26 +68,25 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="input-group">
-							<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #fdate="bsDatepicker" 
-								maxlength="10" id="fromDate2" appBsDatepickerInvalid [minDate]="minDate" [maxDate]="maxDate"
-								[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)"
-								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-							<div class="input-group-addon p-2" style="height: 34px;">
-								<i class="bi bi-calendar-date" (click)="fdate.toggle()" [attr.aria-expanded]="fdate.isOpen"></i>
+								<input class="form-control form-control-sm" placeholder="Từ ngày.." bsDatepicker #fdate="bsDatepicker"
+									maxlength="10" id="fromDate2" appBsDatepickerInvalid [minDate]="minDate" [maxDate]="maxDate"
+									[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)"
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon p-2" style="height: 34px;">
+									<i class="bi bi-calendar-date" (click)="fdate.toggle()" [attr.aria-expanded]="fdate.isOpen"></i>
+								</div>
 							</div>
-						</div>
 						</div>
 						<div class="col-md-6">
 							<div class="input-group">
-							<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #tdate="bsDatepicker"
-								[minDate]="minDate" [maxDate]="maxDate"
-								maxlength="10" id="toDate2" appBsDatepickerInvalid
-								[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)"
-								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-							<div class="input-group-addon p-2" style="height: 34px;">
-								<i class="bi bi-calendar-date" (click)="tdate.toggle()" [attr.aria-expanded]="tdate.isOpen"></i>
+								<input class="form-control form-control-sm" placeholder="Đến ngày.." bsDatepicker #tdate="bsDatepicker"
+									[minDate]="minDate" [maxDate]="maxDate" maxlength="10" id="toDate2" appBsDatepickerInvalid
+									[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)"
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon p-2" style="height: 34px;">
+									<i class="bi bi-calendar-date" (click)="tdate.toggle()" [attr.aria-expanded]="tdate.isOpen"></i>
+								</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
@@ -94,14 +98,14 @@
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
 						<p-table #table [value]="listData" [paginator]="false" [showCurrentPageReport]="true"
-							 [rows]="listData.length" [totalRecords]="table.totalRecords" [responsive]="true" autoLayout="true"
+							[rows]="listData.length" [totalRecords]="table.totalRecords" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
 									<th style="min-width: 140px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị</strong>
-											
+
 										</p>
 									</th>
 
@@ -163,7 +167,7 @@
 									<th style="max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đã giải quyết</strong>
-											
+
 										</p>
 									</th>
 
@@ -173,31 +177,31 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong class="highlight"	(click)="viewDetail(item.unitId)">{{item.unitName}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId)">{{item.unitName}}</strong>
 									</td>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId)">{{item.total}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId)">{{item.total}}</strong>
 									</td>
 									<td>
 										<strong class="highlight" (click)="viewDetail(item.unitId, 1)">{{item.created}}</strong>
 									</td>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId,2)">{{item.receiveWait}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId,2)">{{item.receiveWait}}</strong>
 									</td>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId, 4)">{{item.receiveApproved}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId, 4)">{{item.receiveApproved}}</strong>
 									</td>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId,3)">{{item.receiveDeny}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId,3)">{{item.receiveDeny}}</strong>
 									</td>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId,5)">{{item.processWait}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId,5)">{{item.processWait}}</strong>
 									</td>
 									<td>
 										<strong class="highlight" (click)="viewDetail(item.unitId, 6)">{{item.processDeny}}</strong>
 									</td>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId,7)">{{item.processing}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId,7)">{{item.processing}}</strong>
 									</td>
 									<td>
 										<strong class="highlight" (click)="viewDetail(item.unitId, 8)">{{item.approveWait}}</strong>
@@ -205,7 +209,7 @@
 									<td>
 										<strong class="highlight" (click)="viewDetail(item.unitId, 9)">{{item.approveDeny}}</strong>
 									<td>
-										<strong  class="highlight" (click)="viewDetail(item.unitId,10)">{{item.finised}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.unitId,10)">{{item.finised}}</strong>
 									</td>
 								</tr>
 							</ng-template>

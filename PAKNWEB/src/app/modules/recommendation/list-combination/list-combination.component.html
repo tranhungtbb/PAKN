@@ -51,7 +51,7 @@
 											<strong>Mã số</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.code"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.code=''">
@@ -63,7 +63,7 @@
 											<strong>Tên CN/DN</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.name"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.name=''">
@@ -75,7 +75,7 @@
 											<strong>Tiêu đề</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.content"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.content=''">
@@ -88,7 +88,7 @@
 
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" notFoundText="Không có dữ liệu"
+											<ng-select placeholder="Chọn.." class="" [items]="lstUnit" notFoundText="Không có dữ liệu"
 												bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
 												(change)="dataStateChange()">
 											</ng-select>
@@ -102,7 +102,7 @@
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value"
 												notFoundText="Không có dữ liệu" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
-												(change)="dataStateChange()" placeholder="Chọn...">
+												(change)="dataStateChange()" placeholder="Chọn..">
 											</ng-select>
 										</div>
 									</th>
@@ -112,7 +112,7 @@
 
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái .." bindLabel="text"
 												bindValue="value" notFoundText="Không có dữ liệu" [(ngModel)]="status" [closeOnSelect]="true"
 												(change)="dataStateChange()">
 											</ng-select>
@@ -213,7 +213,7 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối tham mưu <strong>Phản ánh, kiến nghị</strong> này?</p>
-				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do..."
+				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do.."
 					[(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 
 			</div>

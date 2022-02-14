@@ -41,7 +41,7 @@
 										<strong>Từ ngữ <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" placeholder="Nhập tên..." trim
+									<input class="form-control form-control-sm" maxlength="100" placeholder="Nhập tên.." trim
 										[(ngModel)]="name" [ngSwitch]="'name'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')" />
 									<button *ngIf="name" class="btn bg-transparent btn-clear-input" (click)="name=''">
@@ -56,7 +56,7 @@
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listGroup"
-											placeholder="Nhóm thư viện từ ..." bindLabel="text" bindValue="value" [ngSwitch]="'groupName'"
+											placeholder="Nhóm thư viện từ .." bindLabel="text" bindValue="value" [ngSwitch]="'groupName'"
 											(change)="table.filter($event?.text.toString(), 'groupName')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
@@ -68,7 +68,7 @@
 										<strong>Thứ tự hiển thị<p-sortIcon [field]="'index'"></p-sortIcon></strong>
 
 									</p>
-									<input class="form-control form-control-sm" numbersOnly maxlength="10" placeholder="Nhập thứ tự..."
+									<input class="form-control form-control-sm" numbersOnly maxlength="10" placeholder="Nhập thứ tự.."
 										trim [(ngModel)]="index" [ngSwitch]="'index'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'index', 'contains')" />
 									<button *ngIf="index" class="btn bg-transparent btn-clear-input" (click)="index=''">
@@ -85,7 +85,7 @@
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="description"
 										[ngSwitch]="'description'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
-										placeholder="Nhập mô tả..." />
+										placeholder="Nhập mô tả.." />
 									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -97,8 +97,8 @@
 
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
+											bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
 											(change)="table.filter($event?.value.toString(), 'isActived')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
@@ -174,7 +174,7 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Từ ngữ <span class="text-danger">(*)</span></label>
-								<input placeholder="Nhập..." id="target" svTrim class="form-control" formControlName="name"
+								<input placeholder="Nhập.." id="target" svTrim class="form-control" formControlName="name"
 									[(ngModel)]="model.name" maxlength="100" />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
@@ -189,7 +189,7 @@
 							<div class="col-sm-6">
 								<label class="control-label">Nhóm từ ngữ <span class="text-danger">(*)</span></label>
 								<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="listGroup"
-									placeholder="Chọn nhóm ..." bindLabel="text" bindValue="value" [(ngModel)]="model.groupId"
+									placeholder="Chọn nhóm .." bindLabel="text" bindValue="value" [(ngModel)]="model.groupId"
 									formControlName="groupId" [closeOnSelect]="true">
 								</ng-select>
 								<div
@@ -202,7 +202,7 @@
 							</div>
 							<div class="col-sm-3">
 								<label class="control-label">Thứ tự hiển thị</label>
-								<input placeholder="Nhập..." numbersOnly class="form-control" formControlName="index"
+								<input placeholder="Nhập.." numbersOnly class="form-control" formControlName="index"
 									[(ngModel)]="model.index" maxlength="10" />
 
 							</div>
@@ -224,7 +224,7 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả</label>
-								<textarea placeholder="Nhập..." class="form-control" formControlName="description" type="text" rows="4"
+								<textarea placeholder="Nhập.." class="form-control" formControlName="description" type="text" rows="4"
 									[(ngModel)]="model.description" maxlength="255"></textarea>
 							</div>
 						</div>

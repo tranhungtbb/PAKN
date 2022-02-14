@@ -40,7 +40,7 @@ export class OrgRepreFormComponent implements OnInit {
 	//event
 	//event
 	onResetNationValue(event: any) {
-		if (event.target.value == 'Nhập...') {
+		if (event.target.value == 'Nhập..') {
 			event.target.value = ''
 		}
 	}

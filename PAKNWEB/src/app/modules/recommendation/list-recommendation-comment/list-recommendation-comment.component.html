@@ -30,7 +30,7 @@
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Người tạo</strong>
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.fullName"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.fullName"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.fullName" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.fullName=''">
@@ -42,7 +42,7 @@
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nội dung bình luận</strong>
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.contents"
+										<input placeholder="Nhập.." class="form-control form-control-sm" [(ngModel)]="dataSearch.contents"
 											maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.contents" class="btn bg-transparent btn-clear-input"
 											(click)="dataSearch.contents=''">
@@ -55,7 +55,7 @@
 											<strong>Tiêu đề</strong>
 
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm"
+										<input placeholder="Nhập.." class="form-control form-control-sm"
 											[(ngModel)]="dataSearch.titleRecommendation" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.titleRecommendation" class="btn bg-transparent btn-clear-input"
@@ -84,7 +84,7 @@
 
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái .." bindLabel="text"
 												bindValue="value" notFoundText="Không có dữ liệu" [(ngModel)]="isPublish" [closeOnSelect]="true"
 												(change)="dataStateChange()">
 											</ng-select>

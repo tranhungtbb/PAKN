@@ -165,6 +165,7 @@ namespace PAKNAPI.Models.Recommendation
 					data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
 					foreach (var item in data.filesConclusion)
 					{
+						item.FilePathUrl = item.FilePath;
 						item.FilePath = decrypt.EncryptData(item.FilePath);
 					}
 				}

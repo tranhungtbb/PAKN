@@ -66,7 +66,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 		this.formData.controls['wardsId'].setValue(null)
 	}
 	resetNationField() {
-		if (this.model.nation == 'Nhập...') this.model.nation = ''
+		if (this.model.nation == 'Nhập..') this.model.nation = ''
 	}
 	onChangeNation(clearable = false) {
 		if (clearable) {

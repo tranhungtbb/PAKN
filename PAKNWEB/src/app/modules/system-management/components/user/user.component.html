@@ -7,9 +7,12 @@
 			</ol>
 			<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 			<div class="btn-group group-button-table" role="group">
-				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)" *hasPermission="['3', 'A_IX_6']">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white"
+					(click)="modalUserCreateOrUpdate(null)" *hasPermission="['3', 'A_IX_6']">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+						viewBox="0 0 16 16">
+						<path
+							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
 					Thêm mới
 				</button>
@@ -22,7 +25,8 @@
 				<div class="table-responsive">
 
 					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords"
+						[rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -33,86 +37,77 @@
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'userName'">
+										[pSortableColumn]="'userName'">
 										<strong>Tên tài khoản <p-sortIcon [field]="'userName'"></p-sortIcon></strong>
-										
+
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="userName"
-										trim [ngSwitch]="'userName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
-										maxlength="100" placeholder="Nhập ..." />
+									<input class="form-control form-control-sm" [(ngModel)]="userName" trim [ngSwitch]="'userName'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')" maxlength="100"
+										placeholder="Nhập .." />
 									<button *ngIf="userName" class="btn bg-transparent btn-clear-input" (click)="userName=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="min-width: 180px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'fullName'"
-									>
+										[pSortableColumn]="'fullName'">
 										<strong>Họ và tên <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName"
-										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
-										placeholder="Nhập ...">
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" trim
+										[ngSwitch]="'fullName'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
+										placeholder="Nhập ..">
 									<button *ngIf="fullName" class="btn bg-transparent btn-clear-input" (click)="fullName=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="width: 120px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'positionName'">
+										[pSortableColumn]="'positionName'">
 										<strong>Chức vụ <p-sortIcon [field]="'positionName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu"  placeholder="Chọn..." [closeOnSelect]="true"
-											bindLabel="text" 
-											bindValue="value" 
-											[items]= 'positionsList'
-											[ngSwitch]="'positionName'"
-											(change)="table.filter($event?.text.toString(), 'positionName')"
-											style="width: 120px;"
-										>
+										<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn.." [closeOnSelect]="true"
+											bindLabel="text" bindValue="value" [items]='positionsList' [ngSwitch]="'positionName'"
+											(change)="table.filter($event?.text.toString(), 'positionName')" style="width: 120px;">
 										</ng-select>
 									</div>
 								</th>
 								<th style="width: 130px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'phone'">
+										[pSortableColumn]="'phone'">
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
-										
+
 									</p>
 									<input type="text" class="form-control form-control-sm" style="width: 130px;" [(ngModel)]="phone"
-										numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
-										placeholder="Nhập...">
+										numbersOnly [ngSwitch]="'phone'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+										placeholder="Nhập..">
 									<button *ngIf="phone" class="btn bg-transparent btn-clear-input" (click)="phone=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="max-width: 170px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-										[pSortableColumn]="'unitName'"
-									>
+										[pSortableColumn]="'unitName'">
 										<strong>Đơn vị <p-sortIcon [field]="'unitName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu"  placeholder="Chọn..." [closeOnSelect]="true" [items]= 'unitsList'
-											bindLabel="text" 
-											bindValue="value"
-											[ngSwitch]="'unitName'"
-											(change)="table.filter($event?.text.toString(), 'unitName','contains')"
-											>
+										<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn.." [closeOnSelect]="true"
+											[items]='unitsList' bindLabel="text" bindValue="value" [ngSwitch]="'unitName'"
+											(change)="table.filter($event?.text.toString(), 'unitName','contains')">
 										</ng-select>
 									</div>
 								</th>
 								<th style="width: 110px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'isActived'">
+										[pSortableColumn]="'isActived'">
 										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" 
-											[ngSwitch]="'isActived'"
-											(change)="table.filter($event?.value.toString(), 'isActived')"
-											style="width: 120px !important;"
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
+											bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')" style="width: 120px !important;"
 											[closeOnSelect]="true">
 										</ng-select>
 									</div>
@@ -128,7 +123,8 @@
 								<td>
 									<strong class="highlight cursor">
 										<a *hasNotPermission="['3', 'A_IX_0']" class="ellipsis" title="Xem chi tiết">{{item.userName}}</a>
-										<a *hasPermission="['3', 'A_IX_0']" (click)="modalUserInfo(item.id)" class="ellipsis" title="Xem chi tiết">{{item.userName}}</a>
+										<a *hasPermission="['3', 'A_IX_0']" (click)="modalUserInfo(item.id)" class="ellipsis"
+											title="Xem chi tiết">{{item.userName}}</a>
 									</strong>
 								</td>
 								<td>{{item.fullName}}</td>
@@ -141,21 +137,29 @@
 								</td>
 								<td>
 									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
-										<span *hasPermission="['3', 'A_IX_4']" type="button" (click)="changeStatus(item.id)" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill bg-success">Hiệu
+											lực</span>
+										<span *hasPermission="['3', 'A_IX_4']" type="button" (click)="changeStatus(item.id)"
+											class="badge rounded-pill bg-success">Hiệu lực</span>
 									</p>
 									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										<span *hasPermission="['3', 'A_IX_4']" type="button" (click)="changeStatus(item.id)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill badge-light">Hết
+											hiệu lực</span>
+										<span *hasPermission="['3', 'A_IX_4']" type="button" (click)="changeStatus(item.id)"
+											class="badge rounded-pill badge-light">Hết hiệu lực</span>
 									</p>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_IX_1']" title="Cập nhập" (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-1"><i class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_IX_2']" title="Thay đổi mật khẩu" (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-1 cursor"><i class="bi bi-key"></i></a>
-										<a *hasPermission="['3', 'A_IX_7']" title="Lịch sử người dùng" class="btn-icon mr-1 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
+										<a *hasPermission="['3', 'A_IX_1']" title="Cập nhập" (click)="modalUserCreateOrUpdate(item.id)"
+											class="btn-icon grd-brown text-brown mr-1"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_IX_2']" title="Thay đổi mật khẩu" (click)="preChangePassword(item.id)"
+											class="btn-icon grd-brown text-brown mr-1 cursor"><i class="bi bi-key"></i></a>
+										<a *hasPermission="['3', 'A_IX_7']" title="Lịch sử người dùng" class="btn-icon mr-1 cursor"
+											(click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
 												class="bi bi-clock-history"></i></a>
-										<a *hasPermission="['3', 'A_IX_3']" title="Xóa người dùng" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a *hasPermission="['3', 'A_IX_3']" title="Xóa người dùng" (click)="preDelete(item.id)"
+											class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -189,7 +193,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>
@@ -211,7 +216,8 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onChangeUserStatus()">Xác nhận</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onChangeUserStatus()">Xác
+					nhận</button>
 			</div>
 		</div>
 	</div>
@@ -226,110 +232,107 @@
 <div class="modal fade" id="modalHis">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 80%" role="document">
 		<div class="modal-content rounded">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Lịch sử: <span class="text-primary">{{emailUser}}</span></p>
-					</div>
-					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
-						<div class="form-horizontal">
-							<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
-								<div class="col-12 col-sm-2 col-lg-2 form-group">
-									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
-									<div class="input-group">
-										<input class="form-control border-input" placeholder="Nhập..." 
-											[ngModelOptions]="{standalone: true}" [maxDate]="dataSearch2.toDate"
-											bsDatepicker #fd="bsDatepicker" maxlength="10"
-											[(ngModel)]="dataSearch2.fromDate" (bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
-											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" 
-										/>
-										<div class="input-group-addon p-2">
-											<i class="bi bi-calendar-date" (click)="fd.toggle()" [attr.aria-expanded]="fd.isOpen"></i>
-										</div>
-									</div>
-								</div>
-								<div class="col-12 col-sm-2 col-lg-2 form-group">
-									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
-									<div class="input-group">
-										<input class="form-control border-input"
-											[ngModelOptions]="{standalone: true}" [minDate]="dataSearch2.fromDate"
-											placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10"
-											[(ngModel)]="dataSearch2.toDate" (bsValueChange)="onChangeToDate($event)"  appBsDatepickerInvalid
-											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
-										/>
-										<div class="input-group-addon p-2">
-											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-										</div>
-									</div>
-								</div>
-								<div class="col-12 col-sm-3 col-lg-3 form-group">
-									<label class="mb-1 text-uppercase"><strong>Nội dung</strong></label>
-									<input class="form-control" [(ngModel)]="dataSearch2.content" maxlength="100"
-										[ngModelOptions]="{standalone: true}"
-										(keydown.enter)="dataHisStateChange()" placeholder="Nhập..." />
-								</div>
-								<div class="col-12 col-sm-2 col-lg-2 form-group">
-									<label class="mb-1 text-uppercase"><strong>Trạng thái</strong></label>
-									<ng-select notFoundText="Không có dữ liệu"  class="form-control" [items]="listHisStatus" placeholder="Trạng thái..."
-										bindLabel="text" bindValue="value"
-										[ngModelOptions]="{standalone: true}"
-										[(ngModel)]="dataSearch2.status"
-										(change)="dataHisStateChange()">
-									</ng-select>
-								</div>
-								<div class="col-12 col-sm-3 form-group" style="padding-right: 0px;">
-									<label></label>
-									<div style="display:flex;">
-										<a (click)="dataHisStateChange()" class="btn grd-blue btn-sm rounded border-0 mr-3 text-white">
-											Tìm kiếm
-										</a>
-										<a (click)="onExport()" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-											<i class="bi bi-file-earmark-excel mr-1"></i>
-											Xuất excel
-										</a>
+			<div class="panel panel-default no-margin">
+				<div class="modal-header" style="border: none;">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Lịch sử: <span class="text-primary">{{emailUser}}</span></p>
+				</div>
+				<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+					<div class="form-horizontal">
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
+							<div class="col-12 col-sm-2 col-lg-2 form-group">
+								<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
+								<div class="input-group">
+									<input class="form-control border-input" placeholder="Nhập.." [ngModelOptions]="{standalone: true}"
+										[maxDate]="dataSearch2.toDate" bsDatepicker #fd="bsDatepicker" maxlength="10"
+										[(ngModel)]="dataSearch2.fromDate" (bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon p-2">
+										<i class="bi bi-calendar-date" (click)="fd.toggle()" [attr.aria-expanded]="fd.isOpen"></i>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="card mb-0 shadow-none">
-									<div class="table-responsive">
-
-										<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onHisPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true"
-											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
-
-											<ng-template pTemplate="body" let-item>
-												<tr>
-													<td style="width: 20%;">{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date: 'dd/MM/yyyy'}} </td>
-													<td>{{item.description}}</td>
-													<td style="width: 20%;">
-														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
-														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white" (click)="showMessageError(item.messageError)">Thất bại</span>
-													</td>
-												</tr>
-											</ng-template>
-											<ng-template pTemplate="emptymessage">
-												<tr>
-													<td class="text-center" colspan="5">Không có dữ liệu</td>
-												</tr>
-											</ng-template>
-										</p-table>
-										<div style="display: flex; float: right;">
-											<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" data-dismiss="modal">
-												Đóng
-											</button>
-										</div>
-
+							<div class="col-12 col-sm-2 col-lg-2 form-group">
+								<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
+								<div class="input-group">
+									<input class="form-control border-input" [ngModelOptions]="{standalone: true}"
+										[minDate]="dataSearch2.fromDate" placeholder="Nhập.." bsDatepicker #n="bsDatepicker" maxlength="10"
+										[(ngModel)]="dataSearch2.toDate" (bsValueChange)="onChangeToDate($event)" appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon p-2">
+										<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-3 col-lg-3 form-group">
+								<label class="mb-1 text-uppercase"><strong>Nội dung</strong></label>
+								<input class="form-control" [(ngModel)]="dataSearch2.content" maxlength="100"
+									[ngModelOptions]="{standalone: true}" (keydown.enter)="dataHisStateChange()" placeholder="Nhập.." />
+							</div>
+							<div class="col-12 col-sm-2 col-lg-2 form-group">
+								<label class="mb-1 text-uppercase"><strong>Trạng thái</strong></label>
+								<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="listHisStatus"
+									placeholder="Trạng thái.." bindLabel="text" bindValue="value" [ngModelOptions]="{standalone: true}"
+									[(ngModel)]="dataSearch2.status" (change)="dataHisStateChange()">
+								</ng-select>
+							</div>
+							<div class="col-12 col-sm-3 form-group" style="padding-right: 0px;">
+								<label></label>
+								<div style="display:flex;">
+									<a (click)="dataHisStateChange()" class="btn grd-blue btn-sm rounded border-0 mr-3 text-white">
+										Tìm kiếm
+									</a>
+									<a (click)="onExport()" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+										<i class="bi bi-file-earmark-excel mr-1"></i>
+										Xuất excel
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card mb-0 shadow-none">
+								<div class="table-responsive">
+
+									<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onHisPageChange($event)"
+										[paginator]="true" [showCurrentPageReport]="true"
+										currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize"
+										[totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
+										tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+
+										<ng-template pTemplate="body" let-item>
+											<tr>
+												<td style="width: 20%;">{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date:
+													'dd/MM/yyyy'}} </td>
+												<td>{{item.description}}</td>
+												<td style="width: 20%;">
+													<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
+													<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white"
+														(click)="showMessageError(item.messageError)">Thất bại</span>
+												</td>
+											</tr>
+										</ng-template>
+										<ng-template pTemplate="emptymessage">
+											<tr>
+												<td class="text-center" colspan="5">Không có dữ liệu</td>
+											</tr>
+										</ng-template>
+									</p-table>
+									<div style="display: flex; float: right;">
+										<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" data-dismiss="modal">
+											Đóng
+										</button>
+									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 			<!-- </form> -->
 		</div>
 	</div>
@@ -371,11 +374,13 @@
 								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
 								<input class="form-control" style="position: relative;"
 									pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$"
-									[type]="isShowPassword ? 'text' : 'password'" 
-									formControlName="newPassword" 
-									[(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
-								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
-								<div *ngIf="(submitted && f.newPassword.invalid) || (f.newPassword.invalid && (f.newPassword.dirty || f.newPassword.touched))"
+									[type]="isShowPassword ? 'text' : 'password'" formControlName="newPassword" [(ngModel)]="newPassword"
+									maxlength="50" placeholder="Nhập.." />
+								<i class="custom-show-pass"
+									[ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}"
+									(click)="showPassword()"></i>
+								<div
+									*ngIf="(submitted && f.newPassword.invalid) || (f.newPassword.invalid && (f.newPassword.dirty || f.newPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.newPassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -387,11 +392,14 @@
 							</div>
 							<div class="col-sm-12 pb-2">
 								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
-								<input class="form-control" formControlName="rePassword"
-								[type]="isShowRePassword ? 'text' : 'password'"
-								[(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
-								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowRePassword, 'bi bi-eye-slash': !isShowRePassword}" (click)="showRePassword()"></i>
-								<div *ngIf="(submitted && f.rePassword.invalid) || (f.rePassword.invalid && (f.rePassword.dirty || f.rePassword.touched))" class="has-error m-b-12">
+								<input class="form-control" formControlName="rePassword" [type]="isShowRePassword ? 'text' : 'password'"
+									[(ngModel)]="rePassword" maxlength="50" placeholder="Nhập.." />
+								<i class="custom-show-pass"
+									[ngClass]="{ 'bi bi-eye': isShowRePassword, 'bi bi-eye-slash': !isShowRePassword}"
+									(click)="showRePassword()"></i>
+								<div
+									*ngIf="(submitted && f.rePassword.invalid) || (f.rePassword.invalid && (f.rePassword.dirty || f.rePassword.touched))"
+									class="has-error m-b-12">
 									<div *ngIf="f.rePassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -405,7 +413,8 @@
 						</div>
 					</div>
 					<div class="modal-footer center" style="border: none;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onChangePassword()">Xác
 							nhận</button>
 					</div>

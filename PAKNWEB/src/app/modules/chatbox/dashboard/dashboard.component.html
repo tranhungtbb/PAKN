@@ -6,50 +6,56 @@
 					<!-- <li class="breadcrumb-item"><a>Vai trò</a></li> -->
 					<div style="display: flex;">
 						<div style="display: inline-block;" class="mt-lg-n4">
-							 <a class="active font-weight-bold mb-0 nav-link pb-0 pt-3" aria-current="page" >TIN NHẮN</a>
-							 <div class="form-group">
-									<ng-select class="form-control" [clearable]="false" style="width: 10rem;"
-										[items]="lstTypeOrder" placeholder="Sắp xếp..." bindLabel="text" bindValue="value" 
-										[(ngModel)]="orderBy" (change)="getChatList('chat')">
-									</ng-select>
-							 </div>
+							<a class="active font-weight-bold mb-0 nav-link pb-0 pt-3" aria-current="page">TIN NHẮN</a>
+							<div class="form-group">
+								<ng-select class="form-control" [clearable]="false" style="width: 10rem;" [items]="lstTypeOrder"
+									placeholder="Sắp xếp.." bindLabel="text" bindValue="value" [(ngModel)]="orderBy"
+									(change)="getChatList('chat')">
+								</ng-select>
+							</div>
 						</div>
 						<div style="display: inline-block; width: 100%" class="ml-2 mt-lg-n2">
-							<button (click)="createNewGroup()" style="padding: 0.625rem 1rem;"
-							[class.active]="createGroupClicked" target="_blank" class="btn mt-3 grd-blue btn-sm rounded text-white" type="button"><svg _ngcontent-vyf-c22="" class="bi bi-plus" fill="currentColor" height="20" viewBox="0 0 16 16" width="20" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-vyf-c22="" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-							</svg> Thêm mới </button>
+							<button (click)="createNewGroup()" style="padding: 0.625rem 1rem;" [class.active]="createGroupClicked"
+								target="_blank" class="btn mt-3 grd-blue btn-sm rounded text-white" type="button"><svg
+									_ngcontent-vyf-c22="" class="bi bi-plus" fill="currentColor" height="20" viewBox="0 0 16 16"
+									width="20" xmlns="http://www.w3.org/2000/svg">
+									<path _ngcontent-vyf-c22=""
+										d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
+									</path>
+								</svg> Thêm mới </button>
 						</div>
 					</div>
 				</div>
 				<div class="sidebar__header">
 					<div class="dashboardCB__status_wrap">
-							<div class="input-group">
-								<span class=" bg-white input-group-text" id="basic-addon1">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-										<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-									</svg>
-								</span>
-								<input type="text" [(ngModel)]="searchDialog" (keydown.enter)="getChatList('chat')" autocomplete="off"
-									class="border-0 form-control rounded-right" 
-									placeholder="Tìm kiếm..." aria-label="Input group example" 
-									aria-describedby="basic-addon1">
-							</div>
+						<div class="input-group">
+							<span class=" bg-white input-group-text" id="basic-addon1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+									viewBox="0 0 16 16">
+									<path
+										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+									</path>
+								</svg>
+							</span>
+							<input type="text" [(ngModel)]="searchDialog" (keydown.enter)="getChatList('chat')" autocomplete="off"
+								class="border-0 form-control rounded-right" placeholder="Tìm kiếm.." aria-label="Input group example"
+								aria-describedby="basic-addon1">
+						</div>
 					</div>
 				</div>
 				<div class="sidebar__content">
 					<ul class="border-0 sidebar__dilog_list j-sidebar__dilog_list">
 						<li (click)="openChat(chat)" *ngFor="let chat of chats" class="dialog__item j-dialog__item mb-3">
 							<div class="rounded-xl border ex1" [ngClass]="{'selected': selectedChat === chat._id}">
-								<a class="dialog__item_link" style="color: #4a4a4a;" [ngClass]="{'selected': selectedChat === chat._id}">
+								<a class="dialog__item_link" style="color: #4a4a4a;"
+									[ngClass]="{'selected': selectedChat === chat._id}">
 									<div class="avatar-circle mr-2 avatar-custom">{{getShortName(chat.name)}} </div>
-									
+
 									<span class="dialog__info">
 										<span class="dialog__name">
 											<span>{{chat.name}}</span>
-											<span *ngIf="chat.last_message_date_sent" 
-												class="dialog__last_message_date j-dialog__last_message_date"
-												style="float: right;"
-												>
+											<span *ngIf="chat.last_message_date_sent"
+												class="dialog__last_message_date j-dialog__last_message_date" style="float: right;">
 												{{getTime(chat.last_message_date_sent)}}
 											</span>
 										</span>
@@ -57,7 +63,7 @@
 											{{chat.occupants_ids.length}} người tham gia
 										</span>
 									</span>
-									
+
 								</a>
 								<div style="display: flex;">
 									<p class="last__message">{{chat.last_message}}</p>

@@ -41,7 +41,7 @@
 									</p>
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="name"
 										[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
-										placeholder="Nhập..." />
+										placeholder="Nhập.." />
 									<button *ngIf="name" class="btn bg-transparent btn-clear-input" (click)="name=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -52,7 +52,7 @@
 										<strong>Nhóm sở ngành <p-sortIcon [field]="'groupName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" [items]="listDepartmentGroup" placeholder="Chọn nhóm ..."
+										<ng-select notFoundText="Không có dữ liệu" [items]="listDepartmentGroup" placeholder="Chọn nhóm .."
 											bindLabel="name" bindValue="id" [ngSwitch]="'groupName'"
 											(change)="table.filter($event?.name.toString(), 'groupName', 'contains')">
 										</ng-select>
@@ -66,7 +66,7 @@
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="phone"
 										[ngSwitch]="'phone'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
-										placeholder="Nhập..." />
+										placeholder="Nhập.." />
 									<button *ngIf="phone" class="btn bg-transparent btn-clear-input" (click)="phone=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -79,7 +79,7 @@
 									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="email"
 										[ngSwitch]="'email'"
 										(keydown.enter)="table.filter($event?.target.value.trim(), 'email', 'contains')"
-										placeholder="Nhập..." />
+										placeholder="Nhập.." />
 									<button *ngIf="email" class="btn bg-transparent btn-clear-input" (click)="email=''">
 										<i class="fa fa-times"></i>
 									</button>
@@ -90,8 +90,8 @@
 										<strong>Trạng thái<p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
+											bindLabel="text" bindValue="value" [ngSwitch]="'isActived'"
 											(change)="table.filter($event?.value.toString(), 'isActived')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
@@ -174,8 +174,8 @@
 						<div class="row form-group">
 							<div class="col-sm-4">
 								<label class="control-label">Tên sở ngành <span class="text-danger">(*)</span></label>
-								<input id="target" autofocus svTrim placeholder="Nhập tên..." class="form-control"
-									formControlName="name" [(ngModel)]="model.name" maxlength="100" />
+								<input id="target" autofocus svTrim placeholder="Nhập tên.." class="form-control" formControlName="name"
+									[(ngModel)]="model.name" maxlength="100" />
 								<div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
@@ -186,7 +186,7 @@
 							<div class="col-sm-4">
 								<label class="control-label">Nhóm sở ngành <span class="text-danger">(*)</span></label>
 								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listDepartmentGroup"
-									bindValue="id" placeholder="Chọn..." bindLabel="name" formControlName="departmentGroupId"
+									bindValue="id" placeholder="Chọn.." bindLabel="name" formControlName="departmentGroupId"
 									[(ngModel)]="model.departmentGroupId">
 								</ng-select>
 								<div
@@ -216,7 +216,7 @@
 						<div class="row form-group">
 							<div class="col-sm-4">
 								<label class="control-label">Điện thoại <span class="text-danger">(*)</span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="phone"
+								<input svTrim placeholder="Nhập.." class="form-control" formControlName="phone"
 									[(ngModel)]="model.phone" maxlength="10" />
 								<div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))"
 									class="has-error m-b-12">
@@ -230,7 +230,7 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Email <span class="text-danger">(*)</span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="email"
+								<input svTrim placeholder="Nhập.." class="form-control" formControlName="email"
 									[(ngModel)]="model.email" maxlength="100" />
 								<div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))"
 									class="has-error m-b-12">
@@ -244,7 +244,7 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Fax <span class="text-danger"></span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="fax" [(ngModel)]="model.fax"
+								<input svTrim placeholder="Nhập.." class="form-control" formControlName="fax" [(ngModel)]="model.fax"
 									maxlength="100" />
 								<!-- <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
                   class="has-error m-b-12">
@@ -257,7 +257,7 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Địa chỉ</label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="address"
+								<input svTrim placeholder="Nhập.." class="form-control" formControlName="address"
 									[(ngModel)]="model.address" maxlength="200" />
 								<!-- <div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
                   class="has-error m-b-12">
@@ -270,7 +270,7 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả</label>
-								<textarea placeholder="Nhập..." class="form-control" formControlName="description" type="text" rows="4"
+								<textarea placeholder="Nhập.." class="form-control" formControlName="description" type="text" rows="4"
 									[(ngModel)]="model.description" maxlength="255"></textarea>
 							</div>
 						</div>

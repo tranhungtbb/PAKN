@@ -2210,8 +2210,6 @@ namespace PAKNAPI.Controller
                         {"MRInfomationExchangeAllOnPage", _results},
                         {"TotalCount", _results != null && _results.Count > 0 ? _results[0].RowNumber : 0}
                     };
-
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             }
             catch (Exception ex)

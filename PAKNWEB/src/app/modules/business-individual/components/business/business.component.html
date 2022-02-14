@@ -53,7 +53,7 @@
 										<strong>Doanh nghiệp</strong>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.representativeName"
-										maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+										maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập .." />
 									<button *ngIf="dataSearch.representativeName" class="btn bg-transparent btn-clear-input"
 										(click)="dataSearch.representativeName=''">
 										<i class="fa fa-times"></i>
@@ -64,7 +64,7 @@
 										<strong>Địa chỉ trụ sở</strong>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100"
-										(keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+										(keydown.enter)="dataStateChange()" placeholder="Nhập .." />
 									<button *ngIf="dataSearch.address" class="btn bg-transparent btn-clear-input"
 										(click)="dataSearch.address=''">
 										<i class="fa fa-times"></i>
@@ -75,7 +75,7 @@
 										<strong>Số điện thoại</strong>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11"
-										(keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+										(keydown.enter)="dataStateChange()" placeholder="Nhập .." />
 									<button *ngIf="dataSearch.phone" class="btn bg-transparent btn-clear-input"
 										(click)="dataSearch.phone=''">
 										<i class="fa fa-times"></i>
@@ -86,7 +86,7 @@
 										<strong>Email</strong>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256"
-										(keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+										(keydown.enter)="dataStateChange()" placeholder="Nhập .." />
 									<button *ngIf="dataSearch.email" class="btn bg-transparent btn-clear-input"
 										(click)="dataSearch.email=''">
 										<i class="fa fa-times"></i>
@@ -97,9 +97,9 @@
 										<strong>Trạng thái</strong>
 									</p>
 									<div style="width: 140px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus"
-											placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái .."
+											bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status" [closeOnSelect]="true"
+											(change)="dataStateChange()">
 										</ng-select>
 									</div>
 								</th>

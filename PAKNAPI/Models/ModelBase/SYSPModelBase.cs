@@ -1811,16 +1811,17 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 
-		public async Task<List<SYUserGetByUnitId>> SYUserGetByUnitIdDAO(int? UnitId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UnitId", UnitId);
+        public async Task<List<SYUserGetByUnitId>> SYUserGetByUnitIdDAO(int? UnitId, bool? IsPerrmissionApproved = false)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("UnitId", UnitId);
+            DP.Add("IsPerrmissionApproved", IsPerrmissionApproved);
 
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByUnitId>("SY_UserGetByUnitId", DP)).ToList();
-		}
+            return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByUnitId>("SY_UserGetByUnitId", DP)).ToList();
+        }
 	}
 
-	public class SYUserGetByUserName
+    public class SYUserGetByUserName
 	{
 		private SQLCon _sQLCon;
 

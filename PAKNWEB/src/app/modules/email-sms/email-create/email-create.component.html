@@ -10,8 +10,10 @@
 						<i class="bi bi-arrow-left"></i>&nbsp;
 						Quay lại
 					</a>
-					<button *hasPermission="['3', 'B_I_6']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" (click)="onSave(false)">Lưu</button>
-					<button *hasPermission="['3', 'B_I_0']" class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4" (click)="onSave(true)">Gửi</button>
+					<button *hasPermission="['3', 'B_I_6']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4"
+						(click)="onSave(false)">Lưu</button>
+					<button *hasPermission="['3', 'B_I_0']" class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4"
+						(click)="onSave(true)">Gửi</button>
 				</div>
 			</div>
 		</div>
@@ -20,9 +22,12 @@
 				<form class="form-horizontal" [formGroup]="form">
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col mb-3">
-							<label class="control-label department" style="font-weight: 500;">Tiêu đề<span class="text-danger"> (*)</span></label>
-							<input class="form-control" formControlName="title" autofocus [(ngModel)]="model.title" maxlength="50" placeholder="Nhập..." />
-							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+							<label class="control-label department" style="font-weight: 500;">Tiêu đề<span class="text-danger">
+									(*)</span></label>
+							<input class="form-control" formControlName="title" autofocus [(ngModel)]="model.title" maxlength="50"
+								placeholder="Nhập.." />
+							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+								class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
@@ -30,9 +35,13 @@
 						</div>
 
 						<div class="col-sm-12 padding-col mb-3">
-							<label class="control-label department" style="font-weight: 500;">Nội dung<span class="text-danger"> (*)</span></label>
-							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="7" placeholder="Nhập..."></textarea>
-							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
+							<label class="control-label department" style="font-weight: 500;">Nội dung<span class="text-danger">
+									(*)</span></label>
+							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="7"
+								placeholder="Nhập.."></textarea>
+							<div
+								*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
+								class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
@@ -40,9 +49,13 @@
 						</div>
 
 						<div class="col-sm-12 padding-col mb-3">
-							<label class="control-label department text-uppercase" style="font-weight: 500;">Chữ ký<span class="text-danger"> (*)</span></label>
-							<input class="form-control" [(ngModel)]="model.signature" formControlName="signature" placeholder="Nhập..." />
-							<div *ngIf="(submitted && f.signature.invalid) || (f.signature.invalid && (f.signature.dirty || f.signature.touched))" class="has-error m-b-12">
+							<label class="control-label department text-uppercase" style="font-weight: 500;">Chữ ký<span
+									class="text-danger"> (*)</span></label>
+							<input class="form-control" [(ngModel)]="model.signature" formControlName="signature"
+								placeholder="Nhập.." />
+							<div
+								*ngIf="(submitted && f.signature.invalid) || (f.signature.invalid && (f.signature.dirty || f.signature.touched))"
+								class="has-error m-b-12">
 								<div *ngIf="f.signature.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
@@ -52,7 +65,8 @@
 						<div class="box attach-ct">
 							<p class="h5 text-uppercase mb-3">
 								<span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+										class="bi bi-paperclip" viewBox="0 0 16 16">
 										<path
 											d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 										</path>
@@ -63,8 +77,8 @@
 							<div class="attach-file row">
 								<div class="col-auto mb-4 p-0">
 									<div class="alert alert-dark h-100 d-flex align-items-center pl-0 pr-0">
-										<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
-											accept="{{fileAccept}}" />
+										<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+											class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
 										<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
 										<label for="file-5" (click)="file.click()">
 											<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -77,8 +91,10 @@
 								</div>
 								<ng-container *ngFor="let item of [].concat(listFileNew,listAttachment)">
 									<div class="col-auto mb-4" *ngIf="item.fileType == 0">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -87,8 +103,10 @@
 										</div>
 									</div>
 									<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -97,8 +115,10 @@
 										</div>
 									</div>
 									<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -107,8 +127,10 @@
 										</div>
 									</div>
 									<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
@@ -117,8 +139,10 @@
 										</div>
 									</div>
 									<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
@@ -127,18 +151,23 @@
 										</div>
 									</div>
 									<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a class="d-block text-center box-fileinput">
-												<img (click)="previewFile(item)" src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
+												<img (click)="previewFile(item)" src="../../../../assets/dist/images/file-powerpoint.svg"
+													style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
 									</div>
 									<div class="col-auto mb-4" *ngIf="item.fileType == 7">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border"
+											style="width: 170px">
+											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
@@ -155,81 +184,87 @@
 			</div>
 			<div class="col-md-6">
 				<!-- <form class="form-horizontal"> -->
-					<div class="row form-group pr-2">
-						<div class="col-sm-12 pr-2 pl-2">
-							<div class="title-user-map text-uppercase">Cá nhân doanh nghiệp nhận email</div>
-							<div class="border mt-2 ng-star-inserted p-3 rounded search-user" *ngIf="statusCurent != 2">
-								<div class="d-flex">
-									<div class="input-serach pr-2" style="flex:1 1;">
-										<div class="department">
-											<label>Đơn vị</label>
-										</div>
-										<div class="form-group" style="margin-bottom: 0px;">
-											<ngx-dropdown-treeview [config]="config" [items]="listDiadanhTree" buttonClass="btn btn-outline-primary" (selectedChange)="onSelectedChange($event)">
-											</ngx-dropdown-treeview>
-										</div>
+				<div class="row form-group pr-2">
+					<div class="col-sm-12 pr-2 pl-2">
+						<div class="title-user-map text-uppercase">Cá nhân doanh nghiệp nhận email</div>
+						<div class="border mt-2 ng-star-inserted p-3 rounded search-user" *ngIf="statusCurent != 2">
+							<div class="d-flex">
+								<div class="input-serach pr-2" style="flex:1 1;">
+									<div class="department">
+										<label>Đơn vị</label>
 									</div>
-									<div class="info-individual pr-2" style="flex:1 1;">
-										<div class="individual">
-											<div class="form-check form-check-inline">
-												<input class="form-check-input" type="checkbox" (change)="onChange($event,1)" id="inlineCheckbox1" value="option1" 
-												[checked]="objectType == 1 || objectType == 3">
-												<label class="form-check-label" for="inlineCheckbox1">Cá nhân</label>
-											</div>
-											<div class="form-check form-check-inline">
-												<input class="form-check-input" type="checkbox" (change)="onChange($event,2)" id="inlineCheckbox2" value="option2"
-												[checked]="objectType == 2 || objectType == 3">
-												<label class="form-check-label" for="inlineCheckbox2">Doanh nghiệp</label>
-											</div>
-										</div>
-
-										<p-multiSelect [options]="listIndividualAndBusinessGetByAdmintrativeId"  [(ngModel)]="userId" optionLabel="name" [virtualScroll]="true" optionValue="id">
-											<ng-template let-userSelected pTemplate="selectedItems">
-												<ng-container *ngIf="userSelected && (userSelected.length > 0 && userSelected.length < 3)">
-													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
-														<span>{{val.name}}</span>
-													</div>
-												</ng-container>
-												<span *ngIf="userId.length === 0">Chọn cá nhân, doanh nghiệp...</span>
-												<span *ngIf="userId.length >= 3" class="ui-multiselected-empty-token ui-corner-all">{{userId.length}}
-													cá nhân, doanh nghiệp đã chọn</span>
-											</ng-template>
-										</p-multiSelect>
-
-									</div>
-									<div class="action padding-item">
-										<div class="department"><label>&nbsp;</label></div>
-										<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white center" (click)="onCreateUser()">
-											<i class="bi bi-plus"></i>
-										</button>
+									<div class="form-group" style="margin-bottom: 0px;">
+										<ngx-dropdown-treeview [config]="config" [items]="listDiadanhTree"
+											buttonClass="btn btn-outline-primary" (selectedChange)="onSelectedChange($event)">
+										</ngx-dropdown-treeview>
 									</div>
 								</div>
-							</div>
-							
-						</div>
+								<div class="info-individual pr-2" style="flex:1 1;">
+									<div class="individual">
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" (change)="onChange($event,1)" id="inlineCheckbox1"
+												value="option1" [checked]="objectType == 1 || objectType == 3">
+											<label class="form-check-label" for="inlineCheckbox1">Cá nhân</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" (change)="onChange($event,2)" id="inlineCheckbox2"
+												value="option2" [checked]="objectType == 2 || objectType == 3">
+											<label class="form-check-label" for="inlineCheckbox2">Doanh nghiệp</label>
+										</div>
+									</div>
 
+									<p-multiSelect [options]="listIndividualAndBusinessGetByAdmintrativeId" [(ngModel)]="userId"
+										optionLabel="name" [virtualScroll]="true" optionValue="id">
+										<ng-template let-userSelected pTemplate="selectedItems">
+											<ng-container *ngIf="userSelected && (userSelected.length > 0 && userSelected.length < 3)">
+												<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+													<span>{{val.name}}</span>
+												</div>
+											</ng-container>
+											<span *ngIf="userId.length === 0">Chọn cá nhân, doanh nghiệp..</span>
+											<span *ngIf="userId.length >= 3"
+												class="ui-multiselected-empty-token ui-corner-all">{{userId.length}}
+												cá nhân, doanh nghiệp đã chọn</span>
+										</ng-template>
+									</p-multiSelect>
 
-						<div class="list-user">
-							<div class="title-user-map center" style="text-transform: none;" *ngIf="listBusinessIndividual.length ==0">Chưa có cá nhân, doanh nghiệp</div>
-							<div class="border col-sm-12 item-user ng-star-inserted p-3 rounded mt-3" style="display: flex;" *ngFor="let item of listBusinessIndividual">
-								<div class="info-user border-right padding-item" style="padding-left: 0px; flex: 1 1;">
-									<div class="title" *ngIf="item.category == 1">Cá nhân</div>
-									<div class="title" *ngIf="item.category == 2">Doanh nghiệp</div>
-									<div class="department"><strong>{{item.objectName}}</strong></div>
 								</div>
-								<div class="info-unit border-right padding-item ml-2" style="flex: 1 1;">
-									<div class="title">Đơn vị</div>
-									<div class="department"><strong>{{item.unitName}}</strong></div>
-								</div>
-								<div class="action padding-item center ml-2">
-									<button type="button" (click)="onRemoveUser(item)" style="height: 40px;background: #E0E7FA; color: black;"
-										class="btn btn-block border-0 px-3 center">
-										<i class="bi bi-dash"></i>
+								<div class="action padding-item">
+									<div class="department"><label>&nbsp;</label></div>
+									<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white center"
+										(click)="onCreateUser()">
+										<i class="bi bi-plus"></i>
 									</button>
 								</div>
 							</div>
 						</div>
+
 					</div>
+
+
+					<div class="list-user">
+						<div class="title-user-map center" style="text-transform: none;" *ngIf="listBusinessIndividual.length ==0">
+							Chưa có cá nhân, doanh nghiệp</div>
+						<div class="border col-sm-12 item-user ng-star-inserted p-3 rounded mt-3" style="display: flex;"
+							*ngFor="let item of listBusinessIndividual">
+							<div class="info-user border-right padding-item" style="padding-left: 0px; flex: 1 1;">
+								<div class="title" *ngIf="item.category == 1">Cá nhân</div>
+								<div class="title" *ngIf="item.category == 2">Doanh nghiệp</div>
+								<div class="department"><strong>{{item.objectName}}</strong></div>
+							</div>
+							<div class="info-unit border-right padding-item ml-2" style="flex: 1 1;">
+								<div class="title">Đơn vị</div>
+								<div class="department"><strong>{{item.unitName}}</strong></div>
+							</div>
+							<div class="action padding-item center ml-2">
+								<button type="button" (click)="onRemoveUser(item)"
+									style="height: 40px;background: #E0E7FA; color: black;" class="btn btn-block border-0 px-3 center">
+									<i class="bi bi-dash"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!-- </form> -->
 			</div>
 		</div>
@@ -253,7 +288,8 @@
 						</div>
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="pressSendButton()">Xác
 							nhận</button>
 					</div>
