@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr'
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
-	constructor(private _router: Router, private storeageService: UserInfoStorageService, private loadingService: LoadingIndicatorService, private toastr: ToastrService) {}
+	constructor(private _router: Router, private storeageService: UserInfoStorageService, private loadingService: LoadingIndicatorService, private toastr: ToastrService) { }
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		//const started = Date.now();

@@ -971,7 +971,11 @@ textarea:placeholder-shown{
 }
 
 .deznav .metismenu {
-	padding: 15px;
+	padding: 0.5rem;
+}
+
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li a {
+	padding: 0.2rem 0.3rem;
 }
 
 .nav-header {
@@ -1014,7 +1018,7 @@ textarea:placeholder-shown{
 
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu>li>a {
 	color: #222;
-	padding: 12px;
+	padding: 0.4rem;
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu>li>a i {
@@ -1065,7 +1069,7 @@ textarea:placeholder-shown{
 }
 
 .deznav .metismenu ul a {
-	padding: 10px 20px;
+	padding: 0.4rem 0.6rem;
 }
 
 .header-right .notification_dropdown .nav-link i {
@@ -1175,7 +1179,7 @@ textarea:placeholder-shown{
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu>li>a i {
-	padding: 10px;
+	padding: 0.5rem;
 	margin-right: 0;
 }
 
@@ -1215,10 +1219,14 @@ textarea:placeholder-shown{
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li>ul {
-	left: 60px !important;
+	left: 53px !important;
 	top: 4px !important;
 	padding-right: 0;
 	padding-bottom: 0;
+}
+
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > ul a {
+	padding: 4px 15px 4px 15px !important;
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu>li .has-arrow:after {
@@ -2547,4 +2555,11 @@ table thead .form-control ng-select {
 
 .highlight-key-search {
 	color:#f35f1b
+}
+
+
+.p-text-content{
+	text-align: justify;
+	text-justify:inter-word;
+	white-space: pre-wrap;
 }

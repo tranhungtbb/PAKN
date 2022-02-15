@@ -45,6 +45,10 @@
 										class="text-danger">({{statistic.processDeny}})</span></a></li>
 
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
+									routerLink="/quan-tri/kien-nghi/tham-muu-don-vi">Phối hợp xử lý <span *ngIf="statistic"
+										class="text-danger">({{statistic.combine}})</span></a></li>
+
+							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết <span *ngIf="statistic"
 										class="text-danger">({{statistic.processing}})</span></a></li>
 
@@ -108,6 +112,9 @@
 							<li *hasPermission="['3', 'E_I_3']"><a routerLinkActive="mm-active"
 									routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết <span *ngIf="statistic"
 										class="text-danger">({{statistic.finised}})</span></a></li>
+							<li *hasPermission="['3', 'E_XI_0']"><a routerLinkActive="mm-active"
+									routerLink="/quan-tri/kien-nghi/chua-anh-gia">PAKN chứa ảnh giả
+									<span *ngIf="statistic" class="text-danger">({{statistic.fakeImage}})</span></a></li>
 						</ng-container>
 
 					</ng-container>
@@ -224,35 +231,6 @@
 					<span class="nav-text">SMS</span>
 				</a>
 			</li> -->
-			<li *hasPermission="['3', 'A_XX_0']" routerLinkActive="mm-active active"
-				[routerLinkActiveOptions]="{exact: false}">
-				<a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi" class="ai-icon" href="javascript:void()"
-					aria-expanded="false">
-					<i class="bi bi-phone"></i>
-					<span class="nav-text">Cuộc gọi</span>
-				</a>
-			</li>
-			<li *hasPermission="['1', 'I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
-				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-					<i class="bi bi-arrow-repeat"></i>
-					<span class="nav-text">Đồng bộ dữ liệu</span>
-				</a>
-				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li *hasPermission="['3', 'I_I_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dien-tu-tinh">Cổng thông tin điện tử
-							tỉnh</a></li>
-					<li *hasPermission="['3', 'I_IV_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dv-hcc">Cổng thông tin DV HCC trực
-							tuyến</a></li>
-					<li *hasPermission="['3', 'I_II_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri">Hệ thống quản lý
-							kiến nghị cử
-							tri</a></li>
-					<li *hasPermission="['3', 'I_III_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu">Hệ thống PAKN của Chính
-							phủ</a></li>
-				</ul>
-			</li>
 
 			<!-- <li *hasPermission="['1','B']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -268,30 +246,6 @@
 			</li> -->
 			<!-- *hasPermission="['3', 'B_II_3']" -->
 
-			<li *hasPermission="['1','C']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
-				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-					<i class="bi bi-distribute-vertical"></i>
-					<span class="nav-text">Danh mục</span>
-				</a>
-				<ul routerLinkActive="mm-show" aria-expanded="false" id="boxnoidung">
-					<li *hasPermission="['3', 'C_I_0']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/chuc-vu">Chức vụ</a></li>
-					<li *hasPermission="['3', 'C_IV_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/linh-vuc">Lĩnh vực</a></li>
-					<li *hasPermission="['3', 'C_V_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại thông báo</a></li>
-					<li *hasPermission="['3', 'C_VII_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/nhom-thu-vien-tu">Nhóm thư viện từ ngữ</a></li>
-					<li *hasPermission="['3', 'C_VI_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/thu-vien-tu">Thư viện từ ngữ</a></li>
-					<li *hasPermission="['3', 'C_II_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/nhom-so-nganh">Nhóm sở ngành</a></li>
-					<li *hasPermission="['3', 'C_III_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
-					<li *hasPermission="['3', 'C_VIII_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/hashtag">Nhãn dữ liệu</a></li>
-				</ul>
-			</li>
 			<li *hasPermission="['1','A']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-diagram-2"></i>
@@ -321,12 +275,38 @@
 					</li>
 					<li *hasPermission="['3', 'A_XIX_0']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thong-bao">Thông báo</a></li>
+					<!-- <li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thong-bao">Thông báo</a></li> -->
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thong-ke-truy-cap">Thống kê truy cập</a>
 					</li>
 				</ul>
 			</li>
+
+			<li *hasPermission="['1','C']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-distribute-vertical"></i>
+					<span class="nav-text">Danh mục</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false" id="boxnoidung">
+					<li *hasPermission="['3', 'C_I_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/chuc-vu">Chức vụ</a></li>
+					<li *hasPermission="['3', 'C_IV_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/linh-vuc">Lĩnh vực</a></li>
+					<li *hasPermission="['3', 'C_V_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại thông báo</a></li>
+					<li *hasPermission="['3', 'C_VII_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/nhom-thu-vien-tu">Nhóm thư viện từ ngữ</a></li>
+					<li *hasPermission="['3', 'C_VI_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/thu-vien-tu">Thư viện từ ngữ</a></li>
+					<li *hasPermission="['3', 'C_II_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/nhom-so-nganh">Nhóm sở ngành</a></li>
+					<li *hasPermission="['3', 'C_III_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
+					<li *hasPermission="['3', 'C_VIII_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/hashtag">Nhãn dữ liệu</a></li>
+				</ul>
+			</li>
+
 			<li *hasPermission="['1','D']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-pie-chart"></i>
@@ -370,6 +350,29 @@
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/he-thong/thu-vien-anh">Thư viện ảnh</a></li>
 				</ul>
 			</li> -->
+
+			<li *hasPermission="['1', 'I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-arrow-repeat"></i>
+					<span class="nav-text">Đồng bộ dữ liệu</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li *hasPermission="['3', 'I_I_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dien-tu-tinh">Cổng thông tin điện tử
+							tỉnh</a></li>
+					<li *hasPermission="['3', 'I_IV_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dv-hcc">Cổng thông tin DV HCC trực
+							tuyến</a></li>
+					<li *hasPermission="['3', 'I_II_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri">Hệ thống quản lý
+							kiến nghị cử
+							tri</a></li>
+					<li *hasPermission="['3', 'I_III_0']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu">Hệ thống PAKN của Chính
+							phủ</a></li>
+				</ul>
+			</li>
+
 			<li *hasPermission="['1', 'G']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-life-preserver"></i>
@@ -384,6 +387,15 @@
 							routerLink="/quan-tri/huong-dan-su-dung/nguoi-dan-doanh-nghiep">Hướng dẫn người dân, doanh nghiệp</a></li>
 
 				</ul>
+			</li>
+
+			<li *hasPermission="['3', 'A_XX_0']" routerLinkActive="mm-active active"
+				[routerLinkActiveOptions]="{exact: false}">
+				<a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi" class="ai-icon" href="javascript:void()"
+					aria-expanded="false">
+					<i class="bi bi-phone"></i>
+					<span class="nav-text">Cuộc gọi</span>
+				</a>
 			</li>
 
 		</ul>

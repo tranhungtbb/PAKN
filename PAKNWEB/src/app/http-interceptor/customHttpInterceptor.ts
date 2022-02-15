@@ -75,7 +75,6 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 						window.location.href = '/cong-bo/trang-chu'
 					} else if (err.status === 403) {
 						this.env.isContentLoading = false
-						this.storeageService.clear()
 						this._router.navigate(['/forbidden'])
 						this.toastr.error('Bạn không có quyền truy cập trang!')
 					}

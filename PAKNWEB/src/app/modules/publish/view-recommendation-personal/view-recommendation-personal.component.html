@@ -26,7 +26,8 @@
 
 					<div class="media pb-4 mb-4 box-message-publish m-0 p-0">
 						<div class="media-body">
-							<p class="mb-0 text-tranform-first" innerHTML="{{model.content | Change}}" style="text-align: justify;">
+							<p class="mb-0 text-tranform-first p-text-content">
+								{{model.content}}
 							</p>
 
 							<span class="text-left">
@@ -97,12 +98,10 @@
 							<p class="mt-3 mb-2 font-weight-bold text-center">Trả lời phản ánh</p>
 
 							<ng-container *ngIf="[3,6].includes(model.status)">
-								<p class="mb-0 text-tranform-first" innerHTML="{{model.reasonDeny | Change}}"
-									style="text-align: justify;"></p>
+								<p class="mb-0 text-tranform-first p-text-content">{{model.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status > 5 && model.status != 14">
-								<p class="mb-0 text-tranform-first" innerHTML="{{modelConclusion.content | Change}}"
-									style="text-align: justify;"></p>
+								<p class="mb-0 text-tranform-first p-text-content"> {{modelConclusion.content}}</p>
 								<p *ngIf="files && files.length > 0" class="mb-2 font-weight-bold">Tài liệu đính kèm:</p>
 								<div *ngFor="let file of files" class="pointer item-file mb-2">
 									<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.filePath"

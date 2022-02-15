@@ -17,8 +17,7 @@
 					<p class="h4 font-weight-bold mt-3 text-tranform-first" style="font-size: 14px;">{{model.title}}</p>
 					<div class="media pb-3  box-message-publish m-0">
 						<div class="media-body">
-							<p class="mb-0 text-tranform-first" style="text-align:justify; text-justify:inter-word"
-								innerHTML="{{model.content | Change}}">
+							<p class="mb-0 text-tranform-first p-text-content">{{model.content}}
 							</p>
 							<span *ngIf="lstFiles && lstFiles.length > 0" class="text-left ">
 								<p class="mb-0 font-weight-bold mb-2">Tài liệu đính kèm:</p>
@@ -88,8 +87,8 @@
 
 							</div>
 							<p class="mt-3 mb-2 font-weight-bold text-center">Trả lời phản ánh</p>
-							<p class="mb-0 text-tranform-first" style="text-align:justify; text-justify:inter-word"
-								*ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
+							<p class="mb-0 text-tranform-first p-text-content" *ngIf="lstConclusion">
+								{{lstConclusion.content}}
 							</p>
 							<p class="mb-0 text-tranform-first" *ngIf="!lstConclusion">
 								{{model.contentConclusion != null ? model.contentConclusion : ''}}

@@ -150,7 +150,7 @@ namespace PAKNAPI.Controller
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
+        [Authorize(Policy = "ThePolicy")]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByID(int? Id)
         {

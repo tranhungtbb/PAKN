@@ -131,8 +131,8 @@ export class ViewRecommendationComponent implements OnInit {
 				} else {
 					this.modelConclusion = new RecommendationConclusionObject()
 				}
-				if (this.model.status == 6 && response.result.denyContent) {
-					this.denyContent = response.result.denyContent[0] == undefined ? {} : response.result.denyContent[0]
+				if ([3, 6].includes(this.model.status) && response.result.denyContent) {
+					this.denyContent = response.result.denyContent.length == 0 ? {} : response.result.denyContent[0]
 				}
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.filesModel = response.result.lstFiles
@@ -168,6 +168,10 @@ export class ViewRecommendationComponent implements OnInit {
 			(error) => {
 				console.log(error)
 			}
+	}
+
+	getTitle() {
+
 	}
 
 	getListSuggest() {
