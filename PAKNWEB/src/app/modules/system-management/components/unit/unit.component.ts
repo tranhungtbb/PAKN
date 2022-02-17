@@ -7,8 +7,6 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { MESSAGE_COMMON, REGEX } from 'src/app/constants/CONSTANTS'
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
-import { PositionService } from '../../../../services/position.service'
-import { RoleService } from '../../../../services/role.service'
 
 import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-create-or-update.component'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
@@ -16,6 +14,7 @@ import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
 import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { TemplateSmsService } from 'src/app/services/template-sms.service'
 
 declare var $: any
 @Component({
@@ -53,6 +52,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	listFieldSelected: any = []
 
 	createUnitFrom: FormGroup
+	template: FormGroup
 	titleConfirm: any = ''
 	modelUnit: UnitObject = new UnitObject()
 
@@ -91,14 +91,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	constructor(
 		private unitService: UnitService,
 		private userService: UserService,
-		private positionService: PositionService,
 		private formBuilder: FormBuilder,
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private _router: Router,
-		private roleService: RoleService,
 		private _userServiceChat: UserServiceChatBox,
-		private _storageService: UserInfoStorageService
+		private _storageService: UserInfoStorageService,
+		private _templateSMSService: TemplateSmsService
 	) { }
 
 	ngOnInit() {
@@ -118,13 +117,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			group: [this.modelUnit.group, [Validators.required]],
 		})
 
-		this.getDropListUnitPermission()
-		this.unitService.getDataForCreate().subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.lstField = res.result.lstField
-			}
+
+		this.template = this.formBuilder.group({
+			title: [this.modelTemplate.name, Validators.required],
+			content: [this.modelTemplate.content, [Validators.required]],
+			isActive: [this.modelTemplate.isActive, [Validators.required]],
 		})
 
+		this.getDropListUnitPermission()
 		this.unitService.getDataForCreate().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.lstField = res.result.lstField
@@ -139,9 +139,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.modelUnit = new UnitObject()
 			this.createUnitFrom.reset()
 		})
-		setTimeout(() => {
-			this.onCollapsed('item02')
-		}, 1000)
+		// setTimeout(() => {
+		// 	this.onCollapsed('item02')
+		// }, 1000)
 	}
 
 	collapsed_checked: any = {
@@ -177,6 +177,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.unitObject = res.result.CAUnitGetByID[0]
 			this.listFieldSelected = this.unitObject.listField == null ? [] : this.unitObject.listField.split(',').map(Number)
 			this.getUserPagedList()
+			this.getListTeamplateSMS()
 		})
 	}
 
@@ -310,9 +311,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			})
 		}
 		$('#modal-create-or-update').modal('show')
-		// setTimeout(() => {
-		// 	$('#unitId').focus()
-		// }, 400)
 		this.modelUnit.unitLevel = level
 		if (parentId > 0) this.modelUnit.parentId = parentId
 	}
@@ -320,6 +318,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	get fUnit() {
 		return this.createUnitFrom.controls
 	}
+
 	checkExists = {
 		Phone: false,
 		Email: false,
@@ -491,6 +490,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		} else if (this.modalConfirm_type == 'user_status') {
 			this.titleConfirm = 'Bạn có chắc chắn muốn thay đổi trạng thái của người dùng này?'
 		}
+		else if (this.modalConfirm_type == 'update_teamplate') {
+			this.titleConfirm = 'Bạn có chắc chắn muốn thay đổi trạng thái của teamplate này?'
+		}
+		else if (this.modalConfirm_type == 'delete_teamplate') {
+			this.titleConfirm = 'Bạn có chắc chắn muốn xóa teamplate này?'
+		}
 		$('#modal-confirm').modal('show')
 	}
 	acceptConfirm() {
@@ -502,6 +507,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.onChangeUnitStatus(this.modelConfirm_itemId)
 		} else if (this.modalConfirm_type == 'user_status') {
 			this.onChangeUserStatus(this.modelConfirm_itemId)
+		}
+		else if (this.modalConfirm_type == 'update_teamplate') {
+			this.onChangeStatus()
+		}
+		else if (this.modalConfirm_type == 'delete_teamplate') {
+			this.onDelete()
 		}
 
 		$('#modal-confirm').modal('hide')
@@ -630,6 +641,131 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			console.log(err)
 		})
 	}
+
+
+
+	/// template
+
+	modelTemplate: any = {}
+	submitted: boolean = false
+	listTeamplate: any[] = []
+	totalTeamplate: number = 0
+	title: string
+
+	titleTeamplate: string
+	contentTeamplate: string
+	isActiveTeamplate: string
+
+	get f() {
+		return this.template.controls
+	}
+
+	rebuildFormTemplate() {
+		this.template.reset({
+			title: this.modelTemplate.name,
+			content: this.modelTemplate.unitLevel,
+			isActive: this.modelTemplate.isActived,
+		})
+	}
+
+
+	preCreate() {
+		this.submitted = false
+		this.title = 'Thêm mới'
+		this.modelTemplate = {}
+		this.modelTemplate.isActive = true
+		this.modelTemplate.unitId = this.unitObject.id
+		this.rebuildFormTemplate()
+		$('#modalTeamplate').modal('show')
+	}
+
+	preUpdate(item: any) {
+		this.title = 'Cập nhật'
+		this.submitted = false
+		this.modelTemplate = { ...item }
+		// this.rebuildFormTemplate()
+		$('#modalTeamplate').modal('show')
+	}
+
+	getListTeamplateSMS() {
+		this._templateSMSService.getList({ UnitId: this.unitObject.id }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listTeamplate = res.result.SYTemplateSMS
+				this.totalTeamplate = res.result.TotalCount
+			} else {
+				this.listTeamplate = []
+			}
+		}, err => {
+			console.log(err)
+		})
+	}
+
+	onSave() {
+		this.submitted = true
+		this.modelTemplate.title = this.modelTemplate.title == null ? '' : this.modelTemplate.title.trim()
+		this.modelTemplate.content = this.modelTemplate.content == null ? '' : this.modelTemplate.content.trim()
+		if (this.template.invalid) {
+			return
+		}
+		if (!this.modelTemplate.id) {
+			this._templateSMSService.create(this.modelTemplate).subscribe(res => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.getListTeamplateSMS()
+					$('#modalTeamplate').modal('hide')
+					this._toastr.success(COMMONS.ADD_SUCCESS)
+				} else {
+					this._toastr.error(res.message)
+				}
+			}, err => {
+				console.log(err)
+			})
+		} else {
+			this._templateSMSService.update(this.modelTemplate).subscribe(res => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.getListTeamplateSMS()
+					$('#modalTeamplate').modal('hide')
+					this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				} else {
+					this._toastr.error(res.message)
+				}
+			}, err => {
+				console.log(err)
+			})
+		}
+	}
+
+	onDelete() {
+		this._templateSMSService.delete({ Id: this.modelConfirm_itemId }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.getListTeamplateSMS()
+				this._toastr.success(COMMONS.DELETE_SUCCESS)
+			} else {
+				this._toastr.error(res.message)
+			}
+		}, err => {
+			console.log(err)
+		})
+	}
+
+	onChangeStatus() {
+		let object = this.listTeamplate.find(x => x.id == this.modelConfirm_itemId)
+		object.isActive = !object.isActive
+		this._templateSMSService.update(object).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.getListTeamplateSMS()
+				this._toastr.success(COMMONS.DELETE_SUCCESS)
+			} else {
+				this._toastr.error(res.message)
+			}
+		}, err => {
+			console.log(err)
+		})
+	}
+
+
+
+
+
 
 	private unflatten(arr): any[] {
 		var tree = [],

@@ -387,11 +387,8 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 			}
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
-
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
-			// this.contentForward = ''
-
 			this._service.recommendationGetDataForForward({}).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result != null) {
@@ -401,7 +398,6 @@ export class ListGeneralComponent implements OnInit, AfterViewInit {
 						if (unitForwardMain) {
 							this.modelForward.unitReceiveId = unitForwardMain.value
 						}
-
 						this.rebuilForm()
 						this.submitted = false
 						$('#modalForward').modal('show')

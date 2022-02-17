@@ -309,7 +309,110 @@ namespace PAKNAPI.Controllers
 		}
 
 
+		/// <summary>
+		/// danh sách template SMS - Authorize
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
+		[Route("get-list-template-sms")]
+		public async Task<ActionResult<object>> SYTemplateSMSGetAllOnPageBase(int? UnitId)
+		{
+			try
+			{
+				List<SYTemplateSMS> rsSYConfigGetAllOnPage = await new SYTemplateSMS(_appSetting).SYTemplateSMSGetAllOnPageDAO(UnitId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTemplateSMS", rsSYConfigGetAllOnPage},
+						{"TotalCount", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? rsSYConfigGetAllOnPage[0].RowNumber : 0}
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		/// <summary>
+		/// thêm mới template SMS - Authorize
+		/// </summary>
+		/// <param name="update"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
+		[Route("template-sms-insert")]
+		public async Task<ActionResult<object>> SYTemplateSMSInsertBase(SYTemplateSMS update)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTemplateSMS(_appSetting).SYTemplateSMSInsertDAO(update) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		/// <summary>
+		/// cập nhập template SMS - Authorize
+		/// </summary>
+		/// <param name="update"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
+		[Route("template-sms-update")]
+		public async Task<ActionResult<object>> SYTemplateSMSUpdateBase(SYTemplateSMS update)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTemplateSMS(_appSetting).SYTemplateSMSUpdateDAO(update) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		/// <summary>
+		/// xóa template SMS - Authorize
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+
+		[HttpPost]
+		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
+		[Route("template-sms-delete")]
+		public async Task<ActionResult<object>> SYTemplateSMSDeleteBase(SYTemplateSMSDelete model)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTemplateSMS(_appSetting).SYTemplateSMSDeleteDAO(model) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 
 	}

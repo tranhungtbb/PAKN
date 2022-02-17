@@ -345,14 +345,14 @@ namespace PAKNAPI.Controllers
 							values.Add(new RecommendationStatisticForChart("Tổng", statisticByUnitParent.Select(x => x.TotalResult).ToList()));
 							break;
 						case 1:
-							values.Add(new RecommendationStatisticForChart("Đã xử lý", statisticByUnitParent.Select(x => x.Finised).ToList()));
+							values.Add(new RecommendationStatisticForChart("Đã xử lý", statisticByUnitParent.Select(x => x.FinisedTotal).ToList()));
 							break;
 						case 2:
-							values.Add(new RecommendationStatisticForChart("Đang xử lý", statisticByUnitParent.Select(x => x.Processing).ToList()));
+							values.Add(new RecommendationStatisticForChart("Đang xử lý", statisticByUnitParent.Select(x => x.ProcessTotal).ToList()));
 							break;
-						case 3:
-							values.Add(new RecommendationStatisticForChart("Quá hạn", statisticByUnitParent.Select(x => x.Expired).ToList()));
-							break;
+						//case 3:
+						//	values.Add(new RecommendationStatisticForChart("Quá hạn", statisticByUnitParent.Select(x => x.Expired).ToList()));
+						//	break;
 						default: 
 							break;
 					}

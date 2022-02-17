@@ -394,6 +394,79 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	public class SYTemplateSMS
+	{
+		private SQLCon _sQLCon;
+
+		public SYTemplateSMS(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTemplateSMS()
+		{
+		}
+
+		public int Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
+		public string Title { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
+		public string Content { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		public bool IsActive { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đơn vị không được để trống")]
+		public int? UnitId { get; set; }
+
+		public int RowNumber { get; set; }
+
+		public async Task<List<SYTemplateSMS>> SYTemplateSMSGetAllOnPageDAO(int? UnitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", UnitId);
+			return (await _sQLCon.ExecuteListDapperAsync<SYTemplateSMS>("[SY_TemplateSMS_GetList]", DP)).ToList();
+		}
+
+
+		public async Task<int?> SYTemplateSMSInsertDAO(SYTemplateSMS syConfig)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", syConfig.Title);
+			DP.Add("IsActive", syConfig.IsActive);
+			DP.Add("Content", syConfig.Content);
+			DP.Add("UnitId", syConfig.UnitId);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("[SY_TemplateSMS_Insert]", DP);
+		}
+
+		public async Task<int?> SYTemplateSMSUpdateDAO(SYTemplateSMS syConfig)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", syConfig.Id);
+			DP.Add("Title", syConfig.Title);
+			DP.Add("IsActive", syConfig.IsActive);
+			DP.Add("Content", syConfig.Content);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("[SY_TemplateSMS_Update]", DP);
+		}
+
+		public async Task<int?> SYTemplateSMSDeleteDAO(SYTemplateSMSDelete model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", model.Id);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("[SY_TemplateSMS_Delete]", DP);
+		}
+	}
+
+	public class SYTemplateSMSDelete {
+		public int Id { get; set; }
+	}
+
 	public class ConfigSameLocation {
 		public int Time { get; set; }
 		public int Radius { get; set; }

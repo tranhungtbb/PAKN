@@ -141,6 +141,15 @@ export class Api {
 	public static UnitGetDropDownForCombine = 'unit/get-dropdown-for-combine'
 
 
+	// temaplate sms
+
+	public static TemplateSMSGetAll = 'system-config/get-list-template-sms'
+	public static TemplateSMSInsert = 'system-config/template-sms-insert'
+	public static TemplateSMSUpdate = 'system-config/template-sms-update'
+	public static TemplateSMSDelete = 'system-config/template-sms-delete'
+
+
+
 
 	//Position
 	public static PositionInsert = 'position/insert'

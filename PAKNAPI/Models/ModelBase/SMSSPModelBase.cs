@@ -243,6 +243,8 @@ namespace PAKNAPI.ModelBase
 		public byte Status { get; set; }
 		public string Type { get; set; }
 
+		public int? TeamplateId { get; set; }
+
 		public async Task<List<SMSQuanLyTinNhanGetById>> SMSQuanLyTinNhanGetByIdDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -277,6 +279,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserSend", _sMSQuanLyTinNhanInsertIN.UserSend);
 			DP.Add("Status", _sMSQuanLyTinNhanInsertIN.Status);
 			DP.Add("Type", _sMSQuanLyTinNhanInsertIN.Type);
+			DP.Add("TeamplateId", _sMSQuanLyTinNhanInsertIN.TeamplateId);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("SMS_QuanLyTinNhanInsert", DP);
 		}
@@ -302,7 +305,7 @@ namespace PAKNAPI.ModelBase
 		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public int? Status { get; set; }
 
-		
+		public int? TeamplateId { get; set; }
 		public string Type { get; set; }
 	}
 
@@ -332,6 +335,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserSend", _sMSQuanLyTinNhanUpdateIN.UserSend);
 			DP.Add("Status", _sMSQuanLyTinNhanUpdateIN.Status);
 			DP.Add("Type", _sMSQuanLyTinNhanUpdateIN.Type);
+			DP.Add("TeamplateId", _sMSQuanLyTinNhanUpdateIN.TeamplateId);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SMS_QuanLyTinNhanUpdate", DP);
 		}
@@ -358,6 +362,7 @@ namespace PAKNAPI.ModelBase
 		public int? Status { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu SMS không được để trống")]
 		public string Type { get; set; }
+		public int? TeamplateId { get; set; }
 	}
 
 	public class SMSTinNhanAdministrativeUnitMapDeleteBySMSId

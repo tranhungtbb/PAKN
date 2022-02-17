@@ -11,6 +11,8 @@ import { COMMONS } from 'src/app/commons/commons'
 import { SMSManagementService } from 'src/app/services/sms-management'
 import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
 import { SMSTreeviewI18n } from 'src/app/shared/sms-treeview-i18n'
+import { TemplateSmsService } from 'src/app/services/template-sms.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 
@@ -47,7 +49,9 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private smsService: SMSManagementService,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private teamplateService: TemplateSmsService,
+		private stogateService: UserInfoStorageService
 	) {
 		this.listItemUserSelected = []
 		this.listIndividualAndBusinessGetByAdmintrativeId = []
@@ -69,10 +73,21 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		maxHeight: 400,
 	})
 
+	lstTeamplate: any[] = []
+
 	ngOnInit() {
 		this.buildForm()
 		this.administrativeUnits = []
 		this.getSMSModelById()
+		this.teamplateService.getList({ UnitId: this.stogateService.getUnitId() }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstTeamplate = res.result.SYTemplateSMS
+			} else {
+				console.log(res.message)
+			}
+		}, err => {
+			console.log(err)
+		})
 	}
 
 	// getAdministrativeUnits() {
@@ -128,6 +143,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			title: [this.model.title, Validators.required],
 			content: [this.model.content, Validators.required],
 			signature: [this.model.signature, Validators.required],
+			teamplateId: [this.model.teamplateId],
 			administrativeUnitId: [this.administrativeUnitId],
 			userId: [this.userId],
 			business: [this.business],
@@ -215,11 +231,12 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	onSave(isSend: boolean) {
 		this.model.status = isSend == false ? 1 : 2
 		this.submitted = true
+		debugger
 
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
 		this.model.signature = this.model.signature.trim()
-		this.rebuilForm()
+		// this.rebuilForm()
 
 		if (this.form.invalid) {
 			return

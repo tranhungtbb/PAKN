@@ -101,6 +101,7 @@ namespace PAKNAPI.Models.EmailSMSModel
         [Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
         [Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
         public int? Status { get; set; }
+        public int? TeamplateId { get; set; }
         public string Type { get; set; }
     }
 }

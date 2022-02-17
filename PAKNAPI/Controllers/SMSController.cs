@@ -246,6 +246,7 @@ namespace PAKNAPI.Controllers
 				update.UpdateDate = DateTime.Now;
 				update.Type = response.model.Type;
 				update.UserUpdateId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				update.TeamplateId = response.model.TeamplateId;
 				if (response.model.Status == STATUS_SMS.SEND)
 				{
 					update.SendDate = DateTime.Now;

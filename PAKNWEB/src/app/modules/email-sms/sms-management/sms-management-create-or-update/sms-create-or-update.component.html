@@ -64,6 +64,14 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="col-sm-12 padding-col">
+							<label class="control-label department">Mẫu teamplate</label>
+							<ng-select notFoundText="Không có dữ liệu" class="form-control" [closeOnSelect]="true"
+								formControlName="teamplateId" [(ngModel)]="model.teamplateId" [searchable]="false"
+								[items]="lstTeamplate" bindLabel="title" bindValue="id" placeholder="Chọn..">
+							</ng-select>
+						</div>
 						<!-- tài liệu đính kèm -->
 
 					</div>

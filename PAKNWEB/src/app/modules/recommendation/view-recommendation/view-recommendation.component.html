@@ -2,15 +2,36 @@
 	<div class="container-fluid pt-0 pr-0">
 		<div class="row">
 			<div class="col-lg-12">
-				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
+				<ol class="breadcrumb title-module mx-0 px-0 bg-transparent mb-0">
+					<!-- <li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li> -->
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chi tiết Phản ánh, kiến nghị</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton
+					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-2" appSvBackButton
 						*ngIf="suggest == false"><i class="bi bi-arrow-left mr-2"></i>
-						quay lại</button>
-					<button type="button" class="btn grd-blue btn-sm rounded border-0 mr-3 text-white" (click)="preForward()"
+						quay lại
+					</button>
+
+					<button type="button" class="btn btn-sm grd-brown2 text-white mr-2" title="Chuyển đơn vị khác"
+						(click)="preProcess(4)"
+						*ngIf="model.unitActive == unitLoginId && model.isForwardProcess && model.status == 5">
+						<i class="bi bi-arrow-left-square mr-2"></i>
+						Chuyển đơn vị khác
+					</button>
+
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 mr-2 text-white" (click)="preProcess(2)"
+						*ngIf="(model.status == 2 || model.status == 4 || model.status == 5) && (model.userActive == userLoginId || model.unitActive == unitLoginId)">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
+							<path
+								d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+							<path
+								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+						</svg>
+						Tiếp nhận
+					</button>
+
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 mr-2 text-white" (click)="preForward()"
 						*ngIf="!isUnitCombine && ((model.status == 4 && model.unitActive == unitLoginId) || (model.status == 6 && model.unitActive == unitLoginId))">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="mr-2">
 							<path
@@ -19,7 +40,16 @@
 						</svg>
 						Gửi giải quyết
 					</button>
-					<button type="button" class="btn grd-red btn-sm rounded border-0 mr-3 text-white" (click)="preProcess(3)"
+
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 mr-2 text-white" (click)="preForward(true)"
+						*ngIf="!isUnitCombine && ( model.status == 4 || (model.status == 7 && !model.isApproveDeny) && model.unitActive == unitLoginId)">
+						<img src="../../../../assets/dist/images/svg/btn-btn-combine.svg">
+						Gửi phối hợp
+					</button>
+
+
+
+					<button type="button" class="btn grd-red btn-sm rounded border-0 mr-2 text-white" (click)="preProcess(3)"
 						*ngIf="(model.status == 2 || model.status == 5) && (model.userActive == userLoginId || model.unitActive == unitLoginId)">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-file-earmark-break mr-2" viewBox="0 0 16 16">
@@ -29,7 +59,7 @@
 						Từ chối
 					</button>
 
-					<button type="button" class="btn grd-red btn-sm rounded border-0 mr-3 text-white" (click)="preProcess(3)"
+					<button type="button" class="btn grd-red btn-sm rounded border-0 mr-2 text-white" (click)="preProcess(3)"
 						*ngIf="(model.status == 8 && model.userActive == userLoginId)">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-file-earmark-break mr-2" viewBox="0 0 16 16">
@@ -40,18 +70,6 @@
 					</button>
 
 
-
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preProcess(2)"
-						*ngIf="(model.status == 2 || model.status == 5) && (model.userActive == userLoginId || model.unitActive == unitLoginId)">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
-							<path
-								d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
-							<path
-								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-						</svg>
-						Tiếp nhận
-					</button>
 
 					<button type="button" class="btn grd-green btn-sm rounded border-0 text-white" (click)="preProcess(2)"
 						*ngIf="model.status == 8 && model.userActive == userLoginId">
@@ -615,59 +633,6 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modalForward">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content rounded">
-			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">Gửi đơn vị giải quyết</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body pt-3 pb-0">
-				<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
-					<div class="form-row">
-						<div class="col-12 col-lg-6 form-group">
-							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value"
-								formControlName="unitReceiveId" [(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true">
-							</ng-select>
-							<div
-								*ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.unitReceiveId.errors.required">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-lg-6 form-group">
-							<label class="mb-1">Hạn giải quyết</label>
-							<div class="input-group">
-								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker
-									#n="bsDatepicker" maxlength="10" formControlName="expiredDate" [(ngModel)]="modelForward.expiredDate"
-									appBsDatepickerInvalid [minDate]="dateNow"
-									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon p-2">
-									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 form-group">
-							<label class="mb-1">Nội dung</label>
-							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
-								placeholder="Nhập nội dung.." maxlength="500"></textarea>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary border w-127 mr-3" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn text-white grd-blue border-0 w-127" (click)="onForward()">Gửi</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
 <div class="modal fade" id="modalAccept">
 	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
@@ -832,6 +797,120 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+<div class="modal fade" id="modalForward">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">{{isForwardMultiUnit == false ? 'Gửi đơn vị giải quyết' : 'Gửi đơn vị phối hợp'}}
+				</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-0">
+				<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
+					<div class="form-row">
+						<div class="col-12 col-lg-6 form-group">
+							<label class="mb-1">{{isForwardMultiUnit == false ? 'Đơn vị giải quyết' : 'Đơn vị phối hợp'}} <span
+									class="cl-red">(*)</span></label>
+
+							<ng-select *ngIf="!isForwardMultiUnit" class="form-control" [items]="lstUnitNotMain" bindLabel="text"
+								bindValue="value" notFoundText="Không có dữ liệu" formControlName="unitReceiveId"
+								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true" [hideSelected]="true"
+								placeholder="Chọn đơn vị">
+							</ng-select>
+							<ng-select *ngIf="isForwardMultiUnit" class="form-control" [items]="lstUnitNotMain" bindLabel="name"
+								bindValue="id" notFoundText="Không có dữ liệu" formControlName="unitReceiveId"
+								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true" [multiple]="true" [hideSelected]="true"
+								placeholder="Chọn đơn vị">
+							</ng-select>
+							<div
+								*ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.unitReceiveId.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6 form-group">
+							<label class="mb-1">Hạn giải quyết</label>
+							<div class="input-group">
+								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker
+									#n="bsDatepicker" maxlength="10" formControlName="expiredDate" [(ngModel)]="modelForward.expiredDate"
+									appBsDatepickerInvalid [minDate]="dateNow"
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Ghi chú</label>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
+								placeholder="Nhập ghi chú.." maxlength="500"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5 mr-3" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn text-white grd-blue border-0 px-5" (click)="onForward()">Gửi</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalForward_main">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="panel panel-default no-margin">
+				<div class="modal-header">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Xác nhận</p>
+				</div>
+				<div class="modal-body no-padding-bottom form-horizontal">
+					<p class="h4 text-center mb-3">Anh/Chị có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này?</p>
+
+					<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
+						<div class="form-row">
+							<div class="col-12 col-lg-12 form-group">
+								<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
+								<ng-select class="form-control border-input" [items]="unitForward" bindLabel="text" bindValue="value"
+									notFoundText="Không có dữ liệu" formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
+									[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
+								<div
+									*ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.unitReceiveId.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 form-group">
+								<label class="mb-1">Nội dung</label>
+								<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
+									placeholder="Nhập nội dung.." maxlength="500"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+						data-dismiss="modal">Hủy</button>
+					<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessForward()">Xác
+						nhận</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <div class="modal fade" id="modalDetail">

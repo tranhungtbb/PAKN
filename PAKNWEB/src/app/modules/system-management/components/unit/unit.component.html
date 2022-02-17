@@ -214,6 +214,127 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="accordion accordion-no-gutter accordion-bordered" *hasPermission="['3', 'A_XXI_0']">
+				<div class="accordion__item">
+					<div class="accordion__header collapsed">
+						<div class="d-flex justify-content-between align-items-center pr-5">
+							<span class="accordion__header--text text-uppercase h4" id="title-user-in-unit" data-toggle="collapse"
+								data-target="#templateSMS" aria-expanded="true" (click)="onCollapsed('item02')">Template SMS</span>
+							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item02']">
+								<span *ngIf="unitObject.isActived">
+									<button *hasPermission="['3', 'A_XXI_1']" type="button" title="Thêm mới template"
+										class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()">
+										<i class="pi pi-plus"></i>Thêm mới
+									</button>
+								</span>
+							</div>
+						</div>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#templateSMS"
+							aria-expanded="true" [ngClass]="{'collapse-icon-up':collapsed_checked['item02']}"
+							(click)="onCollapsed('item02')"></span>
+					</div>
+					<div id="templateSMS" class="accordion__body collapse show">
+						<div class="table-responsive">
+							<p-table #tableTeamplate [value]="listTeamplate" [rows]="20" [rowsPerPageOptions]="[20,30,50]"
+								[totalRecords]="totalCount_User" currentPageReportTemplate="Tổng số {{tableTeamplate.totalRecords}}"
+								[responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
+								tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header" class="bg-thead">
+									<tr>
+										<th style="width: 50px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>#</strong>
+											</p>
+										</th>
+										<th style="width: 250px;">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+												[pSortableColumn]="'title'">
+												<strong class="no-wrap">Tiêu đề <p-sortIcon [field]="'title'"></p-sortIcon></strong>
+											</p>
+											<input placeholder="Nhập .." type="text" class="form-control form-control-sm"
+												[(ngModel)]="titleTeamplate" trim [ngSwitch]="'title'"
+												(keydown.enter)="tableTeamplate.filter($event?.target.value.trim(), 'title', 'contains')">
+											<button *ngIf="titleTeamplate" class="btn bg-transparent btn-clear-input"
+												(click)="titleTeamplate=''">
+												<i class="fa fa-times"></i>
+											</button>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+												[pSortableColumn]="'content'">
+												<strong class="no-wrap">Nội dung <p-sortIcon [field]="'content'"></p-sortIcon></strong>
+											</p>
+											<input placeholder="Nhập .." type="text" class="form-control form-control-sm"
+												[(ngModel)]="contentTeamplate" trim [ngSwitch]="'content'"
+												(keydown.enter)="tableTeamplate.filter($event?.target.value.trim(), 'content', 'contains')">
+											<button *ngIf="contentTeamplate" class="btn bg-transparent btn-clear-input"
+												(click)="contentTeamplate=''">
+												<i class="fa fa-times"></i>
+											</button>
+										</th>
+
+										<th style="width: 150px;">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+												[pSortableColumn]="'isActive'">
+												<strong class="no-wrap">Trạng thái <p-sortIcon [field]="'isActive'"></p-sortIcon></strong>
+											</p>
+											<div class="dropdown bootstrap-select form-control form-control-sm">
+												<ng-select notFoundText="Không có dữ liệu" [closeOnSelect]="true" [searchable]="false"
+													[items]="listStatus" bindLabel="text" bindValue="value" [ngSwitch]="'isActive'"
+													(change)="tableTeamplate.filter($event?.value.toString(), 'isActive')" placeholder="Chọn..">
+												</ng-select>
+											</div>
+
+										</th>
+										<th style="width: 100px;" class="text-right text-uppercase"><strong>Thao tác</strong></th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td>
+											<strong>{{rowIndex+1}}</strong>
+										</td>
+										<td><strong>{{item.title}}</strong></td>
+										<td>
+											<p class="text-2line mb-0">{{item.content}}</p>
+										</td>
+										<td>
+											<p *ngIf="!item.isActive" style="margin-bottom: 0px;">
+												<span *hasNotPermission="['3', 'A_XXI_2']"
+													class="badge rounded-pill badge-light cursor-hand">Hết hiệu lực</span>
+												<span *hasPermission="['3', 'A_XXI_2']" class="badge rounded-pill badge-light cursor-hand"
+													(click)="onOpenConfirmModal(item.id,'update_teamplate')">Hết hiệu lực</span>
+											</p>
+											<p *ngIf="item.isActive" style="margin-bottom: 0px;">
+												<span *hasNotPermission="['3', 'A_XXI_2']"
+													class="badge rounded-pill badge-success cursor-hand">Hiệu lực</span>
+												<span *hasPermission="['3', 'A_XXI_2']" class="badge rounded-pill badge-success cursor-hand"
+													(click)="onOpenConfirmModal(item.id,'update_teamplate')">Hiệu lực</span>
+											</p>
+										</td>
+										<td>
+											<div class="d-flex justify-content-end">
+												<a *hasPermission="['3', 'A_XXI_2']" href="javascript:void(0);" title="Cập nhập template"
+													class="btn-icon grd-brown text-brown mr-2" (click)="preUpdate(item)"><i
+														class="bi bi-pencil-square"></i></a>
+												<a *hasPermission="['3', 'A_XXI_3']" href="javascript:void(0);" title="Xóa template"
+													class="btn-icon grd-red text-white"
+													(click)="onOpenConfirmModal(item.id,'delete_teamplate')"><i class="bi bi-trash"></i></a>
+											</div>
+										</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td class="text-center" colspan="6">Không có dữ liệu</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -367,16 +488,6 @@
 							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control"
 								placeholder="Nhập.." maxlength="500">
 						</div>
-						<!-- <div class="col-12 col-lg-12 form-group">
-							<label class="mb-1">Lĩnh vực</label>
-							<ng-select notFoundText="Không có dữ liệu"  class="form-control"
-								[items]="lstField" placeholder="Chọn.." bindLabel="text" bindValue="value"
-								multiple="true" virtualScroll ="true" hideSelected = "true"
-								formControlName="field" style="height: auto;"
-								[(ngModel)]="listFieldSelected" [closeOnSelect]="true" [searchable]="false">
-							</ng-select>
-						</div> -->
-
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
 							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4"
@@ -417,6 +528,78 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="modal fade" id="modalTeamplate">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">{{ title }}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<form class="form-horizontal" [formGroup]="template" #formDir="ngForm">
+
+					<div class="form-row">
+						<div class="col-12 col-lg-12 form-group">
+							<label class="mb-1">Chọn tiêu đề <span class="cl-red">(*)</span></label>
+
+							<input placeholder="Chọn.." formControlName="title" class="form-control" [(ngModel)]="modelTemplate.title"
+								maxlength="300">
+							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.title.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 form-group">
+							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn.." formControlName="isActive"
+								class="form-control" [items]="listStatus" bindLabel="text" bindValue="value"
+								[(ngModel)]="modelTemplate.isActive" [closeOnSelect]="true">
+							</ng-select>
+							<div
+								*ngIf="(submitted && f.isActive.invalid) || (f.isActive.invalid && (f.isActive.dirty || f.isActive.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.isActive.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12 form-group">
+							<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelTemplate.content" formControlName="content"
+								placeholder="Nhập nội dung.." maxlength="500"></textarea>
+
+							<div
+								*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.content.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onSave()">Xác
+					nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 
 <div class="modal fade" id="modalUnitsPermissionSMS">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">

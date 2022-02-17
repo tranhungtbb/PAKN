@@ -5,6 +5,7 @@ export class smsManagementObject {
 	signature: string
 	type: string
 	status: Number
+	teamplateId: number
 	constructor() {
 		this.id = 0
 		this.title = ''

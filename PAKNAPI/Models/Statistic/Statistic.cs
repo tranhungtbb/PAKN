@@ -286,10 +286,14 @@ namespace PAKNAPI.Models.Statistic
 		public bool ExistChild { get; set; }
 		public string UnitName { get; set; }
 		public int? TotalResult { get; set; }
-		public int? ReceiveApproved { get; set; }
+		public int? FinisedTotal { get; set; }
 		public int? Finised { get; set; }
-		public int? Processing { get; set; }
-		public int? Expired { get; set; }
+		public int? FinisedExpire { get; set; }
+		public int? ProcessTotal { get; set; }
+		public int? Process { get; set; }
+		public int? ProcessExpire { get; set; }
+
+		public int? TotalSatisfaction { get; set; }
 		public int? Satisfaction { get; set; }
 		public int? Accept { get; set; }
 		public int? UnSatisfaction { get; set; }

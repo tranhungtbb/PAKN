@@ -20,6 +20,7 @@ import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.co
 import { AppSettings } from 'src/app/constants/app-setting'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
+import { UnitService } from 'src/app/services/unit.service'
 
 declare var $: any
 
@@ -71,7 +72,8 @@ export class ViewRecommendationComponent implements OnInit {
 		private router: Router,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
-		private biService: BusinessIndividualService
+		private biService: BusinessIndividualService,
+		private _unitService: UnitService
 	) { }
 
 	ngOnInit() {
@@ -414,23 +416,40 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 
-	preForward() {
+	isForwardMultiUnit: boolean
+
+
+	preForward(isForwardMultiUnit: boolean = false) {
+		this.submitted = false
+		this.isForwardMultiUnit = isForwardMultiUnit
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = this.model.id
 		this.rebuilFormForward()
-		this.recommendationService.recommendationGetDataForForward({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnitNotMain = response.result.lstUnitNotMain
-					$('#modalForward').modal('show')
+		if (!isForwardMultiUnit) {
+			this.recommendationService.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.lstUnitNotMain = response.result.lstUnitNotMain
+						$('#modalForward').modal('show')
+					}
+				} else {
+					this.toastr.error(response.message)
 				}
-			} else {
-				this.toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
+			}),
+				(error) => {
+					console.log(error)
+				}
+		} else {
+			this._unitService.getDropdownForCombine({ RecommendationId: this.model.id }).subscribe(res => {
+				this.lstUnitNotMain = res.result
+				$('#modalForward').modal('show')
+			}, err => {
+				console.log(err)
+			})
+		}
+
+
+
 	}
 
 	onForward() {
@@ -439,28 +458,57 @@ export class ViewRecommendationComponent implements OnInit {
 		if (this.formForward.invalid) {
 			return
 		}
+		this.modelForward.id = this.model.idProcess
 		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
 		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
-		var request = {
-			_mRRecommendationForwardInsertIN: this.modelForward,
-			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
-			ListHashTag: this.lstHashtagSelected,
-			IsList: false,
+
+		if (!this.isForwardMultiUnit) {
+			var request = {
+				_mRRecommendationForwardInsertIN: this.modelForward,
+				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+				ListHashTag: this.lstHashtagSelected,
+				IsList: false,
+			}
+
+			this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modalForward').modal('hide')
+					this.getData()
+					this.toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		} else {
+			let requestCombine = {
+				RecommendationCombination: { ...this.modelForward, 'status': RECOMMENDATION_STATUS.PROCESS_WAIT },
+				RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+				ListUnit: this.modelForward.unitReceiveId,
+				ProcessId: this.modelForward.id
+			}
+			requestCombine.RecommendationCombination.unitReceiveId = null
+			debugger
+
+			this.recommendationService.recommendationCombineInsert(requestCombine, this.model.title).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modalForward').modal('hide')
+					this.getData()
+					this.toastr.success(COMMONS.FORWARD_SUCCESS)
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
 		}
 
-		this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modalForward').modal('hide')
-				this.getData()
-				this.toastr.success(COMMONS.FORWARD_SUCCESS)
-			} else {
-				this.toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
+
 	}
+	unitForward: any[] = []
 	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
 	recommendationStatusProcess: number = 0
 	preProcess(status: number) {
@@ -495,14 +543,51 @@ export class ViewRecommendationComponent implements OnInit {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
 				$('#modalReject').modal('show')
 			}
-		} else {
+		}
+		else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
+			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
+			this.recommendationService.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.unitForward = response.result.lstUnitForward
+						this.modelForward = new RecommendationForwardObject()
+						let unitForwardMain = this.unitForward.find(x => x.isMain == true)
+						if (unitForwardMain) {
+							this.modelForward.unitReceiveId = unitForwardMain.value
+						}
+						this.rebuilFormForward()
+						this.submitted = false
+						$('#modalForward_main').modal('show')
+					}
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.log(error)
+				}
+			setTimeout(() => {
+				$('#targetForward').focus()
+			}, 400)
+		}
+		else {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 				this.rebuilFormAccept()
 				$('#modalAcceptWithFiled').modal('show')
 				return
-			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
+			}
+			else if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_APPROVED) {
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn thực hiện giải quyết PAKN này?'
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+				this.modelProcess.status = PROCESS_STATUS_RECOMMENDATION.APPROVED
+				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+				$('#modalAccept').modal('show')
+				return
+			}
+			else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 				if (!this.model.field) {
@@ -632,6 +717,36 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 	}
 
+
+	onProcessForward() {
+		this.submitted = true
+		this.modelForward.content = this.modelForward.content == null ? '' : this.modelForward.content.trim()
+		if (this.formForward.invalid) {
+			return
+		}
+		this.modelProcess.reasonDeny = this.modelForward.content
+		this.modelProcess.unitReceiveId = this.modelForward.unitReceiveId
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_WAIT,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
+			IsForwardProcess: this.model.isForwardProcess,
+		}
+		this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalForward_main').modal('hide')
+				this.toastr.success(COMMONS.FORWARD_SUCCESS)
+				this.getData()
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+
 	onChangeMRSame(event, id: number) {
 		this.recommendationSameLocation = this.recommendationSameLocation.map(item => {
 			if (item.id == id) {
@@ -749,4 +864,27 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		)
 	}
+
+
+	// chuyển tiếp nhiều đơn vị
+
+	// get fCombine() {
+	// 	return this.formCombine.controls
+	// }
+
+	// buildForm() {
+	// 	this.formCombine = this._fb.group({
+	// 		unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+	// 		expiredDate: [this.modelForward.expiredDate],
+	// 		content: [this.modelForward.content],
+	// 	})
+	// }
+
+	// rebuilForm() {
+	// 	this.formCombine.reset({
+	// 		unitReceiveId: this.modelForward.unitReceiveId,
+	// 		expiredDate: this.modelForward.expiredDate,
+	// 		content: this.modelForward.content,
+	// 	})
+	// }
 }

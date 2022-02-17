@@ -95,6 +95,7 @@ export class LOG_OBJECT {
 	public static SY_CONFIG = 'Cấu hình hệ thống'
 	public static SY_SMS = 'Cấu hình SMS thương hiệu'
 	public static SY_UNIT = 'Đơn vị'
+	public static SY_TEAMPLALTE_SMS = 'Teamplate sms'
 	public static SY_CHATBOX = 'Chat box'
 	public static SY_SUPPORT = 'Tài liệu hướng dẫn sử dụng'
 	public static SY_SUPPORT_VIDEO = 'Video hướng dẫn sử dụng'
