@@ -275,18 +275,35 @@
 										: 'Cơ quan chức năng'}}</p>
 									<p *ngIf="model.fieldName" class="my-0 line-height-1 font-weight-bold"> Lĩnh vực: {{model.fieldName}}
 									</p>
+
+									<ng-container *ngIf="model.status == 7 || (model.status == 8 && model.userActive == userLoginId)">
+										<div class="mb-1 mt-2">
+											<p-radioButton name="type" value="1" class="mr-2" [(ngModel)]="model.type" inputId="type1">
+											</p-radioButton>
+											<label class="mb-0" for="type1">Phản ánh kiến nghị về kinh tế xã hội</label>
+										</div>
+										<div>
+											<p-radioButton name="type" value="0" class="mr-2" [(ngModel)]="model.type" inputId="type2">
+											</p-radioButton>
+											<label class="mb-0" for="type2">Phản ánh kiến nghị về dịch vụ công</label>
+										</div>
+									</ng-container>
 								</div>
-								<button *ngIf="lstHashtagSelected.length > 0 && suggest == false" type="button"
-									class="btn btn-sm rounded bg-white text-dark border pull-right" (click)="getListSuggest()">
-									<i class="bi bi-lightbulb"></i> Gợi ý kết quả
-								</button>
+								<div>
+									<button *ngIf="lstHashtagSelected.length > 0 && suggest == false" type="button"
+										class="btn btn-sm rounded bg-white text-dark border pull-right" (click)="getListSuggest()">
+										<i class="bi bi-lightbulb"></i> Gợi ý kết quả
+									</button>
+								</div>
+
 							</div>
 
 
 							<p *ngIf="isUnitCombine" class="mt-3 mb-2 font-weight-bold text-center">Phối hợp trả lời phản ánh</p>
 							<ng-container *ngIf="!isUnitCombine">
-								<p *ngIf="![3,6].includes(model.status); else other" class="mt-3 mb-2 font-weight-bold text-center">Trả
-									lời phản ánh</p>
+								<p *ngIf="![3,6].includes(model.status); else other" class="mt-3 mb-2 font-weight-bold text-center">
+									Trả lời phản ánh
+								</p>
 								<ng-template #other>
 									<p class="mt-3 mb-2 font-weight-bold text-center">Từ chối phản ánh với lý do:</p>
 								</ng-template>

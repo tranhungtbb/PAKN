@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { AuthenticationService } from '../../../../services/authentication.service'
 import { ForgetPasswordObject } from '../../../../models/forgetPasswordUserObject'
 import { ToastrService } from 'ngx-toastr'
@@ -12,15 +12,11 @@ declare var $: any
 })
 export class ForgetPasswordComponent implements OnInit {
 	submitted: boolean = false
-	user: ForgetPasswordObject = {
-		phone: '',
-		email: ''
-	}
+	user: any = new ForgetPasswordObject()
 	phoneHide: any = ''
 	forgetPasswordForm: FormGroup
 	constructor(
 		private authenService: AuthenticationService,
-		private _avRoute: ActivatedRoute,
 		private _router: Router,
 		private toastr: ToastrService,
 		private formBuilder: FormBuilder
@@ -29,7 +25,7 @@ export class ForgetPasswordComponent implements OnInit {
 	ngOnInit() {
 		this.forgetPasswordForm = this.formBuilder.group({
 			// phone: new FormControl(this.user.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]),
-			email: new FormControl(this.user.email, [Validators.required]),
+			email: new FormControl(this.user.email, [Validators.required, Validators.email]),
 		})
 	}
 

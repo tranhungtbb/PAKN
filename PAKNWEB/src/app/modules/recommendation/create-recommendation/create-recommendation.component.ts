@@ -51,7 +51,6 @@ export class CreateRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private notificationService: NotificationService,
 		private storeageService: UserInfoStorageService
 	) { }
 	async ngOnInit() {
@@ -180,17 +179,7 @@ export class CreateRecommendationComponent implements OnInit {
 					this.model.code = response.result.code
 					this.lstUnit = response.result.lstUnit
 					//
-					if (this.model.id == 0) {
-						// nếu thêm mới và data local stogate vẫn có thì lấy ra
-						let dataRecommetdation = JSON.parse(this.storeageService.getRecommentdationObjectRemember())
-						if (dataRecommetdation) {
-							this.model = { ...dataRecommetdation.model, code: response.result.code, sendId: null }
-							this.lstHashtagSelected = [...dataRecommetdation.lstHashtagSelected]
-							if (this.model.sendDate) {
-								this.model.sendDate = new Date(this.model.sendDate)
-							}
-						}
-					}
+
 				}
 			} else {
 				this.toastr.error(response.message)

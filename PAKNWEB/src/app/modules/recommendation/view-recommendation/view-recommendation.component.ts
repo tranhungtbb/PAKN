@@ -338,6 +338,7 @@ export class ViewRecommendationComponent implements OnInit {
 				Hashtags: this.lstHashtagSelected,
 				Files: this.files,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
+				RecommendationType: this.model.type,
 				FilesDelete: this.filesDelete
 			}
 			if (this.isUnitCombine) {

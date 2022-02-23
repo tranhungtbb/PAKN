@@ -30,6 +30,7 @@ namespace PAKNAPI.Models.Results
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 
 		public string Email { get; set; }
+		public bool IsSystem { get; set; }
 	}
 
 	public class GetTokenByEmail

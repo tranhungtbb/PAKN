@@ -649,13 +649,13 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize(Policy = "ThePolicy", Roles = RoleSystem.ADMIN)]
 		[Route("change-status")]
-		public async Task<ActionResult<object>> SYUserChangeStatusBase(SYUserChangeStatusIN _sYUserChangeStatusIN)
+		public async Task<ActionResult<object>> SYUserChangeStatusBase(SYUserUpdateStatusLog _sYUserChangeStatusIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserChangeStatus(_appSetting).SYUserChangeStatusDAO(_sYUserChangeStatusIN) };
+				_sYUserChangeStatusIN.CountLock = 0;
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUser(_appSetting).SYUserUpdateStatusLog(_sYUserChangeStatusIN) };
 			}
 			catch (Exception ex)
 			{

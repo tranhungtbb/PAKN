@@ -12,6 +12,9 @@ import { MatCheckboxModule } from '@angular/material'
 import { TreeTableModule } from 'primeng/treetable'
 import { AgmCoreModule } from '@agm/core'
 import { FilterImagePipe } from 'src/app/pipes/filter-image.pipe'
+import { MatRadioModule } from '@angular/material/radio'
+import { RadioButtonModule } from 'primeng/radiobutton';
+
 
 import { RecommendationRoutingModule } from './recommendation-routing.module'
 import { RecommendationComponent } from './recommendation.component'
@@ -58,6 +61,8 @@ import { HistoryRecommendationComponent } from './history-recommendation/history
 		TableModule,
 		NgSelectModule,
 		ContextMenuModule,
+		MatRadioModule,
+		RadioButtonModule,
 		AgmCoreModule.forRoot({
 			apiKey: 'AIzaSyBriVbWgmHEE8CGaEJM6V47Bem3VoYCi0Q',
 			language: 'vi',

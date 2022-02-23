@@ -22,6 +22,8 @@ using System.Security.Cryptography;
 using System.Linq;
 using PAKNAPI.Services;
 using NSwag.Annotations;
+using AspNetCoreRateLimit;
+using Microsoft.Extensions.Options;
 
 namespace PAKNAPI.Controllers
 {
@@ -31,21 +33,33 @@ namespace PAKNAPI.Controllers
 	[OpenApiTag("Login", Description = "Login")]
 	public class ContactController : BaseApiController
 	{
+		// const
+		private const string textRamdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		private const string numberRamdom = "1234567890";
+
+
 		private readonly IAppSetting _appSetting;
 		private readonly IHttpContextAccessor _context;
-
-		private static string textRamdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		private static string numberRamdom = "1234567890";
-
-		private IConfiguration _config;
+		private readonly IConfiguration _config;
 		private readonly Bugsnag.IClient _bugsnag;
+		// limit request
+		private readonly IOptions<IpRateLimitOptions> _options;
+		private readonly IIpPolicyStore _ipPolicyStore;
 
-		public ContactController(IAppSetting appSetting, IHttpContextAccessor context, IConfiguration config, Bugsnag.IClient client)
+		public ContactController(
+			IAppSetting appSetting, 
+			IHttpContextAccessor context, 
+			IConfiguration config, 
+			Bugsnag.IClient client,
+			IOptions<IpRateLimitOptions> optionsAccessor, 
+			IIpPolicyStore ipPolicyStore)
 		{
 			_appSetting = appSetting;
 			_context = context;
 			_config = config;
 			_bugsnag = client;
+			_options = optionsAccessor;
+			_ipPolicyStore = ipPolicyStore;
 		}
 
 		/// <summary>
@@ -59,7 +73,7 @@ namespace PAKNAPI.Controllers
 		[AllowAnonymous]
 		public async Task<ActionResult<object>> Login(LoginIN loginIN)
 		{
-			return await new LoginService(_appSetting, _config, _context).AuthenticateAsync(loginIN);
+			return await new LoginService(_appSetting, _config, _context, _options, _ipPolicyStore).AuthenticateAsync(loginIN);
 		}
 
 		/// <summary>
@@ -73,7 +87,7 @@ namespace PAKNAPI.Controllers
 		[Route("refresh-token")]
 		public async Task<object> RefreshToken(RefreshTokenRequest model)
 		{
-			return await new LoginService(_appSetting, _config, _context).RefreshToken(model);
+			return await new LoginService(_appSetting, _config, _context, _options, _ipPolicyStore).RefreshToken(model);
 		}
 
 
@@ -88,7 +102,7 @@ namespace PAKNAPI.Controllers
 		[Route("revoke-token")]
 		public async Task<object> RevokeTokenAsync(RevokeTokenRequest model)
 		{
-			return await new LoginService(_appSetting, _config, _context).RevokeToken(model);
+			return await new LoginService(_appSetting, _config, _context, _options, _ipPolicyStore).RevokeToken(model);
 		}
 
 
@@ -138,7 +152,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<SYUSRLogin> user = await new SYUSRLogin(_appSetting).SYUSRGetByEmailDAO(request.Email);
+				List<SYUSRLogin> user = await new SYUSRLogin(_appSetting).SYUSRGetByEmailDAO(request.Email, request.IsSystem);
 				if (user.Count == 0)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Không tồn tại email" };

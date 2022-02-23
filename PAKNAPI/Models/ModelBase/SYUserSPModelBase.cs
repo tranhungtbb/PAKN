@@ -964,6 +964,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsApprove { get; set; }
 		public bool? IsUnitMain { get; set; }
+		public int? CountLock { get; set; } = 0;
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{
@@ -973,10 +974,11 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_Login", DP)).ToList();
 		}
 
-		public async Task<List<SYUSRLogin>> SYUSRGetByEmailDAO(string Email)
+		public async Task<List<SYUSRLogin>> SYUSRGetByEmailDAO(string Email, bool? IsSystem)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Email", Email);
+			DP.Add("IsSystem", IsSystem);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_GetByEmail", DP)).ToList();
 		}

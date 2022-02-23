@@ -1226,7 +1226,11 @@ textarea:placeholder-shown{
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu > li:hover > ul a {
-	padding: 4px 15px 4px 15px !important;
+	padding: 3px 15px 3px 15px !important;
+}
+
+[data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li > ul{
+	width: 14rem !important;
 }
 
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu>li .has-arrow:after {

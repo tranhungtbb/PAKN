@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using PAKNAPI.Common;
 using PAKNAPI.Model;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.Results;
+using PAKNAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,12 +28,17 @@ namespace PAKNAPI.Authorize
 		//readonly HttpActionContext _appContext;
 		readonly IHttpContextAccessor _contextAccessor;
 		private readonly IAppSetting _appSetting;
-
-		public ThePolicyAuthorizationHandler(IHttpContextAccessor ca, IAppSetting appSetting)
+		private readonly IOptions<IpRateLimitOptions> _options;
+		private readonly IIpPolicyStore _ipPolicyStore;
+		private readonly IConfiguration _config;
+		public ThePolicyAuthorizationHandler(IHttpContextAccessor ca, IAppSetting appSetting, IOptions<IpRateLimitOptions> options, IIpPolicyStore ipPolicyStore ,IConfiguration config)
 		{
 			//_appContext = c;
 			_contextAccessor = ca;
 			_appSetting = appSetting;
+			_options = options;
+			_ipPolicyStore = ipPolicyStore;
+			_config = config;
 		}
 
 		protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ThePolicyRequirement requirement)
@@ -44,6 +53,8 @@ namespace PAKNAPI.Authorize
 			Claim userId = context.User.Claims.FirstOrDefault(claim => claim.Type == "Id");
 			var filterContext = context.Resource as AuthorizationFilterContext;
 			var response = filterContext?.HttpContext.Response;
+
+			new ClientRateLimit(_options, _ipPolicyStore, _contextAccessor, _config).AddClientRateLimitAsync().Wait();
 
 			//bool permission = false;
 			if (userId != null)

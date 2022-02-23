@@ -131,6 +131,7 @@ export class RecommendationViewObject {
 	lng: string
 	isForwardProcess: boolean
 	isApproveDeny: boolean
+	type: number
 }
 export class RecommendationConclusionObject {
 	id: number = 0

@@ -327,6 +327,7 @@ export class DashboardChatBotComponent implements OnInit {
 	convertMessageToObjectList() {
 		try {
 			if (this.messages) {
+				debugger
 				for (let index = 0; index < this.messages.length; index++) {
 					const element = this.messages[index]
 					let result, type

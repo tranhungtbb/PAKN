@@ -40,6 +40,8 @@ using NSwag.Generation.Processors.Security;
 using NSwag;
 using NSwag.AspNetCore;
 using System.Reflection;
+using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace PAKNAPI
 {
@@ -105,6 +107,32 @@ namespace PAKNAPI
 			services.AddTransient<IMailService, MailService>();
 
 			services.AddTransient<IAuthorizationHandler, ThePolicyAuthorizationHandler>();
+
+			// AspNetCoreRateLimit
+
+			services.AddOptions();
+
+			// needed to store rate limit counters and ip rules
+			services.AddMemoryCache();
+			//load general configuration from appsettings.json
+			services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+			services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies"));
+
+            // inject counter and rules stores
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+
+			//services.AddSingleton<IIpPolicyStore, DistributedCacheIpPolicyStore>();
+			//services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
+
+			// configuration (resolvers, counter key builders)
+			services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
+			services.AddInMemoryRateLimiting();
+
+
+
 
 			services.AddHttpContextAccessor();
 			services.AddDevExpressControls();
@@ -234,6 +262,10 @@ namespace PAKNAPI
 				options.KeepAliveInterval = TimeSpan.FromSeconds(15);
 				options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);
 			});
+
+
+			
+
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -253,10 +285,18 @@ namespace PAKNAPI
 				await next();
 			});
 
+			app.UseForwardedHeaders(new ForwardedHeadersOptions
+			{
+				ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+				ForwardedHeaders.XForwardedProto
+			});
+
+
+
 			app.UseMiddleware<CustomMiddleware>();
 
 			app.UseCors(
-				options => options.WithOrigins("http://localhost:8081", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:8080/")
+				options => options.WithOrigins("http://localhost:4200", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:8080/")
 				.AllowAnyOrigin()
 				//.AllowAnyMethod()
 				.WithMethods("PUT", "DELETE", "GET", "POST")
@@ -279,6 +319,9 @@ namespace PAKNAPI
 				RequestPath = new PathString("/Upload/Document")
 			});
 			// end
+
+			app.UseIpRateLimiting();
+			//app.UseClientRateLimiting();
 
 			app.UseRouting();
 

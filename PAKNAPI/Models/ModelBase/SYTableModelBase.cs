@@ -1426,9 +1426,23 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UserCount", DP));
 		}
-		
 
+		public async Task<int> SYUserUpdateStatusLog(SYUserUpdateStatusLog _sYUser)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUser.Id);
+			DP.Add("IsActived", _sYUser.IsActived);
+			DP.Add("CountLock", _sYUser.CountLock);
 
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_USR_UpdateStatus", DP));
+		}
+	}
+
+	public class SYUserUpdateStatusLog {
+		public long Id { get; set; }
+		public bool IsActived { get; set; }
+		public int CountLock { get; set; }
+			 
 	}
 
 	public class SYUserRoleMapOnPage

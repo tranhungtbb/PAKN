@@ -2281,6 +2281,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
 			DP.Add("Field", _mRRecommendationUpdateStatusIN.Field);
 			DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
+			DP.Add("Type", _mRRecommendationUpdateStatusIN.Type);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
 		}
 
@@ -2320,6 +2321,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsFakeImage { get; set; }
 
 		public int? Field { get; set; }
+		public int? Type { get; set; }
 
 		public MRRecommendationUpdateStatusIN() {
 			this.IsFakeImage = false;

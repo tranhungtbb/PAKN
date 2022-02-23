@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Type } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthenticationService } from '../../../../services/authentication.service'
-import { ForgetPasswordUserObject } from '../../../../models/forgetPasswordUserObject'
+import { ForgetPasswordObject } from '../../../../models/forgetPasswordUserObject'
 import { ToastrService } from 'ngx-toastr'
+import { TYPE_CONFIG } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-forget-password-user',
@@ -12,21 +13,19 @@ import { ToastrService } from 'ngx-toastr'
 })
 export class ForgetPasswordUserComponent implements OnInit {
 	submitted: boolean = false
-	user: ForgetPasswordUserObject = {
-		Email: '',
-	}
+	user: any = new ForgetPasswordObject()
 	forgetPasswordForm: FormGroup
 	constructor(
 		private authenService: AuthenticationService,
-		private _avRoute: ActivatedRoute,
 		private _router: Router,
 		private toastr: ToastrService,
 		private formBuilder: FormBuilder
 	) { }
 
 	ngOnInit() {
+		this.user.isSystem = true
 		this.forgetPasswordForm = this.formBuilder.group({
-			email: new FormControl(this.user.Email, [Validators.required]),
+			email: new FormControl(this.user.email, [Validators.required, Validators.email]),
 		})
 	}
 

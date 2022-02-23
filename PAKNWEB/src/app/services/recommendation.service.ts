@@ -256,6 +256,7 @@ export class RecommendationService {
 		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
 		form.append('Hashtags', JSON.stringify(request.Hashtags))
 		form.append('RecommendationStatus', JSON.stringify(request.RecommendationStatus))
+		form.append('RecommendationType', JSON.stringify(request.RecommendationType))
 		form.append('FileDelete', JSON.stringify(request.FilesDelete))
 
 		if (request.Files) {

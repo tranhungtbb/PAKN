@@ -372,7 +372,8 @@ namespace PAKNAPI.Controller
                     var unitInfo = new SYUnit(_appSetting).SYUnitGetByID(unitId);
                     if (request.Data.Status > 1)
                     {
-                        request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                        request.Data.Status = request.Data.UnitId != unitId ? 
+                            (byte)STATUS_RECOMMENDATION.PROCESS_WAIT : (byte)STATUS_RECOMMENDATION.PROCESSING;
                         request.Data.UnitId = unitId;
                     }
 
@@ -781,7 +782,8 @@ namespace PAKNAPI.Controller
                     var unitInfo = new SYUnit(_appSetting).SYUnitGetByID(unitId);
                     if (request.Data.Status > 1)
                     {
-                        request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                        request.Data.Status = request.Data.UnitId != unitId ?
+                            (byte)STATUS_RECOMMENDATION.PROCESS_WAIT : (byte)STATUS_RECOMMENDATION.PROCESSING;
                         request.Data.UnitId = unitId;
                     }
                 }
@@ -1443,6 +1445,7 @@ namespace PAKNAPI.Controller
                 var userApprove = forwards.Where(x => x.Step == STEP_RECOMMENDATION.APPROVE && x.Status == PROCESS_STATUS_RECOMMENDATION.WAIT).FirstOrDefault();
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                _mRRecommendationUpdateStatusIN.Type = JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationType"].ToString(), jss);
                 _mRRecommendationUpdateStatusIN.Id = request.DataConclusion.RecommendationId;
 
                 bool isUserApprove = false;

@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
 import { Observable } from 'rxjs'
-// import { LoginUserObject } from '../models/loginUserObject';
-import { ForgetPasswordUserObject } from '../models/forgetPasswordUserObject'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
-// import { ChangePasswordUserObject } from '../models/changePasswordUserObject';
 
 @Injectable({
 	providedIn: 'root',

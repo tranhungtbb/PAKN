@@ -14,6 +14,8 @@ using PAKNAPI.Models.Results;
 using PAKNAPI.Model.ModelAuth;
 using PAKNAPI.Model;
 using PAKNAPI.ModelBase;
+using AspNetCoreRateLimit;
+using Microsoft.Extensions.Options;
 
 namespace PAKNAPI.Services
 {
@@ -22,12 +24,16 @@ namespace PAKNAPI.Services
         private readonly IAppSetting _appSetting;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _context;
+        private readonly IOptions<IpRateLimitOptions> _options;
+        private readonly IIpPolicyStore _ipPolicyStore;
 
-        public LoginService(IAppSetting appSetting, IConfiguration configuration, IHttpContextAccessor context)
+        public LoginService(IAppSetting appSetting, IConfiguration configuration, IHttpContextAccessor context, IOptions<IpRateLimitOptions> options, IIpPolicyStore ipPolicyStore)
         {
-            this._appSetting = appSetting;
+            _appSetting = appSetting;
             _config = configuration;
             _context = context;
+            _options = options;
+            _ipPolicyStore = ipPolicyStore;
         }
         public async Task<object> AuthenticateAsync(LoginIN loginIN)
         {
@@ -67,8 +73,15 @@ namespace PAKNAPI.Services
                             await new SYUSRGetPermissionByUserId(_appSetting).SYUSRGetPermissionByUserIdDAO(Int32.Parse(user[0].Id.ToString()));
                         if (rsSYUSRGetPermissionByUserId != null && rsSYUSRGetPermissionByUserId.Count > 0)
                         {
+                            await new SYUser(_appSetting).SYUserUpdateStatusLog(
+                                new SYUserUpdateStatusLog
+                                {
+                                    Id = user[0].Id,
+                                    IsActived = true,
+                                    CountLock = 0
+                                }
+                            );
                             BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(_context.HttpContext.Request);
-                            //var s = Request.Headers;
                             SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
                             {
                                 UserId = user[0].Id,
@@ -133,7 +146,19 @@ namespace PAKNAPI.Services
                             Exception = null
                         };
                         await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
-                        //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception(), loginIN.UserName);
+
+                        // update db
+
+                        await new SYUser(_appSetting).SYUserUpdateStatusLog(
+                                new SYUserUpdateStatusLog
+                                {
+                                    Id = user[0].Id,
+                                    IsActived = user[0].CountLock + 1 > 5 ? false : true,
+                                    CountLock = (int)user[0].CountLock + 1
+                                }
+                            );
+
+
 
                         return new ResultApi
                         {

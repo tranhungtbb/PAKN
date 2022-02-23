@@ -12,8 +12,8 @@ namespace PAKNAPI.Middle
 	{
 		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
+			//context.Request.Headers.Add("ipAddress", context.Request.HttpContext.Connection.RemoteIpAddress.ToString());
 			context.Request.EnableBuffering();
-
 			using (var reader = new StreamReader(context.Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false, leaveOpen: true))
 			{
 				var body = await reader.ReadToEndAsync();

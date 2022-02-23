@@ -81,18 +81,12 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 	inSortField = 'ID'
 
 	isOtherNation = false
-	isIndividual: boolean = false
 
 	ngOnInit() {
 		// this.buildForm()
 		this.getList()
 		this.localeService.use('vi')
 		this.loadFormBuilder()
-		// this.onChangeNation()
-		if (localStorage.getItem('isIndividual') === 'true') {
-			this.isIndividual = true
-			$('#modal').modal('show')
-		}
 	}
 
 	//event
@@ -414,11 +408,7 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
 				$('#modal').modal('hide')
-				if (this.isIndividual) {
-					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0/1'])
-				} else {
-					this.getList()
-				}
+				this.getList()
 			})
 		}
 	}
@@ -476,9 +466,9 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 				this.model.birthDay = this.model.birthDay == null ? null : new Date(this.model.birthDay)
 				this.model.dateOfIssue = this.model.dateOfIssue == null ? null : new Date(this.model.dateOfIssue)
 
-				this.getProvince()
-				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
-				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
+				// this.getProvince()
+				// this.getDistrict(response.result.InvididualGetByID[0].provinceId)
+				// this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
 				this.rebuidForm()
 				$('#modal').modal('show')
 				setTimeout(() => {
