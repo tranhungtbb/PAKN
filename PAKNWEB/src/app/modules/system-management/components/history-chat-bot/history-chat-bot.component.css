@@ -1,0 +1,6 @@
+:host ::ng-deep table thead input.form-control, 
+:host ::ng-deep table thead select.form-control, 
+:host ::ng-deep table thead .form-control, 
+:host ::ng-deep table thead .form-control ng-select {
+  height: 38px !important;
+}

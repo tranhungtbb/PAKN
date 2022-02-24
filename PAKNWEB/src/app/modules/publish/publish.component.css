@@ -1111,8 +1111,7 @@ body, html {
 .msg_cotainer {
 	margin-top: auto;
 	margin-bottom: auto;
-	margin-left: 10px;
-	border-radius: 25px;
+	border-radius: 15px;
 	background-color: #c8c8c8;
 	padding: 10px;
 	position: relative;
@@ -1337,4 +1336,73 @@ body, html {
 .border-top-radius {
 	border-top-left-radius: 1.1rem;
 	border-top-right-radius: 1.1rem;
+}
+
+/* @media (max-width: 320px) { 
+	.navbar-expand .navbar-collapse{
+		display: block !important;
+	}
+	.title-action{
+    float: right !important;
+	}
+} */
+
+
+
+@media (max-width: 575.98px)  { 
+	.navbar-expand .navbar-collapse{
+		display: block !important;
+	}
+	.title-action{
+    float: right !important;
+	}
+
+	.title-top{
+		font-size: 10px;
+	}
+	.title-bottom{
+		font-size: 20px;
+	}
+
+	.btn-girl span{
+		display: none;
+	}
+	.chat-now{
+		width: 300px;
+	}
+
+	.chat-now.pointer .mr-3{
+		display: none;
+	}
+
+	.chat{
+		padding: 0px;
+	}
+
+	.dropdown-menu-right{
+		right: auto;
+    left: -12px;
+	}
+	.notification_dropdown .dropdown-menu-right{
+		min-width: 280px !important;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+	.title-action{
+		margin-top: 10px !important;
+    float: right !important;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+	
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+@media (min-width: 1200px) { 
+
 }

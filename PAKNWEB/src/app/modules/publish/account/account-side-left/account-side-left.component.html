@@ -26,10 +26,10 @@
 </ul>
 
 
-<div class="sb-tk-pakn mb-4 card-my-recommentdation" *ngIf="typeUserLoginPublish != 1 && recommendationStatistics">
+<div class="sb-tk-pakn mb-4 card-my-recommentdation d-none d-lg-block"
+	*ngIf="typeUserLoginPublish != 1 && recommendationStatistics">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-center" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase">Phản ánh, kiến nghị của tôi</h4>
-		<!-- <h4 class="counter">{{totalRecommentdation}}</h4> -->
 	</div>
 	<div>
 		<div class="border-left-yellow mb-3 d-flex justify-content-between center" (click)="redirectMyRecommendaton(0)">
@@ -96,7 +96,7 @@
 
 
 <div class="modal fade" id="acceptSignOut">
-	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="width: auto" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h3">Xác nhận</p>

@@ -470,3 +470,22 @@ ul li {
 .p-title-hover:hover{
 	color:#f35f1b !important;
 }
+
+
+
+@media (max-width: 575.98px)  { 
+	.btn-girl span{
+		display: none;
+	}
+
+	.pr-7{
+		padding-right: 15px !important;
+	}
+	.pl-7{
+		padding-left: 15px !important;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}

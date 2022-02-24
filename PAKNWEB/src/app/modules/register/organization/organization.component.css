@@ -13,3 +13,9 @@
 .red{
 	color: #DA2222 !important;
 }
+
+@media (max-width: 575.98px)  { 
+	span.py-2.p-3.d-inline-block{
+		font-size: 16px;
+	}
+}

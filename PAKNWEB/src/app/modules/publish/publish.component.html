@@ -31,18 +31,19 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-4 col-xl-4 col-md-4 mb-0">
-									<div class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1"
-										style="display: flex; margin-top: 5px; align-items: center;">
+							<div class="row mt-2">
+								<div class="col-3 col-sm-3 col-md-3 col-lg-4 col-xl-4 mb-0 d-none d-lg-block"
+									*ngIf="typeUserLoginPublish == 1">
+									<div class="nav-item dropdown notification_dropdown d-flex"
+										style="margin-top: 5px; align-items: center;">
 										<a class="nav-link  bg-transparent py-0" href="/quan-tri">
 											<i class="bi bi-grid fa-2x"></i>
 										</a>
 									</div>
 								</div>
-								<div class="col-4 col-xl-4 col-md-4 mb-0" style="padding-left: 5px;">
-									<div class="nav-item dropdown notification_dropdown"
-										style="display: flex; margin-top: 5px; align-items: center;">
+								<div class="col-3 col-sm-3 col-md-4 col-lg-4 col-xl-4 mb-0">
+									<div class="nav-item dropdown notification_dropdown d-flex"
+										style="margin-top: 5px; align-items: center;">
 										<a class="nav-link ai-icon bg-transparent py-0" (click)="updateNotifications()"
 											href="javascript:void(0)" role="button" data-toggle="dropdown">
 											<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
@@ -91,8 +92,8 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-4 col-xl-4 col-md-4 mb-0" style="padding-left: 5px;">
-									<div class="nav-item dropdown header-profile" style="display: flex;">
+								<div class="col-3 col-sm-3 col-md-4 col-lg-4 col-xl-4 mb-0">
+									<div class="nav-item dropdown header-profile d-flex">
 										<a class="nav-link bg-transparent px-0 py-0" href="#" role="button" data-toggle="dropdown">
 											<div class="avatar-circle background-while">
 												<i class="bi bi-person-fill cl-dark"></i>
@@ -126,11 +127,11 @@
 							</div>
 
 						</div>
-						<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center title-action">
+						<ul *ngIf="!isHasToken" class="navbar-nav header-right d-flex align-items-center title-action">
 
-							<span><a class="btn-hight-light" routerLink="/dang-ky/ca-nhan">Đăng ký</a></span>
-							<span class="mx-1" style="color: #337ab7;">|</span>
-							<span><a class="btn-hight-light" routerLink="/dang-nhap">Đăng nhập</a></span>
+							<div><a class="btn-hight-light border-right-blue" routerLink="/dang-ky/ca-nhan">Đăng ký</a></div>
+							<div class="mx-1" style="color: #337ab7;">|</div>
+							<div><a class="btn-hight-light" routerLink="/dang-nhap">Đăng nhập</a></div>
 						</ul>
 					</div>
 					<div style="margin-left:15px; display:inherit">
@@ -382,8 +383,8 @@
 							</div>
 							<div class="card-body msg_card_body" id="bodyMessage">
 								<ng-container *ngFor="let message of messages">
-									<div *ngIf="message.fromId != 0" class="d-flex justify-content-start mb-4">
-										<div class="img_cont_msg">
+									<div *ngIf="message.fromId != 0" class="justify-content-start mb-4">
+										<div class="img_cont_msg mb-1">
 											<img *ngIf="!message.fromAvatarPath" src="../../../assets/dist/images/Icon_app.png"
 												class="rounded-circle user_img_msg">
 											<img *ngIf="message.fromAvatarPath" [src]="message.fromAvatarPath"

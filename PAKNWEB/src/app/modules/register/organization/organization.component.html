@@ -1,6 +1,6 @@
 <div class="tab-pane fade show active" id="dk-doanhnghiep">
 	<div class="row mx-0 border border-brown rounded-xl">
-		<div class="col col-xl-4 col-lg-3 border-right p-4 border-brown">
+		<div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-4 border-right p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
 			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group pi-italic">
@@ -67,12 +67,12 @@
 			</form>
 		</div>
 
-		<div class="col col-xl-8 col-lg-9 p-4 border-brown">
+		<div class="col-12 col-sm-7 col-md-7 col-lg-8 col-xl-8 p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin người đại diện</span></h4>
 
 			<app-org-repre-form></app-org-repre-form>
 		</div>
-		<div class="col col-xl-4 col-lg-3 border-right border-top p-4 border-brown">
+		<div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-4 border-right border-top p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin doanh nghiệp</span></h4>
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group pi-italic">
@@ -111,7 +111,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col col-xl-8 col-lg-9 border-right border-top p-4 border-brown">
+		<div class="col-12 col-sm-7 col-md-7 col-lg-8 col-xl-8 border-right border-top p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">địa chỉ trụ sở / văn phòng đại diện</span>
 			</h4>
 			<app-org-form-address></app-org-form-address>
@@ -122,7 +122,7 @@
 		Hệ thống gửi tin nhắn SMS và thông báo cập nhật kết quả giải quyết</p>
 	<p class="cl-red font-italic mt-0">* Các thông tin có dấu (*) bắt buộc</p>
 	<div class="card-body d-flex justify-content-end px-0 pt-0">
-		<a class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px" (click)="backToHome()">
+		<a class="btn btn-outline-light d-none d-lg-block px-5 mr-3 rounded-10px h-48px" (click)="backToHome()">
 			<i class="bi bi-arrow-left"></i>
 			Quay lại
 		</a>
@@ -134,7 +134,7 @@
 </div>
 
 
-<div class="modal fade" id="modal-otp">
+<div class="modal fade" id="modal-otp" style="width: 95%;">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header d-block">

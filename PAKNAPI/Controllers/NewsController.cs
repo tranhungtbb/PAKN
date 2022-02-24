@@ -147,6 +147,11 @@ namespace PAKNAPI.Controller
 			{
 				List<NENewsGetByID> rsNENewsGetByID = await new NENewsGetByID(_appSetting).NENewsGetByIDDAO(Id);
 				var files = await new NEFileAttach(_appSetting).NENewsFileGetByNewsIdDAO(Id);
+				Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+				foreach (var item in files)
+				{
+					item.FileAttach = decrypt.EncryptData(item.FileAttach);
+				}
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetByID", rsNENewsGetByID},

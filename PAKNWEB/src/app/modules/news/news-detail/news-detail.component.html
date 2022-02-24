@@ -127,6 +127,10 @@
 										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
 											file.name}}</span>
 									</a>
+
+									<span class="center" title="Tải xuống" (click)="DownloadFile(file)">
+										<i class="ml-2 bi bi-download"></i>
+									</span>
 								</p>
 							</ng-container>
 							<!-- bi bi-x -->

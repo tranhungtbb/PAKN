@@ -9,16 +9,12 @@ import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
-import { NotificationService } from 'src/app/services/notification.service'
 import { UnitService } from '../../../services/unit.service'
-import { LocationService } from 'src/app/services/location.service'
-import { DomSanitizer } from '@angular/platform-browser'
 
 declare var $: any
 
@@ -62,10 +58,6 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		private router: Router,
 		private captchaService: CaptchaService,
 		private activatedRoute: ActivatedRoute,
-		private notificationService: NotificationService,
-		private eRef: ElementRef,
-		private locationService: LocationService,
-		private sanitizer: DomSanitizer
 
 	) { }
 
@@ -108,7 +100,7 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 
 
 	ngAfterViewInit() {
-		// this.setCurrentLocation()
+		this.setCurrentLocation()
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 
@@ -118,11 +110,11 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
 				this.model.lat = this.markers.lat
 				this.model.lng = this.markers.lng
-				setTimeout(() => {
-					this.getAddress(this.model.lat, this.model.lng).then((res) => {
-						this.model.address = String(res)
-					})
-				}, 200)
+				// setTimeout(() => {
+				// 	this.getAddress(this.model.lat, this.model.lng).then((res) => {
+				// 		this.model.address = String(res)
+				// 	})
+				// }, 200)
 
 			})
 		}

@@ -22,9 +22,9 @@ export class RecommnendationGetListComponent implements OnInit {
 	title: any
 	status: number
 	ngOnInit() {
-		this.isMain = this.storeageService.getIsMain()
+		this.isMain = this.storeageService.getIsUnitMain()
 		this.isApprove = this.storeageService.getIsApprove()
-		this.status = this.isMain == true ? 2 : this.isApprove != true ? 5 : 8
+		this.status = this.isApprove == true ? 8 : this.isMain == true ? 2 : 5
 		this.getList()
 
 		switch (this.status) {

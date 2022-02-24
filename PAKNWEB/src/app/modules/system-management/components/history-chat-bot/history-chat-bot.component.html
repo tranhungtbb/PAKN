@@ -57,13 +57,16 @@
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Ngày tạo</strong>
 									</p>
-									<input class="form-control form-control-sm" placeholder="Nhập.." [(ngModel)]="createdDate"
-										(keydown.enter)="dataStateChange()" bsDatepicker #n="bsDatepicker" maxlength="10"
-										appBsDatepickerInvalid id="createDate"
-										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-									<div class="input-group-addon">
-										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									<div class="input-group">
+										<input class="form-control form-control-sm" placeholder="Nhập.." [(ngModel)]="createdDate"
+											(keydown.enter)="dataStateChange()" bsDatepicker #n="bsDatepicker" maxlength="10"
+											appBsDatepickerInvalid id="createDate"
+											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+										<div class="input-group-addon p-2">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
 									</div>
+
 								</th>
 							</tr>
 						</ng-template>

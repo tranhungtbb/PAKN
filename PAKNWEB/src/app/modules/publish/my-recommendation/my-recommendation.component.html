@@ -108,17 +108,17 @@
 						<div class="tt-v1 mb-3">
 							<div class="">
 								<div class="row pi-italic center">
-									<div class="col-lg-4">
+									<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
 										<h4 class="text-uppercase mb-0">Phản ánh, kiến nghị của tôi</h4>
 									</div>
 
-									<div class="col-lg-7 p-0 pr-2 p-xs-0 pi-italic">
+									<div class="col-10 col-sm-10 col-md-10 col-lg-7 col-xl-7 p-0 pr-2 pi-italic">
 										<input placeholder="Nhập từ khóa.." class="form-control form-control border-radius-4"
 											(keyup)="changeKeySearch($event)" [(ngModel)]="title" (keydown.enter)="getList()"
 											maxlength="100" />
 									</div>
 
-									<div class="col-lg-1 px-2 p-xs-0">
+									<div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 px-2">
 										<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px center"
 											style="text-transform: none;" (click)="dataStateChange()">
 											<!-- Tìm kiếm -->
@@ -149,8 +149,8 @@
 							</p>
 						</div>
 						<div class="card-footer pt-0 px-2 border-top-0 d-flex justify-content-between align-items-center">
-							<span>
-								<i class="bi bi-alarm cl-gray mt-1 mr-2 p-item-title "></i>
+							<span class="d-inline-block">
+								<i class="bi bi-alarm cl-gray mt-1 mr-2 p-item-title d-none d-lg-block"></i>
 								<span>{{item.createdDate | date:'dd/MM/yyyy HH:mm'}}</span>
 							</span>
 

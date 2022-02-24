@@ -347,7 +347,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 	DownloadFile(file: any) {
 		var request = {
-			Path: file.filePath,
+			Path: file.fileAttach,
 			Name: file.name,
 		}
 		this.fileService.downloadFile(request).subscribe(

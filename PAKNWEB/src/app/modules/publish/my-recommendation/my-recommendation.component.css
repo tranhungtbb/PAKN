@@ -96,3 +96,14 @@ form.form-row {
 ul.category-article li a.active {
 	color: #2e73d5;
 }
+
+
+@media (max-width: 575.98px)  {
+  .modal-footer .btn{
+    padding-right: 1.7rem !important;
+    padding-left: 1.7rem !important;
+  }
+	/* .card-footer{
+		display: block !important;
+	} */
+}

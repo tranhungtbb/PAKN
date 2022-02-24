@@ -32,3 +32,10 @@
 	color: #707C97;
 	font-style: italic;
 }
+
+@media (max-width: 992px){
+	.box-message-publish .media-body {
+    max-width: calc(100%);
+	}
+}
+

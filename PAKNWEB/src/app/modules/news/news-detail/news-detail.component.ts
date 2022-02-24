@@ -37,7 +37,7 @@ export class NewsDetailComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private http: HttpClient,
 		private fileService: UploadFileService
-	) {}
+	) { }
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
 	public ckConfig = {
@@ -111,7 +111,7 @@ export class NewsDetailComponent implements OnInit {
 		})
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 
 	getNewsRelatesInfo() {
 		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
@@ -135,7 +135,7 @@ export class NewsDetailComponent implements OnInit {
 	}
 	DownloadFile(file: any) {
 		var request = {
-			Path: file.filePath,
+			Path: file.fileAttach,
 			Name: file.name,
 		}
 		this.fileService.downloadFile(request).subscribe(

@@ -164,7 +164,7 @@
 
 				</ul>
 			</li>
-			<li *hasPermission="['2', 'H_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<!-- <li *hasPermission="['2', 'H_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-file-earmark-ruled"></i>
 					<span class="nav-text">Thủ tục hành chính</span>
@@ -179,11 +179,11 @@
 							tiếp/Tiếp nhận
 							thủ tục hành chính</a></li>
 				</ul>
-			</li>
+			</li> -->
 			<li *hasPermission="['2', 'F_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-newspaper"></i>
-					<span class="nav-text">Thông báo chính quyền</span>
+					<span class="nav-text">Thông báo</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li *hasPermission="['3', 'F_I_3']"><a routerLinkActive="mm-active"
@@ -292,16 +292,16 @@
 							routerLink="/quan-tri/danh-muc/chuc-vu">Chức vụ</a></li>
 					<li *hasPermission="['3', 'C_IV_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/danh-muc/linh-vuc">Lĩnh vực</a></li>
-					<li *hasPermission="['3', 'C_V_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại thông báo</a></li>
+					<!-- <li *hasPermission="['3', 'C_V_3']"><a routerLinkActive="mm-active"
+							routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại thông báo</a></li> -->
 					<li *hasPermission="['3', 'C_VII_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/danh-muc/nhom-thu-vien-tu">Nhóm thư viện từ ngữ</a></li>
 					<li *hasPermission="['3', 'C_VI_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/danh-muc/thu-vien-tu">Thư viện từ ngữ</a></li>
-					<li *hasPermission="['3', 'C_II_3']"><a routerLinkActive="mm-active"
+					<!-- <li *hasPermission="['3', 'C_II_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/danh-muc/nhom-so-nganh">Nhóm sở ngành</a></li>
 					<li *hasPermission="['3', 'C_III_3']"><a routerLinkActive="mm-active"
-							routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
+							routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li> -->
 					<li *hasPermission="['3', 'C_VIII_3']"><a routerLinkActive="mm-active"
 							routerLink="/quan-tri/danh-muc/hashtag">Nhãn dữ liệu</a></li>
 				</ul>
