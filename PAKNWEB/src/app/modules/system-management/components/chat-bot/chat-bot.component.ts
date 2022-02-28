@@ -479,8 +479,14 @@ export class ChatBotComponent implements OnInit {
 		this.linkSuggest = '';
 	}
 
-	onRemoveAnswer = (index) => {
-		this.lstAnswer.splice(index, 1)
+	index: number = 0
+	preRemoveAnswer(i: number) {
+		this.index = i
+		$('#modalConfirm').modal('show')
+	}
+	onRemoveAnswer = () => {
+		this.lstAnswer.splice(this.index, 1)
+		$('#modalConfirm').modal('hide')
 		return
 	}
 	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']

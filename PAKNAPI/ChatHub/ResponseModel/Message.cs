@@ -1,6 +1,7 @@
 ﻿using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +18,9 @@ namespace PAKNAPI.Chat.ResponseModel
     {
         public static string Conversation { get { return "Conversation"; } }
         public static string All { get { return "All"; } }
-       
+
+        public static string File { get; set; } = "File";
+
     }
     public class Message
     {
@@ -37,4 +40,19 @@ namespace PAKNAPI.Chat.ResponseModel
         public string Type { get; set; }
         public DateTime? DateSend { get; set; }
     }
+
+    public class ChatBotFile
+    {
+        public string Name { get; set; }
+        public short? FileType { get; set; }
+        public string FilePath { get; set; }
+        public string FilePathUrl { get; set; }
+    }
+
+    public class RequestSendFile {
+
+        [Required]
+        public string RoomName { get; set; }
+    }
+
 }

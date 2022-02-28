@@ -1338,6 +1338,8 @@ body, html {
 	border-top-right-radius: 1.1rem;
 }
 
+
+
 /* @media (max-width: 320px) { 
 	.navbar-expand .navbar-collapse{
 		display: block !important;
@@ -1346,6 +1348,11 @@ body, html {
     float: right !important;
 	}
 } */
+
+.br-8px{
+	border-radius: 8px;
+}
+
 
 
 

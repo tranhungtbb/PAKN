@@ -427,16 +427,18 @@
 
 									<div *ngIf="message.fromId == 0" class="d-flex justify-content-end mb-4">
 
-										<div class="msg_cotainer_send">
+										<div *ngIf="message.type != 'File'" class="msg_cotainer_send">
 											{{message.title}}
-											<!-- <span class="msg_time_send">{{message.dateSent}}</span> -->
 										</div>
-										<!-- 
-										<div class="img_cont_msg">
-											<img src="../../../assets/dist/images/Icon_app.png" class="rounded-circle user_img_msg">
+										<ng-container *ngIf="message.type == 'File'">
+											<div class="msg_cotainer_send">
+												<a title="tải xuống" *ngFor="let item of message.title" class="text-white"
+													style="text-decoration: underline;" (click)="DownloadFile(item)">
+													{{item.Name}}
+												</a>
+											</div>
+										</ng-container>
 
-
-										</div> -->
 									</div>
 
 								</ng-container>
@@ -452,16 +454,57 @@
 
 							</div>
 							<div class="card-footer">
+								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+									class="inputfile inputfile-4 d-none" multiple />
 								<div class="input-group br-textMessage p-1">
 									<textarea id="type_msg" [(ngModel)]="textMessage" (keydown)="onKeyDown($event)"
 										class="form-control type_msg" placeholder="Nhập câu hỏi của anh/chị tại đây.."></textarea>
 									<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'type_msg'">
 										<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 									</button>
-									<div class="input-group-append" (click)="onSend()">
-										<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+									<div class="input-group-append" (click)="file.click()">
+										<span class="input-group-text send_btn"><i class="bi bi-plus-circle"></i></span>
 									</div>
 								</div>
+								<div>
+									<div *ngFor="let file of files; let i = index" class="m-1 p-1 border br-8px d-inline-block">
+										<a *ngIf="file.fileType == 1" class="pointer" title="Xem file" style="color: #333; width:auto;">
+											<img src="../../../../assets/dist/images/file-word.svg" class="mr-1" style="width: 15px" alt="">
+											<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 2" class="pointer" title="Xem file" style="color: #333; width:auto;">
+											<img src="../../../../assets/dist/images/file-excel.svg" class="mr-1" style="width: 15px" alt="">
+											<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 3" class="pointer" title="Xem file" style="color: #333; width:auto;">
+											<img src="../../../../assets/dist/images/file-pdf.svg" class="mr-1" style="width: 15px" alt="">
+											<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 4" class="pointer" title="Xem file" style="color: #333; width:auto;">
+											<img src="../../../../assets/dist/images/file-image.svg" class="mr-1" style="width: 15px" alt="">
+											<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 6" title="Xem file" style="color: #333;">
+											<img src="../../../../assets/dist/images/file-powerpoint.svg" class="mr-1" style="width: 15px"
+												alt="">
+											<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+												file.name}}</span>
+										</a>
+										<a *ngIf="file.fileType == 7" class="pointer" title="Xem file" style="color: #333; width:auto;">
+											<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" class="mr-1" style="width: 15px"
+												alt="">
+											<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+												file.name}}</span>
+										</a>
+
+										<i (click)="onRemoveFile(i)" class="ml-1 mdi mdi-close" style="font-size: 15px;"></i>
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</div>

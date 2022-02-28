@@ -33,8 +33,6 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Logging;
 using System;
-using PAKNAPI.Chat;
-using SignalR.Hubs;
 using PAKNAPI.Job;
 using NSwag.Generation.Processors.Security;
 using NSwag;
@@ -42,6 +40,9 @@ using NSwag.AspNetCore;
 using System.Reflection;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.HttpOverrides;
+using SignalR.Hubs;
+using PAKNAPI.Chat;
+using Microsoft.AspNetCore.SignalR;
 
 namespace PAKNAPI
 {

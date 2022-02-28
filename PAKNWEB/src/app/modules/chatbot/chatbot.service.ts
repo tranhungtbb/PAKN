@@ -33,4 +33,25 @@ export class ChatBotService {
 	getRoomById(body: any) {
 		return this.serviceInvoker.get(body, AppSettings.API_ADDRESS + Api.GetRoomGetById)
 	}
+
+
+	clientSendFile(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+		})
+		const form = new FormData()
+		form.append('roomName', request.roomName)
+		if (request.files) {
+			request.files.forEach((item) => {
+				form.append('QD', item)
+			})
+		}
+		tempheaders.append('Content-Type', 'application/json')
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.UploadFileChatBot, form, httpPackage)
+	}
 }

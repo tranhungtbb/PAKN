@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, ViewChild, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { RESPONSE_STATUS, TYPE_NOTIFICATION, RECOMMENDATION_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, TYPE_NOTIFICATION, RECOMMENDATION_STATUS, TYPECONFIG, FILETYPE } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { NotificationService } from 'src/app/services/notification.service'
@@ -14,6 +14,9 @@ import { ChatBotService } from '../chatbot/chatbot.service'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
 import { MetaService } from 'src/app/services/tag-meta.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
+import { ToastrService } from 'ngx-toastr'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
+import { saveAs as importedSaveAs } from 'file-saver'
 
 declare var $: any
 
@@ -33,7 +36,9 @@ export class PublishComponent implements OnInit, OnChanges {
 		private botService: ChatBotService,
 		private systemConfig: SystemconfigService,
 		private metaService: MetaService,
-		private recomenservice: RecommendationService
+		private recomenservice: RecommendationService,
+		private toastr: ToastrService,
+		private fileService: UploadFileService
 	) { }
 
 	activeUrl: string = ''
@@ -169,14 +174,15 @@ export class PublishComponent implements OnInit, OnChanges {
 
 						const newMessage = {
 							dateSent: data.timestamp,
-							title: data.content,
-							type: typeFrom,
+							title: data.type != 'File' ? data.content : JSON.parse(data.content),
+							type: data.type,
 							answers: answers,
 							link: link,
 							fromUserName: data.from,
 							fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
 							fromFullName: data.fromFullName,
 							toUserName: data.to,
+							fromId: data.fromId
 						}
 						console.log('ReceiveMessageToGroup 3', newMessage);
 						if (this.messages) {
@@ -403,19 +409,21 @@ export class PublishComponent implements OnInit, OnChanges {
 			//  text.value += '\n';
 		} else if (event.key === 'Enter') {
 			event.preventDefault()
-			console.log(this.textMessage)
-			this.sendMessageToApi()
+			this.onSend()
 		}
 	}
 
 	onSend() {
+		this.textMessage = this.textMessage == null ? '' : this.textMessage.trim()
+		if (this.textMessage === '' && this.files.length == 0) {
+			this.toastr.error('Vui lòng nhập câu hỏi của anh/chị!')
+		}
 		this.sendMessageToApi()
+		this.sendFile()
 	}
 
 	sendMessageToApi() {
-		if (this.textMessage) {
-			this.textMessage = this.textMessage.trim()
-		}
+		if (this.textMessage === '') return
 		const message = { title: this.textMessage }
 		console.log('sendMessageToApi ', message)
 		this.sendMessage(message, true)
@@ -431,4 +439,89 @@ export class PublishComponent implements OnInit, OnChanges {
 			return '<a target="_blank" href="' + url + '">' + url + '</a>';
 		})
 	}
+
+
+	/// upload file 
+
+	files: any[] = []
+	@ViewChild('file', { static: false }) public file: ElementRef
+
+	onUpload(event) {
+		if (event.target.files.length == 0) {
+			return
+		}
+		const check = this.fileService.checkFileWasExitsted(event, this.files)
+		if (check === 1) {
+			for (let item of event.target.files) {
+				FILETYPE.forEach((fileType) => {
+					if (item.type == fileType.text) {
+						let max = this.files.reduce((a, b) => {
+							return a.id > b.id ? a.id : b.id
+						}, 0)
+						item.id = max + 1
+						item.fileType = fileType.value
+						this.files.push(item)
+					}
+				})
+				if (!item.fileType) {
+					this.toastr.error('Định dạng không được hỗ trợ')
+				}
+			}
+		} else if (check === 2) {
+			this.toastr.error('Không được phép đẩy trùng tên file lên hệ thống')
+		} else {
+			this.toastr.error('File tải lên vượt quá dung lượng cho phép 10MB')
+		}
+		this.file.nativeElement.value = ''
+	}
+
+	onRemoveFile(index: number) {
+		this.files.splice(index, 1)
+	}
+
+
+	sendFile() {
+		if (this.files.length == 0) { return }
+		let obj = {
+			files: this.files,
+			roomName: this.myGuid
+		}
+
+		this.botService.clientSendFile(obj).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+
+				setTimeout(() => {
+					var objDiv = document.getElementById('bodyMessage')
+					objDiv.scrollTop = objDiv.scrollHeight
+				}, 300)
+
+
+				this.file.nativeElement.value = ''
+				this.files = []
+			} else {
+				this.toastr.error(res.message)
+			}
+		})
+
+	}
+
+
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.FilePath,
+			Name: file.Name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
+	}
+
+
+
 }

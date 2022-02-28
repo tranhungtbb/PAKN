@@ -478,4 +478,5 @@ export class Api {
 	public static UpdateStatusRoom = 'bot/bot-update-room'
 	public static GetRoomForNotification = 'bot/rooms-notification'
 	public static GetRoomGetById = 'bot/room-get-by-id'
+	public static UploadFileChatBot = 'upload-files/upload-file-chatbot'
 }

@@ -94,25 +94,21 @@
 											<img *ngIf="message.fromAvatar" [src]="message.fromAvatar" class="rounded-circle user_img_msg">
 
 										</div>
-										<div class="msg_cotainer" style="max-width: 80%;">
-
-											{{message.messageContent}}
-											<ng-container *ngIf="message.answers.length == 1">
-												<ng-container *ngFor="let ans of message.answers">
-													<div *ngIf="ans.answer" class="msg_cotainer_answer" [innerHTML]="ans.answer | Change">
-														<!-- {{ans.answer}} -->
-													</div>
-													<ng-container *ngFor="let tag of ans.subTags.data">
-														<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
-															{{tag.title}}
-														</div>
-													</ng-container>
-												</ng-container>
-											</ng-container>
-											<ng-container *ngIf="message.answers.length > 1">
-												<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
-													<ng-template let-ans pTemplate="item">
-														<div *ngIf="ans.answer" class="msg_cotainer_answer slide" [innerHTML]="ans.answer | Change">
+										<ng-container *ngIf="message.type == 'File'">
+											<div class="msg_cotainer" style="max-width: 80%;">
+												<a title="tải xuống" *ngFor="let item of message.messageContent" class="text-white cursor"
+													style="text-decoration: underline;" (click)="DownloadFile(item)">
+													{{item.Name}}
+												</a>
+												<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+											</div>
+										</ng-container>
+										<ng-container *ngIf="message.type != 'File'">
+											<div class="msg_cotainer" style="max-width: 80%;">
+												{{message.messageContent}}
+												<ng-container *ngIf="message.answers.length == 1">
+													<ng-container *ngFor="let ans of message.answers">
+														<div *ngIf="ans.answer" class="msg_cotainer_answer" [innerHTML]="ans.answer | Change">
 															<!-- {{ans.answer}} -->
 														</div>
 														<ng-container *ngFor="let tag of ans.subTags.data">
@@ -120,11 +116,27 @@
 																{{tag.title}}
 															</div>
 														</ng-container>
-													</ng-template>
-												</p-carousel>
-											</ng-container>
-											<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
-										</div>
+													</ng-container>
+												</ng-container>
+												<ng-container *ngIf="message.answers.length > 1">
+													<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
+														<ng-template let-ans pTemplate="item">
+															<div *ngIf="ans.answer" class="msg_cotainer_answer slide"
+																[innerHTML]="ans.answer | Change">
+																<!-- {{ans.answer}} -->
+															</div>
+															<ng-container *ngFor="let tag of ans.subTags.data">
+																<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag,true)">
+																	{{tag.title}}
+																</div>
+															</ng-container>
+														</ng-template>
+													</p-carousel>
+												</ng-container>
+												<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+											</div>
+										</ng-container>
+
 									</div>
 								</div>
 								<div *ngIf="message.fromUserId == userId">

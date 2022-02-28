@@ -8,6 +8,8 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { UserService } from 'src/app/services/user.service'
 import { ToastrService } from 'ngx-toastr'
 import { ActivatedRoute } from '@angular/router'
+import { saveAs as importedSaveAs } from 'file-saver'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
 
 @Component({
 	selector: 'app-dashboard',
@@ -36,7 +38,7 @@ export class DashboardChatBotComponent implements OnInit {
 
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
-	constructor(private botService: ChatBotService, private userService: UserService, private user: UserInfoStorageService, private toast: ToastrService, private activatedRoute: ActivatedRoute) { }
+	constructor(private botService: ChatBotService, private fileService: UploadFileService, private userService: UserService, private user: UserInfoStorageService, private toast: ToastrService, private activatedRoute: ActivatedRoute) { }
 	async ngOnInit() {
 		this.audio = new Audio()
 		this.audio.src = '../../../assets/img/ring.mp3'
@@ -73,7 +75,7 @@ export class DashboardChatBotComponent implements OnInit {
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
-				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
+				if ((data.type === 'Conversation' || data.type === 'File') && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
 
 					const answers = [];
 					if (data.results) {
@@ -89,7 +91,20 @@ export class DashboardChatBotComponent implements OnInit {
 					}
 
 					console.log('answers 4', answers)
-					this.messages = [...this.messages, { messageContent: data.content, fromAvatar: data.fromAvatar, fromFullName: data.fromFullName, answers, dateSend: data.dateSend }]
+					const newMessage = {
+						dateSent: data.timestamp,
+						messageContent: data.type != 'File' ? data.content : JSON.parse(data.content),
+						type: data.type,
+						answers: answers,
+						link: "",
+						fromUserName: data.from,
+						fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
+						fromFullName: data.fromFullName,
+						toUserName: data.to,
+						fromId: data.fromId,
+						dateSend: data.dateSend
+					}
+					this.messages = [...this.messages, newMessage]
 
 					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
@@ -126,11 +141,13 @@ export class DashboardChatBotComponent implements OnInit {
 				if (room) {
 					this.rooms.splice(this.rooms.indexOf(room), 1)
 					this.rooms.unshift(data)
+
 				} else {
 					this.botService.getRoomById({ Id: data.id }).subscribe(res => {
 						if (res.success == RESPONSE_STATUS.success) {
 							if (res.result) {
 								this.rooms.unshift({ ...res.result, 'type': 2 })
+
 							}
 
 						} else {
@@ -268,6 +285,7 @@ export class DashboardChatBotComponent implements OnInit {
 			if (this.rooms.filter((room) => room.name === this.roomNameSelected).length > 0) {
 				this.rooms.find((room) => room.name === this.roomNameSelected).type = 2
 			}
+			this.botEnable = false
 
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId, fromAvatar: this.userAvatar }]
 			this.newMessage = ''
@@ -327,9 +345,8 @@ export class DashboardChatBotComponent implements OnInit {
 	convertMessageToObjectList() {
 		try {
 			if (this.messages) {
-				debugger
 				for (let index = 0; index < this.messages.length; index++) {
-					const element = this.messages[index]
+					let element = this.messages[index]
 					let result, type
 
 					if (element.xresults) {
@@ -344,25 +361,35 @@ export class DashboardChatBotComponent implements OnInit {
 					element.fromAvatar = element.fromAvatar ? element.fromAvatar : ''
 					element.fromFullName = element.fromFullName ? element.fromFullName : ''
 					const answers = []
-
+					element.type = type
 					if (type === 'string') {
 						element.messageContent = result
+						if (Array.isArray(result)) {
+							element.type = 'File'
+						}
 					} else if (type === 'json') {
 						console.log('answers ', result)
-						if (result.Results && result.Results.length > 0) {
-							console.log('answers 1', result.Results)
-							try {
-								for (let ind = 0; ind < result.Results.length; ind++) {
-									let el = result.Results[ind]
-									if (el.SubTags !== '') {
-										const subTags = JSON.parse(el.SubTags)
-										console.log('answers 2', subTags)
-										answers.push({ answer: el.Answer, subTags: subTags })
+						if (Array.isArray(result)) {
+							element.messageContent = result
+							element.type = 'File'
+						} else {
+							if (result.Results && result.Results.length > 0) {
+								console.log('answers 1', result.Results)
+								try {
+									for (let ind = 0; ind < result.Results.length; ind++) {
+										let el = result.Results[ind]
+										if (el.SubTags !== '') {
+											const subTags = JSON.parse(el.SubTags)
+											console.log('answers 2', subTags)
+											answers.push({ answer: el.Answer, subTags: subTags })
+										}
 									}
-								}
-							} catch (error) { }
+								} catch (error) { }
+							}
+							element.messageContent = ''
 						}
-						element.messageContent = ''
+
+
 					}
 					element.answers = answers
 				}
@@ -380,5 +407,21 @@ export class DashboardChatBotComponent implements OnInit {
 				return { result: string, type: 'string' }
 			}
 		}
+	}
+
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.FilePath,
+			Name: file.Name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toast.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 }

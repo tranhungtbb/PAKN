@@ -15,6 +15,12 @@ using PAKNAPI.ModelBase;
 using PAKNAPI.Services.FileUpload;
 using PAKNAPI.Models.Results;
 using NSwag.Annotations;
+using Microsoft.AspNetCore.SignalR;
+using PAKNAPI.Chat;
+using SignalR.Hubs;
+using PAKNAPI.Chat.ResponseModel;
+using System.Text.Json;
+using PAKNAPI.Models.ModelBase;
 
 namespace PAKNAPI.Controllers
 {
@@ -27,13 +33,16 @@ namespace PAKNAPI.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAppSetting _appSetting;
         private readonly IFileService _fileService;
+        private readonly IHubContext<ChatHub> _hubContext;
 
-        public UploadFileController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting,
-            IFileService fileService)
+
+
+        public UploadFileController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting, IFileService fileService, IHubContext<ChatHub> hub)
         {
             _webHostEnvironment = webHostEnvironment;
             _appSetting = appSetting;
             _fileService = fileService;
+            _hubContext = hub;
         }
 
 
@@ -71,7 +80,8 @@ namespace PAKNAPI.Controllers
                     await file.CopyToAsync(memoryStream);
                 }
 
-                var fileInfo = new {
+                var fileInfo = new
+                {
                     Name = file.FileName,
                     Path = $"{folderName}/{fileName}",
                     Type = file.ContentType
@@ -170,7 +180,7 @@ namespace PAKNAPI.Controllers
         }
         [HttpPost]
         [Route("downloadfile")]
-        public async Task<IActionResult> DownloadFile([FromForm]string path)
+        public async Task<IActionResult> DownloadFile([FromForm] string path)
         {
             Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
             var filePath = decrypt.DecryptData(path);
@@ -205,10 +215,11 @@ namespace PAKNAPI.Controllers
         }
         [HttpPost]
         [Route("upload-image-news")]
-        public async Task<ActionResult<object>> UploadImageNews () {
+        public async Task<ActionResult<object>> UploadImageNews()
+        {
             try
             {
-                string NameFile = "",filePath = "", FullPath = "";
+                string NameFile = "", filePath = "", FullPath = "";
                 var FilesUpload = Request.Form.Files;
                 string folder = Path.Combine("Upload\\NewsFile\\", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString());
                 string folderPath = Path.Combine(_webHostEnvironment.ContentRootPath, folder);
@@ -223,7 +234,7 @@ namespace PAKNAPI.Controllers
                     FullPath = Path.Combine(folder, NameFile);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        item.CopyTo(stream);
+                        await item.CopyToAsync(stream);
                     }
                 }
                 IDictionary<string, object> json = new Dictionary<string, object>
@@ -304,6 +315,86 @@ namespace PAKNAPI.Controllers
                     {"fullPaths", FullPath},
                 };
                 return new ResultApi { Success = ResultCode.OK, Result = new { data = json } };
+            }
+            catch (Exception ex)
+            {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+
+
+
+        [HttpPost]
+        [Route("upload-file-chatbot")]
+        public async Task<ActionResult<object>> UploadImageChatBot([FromForm] RequestSendFile request)
+        {
+            try
+            {
+                Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+                List<ChatBotFile> files = new List<ChatBotFile>();
+                string NameFile = "", filePath = "";
+
+                var FilesUpload = Request.Form.Files;
+                string folder = Path.Combine("Upload\\ChatBot\\" + request.RoomName);
+                string folderPath = Path.Combine(_webHostEnvironment.ContentRootPath, folder);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                foreach (var item in FilesUpload)
+                {
+                    NameFile = Path.GetFileName(item.FileName).Replace("+", "");
+                    filePath = Path.Combine(folderPath, NameFile);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+
+                    files.Add(new ChatBotFile()
+                    {
+                        Name = NameFile,
+                        FileType = GetFileTypes.GetFileTypeInt(item.ContentType),
+                        FilePath = decrypt.EncryptData(Path.Combine(folder, NameFile)),
+                        FilePathUrl = Path.Combine(folder, NameFile)
+                    });
+                }
+
+                // insert db
+                int userId = 0;
+                try {
+                    userId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                }
+                catch (Exception) { }
+                
+
+                // signIR
+                string fullName = userId == 0 ? "Người dân" : new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+                var room = await new BOTRoom(_appSetting).BOTRoomGetByName("Room_" + request.RoomName);
+                DateTime dateSent = DateTime.Now;
+                Message messageModel = new Message();
+                messageModel.Content = JsonSerializer.Serialize(files);
+                messageModel.FromId = "0";
+                messageModel.From = fullName;
+                messageModel.FromFullName = fullName;
+                messageModel.To = "Room_" + request.RoomName;
+                messageModel.Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString();
+                messageModel.Type = MessageTypes.File;
+                messageModel.DateSend = DateTime.Now;
+
+                // insert db
+
+                await new BOTMessage(_appSetting).BOTMessageInsertDAO(messageModel.Content, userId, room.Id, fullName, "", DateTime.Now);
+
+                await _hubContext.Clients.Group(messageModel.To).SendAsync("ReceiveMessageToGroup", messageModel);
+                await _hubContext.Clients.All.SendAsync("OnNewMessage", room);
+                // get all ơ đây
+
+
+
+                return new ResultApi { Success = ResultCode.OK, Result = files };
             }
             catch (Exception ex)
             {

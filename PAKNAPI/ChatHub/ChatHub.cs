@@ -20,22 +20,10 @@ namespace SignalR.Hubs
     {
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
         private readonly IAppSetting _appSetting;
-        //private readonly IManageBots _bots;
-
-        public ChatHub(
-            IAppSetting appSetting
-        //IManageBots bots
-
-        )
+        public ChatHub(IAppSetting appSetting)
         {
-            //_bots = bots;
             _appSetting = appSetting;
         }
-
-        //public async Task BroadcastMessage(Message msg)
-        //{
-        //    await Clients.All.OnNewMessage(msg);
-        //}
 
         public async Task NotifyAdmin(Room room)
         {
@@ -101,7 +89,7 @@ namespace SignalR.Hubs
             await HandleMessageToRoom(room.Name,room.Id, message);
         }
 
-        private async Task HandleMessageToRoom(string roomName,int roomId ,string message) {
+        public async Task HandleMessageToRoom(string roomName,int roomId ,string message) {
             if (!string.IsNullOrEmpty(message))
             {
                 var httpContext = Context.GetHttpContext();
