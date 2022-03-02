@@ -21,60 +21,48 @@
 					<div class="contents" [innerHTML]="model.contents | oembed" style="text-align: justify;">
 					</div>
 
-					<div>
-						<div class="mb-4" *ngIf="files">
-							<ng-container>
-								<div *ngFor="let file of files" class="file-att">
-									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
-										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
-											alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}}</span>
-									</a>
-									<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
-										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
-											alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}}</span>
-									</a>
-									<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
-										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;"
-											alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}}</span>
-									</a>
-									<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
-										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
-											alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}}</span>
-									</a>
-									<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
-										<img src="../../../../assets/dist/images/file-powerpoint.svg"
-											style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}}</span>
-									</a>
-									<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)"
-										style="color: #333;">
-										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg"
-											style="width: 30px;padding-right: 5px;" alt="">
-										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." :
-											file.name}}</span>
-									</a>
-									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile
-										[linkfile]="file.fileAttach" [namefile]="file.name" title="Xem file">
-										<i class="bi bi-eye"></i>
-									</span>
-								</div>
-							</ng-container>
-							<!-- bi bi-x -->
-						</div>
+					<div class="mb-4 d-inline-block" *ngIf="files">
+						<ng-container>
+							<div *ngFor="let file of files; let i = index" class="pointer file-att item-file mb-2">
+								<a *ngIf="file.fileType == 1" class="pointer" appViewFile [linkfile]="file.fileAttach"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 2" class="pointer" appViewFile [linkfile]="file.fileAttach"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 3" class="pointer" appViewFile [linkfile]="file.fileAttach"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 4" class="pointer" appViewFile [linkfile]="file.fileAttach"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 6" appViewFile [linkfile]="file.fileAttach" [namefile]="file.name"
+									title="Xem file" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 7" class="pointer" appViewFile [linkfile]="file.fileAttach"
+									[namefile]="file.name" title="Xem file" style="color: #333; width:auto;">
+									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;"
+										alt="">
+									<span class="small text-truncate">{{file.name}}</span>
+								</a>
+								<i (click)="DownloadFile(file)" class="ml-2 mt-1 bi bi-download"></i>
+							</div>
+						</ng-container>
+						<!-- bi bi-x -->
 					</div>
 				</div>
 

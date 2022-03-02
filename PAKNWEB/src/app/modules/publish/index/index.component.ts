@@ -8,6 +8,7 @@ import { PuRecommendationService } from 'src/app/services/pu-recommendation.serv
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
 
 declare var $: any
 
@@ -20,9 +21,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: PuRecommendationService,
 		private _router: Router,
-		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private _toa: ToastrService,
-		private storageService: UserInfoStorageService
+		private storageService: UserInfoStorageService,
+		private _serviceSetting: IndexSettingService
 	) { }
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	ReflectionsRecommendations: any = []
@@ -94,8 +95,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		)
 	}
 
+	indexSetting: string
+
 	getData() {
 
+		this._serviceSetting.GetInfo({}).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.indexSetting = res.result.model
+			}
+		})
 
 		this._service
 			.getRecommendationReceiveDeny({
@@ -183,6 +191,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		// 	}
 		// 	return
 		// })
+
+
 	}
 
 	ngAfterViewInit() { }

@@ -135,9 +135,10 @@ namespace PAKNAPI.ModelBase
 		public int Type { get; set; }
 
 		public string Content { get; set; }
-		public string? FilePath { get; set; }
+		public string FilePath { get; set; }
 		public int? FileType { get; set; }
 		public int? Index { get; set; }
+		public string Url { get; set; }
 
 		public string FileName { get; set; }
 		public async Task<List<SYSupportMenu>> SYSupportMenuGetByCategoryDAO(int? Category)
@@ -169,6 +170,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FileType", model.FileType);
 			DP.Add("FileName", model.FileName);
 			DP.Add("Index", model.Index);
+			DP.Add("Url", model.Url);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuUpdate]", DP);
 		}
@@ -185,6 +187,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FileType", model.FileType);
 			DP.Add("FileName", model.FileName);
 			DP.Add("Index", model.Index);
+			DP.Add("Url", model.Url);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuInsert]", DP);
 		}
@@ -658,11 +661,17 @@ namespace PAKNAPI.ModelBase
 		public string Email { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ không được để trống")]
 		public string Address { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả không được để trống")]
-		public string Description { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
+		public string SystemTitle { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả giấy phép không được để trống")]
-		public string License { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn banner không được để trống")]
+		public string BannerLink { get; set; }
+
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Cơ quan chủ quản không được để trống")]
+		public string Organization { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đơn vị vận hành không được để trống")]
+		public string Unit { get; set; }
 
 		public async Task<List<SYIndexSetting>> SYIndexSettingGetInfoDAO()
 		{
@@ -681,8 +690,10 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Phone", sy.Phone);
 			DP.Add("Email", sy.Email);
 			DP.Add("Address", sy.Address);
-			DP.Add("Description", sy.Description);
-			DP.Add("License", sy.License);
+			DP.Add("BannerLink", sy.BannerLink);
+			DP.Add("Organization", sy.Organization);
+			DP.Add("Unit", sy.Unit);
+			DP.Add("SystemTitle", sy.SystemTitle);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IndexSettingUpdate", DP);
 		}
@@ -756,32 +767,59 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		[Required]
 		public string NameWebsite { get; set; }
+		[Required]
 		public string UrlWebsite { get; set; }
 		public int IndexSystemId { get; set; }
+		public string FileName { get; set; }
+		public string FilePath { get; set; }
+		public string FilePathBase { get; set; }
 
 		public async Task<List<SYIndexWebsite>> SY_IndexWebsiteGetByIndexSettingId(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("IndexSettingId", Id);
 			return (await _sQLCon.ExecuteListDapperAsync<SYIndexWebsite>("SY_IndexWebsiteGetByIndexSettingId", DP)).ToList();
 		}
 
-		public async Task<int?> SY_IndexWebsiteInsertDAO(SYIndexWebsite sy)
+		public async Task<decimal> SY_IndexWebsiteInsertDAO(SYIndexWebsite sy)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("NameWebsite", sy.NameWebsite);
 			DP.Add("UrlWebsite", sy.UrlWebsite);
 			DP.Add("IndexSystemId", sy.IndexSystemId);
+			DP.Add("FileName", sy.FileName);
+			DP.Add("FilePath", sy.FilePath);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IndexWebsiteInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal>("SY_IndexWebsiteInsert", DP);
+		}
+
+		public async Task<int> SY_IndexWebsiteUpdateDAO(SYIndexWebsite sy)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", sy.Id);
+			DP.Add("NameWebsite", sy.NameWebsite);
+			DP.Add("UrlWebsite", sy.UrlWebsite);
+			DP.Add("IndexSystemId", sy.IndexSystemId);
+			DP.Add("FileName", sy.FileName);
+			DP.Add("FilePath", sy.FilePath);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("SY_IndexWebsiteUpdate", DP);
+		}
+
+		public async Task<List<SYIndexWebsite>> SY_IndexWebsiteGetListDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYIndexWebsite>("SY_IndexWebsiteGetList", DP)).ToList();
 		}
 
 
 
-		public async Task<int> SY_IndexWebsiteDeleteAllDAO()
+		public async Task<int> SY_IndexWebsiteDeleteAllDAO(int id)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", id);
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("[SY_IndexWebsiteDelete]", DP));
 		}
 

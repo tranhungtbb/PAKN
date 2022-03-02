@@ -327,8 +327,12 @@ export class Api {
 
 	public static SYIndexSettingGetInfo = 'index-setting/get-info'
 	public static SYIndexSettingUpdate = 'index-setting/update'
-	public static SYIndexWebsiteInsert = 'index-setting/insert'
+
+	public static SYIndexWebsiteInsert = 'index-setting/index-website-insert'
+	public static SYIndexWebsiteUpdate = 'index-setting/index-website-update'
+	public static SYIndexWebsiteDelete = 'index-setting/index-website-delete'
 	public static SYIndexWebsiteGetAll = 'index-setting/get-list-index-website'
+
 
 	//api dia danh
 	public static ProvinceGetAll = 'administrative/get-list-province'

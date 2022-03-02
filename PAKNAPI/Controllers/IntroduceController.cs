@@ -55,8 +55,8 @@ namespace PAKNAPI.Controllers
 
                 if (lstIntroduce.Count > 0) {
                     result.model = lstIntroduce.FirstOrDefault();
-                    result.lstIntroduceFunction = await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionGetByIntroductId(result.model.Id);
-                    result.lstIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetByIntroduceId(result.model.Id);
+                    //result.lstIntroduceFunction = await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionGetByIntroductId(result.model.Id);
+                    //result.lstIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetByIntroduceId(result.model.Id);
 
                     //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                     return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Success" };
@@ -129,35 +129,35 @@ namespace PAKNAPI.Controllers
                         }
                     }
 
-                    var ltsIcon = model.Files.Where(x => x.Name == "ltsIcon").ToList();
-                    if (ltsIcon.Count > 0) {
-                        folder = "Upload\\Introduce\\IconIntroduce\\";
-                        folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
-                        if (!Directory.Exists(folderPath))
-                        {
-                            Directory.CreateDirectory(folderPath);
-                        }
-                        foreach (var icon in ltsIcon) {
-                            foreach (var item in model.lstIntroduceFunction) {
-                                if (item.IconNew != null && icon.FileName.Contains(item.IconNew)) {
-                                    var nameImg = Path.GetFileName(icon.FileName).Replace("+", "");
-                                    item.Icon = Path.Combine(folder, nameImg);
-                                    string filePath = Path.Combine(folderPath, nameImg);
-                                    using (var stream = new FileStream(filePath, FileMode.Create))
-                                    {
-                                        icon.CopyTo(stream);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //var ltsIcon = model.Files.Where(x => x.Name == "ltsIcon").ToList();
+                    //if (ltsIcon.Count > 0) {
+                    //    folder = "Upload\\Introduce\\IconIntroduce\\";
+                    //    folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    //    if (!Directory.Exists(folderPath))
+                    //    {
+                    //        Directory.CreateDirectory(folderPath);
+                    //    }
+                    //    foreach (var icon in ltsIcon) {
+                    //        foreach (var item in model.lstIntroduceFunction) {
+                    //            if (item.IconNew != null && icon.FileName.Contains(item.IconNew)) {
+                    //                var nameImg = Path.GetFileName(icon.FileName).Replace("+", "");
+                    //                item.Icon = Path.Combine(folder, nameImg);
+                    //                string filePath = Path.Combine(folderPath, nameImg);
+                    //                using (var stream = new FileStream(filePath, FileMode.Create))
+                    //                {
+                    //                    icon.CopyTo(stream);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 }
                 model.model.UpdateDate = DateTime.Now;
                 await new SYIntroduce(_appSetting).SYIntroduceUpdateDAO(model.model);
-                foreach (var item in model.lstIntroduceFunction) {
-                    // insert file nữa này
-                    await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionUpdateDAO(item);
-                }
+                //foreach (var item in model.lstIntroduceFunction) {
+                //    // insert file nữa này
+                //    await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionUpdateDAO(item);
+                //}
 
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK, Result = null };

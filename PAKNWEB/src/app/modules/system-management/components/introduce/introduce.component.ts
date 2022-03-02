@@ -20,10 +20,7 @@ declare var $: any
 })
 export class IntroduceComponent implements OnInit {
 	constructor(private _service: IntroduceService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router, private http: HttpClient) {
-		this.lstIntroduceFunction = []
-		for (var i = 0; i < 6; i++) {
-			this.lstIntroduceFunction.push(new IntroduceFunction())
-		}
+
 	}
 
 	model: any = new IntroduceObjet()
@@ -31,8 +28,6 @@ export class IntroduceComponent implements OnInit {
 	PageIndex: number = 1
 	totalRecords: number = 0
 	modelUnit: any = new IntroduceUnit()
-	ltsIntroductUnit: Array<IntroduceUnit>
-	lstIntroduceFunction: Array<IntroduceFunction>
 	ltsIcon: any[] = []
 	submitted: boolean = false
 	submittedUnit: boolean = false
@@ -69,9 +64,8 @@ export class IntroduceComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.model
 				this.bannerUrl = this.model.bannerUrl
-				this.lstIntroduceFunction = res.result.lstIntroduceFunction
 
-				this.getListUnit()
+				// this.getListUnit()
 			}
 		}),
 			(error) => {
@@ -90,22 +84,9 @@ export class IntroduceComponent implements OnInit {
 		this.form = this._fb.group({
 			title: [this.model.title, Validators.required],
 			summary: [this.model.summary, Validators.required],
-			descriptionUnit: [this.model.descriptionUnit, Validators.required],
-			descriptionFunction: [this.model.descriptionFunction, Validators.required],
+			descriptionUnit: [this.model.descriptionUnit],
+			descriptionFunction: [this.model.descriptionFunction],
 			isActiveBanner: [this.model.isActiveBanner],
-			////
-			titleFunc0: [this.lstIntroduceFunction[0].title, Validators.required],
-			contentFunc0: [this.lstIntroduceFunction[0].content, Validators.required],
-			titleFunc1: [this.lstIntroduceFunction[1].title, Validators.required],
-			contentFunc1: [this.lstIntroduceFunction[1].content, Validators.required],
-			titleFunc2: [this.lstIntroduceFunction[2].title, Validators.required],
-			contentFunc2: [this.lstIntroduceFunction[2].content, Validators.required],
-			titleFunc3: [this.lstIntroduceFunction[3].title, Validators.required],
-			contentFunc3: [this.lstIntroduceFunction[3].content, Validators.required],
-			titleFunc4: [this.lstIntroduceFunction[4].title, Validators.required],
-			contentFunc4: [this.lstIntroduceFunction[4].content, Validators.required],
-			titleFunc5: [this.lstIntroduceFunction[5].title, Validators.required],
-			contentFunc5: [this.lstIntroduceFunction[5].content, Validators.required],
 		})
 	}
 	// validate introduce Unit
@@ -135,42 +116,42 @@ export class IntroduceComponent implements OnInit {
 	onPageChange(event: any) {
 		this.PageSize = event.rows
 		this.PageIndex = event.first / event.rows + 1
-		this.getListUnit()
+		// this.getListUnit()
 	}
 
-	getListUnit() {
-		let obj = {
-			IntroduceId: this.model.id,
-			PageSize: this.PageSize,
-			PageIndex: this.PageIndex,
-		}
-		this._service.IntroduceUnitGetListOnPage(obj).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.SYIntroduceUnitGetOnPage.length > 0) {
-					this.ltsIntroductUnit = res.result.SYIntroduceUnitGetOnPage
-					this.PageIndex = res.result.PageIndex
-					this.PageSize = res.result.PageSize
-					this.totalRecords = res.result.TotalCount
-				} else {
-					this.ltsIntroductUnit = []
-					this.PageIndex = 1
-					this.PageSize = 10
-					this.totalRecords = 0
-					return
-				}
-			} else {
-				this.ltsIntroductUnit = []
-				this.PageIndex = 1
-				this.PageSize = 10
-				this.totalRecords = 0
-				return
-			}
-		}),
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
-	}
+	// getListUnit() {
+	// 	let obj = {
+	// 		IntroduceId: this.model.id,
+	// 		PageSize: this.PageSize,
+	// 		PageIndex: this.PageIndex,
+	// 	}
+	// 	this._service.IntroduceUnitGetListOnPage(obj).subscribe((res) => {
+	// 		if (res.success == RESPONSE_STATUS.success) {
+	// 			if (res.result.SYIntroduceUnitGetOnPage.length > 0) {
+	// 				this.ltsIntroductUnit = res.result.SYIntroduceUnitGetOnPage
+	// 				this.PageIndex = res.result.PageIndex
+	// 				this.PageSize = res.result.PageSize
+	// 				this.totalRecords = res.result.TotalCount
+	// 			} else {
+	// 				this.ltsIntroductUnit = []
+	// 				this.PageIndex = 1
+	// 				this.PageSize = 10
+	// 				this.totalRecords = 0
+	// 				return
+	// 			}
+	// 		} else {
+	// 			this.ltsIntroductUnit = []
+	// 			this.PageIndex = 1
+	// 			this.PageSize = 10
+	// 			this.totalRecords = 0
+	// 			return
+	// 		}
+	// 	}),
+	// 		(error) => {
+	// 			console.log(error)
+	// 			alert(error)
+	// 		}
+	// }
 	redirect() {
 		window.history.back()
 	}
@@ -178,7 +159,6 @@ export class IntroduceComponent implements OnInit {
 		let obj = {
 			model: this.model,
 			fileBanner: this.BannerImg,
-			lstIntroduceFunction: this.lstIntroduceFunction,
 			ltsIcon: this.ltsIcon,
 		}
 		this._service.Update(obj).subscribe((res) => {
@@ -197,60 +177,60 @@ export class IntroduceComponent implements OnInit {
 			}
 	}
 
-	onSaveUnit() {
-		this.submittedUnit = true
-		this.modelUnit.title = this.modelUnit.title.trim()
-		this.modelUnit.description = this.modelUnit.description.trim()
-		this.modelUnit.infomation = this.modelUnit.infomation.trim()
+	// onSaveUnit() {
+	// 	this.submittedUnit = true
+	// 	this.modelUnit.title = this.modelUnit.title.trim()
+	// 	this.modelUnit.description = this.modelUnit.description.trim()
+	// 	this.modelUnit.infomation = this.modelUnit.infomation.trim()
 
-		if (this.formUnit.invalid) {
-			return
-		}
-		if (this.modelUnit.id == 0 || this.modelUnit.id == null) {
-			this.modelUnit.introduceId = this.model.id
-			this._service.IntroduceUnitInsert(this.modelUnit).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal-create-update-introduce-unit').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-					this.getListUnit()
-				} else {
-					let res = isNaN(response.result) == true ? 0 : response.result
-					if (res == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						this._toastr.error(response.message)
-						return
-					}
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		} else {
-			this._service.IntroduceUnitUpdate(this.modelUnit).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal-create-update-introduce-unit').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
-					this.getListUnit()
-				} else {
-					let res = isNaN(response.result) == true ? 0 : response.result
-					if (res == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						this._toastr.error(response.message)
-						return
-					}
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		}
-	}
+	// 	if (this.formUnit.invalid) {
+	// 		return
+	// 	}
+	// 	if (this.modelUnit.id == 0 || this.modelUnit.id == null) {
+	// 		this.modelUnit.introduceId = this.model.id
+	// 		this._service.IntroduceUnitInsert(this.modelUnit).subscribe((response) => {
+	// 			if (response.success == RESPONSE_STATUS.success) {
+	// 				$('#modal-create-update-introduce-unit').modal('hide')
+	// 				this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+	// 				this.getListUnit()
+	// 			} else {
+	// 				let res = isNaN(response.result) == true ? 0 : response.result
+	// 				if (res == -1) {
+	// 					this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+	// 					return
+	// 				} else {
+	// 					this._toastr.error(response.message)
+	// 					return
+	// 				}
+	// 			}
+	// 		}),
+	// 			(error) => {
+	// 				console.error(error)
+	// 				alert(error)
+	// 			}
+	// 	} else {
+	// 		this._service.IntroduceUnitUpdate(this.modelUnit).subscribe((response) => {
+	// 			if (response.success == RESPONSE_STATUS.success) {
+	// 				$('#modal-create-update-introduce-unit').modal('hide')
+	// 				this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
+	// 				this.getListUnit()
+	// 			} else {
+	// 				let res = isNaN(response.result) == true ? 0 : response.result
+	// 				if (res == -1) {
+	// 					this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+	// 					return
+	// 				} else {
+	// 					this._toastr.error(response.message)
+	// 					return
+	// 				}
+	// 			}
+	// 		}),
+	// 			(error) => {
+	// 				console.error(error)
+	// 				alert(error)
+	// 			}
+	// 	}
+	// }
 
 	preCreate() {
 		this.title = 'Thêm mới đơn vị'
@@ -274,27 +254,27 @@ export class IntroduceComponent implements OnInit {
 		$('#modalConfirmDelete').modal('show')
 	}
 
-	onDelete() {
-		let request = {
-			Id: this.idDeleteUnit,
-		}
-		this._service.IntroduceUnitDelete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result > 0) {
-					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				} else {
-					this._toastr.error(MESSAGE_COMMON.DELETE_FAILED)
-				}
-				$('#modalConfirmDelete').modal('hide')
-				this.getListUnit()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
-	}
+	// onDelete() {
+	// 	let request = {
+	// 		Id: this.idDeleteUnit,
+	// 	}
+	// 	this._service.IntroduceUnitDelete(request).subscribe((response) => {
+	// 		if (response.success == RESPONSE_STATUS.success) {
+	// 			if (response.result > 0) {
+	// 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+	// 			} else {
+	// 				this._toastr.error(MESSAGE_COMMON.DELETE_FAILED)
+	// 			}
+	// 			$('#modalConfirmDelete').modal('hide')
+	// 			this.getListUnit()
+	// 		} else {
+	// 			this._toastr.error(response.message)
+	// 		}
+	// 	}),
+	// 		(error) => {
+	// 			console.error(error)
+	// 		}
+	// }
 
 	ChooseBanner() {
 		$('#bannerImg').click()
@@ -319,45 +299,45 @@ export class IntroduceComponent implements OnInit {
 		this.idIcon = id
 		$("[id='" + id + "']").click()
 	}
-	ChangeIcon(event: any) {
-		if (!event.target.files) return
-		var file = event.target.files[0]
-		if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
-			this._toastr.error('Chỉ chọn tệp tin ảnh')
-			event.target.value = null
-			return
-		}
-		let check = false
-		for (var j = 0; j < this.ltsIcon.length; j++) {
-			if (this.ltsIcon[j].name === event.target.files[0].name) {
-				check = true
-				break
-			}
-		}
-		for (var j = 0; j < this.lstIntroduceFunction.length; j++) {
-			if (this.lstIntroduceFunction[j].icon != null && this.lstIntroduceFunction[j].icon.includes(event.target.files[0].name)) {
-				check = true
-				break
-			}
-		}
-		if (check == true) {
-			event.target.value = null
-			this._toastr.error('Không được chọn trùng icon')
-			return
-		}
-		file['Id'] = this.idIcon
-		this.ltsIcon.push(file)
-		let item = this.lstIntroduceFunction.find((x) => x.id == this.idIcon)
-		let index = this.lstIntroduceFunction.indexOf(item)
-		item.iconNew = event.target.files[0].name
-		this.lstIntroduceFunction[index] = { ...item }
+	// ChangeIcon(event: any) {
+	// 	if (!event.target.files) return
+	// 	var file = event.target.files[0]
+	// 	if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
+	// 		this._toastr.error('Chỉ chọn tệp tin ảnh')
+	// 		event.target.value = null
+	// 		return
+	// 	}
+	// 	let check = false
+	// 	for (var j = 0; j < this.ltsIcon.length; j++) {
+	// 		if (this.ltsIcon[j].name === event.target.files[0].name) {
+	// 			check = true
+	// 			break
+	// 		}
+	// 	}
+	// 	for (var j = 0; j < this.lstIntroduceFunction.length; j++) {
+	// 		if (this.lstIntroduceFunction[j].icon != null && this.lstIntroduceFunction[j].icon.includes(event.target.files[0].name)) {
+	// 			check = true
+	// 			break
+	// 		}
+	// 	}
+	// 	if (check == true) {
+	// 		event.target.value = null
+	// 		this._toastr.error('Không được chọn trùng icon')
+	// 		return
+	// 	}
+	// 	file['Id'] = this.idIcon
+	// 	this.ltsIcon.push(file)
+	// 	let item = this.lstIntroduceFunction.find((x) => x.id == this.idIcon)
+	// 	let index = this.lstIntroduceFunction.indexOf(item)
+	// 	item.iconNew = event.target.files[0].name
+	// 	this.lstIntroduceFunction[index] = { ...item }
 
-		let output: any = $('#img_icon_' + this.idIcon)
-		output.attr('src', URL.createObjectURL(file))
-		output.onload = function () {
-			URL.revokeObjectURL(output.src) // free memory
-		}
-	}
+	// 	let output: any = $('#img_icon_' + this.idIcon)
+	// 	output.attr('src', URL.createObjectURL(file))
+	// 	output.onload = function () {
+	// 		URL.revokeObjectURL(output.src) // free memory
+	// 	}
+	// }
 
 	public onReady(editor) {
 		if (editor.model.schema.isRegistered('image')) {

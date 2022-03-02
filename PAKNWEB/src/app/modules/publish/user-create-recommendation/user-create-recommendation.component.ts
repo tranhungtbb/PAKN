@@ -104,18 +104,19 @@ export class CreateRecommendationComponent implements OnInit, AfterViewInit {
 		$('[data-toggle="tooltip"]').tooltip()
 	}
 
-	setCurrentLocation() {
+	setCurrentLocation(getAddress: boolean = false) {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
 				this.model.lat = this.markers.lat
 				this.model.lng = this.markers.lng
-				// setTimeout(() => {
-				// 	this.getAddress(this.model.lat, this.model.lng).then((res) => {
-				// 		this.model.address = String(res)
-				// 	})
-				// }, 200)
-
+				if (getAddress) {
+					setTimeout(() => {
+						this.getAddress(this.model.lat, this.model.lng).then((res) => {
+							this.model.address = String(res)
+						})
+					}, 200)
+				}
 			})
 		}
 	}

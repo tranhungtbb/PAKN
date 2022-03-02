@@ -236,29 +236,27 @@
 					nghiệm!</div>
 				<div class="row justify-content-between">
 					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-1">
-						<h4 class="title-footer text-uppercase fs-17 mb-1">Hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị
-							tỉnh
-							Khánh
-							Hòa</h4>
+						<h4 class="title-footer text-uppercase fs-17 mb-1">{{indexSettingObj.systemTitle}}</h4>
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item py-1 px-0 border-0 d-flex"><i class="fas fa-building mr-2"></i>
-								<div><span class="fw-500">Cơ quan chủ quản: </span>Ủy ban nhân dân tỉnh Khánh Hòa </div>
+								<div><span class="fw-500">Cơ quan chủ quản: </span>{{indexSettingObj.organization}} </div>
 							</li>
 							<li class="list-group-item py-1 px-0 px-0 border-0 d-flex"><i class="fas fa-home mr-2"></i>
-								<div><span class="fw-500">Đơn vị quản lý vận hành:</span> Trung tâm Công nghệ thông tin và Dịch vụ hành
-									chính công trực tuyến <br>(Trực thuộc Sở Thông tin Truyền thông tỉnh Khánh Hòa) </div>
+								<div style="white-space: pre"><span class="fw-500">Đơn vị quản lý vận
+										hành:</span>{{indexSettingObj.unit}}
+								</div>
 							</li>
 							<li class="list-group-item py-1 px-0 border-0 d-flex"><i class="fas fa-phone-square-alt mr-2"></i>
-								<div><span class="fw-500">Tổng đài đường dây nóng:</span> 1900 1023 </div>
+								<div><span class="fw-500">Tổng đài đường dây nóng:</span> {{indexSettingObj.phone}} </div>
 							</li>
 							<li class="list-group-item py-1 px-0 border-0 d-flex"><i class="fas fa-envelope-open mr-2"></i>
 								<div>
 									<span class="fw-500">Email: </span>
-									<a class="color-dark" href="mailto:pakn@khanhhoa.gov.vn">pakn@khanhhoa.gov.vn</a>
+									<a class="color-dark" href="mailto:pakn@khanhhoa.gov.vn">{{ indexSettingObj.email}}</a>
 								</div>
 							</li>
 							<li class="list-group-item py-1 px-0 border-0 d-flex"><i class="fas fa-map-marked-alt mr-2"></i>
-								<div><span class="fw-500">Địa chỉ: </span> 147 Thống Nhất, Nha Trang, Khánh Hòa </div>
+								<div><span class="fw-500">Địa chỉ: </span> {{ indexSettingObj.address}} </div>
 							</li>
 						</ul>
 					</div>
@@ -334,18 +332,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="copyright py-2" style="background: #CDDEF1">
-			<div class="container">
-			</div>
-		</div> -->
 	</div>
-
-
-	<!-- <div class="call-now center  pointer">
-		<div class="call-content center">
-			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
-		</div>
-	</div> -->
 
 	<div class="chat-now pointer" *ngIf="!showChatBot" (click)="showHideMessage()">
 		<div class="d-flex center">
@@ -390,38 +377,52 @@
 											<img *ngIf="message.fromAvatarPath" [src]="message.fromAvatarPath"
 												class="rounded-circle user_img_msg">
 										</div>
-										<div class="msg_cotainer">
-											{{message.title}}
-											<ng-container *ngIf="message.answers.length == 1">
-												<ng-container *ngFor="let ans of message.answers">
-													<div *ngIf="ans.answer" class="msg_cotainer_answer">
-														<span [innerHTML]="ans.answer | Change"></span>
-													</div>
-													<ng-container *ngFor="let tag of ans.subTags.data">
-														<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover "
-															(click)="sendMessage(tag,true)">
-															{{tag.title}}
-														</div>
-													</ng-container>
-												</ng-container>
-											</ng-container>
-											<ng-container *ngIf="message.answers.length > 1">
-												<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
-													<ng-template let-ans pTemplate="item">
-														<div *ngIf="ans.answer" class="msg_cotainer_answer slide">
+										<ng-container *ngIf="message.type == 'File'">
+											<div class="msg_cotainer_send">
+												<a title="tải xuống" *ngFor="let item of message.title" class="text-white cursor d-flex"
+													style="text-decoration: underline;" (click)="DownloadFile(item)">
+													{{item.Name}}
+												</a>
+											</div>
+										</ng-container>
+
+										<ng-container *ngIf="message.type != 'File'">
+
+
+
+											<div class="msg_cotainer">
+												{{message.title}}
+												<ng-container *ngIf="message.answers.length == 1">
+													<ng-container *ngFor="let ans of message.answers">
+														<div *ngIf="ans.answer" class="msg_cotainer_answer">
 															<span [innerHTML]="ans.answer | Change"></span>
 														</div>
 														<ng-container *ngFor="let tag of ans.subTags.data">
-															<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover"
+															<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover "
 																(click)="sendMessage(tag,true)">
 																{{tag.title}}
 															</div>
 														</ng-container>
-													</ng-template>
-												</p-carousel>
-											</ng-container>
-											<!-- <span class="msg_time">{{message.dateSent | date:'HH:mm:ss dd/MM/yyyy'}}</span> -->
-										</div>
+													</ng-container>
+												</ng-container>
+												<ng-container *ngIf="message.answers.length > 1">
+													<p-carousel [value]="message.answers" [numVisible]="1" [numScroll]="1" [circular]="false">
+														<ng-template let-ans pTemplate="item">
+															<div *ngIf="ans.answer" class="msg_cotainer_answer slide">
+																<span [innerHTML]="ans.answer | Change"></span>
+															</div>
+															<ng-container *ngFor="let tag of ans.subTags.data">
+																<div *ngIf="tag.title" class="msg_cotainer_child p-title-hover"
+																	(click)="sendMessage(tag,true)">
+																	{{tag.title}}
+																</div>
+															</ng-container>
+														</ng-template>
+													</p-carousel>
+												</ng-container>
+												<!-- <span class="msg_time">{{message.dateSent | date:'HH:mm:ss dd/MM/yyyy'}}</span> -->
+											</div>
+										</ng-container>
 									</div>
 
 
@@ -432,7 +433,7 @@
 										</div>
 										<ng-container *ngIf="message.type == 'File'">
 											<div class="msg_cotainer_send">
-												<a title="tải xuống" *ngFor="let item of message.title" class="text-white"
+												<a title="tải xuống" *ngFor="let item of message.title" class="text-white cursor d-flex"
 													style="text-decoration: underline;" (click)="DownloadFile(item)">
 													{{item.Name}}
 												</a>
@@ -454,7 +455,7 @@
 
 							</div>
 							<div class="card-footer">
-								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
+								<input type="file" hidden #file id="file" (change)="onUpload($event)"
 									class="inputfile inputfile-4 d-none" multiple />
 								<div class="input-group br-textMessage p-1">
 									<textarea id="type_msg" [(ngModel)]="textMessage" (keydown)="onKeyDown($event)"

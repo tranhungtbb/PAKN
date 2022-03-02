@@ -4,33 +4,32 @@ import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser'
 
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { AppSettings } from 'src/app/constants/app-setting'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 import { IndexSettingService } from 'src/app/services/index-setting.service'
-import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
+import { IndexWebsite } from 'src/app/models/indexSettingObject'
 import { COMMONS } from 'src/app/commons/commons'
+import { saveAs as importedSaveAs } from 'file-saver'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
 declare var $: any
+
+
 @Component({
 	selector: 'app-index-setting',
 	templateUrl: './index-setting.component.html',
 	styleUrls: ['./index-setting.component.css'],
 })
 export class IndexSettingComponent implements OnInit {
-	constructor(private _service: IndexSettingService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router, private sanitizer: DomSanitizer) {
+	constructor(private fileService: UploadFileService, private _service: IndexSettingService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router, private sanitizer: DomSanitizer) {
 		this.ltsIndexSettingWebsite = []
-		this.lstIndexSettingBanner = []
-		this.lstRemoveBanner = []
 		this.lstInsertBanner = []
 	}
 
-	model: any = new IndexSettingObjet()
+	model: any = {}
 
 	modelWebsite: any = new IndexWebsite()
 	ltsIndexSettingWebsite: Array<IndexWebsite>
-	lstIndexSettingBanner: Array<IndexBanner>
 	lstInsertBanner: any[]
-	lstRemoveBanner: Array<IndexBanner>
 	submitted: boolean = false
 	submittedWebsite: boolean = false
 
@@ -47,13 +46,13 @@ export class IndexSettingComponent implements OnInit {
 		// get model
 		this.buildForm()
 		this.buildFormWebsite()
+		this.getListWebsite()
 
 		this._service.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.model
 				this.bannerUrl = this.model.bannerUrl
-				this.lstIndexSettingBanner = res.result.lstIndexSettingBanner == null ? [] : res.result.lstIndexSettingBanner
-				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
+
 			}
 		}),
 			(error) => {
@@ -72,11 +71,14 @@ export class IndexSettingComponent implements OnInit {
 		this.form = this._fb.group({
 			metaTitle: [this.model.metaTitle, [Validators.required]],
 			metaDescription: [this.model.metaDescription, [Validators.required]],
+			systemTitle: [this.model.systemTitle, Validators.required],
+			bannerLink: [this.model.bannerLink, Validators.required],
+			organization: [this.model.organization, Validators.required],
+			unit: [this.model.unit, Validators.required],
 			phone: [this.model.phone, [Validators.required, Validators.pattern('[- +()0-9]+')]],
 			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, Validators.required],
-			description: [this.model.description, Validators.required],
-			license: [this.model.license, Validators.required],
+
 		})
 	}
 
@@ -92,9 +94,10 @@ export class IndexSettingComponent implements OnInit {
 	}
 
 	rebuilFormWebsite() {
+		this.submittedWebsite = false
 		this.formWebsite.reset({
-			nameWebsite: this.modelWebsite.nameWebsite,
-			urlWebsite: this.modelWebsite.urlWebsite,
+			nameWebsite: '',
+			urlWebsite: ''
 		})
 	}
 
@@ -102,13 +105,26 @@ export class IndexSettingComponent implements OnInit {
 		window.history.back()
 	}
 
+	getListWebsite() {
+		this._service.SYIndexWebsiteGetAll().subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.ltsIndexSettingWebsite = res.result == null ? [] : res.result
+			}
+		}, err => {
+			console.log(err)
+		})
+	}
+
 	onSave(isPreView: boolean = false) {
 		this.submitted = true
 		this.model.phone = this.model.phone.trim()
 		this.model.email = this.model.email.trim()
 		this.model.address = this.model.address.trim()
-		this.model.description = this.model.description.trim()
-		this.model.license = this.model.license.trim()
+
+		this.model.systemTitle = this.model.systemTitle == null ? '' : this.model.systemTitle.trim()
+		this.model.bannerLink = this.model.bannerLink == null ? '' : this.model.bannerLink.trim()
+		this.model.organization = this.model.organization == null ? '' : this.model.organization.trim()
+		this.model.unit = this.model.unit == null ? '' : this.model.unit.trim()
 
 		if (this.form.invalid) {
 			return
@@ -116,10 +132,7 @@ export class IndexSettingComponent implements OnInit {
 
 		let obj = {
 			model: this.model,
-			fileBanner: this.BannerImg,
-			ltsIndexWebsite: this.ltsIndexSettingWebsite,
-			lstInsertBanner: this.lstInsertBanner,
-			lstRemoveBanner: this.lstRemoveBanner,
+			fileBanner: this.BannerImg
 		}
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -138,6 +151,22 @@ export class IndexSettingComponent implements OnInit {
 			}
 	}
 
+
+	@ViewChild('fileWebsite', { static: false }) fileWebsite: any
+	file: any
+
+	onChooseImageWebsite(event: any) {
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png'].includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+		// banner.fileAttach = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]))
+		this.file = file
+		this.modelWebsite.fileName = file.name
+	}
+
 	onSaveWebsite() {
 		this.submittedWebsite = true
 		this.modelWebsite.nameWebsite = this.modelWebsite.nameWebsite.trim()
@@ -147,39 +176,71 @@ export class IndexSettingComponent implements OnInit {
 		if (this.formWebsite.invalid) {
 			return
 		}
-		if (this.ltsIndexSettingWebsite.length > 0) {
-			var check = 0
-			this.ltsIndexSettingWebsite.map((item) => {
-				if (item.nameWebsite == this.modelWebsite.nameWebsite) {
-					check += 1
-					return
-				}
-			})
-			if (check > 0) {
-				this._toastr.error('Tên website đã bị trùng')
-				return
-			} else {
-				this.ltsIndexSettingWebsite.push(this.modelWebsite)
-				this.submittedWebsite = false
-				this.modelWebsite = new IndexWebsite()
-				this.rebuilFormWebsite()
-				this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+
+		if (!this.modelWebsite.id) {
+			if (this.file == null) {
+				this._toastr.error("Vui lòng chọn ảnh cho liên kết website")
 				return
 			}
+			this._service.IndexWebsiteInsert({ model: this.modelWebsite, file: this.file }).subscribe((res) => {
+				// console.log(res)
+				if (res.success == RESPONSE_STATUS.success) {
+					this.fileWebsite.nativeElement.value = ''
+					this.modelWebsite = {}
+					this.rebuilFormWebsite()
+					this.file = null
+					this._toastr.success(COMMONS.ADD_SUCCESS)
+					this.getListWebsite()
+				} else {
+					this._toastr.error(COMMONS.ADD_FAILED)
+				}
+			})
 		} else {
-			this.ltsIndexSettingWebsite.push(this.modelWebsite)
-			this.submittedWebsite = false
-			this.modelWebsite = new IndexWebsite()
-			this.rebuilFormWebsite()
-			this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+			this._service.IndexWebsiteUpdate({ model: this.modelWebsite, file: this.file }).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.fileWebsite.nativeElement.value = ''
+					this.modelWebsite = {}
+					this.file = null
+					this.rebuilFormWebsite()
+					this._toastr.success(COMMONS.UPDATE_SUCCESS)
+					this.getListWebsite()
+				} else {
+					this._toastr.error(COMMONS.UPDATE_FAILED)
+				}
+			}, err => {
+				console.log(err)
+			})
 		}
 	}
 
-	onDeleteWebsite(nameWebsite: any) {
-		if (nameWebsite == undefined) return
-		if (this.ltsIndexSettingWebsite.length > 0) {
-			this.ltsIndexSettingWebsite = this.ltsIndexSettingWebsite.filter((x) => x.nameWebsite != nameWebsite)
+	IndexWebsiteGetById(data: any) {
+		this.modelWebsite = { ...data }
+	}
+
+	onDeleteWebsite(id: number) {
+		this._service.IndexWebsiteDelete({ Id: id }).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.getListWebsite()
+			} else {
+				this._toastr.error(res.message)
+			}
+		})
+	}
+
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePathBase,
+			Name: file.fileName,
 		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this._toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 
 	ChooseBanner() {
@@ -204,37 +265,5 @@ export class IndexSettingComponent implements OnInit {
 
 	// lts banner
 
-	preInsertBanner() {
-		$('#insertBanner').click()
-	}
-	onInsertBanner(event: any) {
-		var file = event.target.files[0]
-		if (!['image/jpeg', 'image/png'].includes(file.type)) {
-			this._toastr.error('Chỉ chọn tệp tin ảnh')
-			event.target.value = null
-			return
-		}
 
-		for (let item of this.lstIndexSettingBanner) {
-			if (item.name === file.name) {
-				this._toastr.error('Không phép đẩy cùng 1 file lên hệ thống')
-				return
-			}
-		}
-
-		let banner = new IndexBanner()
-
-		banner.fileAttach = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]))
-
-		this.lstIndexSettingBanner.push(banner)
-
-		this.lstInsertBanner.push(file)
-	}
-
-	onDeleteBanner(args) {
-		const index = this.lstIndexSettingBanner.indexOf(args)
-		const file = this.lstIndexSettingBanner[index]
-		this.lstRemoveBanner.push(file)
-		this.lstIndexSettingBanner.splice(index, 1)
-	}
 }

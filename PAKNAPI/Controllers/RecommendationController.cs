@@ -1445,7 +1445,7 @@ namespace PAKNAPI.Controller
                 var userApprove = forwards.Where(x => x.Step == STEP_RECOMMENDATION.APPROVE && x.Status == PROCESS_STATUS_RECOMMENDATION.WAIT).FirstOrDefault();
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
-                _mRRecommendationUpdateStatusIN.Type = JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationType"].ToString(), jss);
+                _mRRecommendationUpdateStatusIN.Type = Request.Form["RecommendationType"].ToString() == null ? 1 : JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationType"].ToString(), jss);
                 _mRRecommendationUpdateStatusIN.Id = request.DataConclusion.RecommendationId;
 
                 bool isUserApprove = false;

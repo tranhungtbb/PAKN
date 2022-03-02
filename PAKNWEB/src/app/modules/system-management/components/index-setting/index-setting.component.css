@@ -126,3 +126,12 @@ input {
 ::placeholder {
   font-style: normal;
 }
+
+.flex-auto{
+  flex: auto;
+}
+
+.fas {
+	color: #2e73d5;
+	font-size: 15px;
+}

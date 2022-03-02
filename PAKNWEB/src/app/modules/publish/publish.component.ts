@@ -484,7 +484,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (this.files.length == 0) { return }
 		let obj = {
 			files: this.files,
-			roomName: this.myGuid
+			roomName: 'Room_' + this.myGuid
 		}
 
 		this.botService.clientSendFile(obj).subscribe(res => {

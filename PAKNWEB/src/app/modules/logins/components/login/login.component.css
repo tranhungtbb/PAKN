@@ -80,6 +80,11 @@ p.info{
 	display: none;
 }
 
+.no-gutters{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
 
 
 @media (max-width: 575.98px)  { 

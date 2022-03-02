@@ -368,3 +368,7 @@ img {
 ::ng-deep .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
 	background-color: rgb(75 115 227 / 54%);
 }
+
+.br-8px{
+	border-radius: 8px;
+}

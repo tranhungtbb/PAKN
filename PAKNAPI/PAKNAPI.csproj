@@ -64,6 +64,7 @@
   <ItemGroup>
     <Folder Include="DataBaseAuto\" />
     <Folder Include="BusinessLogic\" />
+    <Folder Include="Upload\BannerIndex\Banner\" />
     <Folder Include="Upload\IconLinhVuc\" />
   </ItemGroup>
   <ItemGroup>

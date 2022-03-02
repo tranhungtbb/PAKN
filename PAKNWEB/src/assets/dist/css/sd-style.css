@@ -1651,7 +1651,6 @@ a:not([href]):not([tabindex]) {
 	padding: 4px 15px;
 	border: 1px solid #eeeeee;
 	margin: 3px 7px;
-	width: 180px;
 	border-radius: 10px;
 }
 

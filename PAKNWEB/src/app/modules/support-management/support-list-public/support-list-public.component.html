@@ -72,6 +72,19 @@
 								[(ngModel)]="model.content" (ready)="onReady($event)"></ckeditor>
 
 						</div>
+
+						<div class="col-12 col-sm-12 form-group">
+							<label>Đường dẫn video <span class="cl-red">(*)</span></label>
+							<input class="form-control" type="text" formControlName="url" [(ngModel)]="model.url"
+								placeholder="Nhập ..">
+
+							<div *ngIf="(submitted && f.url.invalid) || (f.content.invalid && (f.url.dirty || f.url.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.url.errors?.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
 					</div>
 				</form>
 

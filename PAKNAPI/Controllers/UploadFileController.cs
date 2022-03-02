@@ -364,22 +364,27 @@ namespace PAKNAPI.Controllers
 
                 // insert db
                 int userId = 0;
+                int unit = 0;
                 try {
                     userId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                    unit = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 }
                 catch (Exception) { }
                 
 
                 // signIR
                 string fullName = userId == 0 ? "Người dân" : new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
-                var room = await new BOTRoom(_appSetting).BOTRoomGetByName("Room_" + request.RoomName);
+                var room = await new BOTRoom(_appSetting).BOTRoomGetByName(request.RoomName);
+                if (room == null) {
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Room is not correct" };
+                }
                 DateTime dateSent = DateTime.Now;
                 Message messageModel = new Message();
                 messageModel.Content = JsonSerializer.Serialize(files);
-                messageModel.FromId = "0";
+                messageModel.FromId = userId == 0 ? "0" : userId.ToString();
                 messageModel.From = fullName;
                 messageModel.FromFullName = fullName;
-                messageModel.To = "Room_" + request.RoomName;
+                messageModel.To = request.RoomName;
                 messageModel.Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString();
                 messageModel.Type = MessageTypes.File;
                 messageModel.DateSend = DateTime.Now;

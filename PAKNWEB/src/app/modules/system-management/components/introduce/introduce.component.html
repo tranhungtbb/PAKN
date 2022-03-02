@@ -23,23 +23,24 @@
 				<div class="row form-group">
 					<div class="col-sm-12 padding-col ps-relative pb-4">
 						<div class="d-flex justify-content-between">
-							<label class="control-label department">Banner lớn<span class="text-danger">(*)</span></label>
+							<label class="control-label department">Hình ảnh giới thiệu (1490 x 425)<span
+									class="text-danger">(*)</span></label>
 							<mat-slide-toggle class="example-margin" [checked]="model.isActiveBanner" formControlName="isActiveBanner"
 								[(ngModel)]="model.isActiveBanner" color="primary">
-								Hiển thị banner
+								Hiển thị hình ảnh
 							</mat-slide-toggle>
 						</div>
 
 						<input class="form-control" (change)="ChangeBanner($event)" id="bannerImg" hidden type="file" />
 						<a *hasPermission="['3', 'A_XV_6']" class="btn btn-sm btn-default rounded mr-3 btn-change-banner"
-							title="Thay banner" type="button" (click)="ChooseBanner()">
+							title="Thay hình ảnh giới thiệu" type="button" (click)="ChooseBanner()">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 								class="bi bi-card-image" viewBox="0 0 16 16">
 								<path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
 								<path
 									d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
 							</svg>
-							<span class="ml-2" style="text-transform: none;">Thay banner</span>
+							<span class="ml-2" style="text-transform: none;">Thay hình ảnh giới thiệu</span>
 						</a>
 						<div style="max-height:400px;width: auto;height:400px;">
 							<img [src]="bannerUrl" id="bannerIntroduce"
@@ -75,11 +76,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 padding-col">
-						<label class="control-label department">Mô tả cơ cấu tổ chức<span class="text-danger">(*)</span></label>
+					<!-- <div class="col-sm-12 padding-col">
+						<label class="control-label department">Đường dẫn youtobe<span class="text-danger">(*)</span></label>
+						<input autofocus class="form-control" formControlName="descriptionUnit" [(ngModel)]="model.descriptionUnit"
+							maxlength="250" placeholder="Nhập.." />
 
-						<ckeditor id="editor__summary" [config]="ckConfig" [editor]="Editor" formControlName="descriptionUnit"
-							[(ngModel)]="model.descriptionUnit" (ready)="onReady($event)"></ckeditor>
 						<div
 							*ngIf="(submitted && f.descriptionUnit.invalid) || (f.descriptionUnit.invalid && (f.descriptionUnit.dirty || f.descriptionUnit.touched))"
 							class="has-error m-b-12">
@@ -87,9 +88,9 @@
 								<span class="help-block">Trường dữ liệu này không để trống</span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
-					<div class="col-sm-12 padding-col" style="padding-top: 20px; padding-bottom: 20px;">
+					<!-- <div class="col-sm-12 padding-col" style="padding-top: 20px; padding-bottom: 20px;">
 						<div class="card mb-0 shadow-none" style="border: 1px solid rgba(214, 214, 214, 0.8); border-radius: 5px;">
 							<p class="p-3 h4 d-flex justify-content-between align-items-center">
 								<span>Danh sách đơn vị</span>
@@ -162,10 +163,10 @@
 								</p-table>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 
-					<div class="col-sm-12 padding-col">
+					<!-- <div class="col-sm-12 padding-col">
 						<label class="control-label department">Mô tả chức năng hệ thống<span class="text-danger">(*)</span></label>
 						<textarea class="form-control" [(ngModel)]="model.descriptionFunction" formControlName="descriptionFunction"
 							rows="6" placeholder="Nhập.."></textarea>
@@ -176,215 +177,7 @@
 								<span class="help-block">Trường dữ liệu này không để trống</span>
 							</div>
 						</div>
-					</div>
-
-
-
-					<div class="col-12 col-sm-6 flex">
-						<div class="item-introduce">
-							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
-								<img src="{{lstIntroduceFunction[0].icon}}">
-							</div>
-							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[0].id)">
-								<img [id]="'img_icon_' + lstIntroduceFunction[0].id" src="{{lstIntroduceFunction[0].icon}}">
-								<input type="file" hidden [id]="lstIntroduceFunction[0].id" (change)="ChangeIcon($event)">
-							</div>
-						</div>
-						<div class="content-intro-x">
-							<div class="title-action">
-								<input class="form-control font-bold" formControlName="titleFunc0"
-									[(ngModel)]="lstIntroduceFunction[0].title" maxlength="100" placeholder="Nhập.." />
-								<div
-									*ngIf="(submitted && f.titleFunc0.invalid) || (f.titleFunc0.invalid && (f.titleFunc0.dirty || f.titleFunc0.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.titleFunc0.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[0].content"
-								formControlName="contentFunc0" maxlength="700" rows="4" placeholder="Nhập.."></textarea>
-							<div
-								*ngIf="(submitted && f.contentFunc0.invalid) || (f.contentFunc0.invalid && (f.contentFunc0.dirty || f.contentFunc0.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.contentFunc0.errors">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 flex">
-						<div class="item-introduce">
-							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
-								<img src="{{lstIntroduceFunction[1].icon}}">
-							</div>
-							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[1].id)">
-								<img [id]="'img_icon_' + lstIntroduceFunction[1].id" src="{{lstIntroduceFunction[1].icon}}">
-								<input type="file" hidden [id]="lstIntroduceFunction[1].id" (change)="ChangeIcon($event)">
-							</div>
-						</div>
-						<div class="content-intro-x">
-							<div class="title-action">
-								<input class="form-control font-bold" formControlName="titleFunc1"
-									[(ngModel)]="lstIntroduceFunction[1].title" maxlength="100" placeholder="Nhập.." />
-								<div
-									*ngIf="(submitted && f.titleFunc1.invalid) || (f.titleFunc1.invalid && (f.titleFunc1.dirty || f.titleFunc1.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.titleFunc1.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[1].content"
-								formControlName="contentFunc1" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
-							<div
-								*ngIf="(submitted && f.contentFunc1.invalid) || (f.contentFunc1.invalid && (f.contentFunc1.dirty || f.contentFunc1.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.contentFunc1.errors">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="col-12 col-sm-6 flex">
-						<div class="item-introduce">
-							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
-								<img src="{{lstIntroduceFunction[2].icon}}">
-							</div>
-							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[2].id)">
-								<img [id]="'img_icon_' + lstIntroduceFunction[2].id" src="{{lstIntroduceFunction[2].icon}}">
-								<input type="file" hidden [id]="lstIntroduceFunction[2].id" (change)="ChangeIcon($event)">
-							</div>
-						</div>
-						<div class="content-intro-x">
-							<div class="title-action">
-								<input class="form-control font-bold" formControlName="titleFunc2"
-									[(ngModel)]="lstIntroduceFunction[2].title" maxlength="100" placeholder="Nhập.." />
-								<div
-									*ngIf="(submitted && f.titleFunc2.invalid) || (f.titleFunc2.invalid && (f.titleFunc2.dirty || f.titleFunc2.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.titleFunc2.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[2].content"
-								formControlName="contentFunc2" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
-							<div
-								*ngIf="(submitted && f.contentFunc2.invalid) || (f.contentFunc2.invalid && (f.contentFunc2.dirty || f.contentFunc2.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.contentFunc2.errors">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 flex">
-						<div class="item-introduce">
-							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
-								<img src="{{lstIntroduceFunction[3].icon}}">
-							</div>
-							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[3].id)">
-								<img [id]="'img_icon_' + lstIntroduceFunction[3].id" src="{{lstIntroduceFunction[3].icon}}">
-								<input type="file" hidden [id]="lstIntroduceFunction[3].id" (change)="ChangeIcon($event)">
-							</div>
-						</div>
-						<div class="content-intro-x">
-							<div class="title-action">
-								<input class="form-control font-bold" formControlName="titleFunc3"
-									[(ngModel)]="lstIntroduceFunction[3].title" maxlength="100" placeholder="Nhập.." />
-								<div
-									*ngIf="(submitted && f.titleFunc3.invalid) || (f.titleFunc3.invalid && (f.titleFunc3.dirty || f.titleFunc3.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.titleFunc3.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[3].content"
-								formControlName="contentFunc3" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
-							<div
-								*ngIf="(submitted && f.contentFunc3.invalid) || (f.contentFunc3.invalid && (f.contentFunc3.dirty || f.contentFunc3.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.contentFunc3.errors">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="col-12 col-sm-6 flex">
-						<div class="item-introduce">
-							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
-								<img src="{{lstIntroduceFunction[4].icon}}">
-							</div>
-							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[4].id)">
-								<img [id]="'img_icon_' + lstIntroduceFunction[4].id" src="{{lstIntroduceFunction[4].icon}}">
-								<input type="file" hidden [id]="lstIntroduceFunction[4].id" (change)="ChangeIcon($event)">
-							</div>
-						</div>
-						<div class="content-intro-x">
-							<div class="title-action">
-								<input class="form-control font-bold" formControlName="titleFunc4"
-									[(ngModel)]="lstIntroduceFunction[4].title" maxlength="100" placeholder="Nhập.." />
-								<div
-									*ngIf="(submitted && f.titleFunc4.invalid) || (f.titleFunc4.invalid && (f.titleFunc4.dirty || f.titleFunc4.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.titleFunc4.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[4].content"
-								formControlName="contentFunc4" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
-							<div
-								*ngIf="(submitted && f.contentFunc4.invalid) || (f.contentFunc4.invalid && (f.contentFunc4.dirty || f.contentFunc4.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.contentFunc4.errors">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 flex">
-						<div class="item-introduce">
-							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
-								<img src="{{lstIntroduceFunction[5].icon}}">
-							</div>
-							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[5].id)">
-								<img [id]="'img_icon_' + lstIntroduceFunction[5].id" src="{{lstIntroduceFunction[5].icon}}">
-								<input type="file" hidden [id]="lstIntroduceFunction[5].id" (change)="ChangeIcon($event)">
-							</div>
-						</div>
-						<div class="content-intro-x">
-							<div class="title-action">
-								<input class="form-control font-bold" formControlName="titleFunc5"
-									[(ngModel)]="lstIntroduceFunction[5].title" maxlength="100" placeholder="Nhập.." />
-								<div
-									*ngIf="(submitted && f.titleFunc5.invalid) || (f.titleFunc5.invalid && (f.titleFunc5.dirty || f.titleFunc5.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.titleFunc5.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[5].content"
-								formControlName="contentFunc5" maxlength="500" rows="4" placeholder="Nhập.."></textarea>
-							<div
-								*ngIf="(submitted && f.contentFunc5.invalid) || (f.contentFunc5.invalid && (f.contentFunc5.dirty || f.contentFunc5.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="f.contentFunc5.errors">
-									<span class="help-block">Trường dữ liệu này không để trống</span>
-								</div>
-							</div>
-						</div>
-					</div>
+					</div> -->
 
 				</div>
 			</form>

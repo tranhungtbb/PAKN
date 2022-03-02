@@ -109,7 +109,7 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 	}
 	DownloadFile(file: any) {
 		var request = {
-			Path: file.filePath,
+			Path: file.fileAttach,
 			Name: file.name,
 		}
 		this.fileService.downloadFile(request).subscribe(

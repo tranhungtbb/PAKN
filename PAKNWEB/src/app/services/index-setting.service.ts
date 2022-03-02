@@ -48,11 +48,57 @@ export class IndexSettingService {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.SYIndexSettingGetInfo)
 	}
 
-	// IndexSettingWebsiteInsert(query: any): Observable<any> {
-	// 	let headers = {
-	// 		logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-	// 		logObject: encodeURIComponent(LOG_OBJECT.SY_INDEXSETTING),
-	// 	}
-	// 	return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SY, headers)
-	// }
+	IndexWebsiteInsert(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INDEXSETTING),
+		})
+
+		const form = new FormData()
+		form.append('model', JSON.stringify(request.model))
+		if (request.file) {
+			form.append('file', request.file)
+		}
+		tempheaders.append('Content-Type', 'application/json')
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+
+		return this.http.post(AppSettings.API_ADDRESS + Api.SYIndexWebsiteInsert, form, httpPackage)
+	}
+
+	IndexWebsiteUpdate(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INDEXSETTING),
+		})
+
+		const form = new FormData()
+		form.append('model', JSON.stringify(request.model))
+		if (request.file) {
+			form.append('file', request.file)
+		}
+		tempheaders.append('Content-Type', 'application/json')
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+
+		return this.http.post(AppSettings.API_ADDRESS + Api.SYIndexWebsiteUpdate, form, httpPackage)
+	}
+
+	IndexWebsiteDelete(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.SYIndexWebsiteDelete)
+	}
+
+	SYIndexWebsiteGetAll(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.SYIndexWebsiteGetAll)
+	}
+
+
 }

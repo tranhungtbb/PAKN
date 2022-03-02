@@ -136,7 +136,8 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 		this.form = this._fb.group({
 			title: [this.model.title, [Validators.required]],
 			content: [this.model.content, [Validators.required]],
-			index: [this.model.index]
+			index: [this.model.index],
+			url: [this.model.url, [Validators.required]]
 		})
 	}
 	ngAfterViewInit() {
@@ -182,7 +183,8 @@ export class SupportListPublicComponent implements OnInit, AfterViewInit {
 		this.form.reset({
 			title: this.model.title,
 			content: this.model.content,
-			index: this.model.index
+			index: this.model.index,
+			url: this.model.url
 		})
 	}
 

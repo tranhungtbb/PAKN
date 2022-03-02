@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { FILETYPE, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { BotMessage, BotRoom } from 'src/app/models/chatbotObject'
 import { ChatBotService } from './chatbot.service'
 import * as signalR from '@aspnet/signalr/'
@@ -75,6 +75,7 @@ export class DashboardChatBotComponent implements OnInit {
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
+				debugger
 				if ((data.type === 'Conversation' || data.type === 'File') && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
 
 					const answers = [];
@@ -101,7 +102,7 @@ export class DashboardChatBotComponent implements OnInit {
 						fromAvatarPath: data.fromAvatarPath ? data.fromAvatarPath : '',
 						fromFullName: data.fromFullName,
 						toUserName: data.to,
-						fromId: data.fromId,
+						fromUserId: data.fromId,
 						dateSend: data.dateSend
 					}
 					this.messages = [...this.messages, newMessage]
@@ -294,16 +295,14 @@ export class DashboardChatBotComponent implements OnInit {
 		}
 	}
 
-	onKeyDown(event) {
-		//console.log(event)
-		if (event.shiftKey && event.key === 'Enter') {
-			var text = document.getElementById('type_msg')
-			//  text.value += '\n';
-		} else if (event.key === 'Enter') {
-			event.preventDefault()
-			//console.log(this.newMessage)
-			this.sendMessage()
+	onKeyDown() {
+		this.newMessage = this.newMessage == null ? '' : this.newMessage.trim()
+		if (this.newMessage === '' && this.files.length == 0) {
+			this.toast.error('Vui lòng nhập nội dung')
+			return
 		}
+		this.sendMessage()
+		this.sendFile()
 	}
 	ngOnDestroy() {
 		if (this.connection) {
@@ -409,6 +408,67 @@ export class DashboardChatBotComponent implements OnInit {
 		}
 	}
 
+
+	files: any[] = []
+	@ViewChild('file', { static: false }) public file: ElementRef
+
+	onUpload(event) {
+		if (event.target.files.length == 0) {
+			return
+		}
+		const check = this.fileService.checkFileWasExitsted(event, this.files)
+		if (check === 1) {
+			for (let item of event.target.files) {
+				FILETYPE.forEach((fileType) => {
+					if (item.type == fileType.text) {
+						let max = this.files.reduce((a, b) => {
+							return a.id > b.id ? a.id : b.id
+						}, 0)
+						item.id = max + 1
+						item.fileType = fileType.value
+						this.files.push(item)
+					}
+				})
+				if (!item.fileType) {
+					this.toast.error('Định dạng không được hỗ trợ')
+				}
+			}
+		} else if (check === 2) {
+			this.toast.error('Không được phép đẩy trùng tên file lên hệ thống')
+		} else {
+			this.toast.error('File tải lên vượt quá dung lượng cho phép 10MB')
+		}
+		this.file.nativeElement.value = ''
+	}
+
+	onRemoveFile(index: number) {
+		this.files.splice(index, 1)
+	}
+
+
+	sendFile() {
+		if (this.files.length == 0) { return }
+		let obj = {
+			files: this.files,
+			roomName: this.roomNameSelected
+		}
+		this.botService.clientSendFile(obj).subscribe(res => {
+			if (res.success == RESPONSE_STATUS.success) {
+
+				setTimeout(() => {
+					var objDiv = document.getElementById('bodyMessage')
+					objDiv.scrollTop = objDiv.scrollHeight
+				}, 300)
+
+
+				this.file.nativeElement.value = ''
+				this.files = []
+			} else {
+				this.toast.error(res.message)
+			}
+		})
+
+	}
 	DownloadFile(file: any) {
 		var request = {
 			Path: file.FilePath,

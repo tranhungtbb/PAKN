@@ -15,10 +15,12 @@ export class IndexSettingObjet {
 }
 
 export class IndexWebsite {
-	id: Number
+	id: number
 	nameWebsite: string
 	urlWebsite: string
 	indexSystemId: number
+	fileName: string
+	filePath: string
 
 	constructor() {
 		this.id = 0

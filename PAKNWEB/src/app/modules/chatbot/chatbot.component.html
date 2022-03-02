@@ -96,8 +96,9 @@
 										</div>
 										<ng-container *ngIf="message.type == 'File'">
 											<div class="msg_cotainer" style="max-width: 80%;">
-												<a title="tải xuống" *ngFor="let item of message.messageContent" class="text-white cursor"
-													style="text-decoration: underline;" (click)="DownloadFile(item)">
+												<a title="tải xuống" *ngFor="let item of message.messageContent"
+													class="text-white cursor d-flex" style="text-decoration: underline;"
+													(click)="DownloadFile(item)">
 													{{item.Name}}
 												</a>
 												<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
@@ -144,20 +145,30 @@
 										{{message.fromFullName}}
 									</div>
 									<div class="d-flex justify-content-end mb-2">
-
-										<div class="msg_cotainer_send" style="max-width: 80%;">
-											<!-- {{message.messageContent}} -->
-											{{message.messageContent}}
-											<ng-container *ngFor="let tag of message.SubTags">
-												<div *ngIf="tag.title" class="msg_cotainer_child">
-													<span class="item p-2">{{tag.title}}</span>
-												</div>
-												<a *ngIf="tag.link" routerLink="tag.link">
-													{{tag.link}}
+										<ng-container *ngIf="message.type == 'File'">
+											<div class="msg_cotainer_send" style="max-width: 80%;">
+												<a title="tải xuống" *ngFor="let item of message.messageContent" class="text-dark cursor d-flex"
+													style="text-decoration: underline;" (click)="DownloadFile(item)">
+													{{item.Name}}
 												</a>
-											</ng-container>
-											<span class="msg_time_send">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
-										</div>
+												<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+											</div>
+										</ng-container>
+										<ng-container *ngIf="message.type != 'File'">
+											<div class="msg_cotainer_send" style="max-width: 80%;">
+												{{message.messageContent}}
+												<ng-container *ngFor="let tag of message.SubTags">
+													<div *ngIf="tag.title" class="msg_cotainer_child">
+														<span class="item p-2">{{tag.title}}</span>
+													</div>
+													<a *ngIf="tag.link" routerLink="tag.link">
+														{{tag.link}}
+													</a>
+												</ng-container>
+												<span class="msg_time_send">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
+											</div>
+										</ng-container>
+
 										<div class="img_cont_msg">
 											<img *ngIf="!message.fromAvatar" src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
 												class="rounded-circle user_img_msg">
@@ -169,17 +180,58 @@
 							</ng-container>
 						</div>
 						<div class="card-footer pr-1 p-3">
+							<input type="file" hidden #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none"
+								multiple />
 							<div class="input-group br-textMessage p-1">
 								<textarea id="type_msg" class="form-control" placeholder="Nhập nội dung.." name="newMessage"
-									[(ngModel)]="newMessage" (keydown)="onKeyDown($event)"></textarea>
+									[(ngModel)]="newMessage" (keydown.enter)="onKeyDown()"></textarea>
 								<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'type_msg'">
 									<img style="width: 30px;" src="assets/dist/img/app-images/mic.gif">
 								</button>
-								<div class="input-group-append" type="button" (click)="sendMessage()">
-									<button type="button" class="btn cl-blue p-2"><i class="fa fa-location-arrow"></i></button>
+								<div class="input-group-append" type="button" (click)="file.click()">
+									<button type="button" class="btn cl-blue p-2"><i class="bi bi-plus-circle"></i></button>
 								</div>
 
 
+							</div>
+
+							<div>
+								<div *ngFor="let file of files; let i = index" class="m-1 p-1 border br-8px d-inline-block">
+									<a *ngIf="file.fileType == 1" class="pointer" title="Xem file" style="color: #333; width:auto;">
+										<img src="../../../../assets/dist/images/file-word.svg" class="mr-1" style="width: 15px" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 2" class="pointer" title="Xem file" style="color: #333; width:auto;">
+										<img src="../../../../assets/dist/images/file-excel.svg" class="mr-1" style="width: 15px" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 3" class="pointer" title="Xem file" style="color: #333; width:auto;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" class="mr-1" style="width: 15px" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 4" class="pointer" title="Xem file" style="color: #333; width:auto;">
+										<img src="../../../../assets/dist/images/file-image.svg" class="mr-1" style="width: 15px" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 6" title="Xem file" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg" class="mr-1" style="width: 15px"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+											file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 7" class="pointer" title="Xem file" style="color: #333; width:auto;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" class="mr-1" style="width: 15px"
+											alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + ".." :
+											file.name}}</span>
+									</a>
+
+									<i (click)="onRemoveFile(i)" class="ml-1 mdi mdi-close" style="font-size: 15px;"></i>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -253,10 +253,11 @@ namespace PAKNAPI.Controller
 
 				// copy for folder upload
 				folder = "Upload\\News\\Media\\" + res;
+				folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
 
-				if (!Directory.Exists(folderPath))
+				if (!Directory.Exists(folder))
 				{
-					Directory.CreateDirectory(folderPath);
+					Directory.CreateDirectory(folder);
 				}
 
 				List<Task> tasks = new List<Task>();
@@ -390,10 +391,11 @@ namespace PAKNAPI.Controller
 
 
 				folder = "Upload\\News\\Media\\" + res;
+				folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
 
-				if (!Directory.Exists(folderPath))
+				if (!Directory.Exists(folder))
 				{
-					Directory.CreateDirectory(folderPath);
+					Directory.CreateDirectory(folder);
 				}
 
 				List<Task> tasks = new List<Task>();
