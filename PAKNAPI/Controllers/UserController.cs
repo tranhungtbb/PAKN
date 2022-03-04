@@ -1139,14 +1139,14 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
 				}
 
+				var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
+				if (checkExists[0].Exists.Value)
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+
 				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0, false);
 				if (accCheckExist[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-				//accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
-				//if (accCheckExist[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 
-				///Phone,Email,IDCard
-				///check ton tai
-				var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+				checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
 				if (checkExists[0].Exists.Value)
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 				if (!string.IsNullOrEmpty(model.Email))
@@ -1155,9 +1155,7 @@ namespace PAKNAPI.Controllers
 					if (checkExists[0].Exists.Value)
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 				}
-				checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
-				if (checkExists[0].Exists.Value)
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+				
 
 
 				//mod loginInfo

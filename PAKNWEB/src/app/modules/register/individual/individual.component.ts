@@ -241,18 +241,18 @@ export class IndividualComponent implements OnInit {
 	}
 
 	onSave() {
-		// if (!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6) {
-		// 	this.toast.error('Vui lòng nhập otp!')
-		// 	return
-		// } else {
-		// 	var otpInput = "" + this.otp_1 + this.otp_2 + this.otp_3 + this.otp_4 + this.otp_5 + this.otp_6;
-		// 	if (otpInput != this.otp) {
-		// 		this.toast.error('Mã otp bạn nhập không chính xác!')
-		// 		return
-		// 	}
-		// }
+		if (!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6) {
+			this.toast.error('Vui lòng nhập otp!')
+			return
+		} else {
+			var otpInput = "" + this.otp_1 + this.otp_2 + this.otp_3 + this.otp_4 + this.otp_5 + this.otp_6;
+			if (otpInput != this.otp) {
+				this.toast.error('Mã otp bạn nhập không chính xác!')
+				return
+			}
+		}
 
-		// $('#modal-otp').modal('hide')
+		$('#modal-otp').modal('hide')
 
 		// req to server
 		this.registerService.registerIndividual(this.model).subscribe((res) => {

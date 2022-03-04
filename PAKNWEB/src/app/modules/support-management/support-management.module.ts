@@ -15,6 +15,7 @@ import { SupportListDocumentComponent } from './support-list-document/support-li
 import { SupportListVideoComponent } from './support-list-video/support-list-video.component'
 import { SupportListPublicComponent } from './support-list-public/support-list-public.component'
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular'
+import { SupportListPublicForAppComponent } from './support-list-public-for-app/support-list-public-for-app.component'
 
 @NgModule({
 	imports: [
@@ -31,6 +32,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular'
 		TreeModule,
 		CKEditorModule
 	],
-	declarations: [SupportManagementComponent, SupportListDocumentComponent, SupportListVideoComponent, SupportListPublicComponent],
+	declarations: [SupportManagementComponent, SupportListDocumentComponent, SupportListVideoComponent, SupportListPublicComponent, SupportListPublicForAppComponent],
 })
 export class SupportManagementModule { }

@@ -195,6 +195,7 @@ export class CATEGORY_SUPPORT {
 export class TYPE_SUPPORT {
 	public static SYSTEM = 1 // he thong
 	public static PUBLIC = 2 //2 ca nhan doanh ng
+	public static APP = 3
 }
 
 export class USER_TYPE {

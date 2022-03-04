@@ -69,9 +69,12 @@ export class IndexSettingComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
+			titleHeader: [this.model.titleHeader, [Validators.required]],
+			title: [this.model.title, [Validators.required]],
+
 			metaTitle: [this.model.metaTitle, [Validators.required]],
 			metaDescription: [this.model.metaDescription, [Validators.required]],
-			systemTitle: [this.model.systemTitle, Validators.required],
+			titleFooter: [this.model.titleFooter, Validators.required],
 			bannerLink: [this.model.bannerLink, Validators.required],
 			organization: [this.model.organization, Validators.required],
 			unit: [this.model.unit, Validators.required],
@@ -90,6 +93,7 @@ export class IndexSettingComponent implements OnInit {
 		this.formWebsite = this._fb.group({
 			nameWebsite: [this.modelWebsite.nameWebsite, Validators.required],
 			urlWebsite: [this.modelWebsite.urlWebsite, [Validators.required]],
+			index: [this.modelWebsite.index],
 		})
 	}
 
@@ -97,7 +101,8 @@ export class IndexSettingComponent implements OnInit {
 		this.submittedWebsite = false
 		this.formWebsite.reset({
 			nameWebsite: '',
-			urlWebsite: ''
+			urlWebsite: '',
+			index: null
 		})
 	}
 
@@ -121,7 +126,9 @@ export class IndexSettingComponent implements OnInit {
 		this.model.email = this.model.email.trim()
 		this.model.address = this.model.address.trim()
 
-		this.model.systemTitle = this.model.systemTitle == null ? '' : this.model.systemTitle.trim()
+		this.model.title = this.model.title == null ? '' : this.model.title.trim()
+		this.model.titleHeader = this.model.titleHeader == null ? '' : this.model.titleHeader.trim()
+		this.model.titleFooter = this.model.titleFooter == null ? '' : this.model.titleFooter.trim()
 		this.model.bannerLink = this.model.bannerLink == null ? '' : this.model.bannerLink.trim()
 		this.model.organization = this.model.organization == null ? '' : this.model.organization.trim()
 		this.model.unit = this.model.unit == null ? '' : this.model.unit.trim()
@@ -129,10 +136,10 @@ export class IndexSettingComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-
 		let obj = {
 			model: this.model,
-			fileBanner: this.BannerImg
+			fileBanner: this.BannerImg,
+			logo: this.imgLogo
 		}
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -153,7 +160,20 @@ export class IndexSettingComponent implements OnInit {
 
 
 	@ViewChild('fileWebsite', { static: false }) fileWebsite: any
+	@ViewChild('logo', { static: false }) logo: any
 	file: any
+	imgLogo: any
+
+	onChooseLogo(event: any) {
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png'].includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+		this.model.logoPath = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]))
+		this.imgLogo = file
+	}
 
 	onChooseImageWebsite(event: any) {
 		var file = event.target.files[0]
@@ -162,7 +182,6 @@ export class IndexSettingComponent implements OnInit {
 			event.target.value = null
 			return
 		}
-		// banner.fileAttach = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]))
 		this.file = file
 		this.modelWebsite.fileName = file.name
 	}

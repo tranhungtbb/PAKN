@@ -23,18 +23,14 @@ export class IndexSettingService {
 
 		const form = new FormData()
 		form.append('model', JSON.stringify(request.model))
-		form.append('ltsIndexWebsite', JSON.stringify(request.ltsIndexWebsite))
-		form.append('lstRemoveBanner', JSON.stringify(request.lstRemoveBanner))
 
 		if (request.fileBanner) {
 			form.append('bannerMain', request.fileBanner)
 		}
-
-		if (request.lstInsertBanner) {
-			request.lstInsertBanner.forEach((item) => {
-				form.append('lstInsertBanner', item)
-			})
+		if (request.logo) {
+			form.append('logo', request.logo)
 		}
+
 		tempheaders.append('Content-Type', 'application/json')
 		const httpPackage = {
 			headers: tempheaders,

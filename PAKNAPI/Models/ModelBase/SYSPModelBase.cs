@@ -645,6 +645,12 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		public string Logo { get; set; }
+		[Required]
+		public string Title { get; set; }
+		[Required]
+		public string TitleHeader { get; set; }
+
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "MetaTitle không được để trống")]
 		public string MetaTitle { get; set; }
@@ -662,7 +668,7 @@ namespace PAKNAPI.ModelBase
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ không được để trống")]
 		public string Address { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
-		public string SystemTitle { get; set; }
+		public string TitleFooter { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn banner không được để trống")]
 		public string BannerLink { get; set; }
@@ -684,6 +690,9 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", sy.Id);
+			DP.Add("Title", sy.Title);
+			DP.Add("TitleHeader", sy.TitleHeader);
+			DP.Add("Logo", sy.Logo);
 			DP.Add("MetaTitle", sy.MetaTitle);
 			DP.Add("MetaDescription", sy.MetaDescription);
 			DP.Add("BannerUrl", sy.BannerUrl);
@@ -693,7 +702,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("BannerLink", sy.BannerLink);
 			DP.Add("Organization", sy.Organization);
 			DP.Add("Unit", sy.Unit);
-			DP.Add("SystemTitle", sy.SystemTitle);
+			DP.Add("TitleFooter", sy.TitleFooter);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IndexSettingUpdate", DP);
 		}
@@ -771,22 +780,18 @@ namespace PAKNAPI.ModelBase
 		public string NameWebsite { get; set; }
 		[Required]
 		public string UrlWebsite { get; set; }
+		public int? Index { get; set; }
 		public int IndexSystemId { get; set; }
 		public string FileName { get; set; }
 		public string FilePath { get; set; }
 		public string FilePathBase { get; set; }
-
-		public async Task<List<SYIndexWebsite>> SY_IndexWebsiteGetByIndexSettingId(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			return (await _sQLCon.ExecuteListDapperAsync<SYIndexWebsite>("SY_IndexWebsiteGetByIndexSettingId", DP)).ToList();
-		}
 
 		public async Task<decimal> SY_IndexWebsiteInsertDAO(SYIndexWebsite sy)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("NameWebsite", sy.NameWebsite);
 			DP.Add("UrlWebsite", sy.UrlWebsite);
+			DP.Add("Index", sy.Index);
 			DP.Add("IndexSystemId", sy.IndexSystemId);
 			DP.Add("FileName", sy.FileName);
 			DP.Add("FilePath", sy.FilePath);
@@ -800,6 +805,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", sy.Id);
 			DP.Add("NameWebsite", sy.NameWebsite);
 			DP.Add("UrlWebsite", sy.UrlWebsite);
+			DP.Add("Index", sy.Index);
 			DP.Add("IndexSystemId", sy.IndexSystemId);
 			DP.Add("FileName", sy.FileName);
 			DP.Add("FilePath", sy.FilePath);

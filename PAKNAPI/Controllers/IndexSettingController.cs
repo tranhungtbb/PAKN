@@ -131,32 +131,32 @@ namespace PAKNAPI.Controllers
                         }
                     }
 
-                    // insert banner thêm mới
-                    if (model.Files.Where(x => x.Name == "lstInsertBanner").ToList().Count > 0) {
-
-                        folder = "Upload\\BannerIndex\\Banner";
-                        folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
-                        if (!Directory.Exists(folderPath))
+                    folder = "Upload\\BannerIndex\\Logo";
+                    folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    // insert logo
+                    var logo = model.Files.Where(x => x.Name == "logo").FirstOrDefault();
+                    if (logo != null)
+                    {
+                        // xóa hết trong banner Main
+                        string[] files = Directory.GetFiles(folder);
+                        foreach (string file in files)
                         {
-                            Directory.CreateDirectory(folderPath);
+                            System.IO.File.Delete(file);
                         }
 
-                        foreach (var item in model.Files.Where(x => x.Name == "lstInsertBanner"))
+                        var nameImg = Path.GetFileName(logo.FileName).Replace("+", "");
+                        model.model.Logo = Path.Combine(folder, nameImg);
+                        string filePath = Path.Combine(folderPath, nameImg);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            SYIndexSettingBanner file = new SYIndexSettingBanner();
-                            file.IndexSystemId = model.model.Id;
-                            file.Name = Path.GetFileName(item.FileName).Replace("+", "");
-                            string filePath = Path.Combine(folderPath, file.Name);
-                            file.FileAttach = Path.Combine(folder, file.Name);
-                            file.FileType = GetFileTypes.GetFileTypeInt(item.ContentType);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                item.CopyTo(stream);
-                            }
-                            await new SYIndexSettingBanner(_appSetting).SYIndexBannerInsertDAO(file);
+                            logo.CopyTo(stream);
                         }
                     }
-                    
+
 
                 }
                 await new SYIndexSetting(_appSetting).SYIndexSettingUpdateDAO(model.model);

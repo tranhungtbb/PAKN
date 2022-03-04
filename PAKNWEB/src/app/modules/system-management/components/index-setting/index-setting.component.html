@@ -21,6 +21,41 @@
 		<div class="col-md-9" style="padding-left: 60px;padding-top: 20px;">
 			<form class="form-horizontal" [formGroup]="form">
 				<div class="row form-group">
+					<div class="col-sm-12 d-flex">
+						<div class="logo mr-3">
+							<img [src]="model.logoPath ? model.logoPath : model.logo" (click)="logo.click()" title="Chọn logo"
+								style="width: 90px; height: 90px;">
+							<p class="mb-1"> (450 x 450) </p>
+							<input type="file" #logo hidden (change)="onChooseLogo($event)">
+						</div>
+						<div class="row" style="width: 100%;">
+							<div class="col-sm-12">
+								<input placeholder="Nhập tên hệ thống .." svTrim class="form-control" formControlName="titleHeader"
+									[(ngModel)]="model.titleHeader" maxlength="200" />
+								<div
+									*ngIf="(submitted && f.titleHeader.invalid) || (f.titleHeader.invalid && (f.titleHeader.dirty || f.titleHeader.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.titleHeader.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<input placeholder="Nhập tiêu đề .." svTrim class="form-control" formControlName="title"
+									[(ngModel)]="model.title" maxlength="200" />
+								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.title.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
 					<div class="col-sm-12">
 						<label class="control-label">Meta title <span class="text-danger">(*)</span></label>
 						<input placeholder="Nhập nội dung .." svTrim class="form-control" formControlName="metaTitle"
@@ -58,7 +93,7 @@
 							</svg>
 							<span class="ml-2" style="text-transform: none;">Thay banner</span>
 						</a>
-						<div style="max-height:250px;width: auto;height:250px;">
+						<div style="width: auto;height:200px;">
 							<img [src]="bannerUrl" id="bannerIntroduce"
 								style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
 						</div>
@@ -81,12 +116,12 @@
 
 					<div class="row form-group">
 						<div class="col-sm-12">
-							<input class="form-control" formControlName="systemTitle" [(ngModel)]="model.systemTitle" maxlength="300"
+							<input class="form-control" formControlName="titleFooter" [(ngModel)]="model.titleFooter" maxlength="300"
 								placeholder="Tiêu đề hệ thống.." />
 							<div
-								*ngIf="(submitted && f.systemTitle.invalid) || (f.systemTitle.invalid && (f.systemTitle.dirty || f.systemTitle.touched))"
+								*ngIf="(submitted && f.titleFooter.invalid) || (f.titleFooter.invalid && (f.titleFooter.dirty || f.titleFooter.touched))"
 								class="has-error m-b-12">
-								<div *ngIf="f.systemTitle.errors.required">
+								<div *ngIf="f.titleFooter.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
 								</div>
 							</div>
@@ -221,6 +256,21 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-12">
+							<input class="form-control" onlyNumber formControlName="index" [(ngModel)]="modelWebsite.index"
+								maxlength="2" placeholder="Thứ tự hiển thị.." />
+							<div
+								*ngIf="(submittedWebsite && fWebsite.index.invalid) || (fWebsite.index.invalid && (fWebsite.index.dirty || fWebsite.index.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fWebsite.index.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<input hidden #fileWebsite type="file" (change)="onChooseImageWebsite($event)">
 					<div class="row form-group">
 						<div class="col-12 d-flex">
@@ -259,14 +309,12 @@
 							{{item.nameWebsite}}</div>
 						<div class="d-flex">
 							<i class="bi bi-paperclip"></i>
-							<a src="" class="text-1line">{{item.urlWebsite}}</a>
+							<a class="text-1line">{{item.urlWebsite}}</a>
 						</div>
 						<div class="d-flex">
 							<a (click)="DownloadFile(item)" class="pointer" title="Xem file">
 								<img src="../../../../assets/dist/images/file-image.svg" class="mr-1" style="width: 15px" alt="">
-								<span class="small text-truncate">{{item.fileName.length > 20? item.fileName.slice(0,19)
-									+ ".." :
-									item.fileName}}</span>
+								<span class="small text-truncate">{{item.fileName}}</span>
 							</a>
 						</div>
 

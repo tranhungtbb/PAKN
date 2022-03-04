@@ -11,13 +11,13 @@
 					<div class="collapse navbar-collapse justify-content-between">
 						<div class="header-left d-flex">
 							<a href="/cong-bo/trang-chu">
-								<img class="img-fluid" src="../../../assets/dist/images/logo.png" alt="">
+								<img class="img-fluid" [src]="indexSettingObj.logo" alt="">
 							</a>
 							<div class="ml-3">
 								<h4 class="text-uppercase mb-0 text-dark title-top mb-1">
-									hệ thống thông tin tiếp nhận, trả lời phản ánh, kiến nghị
+									{{ indexSettingObj.titleHeader }}
 								</h4>
-								<h4 class="text-uppercase mb-0 text-dark title-bottom">Tỉnh khánh hòa</h4>
+								<h4 class="text-uppercase mb-0 text-dark title-bottom">{{ indexSettingObj.title }}</h4>
 								<!-- <div class="info-action cl-red">Hệ thống đang hoạt động thử nghiệm!</div> -->
 							</div>
 						</div>
@@ -236,7 +236,7 @@
 					nghiệm!</div>
 				<div class="row justify-content-between">
 					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-1">
-						<h4 class="title-footer text-uppercase fs-17 mb-1">{{indexSettingObj.systemTitle}}</h4>
+						<h4 class="title-footer text-uppercase fs-17 mb-1">{{indexSettingObj.titleFooter}}</h4>
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item py-1 px-0 border-0 d-flex"><i class="fas fa-building mr-2"></i>
 								<div><span class="fw-500">Cơ quan chủ quản: </span>{{indexSettingObj.organization}} </div>

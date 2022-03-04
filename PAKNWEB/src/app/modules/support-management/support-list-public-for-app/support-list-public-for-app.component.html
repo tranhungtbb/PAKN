@@ -1,0 +1,115 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="breadcrumb title-module px-0 bg-transparent"
+					style="text-transform: uppercase; font-size: 18px;font-weight: 600;">
+					<span class="text-uppercase">Tài liệu hướng dẫn cho người dân, doanh nghiệp</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row ml-0">
+			<div class="col-auto treeView px-0">
+				<ul class="mt-2">
+					<li class="menu-support py-2 px-3" *ngFor="let item of lstSupport" (click)="treeViewActive(item)"
+						[ngClass]="{'active':(model?.id && model?.id == item.id)}">
+						<a class="cursor-hand font-weight-bold">
+							{{item.title}}
+						</a>
+					</li>
+				</ul>
+
+			</div>
+			<div class="col mx-3 mt-3">
+				<div class="tt-v1 mb-2 d-flex justify-content-end">
+					<button *ngIf="model.id > 0" type="button" class="btn grd-blue btn-sm rounded border-0 text-white mr-2"
+						(click)="preDelete(model.id)">
+						Xóa
+					</button>
+
+					<button type="button" *ngIf="model.id && model.id != 0"
+						class="btn grd-blue btn-sm rounded border-0 text-white mr-2" (click)="preCreate()" title="Thêm mới">
+						Thêm mới
+					</button>
+
+
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="onSave()">
+						{{action}}
+					</button>
+				</div>
+
+				<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+					<div class="row">
+						<div class="col-sm-8 form-group">
+							<label> Tên tài liệu <span class="cl-red">(*)</span></label>
+							<input id="target" class="form-control" svTrim type="text" formControlName="title"
+								[(ngModel)]="model.title" placeholder="Nhập ..">
+							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.title.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-4 form-group">
+							<label> Thứ tự hiển thị</label>
+							<input class="form-control" numbersOnly type="text" formControlName="index" [(ngModel)]="model.index"
+								placeholder="Nhập ..">
+						</div>
+
+						<div class="col-12 col-lg-12 form-group">
+							<label class="mb-1"><span>Nội dung tài liệu </span> <span class="cl-red">(*)</span></label>
+							<div
+								*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.content.errors?.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+							<ckeditor id="editor" [config]="config" [editor]="Editor" formControlName="content"
+								[(ngModel)]="model.content" (ready)="onReady($event)"></ckeditor>
+
+						</div>
+
+						<!-- <div class="col-12 col-sm-12 form-group">
+							<label>Đường dẫn video <span class="cl-red">(*)</span></label>
+							<input class="form-control" type="text" formControlName="url" [(ngModel)]="model.url"
+								placeholder="Nhập ..">
+
+							<div *ngIf="(submitted && f.url.invalid) || (f.content.invalid && (f.url.dirty || f.url.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.url.errors?.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal-confirm">
+		<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+			<div class="modal-content rounded">
+				<div class="modal-header border-bottom-0">
+					<p class="modal-title h3">Xác nhận</p>
+					<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pb-3 pt-3">
+					<span>
+						Anh/Chị có chắc chắn muốn xóa tài liệu hướng dẫn sử dụng này?
+					</span>
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+					<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete()">Xác
+						nhận</button>
+				</div>
+			</div>
+		</div>
+	</div>
